@@ -22,6 +22,26 @@ const double CSVCuts[] = {0.244, 0.679, 0.898};
 
 void event_handler::ReduceTree(int Nentries, TString outFilename){
   
+  // for(int entry(0); entry < Nentries; entry++){
+  //   GetEntry(entry);
+
+  //   cout<<"========== Event "<<entry+1<<" ============"<<endl;
+  //   for(unsigned int imc = 0; imc < mc_doc_id->size(); imc++){
+  //     if(abs(mc_doc_id->at(imc))==15){// && mc_doc_status->at(imc)==23){
+  //     cout<<imc<<": ID "<<mc_doc_id->at(imc)<<",   \tMom ID "<<mc_doc_mother_id->at(imc)
+  // 	  <<", \tGMom ID "<<mc_doc_grandmother_id->at(imc)
+  // 	  <<", \tGGMom ID "<<mc_doc_ggrandmother_id->at(imc)
+  // 	  <<", \tN daughters "<<mc_doc_numOfDaughters->at(imc)
+  // 	  <<",   \tN moms "<<mc_doc_numOfMothers->at(imc)
+  // 	  <<",   \tstatus "<<mc_doc_status->at(imc)
+  // 	  <<",   \tpT "<<mc_doc_pt->at(imc)
+  // 	  <<",   \teta "<<mc_doc_eta->at(imc)
+  // 	  <<",   \tphi "<<mc_doc_phi->at(imc)<<endl;
+  //     }
+  //   }
+  //   cout<<endl<<endl;
+  // }
+
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
@@ -224,25 +244,22 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     for(unsigned int imc = 0; imc < mc_jets_pt->size(); imc++)
       if(mc_jets_pt->at(imc)>40 && mc_jets_eta->at(imc)<3) tree.genht += mc_jets_pt->at(imc);
 
-    // True leptons
-    tree.genmus_pt->resize(0); tree.genels_pt->resize(0);
-    tree.genmus_eta->resize(0); tree.genels_eta->resize(0);
-    tree.genmus_phi->resize(0); tree.genels_phi->resize(0);
+    // True particles
+    tree.mc_pt->resize(0);  tree.mc_id->resize(0);  
+    tree.mc_eta->resize(0); tree.mc_momid->resize(0);  
+    tree.mc_phi->resize(0); 
     for(unsigned int imc = 0; imc < mc_doc_id->size(); imc++){
-      int id = static_cast<int>(abs(mc_doc_id->at(imc)));
-      int momid = static_cast<int>(abs(mc_doc_mother_id->at(imc)));
+      int id = static_cast<int>(mc_doc_id->at(imc));
+      int momid = static_cast<int>(mc_doc_mother_id->at(imc));
       pt = mc_doc_pt->at(imc);
-      if(momid == 24){
-	if(id==11) {
-	  tree.genels_pt->push_back(pt);
-	  tree.genels_eta->push_back(mc_doc_eta->at(imc));
-	  tree.genels_phi->push_back(mc_doc_phi->at(imc));
-	}
-	if(id==13) {
-	  tree.genmus_pt->push_back(pt);
-	  tree.genmus_eta->push_back(mc_doc_eta->at(imc));
-	  tree.genmus_phi->push_back(mc_doc_phi->at(imc));
-	}
+      if(((abs(momid) == 24 && abs(id) != 12 && abs(id) != 14 && abs(id) != 16)
+	 || (abs(momid) == 15 && abs(id) != 15))
+	 && abs(id) != 22  && abs(id) != 24 ){
+	tree.mc_pt->push_back(pt);
+	tree.mc_eta->push_back(mc_doc_eta->at(imc));
+	tree.mc_phi->push_back(mc_doc_phi->at(imc));
+ 	tree.mc_id->push_back(id);
+ 	tree.mc_momid->push_back(momid);
       }
     }
    
@@ -278,9 +295,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
 
   // Global tree
   GetEntry(0);
-  TString model = model_params->c_str();
+  TString model = model_params->c_str(), commit;
+  system("git rev-parse HEAD > hash.txt");
+  ifstream hashfile("hash.txt");
+  hashfile >> commit;
+  system("rm hash.txt");
+
   TTree treeglobal("treeglobal", "treeglobal");
   treeglobal.Branch("noriginal", &Nentries);
+  treeglobal.Branch("commit", &commit);
   treeglobal.Branch("model", &model);
   treeglobal.Branch("nthresh", &nthresh);
   treeglobal.Branch("pt_thresh", &pt_thresh);
