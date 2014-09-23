@@ -26,3 +26,4 @@ bin/*
 *.log
 *.pdf
 out
+archive

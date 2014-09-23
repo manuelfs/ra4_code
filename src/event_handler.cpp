@@ -21,7 +21,7 @@ using namespace std;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
 
 void event_handler::ReduceTree(int Nentries, TString outFilename){
-
+  
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
@@ -296,4 +296,3 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
 event_handler::event_handler(const std::string &fileName):
   ra4_objects(fileName){
 }
-
