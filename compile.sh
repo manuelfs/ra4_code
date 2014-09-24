@@ -2,20 +2,19 @@
 
 shopt -s nullglob
 
-tmp_file="makefile_errors_and_warnings_temporary_collision_free_long_unambiguous_name.log"
+tmp_file=mktemp
 
-make -j -k -r -R 2> >(tee $tmp_file >&2)
+make -j 4 -k -r -R 2> >(tee $tmp_file >&2)
+exit_code=$?
 
 echo
 
-if [[ -s $tmp_file ]] ; then
+if [[ $exit_code != 0 ]] ; then
     echo "ERRORS AND WARNINGS:"
     cat $tmp_file >&2
-    rm -rf $tmp_file
-    exit 1
 else
     echo "Compiled successfully without errors or warnings!"
-    rm -rf $tmp_file
-    exit 0
 fi
 
+rm -rf $tmp_file
+exit $exit_code

@@ -11,9 +11,6 @@
 #include "ra4_objects.hpp"
 #include "utilities.hpp"
 
-
-using namespace std;
-
 class event_handler : public ra4_objects{
 public:
   explicit event_handler(const std::string &fileName);

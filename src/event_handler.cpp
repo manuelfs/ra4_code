@@ -1,10 +1,10 @@
 // event_handler: Defines reduced tree with RA4 variables
 
-#include "pdtlund.hpp"
 #include "small_tree.hpp"
 #include "utilities.hpp"
 #include "event_handler.hpp"
 #include "timer.hpp"
+#include <algorithm>
 #include <cfloat>
 #include <ctime>
 #include <cmath>
@@ -60,7 +60,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   tree.v_nbl.resize(nthresh);tree.v_nbm.resize(nthresh);tree.v_nbt.resize(nthresh);
 
   double deltaR, lepmax_pt, lepmax_px, lepmax_py;
-  int mcID, mcmomID, lepID;
+  int mcID, mcmomID;
   float spher[2][2], spher_jets[2][2], spher_nolin[2][2];
   float pt(-99.), px(-99.), py(-99.), eig1(-99.), eig2(-99.);
 
@@ -160,8 +160,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
       pt = els_pt->at(index);
       px = els_px->at(index);
       py = els_py->at(index);
-      if(els_charge->at(index)>0) lepID = pdtlund::e_minus;
-      else lepID = pdtlund::e_plus;
       mcID = GetTrueElectron(static_cast<int>(index), mcmomID, deltaR);
       tree.v_els_pt.push_back(pt);
       tree.v_els_eta.push_back(els_eta->at(index));
@@ -196,8 +194,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     for(uint index=0; index<mus_pt->size(); index++){
       if(!IsBasicMuon(index)) continue;
 
-      if(mus_charge->at(index)>0) lepID = pdtlund::mu_minus;
-      else lepID = pdtlund::mu_plus;
       mcID = GetTrueMuon(static_cast<int>(index), mcmomID, deltaR);
       tree.v_mus_pt.push_back(mus_pt->at(index));
       tree.v_mus_eta.push_back(mus_eta->at(index));
@@ -234,7 +230,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     float metx(0), mety(0);
     for(unsigned int imc = 0; imc < mc_final_id->size(); imc++){
       int id = static_cast<int>(abs(mc_final_id->at(imc)));
-      if(id==12 || id==14 || id==16 || id==39 || id>1e6&&mc_final_charge->at(imc)==0) {
+      if(id==12 || id==14 || id==16 || id==39 || (id>1e6 && mc_final_charge->at(imc)==0)) {
 	metx += mc_final_px->at(imc);
 	mety += mc_final_py->at(imc);
       }
@@ -296,10 +292,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   // Global tree
   GetEntry(0);
   TString model = model_params->c_str(), commit;
-  system("git rev-parse HEAD > hash.txt");
+  int sys_stat = system("git rev-parse HEAD > hash.txt");
   ifstream hashfile("hash.txt");
   hashfile >> commit;
-  system("rm hash.txt");
+  sys_stat = system("rm hash.txt");
+  if(sys_stat!=0){/*something went wrong...*/}
 
   TTree treeglobal("treeglobal", "treeglobal");
   treeglobal.Branch("noriginal", &Nentries);
