@@ -49,7 +49,7 @@ public:
   int color, style;
 };
 
-void plot_distribution(TString luminosity="2") { 
+void plot_distribution(TString luminosity="5") { 
   styles style("Standard"); style.setDefaultStyle();
   vector<hfeats> vars;
   TCanvas can;
@@ -86,25 +86,22 @@ void plot_distribution(TString luminosity="2") {
   bkgsamples.push_back(4); // Wjets
 
   // Variables to plot
-  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
-  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
-  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
-  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
-  // vars.push_back(hfeats("njets[1]",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
-  // vars.push_back(hfeats("nbm[1]",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
-  // vars.push_back(hfeats("mt",40,0,800, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",100));
-  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",1));
-  // vars.push_back(hfeats("mt",40,0,800, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",100));
-  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",1));
+  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
+  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
+  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
+  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
+  vars.push_back(hfeats("njets[1]",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
+  vars.push_back(hfeats("nbm[1]",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
+  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",100));
+  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",1));
+  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",100));
+  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",1));
 
   //////////// Robert Schoefbeck ///////////
-  //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "M_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets[1]>=4"));
+  //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "m_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets[1]>=4"));
 
-  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350"));
-
-  vars.push_back(hfeats("mt",40,0,400, bkgsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets[1]>=4"));
-  //vars.push_back(hfeats("mt",40,0,400, allsamples, "M_{T} (GeV)",
-  //			"nleps==1&&nbm[1]>=2&&njets[1]>=6&&ht>750&&met>350"));
+  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350"));
+  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets[1]>=4"));
 
   float minLog = 0.04, maxLog = 10;
   double legX = 0.65, legY = 0.92, legSingle = 0.049;
@@ -113,7 +110,7 @@ void plot_distribution(TString luminosity="2") {
   leg.SetTextSize(0.048); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
   leg.SetTextFont(132);
 
-  TLine line; line.SetLineColor(28); line.SetLineWidth(2); line.SetLineStyle(2);
+  TLine line; line.SetLineColor(28); line.SetLineWidth(4); line.SetLineStyle(2);
   vector< vector<TH1F*> > histo[2];
   vector<TH1F*> varhisto;
   vector<float> nentries;
