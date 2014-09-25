@@ -210,7 +210,7 @@ void styles::setTitleSizes(TH1 *h,  float size, float lsize, int font,
 
 void styles::parseStyleFile(TString group, TString fnames[], float *fvalues[], int nFloat, 
 			   TString inames[], int *ivalues[], int nInt){
-  ifstream file(confFile);
+  std::ifstream file(confFile);
   TString word, s_value;
   while(file >> word){
     if(word.Contains("[")) {
