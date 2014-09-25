@@ -25,5 +25,6 @@ bin/*
 *.root
 *.log
 *.pdf
+*.eps
 out
 archive

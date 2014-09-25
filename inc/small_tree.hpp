@@ -85,13 +85,16 @@ public:
   float genht;
   float ntrupv_mean;
   int ntrupv;
-  int npv;
   float weight;
+  float wlumi;
+  float wl1;
+  int npv;
   float ht;
   float mt;
   float met;
   float met_phi;
   float dphi_wlep;
+  float mindphi_metjet;
   float dr_bb;
   float spher;
   float spher_jets;

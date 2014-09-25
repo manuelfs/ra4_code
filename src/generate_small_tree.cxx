@@ -55,13 +55,16 @@ int main(){
   variables.push_back("int ntrupv");
 
   //////////////////   Global   ///////////////////
-  variables.push_back("int npv");
   variables.push_back("float weight");
+  variables.push_back("float wlumi");
+  variables.push_back("float wl1");
+  variables.push_back("int npv");
   variables.push_back("float ht");
   variables.push_back("float mt");
   variables.push_back("float met");
   variables.push_back("float met_phi");
   variables.push_back("float dphi_wlep");
+  variables.push_back("float mindphi_metjet");
   variables.push_back("float dr_bb");
   variables.push_back("float spher");
   variables.push_back("float spher_jets");

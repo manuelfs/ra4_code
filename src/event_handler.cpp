@@ -14,6 +14,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "TMath.h"
 #include "TFile.h"
 #include "TTree.h"
 
@@ -48,13 +49,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   // Reduced tree
   small_tree tree;
   float xsec(cross_section(outFilename));
-  const float luminosity = 19600;
+  const float luminosity = 1000; // 1 fb^-1
 
   // Pt thresholds for jets
   vector<double> v_pt_threshold;
   vector<double> *pt_thresh(&v_pt_threshold);
   pt_thresh->push_back(20); pt_thresh->push_back(40); 
-  pt_thresh->push_back(60); pt_thresh->push_back(80); 
+  pt_thresh->push_back(50); pt_thresh->push_back(70); 
   int nthresh = pt_thresh->size();
   tree.v_njets.resize(nthresh);
   tree.v_nbl.resize(nthresh);tree.v_nbm.resize(nthresh);tree.v_nbt.resize(nthresh);
@@ -102,11 +103,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
       tree.v_nbm[ith] = 0;
       tree.v_nbt[ith] = 0;
     }
+    tree.mindphi_metjet = 999.;
     for(uint ijet = 0; ijet<jets_AK4_pt->size(); ijet++) {
       if(!IsGoodJet(ijet, 20, 2.4)) continue;
       pt = jets_AK4_pt->at(ijet);
       px = jets_AK4_px->at(ijet);
       py = jets_AK4_py->at(ijet);
+      float jetdphi = abs(deltaphi(jets_AK4_phi->at(ijet), mets_phi->at(0)));
+      if(pt >= 50 && tree.mindphi_metjet > jetdphi)
+	tree.mindphi_metjet = jetdphi;
       tree.v_jets_pt.push_back(pt);
       tree.v_jets_eta.push_back(jets_AK4_eta->at(ijet));
       tree.v_jets_phi.push_back(jets_AK4_phi->at(ijet));
@@ -282,7 +287,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     }
     tree.npv = Npv;
     ////////////////   Weights   ////////////////
-    tree.weight = xsec*luminosity / static_cast<double>(Nentries);
+    tree.wl1 = (0.5*TMath::Erf((1.35121e-02)*(tree.genht-(3.02695e+02)))+0.5);
+    tree.wlumi = xsec*luminosity / static_cast<double>(Nentries);
+    tree.weight = tree.wlumi*tree.wl1;
     
     tree.Fill();
   }

@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
 
   std::string inFilename("");
   std::string masspoint("");
-  int c(0), Nentries(0), nfiles(-1), nbatch(-1);
+  int c(0), Nentries(-1), nfiles(-1), nbatch(-1);
   while((c=getopt(argc, argv, "n:i:m:f:b:"))!=-1){
     switch(c){
     case 'n':
