@@ -29,8 +29,11 @@ public:
     tag.ReplaceAll("/","_"); tag.ReplaceAll("*",""); tag.ReplaceAll("&&","_");
     tag.ReplaceAll(">",""); tag.ReplaceAll("<",""); tag.ReplaceAll("=","");
     tag.ReplaceAll("+",""); 
+    unit = "";
+    if(title.Contains("GeV)")) unit = "GeV";
+    if(title.Contains("phi")) unit = "rad";
   }
-  TString title, varname, tag, cuts;
+  TString title, varname, tag, cuts, unit;
   int nbins;
   float minx, maxx, cut;
   vector<int> samples;
@@ -46,7 +49,7 @@ public:
   int color, style;
 };
 
-void plot_distribution(TString luminosity="19.6") { 
+void plot_distribution(TString luminosity="2") { 
   styles style("Standard"); style.setDefaultStyle();
   vector<hfeats> vars;
   TCanvas can;
@@ -54,13 +57,13 @@ void plot_distribution(TString luminosity="19.6") {
   // Reading ntuples
   vector<TChain *> chain;
   vector<sfeats> Samples; 
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1200_*", "T1tttt(1200,800)", 28, 2));
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100)", 6, 2));
-  Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD", kCyan+2));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1200_*", "T1tttt(1200,800)", 28));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100)", kMagenta+3, 2));
+  Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD", 4));
   Samples.push_back(sfeats("archive/ra4skim/*TT*", "t#bar{t}", 2));
-  Samples.push_back(sfeats("archive/ra4skim/*WJets*", "W#rightarrowl#nu + jets", kYellow));
+  Samples.push_back(sfeats("archive/ra4skim/*WJets*", "W + jets", kYellow));
   Samples.push_back(sfeats("archive/ra4skim/*_T*channel*", "Single top", 8));
-  Samples.push_back(sfeats("archive/ra4skim/*_DY*", "Drell-Yan", 4));
+  Samples.push_back(sfeats("archive/ra4skim/*_DY*", "Drell-Yan", kCyan+2));
   for(unsigned sam(0); sam < Samples.size(); sam++){
     chain.push_back(new TChain("tree"));
     chain[sam]->Add(Samples[sam].file);
@@ -69,45 +72,63 @@ void plot_distribution(TString luminosity="19.6") {
   vector<int> allsamples;
   allsamples.push_back(1); //(1500,100)
   allsamples.push_back(0); //(1200,800)
-  //allsamples.push_back(6); // Drell-Yan
-  allsamples.push_back(2); // QCD
+  allsamples.push_back(6); // Drell-Yan
   allsamples.push_back(5); // Single top
+  allsamples.push_back(2); // QCD
   allsamples.push_back(3); // tt
   allsamples.push_back(4); // Wjets
 
-  // Variables to plot
-  //vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)"));
-  //vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)"));
-  //vars.push_back(hfeats("mt",8,0,800, allsamples, "M_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets[1]>=4"));
-  //vars.push_back(hfeats("mt",40,0,400, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350"));
-  //vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>350"));
-  //vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750"));
+  vector<int> bkgsamples;
+  bkgsamples.push_back(6); // Drell-Yan
+  bkgsamples.push_back(5); // Single top
+  bkgsamples.push_back(2); // QCD
+  bkgsamples.push_back(3); // tt
+  bkgsamples.push_back(4); // Wjets
 
-  //vars.push_back(hfeats("mt",40,0,400, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets[1]>=4"));
-  vars.push_back(hfeats("mt",40,0,400, allsamples, "M_{T} (GeV)",
-			"nleps==1&&nbm[1]>=2&&njets[1]>=6&&ht>750&&met>350"));
+  // Variables to plot
+  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
+  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
+  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
+  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
+  // vars.push_back(hfeats("njets[1]",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
+  // vars.push_back(hfeats("nbm[1]",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
+  // vars.push_back(hfeats("mt",40,0,800, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",100));
+  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",1));
+  // vars.push_back(hfeats("mt",40,0,800, allsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",100));
+  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",1));
+
+  //////////// Robert Schoefbeck ///////////
+  //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "M_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets[1]>=4"));
+
+  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350"));
+
+  vars.push_back(hfeats("mt",40,0,400, bkgsamples, "M_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets[1]>=4"));
+  //vars.push_back(hfeats("mt",40,0,400, allsamples, "M_{T} (GeV)",
+  //			"nleps==1&&nbm[1]>=2&&njets[1]>=6&&ht>750&&met>350"));
 
   float minLog = 0.04, maxLog = 10;
-  double legX = 0.6, legY = 0.91, legSingle = 0.051;
+  double legX = 0.65, legY = 0.92, legSingle = 0.049;
   double legW = 0.12, legH = legSingle*vars[0].samples.size();
   TLegend leg(legX, legY-legH, legX+legW, legY);
-  leg.SetTextSize(0.049); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
+  leg.SetTextSize(0.048); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
   leg.SetTextFont(132);
 
   TLine line; line.SetLineColor(28); line.SetLineWidth(2); line.SetLineStyle(2);
   vector< vector<TH1F*> > histo[2];
   vector<TH1F*> varhisto;
   vector<float> nentries;
-  TString hname, pname, variable, leghisto, totCut, title;
+  TString hname, pname, variable, leghisto, totCut, title, ytitle;
   for(unsigned var(0); var<vars.size(); var++){
-
+    cout<<endl;
     // Generating vector of histograms
     title = vars[var].cuts; if(title=="1") title = "";
+    title.ReplaceAll("nvmus==1&&nmus==1&&nvels==0","1 #mu");
     title.ReplaceAll("els_pt","p^{e}_{T}");title.ReplaceAll("mus_pt","p^{#mu}_{T}");
-    title.ReplaceAll("njets[1]","n_{jets}^{40}");title.ReplaceAll("abs(lep_id)==13&&","");
+    title.ReplaceAll("njets[1]","n_{jets}");title.ReplaceAll("abs(lep_id)==13&&","");
     title.ReplaceAll(">=", " #geq "); title.ReplaceAll(">", " > "); title.ReplaceAll("&&", ", "); 
     title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}"); 
-    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm[1]","n_{b}^{m}");
+    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm[1]","n_{b}");
+    title.ReplaceAll("nbl[1]","n_{b,l}");
     for(unsigned his(0); his < 2; his++){
       varhisto.resize(0);
       for(unsigned sam(0); sam < vars[var].samples.size(); sam++){
@@ -133,8 +154,14 @@ void plot_distribution(TString luminosity="19.6") {
 					  histo[0][var][sam]->GetBinContent(vars[var].nbins+1));
       nentries.push_back(histo[0][var][sam]->Integral(1,vars[var].nbins));
       histo[0][var][sam]->SetXTitle(vars[var].title);
-      histo[0][var][sam]->SetYTitle("Entries for "+luminosity+" fb^{-1}/("
-				    +RoundNumber((vars[var].maxx-vars[var].minx)/static_cast<float>(vars[var].nbins),0)+" GeV)");
+      ytitle = "Entries for "+luminosity+" fb^{-1}";
+      if(vars[var].unit!="") {
+	int digits(0);
+	float binwidth((vars[var].maxx-vars[var].minx)/static_cast<float>(vars[var].nbins));
+	if(binwidth<1) digits = 1;
+	ytitle += ("/("+RoundNumber(binwidth,digits) +" "+vars[var].unit+")");
+      }
+      histo[0][var][sam]->SetYTitle(ytitle);
       // Cloning histos for later
       for(int bin(0); bin<=histo[0][var][sam]->GetNbinsX()+1; bin++)
 	histo[1][var][sam]->SetBinContent(bin, histo[0][var][sam]->GetBinContent(bin));
@@ -156,7 +183,7 @@ void plot_distribution(TString luminosity="19.6") {
 	histo[0][var][sam]->SetLineWidth(3);
       }
       if(maxhisto < histo[0][var][sam]->GetMaximum()) maxhisto = histo[0][var][sam]->GetMaximum();
-    }
+    } // First loop over samples
     int firstplotted(-1);
     for(int sam(vars[var].samples.size()-1); sam >= 0; sam--){
       int isam = vars[var].samples[sam];
@@ -180,6 +207,11 @@ void plot_distribution(TString luminosity="19.6") {
     if(histo[0][var][firstplotted]->GetMinimum() > minLog) histo[0][var][firstplotted]->SetMinimum(minLog);
     histo[0][var][firstplotted]->SetMinimum(minLog);
     histo[0][var][firstplotted]->SetMaximum(maxhisto*maxLog);
+    if(variable=="mt" && var==vars.size()-1) {
+      histo[0][var][firstplotted]->SetMinimum(0.2);
+      histo[0][var][firstplotted]->SetMaximum(maxhisto*2);
+    }
+    if(vars[var].cut>0) line.DrawLine(vars[var].cut, 0, vars[var].cut, maxhisto*maxLog);
     can.SetLogy(1);
     pname = "eps/log_lumi_"+vars[var].tag+".eps";
     can.SaveAs(pname);
