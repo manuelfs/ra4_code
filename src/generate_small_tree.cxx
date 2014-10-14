@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 #include "TString.h"
-
  
 using namespace std;
 
@@ -14,41 +13,41 @@ int main(){
   variables.push_back("int nleps");
   variables.push_back("int nmus");
   variables.push_back("int nvmus");
-  variables.push_back("vector<double>* mus_pt");
-  variables.push_back("vector<double>* mus_gen_pt");
-  variables.push_back("vector<double>* mus_eta");
-  variables.push_back("vector<double>* mus_phi");
-  variables.push_back("vector<double>* mus_reliso");
-  variables.push_back("vector<double>* mus_tru_dr");
-  variables.push_back("vector<int>* mus_tru_id");
-  variables.push_back("vector<int>* mus_tru_momid");
+  variables.push_back("std::vector<double>* mus_pt");
+  variables.push_back("std::vector<double>* mus_gen_pt");
+  variables.push_back("std::vector<double>* mus_eta");
+  variables.push_back("std::vector<double>* mus_phi");
+  variables.push_back("std::vector<double>* mus_reliso");
+  variables.push_back("std::vector<double>* mus_tru_dr");
+  variables.push_back("std::vector<int>* mus_tru_id");
+  variables.push_back("std::vector<int>* mus_tru_momid");
   variables.push_back("int nels");
   variables.push_back("int nvels");
-  variables.push_back("vector<double>* els_pt");
-  variables.push_back("vector<double>* els_gen_pt");
-  variables.push_back("vector<double>* els_eta");
-  variables.push_back("vector<double>* els_phi");
-  variables.push_back("vector<double>* els_reliso");
-  variables.push_back("vector<double>* els_tru_dr");
-  variables.push_back("vector<int>* els_tru_id");
-  variables.push_back("vector<int>* els_tru_momid");
+  variables.push_back("std::vector<double>* els_pt");
+  variables.push_back("std::vector<double>* els_gen_pt");
+  variables.push_back("std::vector<double>* els_eta");
+  variables.push_back("std::vector<double>* els_phi");
+  variables.push_back("std::vector<double>* els_reliso");
+  variables.push_back("std::vector<double>* els_tru_dr");
+  variables.push_back("std::vector<int>* els_tru_id");
+  variables.push_back("std::vector<int>* els_tru_momid");
 
   /////////////////   Jets   //////////////////
-  variables.push_back("vector<int>* njets");  // Number of jets for different pT thresholds
-  variables.push_back("vector<int>* nbt");    // Number of tight b-tags for different pT thresholds
-  variables.push_back("vector<int>* nbm");    // Number of medium b-tags for different pT thresholds
-  variables.push_back("vector<int>* nbl");    // Number of loose b-tags for different pT thresholds
-  variables.push_back("vector<double>* jets_pt");
-  variables.push_back("vector<double>* jets_eta");
-  variables.push_back("vector<double>* jets_phi");
-  variables.push_back("vector<double>* jets_csv");
+  variables.push_back("std::vector<int>* njets");  // Number of jets for different pT thresholds
+  variables.push_back("std::vector<int>* nbt");    // Number of tight b-tags for different pT thresholds
+  variables.push_back("std::vector<int>* nbm");    // Number of medium b-tags for different pT thresholds
+  variables.push_back("std::vector<int>* nbl");    // Number of loose b-tags for different pT thresholds
+  variables.push_back("std::vector<double>* jets_pt");
+  variables.push_back("std::vector<double>* jets_eta");
+  variables.push_back("std::vector<double>* jets_phi");
+  variables.push_back("std::vector<double>* jets_csv");
   
   //////////////////   MC   ///////////////////
-  variables.push_back("vector<double>* mc_pt");
-  variables.push_back("vector<double>* mc_eta");
-  variables.push_back("vector<double>* mc_phi");
-  variables.push_back("vector<int>* mc_id");
-  variables.push_back("vector<int>* mc_momid");
+  variables.push_back("std::vector<double>* mc_pt");
+  variables.push_back("std::vector<double>* mc_eta");
+  variables.push_back("std::vector<double>* mc_phi");
+  variables.push_back("std::vector<int>* mc_id");
+  variables.push_back("std::vector<int>* mc_momid");
   variables.push_back("float genmet");
   variables.push_back("float genht");
   variables.push_back("float ntrupv_mean"); 
@@ -69,6 +68,12 @@ int main(){
   variables.push_back("float spher");
   variables.push_back("float spher_jets");
   variables.push_back("float spher_nolin");
+  variables.push_back("float mt2_W_max");
+  variables.push_back("float mt2_W_subleading");
+  variables.push_back("float mt2_W_highPt");
+  variables.push_back("float mt2_W_highCSV");
+  variables.push_back("float mbl_max");
+  variables.push_back("float mbl_subleading");
 
   std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
   
@@ -80,7 +85,6 @@ int main(){
   hppFile << "#include <vector>\n";
   hppFile << "#include \"TChain.h\"\n";
   hppFile << "#include \"TTree.h\"\n\n";
-  hppFile << "using namespace std;\n\n";
 
   hppFile << "class small_tree{\n";
   hppFile << "public:\n";

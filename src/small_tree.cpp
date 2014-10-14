@@ -91,6 +91,12 @@ small_tree::small_tree():
   tree.Branch("spher", &spher);
   tree.Branch("spher_jets", &spher_jets);
   tree.Branch("spher_nolin", &spher_nolin);
+  tree.Branch("mt2_W_max", &mt2_W_max);
+  tree.Branch("mt2_W_subleading", &mt2_W_subleading);
+  tree.Branch("mt2_W_highPt", &mt2_W_highPt);
+  tree.Branch("mt2_W_highCSV", &mt2_W_highCSV);
+  tree.Branch("mbl_max", &mbl_max);
+  tree.Branch("mbl_subleading", &mbl_subleading);
   isReadOnly = false;
 }
 
@@ -149,6 +155,12 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("spher", &spher);
   chain.SetBranchAddress("spher_jets", &spher_jets);
   chain.SetBranchAddress("spher_nolin", &spher_nolin);
+  chain.SetBranchAddress("mt2_W_max", &mt2_W_max);
+  chain.SetBranchAddress("mt2_W_subleading", &mt2_W_subleading);
+  chain.SetBranchAddress("mt2_W_highPt", &mt2_W_highPt);
+  chain.SetBranchAddress("mt2_W_highCSV", &mt2_W_highCSV);
+  chain.SetBranchAddress("mbl_max", &mbl_max);
+  chain.SetBranchAddress("mbl_subleading", &mbl_subleading);
   isReadOnly = true;
 }
 

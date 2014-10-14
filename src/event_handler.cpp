@@ -1,22 +1,28 @@
 // event_handler: Defines reduced tree with RA4 variables
 
-#include "small_tree.hpp"
-#include "utilities.hpp"
 #include "event_handler.hpp"
-#include "timer.hpp"
-#include <algorithm>
+
 #include <cfloat>
 #include <ctime>
 #include <cmath>
 #include <cstdio>
+
+#include <algorithm>
 #include <iomanip>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <iostream>
+
 #include "TMath.h"
 #include "TFile.h"
 #include "TTree.h"
+#include "TLorentzVector.h"
+
+#include "small_tree.hpp"
+#include "utilities.hpp"
+#include "timer.hpp"
+#include "mt2_bisect.hpp"
 
 using namespace std;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
@@ -43,6 +49,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   //   cout<<endl<<endl;
   // }
 
+  const float bad_val = -999.;
+
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
@@ -61,10 +69,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   tree.v_nbl.resize(nthresh);tree.v_nbm.resize(nthresh);tree.v_nbt.resize(nthresh);
 
   double deltaR, lepmax_pt, lepmax_px, lepmax_py;
+  TLorentzVector lepmax_p4;
   int mcID, mcmomID;
   float spher[2][2], spher_jets[2][2], spher_nolin[2][2];
-  float pt(-99.), px(-99.), py(-99.), eig1(-99.), eig2(-99.);
+  float pt(bad_val), px(bad_val), py(bad_val), eig1(bad_val), eig2(bad_val);
 
+  const float W_mass(80.385);
+
+  mt2_bisect::mt2 mt2_calc;
+  mt2_calc.set_mn(W_mass);
   vector<int_double> csv_sorted;
   Timer timer(Nentries);
   timer.Start();
@@ -141,13 +154,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     } // Loop over all jets
 
     if(eigen2x2(spher_jets, eig1, eig2)) tree.spher_jets = 2*eig2/(eig1+eig2);
-    else tree.spher_jets = -999.;
+    else tree.spher_jets = bad_val;
     
     if(tree.v_jets_csv.size() >= 2){
       sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
       tree.dr_bb = dR(tree.v_jets_eta[csv_sorted[0].first], tree.v_jets_eta[csv_sorted[1].first], 
 		      tree.v_jets_phi[csv_sorted[0].first], tree.v_jets_phi[csv_sorted[1].first]);
-    } else tree.dr_bb = -999.;
+    } else tree.dr_bb = bad_val;
     
     
     ////////////////   Leptons   ////////////////
@@ -178,6 +191,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
 	lepmax_pt=els_pt->at(index); 
 	lepmax_px=els_px->at(index); 
 	lepmax_py=els_py->at(index);
+	lepmax_p4 = TLorentzVector(els_px->at(index),
+				   els_py->at(index),
+				   els_pz->at(index),
+				   els_energy->at(index));
       }
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
       spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py; 
@@ -212,6 +229,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
 	lepmax_pt=mus_pt->at(index); 
 	lepmax_px=mus_px->at(index); 
 	lepmax_py=mus_py->at(index);
+	lepmax_p4 = TLorentzVector(mus_px->at(index),
+				   mus_py->at(index),
+				   mus_pz->at(index),
+				   mus_energy->at(index));
       }
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
       spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py; 
@@ -221,9 +242,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
       spher[1][0] += px*py/pt; spher[1][1] += py*py/pt; 
     }
     if(eigen2x2(spher, eig1, eig2)) tree.spher = 2*eig2/(eig1+eig2);
-    else tree.spher = -999.;
+    else tree.spher = bad_val;
     if(eigen2x2(spher_nolin, eig1, eig2)) tree.spher_nolin = 2*eig2/(eig1+eig2);
-    else tree.spher_nolin = -999.;
+    else tree.spher_nolin = bad_val;
 
 
     ////////////////   METS   ////////////////
@@ -266,7 +287,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
    
 
     // Finding mT and deltaPhi with respect to highest pT lepton
-    tree.mt = -999.; tree.dphi_wlep = -999.;
+    tree.mt = bad_val; tree.dphi_wlep = bad_val;
     if(lepmax_pt > 0){
       double lepmax_phi = atan2(lepmax_py, lepmax_px);
       double Wx = mets_ex->at(0) + lepmax_px;
@@ -276,6 +297,87 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
       tree.mt = sqrt(2*lepmax_pt* tree.met*(1-cos(tree.met_phi-lepmax_phi)));
     }
 
+    // mT2 with respect to highest pT lepton
+    tree.mt2_W_max = bad_val;
+    tree.mt2_W_subleading = bad_val;
+    tree.mt2_W_highPt = bad_val;
+    tree.mt2_W_highCSV = bad_val;
+    tree.mbl_max = bad_val;
+    tree.mbl_subleading = bad_val;
+    double momentum_met[3] = {W_mass, mets_ex->at(0)+lepmax_px, mets_ey->at(0)+lepmax_py};
+    if(lepmax_pt > 0.0){
+      vector<float> v_mt2(0);
+      float pt1=bad_val, pt2=bad_val, csv1=bad_val, csv2=bad_val;
+      int pti1=-1, pti2=-1, csvi1=-1, csvi2=-1;
+      for(unsigned jet1 = 0; jet1 < jets_AK4_pt->size(); ++jet1){
+	if(!IsBasicJet(jet1)) continue;
+	if(jets_AK4_btag_secVertexCombined->at(jet1)<CSVCuts[1]) continue;
+
+	double momentum_1[3] = {0.0, jets_AK4_px->at(jet1), jets_AK4_py->at(jet1)};
+
+	TLorentzVector jet_p4 = TLorentzVector(jets_AK4_px->at(jet1),
+					       jets_AK4_py->at(jet1),
+					       jets_AK4_pz->at(jet1),
+					       jets_AK4_energy->at(jet1));
+	const float this_mbl = (lepmax_p4 + jet_p4).M();
+
+	const float this_pt = jets_AK4_pt->at(jet1);
+	const float this_csv = jets_AK4_btag_secVertexCombined->at(jet1);
+
+	if(this_mbl>tree.mbl_max){
+	  tree.mbl_subleading=tree.mbl_max;
+	  tree.mbl_max=this_mbl;
+	}else if (this_mbl>tree.mbl_subleading){
+	  tree.mbl_subleading=this_mbl;
+	}
+
+	if(this_pt>pt1){
+	  pt2=pt1;
+	  pt1=this_pt;
+	  pti2=pti1;
+	  pti1=jet1;
+	}else if(this_pt>pt2){
+	  pt2=this_pt;
+	  pti2=jet1;
+	}
+	if(this_csv>csv1){
+	  csv2=csv1;
+	  csv1=this_csv;
+	  csvi2=csvi1;
+	  csvi1=jet1;
+	}else if(this_csv>csv2){
+	  csv2=this_csv;
+	  csvi2=jet1;
+	}
+	for(unsigned jet2 = jet1+1; jet2 < jets_AK4_pt->size(); ++jet2){
+	  if(!IsBasicJet(jet2)) continue;
+	  if(jets_AK4_btag_secVertexCombined->at(jet2)<CSVCuts[1]) continue;
+	  double momentum_2[3] = {0.0, jets_AK4_px->at(jet2), jets_AK4_py->at(jet2)};
+	  
+	  mt2_calc.set_momenta(momentum_1, momentum_2, momentum_met);
+	  v_mt2.push_back(mt2_calc.get_mt2());
+	}
+      }
+      std::sort(v_mt2.begin(), v_mt2.end(), std::greater<float>());
+      if(v_mt2.size()>0){
+	tree.mt2_W_max = v_mt2.at(0);
+	if(v_mt2.size()>1){
+	  tree.mt2_W_subleading = v_mt2.at(1);
+	}
+      }
+      if(pti2>=0){
+	double momentum_1[3] = {0.0, jets_AK4_px->at(pti1), jets_AK4_py->at(pti1)};
+	double momentum_2[3] = {0.0, jets_AK4_px->at(pti2), jets_AK4_py->at(pti2)};
+	mt2_calc.set_momenta(momentum_1, momentum_2, momentum_met);
+	tree.mt2_W_highPt = mt2_calc.get_mt2();
+      }
+      if(csvi2>=0){
+	double momentum_1[3] = {0.0, jets_AK4_px->at(csvi1), jets_AK4_py->at(csvi1)};
+	double momentum_2[3] = {0.0, jets_AK4_px->at(csvi2), jets_AK4_py->at(csvi2)};
+	mt2_calc.set_momenta(momentum_1, momentum_2, momentum_met);
+	tree.mt2_W_highCSV = mt2_calc.get_mt2();
+      }
+    }
 
     ////////////////   Pile-up   ////////////////
     for(unsigned int bc(0); bc<PU_bunchCrossing->size(); ++bc){
