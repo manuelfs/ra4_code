@@ -73,9 +73,3 @@ dummy_cfa.all: $(EXEDIR)/generate_cfa_class.exe example_cfa_file.root
 
 
 .DELETE_ON_ERROR:
-
-.PHONY: clean
-
-clean:
-	-rm -rf $(EXEDIR)/*.exe $(OBJDIR)/*.o $(OBJDIR)/*.a $(MAKEDIR)/*.d *.exe *.out
-	./run/remove_backups.sh
