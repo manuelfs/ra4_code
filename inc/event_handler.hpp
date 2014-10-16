@@ -16,6 +16,7 @@ public:
   explicit event_handler(const std::string &fileName);
 
   void ReduceTree(int Nentries, TString outFilename);
+  unsigned TypeCode() const;
 };
 
 #endif

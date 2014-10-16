@@ -29,6 +29,10 @@
 using namespace std;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
 
+event_handler::event_handler(const std::string &fileName):
+  ra4_objects(fileName){
+}
+
 void event_handler::ReduceTree(int Nentries, TString outFilename){
   
   // for(int entry(0); entry < Nentries; entry++){
@@ -371,7 +375,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
                                                  jets_AK4_py->at(jet1),
                                                  jets_AK4_pz->at(jet1),
                                                  jets_AK4_energy->at(jet1));
-	  v_mbl.push_back((lepmax_p4 + jet_p4).M());
+          v_mbl.push_back((lepmax_p4 + jet_p4).M());
         }
 
         for(unsigned jet2 = jet1+1; jet2 < jets_AK4_pt->size(); ++jet2){
@@ -494,9 +498,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
       if(v_mbl.size()>0){
         tree.mbl_max = v_mbl.at(0);
         tree.mbl_min = v_mbl.at(v_mbl.size()-1);
-	if(v_mbl.size()>1){
-	  tree.mbl_subleading = v_mbl.at(1);
-	}
+        if(v_mbl.size()>1){
+          tree.mbl_subleading = v_mbl.at(1);
+        }
       }
 
       if(pti1>=0){
@@ -562,6 +566,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     tree.wlumi = xsec*luminosity / static_cast<double>(Nentries);
     tree.weight = tree.wlumi*tree.wl1;
     
+    tree.event_code = TypeCode();
+
     tree.Fill();
   }
 
@@ -590,6 +596,49 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
   cout<<"Reduced tree in "<<outFilename<<endl;
 }
 
-event_handler::event_handler(const std::string &fileName):
-  ra4_objects(fileName){
+unsigned event_handler::TypeCode() const{
+  const std::string sample_name = GetSampleName();
+  unsigned sample_code = 0xF;
+  if(Contains(sample_name, "SMS")){
+    sample_code = 0x0;
+  }else if(Contains(sample_name, "TTJets")
+           || Contains(sample_name, "TT_CT10")){
+    sample_code = 0x1;
+  }else if(Contains(sample_name, "WJets")){
+    sample_code = 0x2;
+  }else if(Contains(sample_name, "T_s-channel")
+           || Contains(sample_name, "T_tW-channel")
+           || Contains(sample_name, "T_t-channel")
+           || Contains(sample_name, "Tbar_s-channel")
+           || Contains(sample_name, "Tbar_tW-channel")
+           || Contains(sample_name, "Tbar_t-channel")){
+    sample_code = 0x3;
+  }else if(Contains(sample_name, "QCD")){
+    sample_code = 0x4;
+  }else if(Contains(sample_name, "DY")){
+    sample_code = 0x5;
+  }else{
+    sample_code = 0xF;
+  }
+
+  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0;
+  for(unsigned i = 0; i < mc_doc_id->size(); ++i){
+    const int id = static_cast<int>(floor(fabs(mc_doc_id->at(i))+0.5));
+    const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id->at(i))+0.5));
+
+    if( (id == 11 || id == 13) && (mom == 24 || mom == 15) ){
+      ++num_leps;
+      if(mom == 15) ++num_tau_to_lep;
+    }else if(id == 15 && mom == 24){
+      ++num_taus;
+    }
+  }
+  unsigned num_tau_to_other = num_taus - num_tau_to_lep;
+
+  if(sample_code > 0xF) sample_code = 0xF;
+  if(num_leps > 0xF) num_leps = 0xF;
+  if(num_tau_to_lep > 0xF) num_tau_to_lep = 0xF;
+  if(num_tau_to_other > 0xF) num_tau_to_other = 0xF;
+
+  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_tau_to_other;
 }

@@ -3,10 +3,11 @@
 //----------------------------------------------------------------------------
 
 #ifndef INT_ROOT
-   #include "utilities.hpp"
+#include "utilities.hpp"
 #endif
 
 #include <iostream>
+#include <string>
 #include "TMath.h"
 #include "TString.h"
 #include "TSystemDirectory.h"
@@ -41,12 +42,12 @@ float cross_section(TString file){
   if(file.Contains("WToENu"))   xsec = 16000.0;
   if(file.Contains("WToMuNu"))  xsec = 16100.0;
 
-  if(file.Contains("QCD_Pt-5to10"))	 xsec = 80710000000;
-  if(file.Contains("QCD_Pt-10to15"))	 xsec = 7528000000;
-  if(file.Contains("QCD_Pt-15to30"))	 xsec = 2237000000;
-  if(file.Contains("QCD_Pt-30to50"))	 xsec = 161500000;
-  if(file.Contains("QCD_Pt-50to80"))	 xsec = 22110000;
-  if(file.Contains("QCD_Pt-80to120"))	 xsec = 3000114;
+  if(file.Contains("QCD_Pt-5to10"))      xsec = 80710000000;
+  if(file.Contains("QCD_Pt-10to15"))     xsec = 7528000000;
+  if(file.Contains("QCD_Pt-15to30"))     xsec = 2237000000;
+  if(file.Contains("QCD_Pt-30to50"))     xsec = 161500000;
+  if(file.Contains("QCD_Pt-50to80"))     xsec = 22110000;
+  if(file.Contains("QCD_Pt-80to120"))    xsec = 3000114;
   if(file.Contains("QCD_Pt-120to170"))   xsec = 493200;
   if(file.Contains("QCD_Pt-170to300"))   xsec = 120300;
   if(file.Contains("QCD_Pt-300to470"))   xsec = 7475;
@@ -89,7 +90,7 @@ vector<TString> dirlist(TString folder, TString inname, TString tag){
     while ((file=static_cast<TSystemFile*>(next()))) {
       fname = file->GetName();
       if (inname=="dir") {
-	if ((file->IsDirectory() && !fname.Contains(".") && fname.EndsWith(tag))) v_dirs.push_back(fname);
+        if ((file->IsDirectory() && !fname.Contains(".") && fname.EndsWith(tag))) v_dirs.push_back(fname);
       } else  if(fname.Contains(inname)) v_dirs.push_back(fname);
     }
   } // if(files)
@@ -150,5 +151,6 @@ TString RoundNumber(double num, int decimals, double denom){
   return result;
 }
 
-
-
+bool Contains(const std::string& text, const std::string& pattern){
+  return text.find(pattern) != std::string::npos;
+}

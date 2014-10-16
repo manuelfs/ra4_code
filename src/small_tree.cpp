@@ -10,6 +10,7 @@ using std::endl;
 
 small_tree::small_tree():
   tree("tree", "tree"){
+  tree.Branch("event_code", &event_code);
   tree.Branch("nleps", &nleps);
   tree.Branch("nmus", &nmus);
   tree.Branch("nvmus", &nvmus);
@@ -114,6 +115,7 @@ small_tree::small_tree():
 small_tree::small_tree(TString filename):
   chain("tree"){
   chain.Add(filename);
+  chain.SetBranchAddress("event_code", &event_code);
   chain.SetBranchAddress("nleps", &nleps);
   chain.SetBranchAddress("nmus", &nmus);
   chain.SetBranchAddress("nvmus", &nvmus);
@@ -200,4 +202,3 @@ int small_tree::GetEntries(){
   if(isReadOnly) return chain.GetEntries();
   else return tree.GetEntries();
 }
-
