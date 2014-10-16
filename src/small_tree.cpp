@@ -91,12 +91,23 @@ small_tree::small_tree():
   tree.Branch("spher", &spher);
   tree.Branch("spher_jets", &spher_jets);
   tree.Branch("spher_nolin", &spher_nolin);
-  tree.Branch("mt2_W_max", &mt2_W_max);
-  tree.Branch("mt2_W_subleading", &mt2_W_subleading);
-  tree.Branch("mt2_W_highPt", &mt2_W_highPt);
-  tree.Branch("mt2_W_highCSV", &mt2_W_highCSV);
+  tree.Branch("mt2_max", &mt2_max);
+  tree.Branch("mt2_min", &mt2_min);
+  tree.Branch("mt2_ref_max", &mt2_ref_max);
+  tree.Branch("mt2_ref_min", &mt2_ref_min);
+  tree.Branch("mt2_highPt", &mt2_highPt);
+  tree.Branch("mt2_highCSV", &mt2_highCSV);
+  tree.Branch("mt2w_max", &mt2w_max);
+  tree.Branch("mt2w_min", &mt2w_min);
+  tree.Branch("mt2w_ref_max", &mt2w_ref_max);
+  tree.Branch("mt2w_ref_min", &mt2w_ref_min);
+  tree.Branch("mt2w_highPt", &mt2w_highPt);
+  tree.Branch("mt2w_highCSV", &mt2w_highCSV);
   tree.Branch("mbl_max", &mbl_max);
   tree.Branch("mbl_subleading", &mbl_subleading);
+  tree.Branch("mbl_min", &mbl_min);
+  tree.Branch("mbl_highPt", &mbl_highPt);
+  tree.Branch("mbl_highCSV", &mbl_highCSV);
   isReadOnly = false;
 }
 
@@ -155,12 +166,23 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("spher", &spher);
   chain.SetBranchAddress("spher_jets", &spher_jets);
   chain.SetBranchAddress("spher_nolin", &spher_nolin);
-  chain.SetBranchAddress("mt2_W_max", &mt2_W_max);
-  chain.SetBranchAddress("mt2_W_subleading", &mt2_W_subleading);
-  chain.SetBranchAddress("mt2_W_highPt", &mt2_W_highPt);
-  chain.SetBranchAddress("mt2_W_highCSV", &mt2_W_highCSV);
+  chain.SetBranchAddress("mt2_max", &mt2_max);
+  chain.SetBranchAddress("mt2_min", &mt2_min);
+  chain.SetBranchAddress("mt2_ref_max", &mt2_ref_max);
+  chain.SetBranchAddress("mt2_ref_min", &mt2_ref_min);
+  chain.SetBranchAddress("mt2_highPt", &mt2_highPt);
+  chain.SetBranchAddress("mt2_highCSV", &mt2_highCSV);
+  chain.SetBranchAddress("mt2w_max", &mt2w_max);
+  chain.SetBranchAddress("mt2w_min", &mt2w_min);
+  chain.SetBranchAddress("mt2w_ref_max", &mt2w_ref_max);
+  chain.SetBranchAddress("mt2w_ref_min", &mt2w_ref_min);
+  chain.SetBranchAddress("mt2w_highPt", &mt2w_highPt);
+  chain.SetBranchAddress("mt2w_highCSV", &mt2w_highCSV);
   chain.SetBranchAddress("mbl_max", &mbl_max);
   chain.SetBranchAddress("mbl_subleading", &mbl_subleading);
+  chain.SetBranchAddress("mbl_min", &mbl_min);
+  chain.SetBranchAddress("mbl_highPt", &mbl_highPt);
+  chain.SetBranchAddress("mbl_highCSV", &mbl_highCSV);
   isReadOnly = true;
 }
 

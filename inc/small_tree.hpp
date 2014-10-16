@@ -97,12 +97,23 @@ public:
   float spher;
   float spher_jets;
   float spher_nolin;
-  float mt2_W_max;
-  float mt2_W_subleading;
-  float mt2_W_highPt;
-  float mt2_W_highCSV;
+  float mt2_max;
+  float mt2_min;
+  float mt2_ref_max;
+  float mt2_ref_min;
+  float mt2_highPt;
+  float mt2_highCSV;
+  float mt2w_max;
+  float mt2w_min;
+  float mt2w_ref_max;
+  float mt2w_ref_min;
+  float mt2w_highPt;
+  float mt2w_highCSV;
   float mbl_max;
   float mbl_subleading;
+  float mbl_min;
+  float mbl_highPt;
+  float mbl_highCSV;
 
   void Fill();
   void Write();
