@@ -426,7 +426,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
 
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
         bool found_tag = false;
-        for(unsigned i = 0; i < 2 || (found_tag && i < 3); ++i){
+        for(unsigned i = 0; i < jet_sorter.size() && (i < 2 || (found_tag && i < 3)); ++i){
           const unsigned jet = jet_sorter.at(i).second;
           if(num_tags == 1 && jets_AK4_btag_secVertexCombined->at(jet) > CSVCuts[1]){
             found_tag = true;
@@ -454,14 +454,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
         }
       }else{
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
-        for(unsigned i = 0; i < 3; ++i){
+        for(unsigned i = 0; i < 3 && i < jet_sorter.size(); ++i){
           const unsigned jeta = jet_sorter.at(i).second;
           double momentum_1_3[3] = {0.0, jets_AK4_px->at(jeta), jets_AK4_py->at(jeta)};
           double momentum_1_4[4] = {jets_AK4_energy->at(jeta),
                                     jets_AK4_px->at(jeta),
                                     jets_AK4_py->at(jeta),
                                     jets_AK4_pz->at(jeta)};
-          for(unsigned j = i + 1; j < 3; ++j){
+          for(unsigned j = i + 1; j < 3 && j < jet_sorter.size(); ++j){
             const unsigned jetb = jet_sorter.at(j).second;
             double momentum_2_3[3] = {0.0, jets_AK4_px->at(jetb), jets_AK4_py->at(jetb)};
             double momentum_2_4[4] = {jets_AK4_energy->at(jetb),
