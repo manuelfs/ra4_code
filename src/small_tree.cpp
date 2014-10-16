@@ -10,7 +10,6 @@ using std::endl;
 
 small_tree::small_tree():
   tree("tree", "tree"){
-  tree.Branch("event_code", &event_code);
   tree.Branch("nleps", &nleps);
   tree.Branch("nmus", &nmus);
   tree.Branch("nvmus", &nvmus);
@@ -64,6 +63,7 @@ small_tree::small_tree():
   jets_phi = &v_jets_phi;
   tree.Branch("jets_csv", &jets_csv);
   jets_csv = &v_jets_csv;
+  tree.Branch("mc_type", &mc_type);
   tree.Branch("mc_pt", &mc_pt);
   mc_pt = &v_mc_pt;
   tree.Branch("mc_eta", &mc_eta);
@@ -115,7 +115,6 @@ small_tree::small_tree():
 small_tree::small_tree(TString filename):
   chain("tree"){
   chain.Add(filename);
-  chain.SetBranchAddress("event_code", &event_code);
   chain.SetBranchAddress("nleps", &nleps);
   chain.SetBranchAddress("nmus", &nmus);
   chain.SetBranchAddress("nvmus", &nvmus);
@@ -145,6 +144,7 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("jets_eta", &jets_eta);
   chain.SetBranchAddress("jets_phi", &jets_phi);
   chain.SetBranchAddress("jets_csv", &jets_csv);
+  chain.SetBranchAddress("mc_type", &mc_type);
   chain.SetBranchAddress("mc_pt", &mc_pt);
   chain.SetBranchAddress("mc_eta", &mc_eta);
   chain.SetBranchAddress("mc_phi", &mc_phi);
@@ -202,3 +202,4 @@ int small_tree::GetEntries(){
   if(isReadOnly) return chain.GetEntries();
   else return tree.GetEntries();
 }
+

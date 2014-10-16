@@ -43,6 +43,7 @@ int main(){
   variables.push_back("std::vector<double>* jets_csv");
   
   //////////////////   MC   ///////////////////
+  variables.push_back("unsigned mc_type");
   variables.push_back("std::vector<double>* mc_pt");
   variables.push_back("std::vector<double>* mc_eta");
   variables.push_back("std::vector<double>* mc_phi");
@@ -68,12 +69,23 @@ int main(){
   variables.push_back("float spher");
   variables.push_back("float spher_jets");
   variables.push_back("float spher_nolin");
-  variables.push_back("float mt2_W_max");
-  variables.push_back("float mt2_W_subleading");
-  variables.push_back("float mt2_W_highPt");
-  variables.push_back("float mt2_W_highCSV");
+  variables.push_back("float mt2_max");
+  variables.push_back("float mt2_min");
+  variables.push_back("float mt2_ref_max");
+  variables.push_back("float mt2_ref_min");
+  variables.push_back("float mt2_highPt");
+  variables.push_back("float mt2_highCSV");
+  variables.push_back("float mt2w_max");
+  variables.push_back("float mt2w_min");
+  variables.push_back("float mt2w_ref_max");
+  variables.push_back("float mt2w_ref_min");
+  variables.push_back("float mt2w_highPt");
+  variables.push_back("float mt2w_highCSV");
   variables.push_back("float mbl_max");
   variables.push_back("float mbl_subleading");
+  variables.push_back("float mbl_min");
+  variables.push_back("float mbl_highPt");
+  variables.push_back("float mbl_highCSV");
 
   std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
   

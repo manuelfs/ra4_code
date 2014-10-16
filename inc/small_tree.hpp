@@ -16,7 +16,6 @@ public:
   bool isReadOnly;
   TChain chain;
   TTree tree;
-  unsigned event_code;
   int nleps;
   int nmus;
   int nvmus;
@@ -70,6 +69,7 @@ public:
   std::vector<double> v_jets_phi;
   std::vector<double>* jets_csv;
   std::vector<double> v_jets_csv;
+  unsigned mc_type;
   std::vector<double>* mc_pt;
   std::vector<double> v_mc_pt;
   std::vector<double>* mc_eta;

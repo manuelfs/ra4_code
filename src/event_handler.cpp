@@ -566,7 +566,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     tree.wlumi = xsec*luminosity / static_cast<double>(Nentries);
     tree.weight = tree.wlumi*tree.wl1;
     
-    tree.event_code = TypeCode();
+    tree.mc_type = TypeCode();
 
     tree.Fill();
   }
@@ -621,24 +621,42 @@ unsigned event_handler::TypeCode() const{
     sample_code = 0xF;
   }
 
-  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0;
+  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0, num_conversions = 0;
+  int last_id = -1;
+  bool counting = false;
+
   for(unsigned i = 0; i < mc_doc_id->size(); ++i){
     const int id = static_cast<int>(floor(fabs(mc_doc_id->at(i))+0.5));
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id->at(i))+0.5));
+    const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id->at(i))+0.5));
+    const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id->at(i))+0.5));
+    
+    if(mom != 15) counting=false;
 
-    if( (id == 11 || id == 13) && (mom == 24 || mom == 15) ){
+    if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
       ++num_leps;
-      if(mom == 15) ++num_tau_to_lep;
+      if(mom == 15){
+        ++num_tau_to_lep;
+        if(counting){
+          ++num_conversions;
+          counting = false;
+        }else{
+          counting = true;
+        }
+      }
     }else if(id == 15 && mom == 24){
       ++num_taus;
     }
+    last_id = id;
   }
-  unsigned num_tau_to_other = num_taus - num_tau_to_lep;
+
+  num_leps -= 2*num_conversions;
+  num_tau_to_lep -= 2*num_conversions;
 
   if(sample_code > 0xF) sample_code = 0xF;
   if(num_leps > 0xF) num_leps = 0xF;
   if(num_tau_to_lep > 0xF) num_tau_to_lep = 0xF;
-  if(num_tau_to_other > 0xF) num_tau_to_other = 0xF;
+  if(num_taus > 0xF) num_taus = 0xF;
 
-  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_tau_to_other;
+  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_taus;
 }
