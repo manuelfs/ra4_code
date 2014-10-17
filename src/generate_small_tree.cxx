@@ -33,14 +33,20 @@ int main(){
   variables.push_back("std::vector<int>* els_tru_momid");
 
   /////////////////   Jets   //////////////////
-  variables.push_back("std::vector<int>* njets");  // Number of jets for different pT thresholds
-  variables.push_back("std::vector<int>* nbt");    // Number of tight b-tags for different pT thresholds
-  variables.push_back("std::vector<int>* nbm");    // Number of medium b-tags for different pT thresholds
-  variables.push_back("std::vector<int>* nbl");    // Number of loose b-tags for different pT thresholds
+  variables.push_back("int njets");  
+  variables.push_back("int nbt");    
+  variables.push_back("int nbm");    
+  variables.push_back("int nbl");    
   variables.push_back("std::vector<double>* jets_pt");
   variables.push_back("std::vector<double>* jets_eta");
   variables.push_back("std::vector<double>* jets_phi");
   variables.push_back("std::vector<double>* jets_csv");
+  variables.push_back("int nfjets");  // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("float mj");    // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("std::vector<double>* fjets_pt");
+  variables.push_back("std::vector<double>* fjets_eta");
+  variables.push_back("std::vector<double>* fjets_phi");
+  variables.push_back("std::vector<double>* fjets_mj");
   
   //////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");

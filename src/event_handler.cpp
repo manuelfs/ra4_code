@@ -33,7 +33,7 @@ event_handler::event_handler(const std::string &fileName):
   ra4_objects(fileName){
 }
 
-void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
+void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentries){
   
   // for(int entry(0); entry < Nentries; entry++){
   //   GetEntry(entry);
@@ -64,15 +64,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
   small_tree tree;
   float xsec(cross_section(outFilename));
   const float luminosity = 1000; // 1 fb^-1
-
-  // Pt thresholds for jets
-  vector<double> v_pt_threshold;
-  vector<double> *pt_thresh(&v_pt_threshold);
-  pt_thresh->push_back(20); pt_thresh->push_back(40); 
-  pt_thresh->push_back(50); pt_thresh->push_back(70); 
-  int nthresh = pt_thresh->size();
-  tree.v_njets.resize(nthresh);
-  tree.v_nbl.resize(nthresh);tree.v_nbm.resize(nthresh);tree.v_nbt.resize(nthresh);
+  const float jet_ptThresh = 40;
 
   double deltaR, lepmax_pt, lepmax_energy, lepmax_px, lepmax_py, lepmax_pz;
   TLorentzVector lepmax_p4;
@@ -117,12 +109,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
     spher[0][0] = 0; spher[0][1] = 0; spher[1][0] = 0; spher[1][1] = 0; 
     spher_nolin[0][0] = 0; spher_nolin[0][1] = 0; spher_nolin[1][0] = 0; spher_nolin[1][1] = 0; 
     spher_jets[0][0] = 0; spher_jets[0][1] = 0; spher_jets[1][0] = 0; spher_jets[1][1] = 0; 
-    for(int ith(0); ith < nthresh; ith++) {
-      tree.v_njets[ith] = 0;
-      tree.v_nbl[ith] = 0;
-      tree.v_nbm[ith] = 0;
-      tree.v_nbt[ith] = 0;
-    }
+    tree.njets = 0;
+    tree.nbl = 0; tree.nbm = 0; tree.nbt = 0;
+
     tree.mindphi_metjet = 999.;
     for(uint ijet = 0; ijet<jets_AK4_pt->size(); ijet++) {
       if(!IsGoodJet(ijet, 20, 2.4)) continue;
@@ -149,15 +138,12 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
       spher_jets[1][0] += px*py/pt; spher_jets[1][1] += py*py/pt; 
 
       //       cout<<ijet<<": csv "<<csv<<", eta "<<jets_AK4_eta->at(ijet)<<", phi "<<jets_AK4_phi->at(ijet)<<endl;
-      for(int ith(0); ith < nthresh; ith++) {
-        if(jets_AK4_pt->at(ijet) >= pt_thresh->at(ith)) {
-          tree.v_njets[ith]++;
-          if(csv >= CSVCuts[0]) tree.v_nbl[ith]++;
-          if(csv >= CSVCuts[1]) tree.v_nbm[ith]++;
-          if(csv >= CSVCuts[2]) tree.v_nbt[ith]++;
-        }
-
-      } // Loop over pT thresholds
+      if(jets_AK4_pt->at(ijet) >= jet_ptThresh) {
+	tree.njets++;
+	if(csv >= CSVCuts[0]) tree.nbl++;
+	if(csv >= CSVCuts[1]) tree.nbm++;
+	if(csv >= CSVCuts[2]) tree.nbt++;
+      }
     } // Loop over all jets
 
     if(eigen2x2(spher_jets, eig1, eig2)) tree.spher_jets = 2*eig2/(eig1+eig2);
@@ -170,6 +156,34 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
     } else tree.dr_bb = bad_val;
     
     
+    ////////////////   Fat Jets   ////////////////
+    tree.mj = 0;
+    csv_sorted.resize(0);
+    tree.v_fjets_pt.resize(0); tree.v_fjets_mj.resize(0); 
+    tree.v_fjets_eta.resize(0); tree.v_fjets_phi.resize(0); 
+    for(unsigned ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px->size(); ijet++){
+      pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py->at(ijet),2));
+      csv_sorted.push_back(make_pair(ijet, pt));
+    }
+    if(csv_sorted.size() >= 2)
+      sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
+    for(unsigned iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px->size(); iijet++){
+      unsigned ijet(csv_sorted[iijet].first);
+      pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py->at(ijet),2));
+      tree.v_fjets_pt.push_back(pt);
+      tree.v_fjets_eta.push_back(fastjets_AK4_R1p2_R0p5pT30_eta->at(ijet));
+      tree.v_fjets_phi.push_back(fastjets_AK4_R1p2_R0p5pT30_phi->at(ijet));
+      float mj = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_energy->at(ijet),2)
+		      -pow(fastjets_AK4_R1p2_R0p5pT30_px->at(ijet),2)
+		      -pow(fastjets_AK4_R1p2_R0p5pT30_py->at(ijet),2)
+		      -pow(fastjets_AK4_R1p2_R0p5pT30_pz->at(ijet),2));
+      tree.v_fjets_mj.push_back(mj);
+      if(pt>50){
+	tree.mj += mj;
+	tree.nfjets++;
+      }
+    }
+
     ////////////////   Leptons   ////////////////
     lepmax_energy=0; lepmax_pt=0; lepmax_px=0; lepmax_py=0; lepmax_pz=0;
     tree.v_els_pt.resize(0);
@@ -563,7 +577,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
     tree.npv = Npv;
     ////////////////   Weights   ////////////////
     tree.wl1 = (0.5*TMath::Erf((1.35121e-02)*(tree.genht-(3.02695e+02)))+0.5);
-    tree.wlumi = xsec*luminosity / static_cast<double>(Nentries) / static_cast<double>(Nbatches);
+    tree.wlumi = xsec*luminosity / static_cast<double>(Ntotentries);
     tree.weight = tree.wlumi;
     
     tree.mc_type = TypeCode();
@@ -586,8 +600,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
   treeglobal.Branch("noriginal", &Nentries);
   treeglobal.Branch("commit", &commit);
   treeglobal.Branch("model", &model);
-  treeglobal.Branch("nthresh", &nthresh);
-  treeglobal.Branch("pt_thresh", &pt_thresh);
 
   treeglobal.Fill();
   treeglobal.Write();
