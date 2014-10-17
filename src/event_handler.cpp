@@ -33,7 +33,7 @@ event_handler::event_handler(const std::string &fileName):
   ra4_objects(fileName){
 }
 
-void event_handler::ReduceTree(int Nentries, TString outFilename){
+void event_handler::ReduceTree(int Nentries, TString outFilename, int Nbatches){
   
   // for(int entry(0); entry < Nentries; entry++){
   //   GetEntry(entry);
@@ -563,8 +563,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename){
     tree.npv = Npv;
     ////////////////   Weights   ////////////////
     tree.wl1 = (0.5*TMath::Erf((1.35121e-02)*(tree.genht-(3.02695e+02)))+0.5);
-    tree.wlumi = xsec*luminosity / static_cast<double>(Nentries);
-    tree.weight = tree.wlumi*tree.wl1;
+    tree.wlumi = xsec*luminosity / static_cast<double>(Nentries) / static_cast<double>(Nbatches);
+    tree.weight = tree.wlumi;
     
     tree.mc_type = TypeCode();
 

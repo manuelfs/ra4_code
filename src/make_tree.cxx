@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
   TString outFilename(inFilename), folder(inFilename);
   
   vector<TString> files;
-  int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1);
+  int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Nbatches(1);
   if(pos==std::string::npos){
     if(nfiles>0){
       files = dirlist(inFilename, ".root");
@@ -57,6 +57,7 @@ int main(int argc, char *argv[]){
       inFilename = folder + "/" + files[ini];
       outFilename = "out/small_"+files[ini];
       if(end > ntotfiles) end = ntotfiles;
+      Nbatches = (ntotfiles+nfiles-1)/nfiles;
     }else{
       inFilename = inFilename + "/*.root";
       int len(outFilename.Sizeof());
@@ -83,7 +84,7 @@ int main(int argc, char *argv[]){
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
       <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.GetTotalEntries()<<endl;
-  tHandler.ReduceTree(Nentries, outFilename);
+  tHandler.ReduceTree(Nentries, outFilename, Nbatches);
 
   time(&curTime);
   cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl;

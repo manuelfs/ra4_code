@@ -15,6 +15,7 @@
 #include "TString.h"
 #include "TMath.h"
 #include "TSystem.h"
+#include "TDirectory.h"
 
 using namespace std;
 using std::cout;
@@ -36,6 +37,22 @@ void skim_ntuples(){
     delete ctree;
   }
 
-
 }
 
+void skim_one(TString file){
+  TFile fin(file);
+  fin.cd("configurableAnalysis");
+  TTree *eventA = (TTree*)gDirectory->Get("eventA");
+  TTree *eventB = (TTree*)gDirectory->Get("eventB");
+  TTree *eA(eventA->CloneTree(0));
+  TTree *eB(eventB->CloneTree(0));
+
+  TString outname="cfa_one.root";
+  TFile fout(outname, "RECREATE");
+  fout.mkdir("configurableAnalysis");
+  fout.cd("configurableAnalysis");
+  eA->Write();
+  eB->Write();
+  fout.Close();
+  cout<<endl<<"Written "<<outname<<" with the tree structure of the cfA file."<<endl<<endl;
+}
