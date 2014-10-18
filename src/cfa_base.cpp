@@ -32,7 +32,10 @@ long cfa_base::TotalEntries() const{
 }
 
 void cfa_base::GetEntry(const long entry){
-  entry_ = entry;
+  const long entry_a = chainA_.LoadTree(entry);
+  const long entry_b = chainB_.LoadTree(entry);
+  if(entry_a!=entry_b) throw std::runtime_error("Entry is in different trees for chains A and B");
+  entry_ = entry_a;
 }
 
 short cfa_base::GetVersion() const{

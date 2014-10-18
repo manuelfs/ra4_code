@@ -3609,7 +3609,10 @@ void cfa_13::GetEntry(const long entry){
   c_trkPOG_toomanystripclus53Xfilter_decision_ = false;
   c_trkPOGfilter_decision_ = false;
   c_weight_ = false;
-  entry_ = entry;
+  const long entry_a = chainA_.LoadTree(entry);
+  const long entry_b = chainB_.LoadTree(entry);
+  if(entry_a!=entry_b) throw std::runtime_error("Entry is in different trees for chains A and B");
+  entry_ = entry_a;
 }
 
 void cfa_13::InitializeA(){

@@ -124,7 +124,10 @@ int main(int argc, char *argv[]){
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::GetEntry(const long entry){\n";
-  cpp_file << "  entry_ = entry;\n";
+  cpp_file << "  const long entry_a = chainA_.LoadTree(entry);\n";
+  cpp_file << "  const long entry_b = chainB_.LoadTree(entry);\n";
+  cpp_file << "  if(entry_a!=entry_b) throw std::runtime_error(\"Entry is in different trees for chains A and B\");\n";
+  cpp_file << "  entry_ = entry_a;\n";
   cpp_file << "}\n\n";
 
   cpp_file << "short cfa_base::GetVersion() const{\n";
