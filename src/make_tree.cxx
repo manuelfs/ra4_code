@@ -44,6 +44,8 @@ int main(int argc, char *argv[]){
 
   size_t pos(inFilename.find(".root"));
   TString outFilename(inFilename), folder(inFilename);
+
+  TString all_sample_files(inFilename);
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
@@ -59,9 +61,10 @@ int main(int argc, char *argv[]){
       outFilename = "out/small_"+files[ini];
       if(end > ntotfiles) end = ntotfiles;
       // Finding total number of entries in sample
-      inFilename = inFilename + "/*.root";
+      all_sample_files += "/*.root";
+            
       TChain totsample("configurableAnalysis/eventA");
-      totsample.Add(inFilename.c_str());
+      totsample.Add(all_sample_files);
       Ntotentries = totsample.GetEntries();
     }else{
       inFilename = inFilename + "/*.root";
@@ -83,12 +86,11 @@ int main(int argc, char *argv[]){
     for(int ifile(ini+1); ifile < end; ifile++)
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
   }
-  tHandler.CalcTotalEntries();
-  if(Nentries > tHandler.GetTotalEntries() || Nentries < 0) Nentries = tHandler.GetTotalEntries();
+  if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
 
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
-      <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.GetTotalEntries()<<endl;
+      <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()<<endl;
   tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
 
   time(&curTime);

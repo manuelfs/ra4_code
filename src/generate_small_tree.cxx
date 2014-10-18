@@ -70,7 +70,7 @@ int main(){
   variables.push_back("float met");
   variables.push_back("float met_phi");
   variables.push_back("float dphi_wlep");
-  variables.push_back("float mindphi_metjet");
+  variables.push_back("float mindphin_metjet");
   variables.push_back("float dr_bb");
   variables.push_back("float spher");
   variables.push_back("float spher_jets");

@@ -20,13 +20,13 @@ public:
   void printValues();
   void fixYAxis(TH1 *h, TPad *pad);
   void styleHist(TH1 *h, Int_t color = 1, Int_t fillstyle = 0,
-		 Int_t symbol = 8,Double_t size = 0.7, Int_t width = 1);
+                 Int_t symbol = 8,Double_t size = 0.7, Int_t width = 1);
   void setMarkers(TH1 *h, float Msize=0.6, int Mstyle=20) ;
   void setTitles(TH1 *h, TString xTitle="", TString yTitle="", TString Left="", TString Right="");
   void setTitleSizes(TH1 *h,  float size, float lsize, int font=62, 
-		     float xoff=1., float yoff=1., int divisions=405);
+                     float xoff=1., float yoff=1., int divisions=405);
   void parseStyleFile(TString group, TString fnames[], float *fvalues[], int nFloat, 
-		     TString inames[], int *ivalues[], int nInt);
+                      TString inames[], int *ivalues[], int nInt);
   void setGroup(TString group);
 
   TString confFile, Group;
@@ -37,4 +37,4 @@ public:
 };
 
 
-#endif	// STYLES_HH
+#endif  // STYLES_HH

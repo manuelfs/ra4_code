@@ -99,7 +99,7 @@ public:
   float met;
   float met_phi;
   float dphi_wlep;
-  float mindphi_metjet;
+  float mindphin_metjet;
   float dr_bb;
   float spher;
   float spher_jets;

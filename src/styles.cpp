@@ -3,7 +3,7 @@
 //----------------------------------------------------------------------------
 
 #ifndef INT_ROOT
-  #include "styles.hpp"
+#include "styles.hpp"
 #endif
 
 #include "TCanvas.h"
@@ -84,10 +84,10 @@ void styles::setGroup(TString group){
 void styles::readGroupStyle() {
   TString inames[] = {"CanvasW", "CanvasH"};
   TString fnames[] = {"TextSize", "TitleSize", "LabelSize", "PadRightMargin", "PadTopMargin", "PadBottomMargin",
-		      "xTitleOffset", "PadLeftMargin", "yTitleOffset", "zTitleOffset"};
+                      "xTitleOffset", "PadLeftMargin", "yTitleOffset", "zTitleOffset"};
   int   *ivalues[] = {&CanvasW, &CanvasH};
   float *fvalues[] = {&TextSize,&TitleSize,&LabelSize,&PadRightMargin,&PadTopMargin,&PadBottomMargin,
-		      &xTitleOffset,&PadLeftMargin,&yTitleOffset,&zTitleOffset};
+                      &xTitleOffset,&PadLeftMargin,&yTitleOffset,&zTitleOffset};
   parseStyleFile(Group, fnames, fvalues, 10, inames, ivalues, 2);
 }
 
@@ -177,12 +177,12 @@ void styles::setTitles(TH1 *h, TString xTitle, TString yTitle, TString Left, TSt
     label.DrawLatex(PadLeftMargin+0.04,1-PadTopMargin-0.03,Left);  
     label.SetTextAlign(33);
     label.DrawLatex(1-PadRightMargin-0.02,1-PadTopMargin-0.03,Right);  
- }
+  }
 }
 
 // ----------------------------------------------------------------------
 void styles::styleHist(TH1 *h, Int_t color, Int_t fillstyle,
-		       Int_t symbol, Double_t size, Int_t width) {
+                       Int_t symbol, Double_t size, Int_t width) {
   h->SetLineColor(color);   
   h->SetLineWidth(width);
   h->SetMarkerColor(color); 
@@ -195,7 +195,7 @@ void styles::styleHist(TH1 *h, Int_t color, Int_t fillstyle,
 
 // ----------------------------------------------------------------------
 void styles::setTitleSizes(TH1 *h,  float size, float lsize, int font,
-			   float xoff, float yoff, int divisions) {
+                           float xoff, float yoff, int divisions) {
   if (0==h) {
     cout << " Histogram not defined" << endl;
   } else {
@@ -209,30 +209,30 @@ void styles::setTitleSizes(TH1 *h,  float size, float lsize, int font,
 }
 
 void styles::parseStyleFile(TString group, TString fnames[], float *fvalues[], int nFloat, 
-			   TString inames[], int *ivalues[], int nInt){
+                            TString inames[], int *ivalues[], int nInt){
   std::ifstream file(confFile);
   TString word, s_value;
   while(file >> word){
     if(word.Contains("[")) {
       word.ReplaceAll("[",""); word.ReplaceAll("]",""); 
       if(word == group){
-	while(file >> word){
-	  if(word.Contains("[")) break;
-	  file >> s_value; file >> s_value;
-	  for(int var(0); var < nFloat; var++){
-	    if(word == fnames[var]){
-	      *fvalues[var] = s_value.Atof();
-	      break;
-	    }
-	  } // Loop finding requested float variables
-	  for(int var(0); var < nInt; var++){
-	    if(word == inames[var]){
-	      *ivalues[var] = s_value.Atoi();
-	      break;
-	    }
-	  } // Loop finding requested int variables
-	} // Loop over group variables
-	break;
+        while(file >> word){
+          if(word.Contains("[")) break;
+          file >> s_value; file >> s_value;
+          for(int var(0); var < nFloat; var++){
+            if(word == fnames[var]){
+              *fvalues[var] = s_value.Atof();
+              break;
+            }
+          } // Loop finding requested float variables
+          for(int var(0); var < nInt; var++){
+            if(word == inames[var]){
+              *ivalues[var] = s_value.Atoi();
+              break;
+            }
+          } // Loop finding requested int variables
+        } // Loop over group variables
+        break;
       }
     }
   } // Loop over all words

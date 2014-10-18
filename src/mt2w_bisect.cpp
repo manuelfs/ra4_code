@@ -303,12 +303,13 @@ namespace mt2w_bisect
        4*a2_*d1_*d1_*f2_ - 4*a1_*d1_*d2_*f2_ - 2*a1_*a2_*f1_*f2_ + 
        a1_*a1_*f2_*f2_)/(Eb1sq_*Eb1sq_);
         
-    long  double A0sq, A1sq, A2sq, A3sq, A4sq;
-    A0sq = A0*A0;
-    A1sq = A1*A1;
-    A2sq = A2*A2;
-    A3sq = A3*A3;
-    A4sq = A4*A4;
+    /*long  double A0sq, A1sq, A2sq, A3sq, A4sq;
+      A0sq = A0*A0;
+      A1sq = A1*A1;
+      A2sq = A2*A2;
+      A3sq = A3*A3;
+      A4sq = A4*A4;*/
+    long double A3sq = A3*A3;
    
     long double B3, B2, B1, B0;
     B3 = 4*A4;

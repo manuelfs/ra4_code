@@ -30,7 +30,7 @@ public:
 
   // Jets
   std::vector<int> GetJets(std::vector<int> SigEl, std::vector<int> SigMu, 
-			   std::vector<int> VetoEl, std::vector<int> VetoMu, float &HT);
+                           std::vector<int> VetoEl, std::vector<int> VetoMu, float &HT);
   bool IsGoodJet(const unsigned int ijet, const double ptThresh, const double etaThresh) const;
   bool IsBasicJet(const unsigned int ijet) const;
 
@@ -43,6 +43,12 @@ public:
   bool PassesMETCleaningCut() const;
   bool PassesPVCut() const;
   double getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex);
+
+  //Event variables
+  double getDeltaPhiMETN(unsigned int goodJetI, float otherpt, float othereta, bool useArcsin);
+  double getDeltaPhiMETN_deltaT(unsigned int goodJetI, float otherpt, float othereta);
+  double getMinDeltaPhiMETN(unsigned int maxjets, float mainpt, float maineta,
+                            float otherpt, float othereta, bool useArcsin);
 };
 
 #endif

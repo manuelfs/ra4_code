@@ -1,5 +1,5 @@
-#ifndef H_GEN_CFA
-#define H_GEN_CFA
+#ifndef H_GEN_CFA_MERGED
+#define H_GEN_CFA_MERGED
 
 #include <set>
 #include <utility>
@@ -10,6 +10,5 @@
 typedef std::pair<std::string, std::string> Var;
 
 void GetVariables(TChain *chain, std::set<Var>& vars);
-std::string AllCaps(std::string str);
 
 #endif
