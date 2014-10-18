@@ -1,6 +1,6 @@
 #! /bin/bash
 
-maxfiles=100
+maxfiles=50
 if (( "$#" >= 1 ))
 then
     maxfiles=$1

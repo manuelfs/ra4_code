@@ -29,11 +29,14 @@ void skim_ntuples(){
   vector<TString> files = dirlist(infolder, ".root");
 
   for(unsigned file(0); file < files.size(); file++){
+    TFile out_file(outfolder+files[file]);
+    out_file.cd();
     TChain tree("tree"); 
     tree.Add(infolder+files[file]); 
 
     TTree *ctree = tree.CopyTree(cuts);
-    ctree->SaveAs(outfolder+files[file]);
+    ctree->Write();
+    out_file.Close();
     delete ctree;
   }
 
