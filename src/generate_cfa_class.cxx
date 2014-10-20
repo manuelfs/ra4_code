@@ -106,13 +106,15 @@ std::string AllCaps(std::string str){
 void GetTypes(const VarSet &full_varset,
               const VarSet::const_iterator &variable,
               std::string &from_type,
-              std::string &to_type){
+              std::string &to_type,
+              std::string &this_type){
   from_type = "";
   to_type = "";
+  this_type = "";
 
   if(variable->second.size()==0) throw std::runtime_error("Could not find type for variable in this file.");
   if(variable->second.size()>=2) throw std::runtime_error("Multiple types found for variable in this file.");
-
+  this_type = *(variable->second.begin());
   const std::string name = variable->first;
   VarSet::const_iterator var = full_varset.find(name);
   if(var == full_varset.end()) throw std::runtime_error("Failed to find variable in full dictionary.");
@@ -123,6 +125,7 @@ void GetTypes(const VarSet &full_varset,
   case 1:
     from_type = *(var->second.begin());
     to_type = from_type;
+    this_type = from_type;
     break;
   case 2:
     if(var->second.find("std::vector<float>*") != var->second.end()
@@ -141,22 +144,22 @@ void GetTypes(const VarSet &full_varset,
 
 std::string GetType(const VarSet::const_iterator &variable){
   switch(variable->second.size()){
-    case 0:
-      throw std::runtime_error("Could not find a valid variable type");
-      break;
-    case 1:
-      return *(variable->second.begin());
-    case 2:
-      if(variable->second.find("std::vector<float>*") != variable->second.end()
-	 && variable->second.find("std::vector<bool>*") != variable->second.end()){
-	return "std::vector<bool>*";
-      }else{
-	throw std::runtime_error("Unknown conversion requested.");
-      }
-      break;
-    default:
-      throw std::runtime_error("Too many types found for variable.");
-      break;
+  case 0:
+    throw std::runtime_error("Could not find a valid variable type");
+    break;
+  case 1:
+    return *(variable->second.begin());
+  case 2:
+    if(variable->second.find("std::vector<float>*") != variable->second.end()
+       && variable->second.find("std::vector<bool>*") != variable->second.end()){
+      return "std::vector<bool>*";
+    }else{
+      throw std::runtime_error("Unknown conversion requested.");
+    }
+    break;
+  default:
+    throw std::runtime_error("Too many types found for variable.");
+    break;
   }
 }
 
@@ -348,8 +351,8 @@ void WriteDerivedHeader(const VarSet &full_varset,
       ++it){
     const std::string name = it->first;
 
-    std::string from_type = "", to_type = "";
-    GetTypes(full_varset, it, from_type, to_type);
+    std::string from_type = "", to_type = "", this_type = "";
+    GetTypes(full_varset, it, from_type, to_type, this_type);
     hpp_file << "  virtual " << to_type << " const & " << name << "() const;\n";
   }
   hpp_file << '\n';
@@ -364,15 +367,12 @@ void WriteDerivedHeader(const VarSet &full_varset,
       ++it){
     std::string name = it->first;
 
-    std::string from_type = "", to_type = "";
-    GetTypes(full_varset, it, from_type, to_type);
-    if(from_type == to_type){
-      hpp_file << "  " << to_type << ' ' << name << "_;\n";
-    }else if(from_type == "std::vector<float>*"
-             && to_type == "std::vector<bool>*"){
+    std::string from_type = "", to_type = "", this_type = "";
+    GetTypes(full_varset, it, from_type, to_type, this_type);
+    if(from_type != to_type && this_type != to_type){
       hpp_file << "  " << from_type << " v_" << name << "_;\n";
-      hpp_file << "  " << to_type << ' ' << name << "_;\n";
     }
+    hpp_file << "  " << to_type << ' ' << name << "_;\n";
   }
 
   //Print branches for members
@@ -464,10 +464,10 @@ void WriteDerivedSource(const VarSet &full_varset,
       ++it){
     const std::string name = it->first;
 
-    std::string from_type = "", to_type = "";
-    GetTypes(full_varset, it, from_type, to_type);
+    std::string from_type = "", to_type = "", this_type = "";
+    GetTypes(full_varset, it, from_type, to_type, this_type);
 
-    if(from_type == to_type){
+    if(from_type == to_type || this_type == to_type){
       cpp_file << "  chainA_.SetBranchAddress(\"" << name << "\", &" << name << "_, &b_" << name << "_);\n";
     }else{
       cpp_file << "  chainA_.SetBranchAddress(\"" << name << "\", &v_" << name << "_, &b_" << name << "_);\n";
@@ -482,10 +482,10 @@ void WriteDerivedSource(const VarSet &full_varset,
       ++it){
     const std::string name = it->first;
 
-    std::string from_type = "", to_type = "";
-    GetTypes(full_varset, it, from_type, to_type);
+    std::string from_type = "", to_type = "", this_type = "";
+    GetTypes(full_varset, it, from_type, to_type, this_type);
 
-    if(from_type == to_type){
+    if(from_type == to_type || this_type == to_type){
       cpp_file << "  chainB_.SetBranchAddress(\"" << name << "\", &" << name << "_, &b_" << name << "_);\n";
     }else{
       cpp_file << "  chainB_.SetBranchAddress(\"" << name << "\", &v_" << name << "_, &b_" << name << "_);\n";
@@ -502,15 +502,16 @@ void WriteDerivedSource(const VarSet &full_varset,
       ++it){
     const std::string name = it->first;
 
-    std::string from_type = "", to_type = "";
-    GetTypes(full_varset, it, from_type, to_type);
+    std::string from_type = "", to_type = "", this_type = "";
+    GetTypes(full_varset, it, from_type, to_type, this_type);
 
     cpp_file << to_type << " const & " << base_name << "::" << name << "() const{\n";
     cpp_file << "  if(!c_" << name << "_ && b_" << name << "_){\n";
     cpp_file << "    b_" << name << "_->GetEntry(entry_);\n";
 
     if(from_type == "std::vector<float>*"
-       && to_type == "std::vector<bool>*"){
+       && to_type == "std::vector<bool>*"
+       && this_type == from_type){
       cpp_file << "    " << name << "_->resize(v_" << name << "_->size());\n";
       cpp_file << "    for(unsigned i = 0; i < " << name << "_->size(); ++i){\n";
       cpp_file << "      " << name << "_->at(i) = static_cast<bool>(v_" << name << "_->at(i));\n";

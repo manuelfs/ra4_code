@@ -12,7 +12,7 @@
 
 class ra4_objects : public cfa{
 public:
-  ra4_objects(const std::string &filename);
+  explicit ra4_objects(const std::string &filename, const bool is_8TeV=false);
 
   // Muons
   std::vector<int> GetMuons(bool doSignal = true);

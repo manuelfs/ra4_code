@@ -352,8 +352,8 @@ double ra4_objects::getDZ(double vx, double vy, double vz, double px, double py,
     -((vx-pv_x()->at(firstGoodVertex))*px+(vy-pv_y()->at(firstGoodVertex))*py)*pz/(px*px+py*py);
 }
 
-ra4_objects::ra4_objects(const std::string &fileName):
-cfa(fileName){
+ra4_objects::ra4_objects(const std::string &fileName, const bool is_8TeV):
+cfa(fileName, is_8TeV){
 }
 
 double ra4_objects::getDeltaPhiMETN(unsigned int goodJetI, float otherpt, float othereta, bool useArcsin) {

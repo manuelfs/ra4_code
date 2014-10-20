@@ -3651,7 +3651,7 @@ void cfa_13::InitializeA(){
   chainA_.SetBranchAddress("taus_el_ind", &taus_el_ind_, &b_taus_el_ind_);
   chainA_.SetBranchAddress("taus_mu_ind", &taus_mu_ind_, &b_taus_mu_ind_);
   chainA_.SetBranchAddress("trackingfailurefilter_decision", &trackingfailurefilter_decision_, &b_trackingfailurefilter_decision_);
-  chainA_.SetBranchAddress("trigger_decision", &v_trigger_decision_, &b_trigger_decision_);
+  chainA_.SetBranchAddress("trigger_decision", &trigger_decision_, &b_trigger_decision_);
   chainA_.SetBranchAddress("trigger_name", &trigger_name_, &b_trigger_name_);
   chainA_.SetBranchAddress("trigger_prescalevalue", &trigger_prescalevalue_, &b_trigger_prescalevalue_);
   chainA_.SetBranchAddress("trkPOG_logErrorTooManyClustersfilter_decision", &trkPOG_logErrorTooManyClustersfilter_decision_, &b_trkPOG_logErrorTooManyClustersfilter_decision_);
@@ -11654,10 +11654,6 @@ Int_t const & cfa_13::trackingfailurefilter_decision() const{
 std::vector<bool>* const & cfa_13::trigger_decision() const{
   if(!c_trigger_decision_ && b_trigger_decision_){
     b_trigger_decision_->GetEntry(entry_);
-    trigger_decision_->resize(v_trigger_decision_->size());
-    for(unsigned i = 0; i < trigger_decision_->size(); ++i){
-      trigger_decision_->at(i) = static_cast<bool>(v_trigger_decision_->at(i));
-    }
     c_trigger_decision_ = true;
   }
   return trigger_decision_;
