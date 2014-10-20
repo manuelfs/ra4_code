@@ -44,11 +44,11 @@ void piechart() {
   chain.Add("archive/ra4skim/*TT*");
 
   vector<TString> cuts;
-  cuts.push_back("nleps==1&&ht>750&&met>250&&njets[1]>=6&&nbl[1]>=2");
-  cuts.push_back("nleps==1&&ht>750&&met>250&&njets[1]>=6&&nbl[1]>=2&&mt>100");
-  cuts.push_back("nleps==1&&ht>750&&met>250&&njets[1]>=6&&nbl[1]>=2&&dphi_wlep>1");
-  cuts.push_back("nleps==1&&ht>750&&met>500&&njets[1]>=6&&nbl[1]>=2&&mt>100");
-  cuts.push_back("nleps==1&&ht>750&&met>500&&njets[1]>=6&&nbl[1]>=2&&dphi_wlep>1");
+  cuts.push_back("nleps==1&&ht>750&&met>250&&njets>=6&&nbm>=2");
+  cuts.push_back("nleps==1&&ht>750&&met>250&&njets>=6&&nbm>=2&&mt>100");
+  cuts.push_back("nleps==1&&ht>750&&met>250&&njets>=6&&nbm>=2&&dphi_wlep>1");
+  cuts.push_back("nleps==1&&ht>750&&met>500&&njets>=6&&nbm>=2&&mt>100");
+  cuts.push_back("nleps==1&&ht>750&&met>500&&njets>=6&&nbm>=2&&dphi_wlep>1");
   vector<sfeats> comp;
   comp.push_back(sfeats("Sum$(abs(mc_id)==11&&abs(mc_momid)==24||abs(mc_id)==13&&abs(mc_momid)==24||abs(mc_id)==15&&abs(mc_momid)==24)==0","Hadronic",1));
   comp.push_back(sfeats("Sum$(abs(mc_id)==11&&abs(mc_momid)==24||abs(mc_id)==13&&abs(mc_momid)==24)==1&&Sum$(abs(mc_id)==15&&abs(mc_momid)==24)==1","1 lep, 1 #tau",4));
@@ -66,11 +66,11 @@ void piechart() {
     tag.ReplaceAll(">",""); tag.ReplaceAll("<",""); tag.ReplaceAll("=","");
     tag.ReplaceAll("+",""); 
     title = cuts[cut];
-    title.ReplaceAll("njets[1]","n_{jets}");
+    title.ReplaceAll("njets","n_{jets}");
     title.ReplaceAll(">=", " #geq "); title.ReplaceAll(">", " > "); title.ReplaceAll("&&", ", "); 
     title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}");  title.ReplaceAll("mt", "m_{T}"); 
-    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm[1]","n_{b}");
-    title.ReplaceAll("nbl[1]","n_{b,l}"); title.ReplaceAll("dphi_wlep", "#Delta#phi");
+    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm","n_{b}");
+    title.ReplaceAll("nbl","n_{b,l}"); title.ReplaceAll("dphi_wlep", "#Delta#phi");
     
     vector<float> yields;
     //vector<string> labels;

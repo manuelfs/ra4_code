@@ -73,7 +73,7 @@ void plot_distribution(TString luminosity="5") {
   allsamples.push_back(1); //(1500,100)
   allsamples.push_back(0); //(1200,800)
   allsamples.push_back(6); // Drell-Yan
-  //allsamples.push_back(5); // Single top
+  allsamples.push_back(5); // Single top
   allsamples.push_back(2); // QCD
   allsamples.push_back(3); // tt
   allsamples.push_back(4); // Wjets
@@ -85,19 +85,23 @@ void plot_distribution(TString luminosity="5") {
   bkgsamples.push_back(3); // tt
   bkgsamples.push_back(4); // Wjets
 
-  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","1",250));
 
   // Variables to plot
-  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
-  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
-  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
-  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
-  // vars.push_back(hfeats("njets",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
-  // vars.push_back(hfeats("nbm",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
-  //vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",100));
-  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",1));
-  // vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",100));
-  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",1));
+  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
+  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
+  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
+  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
+  vars.push_back(hfeats("njets",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
+  vars.push_back(hfeats("nbm",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)",
+			"nleps==1&&ht>750&&met>250",1.5));
+  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)",
+			"nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",100));
+  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)",
+			"nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",1));
+  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)",
+			"nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",100));
+  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)",
+			"nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",1));
 
   //////////// Robert Schoefbeck ///////////
   //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "m_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets>=4"));
