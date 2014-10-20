@@ -7,7 +7,7 @@
 #include "src/utilities.cpp"
 
 #include "TChain.h"
-#include "TH1F.h"
+#include "TH1D.h"
 #include "TCanvas.h"
 #include "TLegend.h"
 #include "TLine.h"
@@ -60,7 +60,7 @@ void plot_distribution(TString luminosity="5") {
   Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1200_*", "T1tttt(1200,800)", 28));
   Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100)", kMagenta+3, 2));
   Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD", 4));
-  Samples.push_back(sfeats("archive/ra4skim/*TT*", "t#bar{t}", 2));
+  Samples.push_back(sfeats("archive/ra4skim/*TTJet*", "t#bar{t}", 2));
   Samples.push_back(sfeats("archive/ra4skim/*WJets*", "W + jets", kYellow));
   Samples.push_back(sfeats("archive/ra4skim/*_T*channel*", "Single top", 8));
   Samples.push_back(sfeats("archive/ra4skim/*_DY*", "Drell-Yan", kCyan+2));
@@ -73,7 +73,7 @@ void plot_distribution(TString luminosity="5") {
   allsamples.push_back(1); //(1500,100)
   allsamples.push_back(0); //(1200,800)
   allsamples.push_back(6); // Drell-Yan
-  allsamples.push_back(5); // Single top
+  //allsamples.push_back(5); // Single top
   allsamples.push_back(2); // QCD
   allsamples.push_back(3); // tt
   allsamples.push_back(4); // Wjets
@@ -85,23 +85,25 @@ void plot_distribution(TString luminosity="5") {
   bkgsamples.push_back(3); // tt
   bkgsamples.push_back(4); // Wjets
 
+  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","1",250));
+
   // Variables to plot
-  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
-  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
-  vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
-  vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
-  vars.push_back(hfeats("njets[1]",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
-  vars.push_back(hfeats("nbm[1]",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
-  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",100));
-  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm[1]>=2&&njets[1]>=6",1));
-  vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",100));
-  vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm[1]>=2&&njets[1]>=6",1));
+  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1",750));
+  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1",250));
+  // vars.push_back(hfeats("ht",50,0,2500, allsamples, "H_{T} (GeV)","nleps==1&&met>250",750));
+  // vars.push_back(hfeats("met",50,0,750, allsamples, "MET (GeV)","nleps==1&&ht>750",250));
+  // vars.push_back(hfeats("njets",16,-0.5,15.5, allsamples, "Number of 40 GeV jets","nleps==1&&ht>750&&met>250",5.5));
+  // vars.push_back(hfeats("nbm",7,-0.5,6.5, allsamples, "Number of 40 GeV b-tags (CSVM)","nleps==1&&ht>750&&met>250",1.5));
+  //vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",100));
+  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>250&&nbm>=2&&njets>=6",1));
+  // vars.push_back(hfeats("mt",40,0,800, allsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",100));
+  // vars.push_back(hfeats("dphi_wlep",32,0,3.2, allsamples, "#Delta#phi(W,lep) (rad)","nleps==1&&ht>750&&met>500&&nbm>=2&&njets>=6",1));
 
   //////////// Robert Schoefbeck ///////////
-  //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "m_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets[1]>=4"));
+  //vars.push_back(hfeats("mt",8,0,800, bkgsamples, "m_{T} (GeV)","nvmus==1&&nmus==1&&nvels==0&&ht>750&&met>250&&nbl[1]==0&&njets>=4"));
 
   //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350"));
-  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets[1]>=4"));
+  //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl[1]==0&&njets>=4"));
 
   float minLog = 0.04, maxLog = 10;
   double legX = 0.65, legY = 0.92, legSingle = 0.049;
@@ -111,8 +113,8 @@ void plot_distribution(TString luminosity="5") {
   leg.SetTextFont(132);
 
   TLine line; line.SetLineColor(28); line.SetLineWidth(4); line.SetLineStyle(2);
-  vector< vector<TH1F*> > histo[2];
-  vector<TH1F*> varhisto;
+  vector< vector<TH1D*> > histo[2];
+  vector<TH1D*> varhisto;
   vector<float> nentries;
   TString hname, pname, variable, leghisto, totCut, title, ytitle;
   for(unsigned var(0); var<vars.size(); var++){
@@ -121,16 +123,16 @@ void plot_distribution(TString luminosity="5") {
     title = vars[var].cuts; if(title=="1") title = "";
     title.ReplaceAll("nvmus==1&&nmus==1&&nvels==0","1 #mu");
     title.ReplaceAll("els_pt","p^{e}_{T}");title.ReplaceAll("mus_pt","p^{#mu}_{T}");
-    title.ReplaceAll("njets[1]","n_{jets}");title.ReplaceAll("abs(lep_id)==13&&","");
+    title.ReplaceAll("njets","n_{jets}");title.ReplaceAll("abs(lep_id)==13&&","");
     title.ReplaceAll(">=", " #geq "); title.ReplaceAll(">", " > "); title.ReplaceAll("&&", ", "); 
     title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}"); 
-    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm[1]","n_{b}");
+    title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm","n_{b}");
     title.ReplaceAll("nbl[1]","n_{b,l}");
     for(unsigned his(0); his < 2; his++){
       varhisto.resize(0);
       for(unsigned sam(0); sam < vars[var].samples.size(); sam++){
 	hname = "histo"; hname += var; hname += his; hname += sam;
-	varhisto.push_back(new TH1F(hname, title, vars[var].nbins, vars[var].minx, vars[var].maxx));
+	varhisto.push_back(new TH1D(hname, title, vars[var].nbins, vars[var].minx, vars[var].maxx));
       }
       histo[his].push_back(varhisto);
     }
@@ -144,7 +146,7 @@ void plot_distribution(TString luminosity="5") {
       int isam = vars[var].samples[sam];
       bool isSig = Samples[isam].file.Contains("T1tttt");
 
-      totCut = luminosity+"/19.6*weight*("+vars[var].cuts+")"; 
+      totCut = luminosity+"*weight*("+vars[var].cuts+")"; 
       chain[isam]->Project(histo[0][var][sam]->GetName(), variable, totCut);
       histo[0][var][sam]->SetBinContent(vars[var].nbins,
 					  histo[0][var][sam]->GetBinContent(vars[var].nbins)+

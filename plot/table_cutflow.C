@@ -12,7 +12,7 @@
 #include "TChain.h"
 #include "TFile.h"
 #include "TString.h"
-#include "TH1F.h"
+#include "TH1D.h"
 #include "TMath.h"
 
 using namespace std;
@@ -37,7 +37,7 @@ void table_cutflow(){
   vector<TChain *> chain;
   vector<sfeats> Samples; 
   Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD"));
-  Samples.push_back(sfeats("archive/ra4skim/*TT*", "$\\mathbf{t\\bar{t}}$"));
+  Samples.push_back(sfeats("archive/ra4skim/*TTJet*", "$\\mathbf{t\\bar{t}}$"));
   Samples.push_back(sfeats("archive/ra4skim/*WJets*", "W+jets"));
   Samples.push_back(sfeats("archive/ra4skim/*_T*channel*", "1 top"));
   Samples.push_back(sfeats("archive/ra4skim/*_DY*", "DY"));
@@ -83,9 +83,9 @@ TString YieldsCut(TString title, TString cuts, vector<TChain*> chain, int nsig){
   vector<float> yield;
   float bkg(0);
   int nsam(chain.size());
-  TH1F histo(Hname, "",100, 0, 10000);
+  TH1D histo(Hname, "",100, 0, 10000);
   for(int sam(0); sam < nsam; sam++){
-    totCut = luminosity+"/19.6*weight*("+cuts+")";
+    totCut = luminosity+"*weight*("+cuts+")";
     chain[sam]->Project(Hname, "met", totCut);
     yield.push_back(histo.Integral(0,101));
     if(sam<nsam-nsig) bkg += yield[sam];

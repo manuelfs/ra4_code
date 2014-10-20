@@ -22,7 +22,7 @@ using std::cout;
 using std::endl;
 
 void skim_ntuples(){
-  TString outfolder="archive/ra4skim2/", infolder = "archive/";
+  TString outfolder="archive/ra4skim/", infolder = "archive/14-10-18/";
   gSystem->mkdir(outfolder, kTRUE);
   TString cuts = "nleps==1";
 

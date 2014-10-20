@@ -579,7 +579,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
     tree.Fill();
   }
-
+  cout<<"xsec is "<<xsec<<" and wlumi "<<tree.wlumi<<" for a total of "<<Ntotentries<<" entries"<<endl;
   tree.Write();
 
   // Global tree

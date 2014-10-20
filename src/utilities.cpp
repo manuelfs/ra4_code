@@ -31,7 +31,7 @@ float cross_section(TString file){
 
   // https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get/TOP-Fall13-00005
   // says that it is 424.5 pb
-  if(file.Contains("TT"))  xsec = 806.1;
+  if(file.Contains("TTJet"))  xsec = 806.1;
 
   // From https://cms-pdmv.cern.ch/mcm
   if(file.Contains("WJetsToLNu_HT-100to200"))  xsec = 1817.0;

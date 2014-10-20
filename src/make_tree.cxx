@@ -42,14 +42,16 @@ int main(int argc, char *argv[]){
     }
   }
 
-  size_t pos(inFilename.find(".root"));
   TString outFilename(inFilename), folder(inFilename);
-
-  TString all_sample_files(inFilename);
+  TString all_sample_files(inFilename), outfolder("out2/");
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
-  if(pos==std::string::npos){
+  outFilename.ReplaceAll("/configurableAnalysis","");
+  int len(outFilename.Length());
+  if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
+  outFilename.Remove(0,outFilename.Last('/')+1);
+  if(inFilename.find(".root")==std::string::npos){
     if(nfiles>0){ // Doing sample in various parts
       files = dirlist(inFilename, ".root");
       ntotfiles = static_cast<int>(files.size());
@@ -58,7 +60,9 @@ int main(int argc, char *argv[]){
 	return 1;
       }
       inFilename = folder + "/" + files[ini];
-      outFilename = "out/small_"+files[ini];
+      outFilename = outfolder+"small_"+outFilename+"_files"; outFilename += nfiles;
+      outFilename += "_batch"; outFilename += nbatch; outFilename += ".root";
+
       if(end > ntotfiles) end = ntotfiles;
       // Finding total number of entries in sample
       all_sample_files += "/*.root";
@@ -68,15 +72,19 @@ int main(int argc, char *argv[]){
       Ntotentries = totsample.GetEntries();
     }else{
       inFilename = inFilename + "/*.root";
-      int len(outFilename.Sizeof());
-      if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
-      outFilename.Remove(0,outFilename.Last('/')+1);
-      outFilename = "out/small_"+outFilename+".root";
+      outFilename = outfolder+"small_"+outFilename+".root";
     }
   } else {
-    outFilename.ReplaceAll("/configurableAnalysis","");
-    outFilename.Remove(0,outFilename.Last('/')+1);
-    outFilename = "out/small_"+outFilename;
+    outFilename = outfolder+"small_"+outFilename;
+  }
+
+  // Checking if output file exists
+  TString outname(outFilename);
+  outname.ReplaceAll(outfolder, "");
+  vector<TString> outfiles = dirlist(outfolder, outname);
+  if(outfiles.size()>0) {
+    cout<<"File "<<outFilename<<" exists. Exiting"<<endl;
+    return 0;
   }
 
   cout<<"Opening "<<inFilename<<endl;
@@ -87,10 +95,12 @@ int main(int argc, char *argv[]){
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
   }
   if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
+  if(nfiles<=0 || inFilename.find(".root")!=std::string::npos) Ntotentries = Nentries;
 
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
-      <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()<<endl;
+      <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()
+      <<". "<<Ntotentries<<" entries in the full sample."<<endl;
   tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
 
   time(&curTime);
