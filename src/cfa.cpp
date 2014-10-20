@@ -56,8 +56,40 @@ Int_t const & cfa::HBHENoisefilter_decision() const{
   return cfa_->HBHENoisefilter_decision();
 }
 
+std::vector<std::string>* const & cfa::L1trigger_alias() const{
+  return cfa_->L1trigger_alias();
+}
+
+std::vector<float>* const & cfa::L1trigger_bit() const{
+  return cfa_->L1trigger_bit();
+}
+
+std::vector<float>* const & cfa::L1trigger_decision() const{
+  return cfa_->L1trigger_decision();
+}
+
+std::vector<float>* const & cfa::L1trigger_decision_nomask() const{
+  return cfa_->L1trigger_decision_nomask();
+}
+
+std::vector<std::string>* const & cfa::L1trigger_name() const{
+  return cfa_->L1trigger_name();
+}
+
+std::vector<float>* const & cfa::L1trigger_prescalevalue() const{
+  return cfa_->L1trigger_prescalevalue();
+}
+
+std::vector<float>* const & cfa::L1trigger_techTrigger() const{
+  return cfa_->L1trigger_techTrigger();
+}
+
 Int_t const & cfa::METFiltersfilter_decision() const{
   return cfa_->METFiltersfilter_decision();
+}
+
+Float_t const & cfa::MPT() const{
+  return cfa_->MPT();
 }
 
 UInt_t const & cfa::NbeamSpot() const{
@@ -70,6 +102,14 @@ UInt_t const & cfa::Nels() const{
 
 UInt_t const & cfa::Njets_AK4() const{
   return cfa_->Njets_AK4();
+}
+
+UInt_t const & cfa::Njets_AK5PF() const{
+  return cfa_->Njets_AK5PF();
+}
+
+UInt_t const & cfa::Njets_AK5PFclean() const{
+  return cfa_->Njets_AK5PFclean();
 }
 
 UInt_t const & cfa::Nmc_doc() const{
@@ -104,6 +144,10 @@ UInt_t const & cfa::Nmc_nutaus() const{
   return cfa_->Nmc_nutaus();
 }
 
+UInt_t const & cfa::Nmc_pdf() const{
+  return cfa_->Nmc_pdf();
+}
+
 UInt_t const & cfa::Nmc_photons() const{
   return cfa_->Nmc_photons();
 }
@@ -116,12 +160,48 @@ UInt_t const & cfa::Nmets() const{
   return cfa_->Nmets();
 }
 
+UInt_t const & cfa::NmetsHO() const{
+  return cfa_->NmetsHO();
+}
+
+UInt_t const & cfa::Nmets_AK5() const{
+  return cfa_->Nmets_AK5();
+}
+
 UInt_t const & cfa::Nmus() const{
   return cfa_->Nmus();
 }
 
+UInt_t const & cfa::NpfTypeINoXYCorrmets() const{
+  return cfa_->NpfTypeINoXYCorrmets();
+}
+
+UInt_t const & cfa::NpfTypeIType0mets() const{
+  return cfa_->NpfTypeIType0mets();
+}
+
+UInt_t const & cfa::NpfTypeImets() const{
+  return cfa_->NpfTypeImets();
+}
+
+UInt_t const & cfa::Npf_els() const{
+  return cfa_->Npf_els();
+}
+
+UInt_t const & cfa::Npf_mus() const{
+  return cfa_->Npf_mus();
+}
+
+UInt_t const & cfa::Npf_photons() const{
+  return cfa_->Npf_photons();
+}
+
 UInt_t const & cfa::Npfcand() const{
   return cfa_->Npfcand();
+}
+
+UInt_t const & cfa::Npfmets() const{
+  return cfa_->Npfmets();
 }
 
 UInt_t const & cfa::Nphotons() const{
@@ -134,6 +214,14 @@ UInt_t const & cfa::Npv() const{
 
 UInt_t const & cfa::Ntaus() const{
   return cfa_->Ntaus();
+}
+
+UInt_t const & cfa::Ntcmets() const{
+  return cfa_->Ntcmets();
+}
+
+UInt_t const & cfa::Ntracks() const{
+  return cfa_->Ntracks();
 }
 
 std::vector<int>* const & cfa::PU_NumInteractions() const{
@@ -240,6 +328,14 @@ Int_t const & cfa::cschalofilter_decision() const{
   return cfa_->cschalofilter_decision();
 }
 
+Int_t const & cfa::ecalBEfilter_decision() const{
+  return cfa_->ecalBEfilter_decision();
+}
+
+Int_t const & cfa::ecalTPfilter_decision() const{
+  return cfa_->ecalTPfilter_decision();
+}
+
 Int_t const & cfa::ecallaserfilter_decision() const{
   return cfa_->ecallaserfilter_decision();
 }
@@ -248,8 +344,24 @@ Int_t const & cfa::eebadscfilter_decision() const{
   return cfa_->eebadscfilter_decision();
 }
 
+Int_t const & cfa::eenoisefilter_decision() const{
+  return cfa_->eenoisefilter_decision();
+}
+
 std::vector<float>* const & cfa::els_PATpassConversionVeto() const{
   return cfa_->els_PATpassConversionVeto();
+}
+
+std::vector<float>* const & cfa::els_PFchargedHadronIsoR03() const{
+  return cfa_->els_PFchargedHadronIsoR03();
+}
+
+std::vector<float>* const & cfa::els_PFneutralHadronIsoR03() const{
+  return cfa_->els_PFneutralHadronIsoR03();
+}
+
+std::vector<float>* const & cfa::els_PFphotonIsoR03() const{
+  return cfa_->els_PFphotonIsoR03();
 }
 
 std::vector<float>* const & cfa::els_basicClustersSize() const{
@@ -270,6 +382,14 @@ std::vector<float>* const & cfa::els_charge() const{
 
 std::vector<float>* const & cfa::els_chi2() const{
   return cfa_->els_chi2();
+}
+
+std::vector<float>* const & cfa::els_conversion_dcot() const{
+  return cfa_->els_conversion_dcot();
+}
+
+std::vector<float>* const & cfa::els_conversion_dist() const{
+  return cfa_->els_conversion_dist();
 }
 
 std::vector<float>* const & cfa::els_core_ecalDrivenSeed() const{
@@ -498,6 +618,10 @@ std::vector<float>* const & cfa::els_gen_theta() const{
 
 std::vector<float>* const & cfa::els_hadOverEm() const{
   return cfa_->els_hadOverEm();
+}
+
+std::vector<bool>* const & cfa::els_hasMatchedConversion() const{
+  return cfa_->els_hasMatchedConversion();
 }
 
 std::vector<float>* const & cfa::els_hcalIso() const{
@@ -932,12 +1056,52 @@ std::vector<float>* const & cfa::fastjets_AK4_R1p2_R0p5pT30_pz() const{
   return cfa_->fastjets_AK4_R1p2_R0p5pT30_pz();
 }
 
+Float_t const & cfa::genHT() const{
+  return cfa_->genHT();
+}
+
 Int_t const & cfa::goodVerticesfilter_decision() const{
   return cfa_->goodVerticesfilter_decision();
 }
 
+Int_t const & cfa::greedymuonfilter_decision() const{
+  return cfa_->greedymuonfilter_decision();
+}
+
+Int_t const & cfa::hbhefilter_decision() const{
+  return cfa_->hbhefilter_decision();
+}
+
 Int_t const & cfa::hcallaserfilter_decision() const{
   return cfa_->hcallaserfilter_decision();
+}
+
+Int_t const & cfa::inconsistentPFmuonfilter_decision() const{
+  return cfa_->inconsistentPFmuonfilter_decision();
+}
+
+std::vector<int>* const & cfa::isotk_charge() const{
+  return cfa_->isotk_charge();
+}
+
+std::vector<float>* const & cfa::isotk_dzpv() const{
+  return cfa_->isotk_dzpv();
+}
+
+std::vector<float>* const & cfa::isotk_eta() const{
+  return cfa_->isotk_eta();
+}
+
+std::vector<float>* const & cfa::isotk_iso() const{
+  return cfa_->isotk_iso();
+}
+
+std::vector<float>* const & cfa::isotk_phi() const{
+  return cfa_->isotk_phi();
+}
+
+std::vector<float>* const & cfa::isotk_pt() const{
+  return cfa_->isotk_pt();
 }
 
 std::vector<float>* const & cfa::jets_AK4_area() const{
@@ -1218,6 +1382,562 @@ std::vector<float>* const & cfa::jets_AK4_status() const{
 
 std::vector<float>* const & cfa::jets_AK4_theta() const{
   return cfa_->jets_AK4_theta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_area() const{
+  return cfa_->jets_AK5PF_area();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_TC_highEff() const{
+  return cfa_->jets_AK5PF_btag_TC_highEff();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_TC_highPur() const{
+  return cfa_->jets_AK5PF_btag_TC_highPur();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_jetBProb() const{
+  return cfa_->jets_AK5PF_btag_jetBProb();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_jetProb() const{
+  return cfa_->jets_AK5PF_btag_jetProb();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_secVertexCombined() const{
+  return cfa_->jets_AK5PF_btag_secVertexCombined();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_secVertexHighEff() const{
+  return cfa_->jets_AK5PF_btag_secVertexHighEff();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_secVertexHighPur() const{
+  return cfa_->jets_AK5PF_btag_secVertexHighPur();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_softEle() const{
+  return cfa_->jets_AK5PF_btag_softEle();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_btag_softMuon() const{
+  return cfa_->jets_AK5PF_btag_softMuon();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_chgEmE() const{
+  return cfa_->jets_AK5PF_chgEmE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_chgHadE() const{
+  return cfa_->jets_AK5PF_chgHadE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_chgMuE() const{
+  return cfa_->jets_AK5PF_chgMuE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_chg_Mult() const{
+  return cfa_->jets_AK5PF_chg_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_corrFactorRaw() const{
+  return cfa_->jets_AK5PF_corrFactorRaw();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_ehf() const{
+  return cfa_->jets_AK5PF_ehf();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_emf() const{
+  return cfa_->jets_AK5PF_emf();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_energy() const{
+  return cfa_->jets_AK5PF_energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_et() const{
+  return cfa_->jets_AK5PF_et();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_eta() const{
+  return cfa_->jets_AK5PF_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_etaetaMoment() const{
+  return cfa_->jets_AK5PF_etaetaMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_etaphiMoment() const{
+  return cfa_->jets_AK5PF_etaphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fHPD() const{
+  return cfa_->jets_AK5PF_fHPD();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fRBX() const{
+  return cfa_->jets_AK5PF_fRBX();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fSubDetector1() const{
+  return cfa_->jets_AK5PF_fSubDetector1();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fSubDetector2() const{
+  return cfa_->jets_AK5PF_fSubDetector2();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fSubDetector3() const{
+  return cfa_->jets_AK5PF_fSubDetector3();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_fSubDetector4() const{
+  return cfa_->jets_AK5PF_fSubDetector4();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_Energy() const{
+  return cfa_->jets_AK5PF_gen_Energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_Id() const{
+  return cfa_->jets_AK5PF_gen_Id();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_et() const{
+  return cfa_->jets_AK5PF_gen_et();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_eta() const{
+  return cfa_->jets_AK5PF_gen_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_mass() const{
+  return cfa_->jets_AK5PF_gen_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_motherID() const{
+  return cfa_->jets_AK5PF_gen_motherID();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_phi() const{
+  return cfa_->jets_AK5PF_gen_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_pt() const{
+  return cfa_->jets_AK5PF_gen_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_gen_threeCharge() const{
+  return cfa_->jets_AK5PF_gen_threeCharge();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_hitsInN90() const{
+  return cfa_->jets_AK5PF_hitsInN90();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_jetCharge() const{
+  return cfa_->jets_AK5PF_jetCharge();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_mass() const{
+  return cfa_->jets_AK5PF_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_mu_Mult() const{
+  return cfa_->jets_AK5PF_mu_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_n60() const{
+  return cfa_->jets_AK5PF_n60();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_n90() const{
+  return cfa_->jets_AK5PF_n90();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_n90Hits() const{
+  return cfa_->jets_AK5PF_n90Hits();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_nECALTowers() const{
+  return cfa_->jets_AK5PF_nECALTowers();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_nHCALTowers() const{
+  return cfa_->jets_AK5PF_nHCALTowers();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_neutralEmE() const{
+  return cfa_->jets_AK5PF_neutralEmE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_neutralHadE() const{
+  return cfa_->jets_AK5PF_neutralHadE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_neutral_Mult() const{
+  return cfa_->jets_AK5PF_neutral_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_partonFlavour() const{
+  return cfa_->jets_AK5PF_partonFlavour();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_Energy() const{
+  return cfa_->jets_AK5PF_parton_Energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_Id() const{
+  return cfa_->jets_AK5PF_parton_Id();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_eta() const{
+  return cfa_->jets_AK5PF_parton_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_mass() const{
+  return cfa_->jets_AK5PF_parton_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_motherId() const{
+  return cfa_->jets_AK5PF_parton_motherId();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_phi() const{
+  return cfa_->jets_AK5PF_parton_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_parton_pt() const{
+  return cfa_->jets_AK5PF_parton_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_phi() const{
+  return cfa_->jets_AK5PF_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_phiphiMoment() const{
+  return cfa_->jets_AK5PF_phiphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_photonEnergy() const{
+  return cfa_->jets_AK5PF_photonEnergy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_pt() const{
+  return cfa_->jets_AK5PF_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_px() const{
+  return cfa_->jets_AK5PF_px();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_py() const{
+  return cfa_->jets_AK5PF_py();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_pz() const{
+  return cfa_->jets_AK5PF_pz();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_rawPt() const{
+  return cfa_->jets_AK5PF_rawPt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_status() const{
+  return cfa_->jets_AK5PF_status();
+}
+
+std::vector<float>* const & cfa::jets_AK5PF_theta() const{
+  return cfa_->jets_AK5PF_theta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_Uncert() const{
+  return cfa_->jets_AK5PFclean_Uncert();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_area() const{
+  return cfa_->jets_AK5PFclean_area();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_TC_highEff() const{
+  return cfa_->jets_AK5PFclean_btag_TC_highEff();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_TC_highPur() const{
+  return cfa_->jets_AK5PFclean_btag_TC_highPur();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_jetBProb() const{
+  return cfa_->jets_AK5PFclean_btag_jetBProb();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_jetProb() const{
+  return cfa_->jets_AK5PFclean_btag_jetProb();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_secVertexCombined() const{
+  return cfa_->jets_AK5PFclean_btag_secVertexCombined();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_secVertexHighEff() const{
+  return cfa_->jets_AK5PFclean_btag_secVertexHighEff();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_secVertexHighPur() const{
+  return cfa_->jets_AK5PFclean_btag_secVertexHighPur();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_softEle() const{
+  return cfa_->jets_AK5PFclean_btag_softEle();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_btag_softMuon() const{
+  return cfa_->jets_AK5PFclean_btag_softMuon();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_chgEmE() const{
+  return cfa_->jets_AK5PFclean_chgEmE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_chgHadE() const{
+  return cfa_->jets_AK5PFclean_chgHadE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_chgMuE() const{
+  return cfa_->jets_AK5PFclean_chgMuE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_chg_Mult() const{
+  return cfa_->jets_AK5PFclean_chg_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrFactorRaw() const{
+  return cfa_->jets_AK5PFclean_corrFactorRaw();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL1FastL2L3() const{
+  return cfa_->jets_AK5PFclean_corrL1FastL2L3();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL1FastL2L3Residual() const{
+  return cfa_->jets_AK5PFclean_corrL1FastL2L3Residual();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL1L2L3() const{
+  return cfa_->jets_AK5PFclean_corrL1L2L3();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL1L2L3Residual() const{
+  return cfa_->jets_AK5PFclean_corrL1L2L3Residual();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL2L3() const{
+  return cfa_->jets_AK5PFclean_corrL2L3();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_corrL2L3Residual() const{
+  return cfa_->jets_AK5PFclean_corrL2L3Residual();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_ehf() const{
+  return cfa_->jets_AK5PFclean_ehf();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_emf() const{
+  return cfa_->jets_AK5PFclean_emf();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_energy() const{
+  return cfa_->jets_AK5PFclean_energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_et() const{
+  return cfa_->jets_AK5PFclean_et();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_eta() const{
+  return cfa_->jets_AK5PFclean_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_etaetaMoment() const{
+  return cfa_->jets_AK5PFclean_etaetaMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_etaphiMoment() const{
+  return cfa_->jets_AK5PFclean_etaphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fHPD() const{
+  return cfa_->jets_AK5PFclean_fHPD();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fRBX() const{
+  return cfa_->jets_AK5PFclean_fRBX();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fSubDetector1() const{
+  return cfa_->jets_AK5PFclean_fSubDetector1();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fSubDetector2() const{
+  return cfa_->jets_AK5PFclean_fSubDetector2();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fSubDetector3() const{
+  return cfa_->jets_AK5PFclean_fSubDetector3();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_fSubDetector4() const{
+  return cfa_->jets_AK5PFclean_fSubDetector4();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_Energy() const{
+  return cfa_->jets_AK5PFclean_gen_Energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_Id() const{
+  return cfa_->jets_AK5PFclean_gen_Id();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_et() const{
+  return cfa_->jets_AK5PFclean_gen_et();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_eta() const{
+  return cfa_->jets_AK5PFclean_gen_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_mass() const{
+  return cfa_->jets_AK5PFclean_gen_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_phi() const{
+  return cfa_->jets_AK5PFclean_gen_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_gen_pt() const{
+  return cfa_->jets_AK5PFclean_gen_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_hitsInN90() const{
+  return cfa_->jets_AK5PFclean_hitsInN90();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_jetCharge() const{
+  return cfa_->jets_AK5PFclean_jetCharge();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_mass() const{
+  return cfa_->jets_AK5PFclean_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_mu_Mult() const{
+  return cfa_->jets_AK5PFclean_mu_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_n60() const{
+  return cfa_->jets_AK5PFclean_n60();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_n90() const{
+  return cfa_->jets_AK5PFclean_n90();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_n90Hits() const{
+  return cfa_->jets_AK5PFclean_n90Hits();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_nECALTowers() const{
+  return cfa_->jets_AK5PFclean_nECALTowers();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_nHCALTowers() const{
+  return cfa_->jets_AK5PFclean_nHCALTowers();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_neutralEmE() const{
+  return cfa_->jets_AK5PFclean_neutralEmE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_neutralHadE() const{
+  return cfa_->jets_AK5PFclean_neutralHadE();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_neutral_Mult() const{
+  return cfa_->jets_AK5PFclean_neutral_Mult();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_partonFlavour() const{
+  return cfa_->jets_AK5PFclean_partonFlavour();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_Energy() const{
+  return cfa_->jets_AK5PFclean_parton_Energy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_Id() const{
+  return cfa_->jets_AK5PFclean_parton_Id();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_eta() const{
+  return cfa_->jets_AK5PFclean_parton_eta();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_mass() const{
+  return cfa_->jets_AK5PFclean_parton_mass();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_motherId() const{
+  return cfa_->jets_AK5PFclean_parton_motherId();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_phi() const{
+  return cfa_->jets_AK5PFclean_parton_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_parton_pt() const{
+  return cfa_->jets_AK5PFclean_parton_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_phi() const{
+  return cfa_->jets_AK5PFclean_phi();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_phiphiMoment() const{
+  return cfa_->jets_AK5PFclean_phiphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_photonEnergy() const{
+  return cfa_->jets_AK5PFclean_photonEnergy();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_pt() const{
+  return cfa_->jets_AK5PFclean_pt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_px() const{
+  return cfa_->jets_AK5PFclean_px();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_py() const{
+  return cfa_->jets_AK5PFclean_py();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_pz() const{
+  return cfa_->jets_AK5PFclean_pz();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_rawPt() const{
+  return cfa_->jets_AK5PFclean_rawPt();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_status() const{
+  return cfa_->jets_AK5PFclean_status();
+}
+
+std::vector<float>* const & cfa::jets_AK5PFclean_theta() const{
+  return cfa_->jets_AK5PFclean_theta();
 }
 
 UInt_t const & cfa::lumiblock() const{
@@ -1860,6 +2580,26 @@ std::vector<float>* const & cfa::mc_nutaus_vertex_z() const{
   return cfa_->mc_nutaus_vertex_z();
 }
 
+std::vector<float>* const & cfa::mc_pdf_id1() const{
+  return cfa_->mc_pdf_id1();
+}
+
+std::vector<float>* const & cfa::mc_pdf_id2() const{
+  return cfa_->mc_pdf_id2();
+}
+
+std::vector<float>* const & cfa::mc_pdf_q() const{
+  return cfa_->mc_pdf_q();
+}
+
+std::vector<float>* const & cfa::mc_pdf_x1() const{
+  return cfa_->mc_pdf_x1();
+}
+
+std::vector<float>* const & cfa::mc_pdf_x2() const{
+  return cfa_->mc_pdf_x2();
+}
+
 std::vector<float>* const & cfa::mc_photons_charge() const{
   return cfa_->mc_photons_charge();
 }
@@ -2018,6 +2758,66 @@ std::vector<float>* const & cfa::mc_taus_vertex_y() const{
 
 std::vector<float>* const & cfa::mc_taus_vertex_z() const{
   return cfa_->mc_taus_vertex_z();
+}
+
+std::vector<float>* const & cfa::metsHO_et() const{
+  return cfa_->metsHO_et();
+}
+
+std::vector<float>* const & cfa::metsHO_ex() const{
+  return cfa_->metsHO_ex();
+}
+
+std::vector<float>* const & cfa::metsHO_ey() const{
+  return cfa_->metsHO_ey();
+}
+
+std::vector<float>* const & cfa::metsHO_phi() const{
+  return cfa_->metsHO_phi();
+}
+
+std::vector<float>* const & cfa::metsHO_sumEt() const{
+  return cfa_->metsHO_sumEt();
+}
+
+std::vector<float>* const & cfa::mets_AK5_et() const{
+  return cfa_->mets_AK5_et();
+}
+
+std::vector<float>* const & cfa::mets_AK5_ex() const{
+  return cfa_->mets_AK5_ex();
+}
+
+std::vector<float>* const & cfa::mets_AK5_ey() const{
+  return cfa_->mets_AK5_ey();
+}
+
+std::vector<float>* const & cfa::mets_AK5_gen_et() const{
+  return cfa_->mets_AK5_gen_et();
+}
+
+std::vector<float>* const & cfa::mets_AK5_gen_phi() const{
+  return cfa_->mets_AK5_gen_phi();
+}
+
+std::vector<float>* const & cfa::mets_AK5_phi() const{
+  return cfa_->mets_AK5_phi();
+}
+
+std::vector<float>* const & cfa::mets_AK5_sign() const{
+  return cfa_->mets_AK5_sign();
+}
+
+std::vector<float>* const & cfa::mets_AK5_sumEt() const{
+  return cfa_->mets_AK5_sumEt();
+}
+
+std::vector<float>* const & cfa::mets_AK5_unCPhi() const{
+  return cfa_->mets_AK5_unCPhi();
+}
+
+std::vector<float>* const & cfa::mets_AK5_unCPt() const{
+  return cfa_->mets_AK5_unCPt();
 }
 
 std::vector<float>* const & cfa::mets_et() const{
@@ -3020,6 +3820,1778 @@ UInt_t const & cfa::orbitNumber() const{
   return cfa_->orbitNumber();
 }
 
+Int_t const & cfa::passprescaleHT250filter_decision() const{
+  return cfa_->passprescaleHT250filter_decision();
+}
+
+Int_t const & cfa::passprescaleHT300filter_decision() const{
+  return cfa_->passprescaleHT300filter_decision();
+}
+
+Int_t const & cfa::passprescaleHT350filter_decision() const{
+  return cfa_->passprescaleHT350filter_decision();
+}
+
+Int_t const & cfa::passprescaleHT400filter_decision() const{
+  return cfa_->passprescaleHT400filter_decision();
+}
+
+Int_t const & cfa::passprescaleHT450filter_decision() const{
+  return cfa_->passprescaleHT450filter_decision();
+}
+
+Int_t const & cfa::passprescaleJet30MET80filter_decision() const{
+  return cfa_->passprescaleJet30MET80filter_decision();
+}
+
+Int_t const & cfa::passprescalePFHT350filter_decision() const{
+  return cfa_->passprescalePFHT350filter_decision();
+}
+
+std::vector<float>* const & cfa::pdfweights_cteq() const{
+  return cfa_->pdfweights_cteq();
+}
+
+std::vector<float>* const & cfa::pdfweights_mstw() const{
+  return cfa_->pdfweights_mstw();
+}
+
+std::vector<float>* const & cfa::pdfweights_nnpdf() const{
+  return cfa_->pdfweights_nnpdf();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_et() const{
+  return cfa_->pfTypeINoXYCorrmets_et();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_ex() const{
+  return cfa_->pfTypeINoXYCorrmets_ex();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_ey() const{
+  return cfa_->pfTypeINoXYCorrmets_ey();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_gen_et() const{
+  return cfa_->pfTypeINoXYCorrmets_gen_et();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_gen_phi() const{
+  return cfa_->pfTypeINoXYCorrmets_gen_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_phi() const{
+  return cfa_->pfTypeINoXYCorrmets_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_sign() const{
+  return cfa_->pfTypeINoXYCorrmets_sign();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_sumEt() const{
+  return cfa_->pfTypeINoXYCorrmets_sumEt();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_unCPhi() const{
+  return cfa_->pfTypeINoXYCorrmets_unCPhi();
+}
+
+std::vector<float>* const & cfa::pfTypeINoXYCorrmets_unCPt() const{
+  return cfa_->pfTypeINoXYCorrmets_unCPt();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_et() const{
+  return cfa_->pfTypeIType0mets_et();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_ex() const{
+  return cfa_->pfTypeIType0mets_ex();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_ey() const{
+  return cfa_->pfTypeIType0mets_ey();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_gen_et() const{
+  return cfa_->pfTypeIType0mets_gen_et();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_gen_phi() const{
+  return cfa_->pfTypeIType0mets_gen_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_phi() const{
+  return cfa_->pfTypeIType0mets_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_sign() const{
+  return cfa_->pfTypeIType0mets_sign();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_sumEt() const{
+  return cfa_->pfTypeIType0mets_sumEt();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_unCPhi() const{
+  return cfa_->pfTypeIType0mets_unCPhi();
+}
+
+std::vector<float>* const & cfa::pfTypeIType0mets_unCPt() const{
+  return cfa_->pfTypeIType0mets_unCPt();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_et() const{
+  return cfa_->pfTypeImets_et();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_ex() const{
+  return cfa_->pfTypeImets_ex();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_ey() const{
+  return cfa_->pfTypeImets_ey();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_gen_et() const{
+  return cfa_->pfTypeImets_gen_et();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_gen_phi() const{
+  return cfa_->pfTypeImets_gen_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_phi() const{
+  return cfa_->pfTypeImets_phi();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_sign() const{
+  return cfa_->pfTypeImets_sign();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_sumEt() const{
+  return cfa_->pfTypeImets_sumEt();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_unCPhi() const{
+  return cfa_->pfTypeImets_unCPhi();
+}
+
+std::vector<float>* const & cfa::pfTypeImets_unCPt() const{
+  return cfa_->pfTypeImets_unCPt();
+}
+
+std::vector<float>* const & cfa::pf_els_PATpassConversionVeto() const{
+  return cfa_->pf_els_PATpassConversionVeto();
+}
+
+std::vector<float>* const & cfa::pf_els_PFchargedHadronIsoR03() const{
+  return cfa_->pf_els_PFchargedHadronIsoR03();
+}
+
+std::vector<float>* const & cfa::pf_els_PFneutralHadronIsoR03() const{
+  return cfa_->pf_els_PFneutralHadronIsoR03();
+}
+
+std::vector<float>* const & cfa::pf_els_PFphotonIsoR03() const{
+  return cfa_->pf_els_PFphotonIsoR03();
+}
+
+std::vector<float>* const & cfa::pf_els_basicClustersSize() const{
+  return cfa_->pf_els_basicClustersSize();
+}
+
+std::vector<float>* const & cfa::pf_els_cIso() const{
+  return cfa_->pf_els_cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_caloEnergy() const{
+  return cfa_->pf_els_caloEnergy();
+}
+
+std::vector<float>* const & cfa::pf_els_charge() const{
+  return cfa_->pf_els_charge();
+}
+
+std::vector<float>* const & cfa::pf_els_chargedHadronIso() const{
+  return cfa_->pf_els_chargedHadronIso();
+}
+
+std::vector<float>* const & cfa::pf_els_chi2() const{
+  return cfa_->pf_els_chi2();
+}
+
+std::vector<float>* const & cfa::pf_els_core_ecalDrivenSeed() const{
+  return cfa_->pf_els_core_ecalDrivenSeed();
+}
+
+std::vector<float>* const & cfa::pf_els_cpx() const{
+  return cfa_->pf_els_cpx();
+}
+
+std::vector<float>* const & cfa::pf_els_cpy() const{
+  return cfa_->pf_els_cpy();
+}
+
+std::vector<float>* const & cfa::pf_els_cpz() const{
+  return cfa_->pf_els_cpz();
+}
+
+std::vector<float>* const & cfa::pf_els_ctf_tk_charge() const{
+  return cfa_->pf_els_ctf_tk_charge();
+}
+
+std::vector<float>* const & cfa::pf_els_ctf_tk_eta() const{
+  return cfa_->pf_els_ctf_tk_eta();
+}
+
+std::vector<float>* const & cfa::pf_els_ctf_tk_id() const{
+  return cfa_->pf_els_ctf_tk_id();
+}
+
+std::vector<float>* const & cfa::pf_els_ctf_tk_phi() const{
+  return cfa_->pf_els_ctf_tk_phi();
+}
+
+std::vector<float>* const & cfa::pf_els_cx() const{
+  return cfa_->pf_els_cx();
+}
+
+std::vector<float>* const & cfa::pf_els_cy() const{
+  return cfa_->pf_els_cy();
+}
+
+std::vector<float>* const & cfa::pf_els_cz() const{
+  return cfa_->pf_els_cz();
+}
+
+std::vector<float>* const & cfa::pf_els_d0dum() const{
+  return cfa_->pf_els_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_els_d0dumError() const{
+  return cfa_->pf_els_d0dumError();
+}
+
+std::vector<float>* const & cfa::pf_els_dEtaIn() const{
+  return cfa_->pf_els_dEtaIn();
+}
+
+std::vector<float>* const & cfa::pf_els_dEtaOut() const{
+  return cfa_->pf_els_dEtaOut();
+}
+
+std::vector<float>* const & cfa::pf_els_dPhiIn() const{
+  return cfa_->pf_els_dPhiIn();
+}
+
+std::vector<float>* const & cfa::pf_els_dPhiOut() const{
+  return cfa_->pf_els_dPhiOut();
+}
+
+std::vector<float>* const & cfa::pf_els_dr03EcalRecHitSumEt() const{
+  return cfa_->pf_els_dr03EcalRecHitSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr03HcalDepth1TowerSumEt() const{
+  return cfa_->pf_els_dr03HcalDepth1TowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr03HcalDepth2TowerSumEt() const{
+  return cfa_->pf_els_dr03HcalDepth2TowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr03HcalTowerSumEt() const{
+  return cfa_->pf_els_dr03HcalTowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr03TkSumPt() const{
+  return cfa_->pf_els_dr03TkSumPt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr04EcalRecHitSumEt() const{
+  return cfa_->pf_els_dr04EcalRecHitSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr04HcalDepth1TowerSumEt() const{
+  return cfa_->pf_els_dr04HcalDepth1TowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr04HcalDepth2TowerSumEt() const{
+  return cfa_->pf_els_dr04HcalDepth2TowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr04HcalTowerSumEt() const{
+  return cfa_->pf_els_dr04HcalTowerSumEt();
+}
+
+std::vector<float>* const & cfa::pf_els_dr04TkSumPt() const{
+  return cfa_->pf_els_dr04TkSumPt();
+}
+
+std::vector<float>* const & cfa::pf_els_dz() const{
+  return cfa_->pf_els_dz();
+}
+
+std::vector<float>* const & cfa::pf_els_dzError() const{
+  return cfa_->pf_els_dzError();
+}
+
+std::vector<float>* const & cfa::pf_els_eOverPIn() const{
+  return cfa_->pf_els_eOverPIn();
+}
+
+std::vector<float>* const & cfa::pf_els_eSeedOverPOut() const{
+  return cfa_->pf_els_eSeedOverPOut();
+}
+
+std::vector<float>* const & cfa::pf_els_ecalIso() const{
+  return cfa_->pf_els_ecalIso();
+}
+
+std::vector<float>* const & cfa::pf_els_energy() const{
+  return cfa_->pf_els_energy();
+}
+
+std::vector<float>* const & cfa::pf_els_et() const{
+  return cfa_->pf_els_et();
+}
+
+std::vector<float>* const & cfa::pf_els_eta() const{
+  return cfa_->pf_els_eta();
+}
+
+std::vector<float>* const & cfa::pf_els_etaError() const{
+  return cfa_->pf_els_etaError();
+}
+
+std::vector<float>* const & cfa::pf_els_fbrem() const{
+  return cfa_->pf_els_fbrem();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_et() const{
+  return cfa_->pf_els_gen_et();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_eta() const{
+  return cfa_->pf_els_gen_eta();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_id() const{
+  return cfa_->pf_els_gen_id();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_et() const{
+  return cfa_->pf_els_gen_mother_et();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_eta() const{
+  return cfa_->pf_els_gen_mother_eta();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_id() const{
+  return cfa_->pf_els_gen_mother_id();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_phi() const{
+  return cfa_->pf_els_gen_mother_phi();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_pt() const{
+  return cfa_->pf_els_gen_mother_pt();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_px() const{
+  return cfa_->pf_els_gen_mother_px();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_py() const{
+  return cfa_->pf_els_gen_mother_py();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_pz() const{
+  return cfa_->pf_els_gen_mother_pz();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_mother_theta() const{
+  return cfa_->pf_els_gen_mother_theta();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_phi() const{
+  return cfa_->pf_els_gen_phi();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_pt() const{
+  return cfa_->pf_els_gen_pt();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_px() const{
+  return cfa_->pf_els_gen_px();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_py() const{
+  return cfa_->pf_els_gen_py();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_pz() const{
+  return cfa_->pf_els_gen_pz();
+}
+
+std::vector<float>* const & cfa::pf_els_gen_theta() const{
+  return cfa_->pf_els_gen_theta();
+}
+
+std::vector<float>* const & cfa::pf_els_hadOverEm() const{
+  return cfa_->pf_els_hadOverEm();
+}
+
+std::vector<bool>* const & cfa::pf_els_hasMatchedConversion() const{
+  return cfa_->pf_els_hasMatchedConversion();
+}
+
+std::vector<float>* const & cfa::pf_els_hcalIso() const{
+  return cfa_->pf_els_hcalIso();
+}
+
+std::vector<float>* const & cfa::pf_els_hcalOverEcalBc() const{
+  return cfa_->pf_els_hcalOverEcalBc();
+}
+
+std::vector<float>* const & cfa::pf_els_isEB() const{
+  return cfa_->pf_els_isEB();
+}
+
+std::vector<float>* const & cfa::pf_els_isEE() const{
+  return cfa_->pf_els_isEE();
+}
+
+std::vector<float>* const & cfa::pf_els_looseId() const{
+  return cfa_->pf_els_looseId();
+}
+
+std::vector<float>* const & cfa::pf_els_n_inner_layer() const{
+  return cfa_->pf_els_n_inner_layer();
+}
+
+std::vector<float>* const & cfa::pf_els_n_outer_layer() const{
+  return cfa_->pf_els_n_outer_layer();
+}
+
+std::vector<float>* const & cfa::pf_els_ndof() const{
+  return cfa_->pf_els_ndof();
+}
+
+std::vector<float>* const & cfa::pf_els_neutralHadronIso() const{
+  return cfa_->pf_els_neutralHadronIso();
+}
+
+std::vector<float>* const & cfa::pf_els_numlosthits() const{
+  return cfa_->pf_els_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_els_numvalhits() const{
+  return cfa_->pf_els_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_els_phi() const{
+  return cfa_->pf_els_phi();
+}
+
+std::vector<float>* const & cfa::pf_els_phiError() const{
+  return cfa_->pf_els_phiError();
+}
+
+std::vector<float>* const & cfa::pf_els_photonIso() const{
+  return cfa_->pf_els_photonIso();
+}
+
+std::vector<float>* const & cfa::pf_els_pt() const{
+  return cfa_->pf_els_pt();
+}
+
+std::vector<float>* const & cfa::pf_els_ptError() const{
+  return cfa_->pf_els_ptError();
+}
+
+std::vector<float>* const & cfa::pf_els_px() const{
+  return cfa_->pf_els_px();
+}
+
+std::vector<float>* const & cfa::pf_els_py() const{
+  return cfa_->pf_els_py();
+}
+
+std::vector<float>* const & cfa::pf_els_pz() const{
+  return cfa_->pf_els_pz();
+}
+
+std::vector<float>* const & cfa::pf_els_robustHighEnergyId() const{
+  return cfa_->pf_els_robustHighEnergyId();
+}
+
+std::vector<float>* const & cfa::pf_els_robustLooseId() const{
+  return cfa_->pf_els_robustLooseId();
+}
+
+std::vector<float>* const & cfa::pf_els_robustTightId() const{
+  return cfa_->pf_els_robustTightId();
+}
+
+std::vector<float>* const & cfa::pf_els_scE1x5() const{
+  return cfa_->pf_els_scE1x5();
+}
+
+std::vector<float>* const & cfa::pf_els_scE2x5Max() const{
+  return cfa_->pf_els_scE2x5Max();
+}
+
+std::vector<float>* const & cfa::pf_els_scE5x5() const{
+  return cfa_->pf_els_scE5x5();
+}
+
+std::vector<float>* const & cfa::pf_els_scEnergy() const{
+  return cfa_->pf_els_scEnergy();
+}
+
+std::vector<float>* const & cfa::pf_els_scEta() const{
+  return cfa_->pf_els_scEta();
+}
+
+std::vector<float>* const & cfa::pf_els_scEtaWidth() const{
+  return cfa_->pf_els_scEtaWidth();
+}
+
+std::vector<float>* const & cfa::pf_els_scPhi() const{
+  return cfa_->pf_els_scPhi();
+}
+
+std::vector<float>* const & cfa::pf_els_scPhiWidth() const{
+  return cfa_->pf_els_scPhiWidth();
+}
+
+std::vector<float>* const & cfa::pf_els_scRawEnergy() const{
+  return cfa_->pf_els_scRawEnergy();
+}
+
+std::vector<float>* const & cfa::pf_els_scSeedEnergy() const{
+  return cfa_->pf_els_scSeedEnergy();
+}
+
+std::vector<float>* const & cfa::pf_els_shFracInnerHits() const{
+  return cfa_->pf_els_shFracInnerHits();
+}
+
+std::vector<float>* const & cfa::pf_els_sigmaEtaEta() const{
+  return cfa_->pf_els_sigmaEtaEta();
+}
+
+std::vector<float>* const & cfa::pf_els_sigmaIEtaIEta() const{
+  return cfa_->pf_els_sigmaIEtaIEta();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId60cIso() const{
+  return cfa_->pf_els_simpleEleId60cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId60relIso() const{
+  return cfa_->pf_els_simpleEleId60relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId70cIso() const{
+  return cfa_->pf_els_simpleEleId70cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId70relIso() const{
+  return cfa_->pf_els_simpleEleId70relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId80cIso() const{
+  return cfa_->pf_els_simpleEleId80cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId80relIso() const{
+  return cfa_->pf_els_simpleEleId80relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId85cIso() const{
+  return cfa_->pf_els_simpleEleId85cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId85relIso() const{
+  return cfa_->pf_els_simpleEleId85relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId90cIso() const{
+  return cfa_->pf_els_simpleEleId90cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId90relIso() const{
+  return cfa_->pf_els_simpleEleId90relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId95cIso() const{
+  return cfa_->pf_els_simpleEleId95cIso();
+}
+
+std::vector<float>* const & cfa::pf_els_simpleEleId95relIso() const{
+  return cfa_->pf_els_simpleEleId95relIso();
+}
+
+std::vector<float>* const & cfa::pf_els_status() const{
+  return cfa_->pf_els_status();
+}
+
+std::vector<float>* const & cfa::pf_els_tIso() const{
+  return cfa_->pf_els_tIso();
+}
+
+std::vector<float>* const & cfa::pf_els_theta() const{
+  return cfa_->pf_els_theta();
+}
+
+std::vector<float>* const & cfa::pf_els_tightId() const{
+  return cfa_->pf_els_tightId();
+}
+
+std::vector<float>* const & cfa::pf_els_tk_charge() const{
+  return cfa_->pf_els_tk_charge();
+}
+
+std::vector<float>* const & cfa::pf_els_tk_eta() const{
+  return cfa_->pf_els_tk_eta();
+}
+
+std::vector<float>* const & cfa::pf_els_tk_phi() const{
+  return cfa_->pf_els_tk_phi();
+}
+
+std::vector<float>* const & cfa::pf_els_tk_pt() const{
+  return cfa_->pf_els_tk_pt();
+}
+
+std::vector<float>* const & cfa::pf_els_tk_pz() const{
+  return cfa_->pf_els_tk_pz();
+}
+
+std::vector<float>* const & cfa::pf_els_vpx() const{
+  return cfa_->pf_els_vpx();
+}
+
+std::vector<float>* const & cfa::pf_els_vpy() const{
+  return cfa_->pf_els_vpy();
+}
+
+std::vector<float>* const & cfa::pf_els_vpz() const{
+  return cfa_->pf_els_vpz();
+}
+
+std::vector<float>* const & cfa::pf_els_vx() const{
+  return cfa_->pf_els_vx();
+}
+
+std::vector<float>* const & cfa::pf_els_vy() const{
+  return cfa_->pf_els_vy();
+}
+
+std::vector<float>* const & cfa::pf_els_vz() const{
+  return cfa_->pf_els_vz();
+}
+
+std::vector<float>* const & cfa::pf_mus_cIso() const{
+  return cfa_->pf_mus_cIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyEm() const{
+  return cfa_->pf_mus_calEnergyEm();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyEmS9() const{
+  return cfa_->pf_mus_calEnergyEmS9();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyHad() const{
+  return cfa_->pf_mus_calEnergyHad();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyHadS9() const{
+  return cfa_->pf_mus_calEnergyHadS9();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyHo() const{
+  return cfa_->pf_mus_calEnergyHo();
+}
+
+std::vector<float>* const & cfa::pf_mus_calEnergyHoS9() const{
+  return cfa_->pf_mus_calEnergyHoS9();
+}
+
+std::vector<float>* const & cfa::pf_mus_charge() const{
+  return cfa_->pf_mus_charge();
+}
+
+std::vector<float>* const & cfa::pf_mus_chargedHadronIso() const{
+  return cfa_->pf_mus_chargedHadronIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_ExpectedHitsInner() const{
+  return cfa_->pf_mus_cm_ExpectedHitsInner();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_ExpectedHitsOuter() const{
+  return cfa_->pf_mus_cm_ExpectedHitsOuter();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_LayersWithMeasurement() const{
+  return cfa_->pf_mus_cm_LayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_LayersWithoutMeasurement() const{
+  return cfa_->pf_mus_cm_LayersWithoutMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_PixelLayersWithMeasurement() const{
+  return cfa_->pf_mus_cm_PixelLayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_ValidStripLayersWithMonoAndStereoHit() const{
+  return cfa_->pf_mus_cm_ValidStripLayersWithMonoAndStereoHit();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_chg() const{
+  return cfa_->pf_mus_cm_chg();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_chi2() const{
+  return cfa_->pf_mus_cm_chi2();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_d0dum() const{
+  return cfa_->pf_mus_cm_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_d0dumErr() const{
+  return cfa_->pf_mus_cm_d0dumErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_dz() const{
+  return cfa_->pf_mus_cm_dz();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_dzErr() const{
+  return cfa_->pf_mus_cm_dzErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_eta() const{
+  return cfa_->pf_mus_cm_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_etaErr() const{
+  return cfa_->pf_mus_cm_etaErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_ndof() const{
+  return cfa_->pf_mus_cm_ndof();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_numlosthits() const{
+  return cfa_->pf_mus_cm_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_numvalMuonhits() const{
+  return cfa_->pf_mus_cm_numvalMuonhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_numvalhits() const{
+  return cfa_->pf_mus_cm_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_phi() const{
+  return cfa_->pf_mus_cm_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_phiErr() const{
+  return cfa_->pf_mus_cm_phiErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_pt() const{
+  return cfa_->pf_mus_cm_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_ptErr() const{
+  return cfa_->pf_mus_cm_ptErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_px() const{
+  return cfa_->pf_mus_cm_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_py() const{
+  return cfa_->pf_mus_cm_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_pz() const{
+  return cfa_->pf_mus_cm_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_theta() const{
+  return cfa_->pf_mus_cm_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_vx() const{
+  return cfa_->pf_mus_cm_vx();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_vy() const{
+  return cfa_->pf_mus_cm_vy();
+}
+
+std::vector<float>* const & cfa::pf_mus_cm_vz() const{
+  return cfa_->pf_mus_cm_vz();
+}
+
+std::vector<float>* const & cfa::pf_mus_dB() const{
+  return cfa_->pf_mus_dB();
+}
+
+std::vector<float>* const & cfa::pf_mus_ecalIso() const{
+  return cfa_->pf_mus_ecalIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_energy() const{
+  return cfa_->pf_mus_energy();
+}
+
+std::vector<float>* const & cfa::pf_mus_et() const{
+  return cfa_->pf_mus_et();
+}
+
+std::vector<float>* const & cfa::pf_mus_eta() const{
+  return cfa_->pf_mus_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_et() const{
+  return cfa_->pf_mus_gen_et();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_eta() const{
+  return cfa_->pf_mus_gen_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_id() const{
+  return cfa_->pf_mus_gen_id();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_et() const{
+  return cfa_->pf_mus_gen_mother_et();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_eta() const{
+  return cfa_->pf_mus_gen_mother_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_id() const{
+  return cfa_->pf_mus_gen_mother_id();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_phi() const{
+  return cfa_->pf_mus_gen_mother_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_pt() const{
+  return cfa_->pf_mus_gen_mother_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_px() const{
+  return cfa_->pf_mus_gen_mother_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_py() const{
+  return cfa_->pf_mus_gen_mother_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_pz() const{
+  return cfa_->pf_mus_gen_mother_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_mother_theta() const{
+  return cfa_->pf_mus_gen_mother_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_phi() const{
+  return cfa_->pf_mus_gen_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_pt() const{
+  return cfa_->pf_mus_gen_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_px() const{
+  return cfa_->pf_mus_gen_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_py() const{
+  return cfa_->pf_mus_gen_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_pz() const{
+  return cfa_->pf_mus_gen_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_gen_theta() const{
+  return cfa_->pf_mus_gen_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_hcalIso() const{
+  return cfa_->pf_mus_hcalIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_All() const{
+  return cfa_->pf_mus_id_All();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_AllArbitrated() const{
+  return cfa_->pf_mus_id_AllArbitrated();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_AllGlobalMuons() const{
+  return cfa_->pf_mus_id_AllGlobalMuons();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_AllStandAloneMuons() const{
+  return cfa_->pf_mus_id_AllStandAloneMuons();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_AllTrackerMuons() const{
+  return cfa_->pf_mus_id_AllTrackerMuons();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_GlobalMuonPromptTight() const{
+  return cfa_->pf_mus_id_GlobalMuonPromptTight();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TM2DCompatibilityLoose() const{
+  return cfa_->pf_mus_id_TM2DCompatibilityLoose();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TM2DCompatibilityTight() const{
+  return cfa_->pf_mus_id_TM2DCompatibilityTight();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMLastStationLoose() const{
+  return cfa_->pf_mus_id_TMLastStationLoose();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMLastStationOptimizedLowPtLoose() const{
+  return cfa_->pf_mus_id_TMLastStationOptimizedLowPtLoose();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMLastStationOptimizedLowPtTight() const{
+  return cfa_->pf_mus_id_TMLastStationOptimizedLowPtTight();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMLastStationTight() const{
+  return cfa_->pf_mus_id_TMLastStationTight();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMOneStationLoose() const{
+  return cfa_->pf_mus_id_TMOneStationLoose();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TMOneStationTight() const{
+  return cfa_->pf_mus_id_TMOneStationTight();
+}
+
+std::vector<float>* const & cfa::pf_mus_id_TrackerMuonArbitrated() const{
+  return cfa_->pf_mus_id_TrackerMuonArbitrated();
+}
+
+std::vector<float>* const & cfa::pf_mus_isCaloMuon() const{
+  return cfa_->pf_mus_isCaloMuon();
+}
+
+std::vector<float>* const & cfa::pf_mus_isConvertedPhoton() const{
+  return cfa_->pf_mus_isConvertedPhoton();
+}
+
+std::vector<float>* const & cfa::pf_mus_isElectron() const{
+  return cfa_->pf_mus_isElectron();
+}
+
+std::vector<float>* const & cfa::pf_mus_isGlobalMuon() const{
+  return cfa_->pf_mus_isGlobalMuon();
+}
+
+std::vector<float>* const & cfa::pf_mus_isPFMuon() const{
+  return cfa_->pf_mus_isPFMuon();
+}
+
+std::vector<float>* const & cfa::pf_mus_isPhoton() const{
+  return cfa_->pf_mus_isPhoton();
+}
+
+std::vector<float>* const & cfa::pf_mus_isStandAloneMuon() const{
+  return cfa_->pf_mus_isStandAloneMuon();
+}
+
+std::vector<float>* const & cfa::pf_mus_isTrackerMuon() const{
+  return cfa_->pf_mus_isTrackerMuon();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_emEt() const{
+  return cfa_->pf_mus_iso03_emEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_emVetoEt() const{
+  return cfa_->pf_mus_iso03_emVetoEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_hadEt() const{
+  return cfa_->pf_mus_iso03_hadEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_hadVetoEt() const{
+  return cfa_->pf_mus_iso03_hadVetoEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_hoEt() const{
+  return cfa_->pf_mus_iso03_hoEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_nTracks() const{
+  return cfa_->pf_mus_iso03_nTracks();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso03_sumPt() const{
+  return cfa_->pf_mus_iso03_sumPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso05_emEt() const{
+  return cfa_->pf_mus_iso05_emEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso05_hadEt() const{
+  return cfa_->pf_mus_iso05_hadEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso05_hoEt() const{
+  return cfa_->pf_mus_iso05_hoEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso05_nTracks() const{
+  return cfa_->pf_mus_iso05_nTracks();
+}
+
+std::vector<float>* const & cfa::pf_mus_iso05_sumPt() const{
+  return cfa_->pf_mus_iso05_sumPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_neutralHadronIso() const{
+  return cfa_->pf_mus_neutralHadronIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_num_matches() const{
+  return cfa_->pf_mus_num_matches();
+}
+
+std::vector<float>* const & cfa::pf_mus_numberOfMatchedStations() const{
+  return cfa_->pf_mus_numberOfMatchedStations();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumChargedHadronPt() const{
+  return cfa_->pf_mus_pfIsolationR03_sumChargedHadronPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumChargedParticlePt() const{
+  return cfa_->pf_mus_pfIsolationR03_sumChargedParticlePt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumNeutralHadronEt() const{
+  return cfa_->pf_mus_pfIsolationR03_sumNeutralHadronEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold() const{
+  return cfa_->pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumPUPt() const{
+  return cfa_->pf_mus_pfIsolationR03_sumPUPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumPhotonEt() const{
+  return cfa_->pf_mus_pfIsolationR03_sumPhotonEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR03_sumPhotonEtHighThreshold() const{
+  return cfa_->pf_mus_pfIsolationR03_sumPhotonEtHighThreshold();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumChargedHadronPt() const{
+  return cfa_->pf_mus_pfIsolationR04_sumChargedHadronPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumChargedParticlePt() const{
+  return cfa_->pf_mus_pfIsolationR04_sumChargedParticlePt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumNeutralHadronEt() const{
+  return cfa_->pf_mus_pfIsolationR04_sumNeutralHadronEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold() const{
+  return cfa_->pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumPUPt() const{
+  return cfa_->pf_mus_pfIsolationR04_sumPUPt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumPhotonEt() const{
+  return cfa_->pf_mus_pfIsolationR04_sumPhotonEt();
+}
+
+std::vector<float>* const & cfa::pf_mus_pfIsolationR04_sumPhotonEtHighThreshold() const{
+  return cfa_->pf_mus_pfIsolationR04_sumPhotonEtHighThreshold();
+}
+
+std::vector<float>* const & cfa::pf_mus_phi() const{
+  return cfa_->pf_mus_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_photonIso() const{
+  return cfa_->pf_mus_photonIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_ExpectedHitsInner() const{
+  return cfa_->pf_mus_picky_ExpectedHitsInner();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_ExpectedHitsOuter() const{
+  return cfa_->pf_mus_picky_ExpectedHitsOuter();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_LayersWithMeasurement() const{
+  return cfa_->pf_mus_picky_LayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_LayersWithoutMeasurement() const{
+  return cfa_->pf_mus_picky_LayersWithoutMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_PixelLayersWithMeasurement() const{
+  return cfa_->pf_mus_picky_PixelLayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_ValidStripLayersWithMonoAndStereoHit() const{
+  return cfa_->pf_mus_picky_ValidStripLayersWithMonoAndStereoHit();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_chg() const{
+  return cfa_->pf_mus_picky_chg();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_chi2() const{
+  return cfa_->pf_mus_picky_chi2();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_d0dum() const{
+  return cfa_->pf_mus_picky_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_d0dumErr() const{
+  return cfa_->pf_mus_picky_d0dumErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_dz() const{
+  return cfa_->pf_mus_picky_dz();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_dzErr() const{
+  return cfa_->pf_mus_picky_dzErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_eta() const{
+  return cfa_->pf_mus_picky_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_etaErr() const{
+  return cfa_->pf_mus_picky_etaErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_id() const{
+  return cfa_->pf_mus_picky_id();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_ndof() const{
+  return cfa_->pf_mus_picky_ndof();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_numlosthits() const{
+  return cfa_->pf_mus_picky_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_numvalPixelhits() const{
+  return cfa_->pf_mus_picky_numvalPixelhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_numvalhits() const{
+  return cfa_->pf_mus_picky_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_phi() const{
+  return cfa_->pf_mus_picky_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_phiErr() const{
+  return cfa_->pf_mus_picky_phiErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_pt() const{
+  return cfa_->pf_mus_picky_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_ptErr() const{
+  return cfa_->pf_mus_picky_ptErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_px() const{
+  return cfa_->pf_mus_picky_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_py() const{
+  return cfa_->pf_mus_picky_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_pz() const{
+  return cfa_->pf_mus_picky_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_theta() const{
+  return cfa_->pf_mus_picky_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_vx() const{
+  return cfa_->pf_mus_picky_vx();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_vy() const{
+  return cfa_->pf_mus_picky_vy();
+}
+
+std::vector<float>* const & cfa::pf_mus_picky_vz() const{
+  return cfa_->pf_mus_picky_vz();
+}
+
+std::vector<float>* const & cfa::pf_mus_pt() const{
+  return cfa_->pf_mus_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_px() const{
+  return cfa_->pf_mus_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_py() const{
+  return cfa_->pf_mus_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_pz() const{
+  return cfa_->pf_mus_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_chg() const{
+  return cfa_->pf_mus_stamu_chg();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_chi2() const{
+  return cfa_->pf_mus_stamu_chi2();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_d0dum() const{
+  return cfa_->pf_mus_stamu_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_d0dumErr() const{
+  return cfa_->pf_mus_stamu_d0dumErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_dz() const{
+  return cfa_->pf_mus_stamu_dz();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_dzErr() const{
+  return cfa_->pf_mus_stamu_dzErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_eta() const{
+  return cfa_->pf_mus_stamu_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_etaErr() const{
+  return cfa_->pf_mus_stamu_etaErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_ndof() const{
+  return cfa_->pf_mus_stamu_ndof();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_numlosthits() const{
+  return cfa_->pf_mus_stamu_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_numvalhits() const{
+  return cfa_->pf_mus_stamu_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_phi() const{
+  return cfa_->pf_mus_stamu_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_phiErr() const{
+  return cfa_->pf_mus_stamu_phiErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_pt() const{
+  return cfa_->pf_mus_stamu_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_ptErr() const{
+  return cfa_->pf_mus_stamu_ptErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_px() const{
+  return cfa_->pf_mus_stamu_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_py() const{
+  return cfa_->pf_mus_stamu_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_pz() const{
+  return cfa_->pf_mus_stamu_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_theta() const{
+  return cfa_->pf_mus_stamu_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_vx() const{
+  return cfa_->pf_mus_stamu_vx();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_vy() const{
+  return cfa_->pf_mus_stamu_vy();
+}
+
+std::vector<float>* const & cfa::pf_mus_stamu_vz() const{
+  return cfa_->pf_mus_stamu_vz();
+}
+
+std::vector<float>* const & cfa::pf_mus_status() const{
+  return cfa_->pf_mus_status();
+}
+
+std::vector<float>* const & cfa::pf_mus_tIso() const{
+  return cfa_->pf_mus_tIso();
+}
+
+std::vector<float>* const & cfa::pf_mus_theta() const{
+  return cfa_->pf_mus_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_tkHits() const{
+  return cfa_->pf_mus_tkHits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_ExpectedHitsInner() const{
+  return cfa_->pf_mus_tk_ExpectedHitsInner();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_ExpectedHitsOuter() const{
+  return cfa_->pf_mus_tk_ExpectedHitsOuter();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_LayersWithMeasurement() const{
+  return cfa_->pf_mus_tk_LayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_LayersWithoutMeasurement() const{
+  return cfa_->pf_mus_tk_LayersWithoutMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_PixelLayersWithMeasurement() const{
+  return cfa_->pf_mus_tk_PixelLayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_ValidStripLayersWithMonoAndStereoHit() const{
+  return cfa_->pf_mus_tk_ValidStripLayersWithMonoAndStereoHit();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_chg() const{
+  return cfa_->pf_mus_tk_chg();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_chi2() const{
+  return cfa_->pf_mus_tk_chi2();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_d0dum() const{
+  return cfa_->pf_mus_tk_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_d0dumErr() const{
+  return cfa_->pf_mus_tk_d0dumErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_dz() const{
+  return cfa_->pf_mus_tk_dz();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_dzErr() const{
+  return cfa_->pf_mus_tk_dzErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_eta() const{
+  return cfa_->pf_mus_tk_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_etaErr() const{
+  return cfa_->pf_mus_tk_etaErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_id() const{
+  return cfa_->pf_mus_tk_id();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_ndof() const{
+  return cfa_->pf_mus_tk_ndof();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_numlosthits() const{
+  return cfa_->pf_mus_tk_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_numpixelWthMeasr() const{
+  return cfa_->pf_mus_tk_numpixelWthMeasr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_numvalPixelhits() const{
+  return cfa_->pf_mus_tk_numvalPixelhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_numvalhits() const{
+  return cfa_->pf_mus_tk_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_phi() const{
+  return cfa_->pf_mus_tk_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_phiErr() const{
+  return cfa_->pf_mus_tk_phiErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_pt() const{
+  return cfa_->pf_mus_tk_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_ptErr() const{
+  return cfa_->pf_mus_tk_ptErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_px() const{
+  return cfa_->pf_mus_tk_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_py() const{
+  return cfa_->pf_mus_tk_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_pz() const{
+  return cfa_->pf_mus_tk_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_theta() const{
+  return cfa_->pf_mus_tk_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_vx() const{
+  return cfa_->pf_mus_tk_vx();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_vy() const{
+  return cfa_->pf_mus_tk_vy();
+}
+
+std::vector<float>* const & cfa::pf_mus_tk_vz() const{
+  return cfa_->pf_mus_tk_vz();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_ExpectedHitsInner() const{
+  return cfa_->pf_mus_tpfms_ExpectedHitsInner();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_ExpectedHitsOuter() const{
+  return cfa_->pf_mus_tpfms_ExpectedHitsOuter();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_LayersWithMeasurement() const{
+  return cfa_->pf_mus_tpfms_LayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_LayersWithoutMeasurement() const{
+  return cfa_->pf_mus_tpfms_LayersWithoutMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_PixelLayersWithMeasurement() const{
+  return cfa_->pf_mus_tpfms_PixelLayersWithMeasurement();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit() const{
+  return cfa_->pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_chg() const{
+  return cfa_->pf_mus_tpfms_chg();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_chi2() const{
+  return cfa_->pf_mus_tpfms_chi2();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_d0dum() const{
+  return cfa_->pf_mus_tpfms_d0dum();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_d0dumErr() const{
+  return cfa_->pf_mus_tpfms_d0dumErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_dz() const{
+  return cfa_->pf_mus_tpfms_dz();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_dzErr() const{
+  return cfa_->pf_mus_tpfms_dzErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_eta() const{
+  return cfa_->pf_mus_tpfms_eta();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_etaErr() const{
+  return cfa_->pf_mus_tpfms_etaErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_id() const{
+  return cfa_->pf_mus_tpfms_id();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_ndof() const{
+  return cfa_->pf_mus_tpfms_ndof();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_numlosthits() const{
+  return cfa_->pf_mus_tpfms_numlosthits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_numvalPixelhits() const{
+  return cfa_->pf_mus_tpfms_numvalPixelhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_numvalhits() const{
+  return cfa_->pf_mus_tpfms_numvalhits();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_phi() const{
+  return cfa_->pf_mus_tpfms_phi();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_phiErr() const{
+  return cfa_->pf_mus_tpfms_phiErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_pt() const{
+  return cfa_->pf_mus_tpfms_pt();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_ptErr() const{
+  return cfa_->pf_mus_tpfms_ptErr();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_px() const{
+  return cfa_->pf_mus_tpfms_px();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_py() const{
+  return cfa_->pf_mus_tpfms_py();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_pz() const{
+  return cfa_->pf_mus_tpfms_pz();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_theta() const{
+  return cfa_->pf_mus_tpfms_theta();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_vx() const{
+  return cfa_->pf_mus_tpfms_vx();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_vy() const{
+  return cfa_->pf_mus_tpfms_vy();
+}
+
+std::vector<float>* const & cfa::pf_mus_tpfms_vz() const{
+  return cfa_->pf_mus_tpfms_vz();
+}
+
+std::vector<float>* const & cfa::pf_photons_chIso() const{
+  return cfa_->pf_photons_chIso();
+}
+
+std::vector<float>* const & cfa::pf_photons_e1x5() const{
+  return cfa_->pf_photons_e1x5();
+}
+
+std::vector<float>* const & cfa::pf_photons_e2x5() const{
+  return cfa_->pf_photons_e2x5();
+}
+
+std::vector<float>* const & cfa::pf_photons_e3x3() const{
+  return cfa_->pf_photons_e3x3();
+}
+
+std::vector<float>* const & cfa::pf_photons_e5x5() const{
+  return cfa_->pf_photons_e5x5();
+}
+
+std::vector<float>* const & cfa::pf_photons_energy() const{
+  return cfa_->pf_photons_energy();
+}
+
+std::vector<float>* const & cfa::pf_photons_et() const{
+  return cfa_->pf_photons_et();
+}
+
+std::vector<float>* const & cfa::pf_photons_eta() const{
+  return cfa_->pf_photons_eta();
+}
+
+std::vector<float>* const & cfa::pf_photons_hadOverEM() const{
+  return cfa_->pf_photons_hadOverEM();
+}
+
+std::vector<float>* const & cfa::pf_photons_hadTowOverEM() const{
+  return cfa_->pf_photons_hadTowOverEM();
+}
+
+std::vector<float>* const & cfa::pf_photons_hasPixelSeed() const{
+  return cfa_->pf_photons_hasPixelSeed();
+}
+
+std::vector<float>* const & cfa::pf_photons_isAlsoElectron() const{
+  return cfa_->pf_photons_isAlsoElectron();
+}
+
+std::vector<float>* const & cfa::pf_photons_isConverted() const{
+  return cfa_->pf_photons_isConverted();
+}
+
+std::vector<float>* const & cfa::pf_photons_isEBEEGap() const{
+  return cfa_->pf_photons_isEBEEGap();
+}
+
+std::vector<float>* const & cfa::pf_photons_isEBGap() const{
+  return cfa_->pf_photons_isEBGap();
+}
+
+std::vector<float>* const & cfa::pf_photons_isEBPho() const{
+  return cfa_->pf_photons_isEBPho();
+}
+
+std::vector<float>* const & cfa::pf_photons_isEEGap() const{
+  return cfa_->pf_photons_isEEGap();
+}
+
+std::vector<float>* const & cfa::pf_photons_isEEPho() const{
+  return cfa_->pf_photons_isEEPho();
+}
+
+std::vector<float>* const & cfa::pf_photons_maxEnergyXtal() const{
+  return cfa_->pf_photons_maxEnergyXtal();
+}
+
+std::vector<float>* const & cfa::pf_photons_nhIso() const{
+  return cfa_->pf_photons_nhIso();
+}
+
+std::vector<float>* const & cfa::pf_photons_phIso() const{
+  return cfa_->pf_photons_phIso();
+}
+
+std::vector<float>* const & cfa::pf_photons_phi() const{
+  return cfa_->pf_photons_phi();
+}
+
+std::vector<float>* const & cfa::pf_photons_pt() const{
+  return cfa_->pf_photons_pt();
+}
+
+std::vector<float>* const & cfa::pf_photons_px() const{
+  return cfa_->pf_photons_px();
+}
+
+std::vector<float>* const & cfa::pf_photons_py() const{
+  return cfa_->pf_photons_py();
+}
+
+std::vector<float>* const & cfa::pf_photons_pz() const{
+  return cfa_->pf_photons_pz();
+}
+
+std::vector<float>* const & cfa::pf_photons_r9() const{
+  return cfa_->pf_photons_r9();
+}
+
+std::vector<float>* const & cfa::pf_photons_scEnergy() const{
+  return cfa_->pf_photons_scEnergy();
+}
+
+std::vector<float>* const & cfa::pf_photons_scEta() const{
+  return cfa_->pf_photons_scEta();
+}
+
+std::vector<float>* const & cfa::pf_photons_scEtaWidth() const{
+  return cfa_->pf_photons_scEtaWidth();
+}
+
+std::vector<float>* const & cfa::pf_photons_scPhi() const{
+  return cfa_->pf_photons_scPhi();
+}
+
+std::vector<float>* const & cfa::pf_photons_scPhiWidth() const{
+  return cfa_->pf_photons_scPhiWidth();
+}
+
+std::vector<float>* const & cfa::pf_photons_scRawEnergy() const{
+  return cfa_->pf_photons_scRawEnergy();
+}
+
+std::vector<float>* const & cfa::pf_photons_sigmaEtaEta() const{
+  return cfa_->pf_photons_sigmaEtaEta();
+}
+
+std::vector<float>* const & cfa::pf_photons_sigmaIetaIeta() const{
+  return cfa_->pf_photons_sigmaIetaIeta();
+}
+
+std::vector<float>* const & cfa::pf_photons_status() const{
+  return cfa_->pf_photons_status();
+}
+
+std::vector<float>* const & cfa::pf_photons_theta() const{
+  return cfa_->pf_photons_theta();
+}
+
 std::vector<float>* const & cfa::pfcand_charge() const{
   return cfa_->pfcand_charge();
 }
@@ -3030,6 +5602,10 @@ std::vector<float>* const & cfa::pfcand_energy() const{
 
 std::vector<float>* const & cfa::pfcand_eta() const{
   return cfa_->pfcand_eta();
+}
+
+std::vector<float>* const & cfa::pfcand_particleId() const{
+  return cfa_->pfcand_particleId();
 }
 
 std::vector<float>* const & cfa::pfcand_pdgId() const{
@@ -3058,6 +5634,110 @@ std::vector<float>* const & cfa::pfcand_pz() const{
 
 std::vector<float>* const & cfa::pfcand_theta() const{
   return cfa_->pfcand_theta();
+}
+
+std::vector<float>* const & cfa::pfmets_et() const{
+  return cfa_->pfmets_et();
+}
+
+std::vector<float>* const & cfa::pfmets_ex() const{
+  return cfa_->pfmets_ex();
+}
+
+std::vector<float>* const & cfa::pfmets_ey() const{
+  return cfa_->pfmets_ey();
+}
+
+Float_t const & cfa::pfmets_fullSignif() const{
+  return cfa_->pfmets_fullSignif();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov00() const{
+  return cfa_->pfmets_fullSignifCov00();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov00_2012() const{
+  return cfa_->pfmets_fullSignifCov00_2012();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov00_2012_dataRes() const{
+  return cfa_->pfmets_fullSignifCov00_2012_dataRes();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov10() const{
+  return cfa_->pfmets_fullSignifCov10();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov10_2012() const{
+  return cfa_->pfmets_fullSignifCov10_2012();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov10_2012_dataRes() const{
+  return cfa_->pfmets_fullSignifCov10_2012_dataRes();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov11() const{
+  return cfa_->pfmets_fullSignifCov11();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov11_2012() const{
+  return cfa_->pfmets_fullSignifCov11_2012();
+}
+
+Float_t const & cfa::pfmets_fullSignifCov11_2012_dataRes() const{
+  return cfa_->pfmets_fullSignifCov11_2012_dataRes();
+}
+
+Float_t const & cfa::pfmets_fullSignif_2012() const{
+  return cfa_->pfmets_fullSignif_2012();
+}
+
+Float_t const & cfa::pfmets_fullSignif_2012_dataRes() const{
+  return cfa_->pfmets_fullSignif_2012_dataRes();
+}
+
+std::vector<float>* const & cfa::pfmets_gen_et() const{
+  return cfa_->pfmets_gen_et();
+}
+
+std::vector<float>* const & cfa::pfmets_gen_phi() const{
+  return cfa_->pfmets_gen_phi();
+}
+
+std::vector<float>* const & cfa::pfmets_phi() const{
+  return cfa_->pfmets_phi();
+}
+
+std::vector<float>* const & cfa::pfmets_sign() const{
+  return cfa_->pfmets_sign();
+}
+
+std::vector<float>* const & cfa::pfmets_sumEt() const{
+  return cfa_->pfmets_sumEt();
+}
+
+std::vector<float>* const & cfa::pfmets_unCPhi() const{
+  return cfa_->pfmets_unCPhi();
+}
+
+std::vector<float>* const & cfa::pfmets_unCPt() const{
+  return cfa_->pfmets_unCPt();
+}
+
+std::vector<float>* const & cfa::photon_chIsoValues() const{
+  return cfa_->photon_chIsoValues();
+}
+
+std::vector<float>* const & cfa::photon_nhIsoValues() const{
+  return cfa_->photon_nhIsoValues();
+}
+
+std::vector<bool>* const & cfa::photon_passElectronVeto() const{
+  return cfa_->photon_passElectronVeto();
+}
+
+std::vector<float>* const & cfa::photon_phIsoValues() const{
+  return cfa_->photon_phIsoValues();
 }
 
 std::vector<float>* const & cfa::photons_e1x5() const{
@@ -3280,6 +5960,14 @@ std::vector<float>* const & cfa::photons_theta() const{
   return cfa_->photons_theta();
 }
 
+std::vector<std::vector<float> >* const & cfa::puJet_rejectionBeta() const{
+  return cfa_->puJet_rejectionBeta();
+}
+
+std::vector<std::vector<float> >* const & cfa::puJet_rejectionMVA() const{
+  return cfa_->puJet_rejectionMVA();
+}
+
 std::vector<float>* const & cfa::pv_chi2() const{
   return cfa_->pv_chi2();
 }
@@ -3324,8 +6012,28 @@ std::vector<float>* const & cfa::pv_zErr() const{
   return cfa_->pv_zErr();
 }
 
+Float_t const & cfa::rho_kt6PFJetsForIsolation2011() const{
+  return cfa_->rho_kt6PFJetsForIsolation2011();
+}
+
+Float_t const & cfa::rho_kt6PFJetsForIsolation2012() const{
+  return cfa_->rho_kt6PFJetsForIsolation2012();
+}
+
 UInt_t const & cfa::run() const{
   return cfa_->run();
+}
+
+Int_t const & cfa::scrapingVeto_decision() const{
+  return cfa_->scrapingVeto_decision();
+}
+
+Float_t const & cfa::softjetUp_dMEx() const{
+  return cfa_->softjetUp_dMEx();
+}
+
+Float_t const & cfa::softjetUp_dMEy() const{
+  return cfa_->softjetUp_dMEy();
 }
 
 std::vector<std::string>* const & cfa::standalone_triggerobject_collectionname() const{
@@ -3608,12 +6316,144 @@ std::vector<float>* const & cfa::taus_trackIsolation() const{
   return cfa_->taus_trackIsolation();
 }
 
+std::vector<float>* const & cfa::tcmets_et() const{
+  return cfa_->tcmets_et();
+}
+
+std::vector<float>* const & cfa::tcmets_ex() const{
+  return cfa_->tcmets_ex();
+}
+
+std::vector<float>* const & cfa::tcmets_ey() const{
+  return cfa_->tcmets_ey();
+}
+
+std::vector<float>* const & cfa::tcmets_phi() const{
+  return cfa_->tcmets_phi();
+}
+
+std::vector<float>* const & cfa::tcmets_sumEt() const{
+  return cfa_->tcmets_sumEt();
+}
+
+Int_t const & cfa::trackercoherentnoisefilter1_decision() const{
+  return cfa_->trackercoherentnoisefilter1_decision();
+}
+
+Int_t const & cfa::trackercoherentnoisefilter2_decision() const{
+  return cfa_->trackercoherentnoisefilter2_decision();
+}
+
+Int_t const & cfa::trackertoomanyclustersfilter_decision() const{
+  return cfa_->trackertoomanyclustersfilter_decision();
+}
+
+Int_t const & cfa::trackertoomanyseedsfilter_decision() const{
+  return cfa_->trackertoomanyseedsfilter_decision();
+}
+
+Int_t const & cfa::trackertoomanytripletsfilter_decision() const{
+  return cfa_->trackertoomanytripletsfilter_decision();
+}
+
 Int_t const & cfa::trackingfailurefilter_decision() const{
   return cfa_->trackingfailurefilter_decision();
 }
 
+std::vector<float>* const & cfa::tracks_chg() const{
+  return cfa_->tracks_chg();
+}
+
+std::vector<float>* const & cfa::tracks_chi2() const{
+  return cfa_->tracks_chi2();
+}
+
+std::vector<float>* const & cfa::tracks_d0dum() const{
+  return cfa_->tracks_d0dum();
+}
+
+std::vector<float>* const & cfa::tracks_d0dumErr() const{
+  return cfa_->tracks_d0dumErr();
+}
+
+std::vector<float>* const & cfa::tracks_dz() const{
+  return cfa_->tracks_dz();
+}
+
+std::vector<float>* const & cfa::tracks_dzErr() const{
+  return cfa_->tracks_dzErr();
+}
+
+std::vector<float>* const & cfa::tracks_eta() const{
+  return cfa_->tracks_eta();
+}
+
+std::vector<float>* const & cfa::tracks_etaErr() const{
+  return cfa_->tracks_etaErr();
+}
+
+std::vector<float>* const & cfa::tracks_highPurity() const{
+  return cfa_->tracks_highPurity();
+}
+
+std::vector<float>* const & cfa::tracks_ndof() const{
+  return cfa_->tracks_ndof();
+}
+
+std::vector<float>* const & cfa::tracks_numlosthits() const{
+  return cfa_->tracks_numlosthits();
+}
+
+std::vector<float>* const & cfa::tracks_numvalhits() const{
+  return cfa_->tracks_numvalhits();
+}
+
+std::vector<float>* const & cfa::tracks_phi() const{
+  return cfa_->tracks_phi();
+}
+
+std::vector<float>* const & cfa::tracks_phiErr() const{
+  return cfa_->tracks_phiErr();
+}
+
+std::vector<float>* const & cfa::tracks_pt() const{
+  return cfa_->tracks_pt();
+}
+
+std::vector<float>* const & cfa::tracks_ptErr() const{
+  return cfa_->tracks_ptErr();
+}
+
+std::vector<float>* const & cfa::tracks_px() const{
+  return cfa_->tracks_px();
+}
+
+std::vector<float>* const & cfa::tracks_py() const{
+  return cfa_->tracks_py();
+}
+
+std::vector<float>* const & cfa::tracks_pz() const{
+  return cfa_->tracks_pz();
+}
+
+std::vector<float>* const & cfa::tracks_vx() const{
+  return cfa_->tracks_vx();
+}
+
+std::vector<float>* const & cfa::tracks_vy() const{
+  return cfa_->tracks_vy();
+}
+
+std::vector<float>* const & cfa::tracks_vz() const{
+  return cfa_->tracks_vz();
+}
+
 std::vector<bool>* const & cfa::trigger_decision() const{
   return cfa_->trigger_decision();
+}
+
+std::vector<std::string>* const & cfa::trigger_lastfiltername() const{
+  return cfa_->trigger_lastfiltername();
 }
 
 std::vector<std::string>* const & cfa::trigger_name() const{
@@ -3622,6 +6462,42 @@ std::vector<std::string>* const & cfa::trigger_name() const{
 
 std::vector<float>* const & cfa::trigger_prescalevalue() const{
   return cfa_->trigger_prescalevalue();
+}
+
+std::vector<std::vector<std::string> >* const & cfa::triggerobject_collectionname() const{
+  return cfa_->triggerobject_collectionname();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_energy() const{
+  return cfa_->triggerobject_energy();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_et() const{
+  return cfa_->triggerobject_et();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_eta() const{
+  return cfa_->triggerobject_eta();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_phi() const{
+  return cfa_->triggerobject_phi();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_pt() const{
+  return cfa_->triggerobject_pt();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_px() const{
+  return cfa_->triggerobject_px();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_py() const{
+  return cfa_->triggerobject_py();
+}
+
+std::vector<std::vector<float> >* const & cfa::triggerobject_pz() const{
+  return cfa_->triggerobject_pz();
 }
 
 Int_t const & cfa::trkPOG_logErrorTooManyClustersfilter_decision() const{
@@ -3638,6 +6514,18 @@ Int_t const & cfa::trkPOG_toomanystripclus53Xfilter_decision() const{
 
 Int_t const & cfa::trkPOGfilter_decision() const{
   return cfa_->trkPOGfilter_decision();
+}
+
+Int_t const & cfa::trk_nTOBTEC() const{
+  return cfa_->trk_nTOBTEC();
+}
+
+Float_t const & cfa::trk_ratioAllTOBTEC() const{
+  return cfa_->trk_ratioAllTOBTEC();
+}
+
+Float_t const & cfa::trk_ratioJetTOBTEC() const{
+  return cfa_->trk_ratioJetTOBTEC();
 }
 
 Float_t const & cfa::weight() const{

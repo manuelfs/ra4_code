@@ -90,8 +90,40 @@ Int_t const & cfa_base::HBHENoisefilter_decision() const{
   throw std::runtime_error("HBHENoisefilter_decision does not exist in this cfa version.");
 }
 
+std::vector<std::string>* const & cfa_base::L1trigger_alias() const{
+  throw std::runtime_error("L1trigger_alias does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::L1trigger_bit() const{
+  throw std::runtime_error("L1trigger_bit does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::L1trigger_decision() const{
+  throw std::runtime_error("L1trigger_decision does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::L1trigger_decision_nomask() const{
+  throw std::runtime_error("L1trigger_decision_nomask does not exist in this cfa version.");
+}
+
+std::vector<std::string>* const & cfa_base::L1trigger_name() const{
+  throw std::runtime_error("L1trigger_name does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::L1trigger_prescalevalue() const{
+  throw std::runtime_error("L1trigger_prescalevalue does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::L1trigger_techTrigger() const{
+  throw std::runtime_error("L1trigger_techTrigger does not exist in this cfa version.");
+}
+
 Int_t const & cfa_base::METFiltersfilter_decision() const{
   throw std::runtime_error("METFiltersfilter_decision does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::MPT() const{
+  throw std::runtime_error("MPT does not exist in this cfa version.");
 }
 
 UInt_t const & cfa_base::NbeamSpot() const{
@@ -104,6 +136,14 @@ UInt_t const & cfa_base::Nels() const{
 
 UInt_t const & cfa_base::Njets_AK4() const{
   throw std::runtime_error("Njets_AK4 does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Njets_AK5PF() const{
+  throw std::runtime_error("Njets_AK5PF does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Njets_AK5PFclean() const{
+  throw std::runtime_error("Njets_AK5PFclean does not exist in this cfa version.");
 }
 
 UInt_t const & cfa_base::Nmc_doc() const{
@@ -138,6 +178,10 @@ UInt_t const & cfa_base::Nmc_nutaus() const{
   throw std::runtime_error("Nmc_nutaus does not exist in this cfa version.");
 }
 
+UInt_t const & cfa_base::Nmc_pdf() const{
+  throw std::runtime_error("Nmc_pdf does not exist in this cfa version.");
+}
+
 UInt_t const & cfa_base::Nmc_photons() const{
   throw std::runtime_error("Nmc_photons does not exist in this cfa version.");
 }
@@ -150,12 +194,48 @@ UInt_t const & cfa_base::Nmets() const{
   throw std::runtime_error("Nmets does not exist in this cfa version.");
 }
 
+UInt_t const & cfa_base::NmetsHO() const{
+  throw std::runtime_error("NmetsHO does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Nmets_AK5() const{
+  throw std::runtime_error("Nmets_AK5 does not exist in this cfa version.");
+}
+
 UInt_t const & cfa_base::Nmus() const{
   throw std::runtime_error("Nmus does not exist in this cfa version.");
 }
 
+UInt_t const & cfa_base::NpfTypeINoXYCorrmets() const{
+  throw std::runtime_error("NpfTypeINoXYCorrmets does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::NpfTypeIType0mets() const{
+  throw std::runtime_error("NpfTypeIType0mets does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::NpfTypeImets() const{
+  throw std::runtime_error("NpfTypeImets does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Npf_els() const{
+  throw std::runtime_error("Npf_els does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Npf_mus() const{
+  throw std::runtime_error("Npf_mus does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Npf_photons() const{
+  throw std::runtime_error("Npf_photons does not exist in this cfa version.");
+}
+
 UInt_t const & cfa_base::Npfcand() const{
   throw std::runtime_error("Npfcand does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Npfmets() const{
+  throw std::runtime_error("Npfmets does not exist in this cfa version.");
 }
 
 UInt_t const & cfa_base::Nphotons() const{
@@ -168,6 +248,14 @@ UInt_t const & cfa_base::Npv() const{
 
 UInt_t const & cfa_base::Ntaus() const{
   throw std::runtime_error("Ntaus does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Ntcmets() const{
+  throw std::runtime_error("Ntcmets does not exist in this cfa version.");
+}
+
+UInt_t const & cfa_base::Ntracks() const{
+  throw std::runtime_error("Ntracks does not exist in this cfa version.");
 }
 
 std::vector<int>* const & cfa_base::PU_NumInteractions() const{
@@ -274,6 +362,14 @@ Int_t const & cfa_base::cschalofilter_decision() const{
   throw std::runtime_error("cschalofilter_decision does not exist in this cfa version.");
 }
 
+Int_t const & cfa_base::ecalBEfilter_decision() const{
+  throw std::runtime_error("ecalBEfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::ecalTPfilter_decision() const{
+  throw std::runtime_error("ecalTPfilter_decision does not exist in this cfa version.");
+}
+
 Int_t const & cfa_base::ecallaserfilter_decision() const{
   throw std::runtime_error("ecallaserfilter_decision does not exist in this cfa version.");
 }
@@ -282,8 +378,24 @@ Int_t const & cfa_base::eebadscfilter_decision() const{
   throw std::runtime_error("eebadscfilter_decision does not exist in this cfa version.");
 }
 
+Int_t const & cfa_base::eenoisefilter_decision() const{
+  throw std::runtime_error("eenoisefilter_decision does not exist in this cfa version.");
+}
+
 std::vector<float>* const & cfa_base::els_PATpassConversionVeto() const{
   throw std::runtime_error("els_PATpassConversionVeto does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::els_PFchargedHadronIsoR03() const{
+  throw std::runtime_error("els_PFchargedHadronIsoR03 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::els_PFneutralHadronIsoR03() const{
+  throw std::runtime_error("els_PFneutralHadronIsoR03 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::els_PFphotonIsoR03() const{
+  throw std::runtime_error("els_PFphotonIsoR03 does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::els_basicClustersSize() const{
@@ -304,6 +416,14 @@ std::vector<float>* const & cfa_base::els_charge() const{
 
 std::vector<float>* const & cfa_base::els_chi2() const{
   throw std::runtime_error("els_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::els_conversion_dcot() const{
+  throw std::runtime_error("els_conversion_dcot does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::els_conversion_dist() const{
+  throw std::runtime_error("els_conversion_dist does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::els_core_ecalDrivenSeed() const{
@@ -532,6 +652,10 @@ std::vector<float>* const & cfa_base::els_gen_theta() const{
 
 std::vector<float>* const & cfa_base::els_hadOverEm() const{
   throw std::runtime_error("els_hadOverEm does not exist in this cfa version.");
+}
+
+std::vector<bool>* const & cfa_base::els_hasMatchedConversion() const{
+  throw std::runtime_error("els_hasMatchedConversion does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::els_hcalIso() const{
@@ -966,12 +1090,52 @@ std::vector<float>* const & cfa_base::fastjets_AK4_R1p2_R0p5pT30_pz() const{
   throw std::runtime_error("fastjets_AK4_R1p2_R0p5pT30_pz does not exist in this cfa version.");
 }
 
+Float_t const & cfa_base::genHT() const{
+  throw std::runtime_error("genHT does not exist in this cfa version.");
+}
+
 Int_t const & cfa_base::goodVerticesfilter_decision() const{
   throw std::runtime_error("goodVerticesfilter_decision does not exist in this cfa version.");
 }
 
+Int_t const & cfa_base::greedymuonfilter_decision() const{
+  throw std::runtime_error("greedymuonfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::hbhefilter_decision() const{
+  throw std::runtime_error("hbhefilter_decision does not exist in this cfa version.");
+}
+
 Int_t const & cfa_base::hcallaserfilter_decision() const{
   throw std::runtime_error("hcallaserfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::inconsistentPFmuonfilter_decision() const{
+  throw std::runtime_error("inconsistentPFmuonfilter_decision does not exist in this cfa version.");
+}
+
+std::vector<int>* const & cfa_base::isotk_charge() const{
+  throw std::runtime_error("isotk_charge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::isotk_dzpv() const{
+  throw std::runtime_error("isotk_dzpv does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::isotk_eta() const{
+  throw std::runtime_error("isotk_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::isotk_iso() const{
+  throw std::runtime_error("isotk_iso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::isotk_phi() const{
+  throw std::runtime_error("isotk_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::isotk_pt() const{
+  throw std::runtime_error("isotk_pt does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::jets_AK4_area() const{
@@ -1252,6 +1416,562 @@ std::vector<float>* const & cfa_base::jets_AK4_status() const{
 
 std::vector<float>* const & cfa_base::jets_AK4_theta() const{
   throw std::runtime_error("jets_AK4_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_area() const{
+  throw std::runtime_error("jets_AK5PF_area does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_TC_highEff() const{
+  throw std::runtime_error("jets_AK5PF_btag_TC_highEff does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_TC_highPur() const{
+  throw std::runtime_error("jets_AK5PF_btag_TC_highPur does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_jetBProb() const{
+  throw std::runtime_error("jets_AK5PF_btag_jetBProb does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_jetProb() const{
+  throw std::runtime_error("jets_AK5PF_btag_jetProb does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_secVertexCombined() const{
+  throw std::runtime_error("jets_AK5PF_btag_secVertexCombined does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_secVertexHighEff() const{
+  throw std::runtime_error("jets_AK5PF_btag_secVertexHighEff does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_secVertexHighPur() const{
+  throw std::runtime_error("jets_AK5PF_btag_secVertexHighPur does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_softEle() const{
+  throw std::runtime_error("jets_AK5PF_btag_softEle does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_btag_softMuon() const{
+  throw std::runtime_error("jets_AK5PF_btag_softMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_chgEmE() const{
+  throw std::runtime_error("jets_AK5PF_chgEmE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_chgHadE() const{
+  throw std::runtime_error("jets_AK5PF_chgHadE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_chgMuE() const{
+  throw std::runtime_error("jets_AK5PF_chgMuE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_chg_Mult() const{
+  throw std::runtime_error("jets_AK5PF_chg_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_corrFactorRaw() const{
+  throw std::runtime_error("jets_AK5PF_corrFactorRaw does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_ehf() const{
+  throw std::runtime_error("jets_AK5PF_ehf does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_emf() const{
+  throw std::runtime_error("jets_AK5PF_emf does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_energy() const{
+  throw std::runtime_error("jets_AK5PF_energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_et() const{
+  throw std::runtime_error("jets_AK5PF_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_eta() const{
+  throw std::runtime_error("jets_AK5PF_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_etaetaMoment() const{
+  throw std::runtime_error("jets_AK5PF_etaetaMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_etaphiMoment() const{
+  throw std::runtime_error("jets_AK5PF_etaphiMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fHPD() const{
+  throw std::runtime_error("jets_AK5PF_fHPD does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fRBX() const{
+  throw std::runtime_error("jets_AK5PF_fRBX does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fSubDetector1() const{
+  throw std::runtime_error("jets_AK5PF_fSubDetector1 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fSubDetector2() const{
+  throw std::runtime_error("jets_AK5PF_fSubDetector2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fSubDetector3() const{
+  throw std::runtime_error("jets_AK5PF_fSubDetector3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_fSubDetector4() const{
+  throw std::runtime_error("jets_AK5PF_fSubDetector4 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_Energy() const{
+  throw std::runtime_error("jets_AK5PF_gen_Energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_Id() const{
+  throw std::runtime_error("jets_AK5PF_gen_Id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_et() const{
+  throw std::runtime_error("jets_AK5PF_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_eta() const{
+  throw std::runtime_error("jets_AK5PF_gen_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_mass() const{
+  throw std::runtime_error("jets_AK5PF_gen_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_motherID() const{
+  throw std::runtime_error("jets_AK5PF_gen_motherID does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_phi() const{
+  throw std::runtime_error("jets_AK5PF_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_pt() const{
+  throw std::runtime_error("jets_AK5PF_gen_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_gen_threeCharge() const{
+  throw std::runtime_error("jets_AK5PF_gen_threeCharge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_hitsInN90() const{
+  throw std::runtime_error("jets_AK5PF_hitsInN90 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_jetCharge() const{
+  throw std::runtime_error("jets_AK5PF_jetCharge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_mass() const{
+  throw std::runtime_error("jets_AK5PF_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_mu_Mult() const{
+  throw std::runtime_error("jets_AK5PF_mu_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_n60() const{
+  throw std::runtime_error("jets_AK5PF_n60 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_n90() const{
+  throw std::runtime_error("jets_AK5PF_n90 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_n90Hits() const{
+  throw std::runtime_error("jets_AK5PF_n90Hits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_nECALTowers() const{
+  throw std::runtime_error("jets_AK5PF_nECALTowers does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_nHCALTowers() const{
+  throw std::runtime_error("jets_AK5PF_nHCALTowers does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_neutralEmE() const{
+  throw std::runtime_error("jets_AK5PF_neutralEmE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_neutralHadE() const{
+  throw std::runtime_error("jets_AK5PF_neutralHadE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_neutral_Mult() const{
+  throw std::runtime_error("jets_AK5PF_neutral_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_partonFlavour() const{
+  throw std::runtime_error("jets_AK5PF_partonFlavour does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_Energy() const{
+  throw std::runtime_error("jets_AK5PF_parton_Energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_Id() const{
+  throw std::runtime_error("jets_AK5PF_parton_Id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_eta() const{
+  throw std::runtime_error("jets_AK5PF_parton_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_mass() const{
+  throw std::runtime_error("jets_AK5PF_parton_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_motherId() const{
+  throw std::runtime_error("jets_AK5PF_parton_motherId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_phi() const{
+  throw std::runtime_error("jets_AK5PF_parton_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_parton_pt() const{
+  throw std::runtime_error("jets_AK5PF_parton_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_phi() const{
+  throw std::runtime_error("jets_AK5PF_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_phiphiMoment() const{
+  throw std::runtime_error("jets_AK5PF_phiphiMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_photonEnergy() const{
+  throw std::runtime_error("jets_AK5PF_photonEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_pt() const{
+  throw std::runtime_error("jets_AK5PF_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_px() const{
+  throw std::runtime_error("jets_AK5PF_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_py() const{
+  throw std::runtime_error("jets_AK5PF_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_pz() const{
+  throw std::runtime_error("jets_AK5PF_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_rawPt() const{
+  throw std::runtime_error("jets_AK5PF_rawPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_status() const{
+  throw std::runtime_error("jets_AK5PF_status does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PF_theta() const{
+  throw std::runtime_error("jets_AK5PF_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_Uncert() const{
+  throw std::runtime_error("jets_AK5PFclean_Uncert does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_area() const{
+  throw std::runtime_error("jets_AK5PFclean_area does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_TC_highEff() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_TC_highEff does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_TC_highPur() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_TC_highPur does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_jetBProb() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_jetBProb does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_jetProb() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_jetProb does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_secVertexCombined() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_secVertexCombined does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_secVertexHighEff() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_secVertexHighEff does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_secVertexHighPur() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_secVertexHighPur does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_softEle() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_softEle does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_btag_softMuon() const{
+  throw std::runtime_error("jets_AK5PFclean_btag_softMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_chgEmE() const{
+  throw std::runtime_error("jets_AK5PFclean_chgEmE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_chgHadE() const{
+  throw std::runtime_error("jets_AK5PFclean_chgHadE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_chgMuE() const{
+  throw std::runtime_error("jets_AK5PFclean_chgMuE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_chg_Mult() const{
+  throw std::runtime_error("jets_AK5PFclean_chg_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrFactorRaw() const{
+  throw std::runtime_error("jets_AK5PFclean_corrFactorRaw does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL1FastL2L3() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL1FastL2L3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL1FastL2L3Residual() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL1FastL2L3Residual does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL1L2L3() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL1L2L3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL1L2L3Residual() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL1L2L3Residual does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL2L3() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL2L3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_corrL2L3Residual() const{
+  throw std::runtime_error("jets_AK5PFclean_corrL2L3Residual does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_ehf() const{
+  throw std::runtime_error("jets_AK5PFclean_ehf does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_emf() const{
+  throw std::runtime_error("jets_AK5PFclean_emf does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_energy() const{
+  throw std::runtime_error("jets_AK5PFclean_energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_et() const{
+  throw std::runtime_error("jets_AK5PFclean_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_eta() const{
+  throw std::runtime_error("jets_AK5PFclean_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_etaetaMoment() const{
+  throw std::runtime_error("jets_AK5PFclean_etaetaMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_etaphiMoment() const{
+  throw std::runtime_error("jets_AK5PFclean_etaphiMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fHPD() const{
+  throw std::runtime_error("jets_AK5PFclean_fHPD does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fRBX() const{
+  throw std::runtime_error("jets_AK5PFclean_fRBX does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fSubDetector1() const{
+  throw std::runtime_error("jets_AK5PFclean_fSubDetector1 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fSubDetector2() const{
+  throw std::runtime_error("jets_AK5PFclean_fSubDetector2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fSubDetector3() const{
+  throw std::runtime_error("jets_AK5PFclean_fSubDetector3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_fSubDetector4() const{
+  throw std::runtime_error("jets_AK5PFclean_fSubDetector4 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_Energy() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_Energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_Id() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_Id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_et() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_eta() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_mass() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_phi() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_gen_pt() const{
+  throw std::runtime_error("jets_AK5PFclean_gen_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_hitsInN90() const{
+  throw std::runtime_error("jets_AK5PFclean_hitsInN90 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_jetCharge() const{
+  throw std::runtime_error("jets_AK5PFclean_jetCharge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_mass() const{
+  throw std::runtime_error("jets_AK5PFclean_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_mu_Mult() const{
+  throw std::runtime_error("jets_AK5PFclean_mu_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_n60() const{
+  throw std::runtime_error("jets_AK5PFclean_n60 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_n90() const{
+  throw std::runtime_error("jets_AK5PFclean_n90 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_n90Hits() const{
+  throw std::runtime_error("jets_AK5PFclean_n90Hits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_nECALTowers() const{
+  throw std::runtime_error("jets_AK5PFclean_nECALTowers does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_nHCALTowers() const{
+  throw std::runtime_error("jets_AK5PFclean_nHCALTowers does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_neutralEmE() const{
+  throw std::runtime_error("jets_AK5PFclean_neutralEmE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_neutralHadE() const{
+  throw std::runtime_error("jets_AK5PFclean_neutralHadE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_neutral_Mult() const{
+  throw std::runtime_error("jets_AK5PFclean_neutral_Mult does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_partonFlavour() const{
+  throw std::runtime_error("jets_AK5PFclean_partonFlavour does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_Energy() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_Energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_Id() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_Id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_eta() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_mass() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_mass does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_motherId() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_motherId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_phi() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_parton_pt() const{
+  throw std::runtime_error("jets_AK5PFclean_parton_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_phi() const{
+  throw std::runtime_error("jets_AK5PFclean_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_phiphiMoment() const{
+  throw std::runtime_error("jets_AK5PFclean_phiphiMoment does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_photonEnergy() const{
+  throw std::runtime_error("jets_AK5PFclean_photonEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_pt() const{
+  throw std::runtime_error("jets_AK5PFclean_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_px() const{
+  throw std::runtime_error("jets_AK5PFclean_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_py() const{
+  throw std::runtime_error("jets_AK5PFclean_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_pz() const{
+  throw std::runtime_error("jets_AK5PFclean_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_rawPt() const{
+  throw std::runtime_error("jets_AK5PFclean_rawPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_status() const{
+  throw std::runtime_error("jets_AK5PFclean_status does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::jets_AK5PFclean_theta() const{
+  throw std::runtime_error("jets_AK5PFclean_theta does not exist in this cfa version.");
 }
 
 UInt_t const & cfa_base::lumiblock() const{
@@ -1894,6 +2614,26 @@ std::vector<float>* const & cfa_base::mc_nutaus_vertex_z() const{
   throw std::runtime_error("mc_nutaus_vertex_z does not exist in this cfa version.");
 }
 
+std::vector<float>* const & cfa_base::mc_pdf_id1() const{
+  throw std::runtime_error("mc_pdf_id1 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mc_pdf_id2() const{
+  throw std::runtime_error("mc_pdf_id2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mc_pdf_q() const{
+  throw std::runtime_error("mc_pdf_q does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mc_pdf_x1() const{
+  throw std::runtime_error("mc_pdf_x1 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mc_pdf_x2() const{
+  throw std::runtime_error("mc_pdf_x2 does not exist in this cfa version.");
+}
+
 std::vector<float>* const & cfa_base::mc_photons_charge() const{
   throw std::runtime_error("mc_photons_charge does not exist in this cfa version.");
 }
@@ -2052,6 +2792,66 @@ std::vector<float>* const & cfa_base::mc_taus_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_taus_vertex_z() const{
   throw std::runtime_error("mc_taus_vertex_z does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::metsHO_et() const{
+  throw std::runtime_error("metsHO_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::metsHO_ex() const{
+  throw std::runtime_error("metsHO_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::metsHO_ey() const{
+  throw std::runtime_error("metsHO_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::metsHO_phi() const{
+  throw std::runtime_error("metsHO_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::metsHO_sumEt() const{
+  throw std::runtime_error("metsHO_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_et() const{
+  throw std::runtime_error("mets_AK5_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_ex() const{
+  throw std::runtime_error("mets_AK5_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_ey() const{
+  throw std::runtime_error("mets_AK5_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_gen_et() const{
+  throw std::runtime_error("mets_AK5_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_gen_phi() const{
+  throw std::runtime_error("mets_AK5_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_phi() const{
+  throw std::runtime_error("mets_AK5_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_sign() const{
+  throw std::runtime_error("mets_AK5_sign does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_sumEt() const{
+  throw std::runtime_error("mets_AK5_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_unCPhi() const{
+  throw std::runtime_error("mets_AK5_unCPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::mets_AK5_unCPt() const{
+  throw std::runtime_error("mets_AK5_unCPt does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::mets_et() const{
@@ -3054,6 +3854,1778 @@ UInt_t const & cfa_base::orbitNumber() const{
   throw std::runtime_error("orbitNumber does not exist in this cfa version.");
 }
 
+Int_t const & cfa_base::passprescaleHT250filter_decision() const{
+  throw std::runtime_error("passprescaleHT250filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescaleHT300filter_decision() const{
+  throw std::runtime_error("passprescaleHT300filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescaleHT350filter_decision() const{
+  throw std::runtime_error("passprescaleHT350filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescaleHT400filter_decision() const{
+  throw std::runtime_error("passprescaleHT400filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescaleHT450filter_decision() const{
+  throw std::runtime_error("passprescaleHT450filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescaleJet30MET80filter_decision() const{
+  throw std::runtime_error("passprescaleJet30MET80filter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::passprescalePFHT350filter_decision() const{
+  throw std::runtime_error("passprescalePFHT350filter_decision does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pdfweights_cteq() const{
+  throw std::runtime_error("pdfweights_cteq does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pdfweights_mstw() const{
+  throw std::runtime_error("pdfweights_mstw does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pdfweights_nnpdf() const{
+  throw std::runtime_error("pdfweights_nnpdf does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_et() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_ex() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_ey() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_gen_et() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_gen_phi() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_phi() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_sign() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_sign does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_sumEt() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_unCPhi() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_unCPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeINoXYCorrmets_unCPt() const{
+  throw std::runtime_error("pfTypeINoXYCorrmets_unCPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_et() const{
+  throw std::runtime_error("pfTypeIType0mets_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_ex() const{
+  throw std::runtime_error("pfTypeIType0mets_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_ey() const{
+  throw std::runtime_error("pfTypeIType0mets_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_gen_et() const{
+  throw std::runtime_error("pfTypeIType0mets_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_gen_phi() const{
+  throw std::runtime_error("pfTypeIType0mets_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_phi() const{
+  throw std::runtime_error("pfTypeIType0mets_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_sign() const{
+  throw std::runtime_error("pfTypeIType0mets_sign does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_sumEt() const{
+  throw std::runtime_error("pfTypeIType0mets_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_unCPhi() const{
+  throw std::runtime_error("pfTypeIType0mets_unCPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeIType0mets_unCPt() const{
+  throw std::runtime_error("pfTypeIType0mets_unCPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_et() const{
+  throw std::runtime_error("pfTypeImets_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_ex() const{
+  throw std::runtime_error("pfTypeImets_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_ey() const{
+  throw std::runtime_error("pfTypeImets_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_gen_et() const{
+  throw std::runtime_error("pfTypeImets_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_gen_phi() const{
+  throw std::runtime_error("pfTypeImets_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_phi() const{
+  throw std::runtime_error("pfTypeImets_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_sign() const{
+  throw std::runtime_error("pfTypeImets_sign does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_sumEt() const{
+  throw std::runtime_error("pfTypeImets_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_unCPhi() const{
+  throw std::runtime_error("pfTypeImets_unCPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfTypeImets_unCPt() const{
+  throw std::runtime_error("pfTypeImets_unCPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_PATpassConversionVeto() const{
+  throw std::runtime_error("pf_els_PATpassConversionVeto does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_PFchargedHadronIsoR03() const{
+  throw std::runtime_error("pf_els_PFchargedHadronIsoR03 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_PFneutralHadronIsoR03() const{
+  throw std::runtime_error("pf_els_PFneutralHadronIsoR03 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_PFphotonIsoR03() const{
+  throw std::runtime_error("pf_els_PFphotonIsoR03 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_basicClustersSize() const{
+  throw std::runtime_error("pf_els_basicClustersSize does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cIso() const{
+  throw std::runtime_error("pf_els_cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_caloEnergy() const{
+  throw std::runtime_error("pf_els_caloEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_charge() const{
+  throw std::runtime_error("pf_els_charge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_chargedHadronIso() const{
+  throw std::runtime_error("pf_els_chargedHadronIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_chi2() const{
+  throw std::runtime_error("pf_els_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_core_ecalDrivenSeed() const{
+  throw std::runtime_error("pf_els_core_ecalDrivenSeed does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cpx() const{
+  throw std::runtime_error("pf_els_cpx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cpy() const{
+  throw std::runtime_error("pf_els_cpy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cpz() const{
+  throw std::runtime_error("pf_els_cpz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ctf_tk_charge() const{
+  throw std::runtime_error("pf_els_ctf_tk_charge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ctf_tk_eta() const{
+  throw std::runtime_error("pf_els_ctf_tk_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ctf_tk_id() const{
+  throw std::runtime_error("pf_els_ctf_tk_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ctf_tk_phi() const{
+  throw std::runtime_error("pf_els_ctf_tk_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cx() const{
+  throw std::runtime_error("pf_els_cx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cy() const{
+  throw std::runtime_error("pf_els_cy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_cz() const{
+  throw std::runtime_error("pf_els_cz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_d0dum() const{
+  throw std::runtime_error("pf_els_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_d0dumError() const{
+  throw std::runtime_error("pf_els_d0dumError does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dEtaIn() const{
+  throw std::runtime_error("pf_els_dEtaIn does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dEtaOut() const{
+  throw std::runtime_error("pf_els_dEtaOut does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dPhiIn() const{
+  throw std::runtime_error("pf_els_dPhiIn does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dPhiOut() const{
+  throw std::runtime_error("pf_els_dPhiOut does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr03EcalRecHitSumEt() const{
+  throw std::runtime_error("pf_els_dr03EcalRecHitSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr03HcalDepth1TowerSumEt() const{
+  throw std::runtime_error("pf_els_dr03HcalDepth1TowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr03HcalDepth2TowerSumEt() const{
+  throw std::runtime_error("pf_els_dr03HcalDepth2TowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr03HcalTowerSumEt() const{
+  throw std::runtime_error("pf_els_dr03HcalTowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr03TkSumPt() const{
+  throw std::runtime_error("pf_els_dr03TkSumPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr04EcalRecHitSumEt() const{
+  throw std::runtime_error("pf_els_dr04EcalRecHitSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr04HcalDepth1TowerSumEt() const{
+  throw std::runtime_error("pf_els_dr04HcalDepth1TowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr04HcalDepth2TowerSumEt() const{
+  throw std::runtime_error("pf_els_dr04HcalDepth2TowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr04HcalTowerSumEt() const{
+  throw std::runtime_error("pf_els_dr04HcalTowerSumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dr04TkSumPt() const{
+  throw std::runtime_error("pf_els_dr04TkSumPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dz() const{
+  throw std::runtime_error("pf_els_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_dzError() const{
+  throw std::runtime_error("pf_els_dzError does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_eOverPIn() const{
+  throw std::runtime_error("pf_els_eOverPIn does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_eSeedOverPOut() const{
+  throw std::runtime_error("pf_els_eSeedOverPOut does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ecalIso() const{
+  throw std::runtime_error("pf_els_ecalIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_energy() const{
+  throw std::runtime_error("pf_els_energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_et() const{
+  throw std::runtime_error("pf_els_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_eta() const{
+  throw std::runtime_error("pf_els_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_etaError() const{
+  throw std::runtime_error("pf_els_etaError does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_fbrem() const{
+  throw std::runtime_error("pf_els_fbrem does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_et() const{
+  throw std::runtime_error("pf_els_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_eta() const{
+  throw std::runtime_error("pf_els_gen_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_id() const{
+  throw std::runtime_error("pf_els_gen_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_et() const{
+  throw std::runtime_error("pf_els_gen_mother_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_eta() const{
+  throw std::runtime_error("pf_els_gen_mother_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_id() const{
+  throw std::runtime_error("pf_els_gen_mother_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_phi() const{
+  throw std::runtime_error("pf_els_gen_mother_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_pt() const{
+  throw std::runtime_error("pf_els_gen_mother_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_px() const{
+  throw std::runtime_error("pf_els_gen_mother_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_py() const{
+  throw std::runtime_error("pf_els_gen_mother_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_pz() const{
+  throw std::runtime_error("pf_els_gen_mother_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_mother_theta() const{
+  throw std::runtime_error("pf_els_gen_mother_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_phi() const{
+  throw std::runtime_error("pf_els_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_pt() const{
+  throw std::runtime_error("pf_els_gen_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_px() const{
+  throw std::runtime_error("pf_els_gen_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_py() const{
+  throw std::runtime_error("pf_els_gen_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_pz() const{
+  throw std::runtime_error("pf_els_gen_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_gen_theta() const{
+  throw std::runtime_error("pf_els_gen_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_hadOverEm() const{
+  throw std::runtime_error("pf_els_hadOverEm does not exist in this cfa version.");
+}
+
+std::vector<bool>* const & cfa_base::pf_els_hasMatchedConversion() const{
+  throw std::runtime_error("pf_els_hasMatchedConversion does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_hcalIso() const{
+  throw std::runtime_error("pf_els_hcalIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_hcalOverEcalBc() const{
+  throw std::runtime_error("pf_els_hcalOverEcalBc does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_isEB() const{
+  throw std::runtime_error("pf_els_isEB does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_isEE() const{
+  throw std::runtime_error("pf_els_isEE does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_looseId() const{
+  throw std::runtime_error("pf_els_looseId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_n_inner_layer() const{
+  throw std::runtime_error("pf_els_n_inner_layer does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_n_outer_layer() const{
+  throw std::runtime_error("pf_els_n_outer_layer does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ndof() const{
+  throw std::runtime_error("pf_els_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_neutralHadronIso() const{
+  throw std::runtime_error("pf_els_neutralHadronIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_numlosthits() const{
+  throw std::runtime_error("pf_els_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_numvalhits() const{
+  throw std::runtime_error("pf_els_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_phi() const{
+  throw std::runtime_error("pf_els_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_phiError() const{
+  throw std::runtime_error("pf_els_phiError does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_photonIso() const{
+  throw std::runtime_error("pf_els_photonIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_pt() const{
+  throw std::runtime_error("pf_els_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_ptError() const{
+  throw std::runtime_error("pf_els_ptError does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_px() const{
+  throw std::runtime_error("pf_els_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_py() const{
+  throw std::runtime_error("pf_els_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_pz() const{
+  throw std::runtime_error("pf_els_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_robustHighEnergyId() const{
+  throw std::runtime_error("pf_els_robustHighEnergyId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_robustLooseId() const{
+  throw std::runtime_error("pf_els_robustLooseId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_robustTightId() const{
+  throw std::runtime_error("pf_els_robustTightId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scE1x5() const{
+  throw std::runtime_error("pf_els_scE1x5 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scE2x5Max() const{
+  throw std::runtime_error("pf_els_scE2x5Max does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scE5x5() const{
+  throw std::runtime_error("pf_els_scE5x5 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scEnergy() const{
+  throw std::runtime_error("pf_els_scEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scEta() const{
+  throw std::runtime_error("pf_els_scEta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scEtaWidth() const{
+  throw std::runtime_error("pf_els_scEtaWidth does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scPhi() const{
+  throw std::runtime_error("pf_els_scPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scPhiWidth() const{
+  throw std::runtime_error("pf_els_scPhiWidth does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scRawEnergy() const{
+  throw std::runtime_error("pf_els_scRawEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_scSeedEnergy() const{
+  throw std::runtime_error("pf_els_scSeedEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_shFracInnerHits() const{
+  throw std::runtime_error("pf_els_shFracInnerHits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_sigmaEtaEta() const{
+  throw std::runtime_error("pf_els_sigmaEtaEta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_sigmaIEtaIEta() const{
+  throw std::runtime_error("pf_els_sigmaIEtaIEta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId60cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId60cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId60relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId60relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId70cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId70cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId70relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId70relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId80cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId80cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId80relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId80relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId85cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId85cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId85relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId85relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId90cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId90cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId90relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId90relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId95cIso() const{
+  throw std::runtime_error("pf_els_simpleEleId95cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_simpleEleId95relIso() const{
+  throw std::runtime_error("pf_els_simpleEleId95relIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_status() const{
+  throw std::runtime_error("pf_els_status does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tIso() const{
+  throw std::runtime_error("pf_els_tIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_theta() const{
+  throw std::runtime_error("pf_els_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tightId() const{
+  throw std::runtime_error("pf_els_tightId does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tk_charge() const{
+  throw std::runtime_error("pf_els_tk_charge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tk_eta() const{
+  throw std::runtime_error("pf_els_tk_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tk_phi() const{
+  throw std::runtime_error("pf_els_tk_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tk_pt() const{
+  throw std::runtime_error("pf_els_tk_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_tk_pz() const{
+  throw std::runtime_error("pf_els_tk_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vpx() const{
+  throw std::runtime_error("pf_els_vpx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vpy() const{
+  throw std::runtime_error("pf_els_vpy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vpz() const{
+  throw std::runtime_error("pf_els_vpz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vx() const{
+  throw std::runtime_error("pf_els_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vy() const{
+  throw std::runtime_error("pf_els_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_els_vz() const{
+  throw std::runtime_error("pf_els_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cIso() const{
+  throw std::runtime_error("pf_mus_cIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyEm() const{
+  throw std::runtime_error("pf_mus_calEnergyEm does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyEmS9() const{
+  throw std::runtime_error("pf_mus_calEnergyEmS9 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyHad() const{
+  throw std::runtime_error("pf_mus_calEnergyHad does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyHadS9() const{
+  throw std::runtime_error("pf_mus_calEnergyHadS9 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyHo() const{
+  throw std::runtime_error("pf_mus_calEnergyHo does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_calEnergyHoS9() const{
+  throw std::runtime_error("pf_mus_calEnergyHoS9 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_charge() const{
+  throw std::runtime_error("pf_mus_charge does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_chargedHadronIso() const{
+  throw std::runtime_error("pf_mus_chargedHadronIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_ExpectedHitsInner() const{
+  throw std::runtime_error("pf_mus_cm_ExpectedHitsInner does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_ExpectedHitsOuter() const{
+  throw std::runtime_error("pf_mus_cm_ExpectedHitsOuter does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_LayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_cm_LayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_LayersWithoutMeasurement() const{
+  throw std::runtime_error("pf_mus_cm_LayersWithoutMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_PixelLayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_cm_PixelLayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_ValidStripLayersWithMonoAndStereoHit() const{
+  throw std::runtime_error("pf_mus_cm_ValidStripLayersWithMonoAndStereoHit does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_chg() const{
+  throw std::runtime_error("pf_mus_cm_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_chi2() const{
+  throw std::runtime_error("pf_mus_cm_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_d0dum() const{
+  throw std::runtime_error("pf_mus_cm_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_d0dumErr() const{
+  throw std::runtime_error("pf_mus_cm_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_dz() const{
+  throw std::runtime_error("pf_mus_cm_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_dzErr() const{
+  throw std::runtime_error("pf_mus_cm_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_eta() const{
+  throw std::runtime_error("pf_mus_cm_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_etaErr() const{
+  throw std::runtime_error("pf_mus_cm_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_ndof() const{
+  throw std::runtime_error("pf_mus_cm_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_numlosthits() const{
+  throw std::runtime_error("pf_mus_cm_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_numvalMuonhits() const{
+  throw std::runtime_error("pf_mus_cm_numvalMuonhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_numvalhits() const{
+  throw std::runtime_error("pf_mus_cm_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_phi() const{
+  throw std::runtime_error("pf_mus_cm_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_phiErr() const{
+  throw std::runtime_error("pf_mus_cm_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_pt() const{
+  throw std::runtime_error("pf_mus_cm_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_ptErr() const{
+  throw std::runtime_error("pf_mus_cm_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_px() const{
+  throw std::runtime_error("pf_mus_cm_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_py() const{
+  throw std::runtime_error("pf_mus_cm_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_pz() const{
+  throw std::runtime_error("pf_mus_cm_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_theta() const{
+  throw std::runtime_error("pf_mus_cm_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_vx() const{
+  throw std::runtime_error("pf_mus_cm_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_vy() const{
+  throw std::runtime_error("pf_mus_cm_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_cm_vz() const{
+  throw std::runtime_error("pf_mus_cm_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_dB() const{
+  throw std::runtime_error("pf_mus_dB does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_ecalIso() const{
+  throw std::runtime_error("pf_mus_ecalIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_energy() const{
+  throw std::runtime_error("pf_mus_energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_et() const{
+  throw std::runtime_error("pf_mus_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_eta() const{
+  throw std::runtime_error("pf_mus_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_et() const{
+  throw std::runtime_error("pf_mus_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_eta() const{
+  throw std::runtime_error("pf_mus_gen_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_id() const{
+  throw std::runtime_error("pf_mus_gen_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_et() const{
+  throw std::runtime_error("pf_mus_gen_mother_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_eta() const{
+  throw std::runtime_error("pf_mus_gen_mother_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_id() const{
+  throw std::runtime_error("pf_mus_gen_mother_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_phi() const{
+  throw std::runtime_error("pf_mus_gen_mother_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_pt() const{
+  throw std::runtime_error("pf_mus_gen_mother_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_px() const{
+  throw std::runtime_error("pf_mus_gen_mother_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_py() const{
+  throw std::runtime_error("pf_mus_gen_mother_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_pz() const{
+  throw std::runtime_error("pf_mus_gen_mother_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_mother_theta() const{
+  throw std::runtime_error("pf_mus_gen_mother_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_phi() const{
+  throw std::runtime_error("pf_mus_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_pt() const{
+  throw std::runtime_error("pf_mus_gen_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_px() const{
+  throw std::runtime_error("pf_mus_gen_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_py() const{
+  throw std::runtime_error("pf_mus_gen_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_pz() const{
+  throw std::runtime_error("pf_mus_gen_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_gen_theta() const{
+  throw std::runtime_error("pf_mus_gen_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_hcalIso() const{
+  throw std::runtime_error("pf_mus_hcalIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_All() const{
+  throw std::runtime_error("pf_mus_id_All does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_AllArbitrated() const{
+  throw std::runtime_error("pf_mus_id_AllArbitrated does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_AllGlobalMuons() const{
+  throw std::runtime_error("pf_mus_id_AllGlobalMuons does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_AllStandAloneMuons() const{
+  throw std::runtime_error("pf_mus_id_AllStandAloneMuons does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_AllTrackerMuons() const{
+  throw std::runtime_error("pf_mus_id_AllTrackerMuons does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_GlobalMuonPromptTight() const{
+  throw std::runtime_error("pf_mus_id_GlobalMuonPromptTight does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TM2DCompatibilityLoose() const{
+  throw std::runtime_error("pf_mus_id_TM2DCompatibilityLoose does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TM2DCompatibilityTight() const{
+  throw std::runtime_error("pf_mus_id_TM2DCompatibilityTight does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMLastStationLoose() const{
+  throw std::runtime_error("pf_mus_id_TMLastStationLoose does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMLastStationOptimizedLowPtLoose() const{
+  throw std::runtime_error("pf_mus_id_TMLastStationOptimizedLowPtLoose does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMLastStationOptimizedLowPtTight() const{
+  throw std::runtime_error("pf_mus_id_TMLastStationOptimizedLowPtTight does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMLastStationTight() const{
+  throw std::runtime_error("pf_mus_id_TMLastStationTight does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMOneStationLoose() const{
+  throw std::runtime_error("pf_mus_id_TMOneStationLoose does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TMOneStationTight() const{
+  throw std::runtime_error("pf_mus_id_TMOneStationTight does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_id_TrackerMuonArbitrated() const{
+  throw std::runtime_error("pf_mus_id_TrackerMuonArbitrated does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isCaloMuon() const{
+  throw std::runtime_error("pf_mus_isCaloMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isConvertedPhoton() const{
+  throw std::runtime_error("pf_mus_isConvertedPhoton does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isElectron() const{
+  throw std::runtime_error("pf_mus_isElectron does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isGlobalMuon() const{
+  throw std::runtime_error("pf_mus_isGlobalMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isPFMuon() const{
+  throw std::runtime_error("pf_mus_isPFMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isPhoton() const{
+  throw std::runtime_error("pf_mus_isPhoton does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isStandAloneMuon() const{
+  throw std::runtime_error("pf_mus_isStandAloneMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_isTrackerMuon() const{
+  throw std::runtime_error("pf_mus_isTrackerMuon does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_emEt() const{
+  throw std::runtime_error("pf_mus_iso03_emEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_emVetoEt() const{
+  throw std::runtime_error("pf_mus_iso03_emVetoEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_hadEt() const{
+  throw std::runtime_error("pf_mus_iso03_hadEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_hadVetoEt() const{
+  throw std::runtime_error("pf_mus_iso03_hadVetoEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_hoEt() const{
+  throw std::runtime_error("pf_mus_iso03_hoEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_nTracks() const{
+  throw std::runtime_error("pf_mus_iso03_nTracks does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso03_sumPt() const{
+  throw std::runtime_error("pf_mus_iso03_sumPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso05_emEt() const{
+  throw std::runtime_error("pf_mus_iso05_emEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso05_hadEt() const{
+  throw std::runtime_error("pf_mus_iso05_hadEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso05_hoEt() const{
+  throw std::runtime_error("pf_mus_iso05_hoEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso05_nTracks() const{
+  throw std::runtime_error("pf_mus_iso05_nTracks does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_iso05_sumPt() const{
+  throw std::runtime_error("pf_mus_iso05_sumPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_neutralHadronIso() const{
+  throw std::runtime_error("pf_mus_neutralHadronIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_num_matches() const{
+  throw std::runtime_error("pf_mus_num_matches does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_numberOfMatchedStations() const{
+  throw std::runtime_error("pf_mus_numberOfMatchedStations does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumChargedHadronPt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumChargedHadronPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumChargedParticlePt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumChargedParticlePt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumNeutralHadronEt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumNeutralHadronEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumPUPt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumPUPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumPhotonEt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumPhotonEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR03_sumPhotonEtHighThreshold() const{
+  throw std::runtime_error("pf_mus_pfIsolationR03_sumPhotonEtHighThreshold does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumChargedHadronPt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumChargedHadronPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumChargedParticlePt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumChargedParticlePt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumNeutralHadronEt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumNeutralHadronEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumPUPt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumPUPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumPhotonEt() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumPhotonEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pfIsolationR04_sumPhotonEtHighThreshold() const{
+  throw std::runtime_error("pf_mus_pfIsolationR04_sumPhotonEtHighThreshold does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_phi() const{
+  throw std::runtime_error("pf_mus_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_photonIso() const{
+  throw std::runtime_error("pf_mus_photonIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_ExpectedHitsInner() const{
+  throw std::runtime_error("pf_mus_picky_ExpectedHitsInner does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_ExpectedHitsOuter() const{
+  throw std::runtime_error("pf_mus_picky_ExpectedHitsOuter does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_LayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_picky_LayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_LayersWithoutMeasurement() const{
+  throw std::runtime_error("pf_mus_picky_LayersWithoutMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_PixelLayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_picky_PixelLayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_ValidStripLayersWithMonoAndStereoHit() const{
+  throw std::runtime_error("pf_mus_picky_ValidStripLayersWithMonoAndStereoHit does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_chg() const{
+  throw std::runtime_error("pf_mus_picky_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_chi2() const{
+  throw std::runtime_error("pf_mus_picky_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_d0dum() const{
+  throw std::runtime_error("pf_mus_picky_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_d0dumErr() const{
+  throw std::runtime_error("pf_mus_picky_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_dz() const{
+  throw std::runtime_error("pf_mus_picky_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_dzErr() const{
+  throw std::runtime_error("pf_mus_picky_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_eta() const{
+  throw std::runtime_error("pf_mus_picky_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_etaErr() const{
+  throw std::runtime_error("pf_mus_picky_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_id() const{
+  throw std::runtime_error("pf_mus_picky_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_ndof() const{
+  throw std::runtime_error("pf_mus_picky_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_numlosthits() const{
+  throw std::runtime_error("pf_mus_picky_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_numvalPixelhits() const{
+  throw std::runtime_error("pf_mus_picky_numvalPixelhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_numvalhits() const{
+  throw std::runtime_error("pf_mus_picky_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_phi() const{
+  throw std::runtime_error("pf_mus_picky_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_phiErr() const{
+  throw std::runtime_error("pf_mus_picky_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_pt() const{
+  throw std::runtime_error("pf_mus_picky_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_ptErr() const{
+  throw std::runtime_error("pf_mus_picky_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_px() const{
+  throw std::runtime_error("pf_mus_picky_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_py() const{
+  throw std::runtime_error("pf_mus_picky_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_pz() const{
+  throw std::runtime_error("pf_mus_picky_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_theta() const{
+  throw std::runtime_error("pf_mus_picky_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_vx() const{
+  throw std::runtime_error("pf_mus_picky_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_vy() const{
+  throw std::runtime_error("pf_mus_picky_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_picky_vz() const{
+  throw std::runtime_error("pf_mus_picky_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pt() const{
+  throw std::runtime_error("pf_mus_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_px() const{
+  throw std::runtime_error("pf_mus_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_py() const{
+  throw std::runtime_error("pf_mus_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_pz() const{
+  throw std::runtime_error("pf_mus_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_chg() const{
+  throw std::runtime_error("pf_mus_stamu_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_chi2() const{
+  throw std::runtime_error("pf_mus_stamu_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_d0dum() const{
+  throw std::runtime_error("pf_mus_stamu_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_d0dumErr() const{
+  throw std::runtime_error("pf_mus_stamu_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_dz() const{
+  throw std::runtime_error("pf_mus_stamu_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_dzErr() const{
+  throw std::runtime_error("pf_mus_stamu_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_eta() const{
+  throw std::runtime_error("pf_mus_stamu_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_etaErr() const{
+  throw std::runtime_error("pf_mus_stamu_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_ndof() const{
+  throw std::runtime_error("pf_mus_stamu_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_numlosthits() const{
+  throw std::runtime_error("pf_mus_stamu_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_numvalhits() const{
+  throw std::runtime_error("pf_mus_stamu_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_phi() const{
+  throw std::runtime_error("pf_mus_stamu_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_phiErr() const{
+  throw std::runtime_error("pf_mus_stamu_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_pt() const{
+  throw std::runtime_error("pf_mus_stamu_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_ptErr() const{
+  throw std::runtime_error("pf_mus_stamu_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_px() const{
+  throw std::runtime_error("pf_mus_stamu_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_py() const{
+  throw std::runtime_error("pf_mus_stamu_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_pz() const{
+  throw std::runtime_error("pf_mus_stamu_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_theta() const{
+  throw std::runtime_error("pf_mus_stamu_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_vx() const{
+  throw std::runtime_error("pf_mus_stamu_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_vy() const{
+  throw std::runtime_error("pf_mus_stamu_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_stamu_vz() const{
+  throw std::runtime_error("pf_mus_stamu_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_status() const{
+  throw std::runtime_error("pf_mus_status does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tIso() const{
+  throw std::runtime_error("pf_mus_tIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_theta() const{
+  throw std::runtime_error("pf_mus_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tkHits() const{
+  throw std::runtime_error("pf_mus_tkHits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_ExpectedHitsInner() const{
+  throw std::runtime_error("pf_mus_tk_ExpectedHitsInner does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_ExpectedHitsOuter() const{
+  throw std::runtime_error("pf_mus_tk_ExpectedHitsOuter does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_LayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_tk_LayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_LayersWithoutMeasurement() const{
+  throw std::runtime_error("pf_mus_tk_LayersWithoutMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_PixelLayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_tk_PixelLayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_ValidStripLayersWithMonoAndStereoHit() const{
+  throw std::runtime_error("pf_mus_tk_ValidStripLayersWithMonoAndStereoHit does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_chg() const{
+  throw std::runtime_error("pf_mus_tk_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_chi2() const{
+  throw std::runtime_error("pf_mus_tk_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_d0dum() const{
+  throw std::runtime_error("pf_mus_tk_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_d0dumErr() const{
+  throw std::runtime_error("pf_mus_tk_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_dz() const{
+  throw std::runtime_error("pf_mus_tk_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_dzErr() const{
+  throw std::runtime_error("pf_mus_tk_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_eta() const{
+  throw std::runtime_error("pf_mus_tk_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_etaErr() const{
+  throw std::runtime_error("pf_mus_tk_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_id() const{
+  throw std::runtime_error("pf_mus_tk_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_ndof() const{
+  throw std::runtime_error("pf_mus_tk_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_numlosthits() const{
+  throw std::runtime_error("pf_mus_tk_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_numpixelWthMeasr() const{
+  throw std::runtime_error("pf_mus_tk_numpixelWthMeasr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_numvalPixelhits() const{
+  throw std::runtime_error("pf_mus_tk_numvalPixelhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_numvalhits() const{
+  throw std::runtime_error("pf_mus_tk_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_phi() const{
+  throw std::runtime_error("pf_mus_tk_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_phiErr() const{
+  throw std::runtime_error("pf_mus_tk_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_pt() const{
+  throw std::runtime_error("pf_mus_tk_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_ptErr() const{
+  throw std::runtime_error("pf_mus_tk_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_px() const{
+  throw std::runtime_error("pf_mus_tk_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_py() const{
+  throw std::runtime_error("pf_mus_tk_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_pz() const{
+  throw std::runtime_error("pf_mus_tk_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_theta() const{
+  throw std::runtime_error("pf_mus_tk_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_vx() const{
+  throw std::runtime_error("pf_mus_tk_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_vy() const{
+  throw std::runtime_error("pf_mus_tk_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tk_vz() const{
+  throw std::runtime_error("pf_mus_tk_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_ExpectedHitsInner() const{
+  throw std::runtime_error("pf_mus_tpfms_ExpectedHitsInner does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_ExpectedHitsOuter() const{
+  throw std::runtime_error("pf_mus_tpfms_ExpectedHitsOuter does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_LayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_tpfms_LayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_LayersWithoutMeasurement() const{
+  throw std::runtime_error("pf_mus_tpfms_LayersWithoutMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_PixelLayersWithMeasurement() const{
+  throw std::runtime_error("pf_mus_tpfms_PixelLayersWithMeasurement does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit() const{
+  throw std::runtime_error("pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_chg() const{
+  throw std::runtime_error("pf_mus_tpfms_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_chi2() const{
+  throw std::runtime_error("pf_mus_tpfms_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_d0dum() const{
+  throw std::runtime_error("pf_mus_tpfms_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_d0dumErr() const{
+  throw std::runtime_error("pf_mus_tpfms_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_dz() const{
+  throw std::runtime_error("pf_mus_tpfms_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_dzErr() const{
+  throw std::runtime_error("pf_mus_tpfms_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_eta() const{
+  throw std::runtime_error("pf_mus_tpfms_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_etaErr() const{
+  throw std::runtime_error("pf_mus_tpfms_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_id() const{
+  throw std::runtime_error("pf_mus_tpfms_id does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_ndof() const{
+  throw std::runtime_error("pf_mus_tpfms_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_numlosthits() const{
+  throw std::runtime_error("pf_mus_tpfms_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_numvalPixelhits() const{
+  throw std::runtime_error("pf_mus_tpfms_numvalPixelhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_numvalhits() const{
+  throw std::runtime_error("pf_mus_tpfms_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_phi() const{
+  throw std::runtime_error("pf_mus_tpfms_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_phiErr() const{
+  throw std::runtime_error("pf_mus_tpfms_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_pt() const{
+  throw std::runtime_error("pf_mus_tpfms_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_ptErr() const{
+  throw std::runtime_error("pf_mus_tpfms_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_px() const{
+  throw std::runtime_error("pf_mus_tpfms_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_py() const{
+  throw std::runtime_error("pf_mus_tpfms_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_pz() const{
+  throw std::runtime_error("pf_mus_tpfms_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_theta() const{
+  throw std::runtime_error("pf_mus_tpfms_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_vx() const{
+  throw std::runtime_error("pf_mus_tpfms_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_vy() const{
+  throw std::runtime_error("pf_mus_tpfms_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_mus_tpfms_vz() const{
+  throw std::runtime_error("pf_mus_tpfms_vz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_chIso() const{
+  throw std::runtime_error("pf_photons_chIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_e1x5() const{
+  throw std::runtime_error("pf_photons_e1x5 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_e2x5() const{
+  throw std::runtime_error("pf_photons_e2x5 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_e3x3() const{
+  throw std::runtime_error("pf_photons_e3x3 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_e5x5() const{
+  throw std::runtime_error("pf_photons_e5x5 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_energy() const{
+  throw std::runtime_error("pf_photons_energy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_et() const{
+  throw std::runtime_error("pf_photons_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_eta() const{
+  throw std::runtime_error("pf_photons_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_hadOverEM() const{
+  throw std::runtime_error("pf_photons_hadOverEM does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_hadTowOverEM() const{
+  throw std::runtime_error("pf_photons_hadTowOverEM does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_hasPixelSeed() const{
+  throw std::runtime_error("pf_photons_hasPixelSeed does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isAlsoElectron() const{
+  throw std::runtime_error("pf_photons_isAlsoElectron does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isConverted() const{
+  throw std::runtime_error("pf_photons_isConverted does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isEBEEGap() const{
+  throw std::runtime_error("pf_photons_isEBEEGap does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isEBGap() const{
+  throw std::runtime_error("pf_photons_isEBGap does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isEBPho() const{
+  throw std::runtime_error("pf_photons_isEBPho does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isEEGap() const{
+  throw std::runtime_error("pf_photons_isEEGap does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_isEEPho() const{
+  throw std::runtime_error("pf_photons_isEEPho does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_maxEnergyXtal() const{
+  throw std::runtime_error("pf_photons_maxEnergyXtal does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_nhIso() const{
+  throw std::runtime_error("pf_photons_nhIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_phIso() const{
+  throw std::runtime_error("pf_photons_phIso does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_phi() const{
+  throw std::runtime_error("pf_photons_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_pt() const{
+  throw std::runtime_error("pf_photons_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_px() const{
+  throw std::runtime_error("pf_photons_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_py() const{
+  throw std::runtime_error("pf_photons_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_pz() const{
+  throw std::runtime_error("pf_photons_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_r9() const{
+  throw std::runtime_error("pf_photons_r9 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scEnergy() const{
+  throw std::runtime_error("pf_photons_scEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scEta() const{
+  throw std::runtime_error("pf_photons_scEta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scEtaWidth() const{
+  throw std::runtime_error("pf_photons_scEtaWidth does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scPhi() const{
+  throw std::runtime_error("pf_photons_scPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scPhiWidth() const{
+  throw std::runtime_error("pf_photons_scPhiWidth does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_scRawEnergy() const{
+  throw std::runtime_error("pf_photons_scRawEnergy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_sigmaEtaEta() const{
+  throw std::runtime_error("pf_photons_sigmaEtaEta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_sigmaIetaIeta() const{
+  throw std::runtime_error("pf_photons_sigmaIetaIeta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_status() const{
+  throw std::runtime_error("pf_photons_status does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pf_photons_theta() const{
+  throw std::runtime_error("pf_photons_theta does not exist in this cfa version.");
+}
+
 std::vector<float>* const & cfa_base::pfcand_charge() const{
   throw std::runtime_error("pfcand_charge does not exist in this cfa version.");
 }
@@ -3064,6 +5636,10 @@ std::vector<float>* const & cfa_base::pfcand_energy() const{
 
 std::vector<float>* const & cfa_base::pfcand_eta() const{
   throw std::runtime_error("pfcand_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfcand_particleId() const{
+  throw std::runtime_error("pfcand_particleId does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::pfcand_pdgId() const{
@@ -3092,6 +5668,110 @@ std::vector<float>* const & cfa_base::pfcand_pz() const{
 
 std::vector<float>* const & cfa_base::pfcand_theta() const{
   throw std::runtime_error("pfcand_theta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_et() const{
+  throw std::runtime_error("pfmets_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_ex() const{
+  throw std::runtime_error("pfmets_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_ey() const{
+  throw std::runtime_error("pfmets_ey does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignif() const{
+  throw std::runtime_error("pfmets_fullSignif does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov00() const{
+  throw std::runtime_error("pfmets_fullSignifCov00 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov00_2012() const{
+  throw std::runtime_error("pfmets_fullSignifCov00_2012 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov00_2012_dataRes() const{
+  throw std::runtime_error("pfmets_fullSignifCov00_2012_dataRes does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov10() const{
+  throw std::runtime_error("pfmets_fullSignifCov10 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov10_2012() const{
+  throw std::runtime_error("pfmets_fullSignifCov10_2012 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov10_2012_dataRes() const{
+  throw std::runtime_error("pfmets_fullSignifCov10_2012_dataRes does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov11() const{
+  throw std::runtime_error("pfmets_fullSignifCov11 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov11_2012() const{
+  throw std::runtime_error("pfmets_fullSignifCov11_2012 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignifCov11_2012_dataRes() const{
+  throw std::runtime_error("pfmets_fullSignifCov11_2012_dataRes does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignif_2012() const{
+  throw std::runtime_error("pfmets_fullSignif_2012 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::pfmets_fullSignif_2012_dataRes() const{
+  throw std::runtime_error("pfmets_fullSignif_2012_dataRes does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_gen_et() const{
+  throw std::runtime_error("pfmets_gen_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_gen_phi() const{
+  throw std::runtime_error("pfmets_gen_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_phi() const{
+  throw std::runtime_error("pfmets_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_sign() const{
+  throw std::runtime_error("pfmets_sign does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_sumEt() const{
+  throw std::runtime_error("pfmets_sumEt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_unCPhi() const{
+  throw std::runtime_error("pfmets_unCPhi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::pfmets_unCPt() const{
+  throw std::runtime_error("pfmets_unCPt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::photon_chIsoValues() const{
+  throw std::runtime_error("photon_chIsoValues does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::photon_nhIsoValues() const{
+  throw std::runtime_error("photon_nhIsoValues does not exist in this cfa version.");
+}
+
+std::vector<bool>* const & cfa_base::photon_passElectronVeto() const{
+  throw std::runtime_error("photon_passElectronVeto does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::photon_phIsoValues() const{
+  throw std::runtime_error("photon_phIsoValues does not exist in this cfa version.");
 }
 
 std::vector<float>* const & cfa_base::photons_e1x5() const{
@@ -3314,6 +5994,14 @@ std::vector<float>* const & cfa_base::photons_theta() const{
   throw std::runtime_error("photons_theta does not exist in this cfa version.");
 }
 
+std::vector<std::vector<float> >* const & cfa_base::puJet_rejectionBeta() const{
+  throw std::runtime_error("puJet_rejectionBeta does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::puJet_rejectionMVA() const{
+  throw std::runtime_error("puJet_rejectionMVA does not exist in this cfa version.");
+}
+
 std::vector<float>* const & cfa_base::pv_chi2() const{
   throw std::runtime_error("pv_chi2 does not exist in this cfa version.");
 }
@@ -3358,8 +6046,28 @@ std::vector<float>* const & cfa_base::pv_zErr() const{
   throw std::runtime_error("pv_zErr does not exist in this cfa version.");
 }
 
+Float_t const & cfa_base::rho_kt6PFJetsForIsolation2011() const{
+  throw std::runtime_error("rho_kt6PFJetsForIsolation2011 does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::rho_kt6PFJetsForIsolation2012() const{
+  throw std::runtime_error("rho_kt6PFJetsForIsolation2012 does not exist in this cfa version.");
+}
+
 UInt_t const & cfa_base::run() const{
   throw std::runtime_error("run does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::scrapingVeto_decision() const{
+  throw std::runtime_error("scrapingVeto_decision does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::softjetUp_dMEx() const{
+  throw std::runtime_error("softjetUp_dMEx does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::softjetUp_dMEy() const{
+  throw std::runtime_error("softjetUp_dMEy does not exist in this cfa version.");
 }
 
 std::vector<std::string>* const & cfa_base::standalone_triggerobject_collectionname() const{
@@ -3642,12 +6350,144 @@ std::vector<float>* const & cfa_base::taus_trackIsolation() const{
   throw std::runtime_error("taus_trackIsolation does not exist in this cfa version.");
 }
 
+std::vector<float>* const & cfa_base::tcmets_et() const{
+  throw std::runtime_error("tcmets_et does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tcmets_ex() const{
+  throw std::runtime_error("tcmets_ex does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tcmets_ey() const{
+  throw std::runtime_error("tcmets_ey does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tcmets_phi() const{
+  throw std::runtime_error("tcmets_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tcmets_sumEt() const{
+  throw std::runtime_error("tcmets_sumEt does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trackercoherentnoisefilter1_decision() const{
+  throw std::runtime_error("trackercoherentnoisefilter1_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trackercoherentnoisefilter2_decision() const{
+  throw std::runtime_error("trackercoherentnoisefilter2_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trackertoomanyclustersfilter_decision() const{
+  throw std::runtime_error("trackertoomanyclustersfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trackertoomanyseedsfilter_decision() const{
+  throw std::runtime_error("trackertoomanyseedsfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trackertoomanytripletsfilter_decision() const{
+  throw std::runtime_error("trackertoomanytripletsfilter_decision does not exist in this cfa version.");
+}
+
 Int_t const & cfa_base::trackingfailurefilter_decision() const{
   throw std::runtime_error("trackingfailurefilter_decision does not exist in this cfa version.");
 }
 
+std::vector<float>* const & cfa_base::tracks_chg() const{
+  throw std::runtime_error("tracks_chg does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_chi2() const{
+  throw std::runtime_error("tracks_chi2 does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_d0dum() const{
+  throw std::runtime_error("tracks_d0dum does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_d0dumErr() const{
+  throw std::runtime_error("tracks_d0dumErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_dz() const{
+  throw std::runtime_error("tracks_dz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_dzErr() const{
+  throw std::runtime_error("tracks_dzErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_eta() const{
+  throw std::runtime_error("tracks_eta does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_etaErr() const{
+  throw std::runtime_error("tracks_etaErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_highPurity() const{
+  throw std::runtime_error("tracks_highPurity does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_ndof() const{
+  throw std::runtime_error("tracks_ndof does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_numlosthits() const{
+  throw std::runtime_error("tracks_numlosthits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_numvalhits() const{
+  throw std::runtime_error("tracks_numvalhits does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_phi() const{
+  throw std::runtime_error("tracks_phi does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_phiErr() const{
+  throw std::runtime_error("tracks_phiErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_pt() const{
+  throw std::runtime_error("tracks_pt does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_ptErr() const{
+  throw std::runtime_error("tracks_ptErr does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_px() const{
+  throw std::runtime_error("tracks_px does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_py() const{
+  throw std::runtime_error("tracks_py does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_pz() const{
+  throw std::runtime_error("tracks_pz does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_vx() const{
+  throw std::runtime_error("tracks_vx does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_vy() const{
+  throw std::runtime_error("tracks_vy does not exist in this cfa version.");
+}
+
+std::vector<float>* const & cfa_base::tracks_vz() const{
+  throw std::runtime_error("tracks_vz does not exist in this cfa version.");
+}
+
 std::vector<bool>* const & cfa_base::trigger_decision() const{
   throw std::runtime_error("trigger_decision does not exist in this cfa version.");
+}
+
+std::vector<std::string>* const & cfa_base::trigger_lastfiltername() const{
+  throw std::runtime_error("trigger_lastfiltername does not exist in this cfa version.");
 }
 
 std::vector<std::string>* const & cfa_base::trigger_name() const{
@@ -3656,6 +6496,42 @@ std::vector<std::string>* const & cfa_base::trigger_name() const{
 
 std::vector<float>* const & cfa_base::trigger_prescalevalue() const{
   throw std::runtime_error("trigger_prescalevalue does not exist in this cfa version.");
+}
+
+std::vector<std::vector<std::string> >* const & cfa_base::triggerobject_collectionname() const{
+  throw std::runtime_error("triggerobject_collectionname does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_energy() const{
+  throw std::runtime_error("triggerobject_energy does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_et() const{
+  throw std::runtime_error("triggerobject_et does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_eta() const{
+  throw std::runtime_error("triggerobject_eta does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_phi() const{
+  throw std::runtime_error("triggerobject_phi does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_pt() const{
+  throw std::runtime_error("triggerobject_pt does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_px() const{
+  throw std::runtime_error("triggerobject_px does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_py() const{
+  throw std::runtime_error("triggerobject_py does not exist in this cfa version.");
+}
+
+std::vector<std::vector<float> >* const & cfa_base::triggerobject_pz() const{
+  throw std::runtime_error("triggerobject_pz does not exist in this cfa version.");
 }
 
 Int_t const & cfa_base::trkPOG_logErrorTooManyClustersfilter_decision() const{
@@ -3672,6 +6548,18 @@ Int_t const & cfa_base::trkPOG_toomanystripclus53Xfilter_decision() const{
 
 Int_t const & cfa_base::trkPOGfilter_decision() const{
   throw std::runtime_error("trkPOGfilter_decision does not exist in this cfa version.");
+}
+
+Int_t const & cfa_base::trk_nTOBTEC() const{
+  throw std::runtime_error("trk_nTOBTEC does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::trk_ratioAllTOBTEC() const{
+  throw std::runtime_error("trk_ratioAllTOBTEC does not exist in this cfa version.");
+}
+
+Float_t const & cfa_base::trk_ratioJetTOBTEC() const{
+  throw std::runtime_error("trk_ratioJetTOBTEC does not exist in this cfa version.");
 }
 
 Float_t const & cfa_base::weight() const{

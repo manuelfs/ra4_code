@@ -1811,6 +1811,7 @@ private:
   std::vector<float>* taus_tkIsoUsingLeadingPi_;
   std::vector<float>* taus_trackIsolation_;
   Int_t trackingfailurefilter_decision_;
+  std::vector<float>* v_trigger_decision_;
   std::vector<bool>* trigger_decision_;
   std::vector<std::string>* trigger_name_;
   std::vector<float>* trigger_prescalevalue_;
