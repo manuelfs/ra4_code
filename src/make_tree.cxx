@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
   }
 
   TString outFilename(inFilename), folder(inFilename);
-  TString all_sample_files(inFilename), outfolder("out2/");
+  TString all_sample_files(inFilename), outfolder("out/");
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);

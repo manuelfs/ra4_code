@@ -21,44 +21,70 @@ int main(int argc, char *argv[]){
     {TTree t("a","b");}//Magically make ROOT link things correctly...
 
     std::vector<std::pair<std::string, VarSet> > individual_varset_a(0), individual_varset_b(0), individual_varset(0);
+    std::vector<std::string> class_names(0);
     VarSet full_varset;
 
     for(int arg = 1; (arg+1) < argc; arg+=2){
       TFile in_file(argv[arg], "read");
-      if(!in_file.IsOpen() || in_file.IsZombie()) throw std::runtime_error("Could not open file.");
+      if(!in_file.IsOpen() || in_file.IsZombie()) throw std::runtime_error(std::string("Could not open file ")+argv[arg]);
 
       TChain *chainA(static_cast<TChain*>(in_file.Get("configurableAnalysis/eventA")));
-      if(!chainA) throw std::runtime_error("Could not find chainA.");
+      if(!chainA) throw std::runtime_error(std::string("Could not find chainA in ")+argv[arg]);
 
       TChain *chainB(static_cast<TChain*>(in_file.Get("configurableAnalysis/eventB")));
-      if(!chainB) throw std::runtime_error("Could not find chainB.");
+      if(!chainB) throw std::runtime_error(std::string("Could not find chainB in ")+argv[arg]);
     
       GetVariables(chainA, full_varset);
       GetVariables(chainB, full_varset);
 
-      individual_varset.push_back(std::make_pair(std::string(argv[arg+1]), VarSet()));
+      const std::string class_name = argv[arg+1];
+      class_names.push_back(class_name);
+
+      individual_varset.push_back(std::make_pair(class_name, VarSet()));
       GetVariables(chainA, individual_varset.back().second);
       GetVariables(chainB, individual_varset.back().second);
 
-      individual_varset_a.push_back(std::make_pair(std::string(argv[arg+1]), VarSet()));
+      individual_varset_a.push_back(std::make_pair(class_name, VarSet()));
       GetVariables(chainA, individual_varset_a.back().second);
 
-      individual_varset_b.push_back(std::make_pair(std::string(argv[arg+1]), VarSet()));
+      individual_varset_b.push_back(std::make_pair(class_name, VarSet()));
       GetVariables(chainB, individual_varset_b.back().second);
 
       in_file.Close();
     }
 
-    WriteBaseHeader(full_varset);
-    WriteBaseSource(full_varset);
+    Dict dictionary;
+    GetDictionary(full_varset, dictionary);
+
+    RepList patterns;
+    GetRules(patterns);
+
+    RepMap replacements;
+    GetReplacements(dictionary, patterns, replacements);
+
+    RepMap overwrites, new_funcs;
+    GetOverwritten(dictionary, replacements, overwrites, new_funcs);
+    
+    /*for(RepMap::const_iterator it = replacements.begin();
+      it != replacements.end();
+      ++it){
+      std::cout << it->first.second << ' ' << it->first.first << ' ';
+      for(unsigned i = 0; i < it->second.size(); ++i){
+      std::cout << it->second.at(i) << ' ';
+      }
+      std::cout << std::endl;
+      }*/
+
+    WriteBaseHeader(dictionary);
+    WriteBaseSource(dictionary);
 
     for(unsigned i = 0; i < individual_varset_a.size(); ++i){
       WriteDerivedHeader(full_varset, individual_varset.at(i));
       WriteDerivedSource(full_varset, individual_varset.at(i), individual_varset_a.at(i), individual_varset_b.at(i));
     }
 
-    WriteMergedHeader(full_varset);
-    WriteMergedSource(full_varset);
+    WriteMergedHeader(dictionary, overwrites, new_funcs);
+    WriteMergedSource(dictionary, overwrites, new_funcs, class_names);
   }
   catch(std::exception& ex){
     std::cerr << "An exception occurred: " << ex.what() << std::endl;
@@ -69,6 +95,77 @@ int main(int argc, char *argv[]){
     return EXIT_FAILURE;
   }
   return EXIT_SUCCESS;
+}
+
+std::string AllCaps(std::string str){
+  for(std::string::iterator it = str.begin();
+      it != str.end();
+      ++it){
+    *it = toupper(*it);
+  }
+  return str;
+}
+
+void GetTypes(const VarSet &full_varset,
+              const VarSet::const_iterator &variable,
+              std::string &from_type,
+              std::string &to_type,
+              std::string &this_type){
+  from_type = "";
+  to_type = "";
+  this_type = "";
+
+  const std::string name = variable->first;
+
+  if(variable->second.size()==0) throw std::runtime_error("Could not find type for "+name+" in this file.");
+  if(variable->second.size()>=2) throw std::runtime_error("Multiple types found for "+name+" in this file.");
+  this_type = *(variable->second.begin());
+  VarSet::const_iterator var = full_varset.find(name);
+  if(var == full_varset.end()) throw std::runtime_error("Failed to find "+name+" in full dictionary.");
+  switch(var->second.size()){
+  case 0:
+    throw std::runtime_error("Could not find type for "+name+" in full dictionary.");
+    break;
+  case 1:
+    from_type = *(var->second.begin());
+    to_type = from_type;
+    this_type = from_type;
+    break;
+  case 2:
+    if(var->second.find("std::vector<float>*") != var->second.end()
+       && var->second.find("std::vector<bool>*") != var->second.end()){
+      from_type = "std::vector<float>*";
+      to_type = "std::vector<bool>*";
+    }else{
+      throw std::runtime_error("Unknown conversion requested.");
+    }
+    break;
+  default:
+    throw std::runtime_error("Too many types found for "+name+" in full dictionary.");
+    break;
+  }
+}
+
+std::string GetType(const VarSet::const_iterator &variable){
+  const std::string& name = variable->first;
+  switch(variable->second.size()){
+  case 0:
+    throw std::runtime_error("Could not find a valid type for "+name);
+    break;
+  case 1:
+    return *(variable->second.begin());
+  case 2:
+    if(variable->second.find("std::vector<float>*") != variable->second.end()
+       && variable->second.find("std::vector<bool>*") != variable->second.end()){
+      return "std::vector<bool>*";
+    }else{
+      throw std::runtime_error("Unknown conversion requested for "+name);
+    }
+    break;
+  default:
+    throw std::runtime_error("Too many types found for "+name);
+    break;
+  }
 }
 
 void GetVariables(TChain *chain, VarSet& vars){
@@ -94,76 +191,102 @@ void GetVariables(TChain *chain, VarSet& vars){
   }
 }
 
-std::string AllCaps(std::string str){
-  for(std::string::iterator it = str.begin();
-      it != str.end();
+void GetDictionary(const VarSet &varset, Dict &dictionary){
+  dictionary.clear();
+  for(VarSet::const_iterator it = varset.begin();
+      it != varset.end();
       ++it){
-    *it = toupper(*it);
+    dictionary.insert(std::make_pair(it->first, GetType(it)));
   }
-  return str;
 }
 
-void GetTypes(const VarSet &full_varset,
-              const VarSet::const_iterator &variable,
-              std::string &from_type,
-              std::string &to_type,
-              std::string &this_type){
-  from_type = "";
-  to_type = "";
-  this_type = "";
+void GetRules(RepList &reps){
+  reps.clear();
 
-  if(variable->second.size()==0) throw std::runtime_error("Could not find type for variable in this file.");
-  if(variable->second.size()>=2) throw std::runtime_error("Multiple types found for variable in this file.");
-  this_type = *(variable->second.begin());
-  const std::string name = variable->first;
-  VarSet::const_iterator var = full_varset.find(name);
-  if(var == full_varset.end()) throw std::runtime_error("Failed to find variable in full dictionary.");
-  switch(var->second.size()){
-  case 0:
-    throw std::runtime_error("Could not find type for variable in full dictionary.");
-    break;
-  case 1:
-    from_type = *(var->second.begin());
-    to_type = from_type;
-    this_type = from_type;
-    break;
-  case 2:
-    if(var->second.find("std::vector<float>*") != var->second.end()
-       && var->second.find("std::vector<bool>*") != var->second.end()){
-      from_type = "std::vector<float>*";
-      to_type = "std::vector<bool>*";
-    }else{
-      throw std::runtime_error("Unknown conversion requested.");
+  std::string new_word;
+  std::vector<std::string> rep_list;
+  std::ifstream file("txt/mux_rules.cfg");
+  while(file >> new_word){
+    if(new_word.find("--") != std::string::npos) break;
+  }
+
+  while(file >> new_word){
+    rep_list.clear();
+    //2 here is the number of cfa versions. Should improve this to use number of example files read in
+    std::string temp;
+    for(unsigned i = 0; i < 2 && file >> temp; ++i){
+      rep_list.push_back(temp);
     }
-    break;
-  default:
-    throw std::runtime_error("Too many types found in full dictionary.");
-    break;
+
+    reps.push_back(std::make_pair(new_word, rep_list));
   }
 }
 
-std::string GetType(const VarSet::const_iterator &variable){
-  switch(variable->second.size()){
-  case 0:
-    throw std::runtime_error("Could not find a valid variable type");
-    break;
-  case 1:
-    return *(variable->second.begin());
-  case 2:
-    if(variable->second.find("std::vector<float>*") != variable->second.end()
-       && variable->second.find("std::vector<bool>*") != variable->second.end()){
-      return "std::vector<bool>*";
-    }else{
-      throw std::runtime_error("Unknown conversion requested.");
+void GetReplacements(const Dict &dictionary, const RepList &pats, RepMap &reps){
+  reps.clear();
+  //Loop over all variables
+  for(Dict::const_iterator var = dictionary.begin();
+      var != dictionary.end();
+      ++var){
+    const std::string& name = var->first;
+    const std::string& type = var->second;
+    //Loop over replacement rules
+    for(RepList::const_iterator pat = pats.begin();
+        pat != pats.end();
+        ++pat){
+      //Loop over words to replace in this rule
+      for(std::vector<std::string>::const_iterator to_match = pat->second.begin();
+          to_match != pat->second.end();
+          ++to_match){
+        const std::string::size_type match_loc = name.find(*to_match);
+        //if(match_loc != std::string::npos){ //Use this to search whole string (dangerous, maybe not working)
+        if(match_loc == 0){ // Use this to search at beginning of string
+          //Variable matches this replacement rule!
+          const std::string prefix = name.substr(0, match_loc);
+          const std::string suffix = name.substr(match_loc+to_match->size(), name.size());
+          
+          //Get the name of the function we're producing
+          const std::string out_name = prefix + pat->first + suffix;
+          const std::pair<std::string, std::string> key_val(out_name, type);
+
+          //Lookup all the replacements for this new function
+          std::vector<std::string> out_vars(pat->second.size(), "");
+          for(unsigned i = 0; i < out_vars.size(); ++i){
+            const std::string test_name = prefix + pat->second.at(i) + suffix;
+            if(dictionary.find(std::make_pair(test_name, type)) != dictionary.end()){
+              //Found a valid match
+              out_vars.at(i) = test_name;
+            }
+          }
+
+          //Make sure we haven't already defined the function
+          if(reps.find(key_val) != reps.end() && reps.find(key_val)->second!=out_vars){
+            throw std::runtime_error("Auto-generating the same function in multiple ways ("+type+" "+out_name+")");
+          }
+
+          reps.insert(std::make_pair(key_val, out_vars));
+        }
+      }
     }
-    break;
-  default:
-    throw std::runtime_error("Too many types found for variable.");
-    break;
   }
 }
 
-void WriteBaseHeader(const VarSet& full_varset){
+void GetOverwritten(const Dict &dictionary, const RepMap &replacements,
+                    RepMap &overwritten, RepMap &new_funcs){
+  overwritten.clear();
+  new_funcs.clear();
+  for(RepMap::const_iterator it = replacements.begin();
+      it != replacements.end();
+      ++it){
+    if(dictionary.find(it->first) != dictionary.end()){
+      overwritten.insert(*it);
+    }else{
+      new_funcs.insert(*it);
+    }
+  }
+}
+
+void WriteBaseHeader(const Dict& dictionary){
   std::ofstream hpp_file("inc/cfa_base.hpp");
   hpp_file << "#ifndef H_CFA_BASE\n";
   hpp_file << "#define H_CFA_BASE\n\n";
@@ -188,11 +311,11 @@ void WriteBaseHeader(const VarSet& full_varset){
   hpp_file << "  virtual ~cfa_base();\n\n";
 
   //Print accessor function declarations
-  for(VarSet::const_iterator it = full_varset.begin();
-      it != full_varset.end();
+  for(Dict::const_iterator it = dictionary.begin();
+      it != dictionary.end();
       ++it){
     const std::string name = it->first;
-    const std::string type = GetType(it);
+    const std::string type = it->second;
 
     hpp_file << "  __attribute__((noreturn)) virtual " << type << " const & " << name << "() const;\n";
   }
@@ -220,7 +343,7 @@ void WriteBaseHeader(const VarSet& full_varset){
   hpp_file.close();
 }
 
-void WriteBaseSource(const VarSet &full_varset){
+void WriteBaseSource(const Dict &dictionary){
   std::ofstream cpp_file("src/cfa_base.cpp");
 
   cpp_file << "#include \"cfa_base.hpp\"\n\n";
@@ -308,11 +431,11 @@ void WriteBaseSource(const VarSet &full_varset){
   cpp_file << "}\n\n";
 
   //Print base implementation (intended to be overriden in child classes)
-  for(VarSet::const_iterator it = full_varset.begin();
-      it != full_varset.end();
+  for(Dict::const_iterator it = dictionary.begin();
+      it != dictionary.end();
       ++it){
     const std::string name = it->first;
-    const std::string type = GetType(it);
+    const std::string type = it->second;
 
     cpp_file << type << " const & cfa_base::" << name << "() const{\n";
     cpp_file << "  throw std::runtime_error(\"" << name << " does not exist in this cfa version.\");\n";
@@ -527,7 +650,7 @@ void WriteDerivedSource(const VarSet &full_varset,
   cpp_file.close();
 }
 
-void WriteMergedHeader(const VarSet &full_varset){
+void WriteMergedHeader(const Dict &dictionary, const RepMap &overwritten, const RepMap &new_funcs){
   std::ofstream hpp_file("inc/cfa.hpp");
 
   hpp_file << "#ifndef H_CFA_MERGED\n";
@@ -555,13 +678,23 @@ void WriteMergedHeader(const VarSet &full_varset){
   hpp_file << "  ~cfa();\n\n";
 
   //Print accessor function declarations
-  for(VarSet::const_iterator it = full_varset.begin();
-      it != full_varset.end();
+  for(Dict::const_iterator it = dictionary.begin();
+      it != dictionary.end();
       ++it){
     const std::string name = it->first;
-    const std::string type = GetType(it);
+    const std::string type = it->second;
 
-    hpp_file << "  " << type << " const & " << name << "() const;\n";
+    if(overwritten.find(*it) != overwritten.end()){
+      hpp_file << "  " << type << " const & " << name << "(const bool mux = true) const;\n";
+    }else{
+      hpp_file << "  " << type << " const & " << name << "() const;\n";
+    }
+  }
+
+  for(RepMap::const_iterator it = new_funcs.begin();
+      it != new_funcs.end();
+      ++it){
+    hpp_file << "  " << it->first.second << " const & " << it->first.first << "() const;\n";
   }
   hpp_file << "\n";
 
@@ -574,7 +707,8 @@ void WriteMergedHeader(const VarSet &full_varset){
   hpp_file.close();
 }
 
-void WriteMergedSource(const VarSet &full_varset){
+void WriteMergedSource(const Dict &dictionary, const RepMap &overwritten, const RepMap &new_funcs,
+                       const std::vector<std::string>& class_names){
   std::ofstream cpp_file("src/cfa.cpp");
 
   cpp_file << "#include \"cfa.hpp\"\n\n";
@@ -627,16 +761,78 @@ void WriteMergedSource(const VarSet &full_varset){
   cpp_file << "  delete cfa_; cfa_=NULL;\n";
   cpp_file << "}\n\n";
 
-  //Print base implementation (intended to be overriden in child classes)
-  for(VarSet::const_iterator it = full_varset.begin();
-      it != full_varset.end();
+  //Print accessor implementation for variables
+  for(Dict::const_iterator it = dictionary.begin();
+      it != dictionary.end();
       ++it){
     const std::string name = it->first;
-    const std::string type = GetType(it);
+    const std::string type = it->second;
+
+    const RepMap::const_iterator over_it = overwritten.find(*it);
+    if(over_it == overwritten.end()){
+      //Function does not conflict with a mux name and just does polymorphic call
+      cpp_file << type << " const & cfa::" << name << "() const{\n";
+      cpp_file << "  return cfa_->" << name << "();\n";
+      cpp_file << "}\n\n";
+    }else{
+      //Function conflicts with a mux name and needs special treatment
+      const std::vector<std::string>& funcs = over_it->second;
+      if(funcs.size() != class_names.size()) throw std::runtime_error("Could not match class names to muxes");
+
+      cpp_file << type << " const & cfa::" << name << "(const bool mux) const{\n";
+      if(funcs.size()){
+        cpp_file << "  if(mux){\n";
+        for(unsigned i = 0; i < funcs.size(); ++i){
+          cpp_file << "    " << (i?"}else ":"") << "if(typeid(*cfa_)==typeid(" << class_names.at(i) << ")){\n";
+          if(funcs.at(i)!=""){
+            cpp_file << "      return cfa_->" << funcs.at(i) << "();\n";
+          }else{
+            cpp_file << "      throw std::logic_error(\"Function lookup unknown for class \"+std::string(typeid(*cfa_).name()));\n";
+          }
+        }
+        cpp_file << "    }else{\n";
+        cpp_file << "      throw std::logic_error(\"Function lookup unknown for class \"+std::string(typeid(*cfa_).name()));\n";
+        cpp_file << "    }\n";
+        cpp_file << "  }\n";
+      }
+      cpp_file << "  return cfa_->" << name << "();\n";
+      cpp_file << "}\n\n";
+    }
+  }
+
+  //Print functions that only exist as a result of muxing
+  for(RepMap::const_iterator it = new_funcs.begin();
+      it != new_funcs.end();
+      ++it){
+    const std::string& name = it->first.first;
+    const std::string& type = it->first.second;
+    const std::vector<std::string>& funcs = it->second;
+    if(funcs.size() != class_names.size()) throw std::runtime_error("Could not match class names to muxes");
+
+    bool all_blank = true;
+    std::string good_name = "";
 
     cpp_file << type << " const & cfa::" << name << "() const{\n";
-    cpp_file << "  return cfa_->" << name << "();\n";
+    for(unsigned i = 0; i < funcs.size(); ++i){
+      if(all_blank && funcs.at(i)!=""){
+        all_blank = false;
+        good_name = funcs.at(i);
+      }
+      cpp_file << "  " << (i?"}else ":"") << "if(typeid(*cfa_)==typeid(" << class_names.at(i) << ")){\n";
+      if(funcs.at(i)!=""){
+        cpp_file << "    return cfa_->" << funcs.at(i) << "();\n";
+      }else{
+        cpp_file << "    throw std::logic_error(\"Function lookup unknown for class \"+std::string(typeid(*cfa_).name()));\n";
+      }
+    }
+    cpp_file << "  }else{\n";
+    cpp_file << "    throw std::logic_error(\"Function lookup unknown for class \"+std::string(typeid(*cfa_).name()));\n";
+    cpp_file << "  }\n";
+    cpp_file << "  return cfa_->" << good_name << "();\n";
     cpp_file << "}\n\n";
+
+    //Make sure we found at least one valid function to call
+    if(all_blank) throw std::runtime_error("No valid function call available for "+type+name);
   }
 
   cpp_file.close();

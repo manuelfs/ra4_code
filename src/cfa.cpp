@@ -348,543 +348,1758 @@ Int_t const & cfa::eenoisefilter_decision() const{
   return cfa_->eenoisefilter_decision();
 }
 
-std::vector<float>* const & cfa::els_PATpassConversionVeto() const{
+std::vector<float>* const & cfa::els_PATpassConversionVeto(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_PATpassConversionVeto();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_PATpassConversionVeto();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_PATpassConversionVeto();
 }
 
-std::vector<float>* const & cfa::els_PFchargedHadronIsoR03() const{
+std::vector<float>* const & cfa::els_PFchargedHadronIsoR03(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_PFchargedHadronIsoR03();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_PFchargedHadronIsoR03();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_PFchargedHadronIsoR03();
 }
 
-std::vector<float>* const & cfa::els_PFneutralHadronIsoR03() const{
+std::vector<float>* const & cfa::els_PFneutralHadronIsoR03(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_PFneutralHadronIsoR03();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_PFneutralHadronIsoR03();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_PFneutralHadronIsoR03();
 }
 
-std::vector<float>* const & cfa::els_PFphotonIsoR03() const{
+std::vector<float>* const & cfa::els_PFphotonIsoR03(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_PFphotonIsoR03();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_PFphotonIsoR03();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_PFphotonIsoR03();
 }
 
-std::vector<float>* const & cfa::els_basicClustersSize() const{
+std::vector<float>* const & cfa::els_basicClustersSize(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_basicClustersSize();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_basicClustersSize();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_basicClustersSize();
 }
 
-std::vector<float>* const & cfa::els_cIso() const{
+std::vector<float>* const & cfa::els_cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cIso();
 }
 
-std::vector<float>* const & cfa::els_caloEnergy() const{
+std::vector<float>* const & cfa::els_caloEnergy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_caloEnergy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_caloEnergy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_caloEnergy();
 }
 
-std::vector<float>* const & cfa::els_charge() const{
+std::vector<float>* const & cfa::els_charge(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_charge();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_charge();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_charge();
 }
 
-std::vector<float>* const & cfa::els_chi2() const{
+std::vector<float>* const & cfa::els_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_chi2();
 }
 
-std::vector<float>* const & cfa::els_conversion_dcot() const{
+std::vector<float>* const & cfa::els_conversion_dcot(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_conversion_dcot();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_conversion_dcot();
 }
 
-std::vector<float>* const & cfa::els_conversion_dist() const{
+std::vector<float>* const & cfa::els_conversion_dist(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_conversion_dist();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_conversion_dist();
 }
 
-std::vector<float>* const & cfa::els_core_ecalDrivenSeed() const{
+std::vector<float>* const & cfa::els_core_ecalDrivenSeed(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_core_ecalDrivenSeed();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_core_ecalDrivenSeed();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_core_ecalDrivenSeed();
 }
 
-std::vector<float>* const & cfa::els_cpx() const{
+std::vector<float>* const & cfa::els_cpx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cpx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cpx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cpx();
 }
 
-std::vector<float>* const & cfa::els_cpy() const{
+std::vector<float>* const & cfa::els_cpy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cpy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cpy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cpy();
 }
 
-std::vector<float>* const & cfa::els_cpz() const{
+std::vector<float>* const & cfa::els_cpz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cpz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cpz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cpz();
 }
 
-std::vector<float>* const & cfa::els_ctf_tk_charge() const{
+std::vector<float>* const & cfa::els_ctf_tk_charge(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ctf_tk_charge();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ctf_tk_charge();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ctf_tk_charge();
 }
 
-std::vector<float>* const & cfa::els_ctf_tk_eta() const{
+std::vector<float>* const & cfa::els_ctf_tk_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ctf_tk_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ctf_tk_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ctf_tk_eta();
 }
 
-std::vector<float>* const & cfa::els_ctf_tk_id() const{
+std::vector<float>* const & cfa::els_ctf_tk_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ctf_tk_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ctf_tk_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ctf_tk_id();
 }
 
-std::vector<float>* const & cfa::els_ctf_tk_phi() const{
+std::vector<float>* const & cfa::els_ctf_tk_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ctf_tk_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ctf_tk_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ctf_tk_phi();
 }
 
-std::vector<float>* const & cfa::els_cx() const{
+std::vector<float>* const & cfa::els_cx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cx();
 }
 
-std::vector<float>* const & cfa::els_cy() const{
+std::vector<float>* const & cfa::els_cy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cy();
 }
 
-std::vector<float>* const & cfa::els_cz() const{
+std::vector<float>* const & cfa::els_cz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_cz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_cz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_cz();
 }
 
-std::vector<float>* const & cfa::els_d0dum() const{
+std::vector<float>* const & cfa::els_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_d0dum();
 }
 
-std::vector<float>* const & cfa::els_d0dumError() const{
+std::vector<float>* const & cfa::els_d0dumError(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_d0dumError();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_d0dumError();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_d0dumError();
 }
 
-std::vector<float>* const & cfa::els_dEtaIn() const{
+std::vector<float>* const & cfa::els_dEtaIn(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dEtaIn();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dEtaIn();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dEtaIn();
 }
 
-std::vector<float>* const & cfa::els_dEtaOut() const{
+std::vector<float>* const & cfa::els_dEtaOut(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dEtaOut();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dEtaOut();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dEtaOut();
 }
 
-std::vector<float>* const & cfa::els_dPhiIn() const{
+std::vector<float>* const & cfa::els_dPhiIn(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dPhiIn();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dPhiIn();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dPhiIn();
 }
 
-std::vector<float>* const & cfa::els_dPhiOut() const{
+std::vector<float>* const & cfa::els_dPhiOut(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dPhiOut();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dPhiOut();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dPhiOut();
 }
 
-std::vector<float>* const & cfa::els_dr03EcalRecHitSumEt() const{
+std::vector<float>* const & cfa::els_dr03EcalRecHitSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr03EcalRecHitSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr03EcalRecHitSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr03EcalRecHitSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr03HcalDepth1TowerSumEt() const{
+std::vector<float>* const & cfa::els_dr03HcalDepth1TowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr03HcalDepth1TowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr03HcalDepth1TowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr03HcalDepth1TowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr03HcalDepth2TowerSumEt() const{
+std::vector<float>* const & cfa::els_dr03HcalDepth2TowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr03HcalDepth2TowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr03HcalDepth2TowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr03HcalDepth2TowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr03HcalTowerSumEt() const{
+std::vector<float>* const & cfa::els_dr03HcalTowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr03HcalTowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr03HcalTowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr03HcalTowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr03TkSumPt() const{
+std::vector<float>* const & cfa::els_dr03TkSumPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr03TkSumPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr03TkSumPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr03TkSumPt();
 }
 
-std::vector<float>* const & cfa::els_dr04EcalRecHitSumEt() const{
+std::vector<float>* const & cfa::els_dr04EcalRecHitSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr04EcalRecHitSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr04EcalRecHitSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr04EcalRecHitSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr04HcalDepth1TowerSumEt() const{
+std::vector<float>* const & cfa::els_dr04HcalDepth1TowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr04HcalDepth1TowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr04HcalDepth1TowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr04HcalDepth1TowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr04HcalDepth2TowerSumEt() const{
+std::vector<float>* const & cfa::els_dr04HcalDepth2TowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr04HcalDepth2TowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr04HcalDepth2TowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr04HcalDepth2TowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr04HcalTowerSumEt() const{
+std::vector<float>* const & cfa::els_dr04HcalTowerSumEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr04HcalTowerSumEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr04HcalTowerSumEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr04HcalTowerSumEt();
 }
 
-std::vector<float>* const & cfa::els_dr04TkSumPt() const{
+std::vector<float>* const & cfa::els_dr04TkSumPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dr04TkSumPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dr04TkSumPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dr04TkSumPt();
 }
 
-std::vector<float>* const & cfa::els_dz() const{
+std::vector<float>* const & cfa::els_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dz();
 }
 
-std::vector<float>* const & cfa::els_dzError() const{
+std::vector<float>* const & cfa::els_dzError(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_dzError();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_dzError();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_dzError();
 }
 
-std::vector<float>* const & cfa::els_eOverPIn() const{
+std::vector<float>* const & cfa::els_eOverPIn(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_eOverPIn();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_eOverPIn();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_eOverPIn();
 }
 
-std::vector<float>* const & cfa::els_eSeedOverPOut() const{
+std::vector<float>* const & cfa::els_eSeedOverPOut(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_eSeedOverPOut();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_eSeedOverPOut();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_eSeedOverPOut();
 }
 
-std::vector<float>* const & cfa::els_ecalIso() const{
+std::vector<float>* const & cfa::els_ecalIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ecalIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ecalIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ecalIso();
 }
 
-std::vector<float>* const & cfa::els_energy() const{
+std::vector<float>* const & cfa::els_energy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_energy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_energy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_energy();
 }
 
-std::vector<float>* const & cfa::els_et() const{
+std::vector<float>* const & cfa::els_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_et();
 }
 
-std::vector<float>* const & cfa::els_eta() const{
+std::vector<float>* const & cfa::els_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_eta();
 }
 
-std::vector<float>* const & cfa::els_etaError() const{
+std::vector<float>* const & cfa::els_etaError(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_etaError();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_etaError();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_etaError();
 }
 
-std::vector<float>* const & cfa::els_fbrem() const{
+std::vector<float>* const & cfa::els_fbrem(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_fbrem();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_fbrem();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_fbrem();
 }
 
-std::vector<float>* const & cfa::els_full5x5_sigmaIetaIeta() const{
+std::vector<float>* const & cfa::els_full5x5_sigmaIetaIeta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_full5x5_sigmaIetaIeta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_full5x5_sigmaIetaIeta();
 }
 
-std::vector<float>* const & cfa::els_gen_et() const{
+std::vector<float>* const & cfa::els_gen_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_et();
 }
 
-std::vector<float>* const & cfa::els_gen_eta() const{
+std::vector<float>* const & cfa::els_gen_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_eta();
 }
 
-std::vector<float>* const & cfa::els_gen_id() const{
+std::vector<float>* const & cfa::els_gen_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_id();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_et() const{
+std::vector<float>* const & cfa::els_gen_mother_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_et();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_eta() const{
+std::vector<float>* const & cfa::els_gen_mother_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_eta();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_id() const{
+std::vector<float>* const & cfa::els_gen_mother_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_id();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_phi() const{
+std::vector<float>* const & cfa::els_gen_mother_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_phi();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_pt() const{
+std::vector<float>* const & cfa::els_gen_mother_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_pt();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_px() const{
+std::vector<float>* const & cfa::els_gen_mother_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_px();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_py() const{
+std::vector<float>* const & cfa::els_gen_mother_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_py();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_pz() const{
+std::vector<float>* const & cfa::els_gen_mother_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_pz();
 }
 
-std::vector<float>* const & cfa::els_gen_mother_theta() const{
+std::vector<float>* const & cfa::els_gen_mother_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_mother_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_mother_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_mother_theta();
 }
 
-std::vector<float>* const & cfa::els_gen_phi() const{
+std::vector<float>* const & cfa::els_gen_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_phi();
 }
 
-std::vector<float>* const & cfa::els_gen_pt() const{
+std::vector<float>* const & cfa::els_gen_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_pt();
 }
 
-std::vector<float>* const & cfa::els_gen_px() const{
+std::vector<float>* const & cfa::els_gen_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_px();
 }
 
-std::vector<float>* const & cfa::els_gen_py() const{
+std::vector<float>* const & cfa::els_gen_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_py();
 }
 
-std::vector<float>* const & cfa::els_gen_pz() const{
+std::vector<float>* const & cfa::els_gen_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_pz();
 }
 
-std::vector<float>* const & cfa::els_gen_theta() const{
+std::vector<float>* const & cfa::els_gen_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_gen_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_gen_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_gen_theta();
 }
 
-std::vector<float>* const & cfa::els_hadOverEm() const{
+std::vector<float>* const & cfa::els_hadOverEm(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_hadOverEm();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_hadOverEm();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_hadOverEm();
 }
 
-std::vector<bool>* const & cfa::els_hasMatchedConversion() const{
+std::vector<bool>* const & cfa::els_hasMatchedConversion(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_hasMatchedConversion();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_hasMatchedConversion();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_hasMatchedConversion();
 }
 
-std::vector<float>* const & cfa::els_hcalIso() const{
+std::vector<float>* const & cfa::els_hcalIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_hcalIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_hcalIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_hcalIso();
 }
 
-std::vector<float>* const & cfa::els_hcalOverEcalBc() const{
+std::vector<float>* const & cfa::els_hcalOverEcalBc(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_hcalOverEcalBc();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_hcalOverEcalBc();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_hcalOverEcalBc();
 }
 
-std::vector<float>* const & cfa::els_isEB() const{
+std::vector<float>* const & cfa::els_isEB(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_isEB();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_isEB();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_isEB();
 }
 
-std::vector<float>* const & cfa::els_isEE() const{
+std::vector<float>* const & cfa::els_isEE(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_isEE();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_isEE();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_isEE();
 }
 
-std::vector<bool>* const & cfa::els_isPF() const{
+std::vector<bool>* const & cfa::els_isPF(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_isPF();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_isPF();
 }
 
-std::vector<int>* const & cfa::els_jet_ind() const{
+std::vector<int>* const & cfa::els_jet_ind(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_jet_ind();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_jet_ind();
 }
 
-std::vector<float>* const & cfa::els_looseId() const{
+std::vector<float>* const & cfa::els_looseId(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_looseId();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_looseId();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_looseId();
 }
 
-std::vector<float>* const & cfa::els_n_inner_layer() const{
+std::vector<float>* const & cfa::els_n_inner_layer(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_n_inner_layer();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_n_inner_layer();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_n_inner_layer();
 }
 
-std::vector<float>* const & cfa::els_n_outer_layer() const{
+std::vector<float>* const & cfa::els_n_outer_layer(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_n_outer_layer();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_n_outer_layer();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_n_outer_layer();
 }
 
-std::vector<float>* const & cfa::els_ndof() const{
+std::vector<float>* const & cfa::els_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ndof();
 }
 
-std::vector<float>* const & cfa::els_numlosthits() const{
+std::vector<float>* const & cfa::els_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_numlosthits();
 }
 
-std::vector<float>* const & cfa::els_numvalhits() const{
+std::vector<float>* const & cfa::els_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_numvalhits();
 }
 
-std::vector<float>* const & cfa::els_pfIsolationR03_sumChargedHadronPt() const{
+std::vector<float>* const & cfa::els_pfIsolationR03_sumChargedHadronPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pfIsolationR03_sumChargedHadronPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pfIsolationR03_sumChargedHadronPt();
 }
 
-std::vector<float>* const & cfa::els_pfIsolationR03_sumNeutralHadronEt() const{
+std::vector<float>* const & cfa::els_pfIsolationR03_sumNeutralHadronEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pfIsolationR03_sumNeutralHadronEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pfIsolationR03_sumNeutralHadronEt();
 }
 
-std::vector<float>* const & cfa::els_pfIsolationR03_sumPUPt() const{
+std::vector<float>* const & cfa::els_pfIsolationR03_sumPUPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pfIsolationR03_sumPUPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pfIsolationR03_sumPUPt();
 }
 
-std::vector<float>* const & cfa::els_pfIsolationR03_sumPhotonEt() const{
+std::vector<float>* const & cfa::els_pfIsolationR03_sumPhotonEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pfIsolationR03_sumPhotonEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pfIsolationR03_sumPhotonEt();
 }
 
-std::vector<float>* const & cfa::els_phi() const{
+std::vector<float>* const & cfa::els_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_phi();
 }
 
-std::vector<float>* const & cfa::els_phiError() const{
+std::vector<float>* const & cfa::els_phiError(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_phiError();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_phiError();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_phiError();
 }
 
-std::vector<float>* const & cfa::els_pt() const{
+std::vector<float>* const & cfa::els_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pt();
 }
 
-std::vector<float>* const & cfa::els_ptError() const{
+std::vector<float>* const & cfa::els_ptError(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_ptError();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_ptError();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_ptError();
 }
 
-std::vector<float>* const & cfa::els_px() const{
+std::vector<float>* const & cfa::els_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_px();
 }
 
-std::vector<float>* const & cfa::els_py() const{
+std::vector<float>* const & cfa::els_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_py();
 }
 
-std::vector<float>* const & cfa::els_pz() const{
+std::vector<float>* const & cfa::els_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_pz();
 }
 
-std::vector<float>* const & cfa::els_robustHighEnergyId() const{
+std::vector<float>* const & cfa::els_robustHighEnergyId(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_robustHighEnergyId();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_robustHighEnergyId();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_robustHighEnergyId();
 }
 
-std::vector<float>* const & cfa::els_robustLooseId() const{
+std::vector<float>* const & cfa::els_robustLooseId(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_robustLooseId();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_robustLooseId();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_robustLooseId();
 }
 
-std::vector<float>* const & cfa::els_robustTightId() const{
+std::vector<float>* const & cfa::els_robustTightId(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_robustTightId();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_robustTightId();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_robustTightId();
 }
 
-std::vector<float>* const & cfa::els_scE1x5() const{
+std::vector<float>* const & cfa::els_scE1x5(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scE1x5();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scE1x5();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scE1x5();
 }
 
-std::vector<float>* const & cfa::els_scE2x5Max() const{
+std::vector<float>* const & cfa::els_scE2x5Max(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scE2x5Max();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scE2x5Max();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scE2x5Max();
 }
 
-std::vector<float>* const & cfa::els_scE5x5() const{
+std::vector<float>* const & cfa::els_scE5x5(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scE5x5();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scE5x5();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scE5x5();
 }
 
-std::vector<float>* const & cfa::els_scEnergy() const{
+std::vector<float>* const & cfa::els_scEnergy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scEnergy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scEnergy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scEnergy();
 }
 
-std::vector<float>* const & cfa::els_scEta() const{
+std::vector<float>* const & cfa::els_scEta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scEta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scEta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scEta();
 }
 
-std::vector<float>* const & cfa::els_scEtaWidth() const{
+std::vector<float>* const & cfa::els_scEtaWidth(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scEtaWidth();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scEtaWidth();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scEtaWidth();
 }
 
-std::vector<float>* const & cfa::els_scPhi() const{
+std::vector<float>* const & cfa::els_scPhi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scPhi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scPhi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scPhi();
 }
 
-std::vector<float>* const & cfa::els_scPhiWidth() const{
+std::vector<float>* const & cfa::els_scPhiWidth(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scPhiWidth();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scPhiWidth();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scPhiWidth();
 }
 
-std::vector<float>* const & cfa::els_scRawEnergy() const{
+std::vector<float>* const & cfa::els_scRawEnergy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scRawEnergy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scRawEnergy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scRawEnergy();
 }
 
-std::vector<float>* const & cfa::els_scSeedEnergy() const{
+std::vector<float>* const & cfa::els_scSeedEnergy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_scSeedEnergy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_scSeedEnergy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_scSeedEnergy();
 }
 
-std::vector<float>* const & cfa::els_shFracInnerHits() const{
+std::vector<float>* const & cfa::els_shFracInnerHits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_shFracInnerHits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_shFracInnerHits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_shFracInnerHits();
 }
 
-std::vector<float>* const & cfa::els_sigmaEtaEta() const{
+std::vector<float>* const & cfa::els_sigmaEtaEta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_sigmaEtaEta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_sigmaEtaEta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_sigmaEtaEta();
 }
 
-std::vector<float>* const & cfa::els_sigmaIEtaIEta() const{
+std::vector<float>* const & cfa::els_sigmaIEtaIEta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_sigmaIEtaIEta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_sigmaIEtaIEta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_sigmaIEtaIEta();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId60cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId60cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId60cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId60cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId60cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId60relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId60relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId60relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId60relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId60relIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId70cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId70cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId70cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId70cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId70cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId70relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId70relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId70relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId70relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId70relIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId80cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId80cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId80cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId80cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId80cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId80relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId80relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId80relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId80relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId80relIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId85cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId85cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId85cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId85cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId85cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId85relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId85relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId85relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId85relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId85relIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId90cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId90cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId90cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId90cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId90cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId90relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId90relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId90relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId90relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId90relIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId95cIso() const{
+std::vector<float>* const & cfa::els_simpleEleId95cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId95cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId95cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId95cIso();
 }
 
-std::vector<float>* const & cfa::els_simpleEleId95relIso() const{
+std::vector<float>* const & cfa::els_simpleEleId95relIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_simpleEleId95relIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_simpleEleId95relIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_simpleEleId95relIso();
 }
 
-std::vector<float>* const & cfa::els_status() const{
+std::vector<float>* const & cfa::els_status(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_status();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_status();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_status();
 }
 
-std::vector<float>* const & cfa::els_tIso() const{
+std::vector<float>* const & cfa::els_tIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tIso();
 }
 
-std::vector<float>* const & cfa::els_theta() const{
+std::vector<float>* const & cfa::els_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_theta();
 }
 
-std::vector<float>* const & cfa::els_tightId() const{
+std::vector<float>* const & cfa::els_tightId(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tightId();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tightId();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tightId();
 }
 
-std::vector<float>* const & cfa::els_tk_charge() const{
+std::vector<float>* const & cfa::els_tk_charge(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tk_charge();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tk_charge();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tk_charge();
 }
 
-std::vector<float>* const & cfa::els_tk_eta() const{
+std::vector<float>* const & cfa::els_tk_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tk_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tk_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tk_eta();
 }
 
-std::vector<float>* const & cfa::els_tk_phi() const{
+std::vector<float>* const & cfa::els_tk_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tk_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tk_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tk_phi();
 }
 
-std::vector<float>* const & cfa::els_tk_pt() const{
+std::vector<float>* const & cfa::els_tk_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tk_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tk_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tk_pt();
 }
 
-std::vector<float>* const & cfa::els_tk_pz() const{
+std::vector<float>* const & cfa::els_tk_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_tk_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_tk_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_tk_pz();
 }
 
-std::vector<float>* const & cfa::els_vpx() const{
+std::vector<float>* const & cfa::els_vpx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vpx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vpx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vpx();
 }
 
-std::vector<float>* const & cfa::els_vpy() const{
+std::vector<float>* const & cfa::els_vpy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vpy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vpy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vpy();
 }
 
-std::vector<float>* const & cfa::els_vpz() const{
+std::vector<float>* const & cfa::els_vpz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vpz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vpz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vpz();
 }
 
-std::vector<float>* const & cfa::els_vx() const{
+std::vector<float>* const & cfa::els_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vx();
 }
 
-std::vector<float>* const & cfa::els_vy() const{
+std::vector<float>* const & cfa::els_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vy();
 }
 
-std::vector<float>* const & cfa::els_vz() const{
+std::vector<float>* const & cfa::els_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_els_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->els_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->els_vz();
 }
 
@@ -2864,955 +4079,3097 @@ std::string* const & cfa::model_params() const{
   return cfa_->model_params();
 }
 
-std::vector<float>* const & cfa::mus_cIso() const{
+std::vector<float>* const & cfa::mus_cIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cIso();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyEm() const{
+std::vector<float>* const & cfa::mus_calEnergyEm(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyEm();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyEm();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyEm();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyEmS9() const{
+std::vector<float>* const & cfa::mus_calEnergyEmS9(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyEmS9();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyEmS9();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyEmS9();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyHad() const{
+std::vector<float>* const & cfa::mus_calEnergyHad(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyHad();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyHad();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyHad();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyHadS9() const{
+std::vector<float>* const & cfa::mus_calEnergyHadS9(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyHadS9();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyHadS9();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyHadS9();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyHo() const{
+std::vector<float>* const & cfa::mus_calEnergyHo(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyHo();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyHo();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyHo();
 }
 
-std::vector<float>* const & cfa::mus_calEnergyHoS9() const{
+std::vector<float>* const & cfa::mus_calEnergyHoS9(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_calEnergyHoS9();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_calEnergyHoS9();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_calEnergyHoS9();
 }
 
-std::vector<float>* const & cfa::mus_charge() const{
+std::vector<float>* const & cfa::mus_charge(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_charge();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_charge();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_charge();
 }
 
-std::vector<float>* const & cfa::mus_cm_ExpectedHitsInner() const{
+std::vector<float>* const & cfa::mus_cm_ExpectedHitsInner(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_ExpectedHitsInner();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_ExpectedHitsInner();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_ExpectedHitsInner();
 }
 
-std::vector<float>* const & cfa::mus_cm_ExpectedHitsOuter() const{
+std::vector<float>* const & cfa::mus_cm_ExpectedHitsOuter(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_ExpectedHitsOuter();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_ExpectedHitsOuter();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_ExpectedHitsOuter();
 }
 
-std::vector<float>* const & cfa::mus_cm_LayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_cm_LayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_LayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_LayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_LayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_cm_LayersWithoutMeasurement() const{
+std::vector<float>* const & cfa::mus_cm_LayersWithoutMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_LayersWithoutMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_LayersWithoutMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_LayersWithoutMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_cm_PixelLayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_cm_PixelLayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_PixelLayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_PixelLayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_PixelLayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_cm_ValidStripLayersWithMonoAndStereoHit() const{
+std::vector<float>* const & cfa::mus_cm_ValidStripLayersWithMonoAndStereoHit(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_ValidStripLayersWithMonoAndStereoHit();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_ValidStripLayersWithMonoAndStereoHit();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_ValidStripLayersWithMonoAndStereoHit();
 }
 
-std::vector<float>* const & cfa::mus_cm_chg() const{
+std::vector<float>* const & cfa::mus_cm_chg(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_chg();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_chg();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_chg();
 }
 
-std::vector<float>* const & cfa::mus_cm_chi2() const{
+std::vector<float>* const & cfa::mus_cm_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_chi2();
 }
 
-std::vector<float>* const & cfa::mus_cm_d0dum() const{
+std::vector<float>* const & cfa::mus_cm_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_d0dum();
 }
 
-std::vector<float>* const & cfa::mus_cm_d0dumErr() const{
+std::vector<float>* const & cfa::mus_cm_d0dumErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_d0dumErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_d0dumErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_d0dumErr();
 }
 
-std::vector<float>* const & cfa::mus_cm_dz() const{
+std::vector<float>* const & cfa::mus_cm_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_dz();
 }
 
-std::vector<float>* const & cfa::mus_cm_dzErr() const{
+std::vector<float>* const & cfa::mus_cm_dzErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_dzErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_dzErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_dzErr();
 }
 
-std::vector<float>* const & cfa::mus_cm_eta() const{
+std::vector<float>* const & cfa::mus_cm_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_eta();
 }
 
-std::vector<float>* const & cfa::mus_cm_etaErr() const{
+std::vector<float>* const & cfa::mus_cm_etaErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_etaErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_etaErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_etaErr();
 }
 
-std::vector<float>* const & cfa::mus_cm_ndof() const{
+std::vector<float>* const & cfa::mus_cm_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_ndof();
 }
 
-std::vector<float>* const & cfa::mus_cm_numlosthits() const{
+std::vector<float>* const & cfa::mus_cm_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_numlosthits();
 }
 
-std::vector<float>* const & cfa::mus_cm_numvalMuonhits() const{
+std::vector<float>* const & cfa::mus_cm_numvalMuonhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_numvalMuonhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_numvalMuonhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_numvalMuonhits();
 }
 
-std::vector<float>* const & cfa::mus_cm_numvalhits() const{
+std::vector<float>* const & cfa::mus_cm_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_numvalhits();
 }
 
-std::vector<float>* const & cfa::mus_cm_phi() const{
+std::vector<float>* const & cfa::mus_cm_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_phi();
 }
 
-std::vector<float>* const & cfa::mus_cm_phiErr() const{
+std::vector<float>* const & cfa::mus_cm_phiErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_phiErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_phiErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_phiErr();
 }
 
-std::vector<float>* const & cfa::mus_cm_pt() const{
+std::vector<float>* const & cfa::mus_cm_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_pt();
 }
 
-std::vector<float>* const & cfa::mus_cm_ptErr() const{
+std::vector<float>* const & cfa::mus_cm_ptErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_ptErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_ptErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_ptErr();
 }
 
-std::vector<float>* const & cfa::mus_cm_px() const{
+std::vector<float>* const & cfa::mus_cm_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_px();
 }
 
-std::vector<float>* const & cfa::mus_cm_py() const{
+std::vector<float>* const & cfa::mus_cm_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_py();
 }
 
-std::vector<float>* const & cfa::mus_cm_pz() const{
+std::vector<float>* const & cfa::mus_cm_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_pz();
 }
 
-std::vector<float>* const & cfa::mus_cm_theta() const{
+std::vector<float>* const & cfa::mus_cm_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_theta();
 }
 
-std::vector<float>* const & cfa::mus_cm_vx() const{
+std::vector<float>* const & cfa::mus_cm_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_vx();
 }
 
-std::vector<float>* const & cfa::mus_cm_vy() const{
+std::vector<float>* const & cfa::mus_cm_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_vy();
 }
 
-std::vector<float>* const & cfa::mus_cm_vz() const{
+std::vector<float>* const & cfa::mus_cm_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_cm_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_cm_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_cm_vz();
 }
 
-std::vector<float>* const & cfa::mus_dB() const{
+std::vector<float>* const & cfa::mus_dB(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_dB();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_dB();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_dB();
 }
 
-std::vector<float>* const & cfa::mus_ecalIso() const{
+std::vector<float>* const & cfa::mus_ecalIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_ecalIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_ecalIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_ecalIso();
 }
 
-std::vector<float>* const & cfa::mus_ecalvetoDep() const{
+std::vector<float>* const & cfa::mus_ecalvetoDep(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_ecalvetoDep();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_ecalvetoDep();
 }
 
-std::vector<float>* const & cfa::mus_energy() const{
+std::vector<float>* const & cfa::mus_energy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_energy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_energy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_energy();
 }
 
-std::vector<float>* const & cfa::mus_et() const{
+std::vector<float>* const & cfa::mus_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_et();
 }
 
-std::vector<float>* const & cfa::mus_eta() const{
+std::vector<float>* const & cfa::mus_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_eta();
 }
 
-std::vector<float>* const & cfa::mus_gen_et() const{
+std::vector<float>* const & cfa::mus_gen_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_et();
 }
 
-std::vector<float>* const & cfa::mus_gen_eta() const{
+std::vector<float>* const & cfa::mus_gen_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_eta();
 }
 
-std::vector<float>* const & cfa::mus_gen_id() const{
+std::vector<float>* const & cfa::mus_gen_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_id();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_et() const{
+std::vector<float>* const & cfa::mus_gen_mother_et(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_et();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_et();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_et();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_eta() const{
+std::vector<float>* const & cfa::mus_gen_mother_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_eta();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_id() const{
+std::vector<float>* const & cfa::mus_gen_mother_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_id();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_phi() const{
+std::vector<float>* const & cfa::mus_gen_mother_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_phi();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_pt() const{
+std::vector<float>* const & cfa::mus_gen_mother_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_pt();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_px() const{
+std::vector<float>* const & cfa::mus_gen_mother_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_px();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_py() const{
+std::vector<float>* const & cfa::mus_gen_mother_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_py();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_pz() const{
+std::vector<float>* const & cfa::mus_gen_mother_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_pz();
 }
 
-std::vector<float>* const & cfa::mus_gen_mother_theta() const{
+std::vector<float>* const & cfa::mus_gen_mother_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_mother_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_mother_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_mother_theta();
 }
 
-std::vector<float>* const & cfa::mus_gen_phi() const{
+std::vector<float>* const & cfa::mus_gen_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_phi();
 }
 
-std::vector<float>* const & cfa::mus_gen_pt() const{
+std::vector<float>* const & cfa::mus_gen_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_pt();
 }
 
-std::vector<float>* const & cfa::mus_gen_px() const{
+std::vector<float>* const & cfa::mus_gen_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_px();
 }
 
-std::vector<float>* const & cfa::mus_gen_py() const{
+std::vector<float>* const & cfa::mus_gen_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_py();
 }
 
-std::vector<float>* const & cfa::mus_gen_pz() const{
+std::vector<float>* const & cfa::mus_gen_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_pz();
 }
 
-std::vector<float>* const & cfa::mus_gen_theta() const{
+std::vector<float>* const & cfa::mus_gen_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_gen_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_gen_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_gen_theta();
 }
 
-std::vector<float>* const & cfa::mus_hcalIso() const{
+std::vector<float>* const & cfa::mus_hcalIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_hcalIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_hcalIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_hcalIso();
 }
 
-std::vector<float>* const & cfa::mus_hcalvetoDep() const{
+std::vector<float>* const & cfa::mus_hcalvetoDep(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_hcalvetoDep();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_hcalvetoDep();
 }
 
-std::vector<float>* const & cfa::mus_id_All() const{
+std::vector<float>* const & cfa::mus_id_All(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_All();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_All();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_All();
 }
 
-std::vector<float>* const & cfa::mus_id_AllArbitrated() const{
+std::vector<float>* const & cfa::mus_id_AllArbitrated(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_AllArbitrated();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_AllArbitrated();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_AllArbitrated();
 }
 
-std::vector<float>* const & cfa::mus_id_AllGlobalMuons() const{
+std::vector<float>* const & cfa::mus_id_AllGlobalMuons(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_AllGlobalMuons();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_AllGlobalMuons();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_AllGlobalMuons();
 }
 
-std::vector<float>* const & cfa::mus_id_AllStandAloneMuons() const{
+std::vector<float>* const & cfa::mus_id_AllStandAloneMuons(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_AllStandAloneMuons();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_AllStandAloneMuons();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_AllStandAloneMuons();
 }
 
-std::vector<float>* const & cfa::mus_id_AllTrackerMuons() const{
+std::vector<float>* const & cfa::mus_id_AllTrackerMuons(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_AllTrackerMuons();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_AllTrackerMuons();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_AllTrackerMuons();
 }
 
-std::vector<float>* const & cfa::mus_id_GlobalMuonPromptTight() const{
+std::vector<float>* const & cfa::mus_id_GlobalMuonPromptTight(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_GlobalMuonPromptTight();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_GlobalMuonPromptTight();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_GlobalMuonPromptTight();
 }
 
-std::vector<float>* const & cfa::mus_id_TM2DCompatibilityLoose() const{
+std::vector<float>* const & cfa::mus_id_TM2DCompatibilityLoose(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TM2DCompatibilityLoose();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TM2DCompatibilityLoose();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TM2DCompatibilityLoose();
 }
 
-std::vector<float>* const & cfa::mus_id_TM2DCompatibilityTight() const{
+std::vector<float>* const & cfa::mus_id_TM2DCompatibilityTight(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TM2DCompatibilityTight();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TM2DCompatibilityTight();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TM2DCompatibilityTight();
 }
 
-std::vector<float>* const & cfa::mus_id_TMLastStationLoose() const{
+std::vector<float>* const & cfa::mus_id_TMLastStationLoose(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMLastStationLoose();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMLastStationLoose();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMLastStationLoose();
 }
 
-std::vector<float>* const & cfa::mus_id_TMLastStationOptimizedLowPtLoose() const{
+std::vector<float>* const & cfa::mus_id_TMLastStationOptimizedLowPtLoose(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMLastStationOptimizedLowPtLoose();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMLastStationOptimizedLowPtLoose();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMLastStationOptimizedLowPtLoose();
 }
 
-std::vector<float>* const & cfa::mus_id_TMLastStationOptimizedLowPtTight() const{
+std::vector<float>* const & cfa::mus_id_TMLastStationOptimizedLowPtTight(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMLastStationOptimizedLowPtTight();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMLastStationOptimizedLowPtTight();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMLastStationOptimizedLowPtTight();
 }
 
-std::vector<float>* const & cfa::mus_id_TMLastStationTight() const{
+std::vector<float>* const & cfa::mus_id_TMLastStationTight(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMLastStationTight();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMLastStationTight();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMLastStationTight();
 }
 
-std::vector<float>* const & cfa::mus_id_TMOneStationLoose() const{
+std::vector<float>* const & cfa::mus_id_TMOneStationLoose(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMOneStationLoose();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMOneStationLoose();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMOneStationLoose();
 }
 
-std::vector<float>* const & cfa::mus_id_TMOneStationTight() const{
+std::vector<float>* const & cfa::mus_id_TMOneStationTight(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TMOneStationTight();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TMOneStationTight();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TMOneStationTight();
 }
 
-std::vector<float>* const & cfa::mus_id_TrackerMuonArbitrated() const{
+std::vector<float>* const & cfa::mus_id_TrackerMuonArbitrated(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_id_TrackerMuonArbitrated();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_id_TrackerMuonArbitrated();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_id_TrackerMuonArbitrated();
 }
 
-std::vector<float>* const & cfa::mus_isCaloMuon() const{
+std::vector<float>* const & cfa::mus_isCaloMuon(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isCaloMuon();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isCaloMuon();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isCaloMuon();
 }
 
-std::vector<float>* const & cfa::mus_isConvertedPhoton() const{
+std::vector<float>* const & cfa::mus_isConvertedPhoton(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isConvertedPhoton();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isConvertedPhoton();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isConvertedPhoton();
 }
 
-std::vector<float>* const & cfa::mus_isElectron() const{
+std::vector<float>* const & cfa::mus_isElectron(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isElectron();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isElectron();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isElectron();
 }
 
-std::vector<float>* const & cfa::mus_isGlobalMuon() const{
+std::vector<float>* const & cfa::mus_isGlobalMuon(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isGlobalMuon();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isGlobalMuon();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isGlobalMuon();
 }
 
-std::vector<bool>* const & cfa::mus_isPF() const{
+std::vector<bool>* const & cfa::mus_isPF(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isPF();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isPF();
 }
 
-std::vector<float>* const & cfa::mus_isPFMuon() const{
+std::vector<float>* const & cfa::mus_isPFMuon(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isPFMuon();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isPFMuon();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isPFMuon();
 }
 
-std::vector<float>* const & cfa::mus_isPhoton() const{
+std::vector<float>* const & cfa::mus_isPhoton(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isPhoton();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isPhoton();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isPhoton();
 }
 
-std::vector<float>* const & cfa::mus_isStandAloneMuon() const{
+std::vector<float>* const & cfa::mus_isStandAloneMuon(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isStandAloneMuon();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isStandAloneMuon();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isStandAloneMuon();
 }
 
-std::vector<float>* const & cfa::mus_isTrackerMuon() const{
+std::vector<float>* const & cfa::mus_isTrackerMuon(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_isTrackerMuon();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_isTrackerMuon();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_isTrackerMuon();
 }
 
-std::vector<float>* const & cfa::mus_iso03_emEt() const{
+std::vector<float>* const & cfa::mus_iso03_emEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_emEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_emEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_emEt();
 }
 
-std::vector<float>* const & cfa::mus_iso03_emVetoEt() const{
+std::vector<float>* const & cfa::mus_iso03_emVetoEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_emVetoEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_emVetoEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_emVetoEt();
 }
 
-std::vector<float>* const & cfa::mus_iso03_hadEt() const{
+std::vector<float>* const & cfa::mus_iso03_hadEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_hadEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_hadEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_hadEt();
 }
 
-std::vector<float>* const & cfa::mus_iso03_hadVetoEt() const{
+std::vector<float>* const & cfa::mus_iso03_hadVetoEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_hadVetoEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_hadVetoEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_hadVetoEt();
 }
 
-std::vector<float>* const & cfa::mus_iso03_hoEt() const{
+std::vector<float>* const & cfa::mus_iso03_hoEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_hoEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_hoEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_hoEt();
 }
 
-std::vector<float>* const & cfa::mus_iso03_nTracks() const{
+std::vector<float>* const & cfa::mus_iso03_nTracks(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_nTracks();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_nTracks();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_nTracks();
 }
 
-std::vector<float>* const & cfa::mus_iso03_sumPt() const{
+std::vector<float>* const & cfa::mus_iso03_sumPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso03_sumPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso03_sumPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso03_sumPt();
 }
 
-std::vector<float>* const & cfa::mus_iso05_emEt() const{
+std::vector<float>* const & cfa::mus_iso05_emEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso05_emEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso05_emEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso05_emEt();
 }
 
-std::vector<float>* const & cfa::mus_iso05_hadEt() const{
+std::vector<float>* const & cfa::mus_iso05_hadEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso05_hadEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso05_hadEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso05_hadEt();
 }
 
-std::vector<float>* const & cfa::mus_iso05_hoEt() const{
+std::vector<float>* const & cfa::mus_iso05_hoEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso05_hoEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso05_hoEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso05_hoEt();
 }
 
-std::vector<float>* const & cfa::mus_iso05_nTracks() const{
+std::vector<float>* const & cfa::mus_iso05_nTracks(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso05_nTracks();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso05_nTracks();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso05_nTracks();
 }
 
-std::vector<float>* const & cfa::mus_iso05_sumPt() const{
+std::vector<float>* const & cfa::mus_iso05_sumPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_iso05_sumPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_iso05_sumPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_iso05_sumPt();
 }
 
-std::vector<int>* const & cfa::mus_jet_ind() const{
+std::vector<int>* const & cfa::mus_jet_ind(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_jet_ind();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_jet_ind();
 }
 
-std::vector<float>* const & cfa::mus_num_matches() const{
+std::vector<float>* const & cfa::mus_num_matches(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_num_matches();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_num_matches();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_num_matches();
 }
 
-std::vector<float>* const & cfa::mus_numberOfMatchedStations() const{
+std::vector<float>* const & cfa::mus_numberOfMatchedStations(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_numberOfMatchedStations();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_numberOfMatchedStations();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_numberOfMatchedStations();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumChargedHadronPt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumChargedHadronPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumChargedHadronPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumChargedHadronPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumChargedHadronPt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumChargedParticlePt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumChargedParticlePt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumChargedParticlePt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumChargedParticlePt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumChargedParticlePt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumNeutralHadronEt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumNeutralHadronEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumNeutralHadronEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumNeutralHadronEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumNeutralHadronEt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumNeutralHadronEtHighThreshold() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumNeutralHadronEtHighThreshold(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumNeutralHadronEtHighThreshold();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumNeutralHadronEtHighThreshold();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumPUPt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumPUPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumPUPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumPUPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumPUPt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumPhotonEt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumPhotonEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumPhotonEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumPhotonEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumPhotonEt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR03_sumPhotonEtHighThreshold() const{
+std::vector<float>* const & cfa::mus_pfIsolationR03_sumPhotonEtHighThreshold(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR03_sumPhotonEtHighThreshold();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR03_sumPhotonEtHighThreshold();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR03_sumPhotonEtHighThreshold();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumChargedHadronPt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumChargedHadronPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumChargedHadronPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumChargedHadronPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumChargedHadronPt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumChargedParticlePt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumChargedParticlePt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumChargedParticlePt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumChargedParticlePt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumChargedParticlePt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumNeutralHadronEt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumNeutralHadronEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumNeutralHadronEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumNeutralHadronEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumNeutralHadronEt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumNeutralHadronEtHighThreshold() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumNeutralHadronEtHighThreshold(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumNeutralHadronEtHighThreshold();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumNeutralHadronEtHighThreshold();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumPUPt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumPUPt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumPUPt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumPUPt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumPUPt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumPhotonEt() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumPhotonEt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumPhotonEt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumPhotonEt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumPhotonEt();
 }
 
-std::vector<float>* const & cfa::mus_pfIsolationR04_sumPhotonEtHighThreshold() const{
+std::vector<float>* const & cfa::mus_pfIsolationR04_sumPhotonEtHighThreshold(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pfIsolationR04_sumPhotonEtHighThreshold();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pfIsolationR04_sumPhotonEtHighThreshold();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pfIsolationR04_sumPhotonEtHighThreshold();
 }
 
-std::vector<float>* const & cfa::mus_phi() const{
+std::vector<float>* const & cfa::mus_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_phi();
 }
 
-std::vector<float>* const & cfa::mus_picky_ExpectedHitsInner() const{
+std::vector<float>* const & cfa::mus_picky_ExpectedHitsInner(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_ExpectedHitsInner();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_ExpectedHitsInner();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_ExpectedHitsInner();
 }
 
-std::vector<float>* const & cfa::mus_picky_ExpectedHitsOuter() const{
+std::vector<float>* const & cfa::mus_picky_ExpectedHitsOuter(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_ExpectedHitsOuter();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_ExpectedHitsOuter();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_ExpectedHitsOuter();
 }
 
-std::vector<float>* const & cfa::mus_picky_LayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_picky_LayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_LayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_LayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_LayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_picky_LayersWithoutMeasurement() const{
+std::vector<float>* const & cfa::mus_picky_LayersWithoutMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_LayersWithoutMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_LayersWithoutMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_LayersWithoutMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_picky_PixelLayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_picky_PixelLayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_PixelLayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_PixelLayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_PixelLayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_picky_ValidStripLayersWithMonoAndStereoHit() const{
+std::vector<float>* const & cfa::mus_picky_ValidStripLayersWithMonoAndStereoHit(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_ValidStripLayersWithMonoAndStereoHit();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_ValidStripLayersWithMonoAndStereoHit();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_ValidStripLayersWithMonoAndStereoHit();
 }
 
-std::vector<float>* const & cfa::mus_picky_chg() const{
+std::vector<float>* const & cfa::mus_picky_chg(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_chg();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_chg();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_chg();
 }
 
-std::vector<float>* const & cfa::mus_picky_chi2() const{
+std::vector<float>* const & cfa::mus_picky_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_chi2();
 }
 
-std::vector<float>* const & cfa::mus_picky_d0dum() const{
+std::vector<float>* const & cfa::mus_picky_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_d0dum();
 }
 
-std::vector<float>* const & cfa::mus_picky_d0dumErr() const{
+std::vector<float>* const & cfa::mus_picky_d0dumErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_d0dumErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_d0dumErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_d0dumErr();
 }
 
-std::vector<float>* const & cfa::mus_picky_dz() const{
+std::vector<float>* const & cfa::mus_picky_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_dz();
 }
 
-std::vector<float>* const & cfa::mus_picky_dzErr() const{
+std::vector<float>* const & cfa::mus_picky_dzErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_dzErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_dzErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_dzErr();
 }
 
-std::vector<float>* const & cfa::mus_picky_eta() const{
+std::vector<float>* const & cfa::mus_picky_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_eta();
 }
 
-std::vector<float>* const & cfa::mus_picky_etaErr() const{
+std::vector<float>* const & cfa::mus_picky_etaErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_etaErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_etaErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_etaErr();
 }
 
-std::vector<float>* const & cfa::mus_picky_id() const{
+std::vector<float>* const & cfa::mus_picky_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_id();
 }
 
-std::vector<float>* const & cfa::mus_picky_ndof() const{
+std::vector<float>* const & cfa::mus_picky_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_ndof();
 }
 
-std::vector<float>* const & cfa::mus_picky_numlosthits() const{
+std::vector<float>* const & cfa::mus_picky_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_numlosthits();
 }
 
-std::vector<float>* const & cfa::mus_picky_numvalPixelhits() const{
+std::vector<float>* const & cfa::mus_picky_numvalPixelhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_numvalPixelhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_numvalPixelhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_numvalPixelhits();
 }
 
-std::vector<float>* const & cfa::mus_picky_numvalhits() const{
+std::vector<float>* const & cfa::mus_picky_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_numvalhits();
 }
 
-std::vector<float>* const & cfa::mus_picky_phi() const{
+std::vector<float>* const & cfa::mus_picky_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_phi();
 }
 
-std::vector<float>* const & cfa::mus_picky_phiErr() const{
+std::vector<float>* const & cfa::mus_picky_phiErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_phiErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_phiErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_phiErr();
 }
 
-std::vector<float>* const & cfa::mus_picky_pt() const{
+std::vector<float>* const & cfa::mus_picky_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_pt();
 }
 
-std::vector<float>* const & cfa::mus_picky_ptErr() const{
+std::vector<float>* const & cfa::mus_picky_ptErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_ptErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_ptErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_ptErr();
 }
 
-std::vector<float>* const & cfa::mus_picky_px() const{
+std::vector<float>* const & cfa::mus_picky_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_px();
 }
 
-std::vector<float>* const & cfa::mus_picky_py() const{
+std::vector<float>* const & cfa::mus_picky_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_py();
 }
 
-std::vector<float>* const & cfa::mus_picky_pz() const{
+std::vector<float>* const & cfa::mus_picky_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_pz();
 }
 
-std::vector<float>* const & cfa::mus_picky_theta() const{
+std::vector<float>* const & cfa::mus_picky_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_theta();
 }
 
-std::vector<float>* const & cfa::mus_picky_vx() const{
+std::vector<float>* const & cfa::mus_picky_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_vx();
 }
 
-std::vector<float>* const & cfa::mus_picky_vy() const{
+std::vector<float>* const & cfa::mus_picky_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_vy();
 }
 
-std::vector<float>* const & cfa::mus_picky_vz() const{
+std::vector<float>* const & cfa::mus_picky_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_picky_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_picky_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_picky_vz();
 }
 
-std::vector<float>* const & cfa::mus_pt() const{
+std::vector<float>* const & cfa::mus_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pt();
 }
 
-std::vector<float>* const & cfa::mus_px() const{
+std::vector<float>* const & cfa::mus_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_px();
 }
 
-std::vector<float>* const & cfa::mus_py() const{
+std::vector<float>* const & cfa::mus_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_py();
 }
 
-std::vector<float>* const & cfa::mus_pz() const{
+std::vector<float>* const & cfa::mus_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_pz();
 }
 
-std::vector<float>* const & cfa::mus_stamu_chg() const{
+std::vector<float>* const & cfa::mus_stamu_chg(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_chg();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_chg();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_chg();
 }
 
-std::vector<float>* const & cfa::mus_stamu_chi2() const{
+std::vector<float>* const & cfa::mus_stamu_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_chi2();
 }
 
-std::vector<float>* const & cfa::mus_stamu_d0dum() const{
+std::vector<float>* const & cfa::mus_stamu_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_d0dum();
 }
 
-std::vector<float>* const & cfa::mus_stamu_d0dumErr() const{
+std::vector<float>* const & cfa::mus_stamu_d0dumErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_d0dumErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_d0dumErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_d0dumErr();
 }
 
-std::vector<float>* const & cfa::mus_stamu_dz() const{
+std::vector<float>* const & cfa::mus_stamu_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_dz();
 }
 
-std::vector<float>* const & cfa::mus_stamu_dzErr() const{
+std::vector<float>* const & cfa::mus_stamu_dzErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_dzErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_dzErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_dzErr();
 }
 
-std::vector<float>* const & cfa::mus_stamu_eta() const{
+std::vector<float>* const & cfa::mus_stamu_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_eta();
 }
 
-std::vector<float>* const & cfa::mus_stamu_etaErr() const{
+std::vector<float>* const & cfa::mus_stamu_etaErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_etaErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_etaErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_etaErr();
 }
 
-std::vector<float>* const & cfa::mus_stamu_ndof() const{
+std::vector<float>* const & cfa::mus_stamu_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_ndof();
 }
 
-std::vector<float>* const & cfa::mus_stamu_numlosthits() const{
+std::vector<float>* const & cfa::mus_stamu_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_numlosthits();
 }
 
-std::vector<float>* const & cfa::mus_stamu_numvalhits() const{
+std::vector<float>* const & cfa::mus_stamu_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_numvalhits();
 }
 
-std::vector<float>* const & cfa::mus_stamu_phi() const{
+std::vector<float>* const & cfa::mus_stamu_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_phi();
 }
 
-std::vector<float>* const & cfa::mus_stamu_phiErr() const{
+std::vector<float>* const & cfa::mus_stamu_phiErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_phiErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_phiErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_phiErr();
 }
 
-std::vector<float>* const & cfa::mus_stamu_pt() const{
+std::vector<float>* const & cfa::mus_stamu_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_pt();
 }
 
-std::vector<float>* const & cfa::mus_stamu_ptErr() const{
+std::vector<float>* const & cfa::mus_stamu_ptErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_ptErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_ptErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_ptErr();
 }
 
-std::vector<float>* const & cfa::mus_stamu_px() const{
+std::vector<float>* const & cfa::mus_stamu_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_px();
 }
 
-std::vector<float>* const & cfa::mus_stamu_py() const{
+std::vector<float>* const & cfa::mus_stamu_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_py();
 }
 
-std::vector<float>* const & cfa::mus_stamu_pz() const{
+std::vector<float>* const & cfa::mus_stamu_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_pz();
 }
 
-std::vector<float>* const & cfa::mus_stamu_theta() const{
+std::vector<float>* const & cfa::mus_stamu_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_theta();
 }
 
-std::vector<float>* const & cfa::mus_stamu_vx() const{
+std::vector<float>* const & cfa::mus_stamu_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_vx();
 }
 
-std::vector<float>* const & cfa::mus_stamu_vy() const{
+std::vector<float>* const & cfa::mus_stamu_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_vy();
 }
 
-std::vector<float>* const & cfa::mus_stamu_vz() const{
+std::vector<float>* const & cfa::mus_stamu_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_stamu_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_stamu_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_stamu_vz();
 }
 
-std::vector<float>* const & cfa::mus_status() const{
+std::vector<float>* const & cfa::mus_status(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_status();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_status();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_status();
 }
 
-std::vector<float>* const & cfa::mus_tIso() const{
+std::vector<float>* const & cfa::mus_tIso(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tIso();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tIso();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tIso();
 }
 
-std::vector<float>* const & cfa::mus_theta() const{
+std::vector<float>* const & cfa::mus_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_theta();
 }
 
-std::vector<float>* const & cfa::mus_tkHits() const{
+std::vector<float>* const & cfa::mus_tkHits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tkHits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tkHits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tkHits();
 }
 
-std::vector<float>* const & cfa::mus_tk_ExpectedHitsInner() const{
+std::vector<float>* const & cfa::mus_tk_ExpectedHitsInner(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_ExpectedHitsInner();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_ExpectedHitsInner();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_ExpectedHitsInner();
 }
 
-std::vector<float>* const & cfa::mus_tk_ExpectedHitsOuter() const{
+std::vector<float>* const & cfa::mus_tk_ExpectedHitsOuter(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_ExpectedHitsOuter();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_ExpectedHitsOuter();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_ExpectedHitsOuter();
 }
 
-std::vector<float>* const & cfa::mus_tk_LayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_tk_LayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_LayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_LayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_LayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tk_LayersWithoutMeasurement() const{
+std::vector<float>* const & cfa::mus_tk_LayersWithoutMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_LayersWithoutMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_LayersWithoutMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_LayersWithoutMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tk_PixelLayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_tk_PixelLayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_PixelLayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_PixelLayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_PixelLayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tk_ValidStripLayersWithMonoAndStereoHit() const{
+std::vector<float>* const & cfa::mus_tk_ValidStripLayersWithMonoAndStereoHit(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_ValidStripLayersWithMonoAndStereoHit();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_ValidStripLayersWithMonoAndStereoHit();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_ValidStripLayersWithMonoAndStereoHit();
 }
 
-std::vector<float>* const & cfa::mus_tk_chg() const{
+std::vector<float>* const & cfa::mus_tk_chg(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_chg();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_chg();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_chg();
 }
 
-std::vector<float>* const & cfa::mus_tk_chi2() const{
+std::vector<float>* const & cfa::mus_tk_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_chi2();
 }
 
-std::vector<float>* const & cfa::mus_tk_d0dum() const{
+std::vector<float>* const & cfa::mus_tk_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_d0dum();
 }
 
-std::vector<float>* const & cfa::mus_tk_d0dumErr() const{
+std::vector<float>* const & cfa::mus_tk_d0dumErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_d0dumErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_d0dumErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_d0dumErr();
 }
 
-std::vector<float>* const & cfa::mus_tk_dz() const{
+std::vector<float>* const & cfa::mus_tk_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_dz();
 }
 
-std::vector<float>* const & cfa::mus_tk_dzErr() const{
+std::vector<float>* const & cfa::mus_tk_dzErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_dzErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_dzErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_dzErr();
 }
 
-std::vector<float>* const & cfa::mus_tk_eta() const{
+std::vector<float>* const & cfa::mus_tk_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_eta();
 }
 
-std::vector<float>* const & cfa::mus_tk_etaErr() const{
+std::vector<float>* const & cfa::mus_tk_etaErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_etaErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_etaErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_etaErr();
 }
 
-std::vector<float>* const & cfa::mus_tk_id() const{
+std::vector<float>* const & cfa::mus_tk_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_id();
 }
 
-std::vector<float>* const & cfa::mus_tk_ndof() const{
+std::vector<float>* const & cfa::mus_tk_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_ndof();
 }
 
-std::vector<float>* const & cfa::mus_tk_numlosthits() const{
+std::vector<float>* const & cfa::mus_tk_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_numlosthits();
 }
 
-std::vector<float>* const & cfa::mus_tk_numpixelWthMeasr() const{
+std::vector<float>* const & cfa::mus_tk_numpixelWthMeasr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_numpixelWthMeasr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_numpixelWthMeasr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_numpixelWthMeasr();
 }
 
-std::vector<float>* const & cfa::mus_tk_numvalPixelhits() const{
+std::vector<float>* const & cfa::mus_tk_numvalPixelhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_numvalPixelhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_numvalPixelhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_numvalPixelhits();
 }
 
-std::vector<float>* const & cfa::mus_tk_numvalhits() const{
+std::vector<float>* const & cfa::mus_tk_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_numvalhits();
 }
 
-std::vector<float>* const & cfa::mus_tk_phi() const{
+std::vector<float>* const & cfa::mus_tk_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_phi();
 }
 
-std::vector<float>* const & cfa::mus_tk_phiErr() const{
+std::vector<float>* const & cfa::mus_tk_phiErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_phiErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_phiErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_phiErr();
 }
 
-std::vector<float>* const & cfa::mus_tk_pt() const{
+std::vector<float>* const & cfa::mus_tk_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_pt();
 }
 
-std::vector<float>* const & cfa::mus_tk_ptErr() const{
+std::vector<float>* const & cfa::mus_tk_ptErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_ptErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_ptErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_ptErr();
 }
 
-std::vector<float>* const & cfa::mus_tk_px() const{
+std::vector<float>* const & cfa::mus_tk_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_px();
 }
 
-std::vector<float>* const & cfa::mus_tk_py() const{
+std::vector<float>* const & cfa::mus_tk_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_py();
 }
 
-std::vector<float>* const & cfa::mus_tk_pz() const{
+std::vector<float>* const & cfa::mus_tk_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_pz();
 }
 
-std::vector<float>* const & cfa::mus_tk_theta() const{
+std::vector<float>* const & cfa::mus_tk_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_theta();
 }
 
-std::vector<float>* const & cfa::mus_tk_vx() const{
+std::vector<float>* const & cfa::mus_tk_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_vx();
 }
 
-std::vector<float>* const & cfa::mus_tk_vy() const{
+std::vector<float>* const & cfa::mus_tk_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_vy();
 }
 
-std::vector<float>* const & cfa::mus_tk_vz() const{
+std::vector<float>* const & cfa::mus_tk_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tk_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tk_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tk_vz();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_ExpectedHitsInner() const{
+std::vector<float>* const & cfa::mus_tpfms_ExpectedHitsInner(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_ExpectedHitsInner();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_ExpectedHitsInner();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_ExpectedHitsInner();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_ExpectedHitsOuter() const{
+std::vector<float>* const & cfa::mus_tpfms_ExpectedHitsOuter(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_ExpectedHitsOuter();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_ExpectedHitsOuter();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_ExpectedHitsOuter();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_LayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_tpfms_LayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_LayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_LayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_LayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_LayersWithoutMeasurement() const{
+std::vector<float>* const & cfa::mus_tpfms_LayersWithoutMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_LayersWithoutMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_LayersWithoutMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_LayersWithoutMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_PixelLayersWithMeasurement() const{
+std::vector<float>* const & cfa::mus_tpfms_PixelLayersWithMeasurement(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_PixelLayersWithMeasurement();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_PixelLayersWithMeasurement();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_PixelLayersWithMeasurement();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_ValidStripLayersWithMonoAndStereoHit() const{
+std::vector<float>* const & cfa::mus_tpfms_ValidStripLayersWithMonoAndStereoHit(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_ValidStripLayersWithMonoAndStereoHit();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_ValidStripLayersWithMonoAndStereoHit();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_chg() const{
+std::vector<float>* const & cfa::mus_tpfms_chg(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_chg();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_chg();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_chg();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_chi2() const{
+std::vector<float>* const & cfa::mus_tpfms_chi2(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_chi2();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_chi2();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_chi2();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_d0dum() const{
+std::vector<float>* const & cfa::mus_tpfms_d0dum(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_d0dum();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_d0dum();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_d0dum();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_d0dumErr() const{
+std::vector<float>* const & cfa::mus_tpfms_d0dumErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_d0dumErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_d0dumErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_d0dumErr();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_dz() const{
+std::vector<float>* const & cfa::mus_tpfms_dz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_dz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_dz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_dz();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_dzErr() const{
+std::vector<float>* const & cfa::mus_tpfms_dzErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_dzErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_dzErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_dzErr();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_eta() const{
+std::vector<float>* const & cfa::mus_tpfms_eta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_eta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_eta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_eta();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_etaErr() const{
+std::vector<float>* const & cfa::mus_tpfms_etaErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_etaErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_etaErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_etaErr();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_id() const{
+std::vector<float>* const & cfa::mus_tpfms_id(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_id();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_id();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_id();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_ndof() const{
+std::vector<float>* const & cfa::mus_tpfms_ndof(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_ndof();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_ndof();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_ndof();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_numlosthits() const{
+std::vector<float>* const & cfa::mus_tpfms_numlosthits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_numlosthits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_numlosthits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_numlosthits();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_numvalPixelhits() const{
+std::vector<float>* const & cfa::mus_tpfms_numvalPixelhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_numvalPixelhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_numvalPixelhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_numvalPixelhits();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_numvalhits() const{
+std::vector<float>* const & cfa::mus_tpfms_numvalhits(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_numvalhits();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_numvalhits();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_numvalhits();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_phi() const{
+std::vector<float>* const & cfa::mus_tpfms_phi(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_phi();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_phi();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_phi();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_phiErr() const{
+std::vector<float>* const & cfa::mus_tpfms_phiErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_phiErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_phiErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_phiErr();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_pt() const{
+std::vector<float>* const & cfa::mus_tpfms_pt(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_pt();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_pt();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_pt();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_ptErr() const{
+std::vector<float>* const & cfa::mus_tpfms_ptErr(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_ptErr();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_ptErr();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_ptErr();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_px() const{
+std::vector<float>* const & cfa::mus_tpfms_px(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_px();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_px();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_px();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_py() const{
+std::vector<float>* const & cfa::mus_tpfms_py(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_py();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_py();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_py();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_pz() const{
+std::vector<float>* const & cfa::mus_tpfms_pz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_pz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_pz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_pz();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_theta() const{
+std::vector<float>* const & cfa::mus_tpfms_theta(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_theta();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_theta();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_theta();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_vx() const{
+std::vector<float>* const & cfa::mus_tpfms_vx(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_vx();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_vx();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_vx();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_vy() const{
+std::vector<float>* const & cfa::mus_tpfms_vy(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_vy();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_vy();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_vy();
 }
 
-std::vector<float>* const & cfa::mus_tpfms_vz() const{
+std::vector<float>* const & cfa::mus_tpfms_vz(const bool mux) const{
+  if(mux){
+    if(typeid(*cfa_)==typeid(cfa_8)){
+      return cfa_->pf_mus_tpfms_vz();
+    }else if(typeid(*cfa_)==typeid(cfa_13)){
+      return cfa_->mus_tpfms_vz();
+    }else{
+      throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+    }
+  }
   return cfa_->mus_tpfms_vz();
 }
 
@@ -6530,5 +9887,1633 @@ Float_t const & cfa::trk_ratioJetTOBTEC() const{
 
 Float_t const & cfa::weight() const{
   return cfa_->weight();
+}
+
+std::vector<float>* const & cfa::els_chargedHadronIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_els_chargedHadronIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_els_chargedHadronIso();
+}
+
+std::vector<float>* const & cfa::els_neutralHadronIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_els_neutralHadronIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_els_neutralHadronIso();
+}
+
+std::vector<float>* const & cfa::els_photonIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_els_photonIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_els_photonIso();
+}
+
+std::vector<float>* const & cfa::jets_area() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_area();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_area();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_area();
+}
+
+std::vector<float>* const & cfa::jets_btag_TC_highEff() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_TC_highEff();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_TC_highEff();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_TC_highEff();
+}
+
+std::vector<float>* const & cfa::jets_btag_TC_highPur() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_TC_highPur();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_TC_highPur();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_TC_highPur();
+}
+
+std::vector<float>* const & cfa::jets_btag_jetBProb() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_jetBProb();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_jetBProb();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_jetBProb();
+}
+
+std::vector<float>* const & cfa::jets_btag_jetProb() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_jetProb();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_jetProb();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_jetProb();
+}
+
+std::vector<float>* const & cfa::jets_btag_secVertexCombined() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_secVertexCombined();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_secVertexCombined();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_secVertexCombined();
+}
+
+std::vector<float>* const & cfa::jets_btag_secVertexHighEff() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_secVertexHighEff();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_secVertexHighEff();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_secVertexHighEff();
+}
+
+std::vector<float>* const & cfa::jets_btag_secVertexHighPur() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_secVertexHighPur();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_secVertexHighPur();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_secVertexHighPur();
+}
+
+std::vector<float>* const & cfa::jets_btag_softEle() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_softEle();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_softEle();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_softEle();
+}
+
+std::vector<float>* const & cfa::jets_btag_softMuon() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_btag_softMuon();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_btag_softMuon();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_btag_softMuon();
+}
+
+std::vector<float>* const & cfa::jets_chgEmE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_chgEmE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_chgEmE();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_chgEmE();
+}
+
+std::vector<float>* const & cfa::jets_chgHadE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_chgHadE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_chgHadE();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_chgHadE();
+}
+
+std::vector<float>* const & cfa::jets_chgMuE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_chgMuE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_chgMuE();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_chgMuE();
+}
+
+std::vector<float>* const & cfa::jets_chg_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_chg_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_chg_Mult();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_chg_Mult();
+}
+
+std::vector<float>* const & cfa::jets_corrFactorRaw() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_corrFactorRaw();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_corrFactorRaw();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_corrFactorRaw();
+}
+
+std::vector<float>* const & cfa::jets_ehf() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_ehf();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_ehf();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_ehf();
+}
+
+std::vector<int>* const & cfa::jets_el_ind() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_el_ind();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK4_el_ind();
+}
+
+std::vector<float>* const & cfa::jets_emf() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_emf();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_emf();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_emf();
+}
+
+std::vector<float>* const & cfa::jets_energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_energy();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_energy();
+}
+
+std::vector<float>* const & cfa::jets_et() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_et();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_et();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_et();
+}
+
+std::vector<float>* const & cfa::jets_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_eta();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_eta();
+}
+
+std::vector<float>* const & cfa::jets_etaetaMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_etaetaMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_etaetaMoment();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_etaetaMoment();
+}
+
+std::vector<float>* const & cfa::jets_etaphiMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_etaphiMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_etaphiMoment();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_etaphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_fHPD() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fHPD();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fHPD();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fHPD();
+}
+
+std::vector<float>* const & cfa::jets_fRBX() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fRBX();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fRBX();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fRBX();
+}
+
+std::vector<float>* const & cfa::jets_fSubDetector1() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fSubDetector1();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fSubDetector1();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fSubDetector1();
+}
+
+std::vector<float>* const & cfa::jets_fSubDetector2() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fSubDetector2();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fSubDetector2();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fSubDetector2();
+}
+
+std::vector<float>* const & cfa::jets_fSubDetector3() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fSubDetector3();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fSubDetector3();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fSubDetector3();
+}
+
+std::vector<float>* const & cfa::jets_fSubDetector4() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_fSubDetector4();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_fSubDetector4();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_fSubDetector4();
+}
+
+std::vector<float>* const & cfa::jets_gen_Energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_Energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_Energy();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_Energy();
+}
+
+std::vector<float>* const & cfa::jets_gen_Id() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_Id();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_Id();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_Id();
+}
+
+std::vector<float>* const & cfa::jets_gen_et() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_et();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_et();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_et();
+}
+
+std::vector<float>* const & cfa::jets_gen_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_eta();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_eta();
+}
+
+std::vector<float>* const & cfa::jets_gen_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_mass();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_mass();
+}
+
+std::vector<float>* const & cfa::jets_gen_motherID() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_motherID();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_motherID();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_motherID();
+}
+
+std::vector<float>* const & cfa::jets_gen_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_phi();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_phi();
+}
+
+std::vector<float>* const & cfa::jets_gen_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_pt();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_pt();
+}
+
+std::vector<float>* const & cfa::jets_gen_threeCharge() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_gen_threeCharge();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_gen_threeCharge();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_gen_threeCharge();
+}
+
+std::vector<float>* const & cfa::jets_hitsInN90() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_hitsInN90();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_hitsInN90();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_hitsInN90();
+}
+
+std::vector<float>* const & cfa::jets_jetCharge() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_jetCharge();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_jetCharge();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_jetCharge();
+}
+
+std::vector<float>* const & cfa::jets_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_mass();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_mass();
+}
+
+std::vector<int>* const & cfa::jets_maxpt_id() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_maxpt_id();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK4_maxpt_id();
+}
+
+std::vector<float>* const & cfa::jets_mu_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_mu_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_mu_Mult();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_mu_Mult();
+}
+
+std::vector<int>* const & cfa::jets_mu_ind() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_mu_ind();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK4_mu_ind();
+}
+
+std::vector<float>* const & cfa::jets_n60() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_n60();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_n60();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_n60();
+}
+
+std::vector<float>* const & cfa::jets_n90() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_n90();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_n90();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_n90();
+}
+
+std::vector<float>* const & cfa::jets_n90Hits() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_n90Hits();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_n90Hits();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_n90Hits();
+}
+
+std::vector<float>* const & cfa::jets_nECALTowers() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_nECALTowers();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_nECALTowers();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_nECALTowers();
+}
+
+std::vector<float>* const & cfa::jets_nHCALTowers() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_nHCALTowers();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_nHCALTowers();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_nHCALTowers();
+}
+
+std::vector<float>* const & cfa::jets_neutralEmE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_neutralEmE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_neutralEmE();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_neutralEmE();
+}
+
+std::vector<float>* const & cfa::jets_neutralHadE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_neutralHadE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_neutralHadE();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_neutralHadE();
+}
+
+std::vector<float>* const & cfa::jets_neutral_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_neutral_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_neutral_Mult();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_neutral_Mult();
+}
+
+std::vector<float>* const & cfa::jets_partonFlavour() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_partonFlavour();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_partonFlavour();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_partonFlavour();
+}
+
+std::vector<float>* const & cfa::jets_parton_Energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_Energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_Energy();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_Energy();
+}
+
+std::vector<float>* const & cfa::jets_parton_Id() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_Id();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_Id();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_Id();
+}
+
+std::vector<float>* const & cfa::jets_parton_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_eta();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_eta();
+}
+
+std::vector<float>* const & cfa::jets_parton_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_mass();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_mass();
+}
+
+std::vector<float>* const & cfa::jets_parton_motherId() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_motherId();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_motherId();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_motherId();
+}
+
+std::vector<float>* const & cfa::jets_parton_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_phi();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_phi();
+}
+
+std::vector<float>* const & cfa::jets_parton_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_parton_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_parton_pt();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_parton_pt();
+}
+
+std::vector<float>* const & cfa::jets_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_phi();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_phi();
+}
+
+std::vector<float>* const & cfa::jets_phiphiMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_phiphiMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_phiphiMoment();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_phiphiMoment();
+}
+
+std::vector<float>* const & cfa::jets_photonEnergy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_photonEnergy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_photonEnergy();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_photonEnergy();
+}
+
+std::vector<float>* const & cfa::jets_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_pt();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_pt();
+}
+
+std::vector<float>* const & cfa::jets_px() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_px();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_px();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_px();
+}
+
+std::vector<float>* const & cfa::jets_py() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_py();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_py();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_py();
+}
+
+std::vector<float>* const & cfa::jets_pz() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_pz();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_pz();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_pz();
+}
+
+std::vector<float>* const & cfa::jets_rawPt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_rawPt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_rawPt();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_rawPt();
+}
+
+std::vector<float>* const & cfa::jets_status() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_status();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_status();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_status();
+}
+
+std::vector<float>* const & cfa::jets_theta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PF_theta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    return cfa_->jets_AK4_theta();
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PF_theta();
+}
+
+std::vector<float>* const & cfa::jetsclean_Uncert() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_Uncert();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_Uncert();
+}
+
+std::vector<float>* const & cfa::jetsclean_area() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_area();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_area();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_TC_highEff() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_TC_highEff();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_TC_highEff();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_TC_highPur() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_TC_highPur();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_TC_highPur();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_jetBProb() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_jetBProb();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_jetBProb();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_jetProb() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_jetProb();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_jetProb();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_secVertexCombined() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_secVertexCombined();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_secVertexCombined();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_secVertexHighEff() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_secVertexHighEff();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_secVertexHighEff();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_secVertexHighPur() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_secVertexHighPur();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_secVertexHighPur();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_softEle() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_softEle();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_softEle();
+}
+
+std::vector<float>* const & cfa::jetsclean_btag_softMuon() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_btag_softMuon();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_btag_softMuon();
+}
+
+std::vector<float>* const & cfa::jetsclean_chgEmE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_chgEmE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_chgEmE();
+}
+
+std::vector<float>* const & cfa::jetsclean_chgHadE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_chgHadE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_chgHadE();
+}
+
+std::vector<float>* const & cfa::jetsclean_chgMuE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_chgMuE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_chgMuE();
+}
+
+std::vector<float>* const & cfa::jetsclean_chg_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_chg_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_chg_Mult();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrFactorRaw() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrFactorRaw();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrFactorRaw();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL1FastL2L3() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL1FastL2L3();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL1FastL2L3();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL1FastL2L3Residual() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL1FastL2L3Residual();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL1FastL2L3Residual();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL1L2L3() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL1L2L3();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL1L2L3();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL1L2L3Residual() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL1L2L3Residual();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL1L2L3Residual();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL2L3() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL2L3();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL2L3();
+}
+
+std::vector<float>* const & cfa::jetsclean_corrL2L3Residual() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_corrL2L3Residual();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_corrL2L3Residual();
+}
+
+std::vector<float>* const & cfa::jetsclean_ehf() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_ehf();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_ehf();
+}
+
+std::vector<float>* const & cfa::jetsclean_emf() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_emf();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_emf();
+}
+
+std::vector<float>* const & cfa::jetsclean_energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_energy();
+}
+
+std::vector<float>* const & cfa::jetsclean_et() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_et();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_et();
+}
+
+std::vector<float>* const & cfa::jetsclean_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_eta();
+}
+
+std::vector<float>* const & cfa::jetsclean_etaetaMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_etaetaMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_etaetaMoment();
+}
+
+std::vector<float>* const & cfa::jetsclean_etaphiMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_etaphiMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_etaphiMoment();
+}
+
+std::vector<float>* const & cfa::jetsclean_fHPD() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fHPD();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fHPD();
+}
+
+std::vector<float>* const & cfa::jetsclean_fRBX() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fRBX();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fRBX();
+}
+
+std::vector<float>* const & cfa::jetsclean_fSubDetector1() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fSubDetector1();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fSubDetector1();
+}
+
+std::vector<float>* const & cfa::jetsclean_fSubDetector2() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fSubDetector2();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fSubDetector2();
+}
+
+std::vector<float>* const & cfa::jetsclean_fSubDetector3() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fSubDetector3();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fSubDetector3();
+}
+
+std::vector<float>* const & cfa::jetsclean_fSubDetector4() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_fSubDetector4();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_fSubDetector4();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_Energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_Energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_Energy();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_Id() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_Id();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_Id();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_et() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_et();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_et();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_eta();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_mass();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_phi();
+}
+
+std::vector<float>* const & cfa::jetsclean_gen_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_gen_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_gen_pt();
+}
+
+std::vector<float>* const & cfa::jetsclean_hitsInN90() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_hitsInN90();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_hitsInN90();
+}
+
+std::vector<float>* const & cfa::jetsclean_jetCharge() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_jetCharge();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_jetCharge();
+}
+
+std::vector<float>* const & cfa::jetsclean_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_mass();
+}
+
+std::vector<float>* const & cfa::jetsclean_mu_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_mu_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_mu_Mult();
+}
+
+std::vector<float>* const & cfa::jetsclean_n60() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_n60();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_n60();
+}
+
+std::vector<float>* const & cfa::jetsclean_n90() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_n90();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_n90();
+}
+
+std::vector<float>* const & cfa::jetsclean_n90Hits() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_n90Hits();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_n90Hits();
+}
+
+std::vector<float>* const & cfa::jetsclean_nECALTowers() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_nECALTowers();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_nECALTowers();
+}
+
+std::vector<float>* const & cfa::jetsclean_nHCALTowers() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_nHCALTowers();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_nHCALTowers();
+}
+
+std::vector<float>* const & cfa::jetsclean_neutralEmE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_neutralEmE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_neutralEmE();
+}
+
+std::vector<float>* const & cfa::jetsclean_neutralHadE() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_neutralHadE();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_neutralHadE();
+}
+
+std::vector<float>* const & cfa::jetsclean_neutral_Mult() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_neutral_Mult();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_neutral_Mult();
+}
+
+std::vector<float>* const & cfa::jetsclean_partonFlavour() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_partonFlavour();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_partonFlavour();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_Energy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_Energy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_Energy();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_Id() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_Id();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_Id();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_eta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_eta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_eta();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_mass() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_mass();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_mass();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_motherId() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_motherId();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_motherId();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_phi();
+}
+
+std::vector<float>* const & cfa::jetsclean_parton_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_parton_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_parton_pt();
+}
+
+std::vector<float>* const & cfa::jetsclean_phi() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_phi();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_phi();
+}
+
+std::vector<float>* const & cfa::jetsclean_phiphiMoment() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_phiphiMoment();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_phiphiMoment();
+}
+
+std::vector<float>* const & cfa::jetsclean_photonEnergy() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_photonEnergy();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_photonEnergy();
+}
+
+std::vector<float>* const & cfa::jetsclean_pt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_pt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_pt();
+}
+
+std::vector<float>* const & cfa::jetsclean_px() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_px();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_px();
+}
+
+std::vector<float>* const & cfa::jetsclean_py() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_py();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_py();
+}
+
+std::vector<float>* const & cfa::jetsclean_pz() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_pz();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_pz();
+}
+
+std::vector<float>* const & cfa::jetsclean_rawPt() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_rawPt();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_rawPt();
+}
+
+std::vector<float>* const & cfa::jetsclean_status() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_status();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_status();
+}
+
+std::vector<float>* const & cfa::jetsclean_theta() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->jets_AK5PFclean_theta();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->jets_AK5PFclean_theta();
+}
+
+std::vector<float>* const & cfa::mus_chargedHadronIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_mus_chargedHadronIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_mus_chargedHadronIso();
+}
+
+std::vector<float>* const & cfa::mus_neutralHadronIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_mus_neutralHadronIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_mus_neutralHadronIso();
+}
+
+std::vector<float>* const & cfa::mus_photonIso() const{
+  if(typeid(*cfa_)==typeid(cfa_8)){
+    return cfa_->pf_mus_photonIso();
+  }else if(typeid(*cfa_)==typeid(cfa_13)){
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }else{
+    throw std::logic_error("Function lookup unknown for class "+std::string(typeid(*cfa_).name()));
+  }
+  return cfa_->pf_mus_photonIso();
 }
 

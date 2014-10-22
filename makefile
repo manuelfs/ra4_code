@@ -70,8 +70,12 @@ $(SRCDIR)/small_tree.cpp $(INCDIR)/small_tree.hpp: dummy_small_tree.all
 dummy_small_tree.all: $(EXEDIR)/generate_small_tree.exe 
 	./$< 
 
-$(SRCDIR)/cfa_base.cpp $(INCDIR)/cfa_base.hpp $(SRCDIR)/cfa_8.cpp $(INCDIR)/cfa_8.hpp $(SRCDIR)/cfa_13.cpp $(INCDIR)/cfa_13.hpp $(SRCDIR)/cfa.cpp $(INCDIR)/cfa.hpp: dummy_cfa.all
-dummy_cfa.all: $(EXEDIR)/generate_cfa_class.exe $(EX8FILE) $(EX13FILE)
+$(SRCDIR)/cfa_base.cpp $(INCDIR)/cfa_base.hpp $(SRCDIR)/cfa_8.cpp $(INCDIR)/cfa_8.hpp $(SRCDIR)/cfa_13.cpp $(INCDIR)/cfa_13.hpp $(SRCDIR)/cfa.cpp $(INCDIR)/cfa.hpp $(MAKEDIR)/cfa_base.d $(MAKEDIR)/cfa_8.d $(MAKEDIR)/cfa_13.d $(MAKEDIR)/cfa.d: dummy_cfa.all
+$(SRCDIR)/cfa_base.cpp $(INCDIR)/cfa_base.hpp $(MAKEDIR)/cfa_base.d: dummy_cfa.all
+$(SRCDIR)/cfa.cpp $(INCDIR)/cfa.hpp $(MAKEDIR)/cfa.d: dummy_cfa.all
+$(SRCDIR)/cfa_8.cpp $(INCDIR)/cfa_8.hpp $(MAKEDIR)/cfa_8.d: dummy_cfa.all
+$(SRCDIR)/cfa_13.cpp $(INCDIR)/cfa_13.hpp $(MAKEDIR)/cfa_13.d: dummy_cfa.all
+dummy_cfa.all: $(EXEDIR)/generate_cfa_class.exe $(EX8FILE) $(EX13FILE) txt/mux_rules.cfg
 	./$< $(word 2,$^) cfa_8 $(word 3,$^) cfa_13
 
 .DELETE_ON_ERROR:
