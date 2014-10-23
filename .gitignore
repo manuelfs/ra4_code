@@ -27,5 +27,6 @@ bin/*
 *.log
 *.pdf
 *.eps
+*.tex
 out
 archive
