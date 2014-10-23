@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "TString.h"
+#include "TTree.h"
 
 typedef std::pair<int,double> int_double;
 typedef std::pair<double,double> double_double;
@@ -24,5 +25,12 @@ double deltaphi(double phi1, double phi2);
 float dR(float eta1, float phi1, float eta2, float phi2);
 TString RoundNumber(double num, int decimals, double denom=1.);
 bool Contains(const std::string& text, const std::string& pattern);
+
+std::vector<std::string> Tokenize(const std::string& input,
+                                  const std::string& tokens=" ");
+void get_count_and_uncertainty(TTree& tree,
+                               const std::string& cut,
+                               double& count,
+                               double& uncertainty);
 
 #endif

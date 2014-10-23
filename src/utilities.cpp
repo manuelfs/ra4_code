@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <string>
+
 #include "TMath.h"
 #include "TString.h"
 #include "TSystemDirectory.h"
@@ -15,6 +16,8 @@
 #include "TSystem.h"
 #include "TList.h"
 #include "TCollection.h"
+#include "TH1D.h"
+#include "TTree.h"
 
 using namespace std;
 
@@ -153,4 +156,28 @@ TString RoundNumber(double num, int decimals, double denom){
 
 bool Contains(const std::string& text, const std::string& pattern){
   return text.find(pattern) != std::string::npos;
+}
+
+std::vector<std::string> Tokenize(const std::string& input,
+                                  const std::string& tokens){
+  char* ipt(new char[input.size()+1]);
+  memcpy(ipt, input.data(), input.size());
+  ipt[input.size()]=static_cast<char>(0);
+  char* ptr(strtok(ipt, tokens.c_str()));
+  std::vector<std::string> output(0);
+  while(ptr!=NULL){
+    output.push_back(ptr);
+    ptr=strtok(NULL, tokens.c_str());
+  }
+  return output;
+}
+
+void get_count_and_uncertainty(TTree& tree,
+                               const std::string& cut,
+                               double& count,
+                               double& uncertainty){
+  const std::string hist_name("temp");
+  TH1D temp(hist_name.c_str(), "", 1, -1.0, 1.0);
+  tree.Project(hist_name.c_str(), "0.0", cut.c_str());
+  count=temp.IntegralAndError(0,2,uncertainty);
 }
