@@ -657,7 +657,8 @@ void WriteMergedHeader(const Dict &dictionary, const RepMap &overwritten, const 
   hpp_file << "#define H_CFA_MERGED\n\n";
 
   hpp_file << "#include <vector>\n";
-  hpp_file << "#include <string>\n\n";
+  hpp_file << "#include <string>\n";
+  hpp_file << "#include <typeinfo>\n\n";
 
   hpp_file << "#include \"TChain.h\"\n\n";
 
@@ -673,7 +674,8 @@ void WriteMergedHeader(const Dict &dictionary, const RepMap &overwritten, const 
   hpp_file << "  const std::string& SampleName() const;\n";
   hpp_file << "  const std::string& SampleName(const std::string &sample_name);\n";
   hpp_file << "  void SetFile(const std::string &file, bool is_8TeV = false);\n";
-  hpp_file << "  void AddFiles(const std::string &file);\n\n";
+  hpp_file << "  void AddFiles(const std::string &file);\n";
+  hpp_file << "  const std::type_info& Type() const;\n\n";
 
   hpp_file << "  ~cfa();\n\n";
 
@@ -716,7 +718,8 @@ void WriteMergedSource(const Dict &dictionary, const RepMap &overwritten, const 
   cpp_file << "#include <string>\n";
   cpp_file << "#include <vector>\n";
   cpp_file << "#include <sstream>\n";
-  cpp_file << "#include <stdexcept>\n\n";
+  cpp_file << "#include <stdexcept>\n";
+  cpp_file << "#include <typeinfo>\n\n";
 
   cpp_file << "#include \"TChain.h\"\n\n";
 
@@ -755,6 +758,10 @@ void WriteMergedSource(const Dict &dictionary, const RepMap &overwritten, const 
 
   cpp_file << "void cfa::AddFiles(const std::string &file){\n";
   cpp_file << "  cfa_->AddFiles(file);\n";
+  cpp_file << "}\n\n";
+
+  cpp_file << "const std::type_info& cfa::Type() const{\n";
+  cpp_file << "  return typeid(*cfa_);\n";
   cpp_file << "}\n\n";
 
   cpp_file << "cfa::~cfa(){\n";
