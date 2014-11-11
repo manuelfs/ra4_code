@@ -56,6 +56,12 @@ int main(){
   variables.push_back("std::vector<double>* fjets_eta");
   variables.push_back("std::vector<double>* fjets_phi");
   variables.push_back("std::vector<double>* fjets_mj");
+  variables.push_back("int ncfjets");  // for cfjets_pt>50, all with skinny jets pt>30
+  variables.push_back("float cmj");    // for cfjets_pt>50, all with skinny jets pt>30
+  variables.push_back("std::vector<double>* cfjets_pt");
+  variables.push_back("std::vector<double>* cfjets_eta");
+  variables.push_back("std::vector<double>* cfjets_phi");
+  variables.push_back("std::vector<double>* cfjets_mj");
   
   //////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");

@@ -41,7 +41,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
   //   GetEntry(entry);
 
   //   cout<<"========== Event "<<entry+1<<" ============"<<endl;
-  //   for(unsigned int imc = 0; imc < mc_doc_id()->size(); imc++){
+  //   for(size_t imc = 0; imc < mc_doc_id()->size(); imc++){
   //     if(abs(mc_doc_id()->at(imc))==15){// && mc_doc_status()->at(imc)==23){
   //     cout<<imc<<": ID "<<mc_doc_id()->at(imc)<<",   \tMom ID "<<mc_doc_mother_id()->at(imc)
   //      <<", \tGMom ID "<<mc_doc_grandmother_id()->at(imc)
@@ -84,7 +84,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
   Timer timer(Nentries);
   timer.Start();
   for(int entry(0); entry < Nentries; entry++){
-    if(entry%5000==0 && entry!=0){
+    if(entry%1000==0 && entry!=0){
       timer.PrintRemainingTime();
     }
     timer.Iterate();
@@ -105,7 +105,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////  Tracks  ////////////////
     if(Type()==typeid(cfa_8)){ //This should be changed when isotk becomes available in cfa_13!
       tree.nisotrks = 0;
-      for(unsigned i = 0; i < isotk_pt()->size(); ++i){
+      for(size_t i = 0; i < isotk_pt()->size(); ++i){
 	if(IsGoodIsoTrack(i)) ++tree.nisotrks;
       }
     }else{
@@ -126,8 +126,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
     tree.ht=0.0;
     tree.mindphin_metjet = getMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
-    for(unsigned i = 0; i<good_jets.size(); ++i){
-      const unsigned ijet = good_jets.at(i);
+    for(size_t i = 0; i<good_jets.size(); ++i){
+      const size_t ijet = good_jets.at(i);
       if(ijet>=jets_pt()->size()) continue;
       pt = jets_pt()->at(ijet);
       px = jets_px()->at(ijet);
@@ -173,14 +173,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     csv_sorted.resize(0);
     tree.v_fjets_pt.resize(0); tree.v_fjets_mj.resize(0); 
     tree.v_fjets_eta.resize(0); tree.v_fjets_phi.resize(0); 
-    for(unsigned ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
+    for(size_t ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
       pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
       csv_sorted.push_back(make_pair(ijet, pt));
     }
     if(csv_sorted.size() >= 2)
       sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
-    for(unsigned iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++iijet){
-      unsigned ijet(csv_sorted[iijet].first);
+    for(size_t iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++iijet){
+      size_t ijet(csv_sorted[iijet].first);
       pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
       tree.v_fjets_pt.push_back(pt);
       tree.v_fjets_eta.push_back(fastjets_AK4_R1p2_R0p5pT30_eta()->at(ijet));
@@ -193,6 +193,63 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       if(pt>50){
         tree.mj += mj;
         tree.nfjets++;
+      }
+    }
+
+    ////////////////  Clean Fat Jets ////////////
+    tree.ncfjets = 0;
+    tree.cmj = 0.;
+    tree.v_cfjets_mj.resize(0);
+    tree.v_cfjets_pt.resize(0);
+    tree.v_cfjets_eta.resize(0);
+    tree.v_cfjets_phi.resize(0);
+    for(size_t ijet = 0; ijet<tree.v_fjets_pt.size(); ++ijet){
+      TLorentzVector p4jet;
+      p4jet.SetPtEtaPhiM(tree.v_fjets_pt.at(ijet), tree.v_fjets_eta.at(ijet),
+			 tree.v_fjets_phi.at(ijet), tree.v_fjets_mj.at(ijet));
+
+      //Keep the original 4-vector to check DeltaR
+      //(otherwise which leptons are cleaned depends on the order they're checked)
+      const TLorentzVector p4jet_original(p4jet);
+
+      for(size_t iel = 0; iel<els_pt()->size(); ++iel){
+	if(!IsVetoElectron(iel)) continue;
+	const size_t ijetel(els_jet_ind()->at(iel));
+	if(ijetel>=jets_pt()->size()) continue;
+	const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
+				  els_pz()->at(iel), els_energy()->at(iel));
+	const TLorentzVector p4jetel(jets_px()->at(ijetel), jets_py()->at(ijetel),
+				     jets_pz()->at(ijetel), jets_energy()->at(ijetel));
+			     
+	if(p4jetel.DeltaR(p4jet_original)<1.0
+	   && p4jetel.Pt()>30.0
+	   && p4jetel.DeltaR(p4el)<0.3){
+	  p4jet-=p4jetel;
+	}
+      }
+      for(size_t imu = 0; imu<mus_pt()->size(); ++imu){
+	if(!IsVetoMuon(imu)) continue;
+	const size_t ijetmu(mus_jet_ind()->at(imu));
+	if(ijetmu>=jets_pt()->size()) continue;
+	const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
+				  mus_pz()->at(imu), mus_energy()->at(imu));
+	const TLorentzVector p4jetmu(jets_px()->at(ijetmu), jets_py()->at(ijetmu),
+				     jets_pz()->at(ijetmu), jets_energy()->at(ijetmu));
+
+	if(p4jetmu.DeltaR(p4jet_original)<1.0
+	   && p4jetmu.Pt()>30.0
+	   && p4jetmu.DeltaR(p4mu)<0.3){
+	  p4jet-=p4jetmu;
+	}
+      }
+
+      tree.v_cfjets_mj.push_back(p4jet.M());
+      tree.v_cfjets_pt.push_back(p4jet.Pt());
+      tree.v_cfjets_eta.push_back(p4jet.Eta());
+      tree.v_cfjets_phi.push_back(p4jet.Phi());
+      if(p4jet.Pt()>50.0){
+	tree.cmj+=p4jet.M();
+	++tree.ncfjets;
       }
     }
 
@@ -308,7 +365,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////   TRUTH   ////////////////
     // True MET and HT
     float metx(0), mety(0);
-    for(unsigned int imc = 0; imc < mc_final_id()->size(); imc++){
+    for(size_t imc = 0; imc < mc_final_id()->size(); imc++){
       int id = static_cast<int>(abs(mc_final_id()->at(imc)));
       if(id==12 || id==14 || id==16 || id==39 || (id>1e6 && mc_final_charge()->at(imc)==0)) {
         metx += mc_final_px()->at(imc);
@@ -317,14 +374,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.genmet = sqrt(pow(metx,2)+pow(mety,2));
     tree.genht = 0;
-    for(unsigned int imc = 0; imc < mc_jets_pt()->size(); imc++)
+    for(size_t imc = 0; imc < mc_jets_pt()->size(); imc++)
       if(mc_jets_pt()->at(imc)>40 && mc_jets_eta()->at(imc)<3) tree.genht += mc_jets_pt()->at(imc);
 
     // True particles
     tree.mc_pt->resize(0);  tree.mc_id->resize(0);  
     tree.mc_eta->resize(0); tree.mc_momid->resize(0);  
     tree.mc_phi->resize(0); 
-    for(unsigned int imc = 0; imc < mc_doc_id()->size(); imc++){
+    for(size_t imc = 0; imc < mc_doc_id()->size(); imc++){
       int id = static_cast<int>(mc_doc_id()->at(imc));
       int momid = GetMom(mc_doc_id()->at(imc), mc_doc_mother_id()->at(imc),
 			 mc_doc_grandmother_id()->at(imc), mc_doc_ggrandmother_id()->at(imc),
@@ -386,7 +443,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       vector<float> v_mt2(0), v_mt2w(0), v_mbl(0), v_mblnu(0);
       float pt1=bad_val, pt2=bad_val, csv1=bad_val, csv2=bad_val;
       int pti1=-1, pti2=-1, csvi1=-1, csvi2=-1;
-      for(unsigned jet1 = 0; jet1 < jets_pt()->size(); ++jet1) {
+      for(size_t jet1 = 0; jet1 < jets_pt()->size(); ++jet1) {
         if(!IsBasicJet(jet1)) continue;
 
         jet_sorter.push_back(std::make_pair(-jets_pt()->at(jet1), jet1));
@@ -431,7 +488,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
           v_mblnu.push_back((lepmax_p4 + jet_p4 + met_p4).M());
         }
 
-        for(unsigned jet2 = jet1+1; jet2 < jets_pt()->size(); ++jet2){
+        for(size_t jet2 = jet1+1; jet2 < jets_pt()->size(); ++jet2){
           if(!IsBasicJet(jet2)) continue;
           double momentum_2[3] = {0.0, jets_px()->at(jet2), jets_py()->at(jet2)};
           double momentum_2_4[4] = {jets_energy()->at(jet2),
@@ -480,8 +537,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
         bool found_tag = false;
-        for(unsigned i = 0; i < jet_sorter.size() && (i < 2 || (found_tag && i < 3)); ++i){
-          const unsigned jet = jet_sorter.at(i).second;
+        for(size_t i = 0; i < jet_sorter.size() && (i < 2 || (found_tag && i < 3)); ++i){
+          const size_t jet = jet_sorter.at(i).second;
           if(num_tags == 1 && jets_btag_secVertexCombined()->at(jet) > CSVCuts[1]){
             found_tag = true;
             continue;
@@ -508,15 +565,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
         }
       }else{
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
-        for(unsigned i = 0; i < 3 && i < jet_sorter.size(); ++i){
-          const unsigned jeta = jet_sorter.at(i).second;
+        for(size_t i = 0; i < 3 && i < jet_sorter.size(); ++i){
+          const size_t jeta = jet_sorter.at(i).second;
           double momentum_1_3[3] = {0.0, jets_px()->at(jeta), jets_py()->at(jeta)};
           double momentum_1_4[4] = {jets_energy()->at(jeta),
                                     jets_px()->at(jeta),
                                     jets_py()->at(jeta),
                                     jets_pz()->at(jeta)};
-          for(unsigned j = i + 1; j < 3 && j < jet_sorter.size(); ++j){
-            const unsigned jetb = jet_sorter.at(j).second;
+          for(size_t j = i + 1; j < 3 && j < jet_sorter.size(); ++j){
+            const size_t jetb = jet_sorter.at(j).second;
             double momentum_2_3[3] = {0.0, jets_px()->at(jetb), jets_py()->at(jetb)};
             double momentum_2_4[4] = {jets_energy()->at(jetb),
                                       jets_px()->at(jetb),
@@ -616,7 +673,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
 
     ////////////////   Pile-up   ////////////////
-    for(unsigned int bc(0); bc<PU_bunchCrossing()->size(); ++bc){
+    for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
       if(PU_bunchCrossing()->at(bc)==0){
         tree.ntrupv = PU_NumInteractions()->at(bc);
         tree.ntrupv_mean = PU_TrueNumInteractions()->at(bc);
@@ -685,7 +742,7 @@ unsigned event_handler::TypeCode() const{
   unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0, num_conversions = 0;
   bool counting = false;
 
-  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
+  for(size_t i = 0; i < mc_doc_id()->size(); ++i){
     const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
     const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));

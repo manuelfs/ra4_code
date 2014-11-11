@@ -88,6 +88,16 @@ public:
   std::vector<double> v_fjets_phi;
   std::vector<double>* fjets_mj;
   std::vector<double> v_fjets_mj;
+  int ncfjets;
+  float cmj;
+  std::vector<double>* cfjets_pt;
+  std::vector<double> v_cfjets_pt;
+  std::vector<double>* cfjets_eta;
+  std::vector<double> v_cfjets_eta;
+  std::vector<double>* cfjets_phi;
+  std::vector<double> v_cfjets_phi;
+  std::vector<double>* cfjets_mj;
+  std::vector<double> v_cfjets_mj;
   unsigned mc_type;
   std::vector<double>* mc_pt;
   std::vector<double> v_mc_pt;
