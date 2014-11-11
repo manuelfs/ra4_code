@@ -212,8 +212,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       //(otherwise which leptons are cleaned depends on the order they're checked)
       const TLorentzVector p4jet_original(p4jet);
 
-      for(size_t iel = 0; iel<els_pt()->size(); ++iel){
-	if(!IsVetoElectron(iel)) continue;
+      for(size_t i = 0; i<veto_electrons.size(); ++i){
+	const size_t iel = veto_electrons.at(i);
 	const size_t ijetel(els_jet_ind()->at(iel));
 	if(ijetel>=jets_pt()->size()) continue;
 	const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
@@ -227,7 +227,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 	  p4jet-=p4jetel;
 	}
       }
-      for(size_t imu = 0; imu<mus_pt()->size(); ++imu){
+      for(size_t i = 0; i<veto_muons; ++i){
+	const size_t imu = veto_muons.at(i);
 	if(!IsVetoMuon(imu)) continue;
 	const size_t ijetmu(mus_jet_ind()->at(imu));
 	if(ijetmu>=jets_pt()->size()) continue;
