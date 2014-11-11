@@ -6,6 +6,7 @@
 #include <cfloat>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 
 #include <iomanip>
 #include <fstream>
@@ -22,11 +23,9 @@
 #include "utilities.hpp"
 
 namespace{
-  const float MinSignalLeptonPt_13TeV = 20.;
-  const float MinSignalLeptonPt_8TeV = 5.;
-  const float MinVetoLeptonPt_13TeV = 15.;
-  const float MinVetoLeptonPt_8TeV = 5.;
-  const float MinJetPt = 40.;
+  const float MinSignalLeptonPt = 20.;
+  const float MinVetoLeptonPt = 15.;
+  const float MinTrackPt = MinVetoLeptonPt;
 }
 
 using namespace std;
@@ -51,51 +50,43 @@ vector<int> ra4_objects::GetMuons(bool doSignal) const {
 
 bool ra4_objects::IsSignalMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-
-  float relIso = GetMuonIsolation(imu);
-  return (IsBasicMuon(imu) && relIso < 0.12);
+  return IsSignalIdMuon(imu) && GetMuonIsolation(imu)<0.12 && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
-bool ra4_objects::IsVetoMuon(unsigned imu) const {
+bool ra4_objects::IsVetoMuon(unsigned imu) const{
+  if(imu >= mus_pt()->size()) return false;
+  return IsVetoIdMuon(imu) && GetMuonIsolation(imu)<0.2 && mus_pt()->at(imu)>MinVetoLeptonPt;
+}
+
+bool ra4_objects::IsVetoIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
 
-  float relIso = GetMuonIsolation(imu);
-
-  bool isPF(false), passes_pt(false);
+  bool isPF(false);
   if(Type()==typeid(cfa_8)){
     isPF = mus_isPFMuon()->at(imu);
-    passes_pt = mus_pt()->at(imu) >= MinVetoLeptonPt_8TeV;
   }else if(Type()==typeid(cfa_13)){
     isPF = mus_isPF()->at(imu);
-    passes_pt = mus_pt()->at(imu) >= MinVetoLeptonPt_13TeV;
   }else{
     return false;
   }
 
   return ((mus_isGlobalMuon()->at(imu) >0 || mus_isTrackerMuon()->at(imu) >0)
           && isPF
-          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu), mus_tk_px()->at(imu),
-                        mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
-          && passes_pt
-          && fabs(mus_eta()->at(imu)) <= 2.5
-          && relIso < 0.2);
+          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
+			mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
+          && fabs(mus_eta()->at(imu)) <= 2.5);
 }
 
-bool ra4_objects::IsBasicMuon(unsigned imu) const {
+bool ra4_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
 
   float d0PV = mus_tk_d0dum()->at(imu)-pv_x()->at(0)*sin(mus_tk_phi()->at(imu))+pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
 
-  bool isPF(false), passes_pt(false), pf_match(false);
+  bool isPF(false);
   if(Type()==typeid(cfa_8)){
     isPF = mus_isPFMuon()->at(imu);
-    passes_pt = mus_pt()->at(imu) >= MinVetoLeptonPt_8TeV;
-    int useless(-1);
-    pf_match = hasPFMatch(imu, particleId::muon, useless);
   }else if(Type()==typeid(cfa_13)){
     isPF = mus_isPF()->at(imu);
-    passes_pt = mus_pt()->at(imu) >= MinVetoLeptonPt_13TeV;
-    pf_match = true;
   }else{
     return false;
   }
@@ -106,12 +97,9 @@ bool ra4_objects::IsBasicMuon(unsigned imu) const {
           && mus_tk_LayersWithMeasurement()->at(imu) > 5
           && mus_tk_numvalPixelhits()->at(imu) > 0
           && mus_numberOfMatchedStations()->at(imu) > 1
-          //&& fabs(mus_dB()->at(imu)) < 0.02
           && fabs(d0PV) < 0.02
-          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu), mus_tk_px()->at(imu),
-                        mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
-          && passes_pt
-          && pf_match
+          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
+			mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
           && fabs(mus_eta()->at(imu)) <= 2.4);
 }
 
@@ -140,28 +128,24 @@ vector<int> ra4_objects::GetElectrons(bool doSignal) const {
 bool ra4_objects::IsSignalElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
 
-  double relIso = GetElectronIsolation(iel);
-  return (IsBasicElectron(iel) && relIso < 0.15);
+  return IsSignalIdElectron(iel)
+    && els_pt()->at(iel)>=MinSignalLeptonPt
+    && GetElectronIsolation(iel)<0.15;
 }
 
 bool ra4_objects::IsVetoElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
+  return IsVetoIdElectron(iel)
+    && els_pt()->at(iel)>=MinVetoLeptonPt
+    && GetElectronIsolation(iel)<0.5;
+}
+
+bool ra4_objects::IsVetoIdElectron(unsigned iel) const {
+  if(iel >= els_pt()->size()) return false;
 
   float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
-  double relIso = GetElectronIsolation(iel);
 
-  bool passes_pt(false);
-  if(Type()==typeid(cfa_8)){
-    passes_pt = els_pt()->at(iel) > MinVetoLeptonPt_8TeV;
-  }else if(Type()==typeid(cfa_13)){
-    passes_pt = els_pt()->at(iel) > MinVetoLeptonPt_13TeV;
-  }else{
-    return false;
-  }
-
-  return (passes_pt
-          && fabs(els_scEta()->at(iel)) < 2.5
-          && relIso < 0.15
+  return (fabs(els_scEta()->at(iel)) < 2.5
           && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel), cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
                         sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel), els_tk_pz()->at(iel), 0)) < 0.2
           && fabs(d0PV) < 0.04
@@ -177,28 +161,27 @@ bool ra4_objects::IsVetoElectron(unsigned iel) const {
           );
 }
 
-bool ra4_objects::IsBasicElectron(unsigned iel) const {
+bool ra4_objects::IsSignalIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
 
   float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
 
-  bool passes_pt(false), no_conversion(false);
+  bool no_conversion(false);
   if(Type()==typeid(cfa_8)){
-    passes_pt = els_pt()->at(iel) > MinVetoLeptonPt_8TeV;
     no_conversion = !els_hasMatchedConversion()->at(iel);
   }else if(Type()==typeid(cfa_13)){
-    passes_pt = els_pt()->at(iel) > MinVetoLeptonPt_13TeV;
     no_conversion=true;
   }else{
     return false;
   }
 
-  return (passes_pt
-          && fabs(els_scEta()->at(iel)) < 2.5
+  return (fabs(els_scEta()->at(iel)) < 2.5
           && no_conversion
           && els_n_inner_layer()->at(iel) <= 1
-          && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel), cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                        sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel), els_tk_pz()->at(iel), 0)) < 0.1
+          && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
+			cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+                        sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+			els_tk_pz()->at(iel), 0)) < 0.1
           && fabs(1./els_caloEnergy()->at(iel) - els_eOverPIn()->at(iel)/els_caloEnergy()->at(iel)) < 0.05
           && fabs(d0PV) < 0.02
           && ((els_isEB()->at(iel) // Endcap selection
@@ -256,10 +239,47 @@ float ra4_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 }
 
 /////////////////////////////////////////////////////////////////////////
+/////////////////////////////////  LEPTONS  /////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+int ra4_objects::GetMom(const float id, const float mom, const float gmom,
+			       const float ggmom, bool &fromW){
+  const int iid = TMath::Nint(id);
+  const int imom = TMath::Nint(mom);
+  const int igmom = TMath::Nint(gmom);
+  const int iggmom = TMath::Nint(ggmom);
+
+  int ret_mom = 0;
+  if(imom != iid){
+    ret_mom = imom;
+  }else if(igmom != iid){
+    ret_mom = igmom;
+  }else{
+    ret_mom = iggmom;
+  }
+
+  fromW = (abs(imom)==24 || abs(igmom)==24 || abs(iggmom)==24);
+
+  return ret_mom;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////  TRACKS  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+bool ra4_objects::IsGoodIsoTrack(unsigned itrk) const{
+  if(itrk>=isotk_pt()->size()) return false;
+  return isotk_pt()->at(itrk)>=MinTrackPt
+    && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
+    && (fabs(isotk_dzpv()->at(itrk))<0.1)
+    && (fabs(isotk_eta()->at(itrk))<2.4);
+}
+
+/////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  JETS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> ra4_objects::GetJets(vector<int> SigEl, vector<int> SigMu, vector<int> VetoEl, vector<int> VetoMu,
-                                 float &HT) const {
+vector<int> ra4_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
+				 const vector<int> &VetoEl, const vector<int> &VetoMu,
+                                 const double pt_thresh, const double eta_thresh,
+				 float &HT) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_pt()->size(), false);
 
@@ -286,7 +306,7 @@ vector<int> ra4_objects::GetJets(vector<int> SigEl, vector<int> SigMu, vector<in
 
   // Tau/photon cleaning, and calculation of HT
   for(unsigned ijet = 0; ijet<jets_pt()->size(); ijet++) {
-    if(!IsGoodJet(ijet, MinJetPt, 2.4) || jet_is_lepton[ijet]) continue;
+    if(!IsGoodJet(ijet, pt_thresh, eta_thresh) || jet_is_lepton[ijet]) continue;
 
     // double tmpdR, partp, jetp = sqrt(pow(jets_px()->at(ijet),2)+pow(jets_py()->at(ijet),2)+pow(jets_pz()->at(ijet),2));
     // bool useJet = true;
@@ -343,7 +363,7 @@ bool ra4_objects::IsBasicJet(const unsigned ijet) const{
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////  TRUTH-MATCHING  ///////////////////////////
 /////////////////////////////////////////////////////////////////////////
-int ra4_objects::GetTrueMuon(int index, int &momID, double &closest_dR) const {
+int ra4_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closest_dR) const {
   if(index < 0 || index >= static_cast<int>(mus_eta()->size())) return -1;
 
   int closest_imc = -1, idLepton = 0;
@@ -360,22 +380,28 @@ int ra4_objects::GetTrueMuon(int index, int &momID, double &closest_dR) const {
   }
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_mus_id()->at(closest_imc));
-    momID = static_cast<int>(mc_mus_mother_id()->at(closest_imc));
-    if(idLepton == momID) momID = static_cast<int>(mc_mus_ggrandmother_id()->at(closest_imc));
+    momID = GetMom(mc_mus_id()->at(closest_imc), mc_mus_mother_id()->at(closest_imc),
+		   mc_mus_grandmother_id()->at(closest_imc),
+		   mc_mus_ggrandmother_id()->at(closest_imc),
+		   fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
     if(closest_imc >= 0){
-      momID = static_cast<int>(mc_doc_mother_id()->at(closest_imc));
       idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
+      momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
+		     mc_doc_grandmother_id()->at(closest_imc),
+		     mc_doc_ggrandmother_id()->at(closest_imc),
+		     fromW);
     } else {
       momID = 0;
       idLepton = 0;
+      fromW = false;
     }
   }
   return idLepton;
 }
 
-int ra4_objects::GetTrueElectron(int index, int &momID, double &closest_dR) const {
+int ra4_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const {
   if(index < 0 || index >= static_cast<int>(els_eta()->size())) return -1;
 
   int closest_imc = -1, idLepton = 0;
@@ -392,16 +418,22 @@ int ra4_objects::GetTrueElectron(int index, int &momID, double &closest_dR) cons
   }
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_electrons_id()->at(closest_imc));
-    momID = static_cast<int>(mc_electrons_mother_id()->at(closest_imc));
-    if(idLepton == momID) momID = static_cast<int>(mc_electrons_ggrandmother_id()->at(closest_imc));
+    momID = GetMom(mc_electrons_id()->at(closest_imc), mc_electrons_mother_id()->at(closest_imc),
+		   mc_electrons_grandmother_id()->at(closest_imc),
+		   mc_electrons_ggrandmother_id()->at(closest_imc),
+		   fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
     if(closest_imc >= 0){
-      momID = static_cast<int>(mc_doc_mother_id()->at(closest_imc));
+      momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
+		     mc_doc_grandmother_id()->at(closest_imc),
+		     mc_doc_ggrandmother_id()->at(closest_imc),
+		     fromW);
       idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     } else {
       momID = 0;
       idLepton = 0;
+      fromW = false;
     }
   }
   return idLepton;

@@ -14,6 +14,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <limits>
 
 #include "TMath.h"
 #include "TFile.h"
@@ -25,6 +26,8 @@
 #include "timer.hpp"
 #include "mt2_bisect.hpp"
 #include "mt2w_bisect.hpp"
+#include "cfa_8.hpp"
+#include "cfa_13.hpp"
 
 using namespace std;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
@@ -68,6 +71,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
   double deltaR, lepmax_pt, lepmax_energy, lepmax_px, lepmax_py, lepmax_pz;
   TLorentzVector lepmax_p4;
   int mcID, mcmomID;
+  bool fromW;
   float spher[2][2], spher_jets[2][2], spher_nolin[2][2];
   float pt(bad_val), px(bad_val), py(bad_val), eig1(bad_val), eig2(bad_val);
 
@@ -75,7 +79,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
   mt2_bisect::mt2 mt2_calc;
   mt2_calc.set_mn(W_mass);
-  mt2w_bisect::mt2w mt2w_calc(9999.9999, -1.0);
+  mt2w_bisect::mt2w mt2w_calc(1.0e5, -1.0);
   vector<int_double> csv_sorted;
   Timer timer(Nentries);
   timer.Start();
@@ -85,19 +89,28 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     timer.Iterate();
     GetEntry(entry);
-
     ////////////////   Leptons   ////////////////
     vector<int> signal_electrons = GetElectrons();
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> signal_muons = GetMuons();
     vector<int> veto_muons = GetMuons(false);
-    vector<int> good_jets = GetJets(signal_electrons, signal_muons, veto_electrons, veto_muons, tree.ht);
+    vector<int> good_jets = GetJets(signal_electrons, signal_muons, veto_electrons, veto_muons, 20.0, 2.4, tree.ht);
     tree.nels  = signal_electrons.size();
     tree.nvels = veto_electrons.size();
     tree.nmus  = signal_muons.size();
     tree.nvmus = veto_muons.size();
     if(tree.nels+tree.nmus == tree.nvels+tree.nvmus) tree.nleps = tree.nels+tree.nmus;
     else tree.nleps = static_cast<int>(bad_val);
+
+    ////////////////  Tracks  ////////////////
+    if(Type()==typeid(cfa_8)){ //This should be changed when isotk becomes available in cfa_13!
+      tree.nisotrks = 0;
+      for(unsigned i = 0; i < isotk_pt()->size(); ++i){
+	if(IsGoodIsoTrack(i)) ++tree.nisotrks;
+      }
+    }else{
+      tree.nisotrks = -1;
+    }
 
     ////////////////   Jets   ////////////////
     tree.v_jets_pt.resize(0);
@@ -111,16 +124,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.njets = 0;
     tree.nbl = 0; tree.nbm = 0; tree.nbt = 0;
 
+    tree.ht=0.0;
     tree.mindphin_metjet = getMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
-    for(uint ijet = 0; ijet<jets_AK4_pt()->size(); ijet++) {
-      if(!IsGoodJet(ijet, 20, 2.4)) continue;
-      pt = jets_AK4_pt()->at(ijet);
-      px = jets_AK4_px()->at(ijet);
-      py = jets_AK4_py()->at(ijet);
+    for(unsigned i = 0; i<good_jets.size(); ++i){
+      const unsigned ijet = good_jets.at(i);
+      if(ijet>=jets_pt()->size()) continue;
+      pt = jets_pt()->at(ijet);
+      px = jets_px()->at(ijet);
+      py = jets_py()->at(ijet);
       tree.v_jets_pt.push_back(pt);
-      tree.v_jets_eta.push_back(jets_AK4_eta()->at(ijet));
-      tree.v_jets_phi.push_back(jets_AK4_phi()->at(ijet));
-      double csv = jets_AK4_btag_secVertexCombined()->at(ijet);
+      tree.v_jets_eta.push_back(jets_eta()->at(ijet));
+      tree.v_jets_phi.push_back(jets_phi()->at(ijet));
+      double csv = jets_btag_secVertexCombined()->at(ijet);
       tree.v_jets_csv.push_back(csv);
       csv_sorted.push_back(make_pair(tree.v_jets_csv.size()-1, csv));
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
@@ -133,9 +148,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       spher_jets[0][0] += px*px/pt; spher_jets[0][1] += px*py/pt; 
       spher_jets[1][0] += px*py/pt; spher_jets[1][1] += py*py/pt; 
 
-      //       cout<<ijet<<": csv "<<csv<<", eta "<<jets_AK4_eta()->at(ijet)<<", phi "<<jets_AK4_phi()->at(ijet)<<endl;
-      if(jets_AK4_pt()->at(ijet) >= jet_ptThresh) {
+      //       cout<<ijet<<": csv "<<csv<<", eta "<<jets_eta()->at(ijet)<<", phi "<<jets_phi()->at(ijet)<<endl;
+      if(jets_pt()->at(ijet) >= jet_ptThresh) {
         tree.njets++;
+	tree.ht+=jets_pt()->at(ijet);
         if(csv >= CSVCuts[0]) tree.nbl++;
         if(csv >= CSVCuts[1]) tree.nbm++;
         if(csv >= CSVCuts[2]) tree.nbt++;
@@ -157,13 +173,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     csv_sorted.resize(0);
     tree.v_fjets_pt.resize(0); tree.v_fjets_mj.resize(0); 
     tree.v_fjets_eta.resize(0); tree.v_fjets_phi.resize(0); 
-    for(unsigned ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ijet++){
+    for(unsigned ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
       pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
       csv_sorted.push_back(make_pair(ijet, pt));
     }
     if(csv_sorted.size() >= 2)
       sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
-    for(unsigned iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); iijet++){
+    for(unsigned iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++iijet){
       unsigned ijet(csv_sorted[iijet].first);
       pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
       tree.v_fjets_pt.push_back(pt);
@@ -183,25 +199,33 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////   Leptons   ////////////////
     lepmax_energy=0; lepmax_pt=0; lepmax_px=0; lepmax_py=0; lepmax_pz=0;
     tree.v_els_pt.resize(0);
+    tree.v_els_gen_pt.resize(0);
     tree.v_els_eta.resize(0);
     tree.v_els_phi.resize(0);
+    tree.v_els_charge.resize(0);
     tree.v_els_reliso.resize(0);
+    tree.v_els_sigid.resize(0);
     tree.v_els_tru_id.resize(0);
     tree.v_els_tru_momid.resize(0);
+    tree.v_els_tru_tm.resize(0);
     tree.v_els_tru_dr.resize(0);
-    for(uint index=0; index<els_pt()->size(); index++){
-      if(!IsBasicElectron(index)) continue;
+    for(uint index=0; index<els_pt()->size(); ++index){
+      if(!IsVetoIdElectron(index) || els_pt()->at(index)<10.0) continue;
 
       pt = els_pt()->at(index);
       px = els_px()->at(index);
       py = els_py()->at(index);
-      mcID = GetTrueElectron(static_cast<int>(index), mcmomID, deltaR);
+      mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
       tree.v_els_pt.push_back(pt);
+      tree.v_els_gen_pt.push_back(els_gen_pt()->at(index));
       tree.v_els_eta.push_back(els_eta()->at(index));
       tree.v_els_phi.push_back(els_phi()->at(index));
+      tree.v_els_charge.push_back(els_charge()->at(index));
       tree.v_els_reliso.push_back(GetElectronIsolation(index));
+      tree.v_els_sigid.push_back(IsSignalIdElectron(index));
       tree.v_els_tru_id.push_back(mcID);
       tree.v_els_tru_momid.push_back(mcmomID);
+      tree.v_els_tru_tm.push_back(abs(mcID)==11 && fromW);
       tree.v_els_tru_dr.push_back(deltaR);
 
       if(els_pt()->at(index) > lepmax_pt){
@@ -226,22 +250,30 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       //          <<", dR "<<deltaR<<endl;
     }
     tree.v_mus_pt.resize(0);
+    tree.v_mus_gen_pt.resize(0);
     tree.v_mus_eta.resize(0);
     tree.v_mus_phi.resize(0);
+    tree.v_mus_charge.resize(0);
     tree.v_mus_reliso.resize(0);
+    tree.v_mus_sigid.resize(0);
     tree.v_mus_tru_id.resize(0);
     tree.v_mus_tru_momid.resize(0);
+    tree.v_mus_tru_tm.resize(0);
     tree.v_mus_tru_dr.resize(0);
-    for(uint index=0; index<mus_pt()->size(); index++){
-      if(!IsBasicMuon(index)) continue;
+    for(uint index=0; index<mus_pt()->size(); ++index){
+      if(!IsVetoIdMuon(index) || mus_pt()->at(index)<10.0) continue;
 
-      mcID = GetTrueMuon(static_cast<int>(index), mcmomID, deltaR);
+      mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
       tree.v_mus_pt.push_back(mus_pt()->at(index));
+      tree.v_mus_pt.push_back(mus_gen_pt()->at(index));
       tree.v_mus_eta.push_back(mus_eta()->at(index));
       tree.v_mus_phi.push_back(mus_phi()->at(index));
+      tree.v_mus_charge.push_back(mus_charge()->at(index));
       tree.v_mus_reliso.push_back(GetMuonIsolation(index));
+      tree.v_mus_sigid.push_back(IsSignalIdMuon(index));
       tree.v_mus_tru_id.push_back(mcID);
       tree.v_mus_tru_momid.push_back(mcmomID);
+      tree.v_mus_tru_tm.push_back(abs(mcID)==13 && fromW);
       tree.v_mus_tru_dr.push_back(deltaR);
 
       if(mus_pt()->at(index) > lepmax_pt){
@@ -270,6 +302,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////   METS   ////////////////
     tree.met = mets_et()->at(0);
     tree.met_phi = mets_phi()->at(0);
+    tree.met_unc_pt = mets_unCPt()->at(0);
+    tree.met_unc_phi = mets_unCPhi()->at(0);
 
     ////////////////   TRUTH   ////////////////
     // True MET and HT
@@ -292,11 +326,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.mc_phi->resize(0); 
     for(unsigned int imc = 0; imc < mc_doc_id()->size(); imc++){
       int id = static_cast<int>(mc_doc_id()->at(imc));
-      int momid = static_cast<int>(mc_doc_mother_id()->at(imc));
+      int momid = GetMom(mc_doc_id()->at(imc), mc_doc_mother_id()->at(imc),
+			 mc_doc_grandmother_id()->at(imc), mc_doc_ggrandmother_id()->at(imc),
+			 fromW);
       pt = mc_doc_pt()->at(imc);
-      if(((abs(momid) == 24 && abs(id) != 12 && abs(id) != 14 && abs(id) != 16)
-          || (abs(momid) == 15 && abs(id) != 15))
-         && abs(id) != 22  && abs(id) != 24 ){
+      if((abs(momid) == 24 || (abs(momid) == 15 && abs(id) != 15))
+	 && abs(id) != 12 && abs(id) != 14 && abs(id) != 16
+         && abs(id) != 22  && abs(id) != 24){
         tree.mc_pt->push_back(pt);
         tree.mc_eta->push_back(mc_doc_eta()->at(imc));
         tree.mc_phi->push_back(mc_doc_phi()->at(imc));
@@ -321,34 +357,41 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.mt2w_min = bad_val;
     tree.mt2w_ref_max = bad_val;
     tree.mt2w_ref_min = bad_val;
-    tree.mt2w_highPt = bad_val;
-    tree.mt2w_highCSV = bad_val;
+    tree.mt2w_high_pt = bad_val;
+    tree.mt2w_high_csv = bad_val;
     tree.mt2_max = bad_val;
     tree.mt2_min = bad_val;
     tree.mt2_ref_max = bad_val;
     tree.mt2_ref_min = bad_val;
-    tree.mt2_highPt = bad_val;
-    tree.mt2_highCSV = bad_val;
+    tree.mt2_high_pt = bad_val;
+    tree.mt2_high_csv = bad_val;
     tree.mbl_max = bad_val;
     tree.mbl_subleading = bad_val;
     tree.mbl_min = bad_val;
-    tree.mbl_highPt = bad_val;
-    tree.mbl_highCSV = bad_val;
+    tree.mbl_high_pt = bad_val;
+    tree.mbl_high_csv = bad_val;
+    tree.mblnu_max = bad_val;
+    tree.mblnu_subleading = bad_val;
+    tree.mblnu_min = bad_val;
+    tree.mblnu_high_pt = bad_val;
+    tree.mblnu_high_csv = bad_val;
     double momentum_W[3] = {W_mass, mets_ex()->at(0)+lepmax_px, mets_ey()->at(0)+lepmax_py};
     double momentum_met[3] = {W_mass, mets_ex()->at(0), mets_ey()->at(0)};
     double momentum_lep_4[4] = {lepmax_energy, lepmax_px, lepmax_py, lepmax_pz};
+
+    TLorentzVector met_p4(mets_ex()->at(0), mets_ey()->at(0), 0.0, mets_et()->at(0));
     if(lepmax_pt > 0.0){
       vector<pair<float, unsigned> > jet_sorter(0);
       unsigned num_tags = 0;
-      vector<float> v_mt2(0), v_mt2w(0), v_mbl(0);
+      vector<float> v_mt2(0), v_mt2w(0), v_mbl(0), v_mblnu(0);
       float pt1=bad_val, pt2=bad_val, csv1=bad_val, csv2=bad_val;
       int pti1=-1, pti2=-1, csvi1=-1, csvi2=-1;
-      for(unsigned jet1 = 0; jet1 < jets_AK4_pt()->size(); ++jet1) {
+      for(unsigned jet1 = 0; jet1 < jets_pt()->size(); ++jet1) {
         if(!IsBasicJet(jet1)) continue;
 
-        jet_sorter.push_back(std::make_pair(-jets_AK4_pt()->at(jet1), jet1));
-        const float this_pt = jets_AK4_pt()->at(jet1);
-        const float this_csv = jets_AK4_btag_secVertexCombined()->at(jet1);
+        jet_sorter.push_back(std::make_pair(-jets_pt()->at(jet1), jet1));
+        const float this_pt = jets_pt()->at(jet1);
+        const float this_csv = jets_btag_secVertexCombined()->at(jet1);
 
         if(this_pt>pt1){
           pt2=pt1;
@@ -369,34 +412,35 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
           csvi2=jet1;
         }
 
-        if(jets_AK4_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
+        if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
           ++num_tags;
         }
 
-        double momentum_1[3] = {0.0, jets_AK4_px()->at(jet1), jets_AK4_py()->at(jet1)};
-        double momentum_1_4[4] = {jets_AK4_energy()->at(jet1),
-                                  jets_AK4_px()->at(jet1),
-                                  jets_AK4_py()->at(jet1),
-                                  jets_AK4_pz()->at(jet1)};
+        double momentum_1[3] = {0.0, jets_px()->at(jet1), jets_py()->at(jet1)};
+        double momentum_1_4[4] = {jets_energy()->at(jet1),
+                                  jets_px()->at(jet1),
+                                  jets_py()->at(jet1),
+                                  jets_pz()->at(jet1)};
 
-        if(jets_AK4_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
-          TLorentzVector jet_p4 = TLorentzVector(jets_AK4_px()->at(jet1),
-                                                 jets_AK4_py()->at(jet1),
-                                                 jets_AK4_pz()->at(jet1),
-                                                 jets_AK4_energy()->at(jet1));
+        if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
+          TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(jet1),
+                                                 jets_py()->at(jet1),
+                                                 jets_pz()->at(jet1),
+                                                 jets_energy()->at(jet1));
           v_mbl.push_back((lepmax_p4 + jet_p4).M());
+          v_mblnu.push_back((lepmax_p4 + jet_p4 + met_p4).M());
         }
 
-        for(unsigned jet2 = jet1+1; jet2 < jets_AK4_pt()->size(); ++jet2){
+        for(unsigned jet2 = jet1+1; jet2 < jets_pt()->size(); ++jet2){
           if(!IsBasicJet(jet2)) continue;
-          double momentum_2[3] = {0.0, jets_AK4_px()->at(jet2), jets_AK4_py()->at(jet2)};
-          double momentum_2_4[4] = {jets_AK4_energy()->at(jet2),
-                                    jets_AK4_px()->at(jet2),
-                                    jets_AK4_py()->at(jet2),
-                                    jets_AK4_pz()->at(jet2)};
+          double momentum_2[3] = {0.0, jets_px()->at(jet2), jets_py()->at(jet2)};
+          double momentum_2_4[4] = {jets_energy()->at(jet2),
+                                    jets_px()->at(jet2),
+                                    jets_py()->at(jet2),
+                                    jets_pz()->at(jet2)};
 
-          if(jets_AK4_btag_secVertexCombined()->at(jet1) > CSVCuts[1]
-             && jets_AK4_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
+          if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]
+             && jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
             mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
             mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
             v_mt2.push_back(mt2_calc.get_mt2());
@@ -407,19 +451,20 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       std::sort(v_mt2.begin(), v_mt2.end(), std::greater<float>());
       std::sort(v_mt2w.begin(), v_mt2w.end(), std::greater<float>());
       std::sort(v_mbl.begin(), v_mbl.end(), std::greater<float>());
+      std::sort(v_mblnu.begin(), v_mblnu.end(), std::greater<float>());
       std::sort(jet_sorter.begin(), jet_sorter.begin(), std::greater<std::pair<float, unsigned> >());
       
       if(num_tags==2){
-        double momentum_csvi1_3[3] = {0.0, jets_AK4_px()->at(csvi1), jets_AK4_py()->at(csvi1)};
-        double momentum_csvi1_4[4] = {jets_AK4_energy()->at(csvi1),
-                                      jets_AK4_px()->at(csvi1),
-                                      jets_AK4_py()->at(csvi1),
-                                      jets_AK4_pz()->at(csvi1)};
-        double momentum_csvi2_3[3] = {0.0, jets_AK4_px()->at(csvi2), jets_AK4_py()->at(csvi2)};
-        double momentum_csvi2_4[4] = {jets_AK4_energy()->at(csvi2),
-                                      jets_AK4_px()->at(csvi2),
-                                      jets_AK4_py()->at(csvi2),
-                                      jets_AK4_pz()->at(csvi2)};
+        double momentum_csvi1_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
+        double momentum_csvi1_4[4] = {jets_energy()->at(csvi1),
+                                      jets_px()->at(csvi1),
+                                      jets_py()->at(csvi1),
+                                      jets_pz()->at(csvi1)};
+        double momentum_csvi2_3[3] = {0.0, jets_px()->at(csvi2), jets_py()->at(csvi2)};
+        double momentum_csvi2_4[4] = {jets_energy()->at(csvi2),
+                                      jets_px()->at(csvi2),
+                                      jets_py()->at(csvi2),
+                                      jets_pz()->at(csvi2)};
         mt2_calc.set_momenta(momentum_csvi1_3, momentum_csvi2_3, momentum_W);
         mt2w_calc.set_momenta(momentum_lep_4, momentum_csvi1_4, momentum_csvi2_4, momentum_met);
         tree.mt2_ref_min = mt2_calc.get_mt2();
@@ -427,25 +472,25 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
         tree.mt2w_ref_min = mt2w_calc.get_mt2w();
         tree.mt2w_ref_max = mt2w_calc.get_mt2w();
       }else if(num_tags==1){
-        double momentum_csv_3[3] = {0.0, jets_AK4_px()->at(csvi1), jets_AK4_py()->at(csvi1)};
-        double momentum_csv_4[4] = {jets_AK4_energy()->at(csvi1),
-                                    jets_AK4_px()->at(csvi1),
-                                    jets_AK4_py()->at(csvi1),
-                                    jets_AK4_pz()->at(csvi1)};
+        double momentum_csv_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
+        double momentum_csv_4[4] = {jets_energy()->at(csvi1),
+                                    jets_px()->at(csvi1),
+                                    jets_py()->at(csvi1),
+                                    jets_pz()->at(csvi1)};
 
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
         bool found_tag = false;
         for(unsigned i = 0; i < jet_sorter.size() && (i < 2 || (found_tag && i < 3)); ++i){
           const unsigned jet = jet_sorter.at(i).second;
-          if(num_tags == 1 && jets_AK4_btag_secVertexCombined()->at(jet) > CSVCuts[1]){
+          if(num_tags == 1 && jets_btag_secVertexCombined()->at(jet) > CSVCuts[1]){
             found_tag = true;
             continue;
           }
-          double momentum_3[3] = {0.0, jets_AK4_px()->at(jet), jets_AK4_py()->at(jet)};
-          double momentum_4[4] = {jets_AK4_energy()->at(jet),
-                                  jets_AK4_px()->at(jet),
-                                  jets_AK4_py()->at(jet),
-                                  jets_AK4_pz()->at(jet)};
+          double momentum_3[3] = {0.0, jets_px()->at(jet), jets_py()->at(jet)};
+          double momentum_4[4] = {jets_energy()->at(jet),
+                                  jets_px()->at(jet),
+                                  jets_py()->at(jet),
+                                  jets_pz()->at(jet)};
           mt2_calc.set_momenta(momentum_csv_3, momentum_3, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_csv_4, momentum_4, momentum_met);
           v_mt2_temp.push_back(mt2_calc.get_mt2());
@@ -465,18 +510,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
         std::vector<double> v_mt2_temp(0), v_mt2w_temp(0);
         for(unsigned i = 0; i < 3 && i < jet_sorter.size(); ++i){
           const unsigned jeta = jet_sorter.at(i).second;
-          double momentum_1_3[3] = {0.0, jets_AK4_px()->at(jeta), jets_AK4_py()->at(jeta)};
-          double momentum_1_4[4] = {jets_AK4_energy()->at(jeta),
-                                    jets_AK4_px()->at(jeta),
-                                    jets_AK4_py()->at(jeta),
-                                    jets_AK4_pz()->at(jeta)};
+          double momentum_1_3[3] = {0.0, jets_px()->at(jeta), jets_py()->at(jeta)};
+          double momentum_1_4[4] = {jets_energy()->at(jeta),
+                                    jets_px()->at(jeta),
+                                    jets_py()->at(jeta),
+                                    jets_pz()->at(jeta)};
           for(unsigned j = i + 1; j < 3 && j < jet_sorter.size(); ++j){
             const unsigned jetb = jet_sorter.at(j).second;
-            double momentum_2_3[3] = {0.0, jets_AK4_px()->at(jetb), jets_AK4_py()->at(jetb)};
-            double momentum_2_4[4] = {jets_AK4_energy()->at(jetb),
-                                      jets_AK4_px()->at(jetb),
-                                      jets_AK4_py()->at(jetb),
-                                      jets_AK4_pz()->at(jetb)};
+            double momentum_2_3[3] = {0.0, jets_px()->at(jetb), jets_py()->at(jetb)};
+            double momentum_2_4[4] = {jets_energy()->at(jetb),
+                                      jets_px()->at(jetb),
+                                      jets_py()->at(jetb),
+                                      jets_pz()->at(jetb)};
 
             mt2_calc.set_momenta(momentum_1_3, momentum_2_3, momentum_W);
             mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
@@ -511,52 +556,61 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
           tree.mbl_subleading = v_mbl.at(1);
         }
       }
+      if(v_mblnu.size()>0){
+        tree.mblnu_max = v_mblnu.at(0);
+        tree.mblnu_min = v_mblnu.at(v_mblnu.size()-1);
+        if(v_mblnu.size()>1){
+          tree.mblnu_subleading = v_mblnu.at(1);
+        }
+      }
 
       if(pti1>=0){
-        TLorentzVector jet_p4 = TLorentzVector(jets_AK4_px()->at(pti1),
-                                               jets_AK4_py()->at(pti1),
-                                               jets_AK4_pz()->at(pti1),
-                                               jets_AK4_energy()->at(pti1));
-        tree.mbl_highPt = (lepmax_p4+jet_p4).M();
+        TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(pti1),
+                                               jets_py()->at(pti1),
+                                               jets_pz()->at(pti1),
+                                               jets_energy()->at(pti1));
+        tree.mbl_high_pt = (lepmax_p4+jet_p4).M();
+        tree.mblnu_high_pt = (lepmax_p4+jet_p4+met_p4).M();
         if(pti2>=0){
-          double momentum_1[3] = {0.0, jets_AK4_px()->at(pti1), jets_AK4_py()->at(pti1)};
-          double momentum_1_4[4] = {jets_AK4_energy()->at(pti1),
-                                    jets_AK4_px()->at(pti1),
-                                    jets_AK4_py()->at(pti1),
-                                    jets_AK4_pz()->at(pti1)};
-          double momentum_2[3] = {0.0, jets_AK4_px()->at(pti2), jets_AK4_py()->at(pti2)};
-          double momentum_2_4[4] = {jets_AK4_energy()->at(pti2),
-                                    jets_AK4_px()->at(pti2),
-                                    jets_AK4_py()->at(pti2),
-                                    jets_AK4_pz()->at(pti2)};
+          double momentum_1[3] = {0.0, jets_px()->at(pti1), jets_py()->at(pti1)};
+          double momentum_1_4[4] = {jets_energy()->at(pti1),
+                                    jets_px()->at(pti1),
+                                    jets_py()->at(pti1),
+                                    jets_pz()->at(pti1)};
+          double momentum_2[3] = {0.0, jets_px()->at(pti2), jets_py()->at(pti2)};
+          double momentum_2_4[4] = {jets_energy()->at(pti2),
+                                    jets_px()->at(pti2),
+                                    jets_py()->at(pti2),
+                                    jets_pz()->at(pti2)};
           mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-          tree.mt2_highPt = mt2_calc.get_mt2();
-          tree.mt2w_highPt = mt2w_calc.get_mt2w();
+          tree.mt2_high_pt = mt2_calc.get_mt2();
+          tree.mt2w_high_pt = mt2w_calc.get_mt2w();
         }
       }
       
       if(csvi1>=0){
-        TLorentzVector jet_p4 = TLorentzVector(jets_AK4_px()->at(csvi1),
-                                               jets_AK4_py()->at(csvi1),
-                                               jets_AK4_pz()->at(csvi1),
-                                               jets_AK4_energy()->at(csvi1));
-        tree.mbl_highCSV = (lepmax_p4+jet_p4).M();
+        TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(csvi1),
+                                               jets_py()->at(csvi1),
+                                               jets_pz()->at(csvi1),
+                                               jets_energy()->at(csvi1));
+        tree.mbl_high_csv = (lepmax_p4+jet_p4).M();
+        tree.mblnu_high_csv = (lepmax_p4+jet_p4+met_p4).M();
         if(csvi2>=0){
-          double momentum_1[3] = {0.0, jets_AK4_px()->at(csvi1), jets_AK4_py()->at(csvi1)};
-          double momentum_1_4[4] = {jets_AK4_energy()->at(csvi1),
-                                    jets_AK4_px()->at(csvi1),
-                                    jets_AK4_py()->at(csvi1),
-                                    jets_AK4_pz()->at(csvi1)};
-          double momentum_2[3] = {0.0, jets_AK4_px()->at(csvi2), jets_AK4_py()->at(csvi2)};
-          double momentum_2_4[4] = {jets_AK4_energy()->at(csvi2),
-                                    jets_AK4_px()->at(csvi2),
-                                    jets_AK4_py()->at(csvi2),
-                                    jets_AK4_pz()->at(csvi2)};
+          double momentum_1[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
+          double momentum_1_4[4] = {jets_energy()->at(csvi1),
+                                    jets_px()->at(csvi1),
+                                    jets_py()->at(csvi1),
+                                    jets_pz()->at(csvi1)};
+          double momentum_2[3] = {0.0, jets_px()->at(csvi2), jets_py()->at(csvi2)};
+          double momentum_2_4[4] = {jets_energy()->at(csvi2),
+                                    jets_px()->at(csvi2),
+                                    jets_py()->at(csvi2),
+                                    jets_pz()->at(csvi2)};
           mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-          tree.mt2_highCSV = mt2_calc.get_mt2();
-          tree.mt2w_highCSV = mt2w_calc.get_mt2w();
+          tree.mt2_high_csv = mt2_calc.get_mt2();
+          tree.mt2w_high_csv = mt2w_calc.get_mt2w();
         }
       }
     }

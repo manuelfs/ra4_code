@@ -17,20 +17,29 @@ int main(){
   variables.push_back("std::vector<double>* mus_gen_pt");
   variables.push_back("std::vector<double>* mus_eta");
   variables.push_back("std::vector<double>* mus_phi");
+  variables.push_back("std::vector<double>* mus_charge");
   variables.push_back("std::vector<double>* mus_reliso");
+  variables.push_back("std::vector<double>* mus_sigid");
   variables.push_back("std::vector<double>* mus_tru_dr");
   variables.push_back("std::vector<int>* mus_tru_id");
   variables.push_back("std::vector<int>* mus_tru_momid");
+  variables.push_back("std::vector<bool>* mus_tru_tm");
   variables.push_back("int nels");
   variables.push_back("int nvels");
   variables.push_back("std::vector<double>* els_pt");
   variables.push_back("std::vector<double>* els_gen_pt");
   variables.push_back("std::vector<double>* els_eta");
   variables.push_back("std::vector<double>* els_phi");
+  variables.push_back("std::vector<double>* els_charge");
   variables.push_back("std::vector<double>* els_reliso");
+  variables.push_back("std::vector<double>* els_sigid");
   variables.push_back("std::vector<double>* els_tru_dr");
   variables.push_back("std::vector<int>* els_tru_id");
   variables.push_back("std::vector<int>* els_tru_momid");
+  variables.push_back("std::vector<bool>* els_tru_tm");
+
+  /////////////////   Tracks   ////////////////
+  variables.push_back("int nisotrks");
 
   /////////////////   Jets   //////////////////
   variables.push_back("int njets");  
@@ -69,6 +78,8 @@ int main(){
   variables.push_back("float mt");
   variables.push_back("float met");
   variables.push_back("float met_phi");
+  variables.push_back("float met_unc_pt");
+  variables.push_back("float met_unc_phi");
   variables.push_back("float dphi_wlep");
   variables.push_back("float mindphin_metjet");
   variables.push_back("float dr_bb");
@@ -79,19 +90,24 @@ int main(){
   variables.push_back("float mt2_min");
   variables.push_back("float mt2_ref_max");
   variables.push_back("float mt2_ref_min");
-  variables.push_back("float mt2_highPt");
-  variables.push_back("float mt2_highCSV");
+  variables.push_back("float mt2_high_pt");
+  variables.push_back("float mt2_high_csv");
   variables.push_back("float mt2w_max");
   variables.push_back("float mt2w_min");
   variables.push_back("float mt2w_ref_max");
   variables.push_back("float mt2w_ref_min");
-  variables.push_back("float mt2w_highPt");
-  variables.push_back("float mt2w_highCSV");
+  variables.push_back("float mt2w_high_pt");
+  variables.push_back("float mt2w_high_csv");
   variables.push_back("float mbl_max");
   variables.push_back("float mbl_subleading");
   variables.push_back("float mbl_min");
-  variables.push_back("float mbl_highPt");
-  variables.push_back("float mbl_highCSV");
+  variables.push_back("float mbl_high_pt");
+  variables.push_back("float mbl_high_csv");
+  variables.push_back("float mblnu_max");
+  variables.push_back("float mblnu_subleading");
+  variables.push_back("float mblnu_min");
+  variables.push_back("float mblnu_high_pt");
+  variables.push_back("float mblnu_high_csv");
 
   std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
   
