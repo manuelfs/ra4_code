@@ -227,7 +227,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 	  p4jet-=p4jetel;
 	}
       }
-      for(size_t i = 0; i<veto_muons; ++i){
+      for(size_t i = 0; i<veto_muons.size(); ++i){
 	const size_t imu = veto_muons.at(i);
 	if(!IsVetoMuon(imu)) continue;
 	const size_t ijetmu(mus_jet_ind()->at(imu));
