@@ -229,7 +229,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       }
       for(size_t i = 0; i<veto_muons.size(); ++i){
 	const size_t imu = veto_muons.at(i);
-	if(!IsVetoMuon(imu)) continue;
 	const size_t ijetmu(mus_jet_ind()->at(imu));
 	if(ijetmu>=jets_pt()->size()) continue;
 	const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
