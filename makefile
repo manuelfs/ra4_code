@@ -56,7 +56,7 @@ $(OBJDIR)/%.a:
 $(EXEDIR)/generate_small_tree.exe: $(OBJDIR)/generate_small_tree.o
 	$(LINK)
 
-$(EXEDIR)/generate_cfa_class.exe: $(OBJDIR)/generate_cfa_class.o
+$(EXEDIR)/generate_cfa_class.exe: $(OBJDIR)/generate_cfa_class.o $(OBJDIR)/generate_cfa.o
 	$(LINK)
 
 $(EXEDIR)/%.exe: $(OBJDIR)/%.o $(LIBFILE)
