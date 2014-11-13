@@ -2183,729 +2183,3621 @@ cfa_8::cfa_8(const std::string &file):
 }
 
 void cfa_8::GetEntry(const long entry){
-  c_L1trigger_alias_ = false;
-  c_L1trigger_bit_ = false;
-  c_L1trigger_decision_ = false;
-  c_L1trigger_decision_nomask_ = false;
-  c_L1trigger_name_ = false;
-  c_L1trigger_prescalevalue_ = false;
-  c_L1trigger_techTrigger_ = false;
-  c_MPT_ = false;
-  c_Njets_AK5PF_ = false;
-  c_Njets_AK5PFclean_ = false;
-  c_Nmc_pdf_ = false;
-  c_NmetsHO_ = false;
-  c_Nmets_AK5_ = false;
-  c_NpfTypeINoXYCorrmets_ = false;
-  c_NpfTypeIType0mets_ = false;
-  c_NpfTypeImets_ = false;
-  c_Npf_els_ = false;
-  c_Npf_mus_ = false;
-  c_Npf_photons_ = false;
-  c_Npfmets_ = false;
-  c_Ntcmets_ = false;
-  c_Ntracks_ = false;
-  c_ecalBEfilter_decision_ = false;
-  c_ecalTPfilter_decision_ = false;
-  c_eenoisefilter_decision_ = false;
-  c_els_PFchargedHadronIsoR03_ = false;
-  c_els_PFneutralHadronIsoR03_ = false;
-  c_els_PFphotonIsoR03_ = false;
-  c_els_conversion_dcot_ = false;
-  c_els_conversion_dist_ = false;
-  c_els_hasMatchedConversion_ = false;
-  c_genHT_ = false;
-  c_greedymuonfilter_decision_ = false;
-  c_hbhefilter_decision_ = false;
-  c_inconsistentPFmuonfilter_decision_ = false;
-  c_isotk_charge_ = false;
-  c_isotk_dzpv_ = false;
-  c_isotk_eta_ = false;
-  c_isotk_iso_ = false;
-  c_isotk_phi_ = false;
-  c_isotk_pt_ = false;
-  c_jets_AK5PF_area_ = false;
-  c_jets_AK5PF_btag_TC_highEff_ = false;
-  c_jets_AK5PF_btag_TC_highPur_ = false;
-  c_jets_AK5PF_btag_jetBProb_ = false;
-  c_jets_AK5PF_btag_jetProb_ = false;
-  c_jets_AK5PF_btag_secVertexCombined_ = false;
-  c_jets_AK5PF_btag_secVertexHighEff_ = false;
-  c_jets_AK5PF_btag_secVertexHighPur_ = false;
-  c_jets_AK5PF_btag_softEle_ = false;
-  c_jets_AK5PF_btag_softMuon_ = false;
-  c_jets_AK5PF_chgEmE_ = false;
-  c_jets_AK5PF_chgHadE_ = false;
-  c_jets_AK5PF_chgMuE_ = false;
-  c_jets_AK5PF_chg_Mult_ = false;
-  c_jets_AK5PF_corrFactorRaw_ = false;
-  c_jets_AK5PF_ehf_ = false;
-  c_jets_AK5PF_emf_ = false;
-  c_jets_AK5PF_energy_ = false;
-  c_jets_AK5PF_et_ = false;
-  c_jets_AK5PF_eta_ = false;
-  c_jets_AK5PF_etaetaMoment_ = false;
-  c_jets_AK5PF_etaphiMoment_ = false;
-  c_jets_AK5PF_fHPD_ = false;
-  c_jets_AK5PF_fRBX_ = false;
-  c_jets_AK5PF_fSubDetector1_ = false;
-  c_jets_AK5PF_fSubDetector2_ = false;
-  c_jets_AK5PF_fSubDetector3_ = false;
-  c_jets_AK5PF_fSubDetector4_ = false;
-  c_jets_AK5PF_gen_Energy_ = false;
-  c_jets_AK5PF_gen_Id_ = false;
-  c_jets_AK5PF_gen_et_ = false;
-  c_jets_AK5PF_gen_eta_ = false;
-  c_jets_AK5PF_gen_mass_ = false;
-  c_jets_AK5PF_gen_motherID_ = false;
-  c_jets_AK5PF_gen_phi_ = false;
-  c_jets_AK5PF_gen_pt_ = false;
-  c_jets_AK5PF_gen_threeCharge_ = false;
-  c_jets_AK5PF_hitsInN90_ = false;
-  c_jets_AK5PF_jetCharge_ = false;
-  c_jets_AK5PF_mass_ = false;
-  c_jets_AK5PF_mu_Mult_ = false;
-  c_jets_AK5PF_n60_ = false;
-  c_jets_AK5PF_n90_ = false;
-  c_jets_AK5PF_n90Hits_ = false;
-  c_jets_AK5PF_nECALTowers_ = false;
-  c_jets_AK5PF_nHCALTowers_ = false;
-  c_jets_AK5PF_neutralEmE_ = false;
-  c_jets_AK5PF_neutralHadE_ = false;
-  c_jets_AK5PF_neutral_Mult_ = false;
-  c_jets_AK5PF_partonFlavour_ = false;
-  c_jets_AK5PF_parton_Energy_ = false;
-  c_jets_AK5PF_parton_Id_ = false;
-  c_jets_AK5PF_parton_eta_ = false;
-  c_jets_AK5PF_parton_mass_ = false;
-  c_jets_AK5PF_parton_motherId_ = false;
-  c_jets_AK5PF_parton_phi_ = false;
-  c_jets_AK5PF_parton_pt_ = false;
-  c_jets_AK5PF_phi_ = false;
-  c_jets_AK5PF_phiphiMoment_ = false;
-  c_jets_AK5PF_photonEnergy_ = false;
-  c_jets_AK5PF_pt_ = false;
-  c_jets_AK5PF_px_ = false;
-  c_jets_AK5PF_py_ = false;
-  c_jets_AK5PF_pz_ = false;
-  c_jets_AK5PF_rawPt_ = false;
-  c_jets_AK5PF_status_ = false;
-  c_jets_AK5PF_theta_ = false;
-  c_jets_AK5PFclean_Uncert_ = false;
-  c_jets_AK5PFclean_area_ = false;
-  c_jets_AK5PFclean_btag_TC_highEff_ = false;
-  c_jets_AK5PFclean_btag_TC_highPur_ = false;
-  c_jets_AK5PFclean_btag_jetBProb_ = false;
-  c_jets_AK5PFclean_btag_jetProb_ = false;
-  c_jets_AK5PFclean_btag_secVertexCombined_ = false;
-  c_jets_AK5PFclean_btag_secVertexHighEff_ = false;
-  c_jets_AK5PFclean_btag_secVertexHighPur_ = false;
-  c_jets_AK5PFclean_btag_softEle_ = false;
-  c_jets_AK5PFclean_btag_softMuon_ = false;
-  c_jets_AK5PFclean_chgEmE_ = false;
-  c_jets_AK5PFclean_chgHadE_ = false;
-  c_jets_AK5PFclean_chgMuE_ = false;
-  c_jets_AK5PFclean_chg_Mult_ = false;
-  c_jets_AK5PFclean_corrFactorRaw_ = false;
-  c_jets_AK5PFclean_corrL1FastL2L3_ = false;
-  c_jets_AK5PFclean_corrL1FastL2L3Residual_ = false;
-  c_jets_AK5PFclean_corrL1L2L3_ = false;
-  c_jets_AK5PFclean_corrL1L2L3Residual_ = false;
-  c_jets_AK5PFclean_corrL2L3_ = false;
-  c_jets_AK5PFclean_corrL2L3Residual_ = false;
-  c_jets_AK5PFclean_ehf_ = false;
-  c_jets_AK5PFclean_emf_ = false;
-  c_jets_AK5PFclean_energy_ = false;
-  c_jets_AK5PFclean_et_ = false;
-  c_jets_AK5PFclean_eta_ = false;
-  c_jets_AK5PFclean_etaetaMoment_ = false;
-  c_jets_AK5PFclean_etaphiMoment_ = false;
-  c_jets_AK5PFclean_fHPD_ = false;
-  c_jets_AK5PFclean_fRBX_ = false;
-  c_jets_AK5PFclean_fSubDetector1_ = false;
-  c_jets_AK5PFclean_fSubDetector2_ = false;
-  c_jets_AK5PFclean_fSubDetector3_ = false;
-  c_jets_AK5PFclean_fSubDetector4_ = false;
-  c_jets_AK5PFclean_gen_Energy_ = false;
-  c_jets_AK5PFclean_gen_Id_ = false;
-  c_jets_AK5PFclean_gen_et_ = false;
-  c_jets_AK5PFclean_gen_eta_ = false;
-  c_jets_AK5PFclean_gen_mass_ = false;
-  c_jets_AK5PFclean_gen_phi_ = false;
-  c_jets_AK5PFclean_gen_pt_ = false;
-  c_jets_AK5PFclean_hitsInN90_ = false;
-  c_jets_AK5PFclean_jetCharge_ = false;
-  c_jets_AK5PFclean_mass_ = false;
-  c_jets_AK5PFclean_mu_Mult_ = false;
-  c_jets_AK5PFclean_n60_ = false;
-  c_jets_AK5PFclean_n90_ = false;
-  c_jets_AK5PFclean_n90Hits_ = false;
-  c_jets_AK5PFclean_nECALTowers_ = false;
-  c_jets_AK5PFclean_nHCALTowers_ = false;
-  c_jets_AK5PFclean_neutralEmE_ = false;
-  c_jets_AK5PFclean_neutralHadE_ = false;
-  c_jets_AK5PFclean_neutral_Mult_ = false;
-  c_jets_AK5PFclean_partonFlavour_ = false;
-  c_jets_AK5PFclean_parton_Energy_ = false;
-  c_jets_AK5PFclean_parton_Id_ = false;
-  c_jets_AK5PFclean_parton_eta_ = false;
-  c_jets_AK5PFclean_parton_mass_ = false;
-  c_jets_AK5PFclean_parton_motherId_ = false;
-  c_jets_AK5PFclean_parton_phi_ = false;
-  c_jets_AK5PFclean_parton_pt_ = false;
-  c_jets_AK5PFclean_phi_ = false;
-  c_jets_AK5PFclean_phiphiMoment_ = false;
-  c_jets_AK5PFclean_photonEnergy_ = false;
-  c_jets_AK5PFclean_pt_ = false;
-  c_jets_AK5PFclean_px_ = false;
-  c_jets_AK5PFclean_py_ = false;
-  c_jets_AK5PFclean_pz_ = false;
-  c_jets_AK5PFclean_rawPt_ = false;
-  c_jets_AK5PFclean_status_ = false;
-  c_jets_AK5PFclean_theta_ = false;
-  c_mc_pdf_id1_ = false;
-  c_mc_pdf_id2_ = false;
-  c_mc_pdf_q_ = false;
-  c_mc_pdf_x1_ = false;
-  c_mc_pdf_x2_ = false;
-  c_metsHO_et_ = false;
-  c_metsHO_ex_ = false;
-  c_metsHO_ey_ = false;
-  c_metsHO_phi_ = false;
-  c_metsHO_sumEt_ = false;
-  c_mets_AK5_et_ = false;
-  c_mets_AK5_ex_ = false;
-  c_mets_AK5_ey_ = false;
-  c_mets_AK5_gen_et_ = false;
-  c_mets_AK5_gen_phi_ = false;
-  c_mets_AK5_phi_ = false;
-  c_mets_AK5_sign_ = false;
-  c_mets_AK5_sumEt_ = false;
-  c_mets_AK5_unCPhi_ = false;
-  c_mets_AK5_unCPt_ = false;
-  c_passprescaleHT250filter_decision_ = false;
-  c_passprescaleHT300filter_decision_ = false;
-  c_passprescaleHT350filter_decision_ = false;
-  c_passprescaleHT400filter_decision_ = false;
-  c_passprescaleHT450filter_decision_ = false;
-  c_passprescaleJet30MET80filter_decision_ = false;
-  c_passprescalePFHT350filter_decision_ = false;
-  c_pdfweights_cteq_ = false;
-  c_pdfweights_mstw_ = false;
-  c_pdfweights_nnpdf_ = false;
-  c_pfTypeINoXYCorrmets_et_ = false;
-  c_pfTypeINoXYCorrmets_ex_ = false;
-  c_pfTypeINoXYCorrmets_ey_ = false;
-  c_pfTypeINoXYCorrmets_gen_et_ = false;
-  c_pfTypeINoXYCorrmets_gen_phi_ = false;
-  c_pfTypeINoXYCorrmets_phi_ = false;
-  c_pfTypeINoXYCorrmets_sign_ = false;
-  c_pfTypeINoXYCorrmets_sumEt_ = false;
-  c_pfTypeINoXYCorrmets_unCPhi_ = false;
-  c_pfTypeINoXYCorrmets_unCPt_ = false;
-  c_pfTypeIType0mets_et_ = false;
-  c_pfTypeIType0mets_ex_ = false;
-  c_pfTypeIType0mets_ey_ = false;
-  c_pfTypeIType0mets_gen_et_ = false;
-  c_pfTypeIType0mets_gen_phi_ = false;
-  c_pfTypeIType0mets_phi_ = false;
-  c_pfTypeIType0mets_sign_ = false;
-  c_pfTypeIType0mets_sumEt_ = false;
-  c_pfTypeIType0mets_unCPhi_ = false;
-  c_pfTypeIType0mets_unCPt_ = false;
-  c_pfTypeImets_et_ = false;
-  c_pfTypeImets_ex_ = false;
-  c_pfTypeImets_ey_ = false;
-  c_pfTypeImets_gen_et_ = false;
-  c_pfTypeImets_gen_phi_ = false;
-  c_pfTypeImets_phi_ = false;
-  c_pfTypeImets_sign_ = false;
-  c_pfTypeImets_sumEt_ = false;
-  c_pfTypeImets_unCPhi_ = false;
-  c_pfTypeImets_unCPt_ = false;
-  c_pf_els_PATpassConversionVeto_ = false;
-  c_pf_els_PFchargedHadronIsoR03_ = false;
-  c_pf_els_PFneutralHadronIsoR03_ = false;
-  c_pf_els_PFphotonIsoR03_ = false;
-  c_pf_els_basicClustersSize_ = false;
-  c_pf_els_cIso_ = false;
-  c_pf_els_caloEnergy_ = false;
-  c_pf_els_charge_ = false;
-  c_pf_els_chargedHadronIso_ = false;
-  c_pf_els_chi2_ = false;
-  c_pf_els_core_ecalDrivenSeed_ = false;
-  c_pf_els_cpx_ = false;
-  c_pf_els_cpy_ = false;
-  c_pf_els_cpz_ = false;
-  c_pf_els_ctf_tk_charge_ = false;
-  c_pf_els_ctf_tk_eta_ = false;
-  c_pf_els_ctf_tk_id_ = false;
-  c_pf_els_ctf_tk_phi_ = false;
-  c_pf_els_cx_ = false;
-  c_pf_els_cy_ = false;
-  c_pf_els_cz_ = false;
-  c_pf_els_d0dum_ = false;
-  c_pf_els_d0dumError_ = false;
-  c_pf_els_dEtaIn_ = false;
-  c_pf_els_dEtaOut_ = false;
-  c_pf_els_dPhiIn_ = false;
-  c_pf_els_dPhiOut_ = false;
-  c_pf_els_dr03EcalRecHitSumEt_ = false;
-  c_pf_els_dr03HcalDepth1TowerSumEt_ = false;
-  c_pf_els_dr03HcalDepth2TowerSumEt_ = false;
-  c_pf_els_dr03HcalTowerSumEt_ = false;
-  c_pf_els_dr03TkSumPt_ = false;
-  c_pf_els_dr04EcalRecHitSumEt_ = false;
-  c_pf_els_dr04HcalDepth1TowerSumEt_ = false;
-  c_pf_els_dr04HcalDepth2TowerSumEt_ = false;
-  c_pf_els_dr04HcalTowerSumEt_ = false;
-  c_pf_els_dr04TkSumPt_ = false;
-  c_pf_els_dz_ = false;
-  c_pf_els_dzError_ = false;
-  c_pf_els_eOverPIn_ = false;
-  c_pf_els_eSeedOverPOut_ = false;
-  c_pf_els_ecalIso_ = false;
-  c_pf_els_energy_ = false;
-  c_pf_els_et_ = false;
-  c_pf_els_eta_ = false;
-  c_pf_els_etaError_ = false;
-  c_pf_els_fbrem_ = false;
-  c_pf_els_gen_et_ = false;
-  c_pf_els_gen_eta_ = false;
-  c_pf_els_gen_id_ = false;
-  c_pf_els_gen_mother_et_ = false;
-  c_pf_els_gen_mother_eta_ = false;
-  c_pf_els_gen_mother_id_ = false;
-  c_pf_els_gen_mother_phi_ = false;
-  c_pf_els_gen_mother_pt_ = false;
-  c_pf_els_gen_mother_px_ = false;
-  c_pf_els_gen_mother_py_ = false;
-  c_pf_els_gen_mother_pz_ = false;
-  c_pf_els_gen_mother_theta_ = false;
-  c_pf_els_gen_phi_ = false;
-  c_pf_els_gen_pt_ = false;
-  c_pf_els_gen_px_ = false;
-  c_pf_els_gen_py_ = false;
-  c_pf_els_gen_pz_ = false;
-  c_pf_els_gen_theta_ = false;
-  c_pf_els_hadOverEm_ = false;
-  c_pf_els_hasMatchedConversion_ = false;
-  c_pf_els_hcalIso_ = false;
-  c_pf_els_hcalOverEcalBc_ = false;
-  c_pf_els_isEB_ = false;
-  c_pf_els_isEE_ = false;
-  c_pf_els_looseId_ = false;
-  c_pf_els_n_inner_layer_ = false;
-  c_pf_els_n_outer_layer_ = false;
-  c_pf_els_ndof_ = false;
-  c_pf_els_neutralHadronIso_ = false;
-  c_pf_els_numlosthits_ = false;
-  c_pf_els_numvalhits_ = false;
-  c_pf_els_phi_ = false;
-  c_pf_els_phiError_ = false;
-  c_pf_els_photonIso_ = false;
-  c_pf_els_pt_ = false;
-  c_pf_els_ptError_ = false;
-  c_pf_els_px_ = false;
-  c_pf_els_py_ = false;
-  c_pf_els_pz_ = false;
-  c_pf_els_robustHighEnergyId_ = false;
-  c_pf_els_robustLooseId_ = false;
-  c_pf_els_robustTightId_ = false;
-  c_pf_els_scE1x5_ = false;
-  c_pf_els_scE2x5Max_ = false;
-  c_pf_els_scE5x5_ = false;
-  c_pf_els_scEnergy_ = false;
-  c_pf_els_scEta_ = false;
-  c_pf_els_scEtaWidth_ = false;
-  c_pf_els_scPhi_ = false;
-  c_pf_els_scPhiWidth_ = false;
-  c_pf_els_scRawEnergy_ = false;
-  c_pf_els_scSeedEnergy_ = false;
-  c_pf_els_shFracInnerHits_ = false;
-  c_pf_els_sigmaEtaEta_ = false;
-  c_pf_els_sigmaIEtaIEta_ = false;
-  c_pf_els_simpleEleId60cIso_ = false;
-  c_pf_els_simpleEleId60relIso_ = false;
-  c_pf_els_simpleEleId70cIso_ = false;
-  c_pf_els_simpleEleId70relIso_ = false;
-  c_pf_els_simpleEleId80cIso_ = false;
-  c_pf_els_simpleEleId80relIso_ = false;
-  c_pf_els_simpleEleId85cIso_ = false;
-  c_pf_els_simpleEleId85relIso_ = false;
-  c_pf_els_simpleEleId90cIso_ = false;
-  c_pf_els_simpleEleId90relIso_ = false;
-  c_pf_els_simpleEleId95cIso_ = false;
-  c_pf_els_simpleEleId95relIso_ = false;
-  c_pf_els_status_ = false;
-  c_pf_els_tIso_ = false;
-  c_pf_els_theta_ = false;
-  c_pf_els_tightId_ = false;
-  c_pf_els_tk_charge_ = false;
-  c_pf_els_tk_eta_ = false;
-  c_pf_els_tk_phi_ = false;
-  c_pf_els_tk_pt_ = false;
-  c_pf_els_tk_pz_ = false;
-  c_pf_els_vpx_ = false;
-  c_pf_els_vpy_ = false;
-  c_pf_els_vpz_ = false;
-  c_pf_els_vx_ = false;
-  c_pf_els_vy_ = false;
-  c_pf_els_vz_ = false;
-  c_pf_mus_cIso_ = false;
-  c_pf_mus_calEnergyEm_ = false;
-  c_pf_mus_calEnergyEmS9_ = false;
-  c_pf_mus_calEnergyHad_ = false;
-  c_pf_mus_calEnergyHadS9_ = false;
-  c_pf_mus_calEnergyHo_ = false;
-  c_pf_mus_calEnergyHoS9_ = false;
-  c_pf_mus_charge_ = false;
-  c_pf_mus_chargedHadronIso_ = false;
-  c_pf_mus_cm_ExpectedHitsInner_ = false;
-  c_pf_mus_cm_ExpectedHitsOuter_ = false;
-  c_pf_mus_cm_LayersWithMeasurement_ = false;
-  c_pf_mus_cm_LayersWithoutMeasurement_ = false;
-  c_pf_mus_cm_PixelLayersWithMeasurement_ = false;
-  c_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_pf_mus_cm_chg_ = false;
-  c_pf_mus_cm_chi2_ = false;
-  c_pf_mus_cm_d0dum_ = false;
-  c_pf_mus_cm_d0dumErr_ = false;
-  c_pf_mus_cm_dz_ = false;
-  c_pf_mus_cm_dzErr_ = false;
-  c_pf_mus_cm_eta_ = false;
-  c_pf_mus_cm_etaErr_ = false;
-  c_pf_mus_cm_ndof_ = false;
-  c_pf_mus_cm_numlosthits_ = false;
-  c_pf_mus_cm_numvalMuonhits_ = false;
-  c_pf_mus_cm_numvalhits_ = false;
-  c_pf_mus_cm_phi_ = false;
-  c_pf_mus_cm_phiErr_ = false;
-  c_pf_mus_cm_pt_ = false;
-  c_pf_mus_cm_ptErr_ = false;
-  c_pf_mus_cm_px_ = false;
-  c_pf_mus_cm_py_ = false;
-  c_pf_mus_cm_pz_ = false;
-  c_pf_mus_cm_theta_ = false;
-  c_pf_mus_cm_vx_ = false;
-  c_pf_mus_cm_vy_ = false;
-  c_pf_mus_cm_vz_ = false;
-  c_pf_mus_dB_ = false;
-  c_pf_mus_ecalIso_ = false;
-  c_pf_mus_energy_ = false;
-  c_pf_mus_et_ = false;
-  c_pf_mus_eta_ = false;
-  c_pf_mus_gen_et_ = false;
-  c_pf_mus_gen_eta_ = false;
-  c_pf_mus_gen_id_ = false;
-  c_pf_mus_gen_mother_et_ = false;
-  c_pf_mus_gen_mother_eta_ = false;
-  c_pf_mus_gen_mother_id_ = false;
-  c_pf_mus_gen_mother_phi_ = false;
-  c_pf_mus_gen_mother_pt_ = false;
-  c_pf_mus_gen_mother_px_ = false;
-  c_pf_mus_gen_mother_py_ = false;
-  c_pf_mus_gen_mother_pz_ = false;
-  c_pf_mus_gen_mother_theta_ = false;
-  c_pf_mus_gen_phi_ = false;
-  c_pf_mus_gen_pt_ = false;
-  c_pf_mus_gen_px_ = false;
-  c_pf_mus_gen_py_ = false;
-  c_pf_mus_gen_pz_ = false;
-  c_pf_mus_gen_theta_ = false;
-  c_pf_mus_hcalIso_ = false;
-  c_pf_mus_id_All_ = false;
-  c_pf_mus_id_AllArbitrated_ = false;
-  c_pf_mus_id_AllGlobalMuons_ = false;
-  c_pf_mus_id_AllStandAloneMuons_ = false;
-  c_pf_mus_id_AllTrackerMuons_ = false;
-  c_pf_mus_id_GlobalMuonPromptTight_ = false;
-  c_pf_mus_id_TM2DCompatibilityLoose_ = false;
-  c_pf_mus_id_TM2DCompatibilityTight_ = false;
-  c_pf_mus_id_TMLastStationLoose_ = false;
-  c_pf_mus_id_TMLastStationOptimizedLowPtLoose_ = false;
-  c_pf_mus_id_TMLastStationOptimizedLowPtTight_ = false;
-  c_pf_mus_id_TMLastStationTight_ = false;
-  c_pf_mus_id_TMOneStationLoose_ = false;
-  c_pf_mus_id_TMOneStationTight_ = false;
-  c_pf_mus_id_TrackerMuonArbitrated_ = false;
-  c_pf_mus_isCaloMuon_ = false;
-  c_pf_mus_isConvertedPhoton_ = false;
-  c_pf_mus_isElectron_ = false;
-  c_pf_mus_isGlobalMuon_ = false;
-  c_pf_mus_isPFMuon_ = false;
-  c_pf_mus_isPhoton_ = false;
-  c_pf_mus_isStandAloneMuon_ = false;
-  c_pf_mus_isTrackerMuon_ = false;
-  c_pf_mus_iso03_emEt_ = false;
-  c_pf_mus_iso03_emVetoEt_ = false;
-  c_pf_mus_iso03_hadEt_ = false;
-  c_pf_mus_iso03_hadVetoEt_ = false;
-  c_pf_mus_iso03_hoEt_ = false;
-  c_pf_mus_iso03_nTracks_ = false;
-  c_pf_mus_iso03_sumPt_ = false;
-  c_pf_mus_iso05_emEt_ = false;
-  c_pf_mus_iso05_hadEt_ = false;
-  c_pf_mus_iso05_hoEt_ = false;
-  c_pf_mus_iso05_nTracks_ = false;
-  c_pf_mus_iso05_sumPt_ = false;
-  c_pf_mus_neutralHadronIso_ = false;
-  c_pf_mus_num_matches_ = false;
-  c_pf_mus_numberOfMatchedStations_ = false;
-  c_pf_mus_pfIsolationR03_sumChargedHadronPt_ = false;
-  c_pf_mus_pfIsolationR03_sumChargedParticlePt_ = false;
-  c_pf_mus_pfIsolationR03_sumNeutralHadronEt_ = false;
-  c_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = false;
-  c_pf_mus_pfIsolationR03_sumPUPt_ = false;
-  c_pf_mus_pfIsolationR03_sumPhotonEt_ = false;
-  c_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = false;
-  c_pf_mus_pfIsolationR04_sumChargedHadronPt_ = false;
-  c_pf_mus_pfIsolationR04_sumChargedParticlePt_ = false;
-  c_pf_mus_pfIsolationR04_sumNeutralHadronEt_ = false;
-  c_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = false;
-  c_pf_mus_pfIsolationR04_sumPUPt_ = false;
-  c_pf_mus_pfIsolationR04_sumPhotonEt_ = false;
-  c_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = false;
-  c_pf_mus_phi_ = false;
-  c_pf_mus_photonIso_ = false;
-  c_pf_mus_picky_ExpectedHitsInner_ = false;
-  c_pf_mus_picky_ExpectedHitsOuter_ = false;
-  c_pf_mus_picky_LayersWithMeasurement_ = false;
-  c_pf_mus_picky_LayersWithoutMeasurement_ = false;
-  c_pf_mus_picky_PixelLayersWithMeasurement_ = false;
-  c_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_pf_mus_picky_chg_ = false;
-  c_pf_mus_picky_chi2_ = false;
-  c_pf_mus_picky_d0dum_ = false;
-  c_pf_mus_picky_d0dumErr_ = false;
-  c_pf_mus_picky_dz_ = false;
-  c_pf_mus_picky_dzErr_ = false;
-  c_pf_mus_picky_eta_ = false;
-  c_pf_mus_picky_etaErr_ = false;
-  c_pf_mus_picky_id_ = false;
-  c_pf_mus_picky_ndof_ = false;
-  c_pf_mus_picky_numlosthits_ = false;
-  c_pf_mus_picky_numvalPixelhits_ = false;
-  c_pf_mus_picky_numvalhits_ = false;
-  c_pf_mus_picky_phi_ = false;
-  c_pf_mus_picky_phiErr_ = false;
-  c_pf_mus_picky_pt_ = false;
-  c_pf_mus_picky_ptErr_ = false;
-  c_pf_mus_picky_px_ = false;
-  c_pf_mus_picky_py_ = false;
-  c_pf_mus_picky_pz_ = false;
-  c_pf_mus_picky_theta_ = false;
-  c_pf_mus_picky_vx_ = false;
-  c_pf_mus_picky_vy_ = false;
-  c_pf_mus_picky_vz_ = false;
-  c_pf_mus_pt_ = false;
-  c_pf_mus_px_ = false;
-  c_pf_mus_py_ = false;
-  c_pf_mus_pz_ = false;
-  c_pf_mus_stamu_chg_ = false;
-  c_pf_mus_stamu_chi2_ = false;
-  c_pf_mus_stamu_d0dum_ = false;
-  c_pf_mus_stamu_d0dumErr_ = false;
-  c_pf_mus_stamu_dz_ = false;
-  c_pf_mus_stamu_dzErr_ = false;
-  c_pf_mus_stamu_eta_ = false;
-  c_pf_mus_stamu_etaErr_ = false;
-  c_pf_mus_stamu_ndof_ = false;
-  c_pf_mus_stamu_numlosthits_ = false;
-  c_pf_mus_stamu_numvalhits_ = false;
-  c_pf_mus_stamu_phi_ = false;
-  c_pf_mus_stamu_phiErr_ = false;
-  c_pf_mus_stamu_pt_ = false;
-  c_pf_mus_stamu_ptErr_ = false;
-  c_pf_mus_stamu_px_ = false;
-  c_pf_mus_stamu_py_ = false;
-  c_pf_mus_stamu_pz_ = false;
-  c_pf_mus_stamu_theta_ = false;
-  c_pf_mus_stamu_vx_ = false;
-  c_pf_mus_stamu_vy_ = false;
-  c_pf_mus_stamu_vz_ = false;
-  c_pf_mus_status_ = false;
-  c_pf_mus_tIso_ = false;
-  c_pf_mus_theta_ = false;
-  c_pf_mus_tkHits_ = false;
-  c_pf_mus_tk_ExpectedHitsInner_ = false;
-  c_pf_mus_tk_ExpectedHitsOuter_ = false;
-  c_pf_mus_tk_LayersWithMeasurement_ = false;
-  c_pf_mus_tk_LayersWithoutMeasurement_ = false;
-  c_pf_mus_tk_PixelLayersWithMeasurement_ = false;
-  c_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_pf_mus_tk_chg_ = false;
-  c_pf_mus_tk_chi2_ = false;
-  c_pf_mus_tk_d0dum_ = false;
-  c_pf_mus_tk_d0dumErr_ = false;
-  c_pf_mus_tk_dz_ = false;
-  c_pf_mus_tk_dzErr_ = false;
-  c_pf_mus_tk_eta_ = false;
-  c_pf_mus_tk_etaErr_ = false;
-  c_pf_mus_tk_id_ = false;
-  c_pf_mus_tk_ndof_ = false;
-  c_pf_mus_tk_numlosthits_ = false;
-  c_pf_mus_tk_numpixelWthMeasr_ = false;
-  c_pf_mus_tk_numvalPixelhits_ = false;
-  c_pf_mus_tk_numvalhits_ = false;
-  c_pf_mus_tk_phi_ = false;
-  c_pf_mus_tk_phiErr_ = false;
-  c_pf_mus_tk_pt_ = false;
-  c_pf_mus_tk_ptErr_ = false;
-  c_pf_mus_tk_px_ = false;
-  c_pf_mus_tk_py_ = false;
-  c_pf_mus_tk_pz_ = false;
-  c_pf_mus_tk_theta_ = false;
-  c_pf_mus_tk_vx_ = false;
-  c_pf_mus_tk_vy_ = false;
-  c_pf_mus_tk_vz_ = false;
-  c_pf_mus_tpfms_ExpectedHitsInner_ = false;
-  c_pf_mus_tpfms_ExpectedHitsOuter_ = false;
-  c_pf_mus_tpfms_LayersWithMeasurement_ = false;
-  c_pf_mus_tpfms_LayersWithoutMeasurement_ = false;
-  c_pf_mus_tpfms_PixelLayersWithMeasurement_ = false;
-  c_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_pf_mus_tpfms_chg_ = false;
-  c_pf_mus_tpfms_chi2_ = false;
-  c_pf_mus_tpfms_d0dum_ = false;
-  c_pf_mus_tpfms_d0dumErr_ = false;
-  c_pf_mus_tpfms_dz_ = false;
-  c_pf_mus_tpfms_dzErr_ = false;
-  c_pf_mus_tpfms_eta_ = false;
-  c_pf_mus_tpfms_etaErr_ = false;
-  c_pf_mus_tpfms_id_ = false;
-  c_pf_mus_tpfms_ndof_ = false;
-  c_pf_mus_tpfms_numlosthits_ = false;
-  c_pf_mus_tpfms_numvalPixelhits_ = false;
-  c_pf_mus_tpfms_numvalhits_ = false;
-  c_pf_mus_tpfms_phi_ = false;
-  c_pf_mus_tpfms_phiErr_ = false;
-  c_pf_mus_tpfms_pt_ = false;
-  c_pf_mus_tpfms_ptErr_ = false;
-  c_pf_mus_tpfms_px_ = false;
-  c_pf_mus_tpfms_py_ = false;
-  c_pf_mus_tpfms_pz_ = false;
-  c_pf_mus_tpfms_theta_ = false;
-  c_pf_mus_tpfms_vx_ = false;
-  c_pf_mus_tpfms_vy_ = false;
-  c_pf_mus_tpfms_vz_ = false;
-  c_pf_photons_chIso_ = false;
-  c_pf_photons_e1x5_ = false;
-  c_pf_photons_e2x5_ = false;
-  c_pf_photons_e3x3_ = false;
-  c_pf_photons_e5x5_ = false;
-  c_pf_photons_energy_ = false;
-  c_pf_photons_et_ = false;
-  c_pf_photons_eta_ = false;
-  c_pf_photons_hadOverEM_ = false;
-  c_pf_photons_hadTowOverEM_ = false;
-  c_pf_photons_hasPixelSeed_ = false;
-  c_pf_photons_isAlsoElectron_ = false;
-  c_pf_photons_isConverted_ = false;
-  c_pf_photons_isEBEEGap_ = false;
-  c_pf_photons_isEBGap_ = false;
-  c_pf_photons_isEBPho_ = false;
-  c_pf_photons_isEEGap_ = false;
-  c_pf_photons_isEEPho_ = false;
-  c_pf_photons_maxEnergyXtal_ = false;
-  c_pf_photons_nhIso_ = false;
-  c_pf_photons_phIso_ = false;
-  c_pf_photons_phi_ = false;
-  c_pf_photons_pt_ = false;
-  c_pf_photons_px_ = false;
-  c_pf_photons_py_ = false;
-  c_pf_photons_pz_ = false;
-  c_pf_photons_r9_ = false;
-  c_pf_photons_scEnergy_ = false;
-  c_pf_photons_scEta_ = false;
-  c_pf_photons_scEtaWidth_ = false;
-  c_pf_photons_scPhi_ = false;
-  c_pf_photons_scPhiWidth_ = false;
-  c_pf_photons_scRawEnergy_ = false;
-  c_pf_photons_sigmaEtaEta_ = false;
-  c_pf_photons_sigmaIetaIeta_ = false;
-  c_pf_photons_status_ = false;
-  c_pf_photons_theta_ = false;
-  c_pfcand_particleId_ = false;
-  c_pfmets_et_ = false;
-  c_pfmets_ex_ = false;
-  c_pfmets_ey_ = false;
-  c_pfmets_fullSignif_ = false;
-  c_pfmets_fullSignifCov00_ = false;
-  c_pfmets_fullSignifCov00_2012_ = false;
-  c_pfmets_fullSignifCov00_2012_dataRes_ = false;
-  c_pfmets_fullSignifCov10_ = false;
-  c_pfmets_fullSignifCov10_2012_ = false;
-  c_pfmets_fullSignifCov10_2012_dataRes_ = false;
-  c_pfmets_fullSignifCov11_ = false;
-  c_pfmets_fullSignifCov11_2012_ = false;
-  c_pfmets_fullSignifCov11_2012_dataRes_ = false;
-  c_pfmets_fullSignif_2012_ = false;
-  c_pfmets_fullSignif_2012_dataRes_ = false;
-  c_pfmets_gen_et_ = false;
-  c_pfmets_gen_phi_ = false;
-  c_pfmets_phi_ = false;
-  c_pfmets_sign_ = false;
-  c_pfmets_sumEt_ = false;
-  c_pfmets_unCPhi_ = false;
-  c_pfmets_unCPt_ = false;
-  c_photon_chIsoValues_ = false;
-  c_photon_nhIsoValues_ = false;
-  c_photon_passElectronVeto_ = false;
-  c_photon_phIsoValues_ = false;
-  c_puJet_rejectionBeta_ = false;
-  c_puJet_rejectionMVA_ = false;
-  c_rho_kt6PFJetsForIsolation2011_ = false;
-  c_rho_kt6PFJetsForIsolation2012_ = false;
-  c_scrapingVeto_decision_ = false;
-  c_softjetUp_dMEx_ = false;
-  c_softjetUp_dMEy_ = false;
-  c_tcmets_et_ = false;
-  c_tcmets_ex_ = false;
-  c_tcmets_ey_ = false;
-  c_tcmets_phi_ = false;
-  c_tcmets_sumEt_ = false;
-  c_trackercoherentnoisefilter1_decision_ = false;
-  c_trackercoherentnoisefilter2_decision_ = false;
-  c_trackertoomanyclustersfilter_decision_ = false;
-  c_trackertoomanyseedsfilter_decision_ = false;
-  c_trackertoomanytripletsfilter_decision_ = false;
-  c_tracks_chg_ = false;
-  c_tracks_chi2_ = false;
-  c_tracks_d0dum_ = false;
-  c_tracks_d0dumErr_ = false;
-  c_tracks_dz_ = false;
-  c_tracks_dzErr_ = false;
-  c_tracks_eta_ = false;
-  c_tracks_etaErr_ = false;
-  c_tracks_highPurity_ = false;
-  c_tracks_ndof_ = false;
-  c_tracks_numlosthits_ = false;
-  c_tracks_numvalhits_ = false;
-  c_tracks_phi_ = false;
-  c_tracks_phiErr_ = false;
-  c_tracks_pt_ = false;
-  c_tracks_ptErr_ = false;
-  c_tracks_px_ = false;
-  c_tracks_py_ = false;
-  c_tracks_pz_ = false;
-  c_tracks_vx_ = false;
-  c_tracks_vy_ = false;
-  c_tracks_vz_ = false;
-  c_trigger_decision_ = false;
-  c_trigger_lastfiltername_ = false;
-  c_triggerobject_collectionname_ = false;
-  c_triggerobject_energy_ = false;
-  c_triggerobject_et_ = false;
-  c_triggerobject_eta_ = false;
-  c_triggerobject_phi_ = false;
-  c_triggerobject_pt_ = false;
-  c_triggerobject_px_ = false;
-  c_triggerobject_py_ = false;
-  c_triggerobject_pz_ = false;
-  c_trk_nTOBTEC_ = false;
-  c_trk_ratioAllTOBTEC_ = false;
-  c_trk_ratioJetTOBTEC_ = false;
+  if(b_L1trigger_alias_ && !b_L1trigger_alias_->TestBit(kDoNotProcess)){
+    c_L1trigger_alias_ = true;
+  }else{
+    c_L1trigger_alias_ = false;
+  }
+  if(b_L1trigger_bit_ && !b_L1trigger_bit_->TestBit(kDoNotProcess)){
+    c_L1trigger_bit_ = true;
+  }else{
+    c_L1trigger_bit_ = false;
+  }
+  if(b_L1trigger_decision_ && !b_L1trigger_decision_->TestBit(kDoNotProcess)){
+    c_L1trigger_decision_ = true;
+  }else{
+    c_L1trigger_decision_ = false;
+  }
+  if(b_L1trigger_decision_nomask_ && !b_L1trigger_decision_nomask_->TestBit(kDoNotProcess)){
+    c_L1trigger_decision_nomask_ = true;
+  }else{
+    c_L1trigger_decision_nomask_ = false;
+  }
+  if(b_L1trigger_name_ && !b_L1trigger_name_->TestBit(kDoNotProcess)){
+    c_L1trigger_name_ = true;
+  }else{
+    c_L1trigger_name_ = false;
+  }
+  if(b_L1trigger_prescalevalue_ && !b_L1trigger_prescalevalue_->TestBit(kDoNotProcess)){
+    c_L1trigger_prescalevalue_ = true;
+  }else{
+    c_L1trigger_prescalevalue_ = false;
+  }
+  if(b_L1trigger_techTrigger_ && !b_L1trigger_techTrigger_->TestBit(kDoNotProcess)){
+    c_L1trigger_techTrigger_ = true;
+  }else{
+    c_L1trigger_techTrigger_ = false;
+  }
+  if(b_MPT_ && !b_MPT_->TestBit(kDoNotProcess)){
+    c_MPT_ = true;
+  }else{
+    c_MPT_ = false;
+  }
+  if(b_Njets_AK5PF_ && !b_Njets_AK5PF_->TestBit(kDoNotProcess)){
+    c_Njets_AK5PF_ = true;
+  }else{
+    c_Njets_AK5PF_ = false;
+  }
+  if(b_Njets_AK5PFclean_ && !b_Njets_AK5PFclean_->TestBit(kDoNotProcess)){
+    c_Njets_AK5PFclean_ = true;
+  }else{
+    c_Njets_AK5PFclean_ = false;
+  }
+  if(b_Nmc_pdf_ && !b_Nmc_pdf_->TestBit(kDoNotProcess)){
+    c_Nmc_pdf_ = true;
+  }else{
+    c_Nmc_pdf_ = false;
+  }
+  if(b_NmetsHO_ && !b_NmetsHO_->TestBit(kDoNotProcess)){
+    c_NmetsHO_ = true;
+  }else{
+    c_NmetsHO_ = false;
+  }
+  if(b_Nmets_AK5_ && !b_Nmets_AK5_->TestBit(kDoNotProcess)){
+    c_Nmets_AK5_ = true;
+  }else{
+    c_Nmets_AK5_ = false;
+  }
+  if(b_NpfTypeINoXYCorrmets_ && !b_NpfTypeINoXYCorrmets_->TestBit(kDoNotProcess)){
+    c_NpfTypeINoXYCorrmets_ = true;
+  }else{
+    c_NpfTypeINoXYCorrmets_ = false;
+  }
+  if(b_NpfTypeIType0mets_ && !b_NpfTypeIType0mets_->TestBit(kDoNotProcess)){
+    c_NpfTypeIType0mets_ = true;
+  }else{
+    c_NpfTypeIType0mets_ = false;
+  }
+  if(b_NpfTypeImets_ && !b_NpfTypeImets_->TestBit(kDoNotProcess)){
+    c_NpfTypeImets_ = true;
+  }else{
+    c_NpfTypeImets_ = false;
+  }
+  if(b_Npf_els_ && !b_Npf_els_->TestBit(kDoNotProcess)){
+    c_Npf_els_ = true;
+  }else{
+    c_Npf_els_ = false;
+  }
+  if(b_Npf_mus_ && !b_Npf_mus_->TestBit(kDoNotProcess)){
+    c_Npf_mus_ = true;
+  }else{
+    c_Npf_mus_ = false;
+  }
+  if(b_Npf_photons_ && !b_Npf_photons_->TestBit(kDoNotProcess)){
+    c_Npf_photons_ = true;
+  }else{
+    c_Npf_photons_ = false;
+  }
+  if(b_Npfmets_ && !b_Npfmets_->TestBit(kDoNotProcess)){
+    c_Npfmets_ = true;
+  }else{
+    c_Npfmets_ = false;
+  }
+  if(b_Ntcmets_ && !b_Ntcmets_->TestBit(kDoNotProcess)){
+    c_Ntcmets_ = true;
+  }else{
+    c_Ntcmets_ = false;
+  }
+  if(b_Ntracks_ && !b_Ntracks_->TestBit(kDoNotProcess)){
+    c_Ntracks_ = true;
+  }else{
+    c_Ntracks_ = false;
+  }
+  if(b_ecalBEfilter_decision_ && !b_ecalBEfilter_decision_->TestBit(kDoNotProcess)){
+    c_ecalBEfilter_decision_ = true;
+  }else{
+    c_ecalBEfilter_decision_ = false;
+  }
+  if(b_ecalTPfilter_decision_ && !b_ecalTPfilter_decision_->TestBit(kDoNotProcess)){
+    c_ecalTPfilter_decision_ = true;
+  }else{
+    c_ecalTPfilter_decision_ = false;
+  }
+  if(b_eenoisefilter_decision_ && !b_eenoisefilter_decision_->TestBit(kDoNotProcess)){
+    c_eenoisefilter_decision_ = true;
+  }else{
+    c_eenoisefilter_decision_ = false;
+  }
+  if(b_els_PFchargedHadronIsoR03_ && !b_els_PFchargedHadronIsoR03_->TestBit(kDoNotProcess)){
+    c_els_PFchargedHadronIsoR03_ = true;
+  }else{
+    c_els_PFchargedHadronIsoR03_ = false;
+  }
+  if(b_els_PFneutralHadronIsoR03_ && !b_els_PFneutralHadronIsoR03_->TestBit(kDoNotProcess)){
+    c_els_PFneutralHadronIsoR03_ = true;
+  }else{
+    c_els_PFneutralHadronIsoR03_ = false;
+  }
+  if(b_els_PFphotonIsoR03_ && !b_els_PFphotonIsoR03_->TestBit(kDoNotProcess)){
+    c_els_PFphotonIsoR03_ = true;
+  }else{
+    c_els_PFphotonIsoR03_ = false;
+  }
+  if(b_els_conversion_dcot_ && !b_els_conversion_dcot_->TestBit(kDoNotProcess)){
+    c_els_conversion_dcot_ = true;
+  }else{
+    c_els_conversion_dcot_ = false;
+  }
+  if(b_els_conversion_dist_ && !b_els_conversion_dist_->TestBit(kDoNotProcess)){
+    c_els_conversion_dist_ = true;
+  }else{
+    c_els_conversion_dist_ = false;
+  }
+  if(b_els_hasMatchedConversion_ && !b_els_hasMatchedConversion_->TestBit(kDoNotProcess)){
+    c_els_hasMatchedConversion_ = true;
+  }else{
+    c_els_hasMatchedConversion_ = false;
+  }
+  if(b_genHT_ && !b_genHT_->TestBit(kDoNotProcess)){
+    c_genHT_ = true;
+  }else{
+    c_genHT_ = false;
+  }
+  if(b_greedymuonfilter_decision_ && !b_greedymuonfilter_decision_->TestBit(kDoNotProcess)){
+    c_greedymuonfilter_decision_ = true;
+  }else{
+    c_greedymuonfilter_decision_ = false;
+  }
+  if(b_hbhefilter_decision_ && !b_hbhefilter_decision_->TestBit(kDoNotProcess)){
+    c_hbhefilter_decision_ = true;
+  }else{
+    c_hbhefilter_decision_ = false;
+  }
+  if(b_inconsistentPFmuonfilter_decision_ && !b_inconsistentPFmuonfilter_decision_->TestBit(kDoNotProcess)){
+    c_inconsistentPFmuonfilter_decision_ = true;
+  }else{
+    c_inconsistentPFmuonfilter_decision_ = false;
+  }
+  if(b_isotk_charge_ && !b_isotk_charge_->TestBit(kDoNotProcess)){
+    c_isotk_charge_ = true;
+  }else{
+    c_isotk_charge_ = false;
+  }
+  if(b_isotk_dzpv_ && !b_isotk_dzpv_->TestBit(kDoNotProcess)){
+    c_isotk_dzpv_ = true;
+  }else{
+    c_isotk_dzpv_ = false;
+  }
+  if(b_isotk_eta_ && !b_isotk_eta_->TestBit(kDoNotProcess)){
+    c_isotk_eta_ = true;
+  }else{
+    c_isotk_eta_ = false;
+  }
+  if(b_isotk_iso_ && !b_isotk_iso_->TestBit(kDoNotProcess)){
+    c_isotk_iso_ = true;
+  }else{
+    c_isotk_iso_ = false;
+  }
+  if(b_isotk_phi_ && !b_isotk_phi_->TestBit(kDoNotProcess)){
+    c_isotk_phi_ = true;
+  }else{
+    c_isotk_phi_ = false;
+  }
+  if(b_isotk_pt_ && !b_isotk_pt_->TestBit(kDoNotProcess)){
+    c_isotk_pt_ = true;
+  }else{
+    c_isotk_pt_ = false;
+  }
+  if(b_jets_AK5PF_area_ && !b_jets_AK5PF_area_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_area_ = true;
+  }else{
+    c_jets_AK5PF_area_ = false;
+  }
+  if(b_jets_AK5PF_btag_TC_highEff_ && !b_jets_AK5PF_btag_TC_highEff_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_TC_highEff_ = true;
+  }else{
+    c_jets_AK5PF_btag_TC_highEff_ = false;
+  }
+  if(b_jets_AK5PF_btag_TC_highPur_ && !b_jets_AK5PF_btag_TC_highPur_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_TC_highPur_ = true;
+  }else{
+    c_jets_AK5PF_btag_TC_highPur_ = false;
+  }
+  if(b_jets_AK5PF_btag_jetBProb_ && !b_jets_AK5PF_btag_jetBProb_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_jetBProb_ = true;
+  }else{
+    c_jets_AK5PF_btag_jetBProb_ = false;
+  }
+  if(b_jets_AK5PF_btag_jetProb_ && !b_jets_AK5PF_btag_jetProb_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_jetProb_ = true;
+  }else{
+    c_jets_AK5PF_btag_jetProb_ = false;
+  }
+  if(b_jets_AK5PF_btag_secVertexCombined_ && !b_jets_AK5PF_btag_secVertexCombined_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_secVertexCombined_ = true;
+  }else{
+    c_jets_AK5PF_btag_secVertexCombined_ = false;
+  }
+  if(b_jets_AK5PF_btag_secVertexHighEff_ && !b_jets_AK5PF_btag_secVertexHighEff_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_secVertexHighEff_ = true;
+  }else{
+    c_jets_AK5PF_btag_secVertexHighEff_ = false;
+  }
+  if(b_jets_AK5PF_btag_secVertexHighPur_ && !b_jets_AK5PF_btag_secVertexHighPur_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_secVertexHighPur_ = true;
+  }else{
+    c_jets_AK5PF_btag_secVertexHighPur_ = false;
+  }
+  if(b_jets_AK5PF_btag_softEle_ && !b_jets_AK5PF_btag_softEle_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_softEle_ = true;
+  }else{
+    c_jets_AK5PF_btag_softEle_ = false;
+  }
+  if(b_jets_AK5PF_btag_softMuon_ && !b_jets_AK5PF_btag_softMuon_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_btag_softMuon_ = true;
+  }else{
+    c_jets_AK5PF_btag_softMuon_ = false;
+  }
+  if(b_jets_AK5PF_chgEmE_ && !b_jets_AK5PF_chgEmE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_chgEmE_ = true;
+  }else{
+    c_jets_AK5PF_chgEmE_ = false;
+  }
+  if(b_jets_AK5PF_chgHadE_ && !b_jets_AK5PF_chgHadE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_chgHadE_ = true;
+  }else{
+    c_jets_AK5PF_chgHadE_ = false;
+  }
+  if(b_jets_AK5PF_chgMuE_ && !b_jets_AK5PF_chgMuE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_chgMuE_ = true;
+  }else{
+    c_jets_AK5PF_chgMuE_ = false;
+  }
+  if(b_jets_AK5PF_chg_Mult_ && !b_jets_AK5PF_chg_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_chg_Mult_ = true;
+  }else{
+    c_jets_AK5PF_chg_Mult_ = false;
+  }
+  if(b_jets_AK5PF_corrFactorRaw_ && !b_jets_AK5PF_corrFactorRaw_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_corrFactorRaw_ = true;
+  }else{
+    c_jets_AK5PF_corrFactorRaw_ = false;
+  }
+  if(b_jets_AK5PF_ehf_ && !b_jets_AK5PF_ehf_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_ehf_ = true;
+  }else{
+    c_jets_AK5PF_ehf_ = false;
+  }
+  if(b_jets_AK5PF_emf_ && !b_jets_AK5PF_emf_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_emf_ = true;
+  }else{
+    c_jets_AK5PF_emf_ = false;
+  }
+  if(b_jets_AK5PF_energy_ && !b_jets_AK5PF_energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_energy_ = true;
+  }else{
+    c_jets_AK5PF_energy_ = false;
+  }
+  if(b_jets_AK5PF_et_ && !b_jets_AK5PF_et_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_et_ = true;
+  }else{
+    c_jets_AK5PF_et_ = false;
+  }
+  if(b_jets_AK5PF_eta_ && !b_jets_AK5PF_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_eta_ = true;
+  }else{
+    c_jets_AK5PF_eta_ = false;
+  }
+  if(b_jets_AK5PF_etaetaMoment_ && !b_jets_AK5PF_etaetaMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_etaetaMoment_ = true;
+  }else{
+    c_jets_AK5PF_etaetaMoment_ = false;
+  }
+  if(b_jets_AK5PF_etaphiMoment_ && !b_jets_AK5PF_etaphiMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_etaphiMoment_ = true;
+  }else{
+    c_jets_AK5PF_etaphiMoment_ = false;
+  }
+  if(b_jets_AK5PF_fHPD_ && !b_jets_AK5PF_fHPD_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fHPD_ = true;
+  }else{
+    c_jets_AK5PF_fHPD_ = false;
+  }
+  if(b_jets_AK5PF_fRBX_ && !b_jets_AK5PF_fRBX_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fRBX_ = true;
+  }else{
+    c_jets_AK5PF_fRBX_ = false;
+  }
+  if(b_jets_AK5PF_fSubDetector1_ && !b_jets_AK5PF_fSubDetector1_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fSubDetector1_ = true;
+  }else{
+    c_jets_AK5PF_fSubDetector1_ = false;
+  }
+  if(b_jets_AK5PF_fSubDetector2_ && !b_jets_AK5PF_fSubDetector2_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fSubDetector2_ = true;
+  }else{
+    c_jets_AK5PF_fSubDetector2_ = false;
+  }
+  if(b_jets_AK5PF_fSubDetector3_ && !b_jets_AK5PF_fSubDetector3_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fSubDetector3_ = true;
+  }else{
+    c_jets_AK5PF_fSubDetector3_ = false;
+  }
+  if(b_jets_AK5PF_fSubDetector4_ && !b_jets_AK5PF_fSubDetector4_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_fSubDetector4_ = true;
+  }else{
+    c_jets_AK5PF_fSubDetector4_ = false;
+  }
+  if(b_jets_AK5PF_gen_Energy_ && !b_jets_AK5PF_gen_Energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_Energy_ = true;
+  }else{
+    c_jets_AK5PF_gen_Energy_ = false;
+  }
+  if(b_jets_AK5PF_gen_Id_ && !b_jets_AK5PF_gen_Id_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_Id_ = true;
+  }else{
+    c_jets_AK5PF_gen_Id_ = false;
+  }
+  if(b_jets_AK5PF_gen_et_ && !b_jets_AK5PF_gen_et_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_et_ = true;
+  }else{
+    c_jets_AK5PF_gen_et_ = false;
+  }
+  if(b_jets_AK5PF_gen_eta_ && !b_jets_AK5PF_gen_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_eta_ = true;
+  }else{
+    c_jets_AK5PF_gen_eta_ = false;
+  }
+  if(b_jets_AK5PF_gen_mass_ && !b_jets_AK5PF_gen_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_mass_ = true;
+  }else{
+    c_jets_AK5PF_gen_mass_ = false;
+  }
+  if(b_jets_AK5PF_gen_motherID_ && !b_jets_AK5PF_gen_motherID_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_motherID_ = true;
+  }else{
+    c_jets_AK5PF_gen_motherID_ = false;
+  }
+  if(b_jets_AK5PF_gen_phi_ && !b_jets_AK5PF_gen_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_phi_ = true;
+  }else{
+    c_jets_AK5PF_gen_phi_ = false;
+  }
+  if(b_jets_AK5PF_gen_pt_ && !b_jets_AK5PF_gen_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_pt_ = true;
+  }else{
+    c_jets_AK5PF_gen_pt_ = false;
+  }
+  if(b_jets_AK5PF_gen_threeCharge_ && !b_jets_AK5PF_gen_threeCharge_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_gen_threeCharge_ = true;
+  }else{
+    c_jets_AK5PF_gen_threeCharge_ = false;
+  }
+  if(b_jets_AK5PF_hitsInN90_ && !b_jets_AK5PF_hitsInN90_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_hitsInN90_ = true;
+  }else{
+    c_jets_AK5PF_hitsInN90_ = false;
+  }
+  if(b_jets_AK5PF_jetCharge_ && !b_jets_AK5PF_jetCharge_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_jetCharge_ = true;
+  }else{
+    c_jets_AK5PF_jetCharge_ = false;
+  }
+  if(b_jets_AK5PF_mass_ && !b_jets_AK5PF_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_mass_ = true;
+  }else{
+    c_jets_AK5PF_mass_ = false;
+  }
+  if(b_jets_AK5PF_mu_Mult_ && !b_jets_AK5PF_mu_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_mu_Mult_ = true;
+  }else{
+    c_jets_AK5PF_mu_Mult_ = false;
+  }
+  if(b_jets_AK5PF_n60_ && !b_jets_AK5PF_n60_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_n60_ = true;
+  }else{
+    c_jets_AK5PF_n60_ = false;
+  }
+  if(b_jets_AK5PF_n90_ && !b_jets_AK5PF_n90_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_n90_ = true;
+  }else{
+    c_jets_AK5PF_n90_ = false;
+  }
+  if(b_jets_AK5PF_n90Hits_ && !b_jets_AK5PF_n90Hits_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_n90Hits_ = true;
+  }else{
+    c_jets_AK5PF_n90Hits_ = false;
+  }
+  if(b_jets_AK5PF_nECALTowers_ && !b_jets_AK5PF_nECALTowers_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_nECALTowers_ = true;
+  }else{
+    c_jets_AK5PF_nECALTowers_ = false;
+  }
+  if(b_jets_AK5PF_nHCALTowers_ && !b_jets_AK5PF_nHCALTowers_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_nHCALTowers_ = true;
+  }else{
+    c_jets_AK5PF_nHCALTowers_ = false;
+  }
+  if(b_jets_AK5PF_neutralEmE_ && !b_jets_AK5PF_neutralEmE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_neutralEmE_ = true;
+  }else{
+    c_jets_AK5PF_neutralEmE_ = false;
+  }
+  if(b_jets_AK5PF_neutralHadE_ && !b_jets_AK5PF_neutralHadE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_neutralHadE_ = true;
+  }else{
+    c_jets_AK5PF_neutralHadE_ = false;
+  }
+  if(b_jets_AK5PF_neutral_Mult_ && !b_jets_AK5PF_neutral_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_neutral_Mult_ = true;
+  }else{
+    c_jets_AK5PF_neutral_Mult_ = false;
+  }
+  if(b_jets_AK5PF_partonFlavour_ && !b_jets_AK5PF_partonFlavour_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_partonFlavour_ = true;
+  }else{
+    c_jets_AK5PF_partonFlavour_ = false;
+  }
+  if(b_jets_AK5PF_parton_Energy_ && !b_jets_AK5PF_parton_Energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_Energy_ = true;
+  }else{
+    c_jets_AK5PF_parton_Energy_ = false;
+  }
+  if(b_jets_AK5PF_parton_Id_ && !b_jets_AK5PF_parton_Id_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_Id_ = true;
+  }else{
+    c_jets_AK5PF_parton_Id_ = false;
+  }
+  if(b_jets_AK5PF_parton_eta_ && !b_jets_AK5PF_parton_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_eta_ = true;
+  }else{
+    c_jets_AK5PF_parton_eta_ = false;
+  }
+  if(b_jets_AK5PF_parton_mass_ && !b_jets_AK5PF_parton_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_mass_ = true;
+  }else{
+    c_jets_AK5PF_parton_mass_ = false;
+  }
+  if(b_jets_AK5PF_parton_motherId_ && !b_jets_AK5PF_parton_motherId_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_motherId_ = true;
+  }else{
+    c_jets_AK5PF_parton_motherId_ = false;
+  }
+  if(b_jets_AK5PF_parton_phi_ && !b_jets_AK5PF_parton_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_phi_ = true;
+  }else{
+    c_jets_AK5PF_parton_phi_ = false;
+  }
+  if(b_jets_AK5PF_parton_pt_ && !b_jets_AK5PF_parton_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_parton_pt_ = true;
+  }else{
+    c_jets_AK5PF_parton_pt_ = false;
+  }
+  if(b_jets_AK5PF_phi_ && !b_jets_AK5PF_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_phi_ = true;
+  }else{
+    c_jets_AK5PF_phi_ = false;
+  }
+  if(b_jets_AK5PF_phiphiMoment_ && !b_jets_AK5PF_phiphiMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_phiphiMoment_ = true;
+  }else{
+    c_jets_AK5PF_phiphiMoment_ = false;
+  }
+  if(b_jets_AK5PF_photonEnergy_ && !b_jets_AK5PF_photonEnergy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_photonEnergy_ = true;
+  }else{
+    c_jets_AK5PF_photonEnergy_ = false;
+  }
+  if(b_jets_AK5PF_pt_ && !b_jets_AK5PF_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_pt_ = true;
+  }else{
+    c_jets_AK5PF_pt_ = false;
+  }
+  if(b_jets_AK5PF_px_ && !b_jets_AK5PF_px_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_px_ = true;
+  }else{
+    c_jets_AK5PF_px_ = false;
+  }
+  if(b_jets_AK5PF_py_ && !b_jets_AK5PF_py_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_py_ = true;
+  }else{
+    c_jets_AK5PF_py_ = false;
+  }
+  if(b_jets_AK5PF_pz_ && !b_jets_AK5PF_pz_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_pz_ = true;
+  }else{
+    c_jets_AK5PF_pz_ = false;
+  }
+  if(b_jets_AK5PF_rawPt_ && !b_jets_AK5PF_rawPt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_rawPt_ = true;
+  }else{
+    c_jets_AK5PF_rawPt_ = false;
+  }
+  if(b_jets_AK5PF_status_ && !b_jets_AK5PF_status_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_status_ = true;
+  }else{
+    c_jets_AK5PF_status_ = false;
+  }
+  if(b_jets_AK5PF_theta_ && !b_jets_AK5PF_theta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PF_theta_ = true;
+  }else{
+    c_jets_AK5PF_theta_ = false;
+  }
+  if(b_jets_AK5PFclean_Uncert_ && !b_jets_AK5PFclean_Uncert_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_Uncert_ = true;
+  }else{
+    c_jets_AK5PFclean_Uncert_ = false;
+  }
+  if(b_jets_AK5PFclean_area_ && !b_jets_AK5PFclean_area_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_area_ = true;
+  }else{
+    c_jets_AK5PFclean_area_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_TC_highEff_ && !b_jets_AK5PFclean_btag_TC_highEff_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_TC_highEff_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_TC_highEff_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_TC_highPur_ && !b_jets_AK5PFclean_btag_TC_highPur_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_TC_highPur_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_TC_highPur_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_jetBProb_ && !b_jets_AK5PFclean_btag_jetBProb_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_jetBProb_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_jetBProb_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_jetProb_ && !b_jets_AK5PFclean_btag_jetProb_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_jetProb_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_jetProb_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_secVertexCombined_ && !b_jets_AK5PFclean_btag_secVertexCombined_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_secVertexCombined_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_secVertexCombined_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_secVertexHighEff_ && !b_jets_AK5PFclean_btag_secVertexHighEff_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_secVertexHighEff_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_secVertexHighEff_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_secVertexHighPur_ && !b_jets_AK5PFclean_btag_secVertexHighPur_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_secVertexHighPur_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_secVertexHighPur_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_softEle_ && !b_jets_AK5PFclean_btag_softEle_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_softEle_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_softEle_ = false;
+  }
+  if(b_jets_AK5PFclean_btag_softMuon_ && !b_jets_AK5PFclean_btag_softMuon_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_btag_softMuon_ = true;
+  }else{
+    c_jets_AK5PFclean_btag_softMuon_ = false;
+  }
+  if(b_jets_AK5PFclean_chgEmE_ && !b_jets_AK5PFclean_chgEmE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_chgEmE_ = true;
+  }else{
+    c_jets_AK5PFclean_chgEmE_ = false;
+  }
+  if(b_jets_AK5PFclean_chgHadE_ && !b_jets_AK5PFclean_chgHadE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_chgHadE_ = true;
+  }else{
+    c_jets_AK5PFclean_chgHadE_ = false;
+  }
+  if(b_jets_AK5PFclean_chgMuE_ && !b_jets_AK5PFclean_chgMuE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_chgMuE_ = true;
+  }else{
+    c_jets_AK5PFclean_chgMuE_ = false;
+  }
+  if(b_jets_AK5PFclean_chg_Mult_ && !b_jets_AK5PFclean_chg_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_chg_Mult_ = true;
+  }else{
+    c_jets_AK5PFclean_chg_Mult_ = false;
+  }
+  if(b_jets_AK5PFclean_corrFactorRaw_ && !b_jets_AK5PFclean_corrFactorRaw_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrFactorRaw_ = true;
+  }else{
+    c_jets_AK5PFclean_corrFactorRaw_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL1FastL2L3_ && !b_jets_AK5PFclean_corrL1FastL2L3_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL1FastL2L3_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL1FastL2L3_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL1FastL2L3Residual_ && !b_jets_AK5PFclean_corrL1FastL2L3Residual_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL1FastL2L3Residual_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL1FastL2L3Residual_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL1L2L3_ && !b_jets_AK5PFclean_corrL1L2L3_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL1L2L3_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL1L2L3_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL1L2L3Residual_ && !b_jets_AK5PFclean_corrL1L2L3Residual_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL1L2L3Residual_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL1L2L3Residual_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL2L3_ && !b_jets_AK5PFclean_corrL2L3_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL2L3_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL2L3_ = false;
+  }
+  if(b_jets_AK5PFclean_corrL2L3Residual_ && !b_jets_AK5PFclean_corrL2L3Residual_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_corrL2L3Residual_ = true;
+  }else{
+    c_jets_AK5PFclean_corrL2L3Residual_ = false;
+  }
+  if(b_jets_AK5PFclean_ehf_ && !b_jets_AK5PFclean_ehf_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_ehf_ = true;
+  }else{
+    c_jets_AK5PFclean_ehf_ = false;
+  }
+  if(b_jets_AK5PFclean_emf_ && !b_jets_AK5PFclean_emf_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_emf_ = true;
+  }else{
+    c_jets_AK5PFclean_emf_ = false;
+  }
+  if(b_jets_AK5PFclean_energy_ && !b_jets_AK5PFclean_energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_energy_ = true;
+  }else{
+    c_jets_AK5PFclean_energy_ = false;
+  }
+  if(b_jets_AK5PFclean_et_ && !b_jets_AK5PFclean_et_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_et_ = true;
+  }else{
+    c_jets_AK5PFclean_et_ = false;
+  }
+  if(b_jets_AK5PFclean_eta_ && !b_jets_AK5PFclean_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_eta_ = true;
+  }else{
+    c_jets_AK5PFclean_eta_ = false;
+  }
+  if(b_jets_AK5PFclean_etaetaMoment_ && !b_jets_AK5PFclean_etaetaMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_etaetaMoment_ = true;
+  }else{
+    c_jets_AK5PFclean_etaetaMoment_ = false;
+  }
+  if(b_jets_AK5PFclean_etaphiMoment_ && !b_jets_AK5PFclean_etaphiMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_etaphiMoment_ = true;
+  }else{
+    c_jets_AK5PFclean_etaphiMoment_ = false;
+  }
+  if(b_jets_AK5PFclean_fHPD_ && !b_jets_AK5PFclean_fHPD_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fHPD_ = true;
+  }else{
+    c_jets_AK5PFclean_fHPD_ = false;
+  }
+  if(b_jets_AK5PFclean_fRBX_ && !b_jets_AK5PFclean_fRBX_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fRBX_ = true;
+  }else{
+    c_jets_AK5PFclean_fRBX_ = false;
+  }
+  if(b_jets_AK5PFclean_fSubDetector1_ && !b_jets_AK5PFclean_fSubDetector1_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fSubDetector1_ = true;
+  }else{
+    c_jets_AK5PFclean_fSubDetector1_ = false;
+  }
+  if(b_jets_AK5PFclean_fSubDetector2_ && !b_jets_AK5PFclean_fSubDetector2_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fSubDetector2_ = true;
+  }else{
+    c_jets_AK5PFclean_fSubDetector2_ = false;
+  }
+  if(b_jets_AK5PFclean_fSubDetector3_ && !b_jets_AK5PFclean_fSubDetector3_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fSubDetector3_ = true;
+  }else{
+    c_jets_AK5PFclean_fSubDetector3_ = false;
+  }
+  if(b_jets_AK5PFclean_fSubDetector4_ && !b_jets_AK5PFclean_fSubDetector4_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_fSubDetector4_ = true;
+  }else{
+    c_jets_AK5PFclean_fSubDetector4_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_Energy_ && !b_jets_AK5PFclean_gen_Energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_Energy_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_Energy_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_Id_ && !b_jets_AK5PFclean_gen_Id_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_Id_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_Id_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_et_ && !b_jets_AK5PFclean_gen_et_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_et_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_et_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_eta_ && !b_jets_AK5PFclean_gen_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_eta_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_eta_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_mass_ && !b_jets_AK5PFclean_gen_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_mass_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_mass_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_phi_ && !b_jets_AK5PFclean_gen_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_phi_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_phi_ = false;
+  }
+  if(b_jets_AK5PFclean_gen_pt_ && !b_jets_AK5PFclean_gen_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_gen_pt_ = true;
+  }else{
+    c_jets_AK5PFclean_gen_pt_ = false;
+  }
+  if(b_jets_AK5PFclean_hitsInN90_ && !b_jets_AK5PFclean_hitsInN90_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_hitsInN90_ = true;
+  }else{
+    c_jets_AK5PFclean_hitsInN90_ = false;
+  }
+  if(b_jets_AK5PFclean_jetCharge_ && !b_jets_AK5PFclean_jetCharge_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_jetCharge_ = true;
+  }else{
+    c_jets_AK5PFclean_jetCharge_ = false;
+  }
+  if(b_jets_AK5PFclean_mass_ && !b_jets_AK5PFclean_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_mass_ = true;
+  }else{
+    c_jets_AK5PFclean_mass_ = false;
+  }
+  if(b_jets_AK5PFclean_mu_Mult_ && !b_jets_AK5PFclean_mu_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_mu_Mult_ = true;
+  }else{
+    c_jets_AK5PFclean_mu_Mult_ = false;
+  }
+  if(b_jets_AK5PFclean_n60_ && !b_jets_AK5PFclean_n60_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_n60_ = true;
+  }else{
+    c_jets_AK5PFclean_n60_ = false;
+  }
+  if(b_jets_AK5PFclean_n90_ && !b_jets_AK5PFclean_n90_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_n90_ = true;
+  }else{
+    c_jets_AK5PFclean_n90_ = false;
+  }
+  if(b_jets_AK5PFclean_n90Hits_ && !b_jets_AK5PFclean_n90Hits_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_n90Hits_ = true;
+  }else{
+    c_jets_AK5PFclean_n90Hits_ = false;
+  }
+  if(b_jets_AK5PFclean_nECALTowers_ && !b_jets_AK5PFclean_nECALTowers_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_nECALTowers_ = true;
+  }else{
+    c_jets_AK5PFclean_nECALTowers_ = false;
+  }
+  if(b_jets_AK5PFclean_nHCALTowers_ && !b_jets_AK5PFclean_nHCALTowers_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_nHCALTowers_ = true;
+  }else{
+    c_jets_AK5PFclean_nHCALTowers_ = false;
+  }
+  if(b_jets_AK5PFclean_neutralEmE_ && !b_jets_AK5PFclean_neutralEmE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_neutralEmE_ = true;
+  }else{
+    c_jets_AK5PFclean_neutralEmE_ = false;
+  }
+  if(b_jets_AK5PFclean_neutralHadE_ && !b_jets_AK5PFclean_neutralHadE_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_neutralHadE_ = true;
+  }else{
+    c_jets_AK5PFclean_neutralHadE_ = false;
+  }
+  if(b_jets_AK5PFclean_neutral_Mult_ && !b_jets_AK5PFclean_neutral_Mult_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_neutral_Mult_ = true;
+  }else{
+    c_jets_AK5PFclean_neutral_Mult_ = false;
+  }
+  if(b_jets_AK5PFclean_partonFlavour_ && !b_jets_AK5PFclean_partonFlavour_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_partonFlavour_ = true;
+  }else{
+    c_jets_AK5PFclean_partonFlavour_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_Energy_ && !b_jets_AK5PFclean_parton_Energy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_Energy_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_Energy_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_Id_ && !b_jets_AK5PFclean_parton_Id_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_Id_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_Id_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_eta_ && !b_jets_AK5PFclean_parton_eta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_eta_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_eta_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_mass_ && !b_jets_AK5PFclean_parton_mass_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_mass_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_mass_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_motherId_ && !b_jets_AK5PFclean_parton_motherId_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_motherId_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_motherId_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_phi_ && !b_jets_AK5PFclean_parton_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_phi_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_phi_ = false;
+  }
+  if(b_jets_AK5PFclean_parton_pt_ && !b_jets_AK5PFclean_parton_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_parton_pt_ = true;
+  }else{
+    c_jets_AK5PFclean_parton_pt_ = false;
+  }
+  if(b_jets_AK5PFclean_phi_ && !b_jets_AK5PFclean_phi_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_phi_ = true;
+  }else{
+    c_jets_AK5PFclean_phi_ = false;
+  }
+  if(b_jets_AK5PFclean_phiphiMoment_ && !b_jets_AK5PFclean_phiphiMoment_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_phiphiMoment_ = true;
+  }else{
+    c_jets_AK5PFclean_phiphiMoment_ = false;
+  }
+  if(b_jets_AK5PFclean_photonEnergy_ && !b_jets_AK5PFclean_photonEnergy_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_photonEnergy_ = true;
+  }else{
+    c_jets_AK5PFclean_photonEnergy_ = false;
+  }
+  if(b_jets_AK5PFclean_pt_ && !b_jets_AK5PFclean_pt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_pt_ = true;
+  }else{
+    c_jets_AK5PFclean_pt_ = false;
+  }
+  if(b_jets_AK5PFclean_px_ && !b_jets_AK5PFclean_px_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_px_ = true;
+  }else{
+    c_jets_AK5PFclean_px_ = false;
+  }
+  if(b_jets_AK5PFclean_py_ && !b_jets_AK5PFclean_py_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_py_ = true;
+  }else{
+    c_jets_AK5PFclean_py_ = false;
+  }
+  if(b_jets_AK5PFclean_pz_ && !b_jets_AK5PFclean_pz_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_pz_ = true;
+  }else{
+    c_jets_AK5PFclean_pz_ = false;
+  }
+  if(b_jets_AK5PFclean_rawPt_ && !b_jets_AK5PFclean_rawPt_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_rawPt_ = true;
+  }else{
+    c_jets_AK5PFclean_rawPt_ = false;
+  }
+  if(b_jets_AK5PFclean_status_ && !b_jets_AK5PFclean_status_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_status_ = true;
+  }else{
+    c_jets_AK5PFclean_status_ = false;
+  }
+  if(b_jets_AK5PFclean_theta_ && !b_jets_AK5PFclean_theta_->TestBit(kDoNotProcess)){
+    c_jets_AK5PFclean_theta_ = true;
+  }else{
+    c_jets_AK5PFclean_theta_ = false;
+  }
+  if(b_mc_pdf_id1_ && !b_mc_pdf_id1_->TestBit(kDoNotProcess)){
+    c_mc_pdf_id1_ = true;
+  }else{
+    c_mc_pdf_id1_ = false;
+  }
+  if(b_mc_pdf_id2_ && !b_mc_pdf_id2_->TestBit(kDoNotProcess)){
+    c_mc_pdf_id2_ = true;
+  }else{
+    c_mc_pdf_id2_ = false;
+  }
+  if(b_mc_pdf_q_ && !b_mc_pdf_q_->TestBit(kDoNotProcess)){
+    c_mc_pdf_q_ = true;
+  }else{
+    c_mc_pdf_q_ = false;
+  }
+  if(b_mc_pdf_x1_ && !b_mc_pdf_x1_->TestBit(kDoNotProcess)){
+    c_mc_pdf_x1_ = true;
+  }else{
+    c_mc_pdf_x1_ = false;
+  }
+  if(b_mc_pdf_x2_ && !b_mc_pdf_x2_->TestBit(kDoNotProcess)){
+    c_mc_pdf_x2_ = true;
+  }else{
+    c_mc_pdf_x2_ = false;
+  }
+  if(b_metsHO_et_ && !b_metsHO_et_->TestBit(kDoNotProcess)){
+    c_metsHO_et_ = true;
+  }else{
+    c_metsHO_et_ = false;
+  }
+  if(b_metsHO_ex_ && !b_metsHO_ex_->TestBit(kDoNotProcess)){
+    c_metsHO_ex_ = true;
+  }else{
+    c_metsHO_ex_ = false;
+  }
+  if(b_metsHO_ey_ && !b_metsHO_ey_->TestBit(kDoNotProcess)){
+    c_metsHO_ey_ = true;
+  }else{
+    c_metsHO_ey_ = false;
+  }
+  if(b_metsHO_phi_ && !b_metsHO_phi_->TestBit(kDoNotProcess)){
+    c_metsHO_phi_ = true;
+  }else{
+    c_metsHO_phi_ = false;
+  }
+  if(b_metsHO_sumEt_ && !b_metsHO_sumEt_->TestBit(kDoNotProcess)){
+    c_metsHO_sumEt_ = true;
+  }else{
+    c_metsHO_sumEt_ = false;
+  }
+  if(b_mets_AK5_et_ && !b_mets_AK5_et_->TestBit(kDoNotProcess)){
+    c_mets_AK5_et_ = true;
+  }else{
+    c_mets_AK5_et_ = false;
+  }
+  if(b_mets_AK5_ex_ && !b_mets_AK5_ex_->TestBit(kDoNotProcess)){
+    c_mets_AK5_ex_ = true;
+  }else{
+    c_mets_AK5_ex_ = false;
+  }
+  if(b_mets_AK5_ey_ && !b_mets_AK5_ey_->TestBit(kDoNotProcess)){
+    c_mets_AK5_ey_ = true;
+  }else{
+    c_mets_AK5_ey_ = false;
+  }
+  if(b_mets_AK5_gen_et_ && !b_mets_AK5_gen_et_->TestBit(kDoNotProcess)){
+    c_mets_AK5_gen_et_ = true;
+  }else{
+    c_mets_AK5_gen_et_ = false;
+  }
+  if(b_mets_AK5_gen_phi_ && !b_mets_AK5_gen_phi_->TestBit(kDoNotProcess)){
+    c_mets_AK5_gen_phi_ = true;
+  }else{
+    c_mets_AK5_gen_phi_ = false;
+  }
+  if(b_mets_AK5_phi_ && !b_mets_AK5_phi_->TestBit(kDoNotProcess)){
+    c_mets_AK5_phi_ = true;
+  }else{
+    c_mets_AK5_phi_ = false;
+  }
+  if(b_mets_AK5_sign_ && !b_mets_AK5_sign_->TestBit(kDoNotProcess)){
+    c_mets_AK5_sign_ = true;
+  }else{
+    c_mets_AK5_sign_ = false;
+  }
+  if(b_mets_AK5_sumEt_ && !b_mets_AK5_sumEt_->TestBit(kDoNotProcess)){
+    c_mets_AK5_sumEt_ = true;
+  }else{
+    c_mets_AK5_sumEt_ = false;
+  }
+  if(b_mets_AK5_unCPhi_ && !b_mets_AK5_unCPhi_->TestBit(kDoNotProcess)){
+    c_mets_AK5_unCPhi_ = true;
+  }else{
+    c_mets_AK5_unCPhi_ = false;
+  }
+  if(b_mets_AK5_unCPt_ && !b_mets_AK5_unCPt_->TestBit(kDoNotProcess)){
+    c_mets_AK5_unCPt_ = true;
+  }else{
+    c_mets_AK5_unCPt_ = false;
+  }
+  if(b_passprescaleHT250filter_decision_ && !b_passprescaleHT250filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleHT250filter_decision_ = true;
+  }else{
+    c_passprescaleHT250filter_decision_ = false;
+  }
+  if(b_passprescaleHT300filter_decision_ && !b_passprescaleHT300filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleHT300filter_decision_ = true;
+  }else{
+    c_passprescaleHT300filter_decision_ = false;
+  }
+  if(b_passprescaleHT350filter_decision_ && !b_passprescaleHT350filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleHT350filter_decision_ = true;
+  }else{
+    c_passprescaleHT350filter_decision_ = false;
+  }
+  if(b_passprescaleHT400filter_decision_ && !b_passprescaleHT400filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleHT400filter_decision_ = true;
+  }else{
+    c_passprescaleHT400filter_decision_ = false;
+  }
+  if(b_passprescaleHT450filter_decision_ && !b_passprescaleHT450filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleHT450filter_decision_ = true;
+  }else{
+    c_passprescaleHT450filter_decision_ = false;
+  }
+  if(b_passprescaleJet30MET80filter_decision_ && !b_passprescaleJet30MET80filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescaleJet30MET80filter_decision_ = true;
+  }else{
+    c_passprescaleJet30MET80filter_decision_ = false;
+  }
+  if(b_passprescalePFHT350filter_decision_ && !b_passprescalePFHT350filter_decision_->TestBit(kDoNotProcess)){
+    c_passprescalePFHT350filter_decision_ = true;
+  }else{
+    c_passprescalePFHT350filter_decision_ = false;
+  }
+  if(b_pdfweights_cteq_ && !b_pdfweights_cteq_->TestBit(kDoNotProcess)){
+    c_pdfweights_cteq_ = true;
+  }else{
+    c_pdfweights_cteq_ = false;
+  }
+  if(b_pdfweights_mstw_ && !b_pdfweights_mstw_->TestBit(kDoNotProcess)){
+    c_pdfweights_mstw_ = true;
+  }else{
+    c_pdfweights_mstw_ = false;
+  }
+  if(b_pdfweights_nnpdf_ && !b_pdfweights_nnpdf_->TestBit(kDoNotProcess)){
+    c_pdfweights_nnpdf_ = true;
+  }else{
+    c_pdfweights_nnpdf_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_et_ && !b_pfTypeINoXYCorrmets_et_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_et_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_et_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_ex_ && !b_pfTypeINoXYCorrmets_ex_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_ex_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_ex_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_ey_ && !b_pfTypeINoXYCorrmets_ey_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_ey_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_ey_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_gen_et_ && !b_pfTypeINoXYCorrmets_gen_et_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_gen_et_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_gen_et_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_gen_phi_ && !b_pfTypeINoXYCorrmets_gen_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_gen_phi_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_gen_phi_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_phi_ && !b_pfTypeINoXYCorrmets_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_phi_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_phi_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_sign_ && !b_pfTypeINoXYCorrmets_sign_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_sign_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_sign_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_sumEt_ && !b_pfTypeINoXYCorrmets_sumEt_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_sumEt_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_sumEt_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_unCPhi_ && !b_pfTypeINoXYCorrmets_unCPhi_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_unCPhi_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_unCPhi_ = false;
+  }
+  if(b_pfTypeINoXYCorrmets_unCPt_ && !b_pfTypeINoXYCorrmets_unCPt_->TestBit(kDoNotProcess)){
+    c_pfTypeINoXYCorrmets_unCPt_ = true;
+  }else{
+    c_pfTypeINoXYCorrmets_unCPt_ = false;
+  }
+  if(b_pfTypeIType0mets_et_ && !b_pfTypeIType0mets_et_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_et_ = true;
+  }else{
+    c_pfTypeIType0mets_et_ = false;
+  }
+  if(b_pfTypeIType0mets_ex_ && !b_pfTypeIType0mets_ex_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_ex_ = true;
+  }else{
+    c_pfTypeIType0mets_ex_ = false;
+  }
+  if(b_pfTypeIType0mets_ey_ && !b_pfTypeIType0mets_ey_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_ey_ = true;
+  }else{
+    c_pfTypeIType0mets_ey_ = false;
+  }
+  if(b_pfTypeIType0mets_gen_et_ && !b_pfTypeIType0mets_gen_et_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_gen_et_ = true;
+  }else{
+    c_pfTypeIType0mets_gen_et_ = false;
+  }
+  if(b_pfTypeIType0mets_gen_phi_ && !b_pfTypeIType0mets_gen_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_gen_phi_ = true;
+  }else{
+    c_pfTypeIType0mets_gen_phi_ = false;
+  }
+  if(b_pfTypeIType0mets_phi_ && !b_pfTypeIType0mets_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_phi_ = true;
+  }else{
+    c_pfTypeIType0mets_phi_ = false;
+  }
+  if(b_pfTypeIType0mets_sign_ && !b_pfTypeIType0mets_sign_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_sign_ = true;
+  }else{
+    c_pfTypeIType0mets_sign_ = false;
+  }
+  if(b_pfTypeIType0mets_sumEt_ && !b_pfTypeIType0mets_sumEt_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_sumEt_ = true;
+  }else{
+    c_pfTypeIType0mets_sumEt_ = false;
+  }
+  if(b_pfTypeIType0mets_unCPhi_ && !b_pfTypeIType0mets_unCPhi_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_unCPhi_ = true;
+  }else{
+    c_pfTypeIType0mets_unCPhi_ = false;
+  }
+  if(b_pfTypeIType0mets_unCPt_ && !b_pfTypeIType0mets_unCPt_->TestBit(kDoNotProcess)){
+    c_pfTypeIType0mets_unCPt_ = true;
+  }else{
+    c_pfTypeIType0mets_unCPt_ = false;
+  }
+  if(b_pfTypeImets_et_ && !b_pfTypeImets_et_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_et_ = true;
+  }else{
+    c_pfTypeImets_et_ = false;
+  }
+  if(b_pfTypeImets_ex_ && !b_pfTypeImets_ex_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_ex_ = true;
+  }else{
+    c_pfTypeImets_ex_ = false;
+  }
+  if(b_pfTypeImets_ey_ && !b_pfTypeImets_ey_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_ey_ = true;
+  }else{
+    c_pfTypeImets_ey_ = false;
+  }
+  if(b_pfTypeImets_gen_et_ && !b_pfTypeImets_gen_et_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_gen_et_ = true;
+  }else{
+    c_pfTypeImets_gen_et_ = false;
+  }
+  if(b_pfTypeImets_gen_phi_ && !b_pfTypeImets_gen_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_gen_phi_ = true;
+  }else{
+    c_pfTypeImets_gen_phi_ = false;
+  }
+  if(b_pfTypeImets_phi_ && !b_pfTypeImets_phi_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_phi_ = true;
+  }else{
+    c_pfTypeImets_phi_ = false;
+  }
+  if(b_pfTypeImets_sign_ && !b_pfTypeImets_sign_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_sign_ = true;
+  }else{
+    c_pfTypeImets_sign_ = false;
+  }
+  if(b_pfTypeImets_sumEt_ && !b_pfTypeImets_sumEt_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_sumEt_ = true;
+  }else{
+    c_pfTypeImets_sumEt_ = false;
+  }
+  if(b_pfTypeImets_unCPhi_ && !b_pfTypeImets_unCPhi_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_unCPhi_ = true;
+  }else{
+    c_pfTypeImets_unCPhi_ = false;
+  }
+  if(b_pfTypeImets_unCPt_ && !b_pfTypeImets_unCPt_->TestBit(kDoNotProcess)){
+    c_pfTypeImets_unCPt_ = true;
+  }else{
+    c_pfTypeImets_unCPt_ = false;
+  }
+  if(b_pf_els_PATpassConversionVeto_ && !b_pf_els_PATpassConversionVeto_->TestBit(kDoNotProcess)){
+    c_pf_els_PATpassConversionVeto_ = true;
+  }else{
+    c_pf_els_PATpassConversionVeto_ = false;
+  }
+  if(b_pf_els_PFchargedHadronIsoR03_ && !b_pf_els_PFchargedHadronIsoR03_->TestBit(kDoNotProcess)){
+    c_pf_els_PFchargedHadronIsoR03_ = true;
+  }else{
+    c_pf_els_PFchargedHadronIsoR03_ = false;
+  }
+  if(b_pf_els_PFneutralHadronIsoR03_ && !b_pf_els_PFneutralHadronIsoR03_->TestBit(kDoNotProcess)){
+    c_pf_els_PFneutralHadronIsoR03_ = true;
+  }else{
+    c_pf_els_PFneutralHadronIsoR03_ = false;
+  }
+  if(b_pf_els_PFphotonIsoR03_ && !b_pf_els_PFphotonIsoR03_->TestBit(kDoNotProcess)){
+    c_pf_els_PFphotonIsoR03_ = true;
+  }else{
+    c_pf_els_PFphotonIsoR03_ = false;
+  }
+  if(b_pf_els_basicClustersSize_ && !b_pf_els_basicClustersSize_->TestBit(kDoNotProcess)){
+    c_pf_els_basicClustersSize_ = true;
+  }else{
+    c_pf_els_basicClustersSize_ = false;
+  }
+  if(b_pf_els_cIso_ && !b_pf_els_cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_cIso_ = true;
+  }else{
+    c_pf_els_cIso_ = false;
+  }
+  if(b_pf_els_caloEnergy_ && !b_pf_els_caloEnergy_->TestBit(kDoNotProcess)){
+    c_pf_els_caloEnergy_ = true;
+  }else{
+    c_pf_els_caloEnergy_ = false;
+  }
+  if(b_pf_els_charge_ && !b_pf_els_charge_->TestBit(kDoNotProcess)){
+    c_pf_els_charge_ = true;
+  }else{
+    c_pf_els_charge_ = false;
+  }
+  if(b_pf_els_chargedHadronIso_ && !b_pf_els_chargedHadronIso_->TestBit(kDoNotProcess)){
+    c_pf_els_chargedHadronIso_ = true;
+  }else{
+    c_pf_els_chargedHadronIso_ = false;
+  }
+  if(b_pf_els_chi2_ && !b_pf_els_chi2_->TestBit(kDoNotProcess)){
+    c_pf_els_chi2_ = true;
+  }else{
+    c_pf_els_chi2_ = false;
+  }
+  if(b_pf_els_core_ecalDrivenSeed_ && !b_pf_els_core_ecalDrivenSeed_->TestBit(kDoNotProcess)){
+    c_pf_els_core_ecalDrivenSeed_ = true;
+  }else{
+    c_pf_els_core_ecalDrivenSeed_ = false;
+  }
+  if(b_pf_els_cpx_ && !b_pf_els_cpx_->TestBit(kDoNotProcess)){
+    c_pf_els_cpx_ = true;
+  }else{
+    c_pf_els_cpx_ = false;
+  }
+  if(b_pf_els_cpy_ && !b_pf_els_cpy_->TestBit(kDoNotProcess)){
+    c_pf_els_cpy_ = true;
+  }else{
+    c_pf_els_cpy_ = false;
+  }
+  if(b_pf_els_cpz_ && !b_pf_els_cpz_->TestBit(kDoNotProcess)){
+    c_pf_els_cpz_ = true;
+  }else{
+    c_pf_els_cpz_ = false;
+  }
+  if(b_pf_els_ctf_tk_charge_ && !b_pf_els_ctf_tk_charge_->TestBit(kDoNotProcess)){
+    c_pf_els_ctf_tk_charge_ = true;
+  }else{
+    c_pf_els_ctf_tk_charge_ = false;
+  }
+  if(b_pf_els_ctf_tk_eta_ && !b_pf_els_ctf_tk_eta_->TestBit(kDoNotProcess)){
+    c_pf_els_ctf_tk_eta_ = true;
+  }else{
+    c_pf_els_ctf_tk_eta_ = false;
+  }
+  if(b_pf_els_ctf_tk_id_ && !b_pf_els_ctf_tk_id_->TestBit(kDoNotProcess)){
+    c_pf_els_ctf_tk_id_ = true;
+  }else{
+    c_pf_els_ctf_tk_id_ = false;
+  }
+  if(b_pf_els_ctf_tk_phi_ && !b_pf_els_ctf_tk_phi_->TestBit(kDoNotProcess)){
+    c_pf_els_ctf_tk_phi_ = true;
+  }else{
+    c_pf_els_ctf_tk_phi_ = false;
+  }
+  if(b_pf_els_cx_ && !b_pf_els_cx_->TestBit(kDoNotProcess)){
+    c_pf_els_cx_ = true;
+  }else{
+    c_pf_els_cx_ = false;
+  }
+  if(b_pf_els_cy_ && !b_pf_els_cy_->TestBit(kDoNotProcess)){
+    c_pf_els_cy_ = true;
+  }else{
+    c_pf_els_cy_ = false;
+  }
+  if(b_pf_els_cz_ && !b_pf_els_cz_->TestBit(kDoNotProcess)){
+    c_pf_els_cz_ = true;
+  }else{
+    c_pf_els_cz_ = false;
+  }
+  if(b_pf_els_d0dum_ && !b_pf_els_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_els_d0dum_ = true;
+  }else{
+    c_pf_els_d0dum_ = false;
+  }
+  if(b_pf_els_d0dumError_ && !b_pf_els_d0dumError_->TestBit(kDoNotProcess)){
+    c_pf_els_d0dumError_ = true;
+  }else{
+    c_pf_els_d0dumError_ = false;
+  }
+  if(b_pf_els_dEtaIn_ && !b_pf_els_dEtaIn_->TestBit(kDoNotProcess)){
+    c_pf_els_dEtaIn_ = true;
+  }else{
+    c_pf_els_dEtaIn_ = false;
+  }
+  if(b_pf_els_dEtaOut_ && !b_pf_els_dEtaOut_->TestBit(kDoNotProcess)){
+    c_pf_els_dEtaOut_ = true;
+  }else{
+    c_pf_els_dEtaOut_ = false;
+  }
+  if(b_pf_els_dPhiIn_ && !b_pf_els_dPhiIn_->TestBit(kDoNotProcess)){
+    c_pf_els_dPhiIn_ = true;
+  }else{
+    c_pf_els_dPhiIn_ = false;
+  }
+  if(b_pf_els_dPhiOut_ && !b_pf_els_dPhiOut_->TestBit(kDoNotProcess)){
+    c_pf_els_dPhiOut_ = true;
+  }else{
+    c_pf_els_dPhiOut_ = false;
+  }
+  if(b_pf_els_dr03EcalRecHitSumEt_ && !b_pf_els_dr03EcalRecHitSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr03EcalRecHitSumEt_ = true;
+  }else{
+    c_pf_els_dr03EcalRecHitSumEt_ = false;
+  }
+  if(b_pf_els_dr03HcalDepth1TowerSumEt_ && !b_pf_els_dr03HcalDepth1TowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr03HcalDepth1TowerSumEt_ = true;
+  }else{
+    c_pf_els_dr03HcalDepth1TowerSumEt_ = false;
+  }
+  if(b_pf_els_dr03HcalDepth2TowerSumEt_ && !b_pf_els_dr03HcalDepth2TowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr03HcalDepth2TowerSumEt_ = true;
+  }else{
+    c_pf_els_dr03HcalDepth2TowerSumEt_ = false;
+  }
+  if(b_pf_els_dr03HcalTowerSumEt_ && !b_pf_els_dr03HcalTowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr03HcalTowerSumEt_ = true;
+  }else{
+    c_pf_els_dr03HcalTowerSumEt_ = false;
+  }
+  if(b_pf_els_dr03TkSumPt_ && !b_pf_els_dr03TkSumPt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr03TkSumPt_ = true;
+  }else{
+    c_pf_els_dr03TkSumPt_ = false;
+  }
+  if(b_pf_els_dr04EcalRecHitSumEt_ && !b_pf_els_dr04EcalRecHitSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr04EcalRecHitSumEt_ = true;
+  }else{
+    c_pf_els_dr04EcalRecHitSumEt_ = false;
+  }
+  if(b_pf_els_dr04HcalDepth1TowerSumEt_ && !b_pf_els_dr04HcalDepth1TowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr04HcalDepth1TowerSumEt_ = true;
+  }else{
+    c_pf_els_dr04HcalDepth1TowerSumEt_ = false;
+  }
+  if(b_pf_els_dr04HcalDepth2TowerSumEt_ && !b_pf_els_dr04HcalDepth2TowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr04HcalDepth2TowerSumEt_ = true;
+  }else{
+    c_pf_els_dr04HcalDepth2TowerSumEt_ = false;
+  }
+  if(b_pf_els_dr04HcalTowerSumEt_ && !b_pf_els_dr04HcalTowerSumEt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr04HcalTowerSumEt_ = true;
+  }else{
+    c_pf_els_dr04HcalTowerSumEt_ = false;
+  }
+  if(b_pf_els_dr04TkSumPt_ && !b_pf_els_dr04TkSumPt_->TestBit(kDoNotProcess)){
+    c_pf_els_dr04TkSumPt_ = true;
+  }else{
+    c_pf_els_dr04TkSumPt_ = false;
+  }
+  if(b_pf_els_dz_ && !b_pf_els_dz_->TestBit(kDoNotProcess)){
+    c_pf_els_dz_ = true;
+  }else{
+    c_pf_els_dz_ = false;
+  }
+  if(b_pf_els_dzError_ && !b_pf_els_dzError_->TestBit(kDoNotProcess)){
+    c_pf_els_dzError_ = true;
+  }else{
+    c_pf_els_dzError_ = false;
+  }
+  if(b_pf_els_eOverPIn_ && !b_pf_els_eOverPIn_->TestBit(kDoNotProcess)){
+    c_pf_els_eOverPIn_ = true;
+  }else{
+    c_pf_els_eOverPIn_ = false;
+  }
+  if(b_pf_els_eSeedOverPOut_ && !b_pf_els_eSeedOverPOut_->TestBit(kDoNotProcess)){
+    c_pf_els_eSeedOverPOut_ = true;
+  }else{
+    c_pf_els_eSeedOverPOut_ = false;
+  }
+  if(b_pf_els_ecalIso_ && !b_pf_els_ecalIso_->TestBit(kDoNotProcess)){
+    c_pf_els_ecalIso_ = true;
+  }else{
+    c_pf_els_ecalIso_ = false;
+  }
+  if(b_pf_els_energy_ && !b_pf_els_energy_->TestBit(kDoNotProcess)){
+    c_pf_els_energy_ = true;
+  }else{
+    c_pf_els_energy_ = false;
+  }
+  if(b_pf_els_et_ && !b_pf_els_et_->TestBit(kDoNotProcess)){
+    c_pf_els_et_ = true;
+  }else{
+    c_pf_els_et_ = false;
+  }
+  if(b_pf_els_eta_ && !b_pf_els_eta_->TestBit(kDoNotProcess)){
+    c_pf_els_eta_ = true;
+  }else{
+    c_pf_els_eta_ = false;
+  }
+  if(b_pf_els_etaError_ && !b_pf_els_etaError_->TestBit(kDoNotProcess)){
+    c_pf_els_etaError_ = true;
+  }else{
+    c_pf_els_etaError_ = false;
+  }
+  if(b_pf_els_fbrem_ && !b_pf_els_fbrem_->TestBit(kDoNotProcess)){
+    c_pf_els_fbrem_ = true;
+  }else{
+    c_pf_els_fbrem_ = false;
+  }
+  if(b_pf_els_gen_et_ && !b_pf_els_gen_et_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_et_ = true;
+  }else{
+    c_pf_els_gen_et_ = false;
+  }
+  if(b_pf_els_gen_eta_ && !b_pf_els_gen_eta_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_eta_ = true;
+  }else{
+    c_pf_els_gen_eta_ = false;
+  }
+  if(b_pf_els_gen_id_ && !b_pf_els_gen_id_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_id_ = true;
+  }else{
+    c_pf_els_gen_id_ = false;
+  }
+  if(b_pf_els_gen_mother_et_ && !b_pf_els_gen_mother_et_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_et_ = true;
+  }else{
+    c_pf_els_gen_mother_et_ = false;
+  }
+  if(b_pf_els_gen_mother_eta_ && !b_pf_els_gen_mother_eta_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_eta_ = true;
+  }else{
+    c_pf_els_gen_mother_eta_ = false;
+  }
+  if(b_pf_els_gen_mother_id_ && !b_pf_els_gen_mother_id_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_id_ = true;
+  }else{
+    c_pf_els_gen_mother_id_ = false;
+  }
+  if(b_pf_els_gen_mother_phi_ && !b_pf_els_gen_mother_phi_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_phi_ = true;
+  }else{
+    c_pf_els_gen_mother_phi_ = false;
+  }
+  if(b_pf_els_gen_mother_pt_ && !b_pf_els_gen_mother_pt_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_pt_ = true;
+  }else{
+    c_pf_els_gen_mother_pt_ = false;
+  }
+  if(b_pf_els_gen_mother_px_ && !b_pf_els_gen_mother_px_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_px_ = true;
+  }else{
+    c_pf_els_gen_mother_px_ = false;
+  }
+  if(b_pf_els_gen_mother_py_ && !b_pf_els_gen_mother_py_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_py_ = true;
+  }else{
+    c_pf_els_gen_mother_py_ = false;
+  }
+  if(b_pf_els_gen_mother_pz_ && !b_pf_els_gen_mother_pz_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_pz_ = true;
+  }else{
+    c_pf_els_gen_mother_pz_ = false;
+  }
+  if(b_pf_els_gen_mother_theta_ && !b_pf_els_gen_mother_theta_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_mother_theta_ = true;
+  }else{
+    c_pf_els_gen_mother_theta_ = false;
+  }
+  if(b_pf_els_gen_phi_ && !b_pf_els_gen_phi_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_phi_ = true;
+  }else{
+    c_pf_els_gen_phi_ = false;
+  }
+  if(b_pf_els_gen_pt_ && !b_pf_els_gen_pt_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_pt_ = true;
+  }else{
+    c_pf_els_gen_pt_ = false;
+  }
+  if(b_pf_els_gen_px_ && !b_pf_els_gen_px_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_px_ = true;
+  }else{
+    c_pf_els_gen_px_ = false;
+  }
+  if(b_pf_els_gen_py_ && !b_pf_els_gen_py_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_py_ = true;
+  }else{
+    c_pf_els_gen_py_ = false;
+  }
+  if(b_pf_els_gen_pz_ && !b_pf_els_gen_pz_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_pz_ = true;
+  }else{
+    c_pf_els_gen_pz_ = false;
+  }
+  if(b_pf_els_gen_theta_ && !b_pf_els_gen_theta_->TestBit(kDoNotProcess)){
+    c_pf_els_gen_theta_ = true;
+  }else{
+    c_pf_els_gen_theta_ = false;
+  }
+  if(b_pf_els_hadOverEm_ && !b_pf_els_hadOverEm_->TestBit(kDoNotProcess)){
+    c_pf_els_hadOverEm_ = true;
+  }else{
+    c_pf_els_hadOverEm_ = false;
+  }
+  if(b_pf_els_hasMatchedConversion_ && !b_pf_els_hasMatchedConversion_->TestBit(kDoNotProcess)){
+    c_pf_els_hasMatchedConversion_ = true;
+  }else{
+    c_pf_els_hasMatchedConversion_ = false;
+  }
+  if(b_pf_els_hcalIso_ && !b_pf_els_hcalIso_->TestBit(kDoNotProcess)){
+    c_pf_els_hcalIso_ = true;
+  }else{
+    c_pf_els_hcalIso_ = false;
+  }
+  if(b_pf_els_hcalOverEcalBc_ && !b_pf_els_hcalOverEcalBc_->TestBit(kDoNotProcess)){
+    c_pf_els_hcalOverEcalBc_ = true;
+  }else{
+    c_pf_els_hcalOverEcalBc_ = false;
+  }
+  if(b_pf_els_isEB_ && !b_pf_els_isEB_->TestBit(kDoNotProcess)){
+    c_pf_els_isEB_ = true;
+  }else{
+    c_pf_els_isEB_ = false;
+  }
+  if(b_pf_els_isEE_ && !b_pf_els_isEE_->TestBit(kDoNotProcess)){
+    c_pf_els_isEE_ = true;
+  }else{
+    c_pf_els_isEE_ = false;
+  }
+  if(b_pf_els_looseId_ && !b_pf_els_looseId_->TestBit(kDoNotProcess)){
+    c_pf_els_looseId_ = true;
+  }else{
+    c_pf_els_looseId_ = false;
+  }
+  if(b_pf_els_n_inner_layer_ && !b_pf_els_n_inner_layer_->TestBit(kDoNotProcess)){
+    c_pf_els_n_inner_layer_ = true;
+  }else{
+    c_pf_els_n_inner_layer_ = false;
+  }
+  if(b_pf_els_n_outer_layer_ && !b_pf_els_n_outer_layer_->TestBit(kDoNotProcess)){
+    c_pf_els_n_outer_layer_ = true;
+  }else{
+    c_pf_els_n_outer_layer_ = false;
+  }
+  if(b_pf_els_ndof_ && !b_pf_els_ndof_->TestBit(kDoNotProcess)){
+    c_pf_els_ndof_ = true;
+  }else{
+    c_pf_els_ndof_ = false;
+  }
+  if(b_pf_els_neutralHadronIso_ && !b_pf_els_neutralHadronIso_->TestBit(kDoNotProcess)){
+    c_pf_els_neutralHadronIso_ = true;
+  }else{
+    c_pf_els_neutralHadronIso_ = false;
+  }
+  if(b_pf_els_numlosthits_ && !b_pf_els_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_els_numlosthits_ = true;
+  }else{
+    c_pf_els_numlosthits_ = false;
+  }
+  if(b_pf_els_numvalhits_ && !b_pf_els_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_els_numvalhits_ = true;
+  }else{
+    c_pf_els_numvalhits_ = false;
+  }
+  if(b_pf_els_phi_ && !b_pf_els_phi_->TestBit(kDoNotProcess)){
+    c_pf_els_phi_ = true;
+  }else{
+    c_pf_els_phi_ = false;
+  }
+  if(b_pf_els_phiError_ && !b_pf_els_phiError_->TestBit(kDoNotProcess)){
+    c_pf_els_phiError_ = true;
+  }else{
+    c_pf_els_phiError_ = false;
+  }
+  if(b_pf_els_photonIso_ && !b_pf_els_photonIso_->TestBit(kDoNotProcess)){
+    c_pf_els_photonIso_ = true;
+  }else{
+    c_pf_els_photonIso_ = false;
+  }
+  if(b_pf_els_pt_ && !b_pf_els_pt_->TestBit(kDoNotProcess)){
+    c_pf_els_pt_ = true;
+  }else{
+    c_pf_els_pt_ = false;
+  }
+  if(b_pf_els_ptError_ && !b_pf_els_ptError_->TestBit(kDoNotProcess)){
+    c_pf_els_ptError_ = true;
+  }else{
+    c_pf_els_ptError_ = false;
+  }
+  if(b_pf_els_px_ && !b_pf_els_px_->TestBit(kDoNotProcess)){
+    c_pf_els_px_ = true;
+  }else{
+    c_pf_els_px_ = false;
+  }
+  if(b_pf_els_py_ && !b_pf_els_py_->TestBit(kDoNotProcess)){
+    c_pf_els_py_ = true;
+  }else{
+    c_pf_els_py_ = false;
+  }
+  if(b_pf_els_pz_ && !b_pf_els_pz_->TestBit(kDoNotProcess)){
+    c_pf_els_pz_ = true;
+  }else{
+    c_pf_els_pz_ = false;
+  }
+  if(b_pf_els_robustHighEnergyId_ && !b_pf_els_robustHighEnergyId_->TestBit(kDoNotProcess)){
+    c_pf_els_robustHighEnergyId_ = true;
+  }else{
+    c_pf_els_robustHighEnergyId_ = false;
+  }
+  if(b_pf_els_robustLooseId_ && !b_pf_els_robustLooseId_->TestBit(kDoNotProcess)){
+    c_pf_els_robustLooseId_ = true;
+  }else{
+    c_pf_els_robustLooseId_ = false;
+  }
+  if(b_pf_els_robustTightId_ && !b_pf_els_robustTightId_->TestBit(kDoNotProcess)){
+    c_pf_els_robustTightId_ = true;
+  }else{
+    c_pf_els_robustTightId_ = false;
+  }
+  if(b_pf_els_scE1x5_ && !b_pf_els_scE1x5_->TestBit(kDoNotProcess)){
+    c_pf_els_scE1x5_ = true;
+  }else{
+    c_pf_els_scE1x5_ = false;
+  }
+  if(b_pf_els_scE2x5Max_ && !b_pf_els_scE2x5Max_->TestBit(kDoNotProcess)){
+    c_pf_els_scE2x5Max_ = true;
+  }else{
+    c_pf_els_scE2x5Max_ = false;
+  }
+  if(b_pf_els_scE5x5_ && !b_pf_els_scE5x5_->TestBit(kDoNotProcess)){
+    c_pf_els_scE5x5_ = true;
+  }else{
+    c_pf_els_scE5x5_ = false;
+  }
+  if(b_pf_els_scEnergy_ && !b_pf_els_scEnergy_->TestBit(kDoNotProcess)){
+    c_pf_els_scEnergy_ = true;
+  }else{
+    c_pf_els_scEnergy_ = false;
+  }
+  if(b_pf_els_scEta_ && !b_pf_els_scEta_->TestBit(kDoNotProcess)){
+    c_pf_els_scEta_ = true;
+  }else{
+    c_pf_els_scEta_ = false;
+  }
+  if(b_pf_els_scEtaWidth_ && !b_pf_els_scEtaWidth_->TestBit(kDoNotProcess)){
+    c_pf_els_scEtaWidth_ = true;
+  }else{
+    c_pf_els_scEtaWidth_ = false;
+  }
+  if(b_pf_els_scPhi_ && !b_pf_els_scPhi_->TestBit(kDoNotProcess)){
+    c_pf_els_scPhi_ = true;
+  }else{
+    c_pf_els_scPhi_ = false;
+  }
+  if(b_pf_els_scPhiWidth_ && !b_pf_els_scPhiWidth_->TestBit(kDoNotProcess)){
+    c_pf_els_scPhiWidth_ = true;
+  }else{
+    c_pf_els_scPhiWidth_ = false;
+  }
+  if(b_pf_els_scRawEnergy_ && !b_pf_els_scRawEnergy_->TestBit(kDoNotProcess)){
+    c_pf_els_scRawEnergy_ = true;
+  }else{
+    c_pf_els_scRawEnergy_ = false;
+  }
+  if(b_pf_els_scSeedEnergy_ && !b_pf_els_scSeedEnergy_->TestBit(kDoNotProcess)){
+    c_pf_els_scSeedEnergy_ = true;
+  }else{
+    c_pf_els_scSeedEnergy_ = false;
+  }
+  if(b_pf_els_shFracInnerHits_ && !b_pf_els_shFracInnerHits_->TestBit(kDoNotProcess)){
+    c_pf_els_shFracInnerHits_ = true;
+  }else{
+    c_pf_els_shFracInnerHits_ = false;
+  }
+  if(b_pf_els_sigmaEtaEta_ && !b_pf_els_sigmaEtaEta_->TestBit(kDoNotProcess)){
+    c_pf_els_sigmaEtaEta_ = true;
+  }else{
+    c_pf_els_sigmaEtaEta_ = false;
+  }
+  if(b_pf_els_sigmaIEtaIEta_ && !b_pf_els_sigmaIEtaIEta_->TestBit(kDoNotProcess)){
+    c_pf_els_sigmaIEtaIEta_ = true;
+  }else{
+    c_pf_els_sigmaIEtaIEta_ = false;
+  }
+  if(b_pf_els_simpleEleId60cIso_ && !b_pf_els_simpleEleId60cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId60cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId60cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId60relIso_ && !b_pf_els_simpleEleId60relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId60relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId60relIso_ = false;
+  }
+  if(b_pf_els_simpleEleId70cIso_ && !b_pf_els_simpleEleId70cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId70cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId70cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId70relIso_ && !b_pf_els_simpleEleId70relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId70relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId70relIso_ = false;
+  }
+  if(b_pf_els_simpleEleId80cIso_ && !b_pf_els_simpleEleId80cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId80cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId80cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId80relIso_ && !b_pf_els_simpleEleId80relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId80relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId80relIso_ = false;
+  }
+  if(b_pf_els_simpleEleId85cIso_ && !b_pf_els_simpleEleId85cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId85cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId85cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId85relIso_ && !b_pf_els_simpleEleId85relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId85relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId85relIso_ = false;
+  }
+  if(b_pf_els_simpleEleId90cIso_ && !b_pf_els_simpleEleId90cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId90cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId90cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId90relIso_ && !b_pf_els_simpleEleId90relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId90relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId90relIso_ = false;
+  }
+  if(b_pf_els_simpleEleId95cIso_ && !b_pf_els_simpleEleId95cIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId95cIso_ = true;
+  }else{
+    c_pf_els_simpleEleId95cIso_ = false;
+  }
+  if(b_pf_els_simpleEleId95relIso_ && !b_pf_els_simpleEleId95relIso_->TestBit(kDoNotProcess)){
+    c_pf_els_simpleEleId95relIso_ = true;
+  }else{
+    c_pf_els_simpleEleId95relIso_ = false;
+  }
+  if(b_pf_els_status_ && !b_pf_els_status_->TestBit(kDoNotProcess)){
+    c_pf_els_status_ = true;
+  }else{
+    c_pf_els_status_ = false;
+  }
+  if(b_pf_els_tIso_ && !b_pf_els_tIso_->TestBit(kDoNotProcess)){
+    c_pf_els_tIso_ = true;
+  }else{
+    c_pf_els_tIso_ = false;
+  }
+  if(b_pf_els_theta_ && !b_pf_els_theta_->TestBit(kDoNotProcess)){
+    c_pf_els_theta_ = true;
+  }else{
+    c_pf_els_theta_ = false;
+  }
+  if(b_pf_els_tightId_ && !b_pf_els_tightId_->TestBit(kDoNotProcess)){
+    c_pf_els_tightId_ = true;
+  }else{
+    c_pf_els_tightId_ = false;
+  }
+  if(b_pf_els_tk_charge_ && !b_pf_els_tk_charge_->TestBit(kDoNotProcess)){
+    c_pf_els_tk_charge_ = true;
+  }else{
+    c_pf_els_tk_charge_ = false;
+  }
+  if(b_pf_els_tk_eta_ && !b_pf_els_tk_eta_->TestBit(kDoNotProcess)){
+    c_pf_els_tk_eta_ = true;
+  }else{
+    c_pf_els_tk_eta_ = false;
+  }
+  if(b_pf_els_tk_phi_ && !b_pf_els_tk_phi_->TestBit(kDoNotProcess)){
+    c_pf_els_tk_phi_ = true;
+  }else{
+    c_pf_els_tk_phi_ = false;
+  }
+  if(b_pf_els_tk_pt_ && !b_pf_els_tk_pt_->TestBit(kDoNotProcess)){
+    c_pf_els_tk_pt_ = true;
+  }else{
+    c_pf_els_tk_pt_ = false;
+  }
+  if(b_pf_els_tk_pz_ && !b_pf_els_tk_pz_->TestBit(kDoNotProcess)){
+    c_pf_els_tk_pz_ = true;
+  }else{
+    c_pf_els_tk_pz_ = false;
+  }
+  if(b_pf_els_vpx_ && !b_pf_els_vpx_->TestBit(kDoNotProcess)){
+    c_pf_els_vpx_ = true;
+  }else{
+    c_pf_els_vpx_ = false;
+  }
+  if(b_pf_els_vpy_ && !b_pf_els_vpy_->TestBit(kDoNotProcess)){
+    c_pf_els_vpy_ = true;
+  }else{
+    c_pf_els_vpy_ = false;
+  }
+  if(b_pf_els_vpz_ && !b_pf_els_vpz_->TestBit(kDoNotProcess)){
+    c_pf_els_vpz_ = true;
+  }else{
+    c_pf_els_vpz_ = false;
+  }
+  if(b_pf_els_vx_ && !b_pf_els_vx_->TestBit(kDoNotProcess)){
+    c_pf_els_vx_ = true;
+  }else{
+    c_pf_els_vx_ = false;
+  }
+  if(b_pf_els_vy_ && !b_pf_els_vy_->TestBit(kDoNotProcess)){
+    c_pf_els_vy_ = true;
+  }else{
+    c_pf_els_vy_ = false;
+  }
+  if(b_pf_els_vz_ && !b_pf_els_vz_->TestBit(kDoNotProcess)){
+    c_pf_els_vz_ = true;
+  }else{
+    c_pf_els_vz_ = false;
+  }
+  if(b_pf_mus_cIso_ && !b_pf_mus_cIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_cIso_ = true;
+  }else{
+    c_pf_mus_cIso_ = false;
+  }
+  if(b_pf_mus_calEnergyEm_ && !b_pf_mus_calEnergyEm_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyEm_ = true;
+  }else{
+    c_pf_mus_calEnergyEm_ = false;
+  }
+  if(b_pf_mus_calEnergyEmS9_ && !b_pf_mus_calEnergyEmS9_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyEmS9_ = true;
+  }else{
+    c_pf_mus_calEnergyEmS9_ = false;
+  }
+  if(b_pf_mus_calEnergyHad_ && !b_pf_mus_calEnergyHad_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyHad_ = true;
+  }else{
+    c_pf_mus_calEnergyHad_ = false;
+  }
+  if(b_pf_mus_calEnergyHadS9_ && !b_pf_mus_calEnergyHadS9_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyHadS9_ = true;
+  }else{
+    c_pf_mus_calEnergyHadS9_ = false;
+  }
+  if(b_pf_mus_calEnergyHo_ && !b_pf_mus_calEnergyHo_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyHo_ = true;
+  }else{
+    c_pf_mus_calEnergyHo_ = false;
+  }
+  if(b_pf_mus_calEnergyHoS9_ && !b_pf_mus_calEnergyHoS9_->TestBit(kDoNotProcess)){
+    c_pf_mus_calEnergyHoS9_ = true;
+  }else{
+    c_pf_mus_calEnergyHoS9_ = false;
+  }
+  if(b_pf_mus_charge_ && !b_pf_mus_charge_->TestBit(kDoNotProcess)){
+    c_pf_mus_charge_ = true;
+  }else{
+    c_pf_mus_charge_ = false;
+  }
+  if(b_pf_mus_chargedHadronIso_ && !b_pf_mus_chargedHadronIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_chargedHadronIso_ = true;
+  }else{
+    c_pf_mus_chargedHadronIso_ = false;
+  }
+  if(b_pf_mus_cm_ExpectedHitsInner_ && !b_pf_mus_cm_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_ExpectedHitsInner_ = true;
+  }else{
+    c_pf_mus_cm_ExpectedHitsInner_ = false;
+  }
+  if(b_pf_mus_cm_ExpectedHitsOuter_ && !b_pf_mus_cm_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_ExpectedHitsOuter_ = true;
+  }else{
+    c_pf_mus_cm_ExpectedHitsOuter_ = false;
+  }
+  if(b_pf_mus_cm_LayersWithMeasurement_ && !b_pf_mus_cm_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_LayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_cm_LayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_cm_LayersWithoutMeasurement_ && !b_pf_mus_cm_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_LayersWithoutMeasurement_ = true;
+  }else{
+    c_pf_mus_cm_LayersWithoutMeasurement_ = false;
+  }
+  if(b_pf_mus_cm_PixelLayersWithMeasurement_ && !b_pf_mus_cm_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_cm_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ && !b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_pf_mus_cm_chg_ && !b_pf_mus_cm_chg_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_chg_ = true;
+  }else{
+    c_pf_mus_cm_chg_ = false;
+  }
+  if(b_pf_mus_cm_chi2_ && !b_pf_mus_cm_chi2_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_chi2_ = true;
+  }else{
+    c_pf_mus_cm_chi2_ = false;
+  }
+  if(b_pf_mus_cm_d0dum_ && !b_pf_mus_cm_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_d0dum_ = true;
+  }else{
+    c_pf_mus_cm_d0dum_ = false;
+  }
+  if(b_pf_mus_cm_d0dumErr_ && !b_pf_mus_cm_d0dumErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_d0dumErr_ = true;
+  }else{
+    c_pf_mus_cm_d0dumErr_ = false;
+  }
+  if(b_pf_mus_cm_dz_ && !b_pf_mus_cm_dz_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_dz_ = true;
+  }else{
+    c_pf_mus_cm_dz_ = false;
+  }
+  if(b_pf_mus_cm_dzErr_ && !b_pf_mus_cm_dzErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_dzErr_ = true;
+  }else{
+    c_pf_mus_cm_dzErr_ = false;
+  }
+  if(b_pf_mus_cm_eta_ && !b_pf_mus_cm_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_eta_ = true;
+  }else{
+    c_pf_mus_cm_eta_ = false;
+  }
+  if(b_pf_mus_cm_etaErr_ && !b_pf_mus_cm_etaErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_etaErr_ = true;
+  }else{
+    c_pf_mus_cm_etaErr_ = false;
+  }
+  if(b_pf_mus_cm_ndof_ && !b_pf_mus_cm_ndof_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_ndof_ = true;
+  }else{
+    c_pf_mus_cm_ndof_ = false;
+  }
+  if(b_pf_mus_cm_numlosthits_ && !b_pf_mus_cm_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_numlosthits_ = true;
+  }else{
+    c_pf_mus_cm_numlosthits_ = false;
+  }
+  if(b_pf_mus_cm_numvalMuonhits_ && !b_pf_mus_cm_numvalMuonhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_numvalMuonhits_ = true;
+  }else{
+    c_pf_mus_cm_numvalMuonhits_ = false;
+  }
+  if(b_pf_mus_cm_numvalhits_ && !b_pf_mus_cm_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_numvalhits_ = true;
+  }else{
+    c_pf_mus_cm_numvalhits_ = false;
+  }
+  if(b_pf_mus_cm_phi_ && !b_pf_mus_cm_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_phi_ = true;
+  }else{
+    c_pf_mus_cm_phi_ = false;
+  }
+  if(b_pf_mus_cm_phiErr_ && !b_pf_mus_cm_phiErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_phiErr_ = true;
+  }else{
+    c_pf_mus_cm_phiErr_ = false;
+  }
+  if(b_pf_mus_cm_pt_ && !b_pf_mus_cm_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_pt_ = true;
+  }else{
+    c_pf_mus_cm_pt_ = false;
+  }
+  if(b_pf_mus_cm_ptErr_ && !b_pf_mus_cm_ptErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_ptErr_ = true;
+  }else{
+    c_pf_mus_cm_ptErr_ = false;
+  }
+  if(b_pf_mus_cm_px_ && !b_pf_mus_cm_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_px_ = true;
+  }else{
+    c_pf_mus_cm_px_ = false;
+  }
+  if(b_pf_mus_cm_py_ && !b_pf_mus_cm_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_py_ = true;
+  }else{
+    c_pf_mus_cm_py_ = false;
+  }
+  if(b_pf_mus_cm_pz_ && !b_pf_mus_cm_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_pz_ = true;
+  }else{
+    c_pf_mus_cm_pz_ = false;
+  }
+  if(b_pf_mus_cm_theta_ && !b_pf_mus_cm_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_theta_ = true;
+  }else{
+    c_pf_mus_cm_theta_ = false;
+  }
+  if(b_pf_mus_cm_vx_ && !b_pf_mus_cm_vx_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_vx_ = true;
+  }else{
+    c_pf_mus_cm_vx_ = false;
+  }
+  if(b_pf_mus_cm_vy_ && !b_pf_mus_cm_vy_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_vy_ = true;
+  }else{
+    c_pf_mus_cm_vy_ = false;
+  }
+  if(b_pf_mus_cm_vz_ && !b_pf_mus_cm_vz_->TestBit(kDoNotProcess)){
+    c_pf_mus_cm_vz_ = true;
+  }else{
+    c_pf_mus_cm_vz_ = false;
+  }
+  if(b_pf_mus_dB_ && !b_pf_mus_dB_->TestBit(kDoNotProcess)){
+    c_pf_mus_dB_ = true;
+  }else{
+    c_pf_mus_dB_ = false;
+  }
+  if(b_pf_mus_ecalIso_ && !b_pf_mus_ecalIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_ecalIso_ = true;
+  }else{
+    c_pf_mus_ecalIso_ = false;
+  }
+  if(b_pf_mus_energy_ && !b_pf_mus_energy_->TestBit(kDoNotProcess)){
+    c_pf_mus_energy_ = true;
+  }else{
+    c_pf_mus_energy_ = false;
+  }
+  if(b_pf_mus_et_ && !b_pf_mus_et_->TestBit(kDoNotProcess)){
+    c_pf_mus_et_ = true;
+  }else{
+    c_pf_mus_et_ = false;
+  }
+  if(b_pf_mus_eta_ && !b_pf_mus_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_eta_ = true;
+  }else{
+    c_pf_mus_eta_ = false;
+  }
+  if(b_pf_mus_gen_et_ && !b_pf_mus_gen_et_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_et_ = true;
+  }else{
+    c_pf_mus_gen_et_ = false;
+  }
+  if(b_pf_mus_gen_eta_ && !b_pf_mus_gen_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_eta_ = true;
+  }else{
+    c_pf_mus_gen_eta_ = false;
+  }
+  if(b_pf_mus_gen_id_ && !b_pf_mus_gen_id_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_id_ = true;
+  }else{
+    c_pf_mus_gen_id_ = false;
+  }
+  if(b_pf_mus_gen_mother_et_ && !b_pf_mus_gen_mother_et_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_et_ = true;
+  }else{
+    c_pf_mus_gen_mother_et_ = false;
+  }
+  if(b_pf_mus_gen_mother_eta_ && !b_pf_mus_gen_mother_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_eta_ = true;
+  }else{
+    c_pf_mus_gen_mother_eta_ = false;
+  }
+  if(b_pf_mus_gen_mother_id_ && !b_pf_mus_gen_mother_id_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_id_ = true;
+  }else{
+    c_pf_mus_gen_mother_id_ = false;
+  }
+  if(b_pf_mus_gen_mother_phi_ && !b_pf_mus_gen_mother_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_phi_ = true;
+  }else{
+    c_pf_mus_gen_mother_phi_ = false;
+  }
+  if(b_pf_mus_gen_mother_pt_ && !b_pf_mus_gen_mother_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_pt_ = true;
+  }else{
+    c_pf_mus_gen_mother_pt_ = false;
+  }
+  if(b_pf_mus_gen_mother_px_ && !b_pf_mus_gen_mother_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_px_ = true;
+  }else{
+    c_pf_mus_gen_mother_px_ = false;
+  }
+  if(b_pf_mus_gen_mother_py_ && !b_pf_mus_gen_mother_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_py_ = true;
+  }else{
+    c_pf_mus_gen_mother_py_ = false;
+  }
+  if(b_pf_mus_gen_mother_pz_ && !b_pf_mus_gen_mother_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_pz_ = true;
+  }else{
+    c_pf_mus_gen_mother_pz_ = false;
+  }
+  if(b_pf_mus_gen_mother_theta_ && !b_pf_mus_gen_mother_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_mother_theta_ = true;
+  }else{
+    c_pf_mus_gen_mother_theta_ = false;
+  }
+  if(b_pf_mus_gen_phi_ && !b_pf_mus_gen_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_phi_ = true;
+  }else{
+    c_pf_mus_gen_phi_ = false;
+  }
+  if(b_pf_mus_gen_pt_ && !b_pf_mus_gen_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_pt_ = true;
+  }else{
+    c_pf_mus_gen_pt_ = false;
+  }
+  if(b_pf_mus_gen_px_ && !b_pf_mus_gen_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_px_ = true;
+  }else{
+    c_pf_mus_gen_px_ = false;
+  }
+  if(b_pf_mus_gen_py_ && !b_pf_mus_gen_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_py_ = true;
+  }else{
+    c_pf_mus_gen_py_ = false;
+  }
+  if(b_pf_mus_gen_pz_ && !b_pf_mus_gen_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_pz_ = true;
+  }else{
+    c_pf_mus_gen_pz_ = false;
+  }
+  if(b_pf_mus_gen_theta_ && !b_pf_mus_gen_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_gen_theta_ = true;
+  }else{
+    c_pf_mus_gen_theta_ = false;
+  }
+  if(b_pf_mus_hcalIso_ && !b_pf_mus_hcalIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_hcalIso_ = true;
+  }else{
+    c_pf_mus_hcalIso_ = false;
+  }
+  if(b_pf_mus_id_All_ && !b_pf_mus_id_All_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_All_ = true;
+  }else{
+    c_pf_mus_id_All_ = false;
+  }
+  if(b_pf_mus_id_AllArbitrated_ && !b_pf_mus_id_AllArbitrated_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_AllArbitrated_ = true;
+  }else{
+    c_pf_mus_id_AllArbitrated_ = false;
+  }
+  if(b_pf_mus_id_AllGlobalMuons_ && !b_pf_mus_id_AllGlobalMuons_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_AllGlobalMuons_ = true;
+  }else{
+    c_pf_mus_id_AllGlobalMuons_ = false;
+  }
+  if(b_pf_mus_id_AllStandAloneMuons_ && !b_pf_mus_id_AllStandAloneMuons_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_AllStandAloneMuons_ = true;
+  }else{
+    c_pf_mus_id_AllStandAloneMuons_ = false;
+  }
+  if(b_pf_mus_id_AllTrackerMuons_ && !b_pf_mus_id_AllTrackerMuons_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_AllTrackerMuons_ = true;
+  }else{
+    c_pf_mus_id_AllTrackerMuons_ = false;
+  }
+  if(b_pf_mus_id_GlobalMuonPromptTight_ && !b_pf_mus_id_GlobalMuonPromptTight_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_GlobalMuonPromptTight_ = true;
+  }else{
+    c_pf_mus_id_GlobalMuonPromptTight_ = false;
+  }
+  if(b_pf_mus_id_TM2DCompatibilityLoose_ && !b_pf_mus_id_TM2DCompatibilityLoose_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TM2DCompatibilityLoose_ = true;
+  }else{
+    c_pf_mus_id_TM2DCompatibilityLoose_ = false;
+  }
+  if(b_pf_mus_id_TM2DCompatibilityTight_ && !b_pf_mus_id_TM2DCompatibilityTight_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TM2DCompatibilityTight_ = true;
+  }else{
+    c_pf_mus_id_TM2DCompatibilityTight_ = false;
+  }
+  if(b_pf_mus_id_TMLastStationLoose_ && !b_pf_mus_id_TMLastStationLoose_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMLastStationLoose_ = true;
+  }else{
+    c_pf_mus_id_TMLastStationLoose_ = false;
+  }
+  if(b_pf_mus_id_TMLastStationOptimizedLowPtLoose_ && !b_pf_mus_id_TMLastStationOptimizedLowPtLoose_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMLastStationOptimizedLowPtLoose_ = true;
+  }else{
+    c_pf_mus_id_TMLastStationOptimizedLowPtLoose_ = false;
+  }
+  if(b_pf_mus_id_TMLastStationOptimizedLowPtTight_ && !b_pf_mus_id_TMLastStationOptimizedLowPtTight_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMLastStationOptimizedLowPtTight_ = true;
+  }else{
+    c_pf_mus_id_TMLastStationOptimizedLowPtTight_ = false;
+  }
+  if(b_pf_mus_id_TMLastStationTight_ && !b_pf_mus_id_TMLastStationTight_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMLastStationTight_ = true;
+  }else{
+    c_pf_mus_id_TMLastStationTight_ = false;
+  }
+  if(b_pf_mus_id_TMOneStationLoose_ && !b_pf_mus_id_TMOneStationLoose_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMOneStationLoose_ = true;
+  }else{
+    c_pf_mus_id_TMOneStationLoose_ = false;
+  }
+  if(b_pf_mus_id_TMOneStationTight_ && !b_pf_mus_id_TMOneStationTight_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TMOneStationTight_ = true;
+  }else{
+    c_pf_mus_id_TMOneStationTight_ = false;
+  }
+  if(b_pf_mus_id_TrackerMuonArbitrated_ && !b_pf_mus_id_TrackerMuonArbitrated_->TestBit(kDoNotProcess)){
+    c_pf_mus_id_TrackerMuonArbitrated_ = true;
+  }else{
+    c_pf_mus_id_TrackerMuonArbitrated_ = false;
+  }
+  if(b_pf_mus_isCaloMuon_ && !b_pf_mus_isCaloMuon_->TestBit(kDoNotProcess)){
+    c_pf_mus_isCaloMuon_ = true;
+  }else{
+    c_pf_mus_isCaloMuon_ = false;
+  }
+  if(b_pf_mus_isConvertedPhoton_ && !b_pf_mus_isConvertedPhoton_->TestBit(kDoNotProcess)){
+    c_pf_mus_isConvertedPhoton_ = true;
+  }else{
+    c_pf_mus_isConvertedPhoton_ = false;
+  }
+  if(b_pf_mus_isElectron_ && !b_pf_mus_isElectron_->TestBit(kDoNotProcess)){
+    c_pf_mus_isElectron_ = true;
+  }else{
+    c_pf_mus_isElectron_ = false;
+  }
+  if(b_pf_mus_isGlobalMuon_ && !b_pf_mus_isGlobalMuon_->TestBit(kDoNotProcess)){
+    c_pf_mus_isGlobalMuon_ = true;
+  }else{
+    c_pf_mus_isGlobalMuon_ = false;
+  }
+  if(b_pf_mus_isPFMuon_ && !b_pf_mus_isPFMuon_->TestBit(kDoNotProcess)){
+    c_pf_mus_isPFMuon_ = true;
+  }else{
+    c_pf_mus_isPFMuon_ = false;
+  }
+  if(b_pf_mus_isPhoton_ && !b_pf_mus_isPhoton_->TestBit(kDoNotProcess)){
+    c_pf_mus_isPhoton_ = true;
+  }else{
+    c_pf_mus_isPhoton_ = false;
+  }
+  if(b_pf_mus_isStandAloneMuon_ && !b_pf_mus_isStandAloneMuon_->TestBit(kDoNotProcess)){
+    c_pf_mus_isStandAloneMuon_ = true;
+  }else{
+    c_pf_mus_isStandAloneMuon_ = false;
+  }
+  if(b_pf_mus_isTrackerMuon_ && !b_pf_mus_isTrackerMuon_->TestBit(kDoNotProcess)){
+    c_pf_mus_isTrackerMuon_ = true;
+  }else{
+    c_pf_mus_isTrackerMuon_ = false;
+  }
+  if(b_pf_mus_iso03_emEt_ && !b_pf_mus_iso03_emEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_emEt_ = true;
+  }else{
+    c_pf_mus_iso03_emEt_ = false;
+  }
+  if(b_pf_mus_iso03_emVetoEt_ && !b_pf_mus_iso03_emVetoEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_emVetoEt_ = true;
+  }else{
+    c_pf_mus_iso03_emVetoEt_ = false;
+  }
+  if(b_pf_mus_iso03_hadEt_ && !b_pf_mus_iso03_hadEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_hadEt_ = true;
+  }else{
+    c_pf_mus_iso03_hadEt_ = false;
+  }
+  if(b_pf_mus_iso03_hadVetoEt_ && !b_pf_mus_iso03_hadVetoEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_hadVetoEt_ = true;
+  }else{
+    c_pf_mus_iso03_hadVetoEt_ = false;
+  }
+  if(b_pf_mus_iso03_hoEt_ && !b_pf_mus_iso03_hoEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_hoEt_ = true;
+  }else{
+    c_pf_mus_iso03_hoEt_ = false;
+  }
+  if(b_pf_mus_iso03_nTracks_ && !b_pf_mus_iso03_nTracks_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_nTracks_ = true;
+  }else{
+    c_pf_mus_iso03_nTracks_ = false;
+  }
+  if(b_pf_mus_iso03_sumPt_ && !b_pf_mus_iso03_sumPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso03_sumPt_ = true;
+  }else{
+    c_pf_mus_iso03_sumPt_ = false;
+  }
+  if(b_pf_mus_iso05_emEt_ && !b_pf_mus_iso05_emEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso05_emEt_ = true;
+  }else{
+    c_pf_mus_iso05_emEt_ = false;
+  }
+  if(b_pf_mus_iso05_hadEt_ && !b_pf_mus_iso05_hadEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso05_hadEt_ = true;
+  }else{
+    c_pf_mus_iso05_hadEt_ = false;
+  }
+  if(b_pf_mus_iso05_hoEt_ && !b_pf_mus_iso05_hoEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso05_hoEt_ = true;
+  }else{
+    c_pf_mus_iso05_hoEt_ = false;
+  }
+  if(b_pf_mus_iso05_nTracks_ && !b_pf_mus_iso05_nTracks_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso05_nTracks_ = true;
+  }else{
+    c_pf_mus_iso05_nTracks_ = false;
+  }
+  if(b_pf_mus_iso05_sumPt_ && !b_pf_mus_iso05_sumPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_iso05_sumPt_ = true;
+  }else{
+    c_pf_mus_iso05_sumPt_ = false;
+  }
+  if(b_pf_mus_neutralHadronIso_ && !b_pf_mus_neutralHadronIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_neutralHadronIso_ = true;
+  }else{
+    c_pf_mus_neutralHadronIso_ = false;
+  }
+  if(b_pf_mus_num_matches_ && !b_pf_mus_num_matches_->TestBit(kDoNotProcess)){
+    c_pf_mus_num_matches_ = true;
+  }else{
+    c_pf_mus_num_matches_ = false;
+  }
+  if(b_pf_mus_numberOfMatchedStations_ && !b_pf_mus_numberOfMatchedStations_->TestBit(kDoNotProcess)){
+    c_pf_mus_numberOfMatchedStations_ = true;
+  }else{
+    c_pf_mus_numberOfMatchedStations_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumChargedHadronPt_ && !b_pf_mus_pfIsolationR03_sumChargedHadronPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumChargedHadronPt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumChargedHadronPt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumChargedParticlePt_ && !b_pf_mus_pfIsolationR03_sumChargedParticlePt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumChargedParticlePt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumChargedParticlePt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumNeutralHadronEt_ && !b_pf_mus_pfIsolationR03_sumNeutralHadronEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumNeutralHadronEt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumNeutralHadronEt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ && !b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumPUPt_ && !b_pf_mus_pfIsolationR03_sumPUPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumPUPt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumPUPt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumPhotonEt_ && !b_pf_mus_pfIsolationR03_sumPhotonEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumPhotonEt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumPhotonEt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ && !b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = true;
+  }else{
+    c_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumChargedHadronPt_ && !b_pf_mus_pfIsolationR04_sumChargedHadronPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumChargedHadronPt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumChargedHadronPt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumChargedParticlePt_ && !b_pf_mus_pfIsolationR04_sumChargedParticlePt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumChargedParticlePt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumChargedParticlePt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumNeutralHadronEt_ && !b_pf_mus_pfIsolationR04_sumNeutralHadronEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumNeutralHadronEt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumNeutralHadronEt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ && !b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumPUPt_ && !b_pf_mus_pfIsolationR04_sumPUPt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumPUPt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumPUPt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumPhotonEt_ && !b_pf_mus_pfIsolationR04_sumPhotonEt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumPhotonEt_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumPhotonEt_ = false;
+  }
+  if(b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ && !b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = true;
+  }else{
+    c_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = false;
+  }
+  if(b_pf_mus_phi_ && !b_pf_mus_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_phi_ = true;
+  }else{
+    c_pf_mus_phi_ = false;
+  }
+  if(b_pf_mus_photonIso_ && !b_pf_mus_photonIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_photonIso_ = true;
+  }else{
+    c_pf_mus_photonIso_ = false;
+  }
+  if(b_pf_mus_picky_ExpectedHitsInner_ && !b_pf_mus_picky_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_ExpectedHitsInner_ = true;
+  }else{
+    c_pf_mus_picky_ExpectedHitsInner_ = false;
+  }
+  if(b_pf_mus_picky_ExpectedHitsOuter_ && !b_pf_mus_picky_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_ExpectedHitsOuter_ = true;
+  }else{
+    c_pf_mus_picky_ExpectedHitsOuter_ = false;
+  }
+  if(b_pf_mus_picky_LayersWithMeasurement_ && !b_pf_mus_picky_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_LayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_picky_LayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_picky_LayersWithoutMeasurement_ && !b_pf_mus_picky_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_LayersWithoutMeasurement_ = true;
+  }else{
+    c_pf_mus_picky_LayersWithoutMeasurement_ = false;
+  }
+  if(b_pf_mus_picky_PixelLayersWithMeasurement_ && !b_pf_mus_picky_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_picky_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ && !b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_pf_mus_picky_chg_ && !b_pf_mus_picky_chg_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_chg_ = true;
+  }else{
+    c_pf_mus_picky_chg_ = false;
+  }
+  if(b_pf_mus_picky_chi2_ && !b_pf_mus_picky_chi2_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_chi2_ = true;
+  }else{
+    c_pf_mus_picky_chi2_ = false;
+  }
+  if(b_pf_mus_picky_d0dum_ && !b_pf_mus_picky_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_d0dum_ = true;
+  }else{
+    c_pf_mus_picky_d0dum_ = false;
+  }
+  if(b_pf_mus_picky_d0dumErr_ && !b_pf_mus_picky_d0dumErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_d0dumErr_ = true;
+  }else{
+    c_pf_mus_picky_d0dumErr_ = false;
+  }
+  if(b_pf_mus_picky_dz_ && !b_pf_mus_picky_dz_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_dz_ = true;
+  }else{
+    c_pf_mus_picky_dz_ = false;
+  }
+  if(b_pf_mus_picky_dzErr_ && !b_pf_mus_picky_dzErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_dzErr_ = true;
+  }else{
+    c_pf_mus_picky_dzErr_ = false;
+  }
+  if(b_pf_mus_picky_eta_ && !b_pf_mus_picky_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_eta_ = true;
+  }else{
+    c_pf_mus_picky_eta_ = false;
+  }
+  if(b_pf_mus_picky_etaErr_ && !b_pf_mus_picky_etaErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_etaErr_ = true;
+  }else{
+    c_pf_mus_picky_etaErr_ = false;
+  }
+  if(b_pf_mus_picky_id_ && !b_pf_mus_picky_id_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_id_ = true;
+  }else{
+    c_pf_mus_picky_id_ = false;
+  }
+  if(b_pf_mus_picky_ndof_ && !b_pf_mus_picky_ndof_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_ndof_ = true;
+  }else{
+    c_pf_mus_picky_ndof_ = false;
+  }
+  if(b_pf_mus_picky_numlosthits_ && !b_pf_mus_picky_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_numlosthits_ = true;
+  }else{
+    c_pf_mus_picky_numlosthits_ = false;
+  }
+  if(b_pf_mus_picky_numvalPixelhits_ && !b_pf_mus_picky_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_numvalPixelhits_ = true;
+  }else{
+    c_pf_mus_picky_numvalPixelhits_ = false;
+  }
+  if(b_pf_mus_picky_numvalhits_ && !b_pf_mus_picky_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_numvalhits_ = true;
+  }else{
+    c_pf_mus_picky_numvalhits_ = false;
+  }
+  if(b_pf_mus_picky_phi_ && !b_pf_mus_picky_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_phi_ = true;
+  }else{
+    c_pf_mus_picky_phi_ = false;
+  }
+  if(b_pf_mus_picky_phiErr_ && !b_pf_mus_picky_phiErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_phiErr_ = true;
+  }else{
+    c_pf_mus_picky_phiErr_ = false;
+  }
+  if(b_pf_mus_picky_pt_ && !b_pf_mus_picky_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_pt_ = true;
+  }else{
+    c_pf_mus_picky_pt_ = false;
+  }
+  if(b_pf_mus_picky_ptErr_ && !b_pf_mus_picky_ptErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_ptErr_ = true;
+  }else{
+    c_pf_mus_picky_ptErr_ = false;
+  }
+  if(b_pf_mus_picky_px_ && !b_pf_mus_picky_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_px_ = true;
+  }else{
+    c_pf_mus_picky_px_ = false;
+  }
+  if(b_pf_mus_picky_py_ && !b_pf_mus_picky_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_py_ = true;
+  }else{
+    c_pf_mus_picky_py_ = false;
+  }
+  if(b_pf_mus_picky_pz_ && !b_pf_mus_picky_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_pz_ = true;
+  }else{
+    c_pf_mus_picky_pz_ = false;
+  }
+  if(b_pf_mus_picky_theta_ && !b_pf_mus_picky_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_theta_ = true;
+  }else{
+    c_pf_mus_picky_theta_ = false;
+  }
+  if(b_pf_mus_picky_vx_ && !b_pf_mus_picky_vx_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_vx_ = true;
+  }else{
+    c_pf_mus_picky_vx_ = false;
+  }
+  if(b_pf_mus_picky_vy_ && !b_pf_mus_picky_vy_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_vy_ = true;
+  }else{
+    c_pf_mus_picky_vy_ = false;
+  }
+  if(b_pf_mus_picky_vz_ && !b_pf_mus_picky_vz_->TestBit(kDoNotProcess)){
+    c_pf_mus_picky_vz_ = true;
+  }else{
+    c_pf_mus_picky_vz_ = false;
+  }
+  if(b_pf_mus_pt_ && !b_pf_mus_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_pt_ = true;
+  }else{
+    c_pf_mus_pt_ = false;
+  }
+  if(b_pf_mus_px_ && !b_pf_mus_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_px_ = true;
+  }else{
+    c_pf_mus_px_ = false;
+  }
+  if(b_pf_mus_py_ && !b_pf_mus_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_py_ = true;
+  }else{
+    c_pf_mus_py_ = false;
+  }
+  if(b_pf_mus_pz_ && !b_pf_mus_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_pz_ = true;
+  }else{
+    c_pf_mus_pz_ = false;
+  }
+  if(b_pf_mus_stamu_chg_ && !b_pf_mus_stamu_chg_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_chg_ = true;
+  }else{
+    c_pf_mus_stamu_chg_ = false;
+  }
+  if(b_pf_mus_stamu_chi2_ && !b_pf_mus_stamu_chi2_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_chi2_ = true;
+  }else{
+    c_pf_mus_stamu_chi2_ = false;
+  }
+  if(b_pf_mus_stamu_d0dum_ && !b_pf_mus_stamu_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_d0dum_ = true;
+  }else{
+    c_pf_mus_stamu_d0dum_ = false;
+  }
+  if(b_pf_mus_stamu_d0dumErr_ && !b_pf_mus_stamu_d0dumErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_d0dumErr_ = true;
+  }else{
+    c_pf_mus_stamu_d0dumErr_ = false;
+  }
+  if(b_pf_mus_stamu_dz_ && !b_pf_mus_stamu_dz_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_dz_ = true;
+  }else{
+    c_pf_mus_stamu_dz_ = false;
+  }
+  if(b_pf_mus_stamu_dzErr_ && !b_pf_mus_stamu_dzErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_dzErr_ = true;
+  }else{
+    c_pf_mus_stamu_dzErr_ = false;
+  }
+  if(b_pf_mus_stamu_eta_ && !b_pf_mus_stamu_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_eta_ = true;
+  }else{
+    c_pf_mus_stamu_eta_ = false;
+  }
+  if(b_pf_mus_stamu_etaErr_ && !b_pf_mus_stamu_etaErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_etaErr_ = true;
+  }else{
+    c_pf_mus_stamu_etaErr_ = false;
+  }
+  if(b_pf_mus_stamu_ndof_ && !b_pf_mus_stamu_ndof_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_ndof_ = true;
+  }else{
+    c_pf_mus_stamu_ndof_ = false;
+  }
+  if(b_pf_mus_stamu_numlosthits_ && !b_pf_mus_stamu_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_numlosthits_ = true;
+  }else{
+    c_pf_mus_stamu_numlosthits_ = false;
+  }
+  if(b_pf_mus_stamu_numvalhits_ && !b_pf_mus_stamu_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_numvalhits_ = true;
+  }else{
+    c_pf_mus_stamu_numvalhits_ = false;
+  }
+  if(b_pf_mus_stamu_phi_ && !b_pf_mus_stamu_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_phi_ = true;
+  }else{
+    c_pf_mus_stamu_phi_ = false;
+  }
+  if(b_pf_mus_stamu_phiErr_ && !b_pf_mus_stamu_phiErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_phiErr_ = true;
+  }else{
+    c_pf_mus_stamu_phiErr_ = false;
+  }
+  if(b_pf_mus_stamu_pt_ && !b_pf_mus_stamu_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_pt_ = true;
+  }else{
+    c_pf_mus_stamu_pt_ = false;
+  }
+  if(b_pf_mus_stamu_ptErr_ && !b_pf_mus_stamu_ptErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_ptErr_ = true;
+  }else{
+    c_pf_mus_stamu_ptErr_ = false;
+  }
+  if(b_pf_mus_stamu_px_ && !b_pf_mus_stamu_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_px_ = true;
+  }else{
+    c_pf_mus_stamu_px_ = false;
+  }
+  if(b_pf_mus_stamu_py_ && !b_pf_mus_stamu_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_py_ = true;
+  }else{
+    c_pf_mus_stamu_py_ = false;
+  }
+  if(b_pf_mus_stamu_pz_ && !b_pf_mus_stamu_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_pz_ = true;
+  }else{
+    c_pf_mus_stamu_pz_ = false;
+  }
+  if(b_pf_mus_stamu_theta_ && !b_pf_mus_stamu_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_theta_ = true;
+  }else{
+    c_pf_mus_stamu_theta_ = false;
+  }
+  if(b_pf_mus_stamu_vx_ && !b_pf_mus_stamu_vx_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_vx_ = true;
+  }else{
+    c_pf_mus_stamu_vx_ = false;
+  }
+  if(b_pf_mus_stamu_vy_ && !b_pf_mus_stamu_vy_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_vy_ = true;
+  }else{
+    c_pf_mus_stamu_vy_ = false;
+  }
+  if(b_pf_mus_stamu_vz_ && !b_pf_mus_stamu_vz_->TestBit(kDoNotProcess)){
+    c_pf_mus_stamu_vz_ = true;
+  }else{
+    c_pf_mus_stamu_vz_ = false;
+  }
+  if(b_pf_mus_status_ && !b_pf_mus_status_->TestBit(kDoNotProcess)){
+    c_pf_mus_status_ = true;
+  }else{
+    c_pf_mus_status_ = false;
+  }
+  if(b_pf_mus_tIso_ && !b_pf_mus_tIso_->TestBit(kDoNotProcess)){
+    c_pf_mus_tIso_ = true;
+  }else{
+    c_pf_mus_tIso_ = false;
+  }
+  if(b_pf_mus_theta_ && !b_pf_mus_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_theta_ = true;
+  }else{
+    c_pf_mus_theta_ = false;
+  }
+  if(b_pf_mus_tkHits_ && !b_pf_mus_tkHits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tkHits_ = true;
+  }else{
+    c_pf_mus_tkHits_ = false;
+  }
+  if(b_pf_mus_tk_ExpectedHitsInner_ && !b_pf_mus_tk_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_ExpectedHitsInner_ = true;
+  }else{
+    c_pf_mus_tk_ExpectedHitsInner_ = false;
+  }
+  if(b_pf_mus_tk_ExpectedHitsOuter_ && !b_pf_mus_tk_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_ExpectedHitsOuter_ = true;
+  }else{
+    c_pf_mus_tk_ExpectedHitsOuter_ = false;
+  }
+  if(b_pf_mus_tk_LayersWithMeasurement_ && !b_pf_mus_tk_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_LayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_tk_LayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_tk_LayersWithoutMeasurement_ && !b_pf_mus_tk_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_LayersWithoutMeasurement_ = true;
+  }else{
+    c_pf_mus_tk_LayersWithoutMeasurement_ = false;
+  }
+  if(b_pf_mus_tk_PixelLayersWithMeasurement_ && !b_pf_mus_tk_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_tk_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ && !b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_pf_mus_tk_chg_ && !b_pf_mus_tk_chg_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_chg_ = true;
+  }else{
+    c_pf_mus_tk_chg_ = false;
+  }
+  if(b_pf_mus_tk_chi2_ && !b_pf_mus_tk_chi2_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_chi2_ = true;
+  }else{
+    c_pf_mus_tk_chi2_ = false;
+  }
+  if(b_pf_mus_tk_d0dum_ && !b_pf_mus_tk_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_d0dum_ = true;
+  }else{
+    c_pf_mus_tk_d0dum_ = false;
+  }
+  if(b_pf_mus_tk_d0dumErr_ && !b_pf_mus_tk_d0dumErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_d0dumErr_ = true;
+  }else{
+    c_pf_mus_tk_d0dumErr_ = false;
+  }
+  if(b_pf_mus_tk_dz_ && !b_pf_mus_tk_dz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_dz_ = true;
+  }else{
+    c_pf_mus_tk_dz_ = false;
+  }
+  if(b_pf_mus_tk_dzErr_ && !b_pf_mus_tk_dzErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_dzErr_ = true;
+  }else{
+    c_pf_mus_tk_dzErr_ = false;
+  }
+  if(b_pf_mus_tk_eta_ && !b_pf_mus_tk_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_eta_ = true;
+  }else{
+    c_pf_mus_tk_eta_ = false;
+  }
+  if(b_pf_mus_tk_etaErr_ && !b_pf_mus_tk_etaErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_etaErr_ = true;
+  }else{
+    c_pf_mus_tk_etaErr_ = false;
+  }
+  if(b_pf_mus_tk_id_ && !b_pf_mus_tk_id_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_id_ = true;
+  }else{
+    c_pf_mus_tk_id_ = false;
+  }
+  if(b_pf_mus_tk_ndof_ && !b_pf_mus_tk_ndof_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_ndof_ = true;
+  }else{
+    c_pf_mus_tk_ndof_ = false;
+  }
+  if(b_pf_mus_tk_numlosthits_ && !b_pf_mus_tk_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_numlosthits_ = true;
+  }else{
+    c_pf_mus_tk_numlosthits_ = false;
+  }
+  if(b_pf_mus_tk_numpixelWthMeasr_ && !b_pf_mus_tk_numpixelWthMeasr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_numpixelWthMeasr_ = true;
+  }else{
+    c_pf_mus_tk_numpixelWthMeasr_ = false;
+  }
+  if(b_pf_mus_tk_numvalPixelhits_ && !b_pf_mus_tk_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_numvalPixelhits_ = true;
+  }else{
+    c_pf_mus_tk_numvalPixelhits_ = false;
+  }
+  if(b_pf_mus_tk_numvalhits_ && !b_pf_mus_tk_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_numvalhits_ = true;
+  }else{
+    c_pf_mus_tk_numvalhits_ = false;
+  }
+  if(b_pf_mus_tk_phi_ && !b_pf_mus_tk_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_phi_ = true;
+  }else{
+    c_pf_mus_tk_phi_ = false;
+  }
+  if(b_pf_mus_tk_phiErr_ && !b_pf_mus_tk_phiErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_phiErr_ = true;
+  }else{
+    c_pf_mus_tk_phiErr_ = false;
+  }
+  if(b_pf_mus_tk_pt_ && !b_pf_mus_tk_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_pt_ = true;
+  }else{
+    c_pf_mus_tk_pt_ = false;
+  }
+  if(b_pf_mus_tk_ptErr_ && !b_pf_mus_tk_ptErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_ptErr_ = true;
+  }else{
+    c_pf_mus_tk_ptErr_ = false;
+  }
+  if(b_pf_mus_tk_px_ && !b_pf_mus_tk_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_px_ = true;
+  }else{
+    c_pf_mus_tk_px_ = false;
+  }
+  if(b_pf_mus_tk_py_ && !b_pf_mus_tk_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_py_ = true;
+  }else{
+    c_pf_mus_tk_py_ = false;
+  }
+  if(b_pf_mus_tk_pz_ && !b_pf_mus_tk_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_pz_ = true;
+  }else{
+    c_pf_mus_tk_pz_ = false;
+  }
+  if(b_pf_mus_tk_theta_ && !b_pf_mus_tk_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_theta_ = true;
+  }else{
+    c_pf_mus_tk_theta_ = false;
+  }
+  if(b_pf_mus_tk_vx_ && !b_pf_mus_tk_vx_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_vx_ = true;
+  }else{
+    c_pf_mus_tk_vx_ = false;
+  }
+  if(b_pf_mus_tk_vy_ && !b_pf_mus_tk_vy_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_vy_ = true;
+  }else{
+    c_pf_mus_tk_vy_ = false;
+  }
+  if(b_pf_mus_tk_vz_ && !b_pf_mus_tk_vz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tk_vz_ = true;
+  }else{
+    c_pf_mus_tk_vz_ = false;
+  }
+  if(b_pf_mus_tpfms_ExpectedHitsInner_ && !b_pf_mus_tpfms_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_ExpectedHitsInner_ = true;
+  }else{
+    c_pf_mus_tpfms_ExpectedHitsInner_ = false;
+  }
+  if(b_pf_mus_tpfms_ExpectedHitsOuter_ && !b_pf_mus_tpfms_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_ExpectedHitsOuter_ = true;
+  }else{
+    c_pf_mus_tpfms_ExpectedHitsOuter_ = false;
+  }
+  if(b_pf_mus_tpfms_LayersWithMeasurement_ && !b_pf_mus_tpfms_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_LayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_tpfms_LayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_tpfms_LayersWithoutMeasurement_ && !b_pf_mus_tpfms_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_LayersWithoutMeasurement_ = true;
+  }else{
+    c_pf_mus_tpfms_LayersWithoutMeasurement_ = false;
+  }
+  if(b_pf_mus_tpfms_PixelLayersWithMeasurement_ && !b_pf_mus_tpfms_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_pf_mus_tpfms_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ && !b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_pf_mus_tpfms_chg_ && !b_pf_mus_tpfms_chg_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_chg_ = true;
+  }else{
+    c_pf_mus_tpfms_chg_ = false;
+  }
+  if(b_pf_mus_tpfms_chi2_ && !b_pf_mus_tpfms_chi2_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_chi2_ = true;
+  }else{
+    c_pf_mus_tpfms_chi2_ = false;
+  }
+  if(b_pf_mus_tpfms_d0dum_ && !b_pf_mus_tpfms_d0dum_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_d0dum_ = true;
+  }else{
+    c_pf_mus_tpfms_d0dum_ = false;
+  }
+  if(b_pf_mus_tpfms_d0dumErr_ && !b_pf_mus_tpfms_d0dumErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_d0dumErr_ = true;
+  }else{
+    c_pf_mus_tpfms_d0dumErr_ = false;
+  }
+  if(b_pf_mus_tpfms_dz_ && !b_pf_mus_tpfms_dz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_dz_ = true;
+  }else{
+    c_pf_mus_tpfms_dz_ = false;
+  }
+  if(b_pf_mus_tpfms_dzErr_ && !b_pf_mus_tpfms_dzErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_dzErr_ = true;
+  }else{
+    c_pf_mus_tpfms_dzErr_ = false;
+  }
+  if(b_pf_mus_tpfms_eta_ && !b_pf_mus_tpfms_eta_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_eta_ = true;
+  }else{
+    c_pf_mus_tpfms_eta_ = false;
+  }
+  if(b_pf_mus_tpfms_etaErr_ && !b_pf_mus_tpfms_etaErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_etaErr_ = true;
+  }else{
+    c_pf_mus_tpfms_etaErr_ = false;
+  }
+  if(b_pf_mus_tpfms_id_ && !b_pf_mus_tpfms_id_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_id_ = true;
+  }else{
+    c_pf_mus_tpfms_id_ = false;
+  }
+  if(b_pf_mus_tpfms_ndof_ && !b_pf_mus_tpfms_ndof_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_ndof_ = true;
+  }else{
+    c_pf_mus_tpfms_ndof_ = false;
+  }
+  if(b_pf_mus_tpfms_numlosthits_ && !b_pf_mus_tpfms_numlosthits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_numlosthits_ = true;
+  }else{
+    c_pf_mus_tpfms_numlosthits_ = false;
+  }
+  if(b_pf_mus_tpfms_numvalPixelhits_ && !b_pf_mus_tpfms_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_numvalPixelhits_ = true;
+  }else{
+    c_pf_mus_tpfms_numvalPixelhits_ = false;
+  }
+  if(b_pf_mus_tpfms_numvalhits_ && !b_pf_mus_tpfms_numvalhits_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_numvalhits_ = true;
+  }else{
+    c_pf_mus_tpfms_numvalhits_ = false;
+  }
+  if(b_pf_mus_tpfms_phi_ && !b_pf_mus_tpfms_phi_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_phi_ = true;
+  }else{
+    c_pf_mus_tpfms_phi_ = false;
+  }
+  if(b_pf_mus_tpfms_phiErr_ && !b_pf_mus_tpfms_phiErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_phiErr_ = true;
+  }else{
+    c_pf_mus_tpfms_phiErr_ = false;
+  }
+  if(b_pf_mus_tpfms_pt_ && !b_pf_mus_tpfms_pt_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_pt_ = true;
+  }else{
+    c_pf_mus_tpfms_pt_ = false;
+  }
+  if(b_pf_mus_tpfms_ptErr_ && !b_pf_mus_tpfms_ptErr_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_ptErr_ = true;
+  }else{
+    c_pf_mus_tpfms_ptErr_ = false;
+  }
+  if(b_pf_mus_tpfms_px_ && !b_pf_mus_tpfms_px_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_px_ = true;
+  }else{
+    c_pf_mus_tpfms_px_ = false;
+  }
+  if(b_pf_mus_tpfms_py_ && !b_pf_mus_tpfms_py_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_py_ = true;
+  }else{
+    c_pf_mus_tpfms_py_ = false;
+  }
+  if(b_pf_mus_tpfms_pz_ && !b_pf_mus_tpfms_pz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_pz_ = true;
+  }else{
+    c_pf_mus_tpfms_pz_ = false;
+  }
+  if(b_pf_mus_tpfms_theta_ && !b_pf_mus_tpfms_theta_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_theta_ = true;
+  }else{
+    c_pf_mus_tpfms_theta_ = false;
+  }
+  if(b_pf_mus_tpfms_vx_ && !b_pf_mus_tpfms_vx_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_vx_ = true;
+  }else{
+    c_pf_mus_tpfms_vx_ = false;
+  }
+  if(b_pf_mus_tpfms_vy_ && !b_pf_mus_tpfms_vy_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_vy_ = true;
+  }else{
+    c_pf_mus_tpfms_vy_ = false;
+  }
+  if(b_pf_mus_tpfms_vz_ && !b_pf_mus_tpfms_vz_->TestBit(kDoNotProcess)){
+    c_pf_mus_tpfms_vz_ = true;
+  }else{
+    c_pf_mus_tpfms_vz_ = false;
+  }
+  if(b_pf_photons_chIso_ && !b_pf_photons_chIso_->TestBit(kDoNotProcess)){
+    c_pf_photons_chIso_ = true;
+  }else{
+    c_pf_photons_chIso_ = false;
+  }
+  if(b_pf_photons_e1x5_ && !b_pf_photons_e1x5_->TestBit(kDoNotProcess)){
+    c_pf_photons_e1x5_ = true;
+  }else{
+    c_pf_photons_e1x5_ = false;
+  }
+  if(b_pf_photons_e2x5_ && !b_pf_photons_e2x5_->TestBit(kDoNotProcess)){
+    c_pf_photons_e2x5_ = true;
+  }else{
+    c_pf_photons_e2x5_ = false;
+  }
+  if(b_pf_photons_e3x3_ && !b_pf_photons_e3x3_->TestBit(kDoNotProcess)){
+    c_pf_photons_e3x3_ = true;
+  }else{
+    c_pf_photons_e3x3_ = false;
+  }
+  if(b_pf_photons_e5x5_ && !b_pf_photons_e5x5_->TestBit(kDoNotProcess)){
+    c_pf_photons_e5x5_ = true;
+  }else{
+    c_pf_photons_e5x5_ = false;
+  }
+  if(b_pf_photons_energy_ && !b_pf_photons_energy_->TestBit(kDoNotProcess)){
+    c_pf_photons_energy_ = true;
+  }else{
+    c_pf_photons_energy_ = false;
+  }
+  if(b_pf_photons_et_ && !b_pf_photons_et_->TestBit(kDoNotProcess)){
+    c_pf_photons_et_ = true;
+  }else{
+    c_pf_photons_et_ = false;
+  }
+  if(b_pf_photons_eta_ && !b_pf_photons_eta_->TestBit(kDoNotProcess)){
+    c_pf_photons_eta_ = true;
+  }else{
+    c_pf_photons_eta_ = false;
+  }
+  if(b_pf_photons_hadOverEM_ && !b_pf_photons_hadOverEM_->TestBit(kDoNotProcess)){
+    c_pf_photons_hadOverEM_ = true;
+  }else{
+    c_pf_photons_hadOverEM_ = false;
+  }
+  if(b_pf_photons_hadTowOverEM_ && !b_pf_photons_hadTowOverEM_->TestBit(kDoNotProcess)){
+    c_pf_photons_hadTowOverEM_ = true;
+  }else{
+    c_pf_photons_hadTowOverEM_ = false;
+  }
+  if(b_pf_photons_hasPixelSeed_ && !b_pf_photons_hasPixelSeed_->TestBit(kDoNotProcess)){
+    c_pf_photons_hasPixelSeed_ = true;
+  }else{
+    c_pf_photons_hasPixelSeed_ = false;
+  }
+  if(b_pf_photons_isAlsoElectron_ && !b_pf_photons_isAlsoElectron_->TestBit(kDoNotProcess)){
+    c_pf_photons_isAlsoElectron_ = true;
+  }else{
+    c_pf_photons_isAlsoElectron_ = false;
+  }
+  if(b_pf_photons_isConverted_ && !b_pf_photons_isConverted_->TestBit(kDoNotProcess)){
+    c_pf_photons_isConverted_ = true;
+  }else{
+    c_pf_photons_isConverted_ = false;
+  }
+  if(b_pf_photons_isEBEEGap_ && !b_pf_photons_isEBEEGap_->TestBit(kDoNotProcess)){
+    c_pf_photons_isEBEEGap_ = true;
+  }else{
+    c_pf_photons_isEBEEGap_ = false;
+  }
+  if(b_pf_photons_isEBGap_ && !b_pf_photons_isEBGap_->TestBit(kDoNotProcess)){
+    c_pf_photons_isEBGap_ = true;
+  }else{
+    c_pf_photons_isEBGap_ = false;
+  }
+  if(b_pf_photons_isEBPho_ && !b_pf_photons_isEBPho_->TestBit(kDoNotProcess)){
+    c_pf_photons_isEBPho_ = true;
+  }else{
+    c_pf_photons_isEBPho_ = false;
+  }
+  if(b_pf_photons_isEEGap_ && !b_pf_photons_isEEGap_->TestBit(kDoNotProcess)){
+    c_pf_photons_isEEGap_ = true;
+  }else{
+    c_pf_photons_isEEGap_ = false;
+  }
+  if(b_pf_photons_isEEPho_ && !b_pf_photons_isEEPho_->TestBit(kDoNotProcess)){
+    c_pf_photons_isEEPho_ = true;
+  }else{
+    c_pf_photons_isEEPho_ = false;
+  }
+  if(b_pf_photons_maxEnergyXtal_ && !b_pf_photons_maxEnergyXtal_->TestBit(kDoNotProcess)){
+    c_pf_photons_maxEnergyXtal_ = true;
+  }else{
+    c_pf_photons_maxEnergyXtal_ = false;
+  }
+  if(b_pf_photons_nhIso_ && !b_pf_photons_nhIso_->TestBit(kDoNotProcess)){
+    c_pf_photons_nhIso_ = true;
+  }else{
+    c_pf_photons_nhIso_ = false;
+  }
+  if(b_pf_photons_phIso_ && !b_pf_photons_phIso_->TestBit(kDoNotProcess)){
+    c_pf_photons_phIso_ = true;
+  }else{
+    c_pf_photons_phIso_ = false;
+  }
+  if(b_pf_photons_phi_ && !b_pf_photons_phi_->TestBit(kDoNotProcess)){
+    c_pf_photons_phi_ = true;
+  }else{
+    c_pf_photons_phi_ = false;
+  }
+  if(b_pf_photons_pt_ && !b_pf_photons_pt_->TestBit(kDoNotProcess)){
+    c_pf_photons_pt_ = true;
+  }else{
+    c_pf_photons_pt_ = false;
+  }
+  if(b_pf_photons_px_ && !b_pf_photons_px_->TestBit(kDoNotProcess)){
+    c_pf_photons_px_ = true;
+  }else{
+    c_pf_photons_px_ = false;
+  }
+  if(b_pf_photons_py_ && !b_pf_photons_py_->TestBit(kDoNotProcess)){
+    c_pf_photons_py_ = true;
+  }else{
+    c_pf_photons_py_ = false;
+  }
+  if(b_pf_photons_pz_ && !b_pf_photons_pz_->TestBit(kDoNotProcess)){
+    c_pf_photons_pz_ = true;
+  }else{
+    c_pf_photons_pz_ = false;
+  }
+  if(b_pf_photons_r9_ && !b_pf_photons_r9_->TestBit(kDoNotProcess)){
+    c_pf_photons_r9_ = true;
+  }else{
+    c_pf_photons_r9_ = false;
+  }
+  if(b_pf_photons_scEnergy_ && !b_pf_photons_scEnergy_->TestBit(kDoNotProcess)){
+    c_pf_photons_scEnergy_ = true;
+  }else{
+    c_pf_photons_scEnergy_ = false;
+  }
+  if(b_pf_photons_scEta_ && !b_pf_photons_scEta_->TestBit(kDoNotProcess)){
+    c_pf_photons_scEta_ = true;
+  }else{
+    c_pf_photons_scEta_ = false;
+  }
+  if(b_pf_photons_scEtaWidth_ && !b_pf_photons_scEtaWidth_->TestBit(kDoNotProcess)){
+    c_pf_photons_scEtaWidth_ = true;
+  }else{
+    c_pf_photons_scEtaWidth_ = false;
+  }
+  if(b_pf_photons_scPhi_ && !b_pf_photons_scPhi_->TestBit(kDoNotProcess)){
+    c_pf_photons_scPhi_ = true;
+  }else{
+    c_pf_photons_scPhi_ = false;
+  }
+  if(b_pf_photons_scPhiWidth_ && !b_pf_photons_scPhiWidth_->TestBit(kDoNotProcess)){
+    c_pf_photons_scPhiWidth_ = true;
+  }else{
+    c_pf_photons_scPhiWidth_ = false;
+  }
+  if(b_pf_photons_scRawEnergy_ && !b_pf_photons_scRawEnergy_->TestBit(kDoNotProcess)){
+    c_pf_photons_scRawEnergy_ = true;
+  }else{
+    c_pf_photons_scRawEnergy_ = false;
+  }
+  if(b_pf_photons_sigmaEtaEta_ && !b_pf_photons_sigmaEtaEta_->TestBit(kDoNotProcess)){
+    c_pf_photons_sigmaEtaEta_ = true;
+  }else{
+    c_pf_photons_sigmaEtaEta_ = false;
+  }
+  if(b_pf_photons_sigmaIetaIeta_ && !b_pf_photons_sigmaIetaIeta_->TestBit(kDoNotProcess)){
+    c_pf_photons_sigmaIetaIeta_ = true;
+  }else{
+    c_pf_photons_sigmaIetaIeta_ = false;
+  }
+  if(b_pf_photons_status_ && !b_pf_photons_status_->TestBit(kDoNotProcess)){
+    c_pf_photons_status_ = true;
+  }else{
+    c_pf_photons_status_ = false;
+  }
+  if(b_pf_photons_theta_ && !b_pf_photons_theta_->TestBit(kDoNotProcess)){
+    c_pf_photons_theta_ = true;
+  }else{
+    c_pf_photons_theta_ = false;
+  }
+  if(b_pfcand_particleId_ && !b_pfcand_particleId_->TestBit(kDoNotProcess)){
+    c_pfcand_particleId_ = true;
+  }else{
+    c_pfcand_particleId_ = false;
+  }
+  if(b_pfmets_et_ && !b_pfmets_et_->TestBit(kDoNotProcess)){
+    c_pfmets_et_ = true;
+  }else{
+    c_pfmets_et_ = false;
+  }
+  if(b_pfmets_ex_ && !b_pfmets_ex_->TestBit(kDoNotProcess)){
+    c_pfmets_ex_ = true;
+  }else{
+    c_pfmets_ex_ = false;
+  }
+  if(b_pfmets_ey_ && !b_pfmets_ey_->TestBit(kDoNotProcess)){
+    c_pfmets_ey_ = true;
+  }else{
+    c_pfmets_ey_ = false;
+  }
+  if(b_pfmets_fullSignif_ && !b_pfmets_fullSignif_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignif_ = true;
+  }else{
+    c_pfmets_fullSignif_ = false;
+  }
+  if(b_pfmets_fullSignifCov00_ && !b_pfmets_fullSignifCov00_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov00_ = true;
+  }else{
+    c_pfmets_fullSignifCov00_ = false;
+  }
+  if(b_pfmets_fullSignifCov00_2012_ && !b_pfmets_fullSignifCov00_2012_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov00_2012_ = true;
+  }else{
+    c_pfmets_fullSignifCov00_2012_ = false;
+  }
+  if(b_pfmets_fullSignifCov00_2012_dataRes_ && !b_pfmets_fullSignifCov00_2012_dataRes_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov00_2012_dataRes_ = true;
+  }else{
+    c_pfmets_fullSignifCov00_2012_dataRes_ = false;
+  }
+  if(b_pfmets_fullSignifCov10_ && !b_pfmets_fullSignifCov10_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov10_ = true;
+  }else{
+    c_pfmets_fullSignifCov10_ = false;
+  }
+  if(b_pfmets_fullSignifCov10_2012_ && !b_pfmets_fullSignifCov10_2012_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov10_2012_ = true;
+  }else{
+    c_pfmets_fullSignifCov10_2012_ = false;
+  }
+  if(b_pfmets_fullSignifCov10_2012_dataRes_ && !b_pfmets_fullSignifCov10_2012_dataRes_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov10_2012_dataRes_ = true;
+  }else{
+    c_pfmets_fullSignifCov10_2012_dataRes_ = false;
+  }
+  if(b_pfmets_fullSignifCov11_ && !b_pfmets_fullSignifCov11_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov11_ = true;
+  }else{
+    c_pfmets_fullSignifCov11_ = false;
+  }
+  if(b_pfmets_fullSignifCov11_2012_ && !b_pfmets_fullSignifCov11_2012_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov11_2012_ = true;
+  }else{
+    c_pfmets_fullSignifCov11_2012_ = false;
+  }
+  if(b_pfmets_fullSignifCov11_2012_dataRes_ && !b_pfmets_fullSignifCov11_2012_dataRes_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignifCov11_2012_dataRes_ = true;
+  }else{
+    c_pfmets_fullSignifCov11_2012_dataRes_ = false;
+  }
+  if(b_pfmets_fullSignif_2012_ && !b_pfmets_fullSignif_2012_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignif_2012_ = true;
+  }else{
+    c_pfmets_fullSignif_2012_ = false;
+  }
+  if(b_pfmets_fullSignif_2012_dataRes_ && !b_pfmets_fullSignif_2012_dataRes_->TestBit(kDoNotProcess)){
+    c_pfmets_fullSignif_2012_dataRes_ = true;
+  }else{
+    c_pfmets_fullSignif_2012_dataRes_ = false;
+  }
+  if(b_pfmets_gen_et_ && !b_pfmets_gen_et_->TestBit(kDoNotProcess)){
+    c_pfmets_gen_et_ = true;
+  }else{
+    c_pfmets_gen_et_ = false;
+  }
+  if(b_pfmets_gen_phi_ && !b_pfmets_gen_phi_->TestBit(kDoNotProcess)){
+    c_pfmets_gen_phi_ = true;
+  }else{
+    c_pfmets_gen_phi_ = false;
+  }
+  if(b_pfmets_phi_ && !b_pfmets_phi_->TestBit(kDoNotProcess)){
+    c_pfmets_phi_ = true;
+  }else{
+    c_pfmets_phi_ = false;
+  }
+  if(b_pfmets_sign_ && !b_pfmets_sign_->TestBit(kDoNotProcess)){
+    c_pfmets_sign_ = true;
+  }else{
+    c_pfmets_sign_ = false;
+  }
+  if(b_pfmets_sumEt_ && !b_pfmets_sumEt_->TestBit(kDoNotProcess)){
+    c_pfmets_sumEt_ = true;
+  }else{
+    c_pfmets_sumEt_ = false;
+  }
+  if(b_pfmets_unCPhi_ && !b_pfmets_unCPhi_->TestBit(kDoNotProcess)){
+    c_pfmets_unCPhi_ = true;
+  }else{
+    c_pfmets_unCPhi_ = false;
+  }
+  if(b_pfmets_unCPt_ && !b_pfmets_unCPt_->TestBit(kDoNotProcess)){
+    c_pfmets_unCPt_ = true;
+  }else{
+    c_pfmets_unCPt_ = false;
+  }
+  if(b_photon_chIsoValues_ && !b_photon_chIsoValues_->TestBit(kDoNotProcess)){
+    c_photon_chIsoValues_ = true;
+  }else{
+    c_photon_chIsoValues_ = false;
+  }
+  if(b_photon_nhIsoValues_ && !b_photon_nhIsoValues_->TestBit(kDoNotProcess)){
+    c_photon_nhIsoValues_ = true;
+  }else{
+    c_photon_nhIsoValues_ = false;
+  }
+  if(b_photon_passElectronVeto_ && !b_photon_passElectronVeto_->TestBit(kDoNotProcess)){
+    c_photon_passElectronVeto_ = true;
+  }else{
+    c_photon_passElectronVeto_ = false;
+  }
+  if(b_photon_phIsoValues_ && !b_photon_phIsoValues_->TestBit(kDoNotProcess)){
+    c_photon_phIsoValues_ = true;
+  }else{
+    c_photon_phIsoValues_ = false;
+  }
+  if(b_puJet_rejectionBeta_ && !b_puJet_rejectionBeta_->TestBit(kDoNotProcess)){
+    c_puJet_rejectionBeta_ = true;
+  }else{
+    c_puJet_rejectionBeta_ = false;
+  }
+  if(b_puJet_rejectionMVA_ && !b_puJet_rejectionMVA_->TestBit(kDoNotProcess)){
+    c_puJet_rejectionMVA_ = true;
+  }else{
+    c_puJet_rejectionMVA_ = false;
+  }
+  if(b_rho_kt6PFJetsForIsolation2011_ && !b_rho_kt6PFJetsForIsolation2011_->TestBit(kDoNotProcess)){
+    c_rho_kt6PFJetsForIsolation2011_ = true;
+  }else{
+    c_rho_kt6PFJetsForIsolation2011_ = false;
+  }
+  if(b_rho_kt6PFJetsForIsolation2012_ && !b_rho_kt6PFJetsForIsolation2012_->TestBit(kDoNotProcess)){
+    c_rho_kt6PFJetsForIsolation2012_ = true;
+  }else{
+    c_rho_kt6PFJetsForIsolation2012_ = false;
+  }
+  if(b_scrapingVeto_decision_ && !b_scrapingVeto_decision_->TestBit(kDoNotProcess)){
+    c_scrapingVeto_decision_ = true;
+  }else{
+    c_scrapingVeto_decision_ = false;
+  }
+  if(b_softjetUp_dMEx_ && !b_softjetUp_dMEx_->TestBit(kDoNotProcess)){
+    c_softjetUp_dMEx_ = true;
+  }else{
+    c_softjetUp_dMEx_ = false;
+  }
+  if(b_softjetUp_dMEy_ && !b_softjetUp_dMEy_->TestBit(kDoNotProcess)){
+    c_softjetUp_dMEy_ = true;
+  }else{
+    c_softjetUp_dMEy_ = false;
+  }
+  if(b_tcmets_et_ && !b_tcmets_et_->TestBit(kDoNotProcess)){
+    c_tcmets_et_ = true;
+  }else{
+    c_tcmets_et_ = false;
+  }
+  if(b_tcmets_ex_ && !b_tcmets_ex_->TestBit(kDoNotProcess)){
+    c_tcmets_ex_ = true;
+  }else{
+    c_tcmets_ex_ = false;
+  }
+  if(b_tcmets_ey_ && !b_tcmets_ey_->TestBit(kDoNotProcess)){
+    c_tcmets_ey_ = true;
+  }else{
+    c_tcmets_ey_ = false;
+  }
+  if(b_tcmets_phi_ && !b_tcmets_phi_->TestBit(kDoNotProcess)){
+    c_tcmets_phi_ = true;
+  }else{
+    c_tcmets_phi_ = false;
+  }
+  if(b_tcmets_sumEt_ && !b_tcmets_sumEt_->TestBit(kDoNotProcess)){
+    c_tcmets_sumEt_ = true;
+  }else{
+    c_tcmets_sumEt_ = false;
+  }
+  if(b_trackercoherentnoisefilter1_decision_ && !b_trackercoherentnoisefilter1_decision_->TestBit(kDoNotProcess)){
+    c_trackercoherentnoisefilter1_decision_ = true;
+  }else{
+    c_trackercoherentnoisefilter1_decision_ = false;
+  }
+  if(b_trackercoherentnoisefilter2_decision_ && !b_trackercoherentnoisefilter2_decision_->TestBit(kDoNotProcess)){
+    c_trackercoherentnoisefilter2_decision_ = true;
+  }else{
+    c_trackercoherentnoisefilter2_decision_ = false;
+  }
+  if(b_trackertoomanyclustersfilter_decision_ && !b_trackertoomanyclustersfilter_decision_->TestBit(kDoNotProcess)){
+    c_trackertoomanyclustersfilter_decision_ = true;
+  }else{
+    c_trackertoomanyclustersfilter_decision_ = false;
+  }
+  if(b_trackertoomanyseedsfilter_decision_ && !b_trackertoomanyseedsfilter_decision_->TestBit(kDoNotProcess)){
+    c_trackertoomanyseedsfilter_decision_ = true;
+  }else{
+    c_trackertoomanyseedsfilter_decision_ = false;
+  }
+  if(b_trackertoomanytripletsfilter_decision_ && !b_trackertoomanytripletsfilter_decision_->TestBit(kDoNotProcess)){
+    c_trackertoomanytripletsfilter_decision_ = true;
+  }else{
+    c_trackertoomanytripletsfilter_decision_ = false;
+  }
+  if(b_tracks_chg_ && !b_tracks_chg_->TestBit(kDoNotProcess)){
+    c_tracks_chg_ = true;
+  }else{
+    c_tracks_chg_ = false;
+  }
+  if(b_tracks_chi2_ && !b_tracks_chi2_->TestBit(kDoNotProcess)){
+    c_tracks_chi2_ = true;
+  }else{
+    c_tracks_chi2_ = false;
+  }
+  if(b_tracks_d0dum_ && !b_tracks_d0dum_->TestBit(kDoNotProcess)){
+    c_tracks_d0dum_ = true;
+  }else{
+    c_tracks_d0dum_ = false;
+  }
+  if(b_tracks_d0dumErr_ && !b_tracks_d0dumErr_->TestBit(kDoNotProcess)){
+    c_tracks_d0dumErr_ = true;
+  }else{
+    c_tracks_d0dumErr_ = false;
+  }
+  if(b_tracks_dz_ && !b_tracks_dz_->TestBit(kDoNotProcess)){
+    c_tracks_dz_ = true;
+  }else{
+    c_tracks_dz_ = false;
+  }
+  if(b_tracks_dzErr_ && !b_tracks_dzErr_->TestBit(kDoNotProcess)){
+    c_tracks_dzErr_ = true;
+  }else{
+    c_tracks_dzErr_ = false;
+  }
+  if(b_tracks_eta_ && !b_tracks_eta_->TestBit(kDoNotProcess)){
+    c_tracks_eta_ = true;
+  }else{
+    c_tracks_eta_ = false;
+  }
+  if(b_tracks_etaErr_ && !b_tracks_etaErr_->TestBit(kDoNotProcess)){
+    c_tracks_etaErr_ = true;
+  }else{
+    c_tracks_etaErr_ = false;
+  }
+  if(b_tracks_highPurity_ && !b_tracks_highPurity_->TestBit(kDoNotProcess)){
+    c_tracks_highPurity_ = true;
+  }else{
+    c_tracks_highPurity_ = false;
+  }
+  if(b_tracks_ndof_ && !b_tracks_ndof_->TestBit(kDoNotProcess)){
+    c_tracks_ndof_ = true;
+  }else{
+    c_tracks_ndof_ = false;
+  }
+  if(b_tracks_numlosthits_ && !b_tracks_numlosthits_->TestBit(kDoNotProcess)){
+    c_tracks_numlosthits_ = true;
+  }else{
+    c_tracks_numlosthits_ = false;
+  }
+  if(b_tracks_numvalhits_ && !b_tracks_numvalhits_->TestBit(kDoNotProcess)){
+    c_tracks_numvalhits_ = true;
+  }else{
+    c_tracks_numvalhits_ = false;
+  }
+  if(b_tracks_phi_ && !b_tracks_phi_->TestBit(kDoNotProcess)){
+    c_tracks_phi_ = true;
+  }else{
+    c_tracks_phi_ = false;
+  }
+  if(b_tracks_phiErr_ && !b_tracks_phiErr_->TestBit(kDoNotProcess)){
+    c_tracks_phiErr_ = true;
+  }else{
+    c_tracks_phiErr_ = false;
+  }
+  if(b_tracks_pt_ && !b_tracks_pt_->TestBit(kDoNotProcess)){
+    c_tracks_pt_ = true;
+  }else{
+    c_tracks_pt_ = false;
+  }
+  if(b_tracks_ptErr_ && !b_tracks_ptErr_->TestBit(kDoNotProcess)){
+    c_tracks_ptErr_ = true;
+  }else{
+    c_tracks_ptErr_ = false;
+  }
+  if(b_tracks_px_ && !b_tracks_px_->TestBit(kDoNotProcess)){
+    c_tracks_px_ = true;
+  }else{
+    c_tracks_px_ = false;
+  }
+  if(b_tracks_py_ && !b_tracks_py_->TestBit(kDoNotProcess)){
+    c_tracks_py_ = true;
+  }else{
+    c_tracks_py_ = false;
+  }
+  if(b_tracks_pz_ && !b_tracks_pz_->TestBit(kDoNotProcess)){
+    c_tracks_pz_ = true;
+  }else{
+    c_tracks_pz_ = false;
+  }
+  if(b_tracks_vx_ && !b_tracks_vx_->TestBit(kDoNotProcess)){
+    c_tracks_vx_ = true;
+  }else{
+    c_tracks_vx_ = false;
+  }
+  if(b_tracks_vy_ && !b_tracks_vy_->TestBit(kDoNotProcess)){
+    c_tracks_vy_ = true;
+  }else{
+    c_tracks_vy_ = false;
+  }
+  if(b_tracks_vz_ && !b_tracks_vz_->TestBit(kDoNotProcess)){
+    c_tracks_vz_ = true;
+  }else{
+    c_tracks_vz_ = false;
+  }
+  if(b_trigger_decision_ && !b_trigger_decision_->TestBit(kDoNotProcess)){
+    c_trigger_decision_ = true;
+  }else{
+    c_trigger_decision_ = false;
+  }
+  if(b_trigger_lastfiltername_ && !b_trigger_lastfiltername_->TestBit(kDoNotProcess)){
+    c_trigger_lastfiltername_ = true;
+  }else{
+    c_trigger_lastfiltername_ = false;
+  }
+  if(b_triggerobject_collectionname_ && !b_triggerobject_collectionname_->TestBit(kDoNotProcess)){
+    c_triggerobject_collectionname_ = true;
+  }else{
+    c_triggerobject_collectionname_ = false;
+  }
+  if(b_triggerobject_energy_ && !b_triggerobject_energy_->TestBit(kDoNotProcess)){
+    c_triggerobject_energy_ = true;
+  }else{
+    c_triggerobject_energy_ = false;
+  }
+  if(b_triggerobject_et_ && !b_triggerobject_et_->TestBit(kDoNotProcess)){
+    c_triggerobject_et_ = true;
+  }else{
+    c_triggerobject_et_ = false;
+  }
+  if(b_triggerobject_eta_ && !b_triggerobject_eta_->TestBit(kDoNotProcess)){
+    c_triggerobject_eta_ = true;
+  }else{
+    c_triggerobject_eta_ = false;
+  }
+  if(b_triggerobject_phi_ && !b_triggerobject_phi_->TestBit(kDoNotProcess)){
+    c_triggerobject_phi_ = true;
+  }else{
+    c_triggerobject_phi_ = false;
+  }
+  if(b_triggerobject_pt_ && !b_triggerobject_pt_->TestBit(kDoNotProcess)){
+    c_triggerobject_pt_ = true;
+  }else{
+    c_triggerobject_pt_ = false;
+  }
+  if(b_triggerobject_px_ && !b_triggerobject_px_->TestBit(kDoNotProcess)){
+    c_triggerobject_px_ = true;
+  }else{
+    c_triggerobject_px_ = false;
+  }
+  if(b_triggerobject_py_ && !b_triggerobject_py_->TestBit(kDoNotProcess)){
+    c_triggerobject_py_ = true;
+  }else{
+    c_triggerobject_py_ = false;
+  }
+  if(b_triggerobject_pz_ && !b_triggerobject_pz_->TestBit(kDoNotProcess)){
+    c_triggerobject_pz_ = true;
+  }else{
+    c_triggerobject_pz_ = false;
+  }
+  if(b_trk_nTOBTEC_ && !b_trk_nTOBTEC_->TestBit(kDoNotProcess)){
+    c_trk_nTOBTEC_ = true;
+  }else{
+    c_trk_nTOBTEC_ = false;
+  }
+  if(b_trk_ratioAllTOBTEC_ && !b_trk_ratioAllTOBTEC_->TestBit(kDoNotProcess)){
+    c_trk_ratioAllTOBTEC_ = true;
+  }else{
+    c_trk_ratioAllTOBTEC_ = false;
+  }
+  if(b_trk_ratioJetTOBTEC_ && !b_trk_ratioJetTOBTEC_->TestBit(kDoNotProcess)){
+    c_trk_ratioJetTOBTEC_ = true;
+  }else{
+    c_trk_ratioJetTOBTEC_ = false;
+  }
   cfa_base::GetEntry(entry);
 }
 
@@ -3646,6 +6538,8 @@ cfa_8::~cfa_8(){
 
 std::vector<std::string>* const & cfa_8::L1trigger_alias() const{
   if(!c_L1trigger_alias_ && b_L1trigger_alias_){
+    b_L1trigger_alias_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_alias", &L1trigger_alias_, &b_L1trigger_alias_);
     b_L1trigger_alias_->GetEntry(entry_);
     c_L1trigger_alias_ = true;
   }
@@ -3654,6 +6548,8 @@ std::vector<std::string>* const & cfa_8::L1trigger_alias() const{
 
 std::vector<float>* const & cfa_8::L1trigger_bit() const{
   if(!c_L1trigger_bit_ && b_L1trigger_bit_){
+    b_L1trigger_bit_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_bit", &L1trigger_bit_, &b_L1trigger_bit_);
     b_L1trigger_bit_->GetEntry(entry_);
     c_L1trigger_bit_ = true;
   }
@@ -3662,6 +6558,8 @@ std::vector<float>* const & cfa_8::L1trigger_bit() const{
 
 std::vector<float>* const & cfa_8::L1trigger_decision() const{
   if(!c_L1trigger_decision_ && b_L1trigger_decision_){
+    b_L1trigger_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_decision", &L1trigger_decision_, &b_L1trigger_decision_);
     b_L1trigger_decision_->GetEntry(entry_);
     c_L1trigger_decision_ = true;
   }
@@ -3670,6 +6568,8 @@ std::vector<float>* const & cfa_8::L1trigger_decision() const{
 
 std::vector<float>* const & cfa_8::L1trigger_decision_nomask() const{
   if(!c_L1trigger_decision_nomask_ && b_L1trigger_decision_nomask_){
+    b_L1trigger_decision_nomask_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_decision_nomask", &L1trigger_decision_nomask_, &b_L1trigger_decision_nomask_);
     b_L1trigger_decision_nomask_->GetEntry(entry_);
     c_L1trigger_decision_nomask_ = true;
   }
@@ -3678,6 +6578,8 @@ std::vector<float>* const & cfa_8::L1trigger_decision_nomask() const{
 
 std::vector<std::string>* const & cfa_8::L1trigger_name() const{
   if(!c_L1trigger_name_ && b_L1trigger_name_){
+    b_L1trigger_name_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_name", &L1trigger_name_, &b_L1trigger_name_);
     b_L1trigger_name_->GetEntry(entry_);
     c_L1trigger_name_ = true;
   }
@@ -3686,6 +6588,8 @@ std::vector<std::string>* const & cfa_8::L1trigger_name() const{
 
 std::vector<float>* const & cfa_8::L1trigger_prescalevalue() const{
   if(!c_L1trigger_prescalevalue_ && b_L1trigger_prescalevalue_){
+    b_L1trigger_prescalevalue_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_prescalevalue", &L1trigger_prescalevalue_, &b_L1trigger_prescalevalue_);
     b_L1trigger_prescalevalue_->GetEntry(entry_);
     c_L1trigger_prescalevalue_ = true;
   }
@@ -3694,6 +6598,8 @@ std::vector<float>* const & cfa_8::L1trigger_prescalevalue() const{
 
 std::vector<float>* const & cfa_8::L1trigger_techTrigger() const{
   if(!c_L1trigger_techTrigger_ && b_L1trigger_techTrigger_){
+    b_L1trigger_techTrigger_->SetStatus(true);
+    chainA_.SetBranchAddress("L1trigger_techTrigger", &L1trigger_techTrigger_, &b_L1trigger_techTrigger_);
     b_L1trigger_techTrigger_->GetEntry(entry_);
     c_L1trigger_techTrigger_ = true;
   }
@@ -3702,6 +6608,8 @@ std::vector<float>* const & cfa_8::L1trigger_techTrigger() const{
 
 Float_t const & cfa_8::MPT() const{
   if(!c_MPT_ && b_MPT_){
+    b_MPT_->SetStatus(true);
+    chainA_.SetBranchAddress("MPT", &MPT_, &b_MPT_);
     b_MPT_->GetEntry(entry_);
     c_MPT_ = true;
   }
@@ -3710,6 +6618,8 @@ Float_t const & cfa_8::MPT() const{
 
 UInt_t const & cfa_8::Njets_AK5PF() const{
   if(!c_Njets_AK5PF_ && b_Njets_AK5PF_){
+    b_Njets_AK5PF_->SetStatus(true);
+    chainB_.SetBranchAddress("Njets_AK5PF", &Njets_AK5PF_, &b_Njets_AK5PF_);
     b_Njets_AK5PF_->GetEntry(entry_);
     c_Njets_AK5PF_ = true;
   }
@@ -3718,6 +6628,8 @@ UInt_t const & cfa_8::Njets_AK5PF() const{
 
 UInt_t const & cfa_8::Njets_AK5PFclean() const{
   if(!c_Njets_AK5PFclean_ && b_Njets_AK5PFclean_){
+    b_Njets_AK5PFclean_->SetStatus(true);
+    chainB_.SetBranchAddress("Njets_AK5PFclean", &Njets_AK5PFclean_, &b_Njets_AK5PFclean_);
     b_Njets_AK5PFclean_->GetEntry(entry_);
     c_Njets_AK5PFclean_ = true;
   }
@@ -3726,6 +6638,8 @@ UInt_t const & cfa_8::Njets_AK5PFclean() const{
 
 UInt_t const & cfa_8::Nmc_pdf() const{
   if(!c_Nmc_pdf_ && b_Nmc_pdf_){
+    b_Nmc_pdf_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_pdf", &Nmc_pdf_, &b_Nmc_pdf_);
     b_Nmc_pdf_->GetEntry(entry_);
     c_Nmc_pdf_ = true;
   }
@@ -3734,6 +6648,8 @@ UInt_t const & cfa_8::Nmc_pdf() const{
 
 UInt_t const & cfa_8::NmetsHO() const{
   if(!c_NmetsHO_ && b_NmetsHO_){
+    b_NmetsHO_->SetStatus(true);
+    chainB_.SetBranchAddress("NmetsHO", &NmetsHO_, &b_NmetsHO_);
     b_NmetsHO_->GetEntry(entry_);
     c_NmetsHO_ = true;
   }
@@ -3742,6 +6658,8 @@ UInt_t const & cfa_8::NmetsHO() const{
 
 UInt_t const & cfa_8::Nmets_AK5() const{
   if(!c_Nmets_AK5_ && b_Nmets_AK5_){
+    b_Nmets_AK5_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmets_AK5", &Nmets_AK5_, &b_Nmets_AK5_);
     b_Nmets_AK5_->GetEntry(entry_);
     c_Nmets_AK5_ = true;
   }
@@ -3750,6 +6668,8 @@ UInt_t const & cfa_8::Nmets_AK5() const{
 
 UInt_t const & cfa_8::NpfTypeINoXYCorrmets() const{
   if(!c_NpfTypeINoXYCorrmets_ && b_NpfTypeINoXYCorrmets_){
+    b_NpfTypeINoXYCorrmets_->SetStatus(true);
+    chainB_.SetBranchAddress("NpfTypeINoXYCorrmets", &NpfTypeINoXYCorrmets_, &b_NpfTypeINoXYCorrmets_);
     b_NpfTypeINoXYCorrmets_->GetEntry(entry_);
     c_NpfTypeINoXYCorrmets_ = true;
   }
@@ -3758,6 +6678,8 @@ UInt_t const & cfa_8::NpfTypeINoXYCorrmets() const{
 
 UInt_t const & cfa_8::NpfTypeIType0mets() const{
   if(!c_NpfTypeIType0mets_ && b_NpfTypeIType0mets_){
+    b_NpfTypeIType0mets_->SetStatus(true);
+    chainB_.SetBranchAddress("NpfTypeIType0mets", &NpfTypeIType0mets_, &b_NpfTypeIType0mets_);
     b_NpfTypeIType0mets_->GetEntry(entry_);
     c_NpfTypeIType0mets_ = true;
   }
@@ -3766,6 +6688,8 @@ UInt_t const & cfa_8::NpfTypeIType0mets() const{
 
 UInt_t const & cfa_8::NpfTypeImets() const{
   if(!c_NpfTypeImets_ && b_NpfTypeImets_){
+    b_NpfTypeImets_->SetStatus(true);
+    chainB_.SetBranchAddress("NpfTypeImets", &NpfTypeImets_, &b_NpfTypeImets_);
     b_NpfTypeImets_->GetEntry(entry_);
     c_NpfTypeImets_ = true;
   }
@@ -3774,6 +6698,8 @@ UInt_t const & cfa_8::NpfTypeImets() const{
 
 UInt_t const & cfa_8::Npf_els() const{
   if(!c_Npf_els_ && b_Npf_els_){
+    b_Npf_els_->SetStatus(true);
+    chainB_.SetBranchAddress("Npf_els", &Npf_els_, &b_Npf_els_);
     b_Npf_els_->GetEntry(entry_);
     c_Npf_els_ = true;
   }
@@ -3782,6 +6708,8 @@ UInt_t const & cfa_8::Npf_els() const{
 
 UInt_t const & cfa_8::Npf_mus() const{
   if(!c_Npf_mus_ && b_Npf_mus_){
+    b_Npf_mus_->SetStatus(true);
+    chainB_.SetBranchAddress("Npf_mus", &Npf_mus_, &b_Npf_mus_);
     b_Npf_mus_->GetEntry(entry_);
     c_Npf_mus_ = true;
   }
@@ -3790,6 +6718,8 @@ UInt_t const & cfa_8::Npf_mus() const{
 
 UInt_t const & cfa_8::Npf_photons() const{
   if(!c_Npf_photons_ && b_Npf_photons_){
+    b_Npf_photons_->SetStatus(true);
+    chainB_.SetBranchAddress("Npf_photons", &Npf_photons_, &b_Npf_photons_);
     b_Npf_photons_->GetEntry(entry_);
     c_Npf_photons_ = true;
   }
@@ -3798,6 +6728,8 @@ UInt_t const & cfa_8::Npf_photons() const{
 
 UInt_t const & cfa_8::Npfmets() const{
   if(!c_Npfmets_ && b_Npfmets_){
+    b_Npfmets_->SetStatus(true);
+    chainB_.SetBranchAddress("Npfmets", &Npfmets_, &b_Npfmets_);
     b_Npfmets_->GetEntry(entry_);
     c_Npfmets_ = true;
   }
@@ -3806,6 +6738,8 @@ UInt_t const & cfa_8::Npfmets() const{
 
 UInt_t const & cfa_8::Ntcmets() const{
   if(!c_Ntcmets_ && b_Ntcmets_){
+    b_Ntcmets_->SetStatus(true);
+    chainB_.SetBranchAddress("Ntcmets", &Ntcmets_, &b_Ntcmets_);
     b_Ntcmets_->GetEntry(entry_);
     c_Ntcmets_ = true;
   }
@@ -3814,6 +6748,8 @@ UInt_t const & cfa_8::Ntcmets() const{
 
 UInt_t const & cfa_8::Ntracks() const{
   if(!c_Ntracks_ && b_Ntracks_){
+    b_Ntracks_->SetStatus(true);
+    chainB_.SetBranchAddress("Ntracks", &Ntracks_, &b_Ntracks_);
     b_Ntracks_->GetEntry(entry_);
     c_Ntracks_ = true;
   }
@@ -3822,6 +6758,8 @@ UInt_t const & cfa_8::Ntracks() const{
 
 Int_t const & cfa_8::ecalBEfilter_decision() const{
   if(!c_ecalBEfilter_decision_ && b_ecalBEfilter_decision_){
+    b_ecalBEfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("ecalBEfilter_decision", &ecalBEfilter_decision_, &b_ecalBEfilter_decision_);
     b_ecalBEfilter_decision_->GetEntry(entry_);
     c_ecalBEfilter_decision_ = true;
   }
@@ -3830,6 +6768,8 @@ Int_t const & cfa_8::ecalBEfilter_decision() const{
 
 Int_t const & cfa_8::ecalTPfilter_decision() const{
   if(!c_ecalTPfilter_decision_ && b_ecalTPfilter_decision_){
+    b_ecalTPfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("ecalTPfilter_decision", &ecalTPfilter_decision_, &b_ecalTPfilter_decision_);
     b_ecalTPfilter_decision_->GetEntry(entry_);
     c_ecalTPfilter_decision_ = true;
   }
@@ -3838,6 +6778,8 @@ Int_t const & cfa_8::ecalTPfilter_decision() const{
 
 Int_t const & cfa_8::eenoisefilter_decision() const{
   if(!c_eenoisefilter_decision_ && b_eenoisefilter_decision_){
+    b_eenoisefilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("eenoisefilter_decision", &eenoisefilter_decision_, &b_eenoisefilter_decision_);
     b_eenoisefilter_decision_->GetEntry(entry_);
     c_eenoisefilter_decision_ = true;
   }
@@ -3846,6 +6788,8 @@ Int_t const & cfa_8::eenoisefilter_decision() const{
 
 std::vector<float>* const & cfa_8::els_PFchargedHadronIsoR03() const{
   if(!c_els_PFchargedHadronIsoR03_ && b_els_PFchargedHadronIsoR03_){
+    b_els_PFchargedHadronIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("els_PFchargedHadronIsoR03", &els_PFchargedHadronIsoR03_, &b_els_PFchargedHadronIsoR03_);
     b_els_PFchargedHadronIsoR03_->GetEntry(entry_);
     c_els_PFchargedHadronIsoR03_ = true;
   }
@@ -3854,6 +6798,8 @@ std::vector<float>* const & cfa_8::els_PFchargedHadronIsoR03() const{
 
 std::vector<float>* const & cfa_8::els_PFneutralHadronIsoR03() const{
   if(!c_els_PFneutralHadronIsoR03_ && b_els_PFneutralHadronIsoR03_){
+    b_els_PFneutralHadronIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("els_PFneutralHadronIsoR03", &els_PFneutralHadronIsoR03_, &b_els_PFneutralHadronIsoR03_);
     b_els_PFneutralHadronIsoR03_->GetEntry(entry_);
     c_els_PFneutralHadronIsoR03_ = true;
   }
@@ -3862,6 +6808,8 @@ std::vector<float>* const & cfa_8::els_PFneutralHadronIsoR03() const{
 
 std::vector<float>* const & cfa_8::els_PFphotonIsoR03() const{
   if(!c_els_PFphotonIsoR03_ && b_els_PFphotonIsoR03_){
+    b_els_PFphotonIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("els_PFphotonIsoR03", &els_PFphotonIsoR03_, &b_els_PFphotonIsoR03_);
     b_els_PFphotonIsoR03_->GetEntry(entry_);
     c_els_PFphotonIsoR03_ = true;
   }
@@ -3870,6 +6818,8 @@ std::vector<float>* const & cfa_8::els_PFphotonIsoR03() const{
 
 std::vector<float>* const & cfa_8::els_conversion_dcot() const{
   if(!c_els_conversion_dcot_ && b_els_conversion_dcot_){
+    b_els_conversion_dcot_->SetStatus(true);
+    chainA_.SetBranchAddress("els_conversion_dcot", &els_conversion_dcot_, &b_els_conversion_dcot_);
     b_els_conversion_dcot_->GetEntry(entry_);
     c_els_conversion_dcot_ = true;
   }
@@ -3878,6 +6828,8 @@ std::vector<float>* const & cfa_8::els_conversion_dcot() const{
 
 std::vector<float>* const & cfa_8::els_conversion_dist() const{
   if(!c_els_conversion_dist_ && b_els_conversion_dist_){
+    b_els_conversion_dist_->SetStatus(true);
+    chainA_.SetBranchAddress("els_conversion_dist", &els_conversion_dist_, &b_els_conversion_dist_);
     b_els_conversion_dist_->GetEntry(entry_);
     c_els_conversion_dist_ = true;
   }
@@ -3886,6 +6838,8 @@ std::vector<float>* const & cfa_8::els_conversion_dist() const{
 
 std::vector<bool>* const & cfa_8::els_hasMatchedConversion() const{
   if(!c_els_hasMatchedConversion_ && b_els_hasMatchedConversion_){
+    b_els_hasMatchedConversion_->SetStatus(true);
+    chainA_.SetBranchAddress("els_hasMatchedConversion", &els_hasMatchedConversion_, &b_els_hasMatchedConversion_);
     b_els_hasMatchedConversion_->GetEntry(entry_);
     c_els_hasMatchedConversion_ = true;
   }
@@ -3894,6 +6848,8 @@ std::vector<bool>* const & cfa_8::els_hasMatchedConversion() const{
 
 Float_t const & cfa_8::genHT() const{
   if(!c_genHT_ && b_genHT_){
+    b_genHT_->SetStatus(true);
+    chainA_.SetBranchAddress("genHT", &genHT_, &b_genHT_);
     b_genHT_->GetEntry(entry_);
     c_genHT_ = true;
   }
@@ -3902,6 +6858,8 @@ Float_t const & cfa_8::genHT() const{
 
 Int_t const & cfa_8::greedymuonfilter_decision() const{
   if(!c_greedymuonfilter_decision_ && b_greedymuonfilter_decision_){
+    b_greedymuonfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("greedymuonfilter_decision", &greedymuonfilter_decision_, &b_greedymuonfilter_decision_);
     b_greedymuonfilter_decision_->GetEntry(entry_);
     c_greedymuonfilter_decision_ = true;
   }
@@ -3910,6 +6868,8 @@ Int_t const & cfa_8::greedymuonfilter_decision() const{
 
 Int_t const & cfa_8::hbhefilter_decision() const{
   if(!c_hbhefilter_decision_ && b_hbhefilter_decision_){
+    b_hbhefilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("hbhefilter_decision", &hbhefilter_decision_, &b_hbhefilter_decision_);
     b_hbhefilter_decision_->GetEntry(entry_);
     c_hbhefilter_decision_ = true;
   }
@@ -3918,6 +6878,8 @@ Int_t const & cfa_8::hbhefilter_decision() const{
 
 Int_t const & cfa_8::inconsistentPFmuonfilter_decision() const{
   if(!c_inconsistentPFmuonfilter_decision_ && b_inconsistentPFmuonfilter_decision_){
+    b_inconsistentPFmuonfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("inconsistentPFmuonfilter_decision", &inconsistentPFmuonfilter_decision_, &b_inconsistentPFmuonfilter_decision_);
     b_inconsistentPFmuonfilter_decision_->GetEntry(entry_);
     c_inconsistentPFmuonfilter_decision_ = true;
   }
@@ -3926,6 +6888,8 @@ Int_t const & cfa_8::inconsistentPFmuonfilter_decision() const{
 
 std::vector<int>* const & cfa_8::isotk_charge() const{
   if(!c_isotk_charge_ && b_isotk_charge_){
+    b_isotk_charge_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_charge", &isotk_charge_, &b_isotk_charge_);
     b_isotk_charge_->GetEntry(entry_);
     c_isotk_charge_ = true;
   }
@@ -3934,6 +6898,8 @@ std::vector<int>* const & cfa_8::isotk_charge() const{
 
 std::vector<float>* const & cfa_8::isotk_dzpv() const{
   if(!c_isotk_dzpv_ && b_isotk_dzpv_){
+    b_isotk_dzpv_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_dzpv", &isotk_dzpv_, &b_isotk_dzpv_);
     b_isotk_dzpv_->GetEntry(entry_);
     c_isotk_dzpv_ = true;
   }
@@ -3942,6 +6908,8 @@ std::vector<float>* const & cfa_8::isotk_dzpv() const{
 
 std::vector<float>* const & cfa_8::isotk_eta() const{
   if(!c_isotk_eta_ && b_isotk_eta_){
+    b_isotk_eta_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_eta", &isotk_eta_, &b_isotk_eta_);
     b_isotk_eta_->GetEntry(entry_);
     c_isotk_eta_ = true;
   }
@@ -3950,6 +6918,8 @@ std::vector<float>* const & cfa_8::isotk_eta() const{
 
 std::vector<float>* const & cfa_8::isotk_iso() const{
   if(!c_isotk_iso_ && b_isotk_iso_){
+    b_isotk_iso_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_iso", &isotk_iso_, &b_isotk_iso_);
     b_isotk_iso_->GetEntry(entry_);
     c_isotk_iso_ = true;
   }
@@ -3958,6 +6928,8 @@ std::vector<float>* const & cfa_8::isotk_iso() const{
 
 std::vector<float>* const & cfa_8::isotk_phi() const{
   if(!c_isotk_phi_ && b_isotk_phi_){
+    b_isotk_phi_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_phi", &isotk_phi_, &b_isotk_phi_);
     b_isotk_phi_->GetEntry(entry_);
     c_isotk_phi_ = true;
   }
@@ -3966,6 +6938,8 @@ std::vector<float>* const & cfa_8::isotk_phi() const{
 
 std::vector<float>* const & cfa_8::isotk_pt() const{
   if(!c_isotk_pt_ && b_isotk_pt_){
+    b_isotk_pt_->SetStatus(true);
+    chainA_.SetBranchAddress("isotk_pt", &isotk_pt_, &b_isotk_pt_);
     b_isotk_pt_->GetEntry(entry_);
     c_isotk_pt_ = true;
   }
@@ -3974,6 +6948,8 @@ std::vector<float>* const & cfa_8::isotk_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_area() const{
   if(!c_jets_AK5PF_area_ && b_jets_AK5PF_area_){
+    b_jets_AK5PF_area_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_area", &jets_AK5PF_area_, &b_jets_AK5PF_area_);
     b_jets_AK5PF_area_->GetEntry(entry_);
     c_jets_AK5PF_area_ = true;
   }
@@ -3982,6 +6958,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_area() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_TC_highEff() const{
   if(!c_jets_AK5PF_btag_TC_highEff_ && b_jets_AK5PF_btag_TC_highEff_){
+    b_jets_AK5PF_btag_TC_highEff_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_TC_highEff", &jets_AK5PF_btag_TC_highEff_, &b_jets_AK5PF_btag_TC_highEff_);
     b_jets_AK5PF_btag_TC_highEff_->GetEntry(entry_);
     c_jets_AK5PF_btag_TC_highEff_ = true;
   }
@@ -3990,6 +6968,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_TC_highEff() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_TC_highPur() const{
   if(!c_jets_AK5PF_btag_TC_highPur_ && b_jets_AK5PF_btag_TC_highPur_){
+    b_jets_AK5PF_btag_TC_highPur_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_TC_highPur", &jets_AK5PF_btag_TC_highPur_, &b_jets_AK5PF_btag_TC_highPur_);
     b_jets_AK5PF_btag_TC_highPur_->GetEntry(entry_);
     c_jets_AK5PF_btag_TC_highPur_ = true;
   }
@@ -3998,6 +6978,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_TC_highPur() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_jetBProb() const{
   if(!c_jets_AK5PF_btag_jetBProb_ && b_jets_AK5PF_btag_jetBProb_){
+    b_jets_AK5PF_btag_jetBProb_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_jetBProb", &jets_AK5PF_btag_jetBProb_, &b_jets_AK5PF_btag_jetBProb_);
     b_jets_AK5PF_btag_jetBProb_->GetEntry(entry_);
     c_jets_AK5PF_btag_jetBProb_ = true;
   }
@@ -4006,6 +6988,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_jetBProb() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_jetProb() const{
   if(!c_jets_AK5PF_btag_jetProb_ && b_jets_AK5PF_btag_jetProb_){
+    b_jets_AK5PF_btag_jetProb_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_jetProb", &jets_AK5PF_btag_jetProb_, &b_jets_AK5PF_btag_jetProb_);
     b_jets_AK5PF_btag_jetProb_->GetEntry(entry_);
     c_jets_AK5PF_btag_jetProb_ = true;
   }
@@ -4014,6 +6998,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_jetProb() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexCombined() const{
   if(!c_jets_AK5PF_btag_secVertexCombined_ && b_jets_AK5PF_btag_secVertexCombined_){
+    b_jets_AK5PF_btag_secVertexCombined_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_secVertexCombined", &jets_AK5PF_btag_secVertexCombined_, &b_jets_AK5PF_btag_secVertexCombined_);
     b_jets_AK5PF_btag_secVertexCombined_->GetEntry(entry_);
     c_jets_AK5PF_btag_secVertexCombined_ = true;
   }
@@ -4022,6 +7008,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexCombined() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexHighEff() const{
   if(!c_jets_AK5PF_btag_secVertexHighEff_ && b_jets_AK5PF_btag_secVertexHighEff_){
+    b_jets_AK5PF_btag_secVertexHighEff_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_secVertexHighEff", &jets_AK5PF_btag_secVertexHighEff_, &b_jets_AK5PF_btag_secVertexHighEff_);
     b_jets_AK5PF_btag_secVertexHighEff_->GetEntry(entry_);
     c_jets_AK5PF_btag_secVertexHighEff_ = true;
   }
@@ -4030,6 +7018,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexHighEff() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexHighPur() const{
   if(!c_jets_AK5PF_btag_secVertexHighPur_ && b_jets_AK5PF_btag_secVertexHighPur_){
+    b_jets_AK5PF_btag_secVertexHighPur_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_secVertexHighPur", &jets_AK5PF_btag_secVertexHighPur_, &b_jets_AK5PF_btag_secVertexHighPur_);
     b_jets_AK5PF_btag_secVertexHighPur_->GetEntry(entry_);
     c_jets_AK5PF_btag_secVertexHighPur_ = true;
   }
@@ -4038,6 +7028,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_secVertexHighPur() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_softEle() const{
   if(!c_jets_AK5PF_btag_softEle_ && b_jets_AK5PF_btag_softEle_){
+    b_jets_AK5PF_btag_softEle_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_softEle", &jets_AK5PF_btag_softEle_, &b_jets_AK5PF_btag_softEle_);
     b_jets_AK5PF_btag_softEle_->GetEntry(entry_);
     c_jets_AK5PF_btag_softEle_ = true;
   }
@@ -4046,6 +7038,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_softEle() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_btag_softMuon() const{
   if(!c_jets_AK5PF_btag_softMuon_ && b_jets_AK5PF_btag_softMuon_){
+    b_jets_AK5PF_btag_softMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_btag_softMuon", &jets_AK5PF_btag_softMuon_, &b_jets_AK5PF_btag_softMuon_);
     b_jets_AK5PF_btag_softMuon_->GetEntry(entry_);
     c_jets_AK5PF_btag_softMuon_ = true;
   }
@@ -4054,6 +7048,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_btag_softMuon() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_chgEmE() const{
   if(!c_jets_AK5PF_chgEmE_ && b_jets_AK5PF_chgEmE_){
+    b_jets_AK5PF_chgEmE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_chgEmE", &jets_AK5PF_chgEmE_, &b_jets_AK5PF_chgEmE_);
     b_jets_AK5PF_chgEmE_->GetEntry(entry_);
     c_jets_AK5PF_chgEmE_ = true;
   }
@@ -4062,6 +7058,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_chgEmE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_chgHadE() const{
   if(!c_jets_AK5PF_chgHadE_ && b_jets_AK5PF_chgHadE_){
+    b_jets_AK5PF_chgHadE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_chgHadE", &jets_AK5PF_chgHadE_, &b_jets_AK5PF_chgHadE_);
     b_jets_AK5PF_chgHadE_->GetEntry(entry_);
     c_jets_AK5PF_chgHadE_ = true;
   }
@@ -4070,6 +7068,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_chgHadE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_chgMuE() const{
   if(!c_jets_AK5PF_chgMuE_ && b_jets_AK5PF_chgMuE_){
+    b_jets_AK5PF_chgMuE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_chgMuE", &jets_AK5PF_chgMuE_, &b_jets_AK5PF_chgMuE_);
     b_jets_AK5PF_chgMuE_->GetEntry(entry_);
     c_jets_AK5PF_chgMuE_ = true;
   }
@@ -4078,6 +7078,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_chgMuE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_chg_Mult() const{
   if(!c_jets_AK5PF_chg_Mult_ && b_jets_AK5PF_chg_Mult_){
+    b_jets_AK5PF_chg_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_chg_Mult", &jets_AK5PF_chg_Mult_, &b_jets_AK5PF_chg_Mult_);
     b_jets_AK5PF_chg_Mult_->GetEntry(entry_);
     c_jets_AK5PF_chg_Mult_ = true;
   }
@@ -4086,6 +7088,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_chg_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_corrFactorRaw() const{
   if(!c_jets_AK5PF_corrFactorRaw_ && b_jets_AK5PF_corrFactorRaw_){
+    b_jets_AK5PF_corrFactorRaw_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_corrFactorRaw", &jets_AK5PF_corrFactorRaw_, &b_jets_AK5PF_corrFactorRaw_);
     b_jets_AK5PF_corrFactorRaw_->GetEntry(entry_);
     c_jets_AK5PF_corrFactorRaw_ = true;
   }
@@ -4094,6 +7098,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_corrFactorRaw() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_ehf() const{
   if(!c_jets_AK5PF_ehf_ && b_jets_AK5PF_ehf_){
+    b_jets_AK5PF_ehf_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_ehf", &jets_AK5PF_ehf_, &b_jets_AK5PF_ehf_);
     b_jets_AK5PF_ehf_->GetEntry(entry_);
     c_jets_AK5PF_ehf_ = true;
   }
@@ -4102,6 +7108,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_ehf() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_emf() const{
   if(!c_jets_AK5PF_emf_ && b_jets_AK5PF_emf_){
+    b_jets_AK5PF_emf_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_emf", &jets_AK5PF_emf_, &b_jets_AK5PF_emf_);
     b_jets_AK5PF_emf_->GetEntry(entry_);
     c_jets_AK5PF_emf_ = true;
   }
@@ -4110,6 +7118,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_emf() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_energy() const{
   if(!c_jets_AK5PF_energy_ && b_jets_AK5PF_energy_){
+    b_jets_AK5PF_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_energy", &jets_AK5PF_energy_, &b_jets_AK5PF_energy_);
     b_jets_AK5PF_energy_->GetEntry(entry_);
     c_jets_AK5PF_energy_ = true;
   }
@@ -4118,6 +7128,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_et() const{
   if(!c_jets_AK5PF_et_ && b_jets_AK5PF_et_){
+    b_jets_AK5PF_et_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_et", &jets_AK5PF_et_, &b_jets_AK5PF_et_);
     b_jets_AK5PF_et_->GetEntry(entry_);
     c_jets_AK5PF_et_ = true;
   }
@@ -4126,6 +7138,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_et() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_eta() const{
   if(!c_jets_AK5PF_eta_ && b_jets_AK5PF_eta_){
+    b_jets_AK5PF_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_eta", &jets_AK5PF_eta_, &b_jets_AK5PF_eta_);
     b_jets_AK5PF_eta_->GetEntry(entry_);
     c_jets_AK5PF_eta_ = true;
   }
@@ -4134,6 +7148,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_etaetaMoment() const{
   if(!c_jets_AK5PF_etaetaMoment_ && b_jets_AK5PF_etaetaMoment_){
+    b_jets_AK5PF_etaetaMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_etaetaMoment", &jets_AK5PF_etaetaMoment_, &b_jets_AK5PF_etaetaMoment_);
     b_jets_AK5PF_etaetaMoment_->GetEntry(entry_);
     c_jets_AK5PF_etaetaMoment_ = true;
   }
@@ -4142,6 +7158,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_etaetaMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_etaphiMoment() const{
   if(!c_jets_AK5PF_etaphiMoment_ && b_jets_AK5PF_etaphiMoment_){
+    b_jets_AK5PF_etaphiMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_etaphiMoment", &jets_AK5PF_etaphiMoment_, &b_jets_AK5PF_etaphiMoment_);
     b_jets_AK5PF_etaphiMoment_->GetEntry(entry_);
     c_jets_AK5PF_etaphiMoment_ = true;
   }
@@ -4150,6 +7168,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_etaphiMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fHPD() const{
   if(!c_jets_AK5PF_fHPD_ && b_jets_AK5PF_fHPD_){
+    b_jets_AK5PF_fHPD_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fHPD", &jets_AK5PF_fHPD_, &b_jets_AK5PF_fHPD_);
     b_jets_AK5PF_fHPD_->GetEntry(entry_);
     c_jets_AK5PF_fHPD_ = true;
   }
@@ -4158,6 +7178,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fHPD() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fRBX() const{
   if(!c_jets_AK5PF_fRBX_ && b_jets_AK5PF_fRBX_){
+    b_jets_AK5PF_fRBX_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fRBX", &jets_AK5PF_fRBX_, &b_jets_AK5PF_fRBX_);
     b_jets_AK5PF_fRBX_->GetEntry(entry_);
     c_jets_AK5PF_fRBX_ = true;
   }
@@ -4166,6 +7188,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fRBX() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector1() const{
   if(!c_jets_AK5PF_fSubDetector1_ && b_jets_AK5PF_fSubDetector1_){
+    b_jets_AK5PF_fSubDetector1_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fSubDetector1", &jets_AK5PF_fSubDetector1_, &b_jets_AK5PF_fSubDetector1_);
     b_jets_AK5PF_fSubDetector1_->GetEntry(entry_);
     c_jets_AK5PF_fSubDetector1_ = true;
   }
@@ -4174,6 +7198,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector1() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector2() const{
   if(!c_jets_AK5PF_fSubDetector2_ && b_jets_AK5PF_fSubDetector2_){
+    b_jets_AK5PF_fSubDetector2_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fSubDetector2", &jets_AK5PF_fSubDetector2_, &b_jets_AK5PF_fSubDetector2_);
     b_jets_AK5PF_fSubDetector2_->GetEntry(entry_);
     c_jets_AK5PF_fSubDetector2_ = true;
   }
@@ -4182,6 +7208,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector2() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector3() const{
   if(!c_jets_AK5PF_fSubDetector3_ && b_jets_AK5PF_fSubDetector3_){
+    b_jets_AK5PF_fSubDetector3_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fSubDetector3", &jets_AK5PF_fSubDetector3_, &b_jets_AK5PF_fSubDetector3_);
     b_jets_AK5PF_fSubDetector3_->GetEntry(entry_);
     c_jets_AK5PF_fSubDetector3_ = true;
   }
@@ -4190,6 +7218,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector3() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector4() const{
   if(!c_jets_AK5PF_fSubDetector4_ && b_jets_AK5PF_fSubDetector4_){
+    b_jets_AK5PF_fSubDetector4_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_fSubDetector4", &jets_AK5PF_fSubDetector4_, &b_jets_AK5PF_fSubDetector4_);
     b_jets_AK5PF_fSubDetector4_->GetEntry(entry_);
     c_jets_AK5PF_fSubDetector4_ = true;
   }
@@ -4198,6 +7228,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_fSubDetector4() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_Energy() const{
   if(!c_jets_AK5PF_gen_Energy_ && b_jets_AK5PF_gen_Energy_){
+    b_jets_AK5PF_gen_Energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_Energy", &jets_AK5PF_gen_Energy_, &b_jets_AK5PF_gen_Energy_);
     b_jets_AK5PF_gen_Energy_->GetEntry(entry_);
     c_jets_AK5PF_gen_Energy_ = true;
   }
@@ -4206,6 +7238,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_Energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_Id() const{
   if(!c_jets_AK5PF_gen_Id_ && b_jets_AK5PF_gen_Id_){
+    b_jets_AK5PF_gen_Id_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_Id", &jets_AK5PF_gen_Id_, &b_jets_AK5PF_gen_Id_);
     b_jets_AK5PF_gen_Id_->GetEntry(entry_);
     c_jets_AK5PF_gen_Id_ = true;
   }
@@ -4214,6 +7248,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_Id() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_et() const{
   if(!c_jets_AK5PF_gen_et_ && b_jets_AK5PF_gen_et_){
+    b_jets_AK5PF_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_et", &jets_AK5PF_gen_et_, &b_jets_AK5PF_gen_et_);
     b_jets_AK5PF_gen_et_->GetEntry(entry_);
     c_jets_AK5PF_gen_et_ = true;
   }
@@ -4222,6 +7258,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_et() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_eta() const{
   if(!c_jets_AK5PF_gen_eta_ && b_jets_AK5PF_gen_eta_){
+    b_jets_AK5PF_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_eta", &jets_AK5PF_gen_eta_, &b_jets_AK5PF_gen_eta_);
     b_jets_AK5PF_gen_eta_->GetEntry(entry_);
     c_jets_AK5PF_gen_eta_ = true;
   }
@@ -4230,6 +7268,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_mass() const{
   if(!c_jets_AK5PF_gen_mass_ && b_jets_AK5PF_gen_mass_){
+    b_jets_AK5PF_gen_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_mass", &jets_AK5PF_gen_mass_, &b_jets_AK5PF_gen_mass_);
     b_jets_AK5PF_gen_mass_->GetEntry(entry_);
     c_jets_AK5PF_gen_mass_ = true;
   }
@@ -4238,6 +7278,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_motherID() const{
   if(!c_jets_AK5PF_gen_motherID_ && b_jets_AK5PF_gen_motherID_){
+    b_jets_AK5PF_gen_motherID_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_motherID", &jets_AK5PF_gen_motherID_, &b_jets_AK5PF_gen_motherID_);
     b_jets_AK5PF_gen_motherID_->GetEntry(entry_);
     c_jets_AK5PF_gen_motherID_ = true;
   }
@@ -4246,6 +7288,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_motherID() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_phi() const{
   if(!c_jets_AK5PF_gen_phi_ && b_jets_AK5PF_gen_phi_){
+    b_jets_AK5PF_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_phi", &jets_AK5PF_gen_phi_, &b_jets_AK5PF_gen_phi_);
     b_jets_AK5PF_gen_phi_->GetEntry(entry_);
     c_jets_AK5PF_gen_phi_ = true;
   }
@@ -4254,6 +7298,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_pt() const{
   if(!c_jets_AK5PF_gen_pt_ && b_jets_AK5PF_gen_pt_){
+    b_jets_AK5PF_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_pt", &jets_AK5PF_gen_pt_, &b_jets_AK5PF_gen_pt_);
     b_jets_AK5PF_gen_pt_->GetEntry(entry_);
     c_jets_AK5PF_gen_pt_ = true;
   }
@@ -4262,6 +7308,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_gen_threeCharge() const{
   if(!c_jets_AK5PF_gen_threeCharge_ && b_jets_AK5PF_gen_threeCharge_){
+    b_jets_AK5PF_gen_threeCharge_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_gen_threeCharge", &jets_AK5PF_gen_threeCharge_, &b_jets_AK5PF_gen_threeCharge_);
     b_jets_AK5PF_gen_threeCharge_->GetEntry(entry_);
     c_jets_AK5PF_gen_threeCharge_ = true;
   }
@@ -4270,6 +7318,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_gen_threeCharge() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_hitsInN90() const{
   if(!c_jets_AK5PF_hitsInN90_ && b_jets_AK5PF_hitsInN90_){
+    b_jets_AK5PF_hitsInN90_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_hitsInN90", &jets_AK5PF_hitsInN90_, &b_jets_AK5PF_hitsInN90_);
     b_jets_AK5PF_hitsInN90_->GetEntry(entry_);
     c_jets_AK5PF_hitsInN90_ = true;
   }
@@ -4278,6 +7328,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_hitsInN90() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_jetCharge() const{
   if(!c_jets_AK5PF_jetCharge_ && b_jets_AK5PF_jetCharge_){
+    b_jets_AK5PF_jetCharge_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_jetCharge", &jets_AK5PF_jetCharge_, &b_jets_AK5PF_jetCharge_);
     b_jets_AK5PF_jetCharge_->GetEntry(entry_);
     c_jets_AK5PF_jetCharge_ = true;
   }
@@ -4286,6 +7338,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_jetCharge() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_mass() const{
   if(!c_jets_AK5PF_mass_ && b_jets_AK5PF_mass_){
+    b_jets_AK5PF_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_mass", &jets_AK5PF_mass_, &b_jets_AK5PF_mass_);
     b_jets_AK5PF_mass_->GetEntry(entry_);
     c_jets_AK5PF_mass_ = true;
   }
@@ -4294,6 +7348,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_mu_Mult() const{
   if(!c_jets_AK5PF_mu_Mult_ && b_jets_AK5PF_mu_Mult_){
+    b_jets_AK5PF_mu_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_mu_Mult", &jets_AK5PF_mu_Mult_, &b_jets_AK5PF_mu_Mult_);
     b_jets_AK5PF_mu_Mult_->GetEntry(entry_);
     c_jets_AK5PF_mu_Mult_ = true;
   }
@@ -4302,6 +7358,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_mu_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_n60() const{
   if(!c_jets_AK5PF_n60_ && b_jets_AK5PF_n60_){
+    b_jets_AK5PF_n60_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_n60", &jets_AK5PF_n60_, &b_jets_AK5PF_n60_);
     b_jets_AK5PF_n60_->GetEntry(entry_);
     c_jets_AK5PF_n60_ = true;
   }
@@ -4310,6 +7368,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_n60() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_n90() const{
   if(!c_jets_AK5PF_n90_ && b_jets_AK5PF_n90_){
+    b_jets_AK5PF_n90_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_n90", &jets_AK5PF_n90_, &b_jets_AK5PF_n90_);
     b_jets_AK5PF_n90_->GetEntry(entry_);
     c_jets_AK5PF_n90_ = true;
   }
@@ -4318,6 +7378,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_n90() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_n90Hits() const{
   if(!c_jets_AK5PF_n90Hits_ && b_jets_AK5PF_n90Hits_){
+    b_jets_AK5PF_n90Hits_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_n90Hits", &jets_AK5PF_n90Hits_, &b_jets_AK5PF_n90Hits_);
     b_jets_AK5PF_n90Hits_->GetEntry(entry_);
     c_jets_AK5PF_n90Hits_ = true;
   }
@@ -4326,6 +7388,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_n90Hits() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_nECALTowers() const{
   if(!c_jets_AK5PF_nECALTowers_ && b_jets_AK5PF_nECALTowers_){
+    b_jets_AK5PF_nECALTowers_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_nECALTowers", &jets_AK5PF_nECALTowers_, &b_jets_AK5PF_nECALTowers_);
     b_jets_AK5PF_nECALTowers_->GetEntry(entry_);
     c_jets_AK5PF_nECALTowers_ = true;
   }
@@ -4334,6 +7398,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_nECALTowers() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_nHCALTowers() const{
   if(!c_jets_AK5PF_nHCALTowers_ && b_jets_AK5PF_nHCALTowers_){
+    b_jets_AK5PF_nHCALTowers_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_nHCALTowers", &jets_AK5PF_nHCALTowers_, &b_jets_AK5PF_nHCALTowers_);
     b_jets_AK5PF_nHCALTowers_->GetEntry(entry_);
     c_jets_AK5PF_nHCALTowers_ = true;
   }
@@ -4342,6 +7408,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_nHCALTowers() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_neutralEmE() const{
   if(!c_jets_AK5PF_neutralEmE_ && b_jets_AK5PF_neutralEmE_){
+    b_jets_AK5PF_neutralEmE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_neutralEmE", &jets_AK5PF_neutralEmE_, &b_jets_AK5PF_neutralEmE_);
     b_jets_AK5PF_neutralEmE_->GetEntry(entry_);
     c_jets_AK5PF_neutralEmE_ = true;
   }
@@ -4350,6 +7418,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_neutralEmE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_neutralHadE() const{
   if(!c_jets_AK5PF_neutralHadE_ && b_jets_AK5PF_neutralHadE_){
+    b_jets_AK5PF_neutralHadE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_neutralHadE", &jets_AK5PF_neutralHadE_, &b_jets_AK5PF_neutralHadE_);
     b_jets_AK5PF_neutralHadE_->GetEntry(entry_);
     c_jets_AK5PF_neutralHadE_ = true;
   }
@@ -4358,6 +7428,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_neutralHadE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_neutral_Mult() const{
   if(!c_jets_AK5PF_neutral_Mult_ && b_jets_AK5PF_neutral_Mult_){
+    b_jets_AK5PF_neutral_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_neutral_Mult", &jets_AK5PF_neutral_Mult_, &b_jets_AK5PF_neutral_Mult_);
     b_jets_AK5PF_neutral_Mult_->GetEntry(entry_);
     c_jets_AK5PF_neutral_Mult_ = true;
   }
@@ -4366,6 +7438,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_neutral_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_partonFlavour() const{
   if(!c_jets_AK5PF_partonFlavour_ && b_jets_AK5PF_partonFlavour_){
+    b_jets_AK5PF_partonFlavour_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_partonFlavour", &jets_AK5PF_partonFlavour_, &b_jets_AK5PF_partonFlavour_);
     b_jets_AK5PF_partonFlavour_->GetEntry(entry_);
     c_jets_AK5PF_partonFlavour_ = true;
   }
@@ -4374,6 +7448,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_partonFlavour() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_Energy() const{
   if(!c_jets_AK5PF_parton_Energy_ && b_jets_AK5PF_parton_Energy_){
+    b_jets_AK5PF_parton_Energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_Energy", &jets_AK5PF_parton_Energy_, &b_jets_AK5PF_parton_Energy_);
     b_jets_AK5PF_parton_Energy_->GetEntry(entry_);
     c_jets_AK5PF_parton_Energy_ = true;
   }
@@ -4382,6 +7458,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_Energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_Id() const{
   if(!c_jets_AK5PF_parton_Id_ && b_jets_AK5PF_parton_Id_){
+    b_jets_AK5PF_parton_Id_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_Id", &jets_AK5PF_parton_Id_, &b_jets_AK5PF_parton_Id_);
     b_jets_AK5PF_parton_Id_->GetEntry(entry_);
     c_jets_AK5PF_parton_Id_ = true;
   }
@@ -4390,6 +7468,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_Id() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_eta() const{
   if(!c_jets_AK5PF_parton_eta_ && b_jets_AK5PF_parton_eta_){
+    b_jets_AK5PF_parton_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_eta", &jets_AK5PF_parton_eta_, &b_jets_AK5PF_parton_eta_);
     b_jets_AK5PF_parton_eta_->GetEntry(entry_);
     c_jets_AK5PF_parton_eta_ = true;
   }
@@ -4398,6 +7478,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_mass() const{
   if(!c_jets_AK5PF_parton_mass_ && b_jets_AK5PF_parton_mass_){
+    b_jets_AK5PF_parton_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_mass", &jets_AK5PF_parton_mass_, &b_jets_AK5PF_parton_mass_);
     b_jets_AK5PF_parton_mass_->GetEntry(entry_);
     c_jets_AK5PF_parton_mass_ = true;
   }
@@ -4406,6 +7488,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_motherId() const{
   if(!c_jets_AK5PF_parton_motherId_ && b_jets_AK5PF_parton_motherId_){
+    b_jets_AK5PF_parton_motherId_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_motherId", &jets_AK5PF_parton_motherId_, &b_jets_AK5PF_parton_motherId_);
     b_jets_AK5PF_parton_motherId_->GetEntry(entry_);
     c_jets_AK5PF_parton_motherId_ = true;
   }
@@ -4414,6 +7498,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_motherId() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_phi() const{
   if(!c_jets_AK5PF_parton_phi_ && b_jets_AK5PF_parton_phi_){
+    b_jets_AK5PF_parton_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_phi", &jets_AK5PF_parton_phi_, &b_jets_AK5PF_parton_phi_);
     b_jets_AK5PF_parton_phi_->GetEntry(entry_);
     c_jets_AK5PF_parton_phi_ = true;
   }
@@ -4422,6 +7508,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_parton_pt() const{
   if(!c_jets_AK5PF_parton_pt_ && b_jets_AK5PF_parton_pt_){
+    b_jets_AK5PF_parton_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_parton_pt", &jets_AK5PF_parton_pt_, &b_jets_AK5PF_parton_pt_);
     b_jets_AK5PF_parton_pt_->GetEntry(entry_);
     c_jets_AK5PF_parton_pt_ = true;
   }
@@ -4430,6 +7518,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_parton_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_phi() const{
   if(!c_jets_AK5PF_phi_ && b_jets_AK5PF_phi_){
+    b_jets_AK5PF_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_phi", &jets_AK5PF_phi_, &b_jets_AK5PF_phi_);
     b_jets_AK5PF_phi_->GetEntry(entry_);
     c_jets_AK5PF_phi_ = true;
   }
@@ -4438,6 +7528,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_phiphiMoment() const{
   if(!c_jets_AK5PF_phiphiMoment_ && b_jets_AK5PF_phiphiMoment_){
+    b_jets_AK5PF_phiphiMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_phiphiMoment", &jets_AK5PF_phiphiMoment_, &b_jets_AK5PF_phiphiMoment_);
     b_jets_AK5PF_phiphiMoment_->GetEntry(entry_);
     c_jets_AK5PF_phiphiMoment_ = true;
   }
@@ -4446,6 +7538,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_phiphiMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_photonEnergy() const{
   if(!c_jets_AK5PF_photonEnergy_ && b_jets_AK5PF_photonEnergy_){
+    b_jets_AK5PF_photonEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_photonEnergy", &jets_AK5PF_photonEnergy_, &b_jets_AK5PF_photonEnergy_);
     b_jets_AK5PF_photonEnergy_->GetEntry(entry_);
     c_jets_AK5PF_photonEnergy_ = true;
   }
@@ -4454,6 +7548,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_photonEnergy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_pt() const{
   if(!c_jets_AK5PF_pt_ && b_jets_AK5PF_pt_){
+    b_jets_AK5PF_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_pt", &jets_AK5PF_pt_, &b_jets_AK5PF_pt_);
     b_jets_AK5PF_pt_->GetEntry(entry_);
     c_jets_AK5PF_pt_ = true;
   }
@@ -4462,6 +7558,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_px() const{
   if(!c_jets_AK5PF_px_ && b_jets_AK5PF_px_){
+    b_jets_AK5PF_px_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_px", &jets_AK5PF_px_, &b_jets_AK5PF_px_);
     b_jets_AK5PF_px_->GetEntry(entry_);
     c_jets_AK5PF_px_ = true;
   }
@@ -4470,6 +7568,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_px() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_py() const{
   if(!c_jets_AK5PF_py_ && b_jets_AK5PF_py_){
+    b_jets_AK5PF_py_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_py", &jets_AK5PF_py_, &b_jets_AK5PF_py_);
     b_jets_AK5PF_py_->GetEntry(entry_);
     c_jets_AK5PF_py_ = true;
   }
@@ -4478,6 +7578,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_py() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_pz() const{
   if(!c_jets_AK5PF_pz_ && b_jets_AK5PF_pz_){
+    b_jets_AK5PF_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_pz", &jets_AK5PF_pz_, &b_jets_AK5PF_pz_);
     b_jets_AK5PF_pz_->GetEntry(entry_);
     c_jets_AK5PF_pz_ = true;
   }
@@ -4486,6 +7588,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_pz() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_rawPt() const{
   if(!c_jets_AK5PF_rawPt_ && b_jets_AK5PF_rawPt_){
+    b_jets_AK5PF_rawPt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_rawPt", &jets_AK5PF_rawPt_, &b_jets_AK5PF_rawPt_);
     b_jets_AK5PF_rawPt_->GetEntry(entry_);
     c_jets_AK5PF_rawPt_ = true;
   }
@@ -4494,6 +7598,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_rawPt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_status() const{
   if(!c_jets_AK5PF_status_ && b_jets_AK5PF_status_){
+    b_jets_AK5PF_status_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_status", &jets_AK5PF_status_, &b_jets_AK5PF_status_);
     b_jets_AK5PF_status_->GetEntry(entry_);
     c_jets_AK5PF_status_ = true;
   }
@@ -4502,6 +7608,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_status() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PF_theta() const{
   if(!c_jets_AK5PF_theta_ && b_jets_AK5PF_theta_){
+    b_jets_AK5PF_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PF_theta", &jets_AK5PF_theta_, &b_jets_AK5PF_theta_);
     b_jets_AK5PF_theta_->GetEntry(entry_);
     c_jets_AK5PF_theta_ = true;
   }
@@ -4510,6 +7618,8 @@ std::vector<float>* const & cfa_8::jets_AK5PF_theta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_Uncert() const{
   if(!c_jets_AK5PFclean_Uncert_ && b_jets_AK5PFclean_Uncert_){
+    b_jets_AK5PFclean_Uncert_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_Uncert", &jets_AK5PFclean_Uncert_, &b_jets_AK5PFclean_Uncert_);
     b_jets_AK5PFclean_Uncert_->GetEntry(entry_);
     c_jets_AK5PFclean_Uncert_ = true;
   }
@@ -4518,6 +7628,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_Uncert() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_area() const{
   if(!c_jets_AK5PFclean_area_ && b_jets_AK5PFclean_area_){
+    b_jets_AK5PFclean_area_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_area", &jets_AK5PFclean_area_, &b_jets_AK5PFclean_area_);
     b_jets_AK5PFclean_area_->GetEntry(entry_);
     c_jets_AK5PFclean_area_ = true;
   }
@@ -4526,6 +7638,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_area() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_TC_highEff() const{
   if(!c_jets_AK5PFclean_btag_TC_highEff_ && b_jets_AK5PFclean_btag_TC_highEff_){
+    b_jets_AK5PFclean_btag_TC_highEff_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_TC_highEff", &jets_AK5PFclean_btag_TC_highEff_, &b_jets_AK5PFclean_btag_TC_highEff_);
     b_jets_AK5PFclean_btag_TC_highEff_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_TC_highEff_ = true;
   }
@@ -4534,6 +7648,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_TC_highEff() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_TC_highPur() const{
   if(!c_jets_AK5PFclean_btag_TC_highPur_ && b_jets_AK5PFclean_btag_TC_highPur_){
+    b_jets_AK5PFclean_btag_TC_highPur_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_TC_highPur", &jets_AK5PFclean_btag_TC_highPur_, &b_jets_AK5PFclean_btag_TC_highPur_);
     b_jets_AK5PFclean_btag_TC_highPur_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_TC_highPur_ = true;
   }
@@ -4542,6 +7658,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_TC_highPur() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_jetBProb() const{
   if(!c_jets_AK5PFclean_btag_jetBProb_ && b_jets_AK5PFclean_btag_jetBProb_){
+    b_jets_AK5PFclean_btag_jetBProb_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_jetBProb", &jets_AK5PFclean_btag_jetBProb_, &b_jets_AK5PFclean_btag_jetBProb_);
     b_jets_AK5PFclean_btag_jetBProb_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_jetBProb_ = true;
   }
@@ -4550,6 +7668,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_jetBProb() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_jetProb() const{
   if(!c_jets_AK5PFclean_btag_jetProb_ && b_jets_AK5PFclean_btag_jetProb_){
+    b_jets_AK5PFclean_btag_jetProb_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_jetProb", &jets_AK5PFclean_btag_jetProb_, &b_jets_AK5PFclean_btag_jetProb_);
     b_jets_AK5PFclean_btag_jetProb_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_jetProb_ = true;
   }
@@ -4558,6 +7678,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_jetProb() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexCombined() const{
   if(!c_jets_AK5PFclean_btag_secVertexCombined_ && b_jets_AK5PFclean_btag_secVertexCombined_){
+    b_jets_AK5PFclean_btag_secVertexCombined_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_secVertexCombined", &jets_AK5PFclean_btag_secVertexCombined_, &b_jets_AK5PFclean_btag_secVertexCombined_);
     b_jets_AK5PFclean_btag_secVertexCombined_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_secVertexCombined_ = true;
   }
@@ -4566,6 +7688,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexCombined() cons
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexHighEff() const{
   if(!c_jets_AK5PFclean_btag_secVertexHighEff_ && b_jets_AK5PFclean_btag_secVertexHighEff_){
+    b_jets_AK5PFclean_btag_secVertexHighEff_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_secVertexHighEff", &jets_AK5PFclean_btag_secVertexHighEff_, &b_jets_AK5PFclean_btag_secVertexHighEff_);
     b_jets_AK5PFclean_btag_secVertexHighEff_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_secVertexHighEff_ = true;
   }
@@ -4574,6 +7698,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexHighEff() const
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexHighPur() const{
   if(!c_jets_AK5PFclean_btag_secVertexHighPur_ && b_jets_AK5PFclean_btag_secVertexHighPur_){
+    b_jets_AK5PFclean_btag_secVertexHighPur_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_secVertexHighPur", &jets_AK5PFclean_btag_secVertexHighPur_, &b_jets_AK5PFclean_btag_secVertexHighPur_);
     b_jets_AK5PFclean_btag_secVertexHighPur_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_secVertexHighPur_ = true;
   }
@@ -4582,6 +7708,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_secVertexHighPur() const
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_softEle() const{
   if(!c_jets_AK5PFclean_btag_softEle_ && b_jets_AK5PFclean_btag_softEle_){
+    b_jets_AK5PFclean_btag_softEle_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_softEle", &jets_AK5PFclean_btag_softEle_, &b_jets_AK5PFclean_btag_softEle_);
     b_jets_AK5PFclean_btag_softEle_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_softEle_ = true;
   }
@@ -4590,6 +7718,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_softEle() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_softMuon() const{
   if(!c_jets_AK5PFclean_btag_softMuon_ && b_jets_AK5PFclean_btag_softMuon_){
+    b_jets_AK5PFclean_btag_softMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_btag_softMuon", &jets_AK5PFclean_btag_softMuon_, &b_jets_AK5PFclean_btag_softMuon_);
     b_jets_AK5PFclean_btag_softMuon_->GetEntry(entry_);
     c_jets_AK5PFclean_btag_softMuon_ = true;
   }
@@ -4598,6 +7728,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_btag_softMuon() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_chgEmE() const{
   if(!c_jets_AK5PFclean_chgEmE_ && b_jets_AK5PFclean_chgEmE_){
+    b_jets_AK5PFclean_chgEmE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_chgEmE", &jets_AK5PFclean_chgEmE_, &b_jets_AK5PFclean_chgEmE_);
     b_jets_AK5PFclean_chgEmE_->GetEntry(entry_);
     c_jets_AK5PFclean_chgEmE_ = true;
   }
@@ -4606,6 +7738,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_chgEmE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_chgHadE() const{
   if(!c_jets_AK5PFclean_chgHadE_ && b_jets_AK5PFclean_chgHadE_){
+    b_jets_AK5PFclean_chgHadE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_chgHadE", &jets_AK5PFclean_chgHadE_, &b_jets_AK5PFclean_chgHadE_);
     b_jets_AK5PFclean_chgHadE_->GetEntry(entry_);
     c_jets_AK5PFclean_chgHadE_ = true;
   }
@@ -4614,6 +7748,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_chgHadE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_chgMuE() const{
   if(!c_jets_AK5PFclean_chgMuE_ && b_jets_AK5PFclean_chgMuE_){
+    b_jets_AK5PFclean_chgMuE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_chgMuE", &jets_AK5PFclean_chgMuE_, &b_jets_AK5PFclean_chgMuE_);
     b_jets_AK5PFclean_chgMuE_->GetEntry(entry_);
     c_jets_AK5PFclean_chgMuE_ = true;
   }
@@ -4622,6 +7758,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_chgMuE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_chg_Mult() const{
   if(!c_jets_AK5PFclean_chg_Mult_ && b_jets_AK5PFclean_chg_Mult_){
+    b_jets_AK5PFclean_chg_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_chg_Mult", &jets_AK5PFclean_chg_Mult_, &b_jets_AK5PFclean_chg_Mult_);
     b_jets_AK5PFclean_chg_Mult_->GetEntry(entry_);
     c_jets_AK5PFclean_chg_Mult_ = true;
   }
@@ -4630,6 +7768,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_chg_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrFactorRaw() const{
   if(!c_jets_AK5PFclean_corrFactorRaw_ && b_jets_AK5PFclean_corrFactorRaw_){
+    b_jets_AK5PFclean_corrFactorRaw_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_corrFactorRaw", &jets_AK5PFclean_corrFactorRaw_, &b_jets_AK5PFclean_corrFactorRaw_);
     b_jets_AK5PFclean_corrFactorRaw_->GetEntry(entry_);
     c_jets_AK5PFclean_corrFactorRaw_ = true;
   }
@@ -4638,6 +7778,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrFactorRaw() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1FastL2L3() const{
   if(!c_jets_AK5PFclean_corrL1FastL2L3_ && b_jets_AK5PFclean_corrL1FastL2L3_){
+    b_jets_AK5PFclean_corrL1FastL2L3_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL1FastL2L3", &jets_AK5PFclean_corrL1FastL2L3_, &b_jets_AK5PFclean_corrL1FastL2L3_);
     b_jets_AK5PFclean_corrL1FastL2L3_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL1FastL2L3_ = true;
   }
@@ -4646,6 +7788,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1FastL2L3() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1FastL2L3Residual() const{
   if(!c_jets_AK5PFclean_corrL1FastL2L3Residual_ && b_jets_AK5PFclean_corrL1FastL2L3Residual_){
+    b_jets_AK5PFclean_corrL1FastL2L3Residual_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL1FastL2L3Residual", &jets_AK5PFclean_corrL1FastL2L3Residual_, &b_jets_AK5PFclean_corrL1FastL2L3Residual_);
     b_jets_AK5PFclean_corrL1FastL2L3Residual_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL1FastL2L3Residual_ = true;
   }
@@ -4654,6 +7798,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1FastL2L3Residual() cons
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1L2L3() const{
   if(!c_jets_AK5PFclean_corrL1L2L3_ && b_jets_AK5PFclean_corrL1L2L3_){
+    b_jets_AK5PFclean_corrL1L2L3_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL1L2L3", &jets_AK5PFclean_corrL1L2L3_, &b_jets_AK5PFclean_corrL1L2L3_);
     b_jets_AK5PFclean_corrL1L2L3_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL1L2L3_ = true;
   }
@@ -4662,6 +7808,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1L2L3() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1L2L3Residual() const{
   if(!c_jets_AK5PFclean_corrL1L2L3Residual_ && b_jets_AK5PFclean_corrL1L2L3Residual_){
+    b_jets_AK5PFclean_corrL1L2L3Residual_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL1L2L3Residual", &jets_AK5PFclean_corrL1L2L3Residual_, &b_jets_AK5PFclean_corrL1L2L3Residual_);
     b_jets_AK5PFclean_corrL1L2L3Residual_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL1L2L3Residual_ = true;
   }
@@ -4670,6 +7818,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL1L2L3Residual() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL2L3() const{
   if(!c_jets_AK5PFclean_corrL2L3_ && b_jets_AK5PFclean_corrL2L3_){
+    b_jets_AK5PFclean_corrL2L3_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL2L3", &jets_AK5PFclean_corrL2L3_, &b_jets_AK5PFclean_corrL2L3_);
     b_jets_AK5PFclean_corrL2L3_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL2L3_ = true;
   }
@@ -4678,6 +7828,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL2L3() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL2L3Residual() const{
   if(!c_jets_AK5PFclean_corrL2L3Residual_ && b_jets_AK5PFclean_corrL2L3Residual_){
+    b_jets_AK5PFclean_corrL2L3Residual_->SetStatus(true);
+    chainA_.SetBranchAddress("jets_AK5PFclean_corrL2L3Residual", &jets_AK5PFclean_corrL2L3Residual_, &b_jets_AK5PFclean_corrL2L3Residual_);
     b_jets_AK5PFclean_corrL2L3Residual_->GetEntry(entry_);
     c_jets_AK5PFclean_corrL2L3Residual_ = true;
   }
@@ -4686,6 +7838,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_corrL2L3Residual() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_ehf() const{
   if(!c_jets_AK5PFclean_ehf_ && b_jets_AK5PFclean_ehf_){
+    b_jets_AK5PFclean_ehf_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_ehf", &jets_AK5PFclean_ehf_, &b_jets_AK5PFclean_ehf_);
     b_jets_AK5PFclean_ehf_->GetEntry(entry_);
     c_jets_AK5PFclean_ehf_ = true;
   }
@@ -4694,6 +7848,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_ehf() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_emf() const{
   if(!c_jets_AK5PFclean_emf_ && b_jets_AK5PFclean_emf_){
+    b_jets_AK5PFclean_emf_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_emf", &jets_AK5PFclean_emf_, &b_jets_AK5PFclean_emf_);
     b_jets_AK5PFclean_emf_->GetEntry(entry_);
     c_jets_AK5PFclean_emf_ = true;
   }
@@ -4702,6 +7858,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_emf() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_energy() const{
   if(!c_jets_AK5PFclean_energy_ && b_jets_AK5PFclean_energy_){
+    b_jets_AK5PFclean_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_energy", &jets_AK5PFclean_energy_, &b_jets_AK5PFclean_energy_);
     b_jets_AK5PFclean_energy_->GetEntry(entry_);
     c_jets_AK5PFclean_energy_ = true;
   }
@@ -4710,6 +7868,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_et() const{
   if(!c_jets_AK5PFclean_et_ && b_jets_AK5PFclean_et_){
+    b_jets_AK5PFclean_et_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_et", &jets_AK5PFclean_et_, &b_jets_AK5PFclean_et_);
     b_jets_AK5PFclean_et_->GetEntry(entry_);
     c_jets_AK5PFclean_et_ = true;
   }
@@ -4718,6 +7878,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_et() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_eta() const{
   if(!c_jets_AK5PFclean_eta_ && b_jets_AK5PFclean_eta_){
+    b_jets_AK5PFclean_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_eta", &jets_AK5PFclean_eta_, &b_jets_AK5PFclean_eta_);
     b_jets_AK5PFclean_eta_->GetEntry(entry_);
     c_jets_AK5PFclean_eta_ = true;
   }
@@ -4726,6 +7888,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_etaetaMoment() const{
   if(!c_jets_AK5PFclean_etaetaMoment_ && b_jets_AK5PFclean_etaetaMoment_){
+    b_jets_AK5PFclean_etaetaMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_etaetaMoment", &jets_AK5PFclean_etaetaMoment_, &b_jets_AK5PFclean_etaetaMoment_);
     b_jets_AK5PFclean_etaetaMoment_->GetEntry(entry_);
     c_jets_AK5PFclean_etaetaMoment_ = true;
   }
@@ -4734,6 +7898,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_etaetaMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_etaphiMoment() const{
   if(!c_jets_AK5PFclean_etaphiMoment_ && b_jets_AK5PFclean_etaphiMoment_){
+    b_jets_AK5PFclean_etaphiMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_etaphiMoment", &jets_AK5PFclean_etaphiMoment_, &b_jets_AK5PFclean_etaphiMoment_);
     b_jets_AK5PFclean_etaphiMoment_->GetEntry(entry_);
     c_jets_AK5PFclean_etaphiMoment_ = true;
   }
@@ -4742,6 +7908,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_etaphiMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fHPD() const{
   if(!c_jets_AK5PFclean_fHPD_ && b_jets_AK5PFclean_fHPD_){
+    b_jets_AK5PFclean_fHPD_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fHPD", &jets_AK5PFclean_fHPD_, &b_jets_AK5PFclean_fHPD_);
     b_jets_AK5PFclean_fHPD_->GetEntry(entry_);
     c_jets_AK5PFclean_fHPD_ = true;
   }
@@ -4750,6 +7918,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fHPD() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fRBX() const{
   if(!c_jets_AK5PFclean_fRBX_ && b_jets_AK5PFclean_fRBX_){
+    b_jets_AK5PFclean_fRBX_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fRBX", &jets_AK5PFclean_fRBX_, &b_jets_AK5PFclean_fRBX_);
     b_jets_AK5PFclean_fRBX_->GetEntry(entry_);
     c_jets_AK5PFclean_fRBX_ = true;
   }
@@ -4758,6 +7928,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fRBX() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector1() const{
   if(!c_jets_AK5PFclean_fSubDetector1_ && b_jets_AK5PFclean_fSubDetector1_){
+    b_jets_AK5PFclean_fSubDetector1_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fSubDetector1", &jets_AK5PFclean_fSubDetector1_, &b_jets_AK5PFclean_fSubDetector1_);
     b_jets_AK5PFclean_fSubDetector1_->GetEntry(entry_);
     c_jets_AK5PFclean_fSubDetector1_ = true;
   }
@@ -4766,6 +7938,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector1() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector2() const{
   if(!c_jets_AK5PFclean_fSubDetector2_ && b_jets_AK5PFclean_fSubDetector2_){
+    b_jets_AK5PFclean_fSubDetector2_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fSubDetector2", &jets_AK5PFclean_fSubDetector2_, &b_jets_AK5PFclean_fSubDetector2_);
     b_jets_AK5PFclean_fSubDetector2_->GetEntry(entry_);
     c_jets_AK5PFclean_fSubDetector2_ = true;
   }
@@ -4774,6 +7948,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector2() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector3() const{
   if(!c_jets_AK5PFclean_fSubDetector3_ && b_jets_AK5PFclean_fSubDetector3_){
+    b_jets_AK5PFclean_fSubDetector3_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fSubDetector3", &jets_AK5PFclean_fSubDetector3_, &b_jets_AK5PFclean_fSubDetector3_);
     b_jets_AK5PFclean_fSubDetector3_->GetEntry(entry_);
     c_jets_AK5PFclean_fSubDetector3_ = true;
   }
@@ -4782,6 +7958,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector3() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector4() const{
   if(!c_jets_AK5PFclean_fSubDetector4_ && b_jets_AK5PFclean_fSubDetector4_){
+    b_jets_AK5PFclean_fSubDetector4_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_fSubDetector4", &jets_AK5PFclean_fSubDetector4_, &b_jets_AK5PFclean_fSubDetector4_);
     b_jets_AK5PFclean_fSubDetector4_->GetEntry(entry_);
     c_jets_AK5PFclean_fSubDetector4_ = true;
   }
@@ -4790,6 +7968,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_fSubDetector4() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_Energy() const{
   if(!c_jets_AK5PFclean_gen_Energy_ && b_jets_AK5PFclean_gen_Energy_){
+    b_jets_AK5PFclean_gen_Energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_Energy", &jets_AK5PFclean_gen_Energy_, &b_jets_AK5PFclean_gen_Energy_);
     b_jets_AK5PFclean_gen_Energy_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_Energy_ = true;
   }
@@ -4798,6 +7978,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_Energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_Id() const{
   if(!c_jets_AK5PFclean_gen_Id_ && b_jets_AK5PFclean_gen_Id_){
+    b_jets_AK5PFclean_gen_Id_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_Id", &jets_AK5PFclean_gen_Id_, &b_jets_AK5PFclean_gen_Id_);
     b_jets_AK5PFclean_gen_Id_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_Id_ = true;
   }
@@ -4806,6 +7988,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_Id() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_et() const{
   if(!c_jets_AK5PFclean_gen_et_ && b_jets_AK5PFclean_gen_et_){
+    b_jets_AK5PFclean_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_et", &jets_AK5PFclean_gen_et_, &b_jets_AK5PFclean_gen_et_);
     b_jets_AK5PFclean_gen_et_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_et_ = true;
   }
@@ -4814,6 +7998,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_et() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_eta() const{
   if(!c_jets_AK5PFclean_gen_eta_ && b_jets_AK5PFclean_gen_eta_){
+    b_jets_AK5PFclean_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_eta", &jets_AK5PFclean_gen_eta_, &b_jets_AK5PFclean_gen_eta_);
     b_jets_AK5PFclean_gen_eta_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_eta_ = true;
   }
@@ -4822,6 +8008,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_mass() const{
   if(!c_jets_AK5PFclean_gen_mass_ && b_jets_AK5PFclean_gen_mass_){
+    b_jets_AK5PFclean_gen_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_mass", &jets_AK5PFclean_gen_mass_, &b_jets_AK5PFclean_gen_mass_);
     b_jets_AK5PFclean_gen_mass_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_mass_ = true;
   }
@@ -4830,6 +8018,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_phi() const{
   if(!c_jets_AK5PFclean_gen_phi_ && b_jets_AK5PFclean_gen_phi_){
+    b_jets_AK5PFclean_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_phi", &jets_AK5PFclean_gen_phi_, &b_jets_AK5PFclean_gen_phi_);
     b_jets_AK5PFclean_gen_phi_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_phi_ = true;
   }
@@ -4838,6 +8028,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_pt() const{
   if(!c_jets_AK5PFclean_gen_pt_ && b_jets_AK5PFclean_gen_pt_){
+    b_jets_AK5PFclean_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_gen_pt", &jets_AK5PFclean_gen_pt_, &b_jets_AK5PFclean_gen_pt_);
     b_jets_AK5PFclean_gen_pt_->GetEntry(entry_);
     c_jets_AK5PFclean_gen_pt_ = true;
   }
@@ -4846,6 +8038,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_gen_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_hitsInN90() const{
   if(!c_jets_AK5PFclean_hitsInN90_ && b_jets_AK5PFclean_hitsInN90_){
+    b_jets_AK5PFclean_hitsInN90_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_hitsInN90", &jets_AK5PFclean_hitsInN90_, &b_jets_AK5PFclean_hitsInN90_);
     b_jets_AK5PFclean_hitsInN90_->GetEntry(entry_);
     c_jets_AK5PFclean_hitsInN90_ = true;
   }
@@ -4854,6 +8048,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_hitsInN90() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_jetCharge() const{
   if(!c_jets_AK5PFclean_jetCharge_ && b_jets_AK5PFclean_jetCharge_){
+    b_jets_AK5PFclean_jetCharge_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_jetCharge", &jets_AK5PFclean_jetCharge_, &b_jets_AK5PFclean_jetCharge_);
     b_jets_AK5PFclean_jetCharge_->GetEntry(entry_);
     c_jets_AK5PFclean_jetCharge_ = true;
   }
@@ -4862,6 +8058,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_jetCharge() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_mass() const{
   if(!c_jets_AK5PFclean_mass_ && b_jets_AK5PFclean_mass_){
+    b_jets_AK5PFclean_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_mass", &jets_AK5PFclean_mass_, &b_jets_AK5PFclean_mass_);
     b_jets_AK5PFclean_mass_->GetEntry(entry_);
     c_jets_AK5PFclean_mass_ = true;
   }
@@ -4870,6 +8068,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_mu_Mult() const{
   if(!c_jets_AK5PFclean_mu_Mult_ && b_jets_AK5PFclean_mu_Mult_){
+    b_jets_AK5PFclean_mu_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_mu_Mult", &jets_AK5PFclean_mu_Mult_, &b_jets_AK5PFclean_mu_Mult_);
     b_jets_AK5PFclean_mu_Mult_->GetEntry(entry_);
     c_jets_AK5PFclean_mu_Mult_ = true;
   }
@@ -4878,6 +8078,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_mu_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_n60() const{
   if(!c_jets_AK5PFclean_n60_ && b_jets_AK5PFclean_n60_){
+    b_jets_AK5PFclean_n60_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_n60", &jets_AK5PFclean_n60_, &b_jets_AK5PFclean_n60_);
     b_jets_AK5PFclean_n60_->GetEntry(entry_);
     c_jets_AK5PFclean_n60_ = true;
   }
@@ -4886,6 +8088,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_n60() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_n90() const{
   if(!c_jets_AK5PFclean_n90_ && b_jets_AK5PFclean_n90_){
+    b_jets_AK5PFclean_n90_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_n90", &jets_AK5PFclean_n90_, &b_jets_AK5PFclean_n90_);
     b_jets_AK5PFclean_n90_->GetEntry(entry_);
     c_jets_AK5PFclean_n90_ = true;
   }
@@ -4894,6 +8098,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_n90() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_n90Hits() const{
   if(!c_jets_AK5PFclean_n90Hits_ && b_jets_AK5PFclean_n90Hits_){
+    b_jets_AK5PFclean_n90Hits_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_n90Hits", &jets_AK5PFclean_n90Hits_, &b_jets_AK5PFclean_n90Hits_);
     b_jets_AK5PFclean_n90Hits_->GetEntry(entry_);
     c_jets_AK5PFclean_n90Hits_ = true;
   }
@@ -4902,6 +8108,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_n90Hits() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_nECALTowers() const{
   if(!c_jets_AK5PFclean_nECALTowers_ && b_jets_AK5PFclean_nECALTowers_){
+    b_jets_AK5PFclean_nECALTowers_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_nECALTowers", &jets_AK5PFclean_nECALTowers_, &b_jets_AK5PFclean_nECALTowers_);
     b_jets_AK5PFclean_nECALTowers_->GetEntry(entry_);
     c_jets_AK5PFclean_nECALTowers_ = true;
   }
@@ -4910,6 +8118,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_nECALTowers() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_nHCALTowers() const{
   if(!c_jets_AK5PFclean_nHCALTowers_ && b_jets_AK5PFclean_nHCALTowers_){
+    b_jets_AK5PFclean_nHCALTowers_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_nHCALTowers", &jets_AK5PFclean_nHCALTowers_, &b_jets_AK5PFclean_nHCALTowers_);
     b_jets_AK5PFclean_nHCALTowers_->GetEntry(entry_);
     c_jets_AK5PFclean_nHCALTowers_ = true;
   }
@@ -4918,6 +8128,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_nHCALTowers() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_neutralEmE() const{
   if(!c_jets_AK5PFclean_neutralEmE_ && b_jets_AK5PFclean_neutralEmE_){
+    b_jets_AK5PFclean_neutralEmE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_neutralEmE", &jets_AK5PFclean_neutralEmE_, &b_jets_AK5PFclean_neutralEmE_);
     b_jets_AK5PFclean_neutralEmE_->GetEntry(entry_);
     c_jets_AK5PFclean_neutralEmE_ = true;
   }
@@ -4926,6 +8138,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_neutralEmE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_neutralHadE() const{
   if(!c_jets_AK5PFclean_neutralHadE_ && b_jets_AK5PFclean_neutralHadE_){
+    b_jets_AK5PFclean_neutralHadE_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_neutralHadE", &jets_AK5PFclean_neutralHadE_, &b_jets_AK5PFclean_neutralHadE_);
     b_jets_AK5PFclean_neutralHadE_->GetEntry(entry_);
     c_jets_AK5PFclean_neutralHadE_ = true;
   }
@@ -4934,6 +8148,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_neutralHadE() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_neutral_Mult() const{
   if(!c_jets_AK5PFclean_neutral_Mult_ && b_jets_AK5PFclean_neutral_Mult_){
+    b_jets_AK5PFclean_neutral_Mult_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_neutral_Mult", &jets_AK5PFclean_neutral_Mult_, &b_jets_AK5PFclean_neutral_Mult_);
     b_jets_AK5PFclean_neutral_Mult_->GetEntry(entry_);
     c_jets_AK5PFclean_neutral_Mult_ = true;
   }
@@ -4942,6 +8158,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_neutral_Mult() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_partonFlavour() const{
   if(!c_jets_AK5PFclean_partonFlavour_ && b_jets_AK5PFclean_partonFlavour_){
+    b_jets_AK5PFclean_partonFlavour_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_partonFlavour", &jets_AK5PFclean_partonFlavour_, &b_jets_AK5PFclean_partonFlavour_);
     b_jets_AK5PFclean_partonFlavour_->GetEntry(entry_);
     c_jets_AK5PFclean_partonFlavour_ = true;
   }
@@ -4950,6 +8168,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_partonFlavour() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_Energy() const{
   if(!c_jets_AK5PFclean_parton_Energy_ && b_jets_AK5PFclean_parton_Energy_){
+    b_jets_AK5PFclean_parton_Energy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_Energy", &jets_AK5PFclean_parton_Energy_, &b_jets_AK5PFclean_parton_Energy_);
     b_jets_AK5PFclean_parton_Energy_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_Energy_ = true;
   }
@@ -4958,6 +8178,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_Energy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_Id() const{
   if(!c_jets_AK5PFclean_parton_Id_ && b_jets_AK5PFclean_parton_Id_){
+    b_jets_AK5PFclean_parton_Id_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_Id", &jets_AK5PFclean_parton_Id_, &b_jets_AK5PFclean_parton_Id_);
     b_jets_AK5PFclean_parton_Id_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_Id_ = true;
   }
@@ -4966,6 +8188,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_Id() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_eta() const{
   if(!c_jets_AK5PFclean_parton_eta_ && b_jets_AK5PFclean_parton_eta_){
+    b_jets_AK5PFclean_parton_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_eta", &jets_AK5PFclean_parton_eta_, &b_jets_AK5PFclean_parton_eta_);
     b_jets_AK5PFclean_parton_eta_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_eta_ = true;
   }
@@ -4974,6 +8198,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_eta() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_mass() const{
   if(!c_jets_AK5PFclean_parton_mass_ && b_jets_AK5PFclean_parton_mass_){
+    b_jets_AK5PFclean_parton_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_mass", &jets_AK5PFclean_parton_mass_, &b_jets_AK5PFclean_parton_mass_);
     b_jets_AK5PFclean_parton_mass_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_mass_ = true;
   }
@@ -4982,6 +8208,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_mass() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_motherId() const{
   if(!c_jets_AK5PFclean_parton_motherId_ && b_jets_AK5PFclean_parton_motherId_){
+    b_jets_AK5PFclean_parton_motherId_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_motherId", &jets_AK5PFclean_parton_motherId_, &b_jets_AK5PFclean_parton_motherId_);
     b_jets_AK5PFclean_parton_motherId_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_motherId_ = true;
   }
@@ -4990,6 +8218,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_motherId() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_phi() const{
   if(!c_jets_AK5PFclean_parton_phi_ && b_jets_AK5PFclean_parton_phi_){
+    b_jets_AK5PFclean_parton_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_phi", &jets_AK5PFclean_parton_phi_, &b_jets_AK5PFclean_parton_phi_);
     b_jets_AK5PFclean_parton_phi_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_phi_ = true;
   }
@@ -4998,6 +8228,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_pt() const{
   if(!c_jets_AK5PFclean_parton_pt_ && b_jets_AK5PFclean_parton_pt_){
+    b_jets_AK5PFclean_parton_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_parton_pt", &jets_AK5PFclean_parton_pt_, &b_jets_AK5PFclean_parton_pt_);
     b_jets_AK5PFclean_parton_pt_->GetEntry(entry_);
     c_jets_AK5PFclean_parton_pt_ = true;
   }
@@ -5006,6 +8238,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_parton_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_phi() const{
   if(!c_jets_AK5PFclean_phi_ && b_jets_AK5PFclean_phi_){
+    b_jets_AK5PFclean_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_phi", &jets_AK5PFclean_phi_, &b_jets_AK5PFclean_phi_);
     b_jets_AK5PFclean_phi_->GetEntry(entry_);
     c_jets_AK5PFclean_phi_ = true;
   }
@@ -5014,6 +8248,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_phi() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_phiphiMoment() const{
   if(!c_jets_AK5PFclean_phiphiMoment_ && b_jets_AK5PFclean_phiphiMoment_){
+    b_jets_AK5PFclean_phiphiMoment_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_phiphiMoment", &jets_AK5PFclean_phiphiMoment_, &b_jets_AK5PFclean_phiphiMoment_);
     b_jets_AK5PFclean_phiphiMoment_->GetEntry(entry_);
     c_jets_AK5PFclean_phiphiMoment_ = true;
   }
@@ -5022,6 +8258,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_phiphiMoment() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_photonEnergy() const{
   if(!c_jets_AK5PFclean_photonEnergy_ && b_jets_AK5PFclean_photonEnergy_){
+    b_jets_AK5PFclean_photonEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_photonEnergy", &jets_AK5PFclean_photonEnergy_, &b_jets_AK5PFclean_photonEnergy_);
     b_jets_AK5PFclean_photonEnergy_->GetEntry(entry_);
     c_jets_AK5PFclean_photonEnergy_ = true;
   }
@@ -5030,6 +8268,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_photonEnergy() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_pt() const{
   if(!c_jets_AK5PFclean_pt_ && b_jets_AK5PFclean_pt_){
+    b_jets_AK5PFclean_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_pt", &jets_AK5PFclean_pt_, &b_jets_AK5PFclean_pt_);
     b_jets_AK5PFclean_pt_->GetEntry(entry_);
     c_jets_AK5PFclean_pt_ = true;
   }
@@ -5038,6 +8278,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_pt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_px() const{
   if(!c_jets_AK5PFclean_px_ && b_jets_AK5PFclean_px_){
+    b_jets_AK5PFclean_px_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_px", &jets_AK5PFclean_px_, &b_jets_AK5PFclean_px_);
     b_jets_AK5PFclean_px_->GetEntry(entry_);
     c_jets_AK5PFclean_px_ = true;
   }
@@ -5046,6 +8288,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_px() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_py() const{
   if(!c_jets_AK5PFclean_py_ && b_jets_AK5PFclean_py_){
+    b_jets_AK5PFclean_py_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_py", &jets_AK5PFclean_py_, &b_jets_AK5PFclean_py_);
     b_jets_AK5PFclean_py_->GetEntry(entry_);
     c_jets_AK5PFclean_py_ = true;
   }
@@ -5054,6 +8298,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_py() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_pz() const{
   if(!c_jets_AK5PFclean_pz_ && b_jets_AK5PFclean_pz_){
+    b_jets_AK5PFclean_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_pz", &jets_AK5PFclean_pz_, &b_jets_AK5PFclean_pz_);
     b_jets_AK5PFclean_pz_->GetEntry(entry_);
     c_jets_AK5PFclean_pz_ = true;
   }
@@ -5062,6 +8308,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_pz() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_rawPt() const{
   if(!c_jets_AK5PFclean_rawPt_ && b_jets_AK5PFclean_rawPt_){
+    b_jets_AK5PFclean_rawPt_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_rawPt", &jets_AK5PFclean_rawPt_, &b_jets_AK5PFclean_rawPt_);
     b_jets_AK5PFclean_rawPt_->GetEntry(entry_);
     c_jets_AK5PFclean_rawPt_ = true;
   }
@@ -5070,6 +8318,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_rawPt() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_status() const{
   if(!c_jets_AK5PFclean_status_ && b_jets_AK5PFclean_status_){
+    b_jets_AK5PFclean_status_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_status", &jets_AK5PFclean_status_, &b_jets_AK5PFclean_status_);
     b_jets_AK5PFclean_status_->GetEntry(entry_);
     c_jets_AK5PFclean_status_ = true;
   }
@@ -5078,6 +8328,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_status() const{
 
 std::vector<float>* const & cfa_8::jets_AK5PFclean_theta() const{
   if(!c_jets_AK5PFclean_theta_ && b_jets_AK5PFclean_theta_){
+    b_jets_AK5PFclean_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("jets_AK5PFclean_theta", &jets_AK5PFclean_theta_, &b_jets_AK5PFclean_theta_);
     b_jets_AK5PFclean_theta_->GetEntry(entry_);
     c_jets_AK5PFclean_theta_ = true;
   }
@@ -5086,6 +8338,8 @@ std::vector<float>* const & cfa_8::jets_AK5PFclean_theta() const{
 
 std::vector<float>* const & cfa_8::mc_pdf_id1() const{
   if(!c_mc_pdf_id1_ && b_mc_pdf_id1_){
+    b_mc_pdf_id1_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_pdf_id1", &mc_pdf_id1_, &b_mc_pdf_id1_);
     b_mc_pdf_id1_->GetEntry(entry_);
     c_mc_pdf_id1_ = true;
   }
@@ -5094,6 +8348,8 @@ std::vector<float>* const & cfa_8::mc_pdf_id1() const{
 
 std::vector<float>* const & cfa_8::mc_pdf_id2() const{
   if(!c_mc_pdf_id2_ && b_mc_pdf_id2_){
+    b_mc_pdf_id2_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_pdf_id2", &mc_pdf_id2_, &b_mc_pdf_id2_);
     b_mc_pdf_id2_->GetEntry(entry_);
     c_mc_pdf_id2_ = true;
   }
@@ -5102,6 +8358,8 @@ std::vector<float>* const & cfa_8::mc_pdf_id2() const{
 
 std::vector<float>* const & cfa_8::mc_pdf_q() const{
   if(!c_mc_pdf_q_ && b_mc_pdf_q_){
+    b_mc_pdf_q_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_pdf_q", &mc_pdf_q_, &b_mc_pdf_q_);
     b_mc_pdf_q_->GetEntry(entry_);
     c_mc_pdf_q_ = true;
   }
@@ -5110,6 +8368,8 @@ std::vector<float>* const & cfa_8::mc_pdf_q() const{
 
 std::vector<float>* const & cfa_8::mc_pdf_x1() const{
   if(!c_mc_pdf_x1_ && b_mc_pdf_x1_){
+    b_mc_pdf_x1_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_pdf_x1", &mc_pdf_x1_, &b_mc_pdf_x1_);
     b_mc_pdf_x1_->GetEntry(entry_);
     c_mc_pdf_x1_ = true;
   }
@@ -5118,6 +8378,8 @@ std::vector<float>* const & cfa_8::mc_pdf_x1() const{
 
 std::vector<float>* const & cfa_8::mc_pdf_x2() const{
   if(!c_mc_pdf_x2_ && b_mc_pdf_x2_){
+    b_mc_pdf_x2_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_pdf_x2", &mc_pdf_x2_, &b_mc_pdf_x2_);
     b_mc_pdf_x2_->GetEntry(entry_);
     c_mc_pdf_x2_ = true;
   }
@@ -5126,6 +8388,8 @@ std::vector<float>* const & cfa_8::mc_pdf_x2() const{
 
 std::vector<float>* const & cfa_8::metsHO_et() const{
   if(!c_metsHO_et_ && b_metsHO_et_){
+    b_metsHO_et_->SetStatus(true);
+    chainB_.SetBranchAddress("metsHO_et", &metsHO_et_, &b_metsHO_et_);
     b_metsHO_et_->GetEntry(entry_);
     c_metsHO_et_ = true;
   }
@@ -5134,6 +8398,8 @@ std::vector<float>* const & cfa_8::metsHO_et() const{
 
 std::vector<float>* const & cfa_8::metsHO_ex() const{
   if(!c_metsHO_ex_ && b_metsHO_ex_){
+    b_metsHO_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("metsHO_ex", &metsHO_ex_, &b_metsHO_ex_);
     b_metsHO_ex_->GetEntry(entry_);
     c_metsHO_ex_ = true;
   }
@@ -5142,6 +8408,8 @@ std::vector<float>* const & cfa_8::metsHO_ex() const{
 
 std::vector<float>* const & cfa_8::metsHO_ey() const{
   if(!c_metsHO_ey_ && b_metsHO_ey_){
+    b_metsHO_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("metsHO_ey", &metsHO_ey_, &b_metsHO_ey_);
     b_metsHO_ey_->GetEntry(entry_);
     c_metsHO_ey_ = true;
   }
@@ -5150,6 +8418,8 @@ std::vector<float>* const & cfa_8::metsHO_ey() const{
 
 std::vector<float>* const & cfa_8::metsHO_phi() const{
   if(!c_metsHO_phi_ && b_metsHO_phi_){
+    b_metsHO_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("metsHO_phi", &metsHO_phi_, &b_metsHO_phi_);
     b_metsHO_phi_->GetEntry(entry_);
     c_metsHO_phi_ = true;
   }
@@ -5158,6 +8428,8 @@ std::vector<float>* const & cfa_8::metsHO_phi() const{
 
 std::vector<float>* const & cfa_8::metsHO_sumEt() const{
   if(!c_metsHO_sumEt_ && b_metsHO_sumEt_){
+    b_metsHO_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("metsHO_sumEt", &metsHO_sumEt_, &b_metsHO_sumEt_);
     b_metsHO_sumEt_->GetEntry(entry_);
     c_metsHO_sumEt_ = true;
   }
@@ -5166,6 +8438,8 @@ std::vector<float>* const & cfa_8::metsHO_sumEt() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_et() const{
   if(!c_mets_AK5_et_ && b_mets_AK5_et_){
+    b_mets_AK5_et_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_et", &mets_AK5_et_, &b_mets_AK5_et_);
     b_mets_AK5_et_->GetEntry(entry_);
     c_mets_AK5_et_ = true;
   }
@@ -5174,6 +8448,8 @@ std::vector<float>* const & cfa_8::mets_AK5_et() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_ex() const{
   if(!c_mets_AK5_ex_ && b_mets_AK5_ex_){
+    b_mets_AK5_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_ex", &mets_AK5_ex_, &b_mets_AK5_ex_);
     b_mets_AK5_ex_->GetEntry(entry_);
     c_mets_AK5_ex_ = true;
   }
@@ -5182,6 +8458,8 @@ std::vector<float>* const & cfa_8::mets_AK5_ex() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_ey() const{
   if(!c_mets_AK5_ey_ && b_mets_AK5_ey_){
+    b_mets_AK5_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_ey", &mets_AK5_ey_, &b_mets_AK5_ey_);
     b_mets_AK5_ey_->GetEntry(entry_);
     c_mets_AK5_ey_ = true;
   }
@@ -5190,6 +8468,8 @@ std::vector<float>* const & cfa_8::mets_AK5_ey() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_gen_et() const{
   if(!c_mets_AK5_gen_et_ && b_mets_AK5_gen_et_){
+    b_mets_AK5_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_gen_et", &mets_AK5_gen_et_, &b_mets_AK5_gen_et_);
     b_mets_AK5_gen_et_->GetEntry(entry_);
     c_mets_AK5_gen_et_ = true;
   }
@@ -5198,6 +8478,8 @@ std::vector<float>* const & cfa_8::mets_AK5_gen_et() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_gen_phi() const{
   if(!c_mets_AK5_gen_phi_ && b_mets_AK5_gen_phi_){
+    b_mets_AK5_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_gen_phi", &mets_AK5_gen_phi_, &b_mets_AK5_gen_phi_);
     b_mets_AK5_gen_phi_->GetEntry(entry_);
     c_mets_AK5_gen_phi_ = true;
   }
@@ -5206,6 +8488,8 @@ std::vector<float>* const & cfa_8::mets_AK5_gen_phi() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_phi() const{
   if(!c_mets_AK5_phi_ && b_mets_AK5_phi_){
+    b_mets_AK5_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_phi", &mets_AK5_phi_, &b_mets_AK5_phi_);
     b_mets_AK5_phi_->GetEntry(entry_);
     c_mets_AK5_phi_ = true;
   }
@@ -5214,6 +8498,8 @@ std::vector<float>* const & cfa_8::mets_AK5_phi() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_sign() const{
   if(!c_mets_AK5_sign_ && b_mets_AK5_sign_){
+    b_mets_AK5_sign_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_sign", &mets_AK5_sign_, &b_mets_AK5_sign_);
     b_mets_AK5_sign_->GetEntry(entry_);
     c_mets_AK5_sign_ = true;
   }
@@ -5222,6 +8508,8 @@ std::vector<float>* const & cfa_8::mets_AK5_sign() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_sumEt() const{
   if(!c_mets_AK5_sumEt_ && b_mets_AK5_sumEt_){
+    b_mets_AK5_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_sumEt", &mets_AK5_sumEt_, &b_mets_AK5_sumEt_);
     b_mets_AK5_sumEt_->GetEntry(entry_);
     c_mets_AK5_sumEt_ = true;
   }
@@ -5230,6 +8518,8 @@ std::vector<float>* const & cfa_8::mets_AK5_sumEt() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_unCPhi() const{
   if(!c_mets_AK5_unCPhi_ && b_mets_AK5_unCPhi_){
+    b_mets_AK5_unCPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_unCPhi", &mets_AK5_unCPhi_, &b_mets_AK5_unCPhi_);
     b_mets_AK5_unCPhi_->GetEntry(entry_);
     c_mets_AK5_unCPhi_ = true;
   }
@@ -5238,6 +8528,8 @@ std::vector<float>* const & cfa_8::mets_AK5_unCPhi() const{
 
 std::vector<float>* const & cfa_8::mets_AK5_unCPt() const{
   if(!c_mets_AK5_unCPt_ && b_mets_AK5_unCPt_){
+    b_mets_AK5_unCPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mets_AK5_unCPt", &mets_AK5_unCPt_, &b_mets_AK5_unCPt_);
     b_mets_AK5_unCPt_->GetEntry(entry_);
     c_mets_AK5_unCPt_ = true;
   }
@@ -5246,6 +8538,8 @@ std::vector<float>* const & cfa_8::mets_AK5_unCPt() const{
 
 Int_t const & cfa_8::passprescaleHT250filter_decision() const{
   if(!c_passprescaleHT250filter_decision_ && b_passprescaleHT250filter_decision_){
+    b_passprescaleHT250filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleHT250filter_decision", &passprescaleHT250filter_decision_, &b_passprescaleHT250filter_decision_);
     b_passprescaleHT250filter_decision_->GetEntry(entry_);
     c_passprescaleHT250filter_decision_ = true;
   }
@@ -5254,6 +8548,8 @@ Int_t const & cfa_8::passprescaleHT250filter_decision() const{
 
 Int_t const & cfa_8::passprescaleHT300filter_decision() const{
   if(!c_passprescaleHT300filter_decision_ && b_passprescaleHT300filter_decision_){
+    b_passprescaleHT300filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleHT300filter_decision", &passprescaleHT300filter_decision_, &b_passprescaleHT300filter_decision_);
     b_passprescaleHT300filter_decision_->GetEntry(entry_);
     c_passprescaleHT300filter_decision_ = true;
   }
@@ -5262,6 +8558,8 @@ Int_t const & cfa_8::passprescaleHT300filter_decision() const{
 
 Int_t const & cfa_8::passprescaleHT350filter_decision() const{
   if(!c_passprescaleHT350filter_decision_ && b_passprescaleHT350filter_decision_){
+    b_passprescaleHT350filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleHT350filter_decision", &passprescaleHT350filter_decision_, &b_passprescaleHT350filter_decision_);
     b_passprescaleHT350filter_decision_->GetEntry(entry_);
     c_passprescaleHT350filter_decision_ = true;
   }
@@ -5270,6 +8568,8 @@ Int_t const & cfa_8::passprescaleHT350filter_decision() const{
 
 Int_t const & cfa_8::passprescaleHT400filter_decision() const{
   if(!c_passprescaleHT400filter_decision_ && b_passprescaleHT400filter_decision_){
+    b_passprescaleHT400filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleHT400filter_decision", &passprescaleHT400filter_decision_, &b_passprescaleHT400filter_decision_);
     b_passprescaleHT400filter_decision_->GetEntry(entry_);
     c_passprescaleHT400filter_decision_ = true;
   }
@@ -5278,6 +8578,8 @@ Int_t const & cfa_8::passprescaleHT400filter_decision() const{
 
 Int_t const & cfa_8::passprescaleHT450filter_decision() const{
   if(!c_passprescaleHT450filter_decision_ && b_passprescaleHT450filter_decision_){
+    b_passprescaleHT450filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleHT450filter_decision", &passprescaleHT450filter_decision_, &b_passprescaleHT450filter_decision_);
     b_passprescaleHT450filter_decision_->GetEntry(entry_);
     c_passprescaleHT450filter_decision_ = true;
   }
@@ -5286,6 +8588,8 @@ Int_t const & cfa_8::passprescaleHT450filter_decision() const{
 
 Int_t const & cfa_8::passprescaleJet30MET80filter_decision() const{
   if(!c_passprescaleJet30MET80filter_decision_ && b_passprescaleJet30MET80filter_decision_){
+    b_passprescaleJet30MET80filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescaleJet30MET80filter_decision", &passprescaleJet30MET80filter_decision_, &b_passprescaleJet30MET80filter_decision_);
     b_passprescaleJet30MET80filter_decision_->GetEntry(entry_);
     c_passprescaleJet30MET80filter_decision_ = true;
   }
@@ -5294,6 +8598,8 @@ Int_t const & cfa_8::passprescaleJet30MET80filter_decision() const{
 
 Int_t const & cfa_8::passprescalePFHT350filter_decision() const{
   if(!c_passprescalePFHT350filter_decision_ && b_passprescalePFHT350filter_decision_){
+    b_passprescalePFHT350filter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("passprescalePFHT350filter_decision", &passprescalePFHT350filter_decision_, &b_passprescalePFHT350filter_decision_);
     b_passprescalePFHT350filter_decision_->GetEntry(entry_);
     c_passprescalePFHT350filter_decision_ = true;
   }
@@ -5302,6 +8608,8 @@ Int_t const & cfa_8::passprescalePFHT350filter_decision() const{
 
 std::vector<float>* const & cfa_8::pdfweights_cteq() const{
   if(!c_pdfweights_cteq_ && b_pdfweights_cteq_){
+    b_pdfweights_cteq_->SetStatus(true);
+    chainA_.SetBranchAddress("pdfweights_cteq", &pdfweights_cteq_, &b_pdfweights_cteq_);
     b_pdfweights_cteq_->GetEntry(entry_);
     c_pdfweights_cteq_ = true;
   }
@@ -5310,6 +8618,8 @@ std::vector<float>* const & cfa_8::pdfweights_cteq() const{
 
 std::vector<float>* const & cfa_8::pdfweights_mstw() const{
   if(!c_pdfweights_mstw_ && b_pdfweights_mstw_){
+    b_pdfweights_mstw_->SetStatus(true);
+    chainA_.SetBranchAddress("pdfweights_mstw", &pdfweights_mstw_, &b_pdfweights_mstw_);
     b_pdfweights_mstw_->GetEntry(entry_);
     c_pdfweights_mstw_ = true;
   }
@@ -5318,6 +8628,8 @@ std::vector<float>* const & cfa_8::pdfweights_mstw() const{
 
 std::vector<float>* const & cfa_8::pdfweights_nnpdf() const{
   if(!c_pdfweights_nnpdf_ && b_pdfweights_nnpdf_){
+    b_pdfweights_nnpdf_->SetStatus(true);
+    chainA_.SetBranchAddress("pdfweights_nnpdf", &pdfweights_nnpdf_, &b_pdfweights_nnpdf_);
     b_pdfweights_nnpdf_->GetEntry(entry_);
     c_pdfweights_nnpdf_ = true;
   }
@@ -5326,6 +8638,8 @@ std::vector<float>* const & cfa_8::pdfweights_nnpdf() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_et() const{
   if(!c_pfTypeINoXYCorrmets_et_ && b_pfTypeINoXYCorrmets_et_){
+    b_pfTypeINoXYCorrmets_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_et", &pfTypeINoXYCorrmets_et_, &b_pfTypeINoXYCorrmets_et_);
     b_pfTypeINoXYCorrmets_et_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_et_ = true;
   }
@@ -5334,6 +8648,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_ex() const{
   if(!c_pfTypeINoXYCorrmets_ex_ && b_pfTypeINoXYCorrmets_ex_){
+    b_pfTypeINoXYCorrmets_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_ex", &pfTypeINoXYCorrmets_ex_, &b_pfTypeINoXYCorrmets_ex_);
     b_pfTypeINoXYCorrmets_ex_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_ex_ = true;
   }
@@ -5342,6 +8658,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_ex() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_ey() const{
   if(!c_pfTypeINoXYCorrmets_ey_ && b_pfTypeINoXYCorrmets_ey_){
+    b_pfTypeINoXYCorrmets_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_ey", &pfTypeINoXYCorrmets_ey_, &b_pfTypeINoXYCorrmets_ey_);
     b_pfTypeINoXYCorrmets_ey_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_ey_ = true;
   }
@@ -5350,6 +8668,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_ey() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_gen_et() const{
   if(!c_pfTypeINoXYCorrmets_gen_et_ && b_pfTypeINoXYCorrmets_gen_et_){
+    b_pfTypeINoXYCorrmets_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_gen_et", &pfTypeINoXYCorrmets_gen_et_, &b_pfTypeINoXYCorrmets_gen_et_);
     b_pfTypeINoXYCorrmets_gen_et_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_gen_et_ = true;
   }
@@ -5358,6 +8678,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_gen_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_gen_phi() const{
   if(!c_pfTypeINoXYCorrmets_gen_phi_ && b_pfTypeINoXYCorrmets_gen_phi_){
+    b_pfTypeINoXYCorrmets_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_gen_phi", &pfTypeINoXYCorrmets_gen_phi_, &b_pfTypeINoXYCorrmets_gen_phi_);
     b_pfTypeINoXYCorrmets_gen_phi_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_gen_phi_ = true;
   }
@@ -5366,6 +8688,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_phi() const{
   if(!c_pfTypeINoXYCorrmets_phi_ && b_pfTypeINoXYCorrmets_phi_){
+    b_pfTypeINoXYCorrmets_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_phi", &pfTypeINoXYCorrmets_phi_, &b_pfTypeINoXYCorrmets_phi_);
     b_pfTypeINoXYCorrmets_phi_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_phi_ = true;
   }
@@ -5374,6 +8698,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_sign() const{
   if(!c_pfTypeINoXYCorrmets_sign_ && b_pfTypeINoXYCorrmets_sign_){
+    b_pfTypeINoXYCorrmets_sign_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_sign", &pfTypeINoXYCorrmets_sign_, &b_pfTypeINoXYCorrmets_sign_);
     b_pfTypeINoXYCorrmets_sign_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_sign_ = true;
   }
@@ -5382,6 +8708,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_sign() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_sumEt() const{
   if(!c_pfTypeINoXYCorrmets_sumEt_ && b_pfTypeINoXYCorrmets_sumEt_){
+    b_pfTypeINoXYCorrmets_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_sumEt", &pfTypeINoXYCorrmets_sumEt_, &b_pfTypeINoXYCorrmets_sumEt_);
     b_pfTypeINoXYCorrmets_sumEt_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_sumEt_ = true;
   }
@@ -5390,6 +8718,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_sumEt() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_unCPhi() const{
   if(!c_pfTypeINoXYCorrmets_unCPhi_ && b_pfTypeINoXYCorrmets_unCPhi_){
+    b_pfTypeINoXYCorrmets_unCPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_unCPhi", &pfTypeINoXYCorrmets_unCPhi_, &b_pfTypeINoXYCorrmets_unCPhi_);
     b_pfTypeINoXYCorrmets_unCPhi_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_unCPhi_ = true;
   }
@@ -5398,6 +8728,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_unCPhi() const{
 
 std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_unCPt() const{
   if(!c_pfTypeINoXYCorrmets_unCPt_ && b_pfTypeINoXYCorrmets_unCPt_){
+    b_pfTypeINoXYCorrmets_unCPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeINoXYCorrmets_unCPt", &pfTypeINoXYCorrmets_unCPt_, &b_pfTypeINoXYCorrmets_unCPt_);
     b_pfTypeINoXYCorrmets_unCPt_->GetEntry(entry_);
     c_pfTypeINoXYCorrmets_unCPt_ = true;
   }
@@ -5406,6 +8738,8 @@ std::vector<float>* const & cfa_8::pfTypeINoXYCorrmets_unCPt() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_et() const{
   if(!c_pfTypeIType0mets_et_ && b_pfTypeIType0mets_et_){
+    b_pfTypeIType0mets_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_et", &pfTypeIType0mets_et_, &b_pfTypeIType0mets_et_);
     b_pfTypeIType0mets_et_->GetEntry(entry_);
     c_pfTypeIType0mets_et_ = true;
   }
@@ -5414,6 +8748,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_ex() const{
   if(!c_pfTypeIType0mets_ex_ && b_pfTypeIType0mets_ex_){
+    b_pfTypeIType0mets_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_ex", &pfTypeIType0mets_ex_, &b_pfTypeIType0mets_ex_);
     b_pfTypeIType0mets_ex_->GetEntry(entry_);
     c_pfTypeIType0mets_ex_ = true;
   }
@@ -5422,6 +8758,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_ex() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_ey() const{
   if(!c_pfTypeIType0mets_ey_ && b_pfTypeIType0mets_ey_){
+    b_pfTypeIType0mets_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_ey", &pfTypeIType0mets_ey_, &b_pfTypeIType0mets_ey_);
     b_pfTypeIType0mets_ey_->GetEntry(entry_);
     c_pfTypeIType0mets_ey_ = true;
   }
@@ -5430,6 +8768,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_ey() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_gen_et() const{
   if(!c_pfTypeIType0mets_gen_et_ && b_pfTypeIType0mets_gen_et_){
+    b_pfTypeIType0mets_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_gen_et", &pfTypeIType0mets_gen_et_, &b_pfTypeIType0mets_gen_et_);
     b_pfTypeIType0mets_gen_et_->GetEntry(entry_);
     c_pfTypeIType0mets_gen_et_ = true;
   }
@@ -5438,6 +8778,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_gen_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_gen_phi() const{
   if(!c_pfTypeIType0mets_gen_phi_ && b_pfTypeIType0mets_gen_phi_){
+    b_pfTypeIType0mets_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_gen_phi", &pfTypeIType0mets_gen_phi_, &b_pfTypeIType0mets_gen_phi_);
     b_pfTypeIType0mets_gen_phi_->GetEntry(entry_);
     c_pfTypeIType0mets_gen_phi_ = true;
   }
@@ -5446,6 +8788,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_phi() const{
   if(!c_pfTypeIType0mets_phi_ && b_pfTypeIType0mets_phi_){
+    b_pfTypeIType0mets_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_phi", &pfTypeIType0mets_phi_, &b_pfTypeIType0mets_phi_);
     b_pfTypeIType0mets_phi_->GetEntry(entry_);
     c_pfTypeIType0mets_phi_ = true;
   }
@@ -5454,6 +8798,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_sign() const{
   if(!c_pfTypeIType0mets_sign_ && b_pfTypeIType0mets_sign_){
+    b_pfTypeIType0mets_sign_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_sign", &pfTypeIType0mets_sign_, &b_pfTypeIType0mets_sign_);
     b_pfTypeIType0mets_sign_->GetEntry(entry_);
     c_pfTypeIType0mets_sign_ = true;
   }
@@ -5462,6 +8808,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_sign() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_sumEt() const{
   if(!c_pfTypeIType0mets_sumEt_ && b_pfTypeIType0mets_sumEt_){
+    b_pfTypeIType0mets_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_sumEt", &pfTypeIType0mets_sumEt_, &b_pfTypeIType0mets_sumEt_);
     b_pfTypeIType0mets_sumEt_->GetEntry(entry_);
     c_pfTypeIType0mets_sumEt_ = true;
   }
@@ -5470,6 +8818,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_sumEt() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_unCPhi() const{
   if(!c_pfTypeIType0mets_unCPhi_ && b_pfTypeIType0mets_unCPhi_){
+    b_pfTypeIType0mets_unCPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_unCPhi", &pfTypeIType0mets_unCPhi_, &b_pfTypeIType0mets_unCPhi_);
     b_pfTypeIType0mets_unCPhi_->GetEntry(entry_);
     c_pfTypeIType0mets_unCPhi_ = true;
   }
@@ -5478,6 +8828,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_unCPhi() const{
 
 std::vector<float>* const & cfa_8::pfTypeIType0mets_unCPt() const{
   if(!c_pfTypeIType0mets_unCPt_ && b_pfTypeIType0mets_unCPt_){
+    b_pfTypeIType0mets_unCPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeIType0mets_unCPt", &pfTypeIType0mets_unCPt_, &b_pfTypeIType0mets_unCPt_);
     b_pfTypeIType0mets_unCPt_->GetEntry(entry_);
     c_pfTypeIType0mets_unCPt_ = true;
   }
@@ -5486,6 +8838,8 @@ std::vector<float>* const & cfa_8::pfTypeIType0mets_unCPt() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_et() const{
   if(!c_pfTypeImets_et_ && b_pfTypeImets_et_){
+    b_pfTypeImets_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_et", &pfTypeImets_et_, &b_pfTypeImets_et_);
     b_pfTypeImets_et_->GetEntry(entry_);
     c_pfTypeImets_et_ = true;
   }
@@ -5494,6 +8848,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_ex() const{
   if(!c_pfTypeImets_ex_ && b_pfTypeImets_ex_){
+    b_pfTypeImets_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_ex", &pfTypeImets_ex_, &b_pfTypeImets_ex_);
     b_pfTypeImets_ex_->GetEntry(entry_);
     c_pfTypeImets_ex_ = true;
   }
@@ -5502,6 +8858,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_ex() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_ey() const{
   if(!c_pfTypeImets_ey_ && b_pfTypeImets_ey_){
+    b_pfTypeImets_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_ey", &pfTypeImets_ey_, &b_pfTypeImets_ey_);
     b_pfTypeImets_ey_->GetEntry(entry_);
     c_pfTypeImets_ey_ = true;
   }
@@ -5510,6 +8868,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_ey() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_gen_et() const{
   if(!c_pfTypeImets_gen_et_ && b_pfTypeImets_gen_et_){
+    b_pfTypeImets_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_gen_et", &pfTypeImets_gen_et_, &b_pfTypeImets_gen_et_);
     b_pfTypeImets_gen_et_->GetEntry(entry_);
     c_pfTypeImets_gen_et_ = true;
   }
@@ -5518,6 +8878,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_gen_et() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_gen_phi() const{
   if(!c_pfTypeImets_gen_phi_ && b_pfTypeImets_gen_phi_){
+    b_pfTypeImets_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_gen_phi", &pfTypeImets_gen_phi_, &b_pfTypeImets_gen_phi_);
     b_pfTypeImets_gen_phi_->GetEntry(entry_);
     c_pfTypeImets_gen_phi_ = true;
   }
@@ -5526,6 +8888,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_phi() const{
   if(!c_pfTypeImets_phi_ && b_pfTypeImets_phi_){
+    b_pfTypeImets_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_phi", &pfTypeImets_phi_, &b_pfTypeImets_phi_);
     b_pfTypeImets_phi_->GetEntry(entry_);
     c_pfTypeImets_phi_ = true;
   }
@@ -5534,6 +8898,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_phi() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_sign() const{
   if(!c_pfTypeImets_sign_ && b_pfTypeImets_sign_){
+    b_pfTypeImets_sign_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_sign", &pfTypeImets_sign_, &b_pfTypeImets_sign_);
     b_pfTypeImets_sign_->GetEntry(entry_);
     c_pfTypeImets_sign_ = true;
   }
@@ -5542,6 +8908,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_sign() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_sumEt() const{
   if(!c_pfTypeImets_sumEt_ && b_pfTypeImets_sumEt_){
+    b_pfTypeImets_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_sumEt", &pfTypeImets_sumEt_, &b_pfTypeImets_sumEt_);
     b_pfTypeImets_sumEt_->GetEntry(entry_);
     c_pfTypeImets_sumEt_ = true;
   }
@@ -5550,6 +8918,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_sumEt() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_unCPhi() const{
   if(!c_pfTypeImets_unCPhi_ && b_pfTypeImets_unCPhi_){
+    b_pfTypeImets_unCPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_unCPhi", &pfTypeImets_unCPhi_, &b_pfTypeImets_unCPhi_);
     b_pfTypeImets_unCPhi_->GetEntry(entry_);
     c_pfTypeImets_unCPhi_ = true;
   }
@@ -5558,6 +8928,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_unCPhi() const{
 
 std::vector<float>* const & cfa_8::pfTypeImets_unCPt() const{
   if(!c_pfTypeImets_unCPt_ && b_pfTypeImets_unCPt_){
+    b_pfTypeImets_unCPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfTypeImets_unCPt", &pfTypeImets_unCPt_, &b_pfTypeImets_unCPt_);
     b_pfTypeImets_unCPt_->GetEntry(entry_);
     c_pfTypeImets_unCPt_ = true;
   }
@@ -5566,6 +8938,8 @@ std::vector<float>* const & cfa_8::pfTypeImets_unCPt() const{
 
 std::vector<float>* const & cfa_8::pf_els_PATpassConversionVeto() const{
   if(!c_pf_els_PATpassConversionVeto_ && b_pf_els_PATpassConversionVeto_){
+    b_pf_els_PATpassConversionVeto_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_PATpassConversionVeto", &pf_els_PATpassConversionVeto_, &b_pf_els_PATpassConversionVeto_);
     b_pf_els_PATpassConversionVeto_->GetEntry(entry_);
     c_pf_els_PATpassConversionVeto_ = true;
   }
@@ -5574,6 +8948,8 @@ std::vector<float>* const & cfa_8::pf_els_PATpassConversionVeto() const{
 
 std::vector<float>* const & cfa_8::pf_els_PFchargedHadronIsoR03() const{
   if(!c_pf_els_PFchargedHadronIsoR03_ && b_pf_els_PFchargedHadronIsoR03_){
+    b_pf_els_PFchargedHadronIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("pf_els_PFchargedHadronIsoR03", &pf_els_PFchargedHadronIsoR03_, &b_pf_els_PFchargedHadronIsoR03_);
     b_pf_els_PFchargedHadronIsoR03_->GetEntry(entry_);
     c_pf_els_PFchargedHadronIsoR03_ = true;
   }
@@ -5582,6 +8958,8 @@ std::vector<float>* const & cfa_8::pf_els_PFchargedHadronIsoR03() const{
 
 std::vector<float>* const & cfa_8::pf_els_PFneutralHadronIsoR03() const{
   if(!c_pf_els_PFneutralHadronIsoR03_ && b_pf_els_PFneutralHadronIsoR03_){
+    b_pf_els_PFneutralHadronIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("pf_els_PFneutralHadronIsoR03", &pf_els_PFneutralHadronIsoR03_, &b_pf_els_PFneutralHadronIsoR03_);
     b_pf_els_PFneutralHadronIsoR03_->GetEntry(entry_);
     c_pf_els_PFneutralHadronIsoR03_ = true;
   }
@@ -5590,6 +8968,8 @@ std::vector<float>* const & cfa_8::pf_els_PFneutralHadronIsoR03() const{
 
 std::vector<float>* const & cfa_8::pf_els_PFphotonIsoR03() const{
   if(!c_pf_els_PFphotonIsoR03_ && b_pf_els_PFphotonIsoR03_){
+    b_pf_els_PFphotonIsoR03_->SetStatus(true);
+    chainA_.SetBranchAddress("pf_els_PFphotonIsoR03", &pf_els_PFphotonIsoR03_, &b_pf_els_PFphotonIsoR03_);
     b_pf_els_PFphotonIsoR03_->GetEntry(entry_);
     c_pf_els_PFphotonIsoR03_ = true;
   }
@@ -5598,6 +8978,8 @@ std::vector<float>* const & cfa_8::pf_els_PFphotonIsoR03() const{
 
 std::vector<float>* const & cfa_8::pf_els_basicClustersSize() const{
   if(!c_pf_els_basicClustersSize_ && b_pf_els_basicClustersSize_){
+    b_pf_els_basicClustersSize_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_basicClustersSize", &pf_els_basicClustersSize_, &b_pf_els_basicClustersSize_);
     b_pf_els_basicClustersSize_->GetEntry(entry_);
     c_pf_els_basicClustersSize_ = true;
   }
@@ -5606,6 +8988,8 @@ std::vector<float>* const & cfa_8::pf_els_basicClustersSize() const{
 
 std::vector<float>* const & cfa_8::pf_els_cIso() const{
   if(!c_pf_els_cIso_ && b_pf_els_cIso_){
+    b_pf_els_cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cIso", &pf_els_cIso_, &b_pf_els_cIso_);
     b_pf_els_cIso_->GetEntry(entry_);
     c_pf_els_cIso_ = true;
   }
@@ -5614,6 +8998,8 @@ std::vector<float>* const & cfa_8::pf_els_cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_caloEnergy() const{
   if(!c_pf_els_caloEnergy_ && b_pf_els_caloEnergy_){
+    b_pf_els_caloEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_caloEnergy", &pf_els_caloEnergy_, &b_pf_els_caloEnergy_);
     b_pf_els_caloEnergy_->GetEntry(entry_);
     c_pf_els_caloEnergy_ = true;
   }
@@ -5622,6 +9008,8 @@ std::vector<float>* const & cfa_8::pf_els_caloEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_els_charge() const{
   if(!c_pf_els_charge_ && b_pf_els_charge_){
+    b_pf_els_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_charge", &pf_els_charge_, &b_pf_els_charge_);
     b_pf_els_charge_->GetEntry(entry_);
     c_pf_els_charge_ = true;
   }
@@ -5630,6 +9018,8 @@ std::vector<float>* const & cfa_8::pf_els_charge() const{
 
 std::vector<float>* const & cfa_8::pf_els_chargedHadronIso() const{
   if(!c_pf_els_chargedHadronIso_ && b_pf_els_chargedHadronIso_){
+    b_pf_els_chargedHadronIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_chargedHadronIso", &pf_els_chargedHadronIso_, &b_pf_els_chargedHadronIso_);
     b_pf_els_chargedHadronIso_->GetEntry(entry_);
     c_pf_els_chargedHadronIso_ = true;
   }
@@ -5638,6 +9028,8 @@ std::vector<float>* const & cfa_8::pf_els_chargedHadronIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_chi2() const{
   if(!c_pf_els_chi2_ && b_pf_els_chi2_){
+    b_pf_els_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_chi2", &pf_els_chi2_, &b_pf_els_chi2_);
     b_pf_els_chi2_->GetEntry(entry_);
     c_pf_els_chi2_ = true;
   }
@@ -5646,6 +9038,8 @@ std::vector<float>* const & cfa_8::pf_els_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_els_core_ecalDrivenSeed() const{
   if(!c_pf_els_core_ecalDrivenSeed_ && b_pf_els_core_ecalDrivenSeed_){
+    b_pf_els_core_ecalDrivenSeed_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_core_ecalDrivenSeed", &pf_els_core_ecalDrivenSeed_, &b_pf_els_core_ecalDrivenSeed_);
     b_pf_els_core_ecalDrivenSeed_->GetEntry(entry_);
     c_pf_els_core_ecalDrivenSeed_ = true;
   }
@@ -5654,6 +9048,8 @@ std::vector<float>* const & cfa_8::pf_els_core_ecalDrivenSeed() const{
 
 std::vector<float>* const & cfa_8::pf_els_cpx() const{
   if(!c_pf_els_cpx_ && b_pf_els_cpx_){
+    b_pf_els_cpx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cpx", &pf_els_cpx_, &b_pf_els_cpx_);
     b_pf_els_cpx_->GetEntry(entry_);
     c_pf_els_cpx_ = true;
   }
@@ -5662,6 +9058,8 @@ std::vector<float>* const & cfa_8::pf_els_cpx() const{
 
 std::vector<float>* const & cfa_8::pf_els_cpy() const{
   if(!c_pf_els_cpy_ && b_pf_els_cpy_){
+    b_pf_els_cpy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cpy", &pf_els_cpy_, &b_pf_els_cpy_);
     b_pf_els_cpy_->GetEntry(entry_);
     c_pf_els_cpy_ = true;
   }
@@ -5670,6 +9068,8 @@ std::vector<float>* const & cfa_8::pf_els_cpy() const{
 
 std::vector<float>* const & cfa_8::pf_els_cpz() const{
   if(!c_pf_els_cpz_ && b_pf_els_cpz_){
+    b_pf_els_cpz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cpz", &pf_els_cpz_, &b_pf_els_cpz_);
     b_pf_els_cpz_->GetEntry(entry_);
     c_pf_els_cpz_ = true;
   }
@@ -5678,6 +9078,8 @@ std::vector<float>* const & cfa_8::pf_els_cpz() const{
 
 std::vector<float>* const & cfa_8::pf_els_ctf_tk_charge() const{
   if(!c_pf_els_ctf_tk_charge_ && b_pf_els_ctf_tk_charge_){
+    b_pf_els_ctf_tk_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ctf_tk_charge", &pf_els_ctf_tk_charge_, &b_pf_els_ctf_tk_charge_);
     b_pf_els_ctf_tk_charge_->GetEntry(entry_);
     c_pf_els_ctf_tk_charge_ = true;
   }
@@ -5686,6 +9088,8 @@ std::vector<float>* const & cfa_8::pf_els_ctf_tk_charge() const{
 
 std::vector<float>* const & cfa_8::pf_els_ctf_tk_eta() const{
   if(!c_pf_els_ctf_tk_eta_ && b_pf_els_ctf_tk_eta_){
+    b_pf_els_ctf_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ctf_tk_eta", &pf_els_ctf_tk_eta_, &b_pf_els_ctf_tk_eta_);
     b_pf_els_ctf_tk_eta_->GetEntry(entry_);
     c_pf_els_ctf_tk_eta_ = true;
   }
@@ -5694,6 +9098,8 @@ std::vector<float>* const & cfa_8::pf_els_ctf_tk_eta() const{
 
 std::vector<float>* const & cfa_8::pf_els_ctf_tk_id() const{
   if(!c_pf_els_ctf_tk_id_ && b_pf_els_ctf_tk_id_){
+    b_pf_els_ctf_tk_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ctf_tk_id", &pf_els_ctf_tk_id_, &b_pf_els_ctf_tk_id_);
     b_pf_els_ctf_tk_id_->GetEntry(entry_);
     c_pf_els_ctf_tk_id_ = true;
   }
@@ -5702,6 +9108,8 @@ std::vector<float>* const & cfa_8::pf_els_ctf_tk_id() const{
 
 std::vector<float>* const & cfa_8::pf_els_ctf_tk_phi() const{
   if(!c_pf_els_ctf_tk_phi_ && b_pf_els_ctf_tk_phi_){
+    b_pf_els_ctf_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ctf_tk_phi", &pf_els_ctf_tk_phi_, &b_pf_els_ctf_tk_phi_);
     b_pf_els_ctf_tk_phi_->GetEntry(entry_);
     c_pf_els_ctf_tk_phi_ = true;
   }
@@ -5710,6 +9118,8 @@ std::vector<float>* const & cfa_8::pf_els_ctf_tk_phi() const{
 
 std::vector<float>* const & cfa_8::pf_els_cx() const{
   if(!c_pf_els_cx_ && b_pf_els_cx_){
+    b_pf_els_cx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cx", &pf_els_cx_, &b_pf_els_cx_);
     b_pf_els_cx_->GetEntry(entry_);
     c_pf_els_cx_ = true;
   }
@@ -5718,6 +9128,8 @@ std::vector<float>* const & cfa_8::pf_els_cx() const{
 
 std::vector<float>* const & cfa_8::pf_els_cy() const{
   if(!c_pf_els_cy_ && b_pf_els_cy_){
+    b_pf_els_cy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cy", &pf_els_cy_, &b_pf_els_cy_);
     b_pf_els_cy_->GetEntry(entry_);
     c_pf_els_cy_ = true;
   }
@@ -5726,6 +9138,8 @@ std::vector<float>* const & cfa_8::pf_els_cy() const{
 
 std::vector<float>* const & cfa_8::pf_els_cz() const{
   if(!c_pf_els_cz_ && b_pf_els_cz_){
+    b_pf_els_cz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_cz", &pf_els_cz_, &b_pf_els_cz_);
     b_pf_els_cz_->GetEntry(entry_);
     c_pf_els_cz_ = true;
   }
@@ -5734,6 +9148,8 @@ std::vector<float>* const & cfa_8::pf_els_cz() const{
 
 std::vector<float>* const & cfa_8::pf_els_d0dum() const{
   if(!c_pf_els_d0dum_ && b_pf_els_d0dum_){
+    b_pf_els_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_d0dum", &pf_els_d0dum_, &b_pf_els_d0dum_);
     b_pf_els_d0dum_->GetEntry(entry_);
     c_pf_els_d0dum_ = true;
   }
@@ -5742,6 +9158,8 @@ std::vector<float>* const & cfa_8::pf_els_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_els_d0dumError() const{
   if(!c_pf_els_d0dumError_ && b_pf_els_d0dumError_){
+    b_pf_els_d0dumError_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_d0dumError", &pf_els_d0dumError_, &b_pf_els_d0dumError_);
     b_pf_els_d0dumError_->GetEntry(entry_);
     c_pf_els_d0dumError_ = true;
   }
@@ -5750,6 +9168,8 @@ std::vector<float>* const & cfa_8::pf_els_d0dumError() const{
 
 std::vector<float>* const & cfa_8::pf_els_dEtaIn() const{
   if(!c_pf_els_dEtaIn_ && b_pf_els_dEtaIn_){
+    b_pf_els_dEtaIn_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dEtaIn", &pf_els_dEtaIn_, &b_pf_els_dEtaIn_);
     b_pf_els_dEtaIn_->GetEntry(entry_);
     c_pf_els_dEtaIn_ = true;
   }
@@ -5758,6 +9178,8 @@ std::vector<float>* const & cfa_8::pf_els_dEtaIn() const{
 
 std::vector<float>* const & cfa_8::pf_els_dEtaOut() const{
   if(!c_pf_els_dEtaOut_ && b_pf_els_dEtaOut_){
+    b_pf_els_dEtaOut_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dEtaOut", &pf_els_dEtaOut_, &b_pf_els_dEtaOut_);
     b_pf_els_dEtaOut_->GetEntry(entry_);
     c_pf_els_dEtaOut_ = true;
   }
@@ -5766,6 +9188,8 @@ std::vector<float>* const & cfa_8::pf_els_dEtaOut() const{
 
 std::vector<float>* const & cfa_8::pf_els_dPhiIn() const{
   if(!c_pf_els_dPhiIn_ && b_pf_els_dPhiIn_){
+    b_pf_els_dPhiIn_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dPhiIn", &pf_els_dPhiIn_, &b_pf_els_dPhiIn_);
     b_pf_els_dPhiIn_->GetEntry(entry_);
     c_pf_els_dPhiIn_ = true;
   }
@@ -5774,6 +9198,8 @@ std::vector<float>* const & cfa_8::pf_els_dPhiIn() const{
 
 std::vector<float>* const & cfa_8::pf_els_dPhiOut() const{
   if(!c_pf_els_dPhiOut_ && b_pf_els_dPhiOut_){
+    b_pf_els_dPhiOut_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dPhiOut", &pf_els_dPhiOut_, &b_pf_els_dPhiOut_);
     b_pf_els_dPhiOut_->GetEntry(entry_);
     c_pf_els_dPhiOut_ = true;
   }
@@ -5782,6 +9208,8 @@ std::vector<float>* const & cfa_8::pf_els_dPhiOut() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr03EcalRecHitSumEt() const{
   if(!c_pf_els_dr03EcalRecHitSumEt_ && b_pf_els_dr03EcalRecHitSumEt_){
+    b_pf_els_dr03EcalRecHitSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr03EcalRecHitSumEt", &pf_els_dr03EcalRecHitSumEt_, &b_pf_els_dr03EcalRecHitSumEt_);
     b_pf_els_dr03EcalRecHitSumEt_->GetEntry(entry_);
     c_pf_els_dr03EcalRecHitSumEt_ = true;
   }
@@ -5790,6 +9218,8 @@ std::vector<float>* const & cfa_8::pf_els_dr03EcalRecHitSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr03HcalDepth1TowerSumEt() const{
   if(!c_pf_els_dr03HcalDepth1TowerSumEt_ && b_pf_els_dr03HcalDepth1TowerSumEt_){
+    b_pf_els_dr03HcalDepth1TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr03HcalDepth1TowerSumEt", &pf_els_dr03HcalDepth1TowerSumEt_, &b_pf_els_dr03HcalDepth1TowerSumEt_);
     b_pf_els_dr03HcalDepth1TowerSumEt_->GetEntry(entry_);
     c_pf_els_dr03HcalDepth1TowerSumEt_ = true;
   }
@@ -5798,6 +9228,8 @@ std::vector<float>* const & cfa_8::pf_els_dr03HcalDepth1TowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr03HcalDepth2TowerSumEt() const{
   if(!c_pf_els_dr03HcalDepth2TowerSumEt_ && b_pf_els_dr03HcalDepth2TowerSumEt_){
+    b_pf_els_dr03HcalDepth2TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr03HcalDepth2TowerSumEt", &pf_els_dr03HcalDepth2TowerSumEt_, &b_pf_els_dr03HcalDepth2TowerSumEt_);
     b_pf_els_dr03HcalDepth2TowerSumEt_->GetEntry(entry_);
     c_pf_els_dr03HcalDepth2TowerSumEt_ = true;
   }
@@ -5806,6 +9238,8 @@ std::vector<float>* const & cfa_8::pf_els_dr03HcalDepth2TowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr03HcalTowerSumEt() const{
   if(!c_pf_els_dr03HcalTowerSumEt_ && b_pf_els_dr03HcalTowerSumEt_){
+    b_pf_els_dr03HcalTowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr03HcalTowerSumEt", &pf_els_dr03HcalTowerSumEt_, &b_pf_els_dr03HcalTowerSumEt_);
     b_pf_els_dr03HcalTowerSumEt_->GetEntry(entry_);
     c_pf_els_dr03HcalTowerSumEt_ = true;
   }
@@ -5814,6 +9248,8 @@ std::vector<float>* const & cfa_8::pf_els_dr03HcalTowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr03TkSumPt() const{
   if(!c_pf_els_dr03TkSumPt_ && b_pf_els_dr03TkSumPt_){
+    b_pf_els_dr03TkSumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr03TkSumPt", &pf_els_dr03TkSumPt_, &b_pf_els_dr03TkSumPt_);
     b_pf_els_dr03TkSumPt_->GetEntry(entry_);
     c_pf_els_dr03TkSumPt_ = true;
   }
@@ -5822,6 +9258,8 @@ std::vector<float>* const & cfa_8::pf_els_dr03TkSumPt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr04EcalRecHitSumEt() const{
   if(!c_pf_els_dr04EcalRecHitSumEt_ && b_pf_els_dr04EcalRecHitSumEt_){
+    b_pf_els_dr04EcalRecHitSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr04EcalRecHitSumEt", &pf_els_dr04EcalRecHitSumEt_, &b_pf_els_dr04EcalRecHitSumEt_);
     b_pf_els_dr04EcalRecHitSumEt_->GetEntry(entry_);
     c_pf_els_dr04EcalRecHitSumEt_ = true;
   }
@@ -5830,6 +9268,8 @@ std::vector<float>* const & cfa_8::pf_els_dr04EcalRecHitSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr04HcalDepth1TowerSumEt() const{
   if(!c_pf_els_dr04HcalDepth1TowerSumEt_ && b_pf_els_dr04HcalDepth1TowerSumEt_){
+    b_pf_els_dr04HcalDepth1TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr04HcalDepth1TowerSumEt", &pf_els_dr04HcalDepth1TowerSumEt_, &b_pf_els_dr04HcalDepth1TowerSumEt_);
     b_pf_els_dr04HcalDepth1TowerSumEt_->GetEntry(entry_);
     c_pf_els_dr04HcalDepth1TowerSumEt_ = true;
   }
@@ -5838,6 +9278,8 @@ std::vector<float>* const & cfa_8::pf_els_dr04HcalDepth1TowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr04HcalDepth2TowerSumEt() const{
   if(!c_pf_els_dr04HcalDepth2TowerSumEt_ && b_pf_els_dr04HcalDepth2TowerSumEt_){
+    b_pf_els_dr04HcalDepth2TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr04HcalDepth2TowerSumEt", &pf_els_dr04HcalDepth2TowerSumEt_, &b_pf_els_dr04HcalDepth2TowerSumEt_);
     b_pf_els_dr04HcalDepth2TowerSumEt_->GetEntry(entry_);
     c_pf_els_dr04HcalDepth2TowerSumEt_ = true;
   }
@@ -5846,6 +9288,8 @@ std::vector<float>* const & cfa_8::pf_els_dr04HcalDepth2TowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr04HcalTowerSumEt() const{
   if(!c_pf_els_dr04HcalTowerSumEt_ && b_pf_els_dr04HcalTowerSumEt_){
+    b_pf_els_dr04HcalTowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr04HcalTowerSumEt", &pf_els_dr04HcalTowerSumEt_, &b_pf_els_dr04HcalTowerSumEt_);
     b_pf_els_dr04HcalTowerSumEt_->GetEntry(entry_);
     c_pf_els_dr04HcalTowerSumEt_ = true;
   }
@@ -5854,6 +9298,8 @@ std::vector<float>* const & cfa_8::pf_els_dr04HcalTowerSumEt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dr04TkSumPt() const{
   if(!c_pf_els_dr04TkSumPt_ && b_pf_els_dr04TkSumPt_){
+    b_pf_els_dr04TkSumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dr04TkSumPt", &pf_els_dr04TkSumPt_, &b_pf_els_dr04TkSumPt_);
     b_pf_els_dr04TkSumPt_->GetEntry(entry_);
     c_pf_els_dr04TkSumPt_ = true;
   }
@@ -5862,6 +9308,8 @@ std::vector<float>* const & cfa_8::pf_els_dr04TkSumPt() const{
 
 std::vector<float>* const & cfa_8::pf_els_dz() const{
   if(!c_pf_els_dz_ && b_pf_els_dz_){
+    b_pf_els_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dz", &pf_els_dz_, &b_pf_els_dz_);
     b_pf_els_dz_->GetEntry(entry_);
     c_pf_els_dz_ = true;
   }
@@ -5870,6 +9318,8 @@ std::vector<float>* const & cfa_8::pf_els_dz() const{
 
 std::vector<float>* const & cfa_8::pf_els_dzError() const{
   if(!c_pf_els_dzError_ && b_pf_els_dzError_){
+    b_pf_els_dzError_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_dzError", &pf_els_dzError_, &b_pf_els_dzError_);
     b_pf_els_dzError_->GetEntry(entry_);
     c_pf_els_dzError_ = true;
   }
@@ -5878,6 +9328,8 @@ std::vector<float>* const & cfa_8::pf_els_dzError() const{
 
 std::vector<float>* const & cfa_8::pf_els_eOverPIn() const{
   if(!c_pf_els_eOverPIn_ && b_pf_els_eOverPIn_){
+    b_pf_els_eOverPIn_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_eOverPIn", &pf_els_eOverPIn_, &b_pf_els_eOverPIn_);
     b_pf_els_eOverPIn_->GetEntry(entry_);
     c_pf_els_eOverPIn_ = true;
   }
@@ -5886,6 +9338,8 @@ std::vector<float>* const & cfa_8::pf_els_eOverPIn() const{
 
 std::vector<float>* const & cfa_8::pf_els_eSeedOverPOut() const{
   if(!c_pf_els_eSeedOverPOut_ && b_pf_els_eSeedOverPOut_){
+    b_pf_els_eSeedOverPOut_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_eSeedOverPOut", &pf_els_eSeedOverPOut_, &b_pf_els_eSeedOverPOut_);
     b_pf_els_eSeedOverPOut_->GetEntry(entry_);
     c_pf_els_eSeedOverPOut_ = true;
   }
@@ -5894,6 +9348,8 @@ std::vector<float>* const & cfa_8::pf_els_eSeedOverPOut() const{
 
 std::vector<float>* const & cfa_8::pf_els_ecalIso() const{
   if(!c_pf_els_ecalIso_ && b_pf_els_ecalIso_){
+    b_pf_els_ecalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ecalIso", &pf_els_ecalIso_, &b_pf_els_ecalIso_);
     b_pf_els_ecalIso_->GetEntry(entry_);
     c_pf_els_ecalIso_ = true;
   }
@@ -5902,6 +9358,8 @@ std::vector<float>* const & cfa_8::pf_els_ecalIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_energy() const{
   if(!c_pf_els_energy_ && b_pf_els_energy_){
+    b_pf_els_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_energy", &pf_els_energy_, &b_pf_els_energy_);
     b_pf_els_energy_->GetEntry(entry_);
     c_pf_els_energy_ = true;
   }
@@ -5910,6 +9368,8 @@ std::vector<float>* const & cfa_8::pf_els_energy() const{
 
 std::vector<float>* const & cfa_8::pf_els_et() const{
   if(!c_pf_els_et_ && b_pf_els_et_){
+    b_pf_els_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_et", &pf_els_et_, &b_pf_els_et_);
     b_pf_els_et_->GetEntry(entry_);
     c_pf_els_et_ = true;
   }
@@ -5918,6 +9378,8 @@ std::vector<float>* const & cfa_8::pf_els_et() const{
 
 std::vector<float>* const & cfa_8::pf_els_eta() const{
   if(!c_pf_els_eta_ && b_pf_els_eta_){
+    b_pf_els_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_eta", &pf_els_eta_, &b_pf_els_eta_);
     b_pf_els_eta_->GetEntry(entry_);
     c_pf_els_eta_ = true;
   }
@@ -5926,6 +9388,8 @@ std::vector<float>* const & cfa_8::pf_els_eta() const{
 
 std::vector<float>* const & cfa_8::pf_els_etaError() const{
   if(!c_pf_els_etaError_ && b_pf_els_etaError_){
+    b_pf_els_etaError_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_etaError", &pf_els_etaError_, &b_pf_els_etaError_);
     b_pf_els_etaError_->GetEntry(entry_);
     c_pf_els_etaError_ = true;
   }
@@ -5934,6 +9398,8 @@ std::vector<float>* const & cfa_8::pf_els_etaError() const{
 
 std::vector<float>* const & cfa_8::pf_els_fbrem() const{
   if(!c_pf_els_fbrem_ && b_pf_els_fbrem_){
+    b_pf_els_fbrem_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_fbrem", &pf_els_fbrem_, &b_pf_els_fbrem_);
     b_pf_els_fbrem_->GetEntry(entry_);
     c_pf_els_fbrem_ = true;
   }
@@ -5942,6 +9408,8 @@ std::vector<float>* const & cfa_8::pf_els_fbrem() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_et() const{
   if(!c_pf_els_gen_et_ && b_pf_els_gen_et_){
+    b_pf_els_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_et", &pf_els_gen_et_, &b_pf_els_gen_et_);
     b_pf_els_gen_et_->GetEntry(entry_);
     c_pf_els_gen_et_ = true;
   }
@@ -5950,6 +9418,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_et() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_eta() const{
   if(!c_pf_els_gen_eta_ && b_pf_els_gen_eta_){
+    b_pf_els_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_eta", &pf_els_gen_eta_, &b_pf_els_gen_eta_);
     b_pf_els_gen_eta_->GetEntry(entry_);
     c_pf_els_gen_eta_ = true;
   }
@@ -5958,6 +9428,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_eta() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_id() const{
   if(!c_pf_els_gen_id_ && b_pf_els_gen_id_){
+    b_pf_els_gen_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_id", &pf_els_gen_id_, &b_pf_els_gen_id_);
     b_pf_els_gen_id_->GetEntry(entry_);
     c_pf_els_gen_id_ = true;
   }
@@ -5966,6 +9438,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_id() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_et() const{
   if(!c_pf_els_gen_mother_et_ && b_pf_els_gen_mother_et_){
+    b_pf_els_gen_mother_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_et", &pf_els_gen_mother_et_, &b_pf_els_gen_mother_et_);
     b_pf_els_gen_mother_et_->GetEntry(entry_);
     c_pf_els_gen_mother_et_ = true;
   }
@@ -5974,6 +9448,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_et() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_eta() const{
   if(!c_pf_els_gen_mother_eta_ && b_pf_els_gen_mother_eta_){
+    b_pf_els_gen_mother_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_eta", &pf_els_gen_mother_eta_, &b_pf_els_gen_mother_eta_);
     b_pf_els_gen_mother_eta_->GetEntry(entry_);
     c_pf_els_gen_mother_eta_ = true;
   }
@@ -5982,6 +9458,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_eta() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_id() const{
   if(!c_pf_els_gen_mother_id_ && b_pf_els_gen_mother_id_){
+    b_pf_els_gen_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_id", &pf_els_gen_mother_id_, &b_pf_els_gen_mother_id_);
     b_pf_els_gen_mother_id_->GetEntry(entry_);
     c_pf_els_gen_mother_id_ = true;
   }
@@ -5990,6 +9468,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_id() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_phi() const{
   if(!c_pf_els_gen_mother_phi_ && b_pf_els_gen_mother_phi_){
+    b_pf_els_gen_mother_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_phi", &pf_els_gen_mother_phi_, &b_pf_els_gen_mother_phi_);
     b_pf_els_gen_mother_phi_->GetEntry(entry_);
     c_pf_els_gen_mother_phi_ = true;
   }
@@ -5998,6 +9478,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_phi() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_pt() const{
   if(!c_pf_els_gen_mother_pt_ && b_pf_els_gen_mother_pt_){
+    b_pf_els_gen_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_pt", &pf_els_gen_mother_pt_, &b_pf_els_gen_mother_pt_);
     b_pf_els_gen_mother_pt_->GetEntry(entry_);
     c_pf_els_gen_mother_pt_ = true;
   }
@@ -6006,6 +9488,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_pt() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_px() const{
   if(!c_pf_els_gen_mother_px_ && b_pf_els_gen_mother_px_){
+    b_pf_els_gen_mother_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_px", &pf_els_gen_mother_px_, &b_pf_els_gen_mother_px_);
     b_pf_els_gen_mother_px_->GetEntry(entry_);
     c_pf_els_gen_mother_px_ = true;
   }
@@ -6014,6 +9498,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_px() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_py() const{
   if(!c_pf_els_gen_mother_py_ && b_pf_els_gen_mother_py_){
+    b_pf_els_gen_mother_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_py", &pf_els_gen_mother_py_, &b_pf_els_gen_mother_py_);
     b_pf_els_gen_mother_py_->GetEntry(entry_);
     c_pf_els_gen_mother_py_ = true;
   }
@@ -6022,6 +9508,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_py() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_pz() const{
   if(!c_pf_els_gen_mother_pz_ && b_pf_els_gen_mother_pz_){
+    b_pf_els_gen_mother_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_pz", &pf_els_gen_mother_pz_, &b_pf_els_gen_mother_pz_);
     b_pf_els_gen_mother_pz_->GetEntry(entry_);
     c_pf_els_gen_mother_pz_ = true;
   }
@@ -6030,6 +9518,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_pz() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_mother_theta() const{
   if(!c_pf_els_gen_mother_theta_ && b_pf_els_gen_mother_theta_){
+    b_pf_els_gen_mother_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_mother_theta", &pf_els_gen_mother_theta_, &b_pf_els_gen_mother_theta_);
     b_pf_els_gen_mother_theta_->GetEntry(entry_);
     c_pf_els_gen_mother_theta_ = true;
   }
@@ -6038,6 +9528,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_mother_theta() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_phi() const{
   if(!c_pf_els_gen_phi_ && b_pf_els_gen_phi_){
+    b_pf_els_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_phi", &pf_els_gen_phi_, &b_pf_els_gen_phi_);
     b_pf_els_gen_phi_->GetEntry(entry_);
     c_pf_els_gen_phi_ = true;
   }
@@ -6046,6 +9538,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_pt() const{
   if(!c_pf_els_gen_pt_ && b_pf_els_gen_pt_){
+    b_pf_els_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_pt", &pf_els_gen_pt_, &b_pf_els_gen_pt_);
     b_pf_els_gen_pt_->GetEntry(entry_);
     c_pf_els_gen_pt_ = true;
   }
@@ -6054,6 +9548,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_pt() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_px() const{
   if(!c_pf_els_gen_px_ && b_pf_els_gen_px_){
+    b_pf_els_gen_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_px", &pf_els_gen_px_, &b_pf_els_gen_px_);
     b_pf_els_gen_px_->GetEntry(entry_);
     c_pf_els_gen_px_ = true;
   }
@@ -6062,6 +9558,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_px() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_py() const{
   if(!c_pf_els_gen_py_ && b_pf_els_gen_py_){
+    b_pf_els_gen_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_py", &pf_els_gen_py_, &b_pf_els_gen_py_);
     b_pf_els_gen_py_->GetEntry(entry_);
     c_pf_els_gen_py_ = true;
   }
@@ -6070,6 +9568,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_py() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_pz() const{
   if(!c_pf_els_gen_pz_ && b_pf_els_gen_pz_){
+    b_pf_els_gen_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_pz", &pf_els_gen_pz_, &b_pf_els_gen_pz_);
     b_pf_els_gen_pz_->GetEntry(entry_);
     c_pf_els_gen_pz_ = true;
   }
@@ -6078,6 +9578,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_pz() const{
 
 std::vector<float>* const & cfa_8::pf_els_gen_theta() const{
   if(!c_pf_els_gen_theta_ && b_pf_els_gen_theta_){
+    b_pf_els_gen_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_gen_theta", &pf_els_gen_theta_, &b_pf_els_gen_theta_);
     b_pf_els_gen_theta_->GetEntry(entry_);
     c_pf_els_gen_theta_ = true;
   }
@@ -6086,6 +9588,8 @@ std::vector<float>* const & cfa_8::pf_els_gen_theta() const{
 
 std::vector<float>* const & cfa_8::pf_els_hadOverEm() const{
   if(!c_pf_els_hadOverEm_ && b_pf_els_hadOverEm_){
+    b_pf_els_hadOverEm_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_hadOverEm", &pf_els_hadOverEm_, &b_pf_els_hadOverEm_);
     b_pf_els_hadOverEm_->GetEntry(entry_);
     c_pf_els_hadOverEm_ = true;
   }
@@ -6094,6 +9598,8 @@ std::vector<float>* const & cfa_8::pf_els_hadOverEm() const{
 
 std::vector<bool>* const & cfa_8::pf_els_hasMatchedConversion() const{
   if(!c_pf_els_hasMatchedConversion_ && b_pf_els_hasMatchedConversion_){
+    b_pf_els_hasMatchedConversion_->SetStatus(true);
+    chainA_.SetBranchAddress("pf_els_hasMatchedConversion", &pf_els_hasMatchedConversion_, &b_pf_els_hasMatchedConversion_);
     b_pf_els_hasMatchedConversion_->GetEntry(entry_);
     c_pf_els_hasMatchedConversion_ = true;
   }
@@ -6102,6 +9608,8 @@ std::vector<bool>* const & cfa_8::pf_els_hasMatchedConversion() const{
 
 std::vector<float>* const & cfa_8::pf_els_hcalIso() const{
   if(!c_pf_els_hcalIso_ && b_pf_els_hcalIso_){
+    b_pf_els_hcalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_hcalIso", &pf_els_hcalIso_, &b_pf_els_hcalIso_);
     b_pf_els_hcalIso_->GetEntry(entry_);
     c_pf_els_hcalIso_ = true;
   }
@@ -6110,6 +9618,8 @@ std::vector<float>* const & cfa_8::pf_els_hcalIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_hcalOverEcalBc() const{
   if(!c_pf_els_hcalOverEcalBc_ && b_pf_els_hcalOverEcalBc_){
+    b_pf_els_hcalOverEcalBc_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_hcalOverEcalBc", &pf_els_hcalOverEcalBc_, &b_pf_els_hcalOverEcalBc_);
     b_pf_els_hcalOverEcalBc_->GetEntry(entry_);
     c_pf_els_hcalOverEcalBc_ = true;
   }
@@ -6118,6 +9628,8 @@ std::vector<float>* const & cfa_8::pf_els_hcalOverEcalBc() const{
 
 std::vector<float>* const & cfa_8::pf_els_isEB() const{
   if(!c_pf_els_isEB_ && b_pf_els_isEB_){
+    b_pf_els_isEB_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_isEB", &pf_els_isEB_, &b_pf_els_isEB_);
     b_pf_els_isEB_->GetEntry(entry_);
     c_pf_els_isEB_ = true;
   }
@@ -6126,6 +9638,8 @@ std::vector<float>* const & cfa_8::pf_els_isEB() const{
 
 std::vector<float>* const & cfa_8::pf_els_isEE() const{
   if(!c_pf_els_isEE_ && b_pf_els_isEE_){
+    b_pf_els_isEE_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_isEE", &pf_els_isEE_, &b_pf_els_isEE_);
     b_pf_els_isEE_->GetEntry(entry_);
     c_pf_els_isEE_ = true;
   }
@@ -6134,6 +9648,8 @@ std::vector<float>* const & cfa_8::pf_els_isEE() const{
 
 std::vector<float>* const & cfa_8::pf_els_looseId() const{
   if(!c_pf_els_looseId_ && b_pf_els_looseId_){
+    b_pf_els_looseId_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_looseId", &pf_els_looseId_, &b_pf_els_looseId_);
     b_pf_els_looseId_->GetEntry(entry_);
     c_pf_els_looseId_ = true;
   }
@@ -6142,6 +9658,8 @@ std::vector<float>* const & cfa_8::pf_els_looseId() const{
 
 std::vector<float>* const & cfa_8::pf_els_n_inner_layer() const{
   if(!c_pf_els_n_inner_layer_ && b_pf_els_n_inner_layer_){
+    b_pf_els_n_inner_layer_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_n_inner_layer", &pf_els_n_inner_layer_, &b_pf_els_n_inner_layer_);
     b_pf_els_n_inner_layer_->GetEntry(entry_);
     c_pf_els_n_inner_layer_ = true;
   }
@@ -6150,6 +9668,8 @@ std::vector<float>* const & cfa_8::pf_els_n_inner_layer() const{
 
 std::vector<float>* const & cfa_8::pf_els_n_outer_layer() const{
   if(!c_pf_els_n_outer_layer_ && b_pf_els_n_outer_layer_){
+    b_pf_els_n_outer_layer_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_n_outer_layer", &pf_els_n_outer_layer_, &b_pf_els_n_outer_layer_);
     b_pf_els_n_outer_layer_->GetEntry(entry_);
     c_pf_els_n_outer_layer_ = true;
   }
@@ -6158,6 +9678,8 @@ std::vector<float>* const & cfa_8::pf_els_n_outer_layer() const{
 
 std::vector<float>* const & cfa_8::pf_els_ndof() const{
   if(!c_pf_els_ndof_ && b_pf_els_ndof_){
+    b_pf_els_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ndof", &pf_els_ndof_, &b_pf_els_ndof_);
     b_pf_els_ndof_->GetEntry(entry_);
     c_pf_els_ndof_ = true;
   }
@@ -6166,6 +9688,8 @@ std::vector<float>* const & cfa_8::pf_els_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_els_neutralHadronIso() const{
   if(!c_pf_els_neutralHadronIso_ && b_pf_els_neutralHadronIso_){
+    b_pf_els_neutralHadronIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_neutralHadronIso", &pf_els_neutralHadronIso_, &b_pf_els_neutralHadronIso_);
     b_pf_els_neutralHadronIso_->GetEntry(entry_);
     c_pf_els_neutralHadronIso_ = true;
   }
@@ -6174,6 +9698,8 @@ std::vector<float>* const & cfa_8::pf_els_neutralHadronIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_numlosthits() const{
   if(!c_pf_els_numlosthits_ && b_pf_els_numlosthits_){
+    b_pf_els_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_numlosthits", &pf_els_numlosthits_, &b_pf_els_numlosthits_);
     b_pf_els_numlosthits_->GetEntry(entry_);
     c_pf_els_numlosthits_ = true;
   }
@@ -6182,6 +9708,8 @@ std::vector<float>* const & cfa_8::pf_els_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_els_numvalhits() const{
   if(!c_pf_els_numvalhits_ && b_pf_els_numvalhits_){
+    b_pf_els_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_numvalhits", &pf_els_numvalhits_, &b_pf_els_numvalhits_);
     b_pf_els_numvalhits_->GetEntry(entry_);
     c_pf_els_numvalhits_ = true;
   }
@@ -6190,6 +9718,8 @@ std::vector<float>* const & cfa_8::pf_els_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_els_phi() const{
   if(!c_pf_els_phi_ && b_pf_els_phi_){
+    b_pf_els_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_phi", &pf_els_phi_, &b_pf_els_phi_);
     b_pf_els_phi_->GetEntry(entry_);
     c_pf_els_phi_ = true;
   }
@@ -6198,6 +9728,8 @@ std::vector<float>* const & cfa_8::pf_els_phi() const{
 
 std::vector<float>* const & cfa_8::pf_els_phiError() const{
   if(!c_pf_els_phiError_ && b_pf_els_phiError_){
+    b_pf_els_phiError_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_phiError", &pf_els_phiError_, &b_pf_els_phiError_);
     b_pf_els_phiError_->GetEntry(entry_);
     c_pf_els_phiError_ = true;
   }
@@ -6206,6 +9738,8 @@ std::vector<float>* const & cfa_8::pf_els_phiError() const{
 
 std::vector<float>* const & cfa_8::pf_els_photonIso() const{
   if(!c_pf_els_photonIso_ && b_pf_els_photonIso_){
+    b_pf_els_photonIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_photonIso", &pf_els_photonIso_, &b_pf_els_photonIso_);
     b_pf_els_photonIso_->GetEntry(entry_);
     c_pf_els_photonIso_ = true;
   }
@@ -6214,6 +9748,8 @@ std::vector<float>* const & cfa_8::pf_els_photonIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_pt() const{
   if(!c_pf_els_pt_ && b_pf_els_pt_){
+    b_pf_els_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_pt", &pf_els_pt_, &b_pf_els_pt_);
     b_pf_els_pt_->GetEntry(entry_);
     c_pf_els_pt_ = true;
   }
@@ -6222,6 +9758,8 @@ std::vector<float>* const & cfa_8::pf_els_pt() const{
 
 std::vector<float>* const & cfa_8::pf_els_ptError() const{
   if(!c_pf_els_ptError_ && b_pf_els_ptError_){
+    b_pf_els_ptError_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_ptError", &pf_els_ptError_, &b_pf_els_ptError_);
     b_pf_els_ptError_->GetEntry(entry_);
     c_pf_els_ptError_ = true;
   }
@@ -6230,6 +9768,8 @@ std::vector<float>* const & cfa_8::pf_els_ptError() const{
 
 std::vector<float>* const & cfa_8::pf_els_px() const{
   if(!c_pf_els_px_ && b_pf_els_px_){
+    b_pf_els_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_px", &pf_els_px_, &b_pf_els_px_);
     b_pf_els_px_->GetEntry(entry_);
     c_pf_els_px_ = true;
   }
@@ -6238,6 +9778,8 @@ std::vector<float>* const & cfa_8::pf_els_px() const{
 
 std::vector<float>* const & cfa_8::pf_els_py() const{
   if(!c_pf_els_py_ && b_pf_els_py_){
+    b_pf_els_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_py", &pf_els_py_, &b_pf_els_py_);
     b_pf_els_py_->GetEntry(entry_);
     c_pf_els_py_ = true;
   }
@@ -6246,6 +9788,8 @@ std::vector<float>* const & cfa_8::pf_els_py() const{
 
 std::vector<float>* const & cfa_8::pf_els_pz() const{
   if(!c_pf_els_pz_ && b_pf_els_pz_){
+    b_pf_els_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_pz", &pf_els_pz_, &b_pf_els_pz_);
     b_pf_els_pz_->GetEntry(entry_);
     c_pf_els_pz_ = true;
   }
@@ -6254,6 +9798,8 @@ std::vector<float>* const & cfa_8::pf_els_pz() const{
 
 std::vector<float>* const & cfa_8::pf_els_robustHighEnergyId() const{
   if(!c_pf_els_robustHighEnergyId_ && b_pf_els_robustHighEnergyId_){
+    b_pf_els_robustHighEnergyId_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_robustHighEnergyId", &pf_els_robustHighEnergyId_, &b_pf_els_robustHighEnergyId_);
     b_pf_els_robustHighEnergyId_->GetEntry(entry_);
     c_pf_els_robustHighEnergyId_ = true;
   }
@@ -6262,6 +9808,8 @@ std::vector<float>* const & cfa_8::pf_els_robustHighEnergyId() const{
 
 std::vector<float>* const & cfa_8::pf_els_robustLooseId() const{
   if(!c_pf_els_robustLooseId_ && b_pf_els_robustLooseId_){
+    b_pf_els_robustLooseId_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_robustLooseId", &pf_els_robustLooseId_, &b_pf_els_robustLooseId_);
     b_pf_els_robustLooseId_->GetEntry(entry_);
     c_pf_els_robustLooseId_ = true;
   }
@@ -6270,6 +9818,8 @@ std::vector<float>* const & cfa_8::pf_els_robustLooseId() const{
 
 std::vector<float>* const & cfa_8::pf_els_robustTightId() const{
   if(!c_pf_els_robustTightId_ && b_pf_els_robustTightId_){
+    b_pf_els_robustTightId_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_robustTightId", &pf_els_robustTightId_, &b_pf_els_robustTightId_);
     b_pf_els_robustTightId_->GetEntry(entry_);
     c_pf_els_robustTightId_ = true;
   }
@@ -6278,6 +9828,8 @@ std::vector<float>* const & cfa_8::pf_els_robustTightId() const{
 
 std::vector<float>* const & cfa_8::pf_els_scE1x5() const{
   if(!c_pf_els_scE1x5_ && b_pf_els_scE1x5_){
+    b_pf_els_scE1x5_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scE1x5", &pf_els_scE1x5_, &b_pf_els_scE1x5_);
     b_pf_els_scE1x5_->GetEntry(entry_);
     c_pf_els_scE1x5_ = true;
   }
@@ -6286,6 +9838,8 @@ std::vector<float>* const & cfa_8::pf_els_scE1x5() const{
 
 std::vector<float>* const & cfa_8::pf_els_scE2x5Max() const{
   if(!c_pf_els_scE2x5Max_ && b_pf_els_scE2x5Max_){
+    b_pf_els_scE2x5Max_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scE2x5Max", &pf_els_scE2x5Max_, &b_pf_els_scE2x5Max_);
     b_pf_els_scE2x5Max_->GetEntry(entry_);
     c_pf_els_scE2x5Max_ = true;
   }
@@ -6294,6 +9848,8 @@ std::vector<float>* const & cfa_8::pf_els_scE2x5Max() const{
 
 std::vector<float>* const & cfa_8::pf_els_scE5x5() const{
   if(!c_pf_els_scE5x5_ && b_pf_els_scE5x5_){
+    b_pf_els_scE5x5_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scE5x5", &pf_els_scE5x5_, &b_pf_els_scE5x5_);
     b_pf_els_scE5x5_->GetEntry(entry_);
     c_pf_els_scE5x5_ = true;
   }
@@ -6302,6 +9858,8 @@ std::vector<float>* const & cfa_8::pf_els_scE5x5() const{
 
 std::vector<float>* const & cfa_8::pf_els_scEnergy() const{
   if(!c_pf_els_scEnergy_ && b_pf_els_scEnergy_){
+    b_pf_els_scEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scEnergy", &pf_els_scEnergy_, &b_pf_els_scEnergy_);
     b_pf_els_scEnergy_->GetEntry(entry_);
     c_pf_els_scEnergy_ = true;
   }
@@ -6310,6 +9868,8 @@ std::vector<float>* const & cfa_8::pf_els_scEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_els_scEta() const{
   if(!c_pf_els_scEta_ && b_pf_els_scEta_){
+    b_pf_els_scEta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scEta", &pf_els_scEta_, &b_pf_els_scEta_);
     b_pf_els_scEta_->GetEntry(entry_);
     c_pf_els_scEta_ = true;
   }
@@ -6318,6 +9878,8 @@ std::vector<float>* const & cfa_8::pf_els_scEta() const{
 
 std::vector<float>* const & cfa_8::pf_els_scEtaWidth() const{
   if(!c_pf_els_scEtaWidth_ && b_pf_els_scEtaWidth_){
+    b_pf_els_scEtaWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scEtaWidth", &pf_els_scEtaWidth_, &b_pf_els_scEtaWidth_);
     b_pf_els_scEtaWidth_->GetEntry(entry_);
     c_pf_els_scEtaWidth_ = true;
   }
@@ -6326,6 +9888,8 @@ std::vector<float>* const & cfa_8::pf_els_scEtaWidth() const{
 
 std::vector<float>* const & cfa_8::pf_els_scPhi() const{
   if(!c_pf_els_scPhi_ && b_pf_els_scPhi_){
+    b_pf_els_scPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scPhi", &pf_els_scPhi_, &b_pf_els_scPhi_);
     b_pf_els_scPhi_->GetEntry(entry_);
     c_pf_els_scPhi_ = true;
   }
@@ -6334,6 +9898,8 @@ std::vector<float>* const & cfa_8::pf_els_scPhi() const{
 
 std::vector<float>* const & cfa_8::pf_els_scPhiWidth() const{
   if(!c_pf_els_scPhiWidth_ && b_pf_els_scPhiWidth_){
+    b_pf_els_scPhiWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scPhiWidth", &pf_els_scPhiWidth_, &b_pf_els_scPhiWidth_);
     b_pf_els_scPhiWidth_->GetEntry(entry_);
     c_pf_els_scPhiWidth_ = true;
   }
@@ -6342,6 +9908,8 @@ std::vector<float>* const & cfa_8::pf_els_scPhiWidth() const{
 
 std::vector<float>* const & cfa_8::pf_els_scRawEnergy() const{
   if(!c_pf_els_scRawEnergy_ && b_pf_els_scRawEnergy_){
+    b_pf_els_scRawEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scRawEnergy", &pf_els_scRawEnergy_, &b_pf_els_scRawEnergy_);
     b_pf_els_scRawEnergy_->GetEntry(entry_);
     c_pf_els_scRawEnergy_ = true;
   }
@@ -6350,6 +9918,8 @@ std::vector<float>* const & cfa_8::pf_els_scRawEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_els_scSeedEnergy() const{
   if(!c_pf_els_scSeedEnergy_ && b_pf_els_scSeedEnergy_){
+    b_pf_els_scSeedEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_scSeedEnergy", &pf_els_scSeedEnergy_, &b_pf_els_scSeedEnergy_);
     b_pf_els_scSeedEnergy_->GetEntry(entry_);
     c_pf_els_scSeedEnergy_ = true;
   }
@@ -6358,6 +9928,8 @@ std::vector<float>* const & cfa_8::pf_els_scSeedEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_els_shFracInnerHits() const{
   if(!c_pf_els_shFracInnerHits_ && b_pf_els_shFracInnerHits_){
+    b_pf_els_shFracInnerHits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_shFracInnerHits", &pf_els_shFracInnerHits_, &b_pf_els_shFracInnerHits_);
     b_pf_els_shFracInnerHits_->GetEntry(entry_);
     c_pf_els_shFracInnerHits_ = true;
   }
@@ -6366,6 +9938,8 @@ std::vector<float>* const & cfa_8::pf_els_shFracInnerHits() const{
 
 std::vector<float>* const & cfa_8::pf_els_sigmaEtaEta() const{
   if(!c_pf_els_sigmaEtaEta_ && b_pf_els_sigmaEtaEta_){
+    b_pf_els_sigmaEtaEta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_sigmaEtaEta", &pf_els_sigmaEtaEta_, &b_pf_els_sigmaEtaEta_);
     b_pf_els_sigmaEtaEta_->GetEntry(entry_);
     c_pf_els_sigmaEtaEta_ = true;
   }
@@ -6374,6 +9948,8 @@ std::vector<float>* const & cfa_8::pf_els_sigmaEtaEta() const{
 
 std::vector<float>* const & cfa_8::pf_els_sigmaIEtaIEta() const{
   if(!c_pf_els_sigmaIEtaIEta_ && b_pf_els_sigmaIEtaIEta_){
+    b_pf_els_sigmaIEtaIEta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_sigmaIEtaIEta", &pf_els_sigmaIEtaIEta_, &b_pf_els_sigmaIEtaIEta_);
     b_pf_els_sigmaIEtaIEta_->GetEntry(entry_);
     c_pf_els_sigmaIEtaIEta_ = true;
   }
@@ -6382,6 +9958,8 @@ std::vector<float>* const & cfa_8::pf_els_sigmaIEtaIEta() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId60cIso() const{
   if(!c_pf_els_simpleEleId60cIso_ && b_pf_els_simpleEleId60cIso_){
+    b_pf_els_simpleEleId60cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId60cIso", &pf_els_simpleEleId60cIso_, &b_pf_els_simpleEleId60cIso_);
     b_pf_els_simpleEleId60cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId60cIso_ = true;
   }
@@ -6390,6 +9968,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId60cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId60relIso() const{
   if(!c_pf_els_simpleEleId60relIso_ && b_pf_els_simpleEleId60relIso_){
+    b_pf_els_simpleEleId60relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId60relIso", &pf_els_simpleEleId60relIso_, &b_pf_els_simpleEleId60relIso_);
     b_pf_els_simpleEleId60relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId60relIso_ = true;
   }
@@ -6398,6 +9978,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId60relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId70cIso() const{
   if(!c_pf_els_simpleEleId70cIso_ && b_pf_els_simpleEleId70cIso_){
+    b_pf_els_simpleEleId70cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId70cIso", &pf_els_simpleEleId70cIso_, &b_pf_els_simpleEleId70cIso_);
     b_pf_els_simpleEleId70cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId70cIso_ = true;
   }
@@ -6406,6 +9988,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId70cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId70relIso() const{
   if(!c_pf_els_simpleEleId70relIso_ && b_pf_els_simpleEleId70relIso_){
+    b_pf_els_simpleEleId70relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId70relIso", &pf_els_simpleEleId70relIso_, &b_pf_els_simpleEleId70relIso_);
     b_pf_els_simpleEleId70relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId70relIso_ = true;
   }
@@ -6414,6 +9998,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId70relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId80cIso() const{
   if(!c_pf_els_simpleEleId80cIso_ && b_pf_els_simpleEleId80cIso_){
+    b_pf_els_simpleEleId80cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId80cIso", &pf_els_simpleEleId80cIso_, &b_pf_els_simpleEleId80cIso_);
     b_pf_els_simpleEleId80cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId80cIso_ = true;
   }
@@ -6422,6 +10008,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId80cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId80relIso() const{
   if(!c_pf_els_simpleEleId80relIso_ && b_pf_els_simpleEleId80relIso_){
+    b_pf_els_simpleEleId80relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId80relIso", &pf_els_simpleEleId80relIso_, &b_pf_els_simpleEleId80relIso_);
     b_pf_els_simpleEleId80relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId80relIso_ = true;
   }
@@ -6430,6 +10018,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId80relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId85cIso() const{
   if(!c_pf_els_simpleEleId85cIso_ && b_pf_els_simpleEleId85cIso_){
+    b_pf_els_simpleEleId85cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId85cIso", &pf_els_simpleEleId85cIso_, &b_pf_els_simpleEleId85cIso_);
     b_pf_els_simpleEleId85cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId85cIso_ = true;
   }
@@ -6438,6 +10028,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId85cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId85relIso() const{
   if(!c_pf_els_simpleEleId85relIso_ && b_pf_els_simpleEleId85relIso_){
+    b_pf_els_simpleEleId85relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId85relIso", &pf_els_simpleEleId85relIso_, &b_pf_els_simpleEleId85relIso_);
     b_pf_els_simpleEleId85relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId85relIso_ = true;
   }
@@ -6446,6 +10038,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId85relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId90cIso() const{
   if(!c_pf_els_simpleEleId90cIso_ && b_pf_els_simpleEleId90cIso_){
+    b_pf_els_simpleEleId90cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId90cIso", &pf_els_simpleEleId90cIso_, &b_pf_els_simpleEleId90cIso_);
     b_pf_els_simpleEleId90cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId90cIso_ = true;
   }
@@ -6454,6 +10048,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId90cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId90relIso() const{
   if(!c_pf_els_simpleEleId90relIso_ && b_pf_els_simpleEleId90relIso_){
+    b_pf_els_simpleEleId90relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId90relIso", &pf_els_simpleEleId90relIso_, &b_pf_els_simpleEleId90relIso_);
     b_pf_els_simpleEleId90relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId90relIso_ = true;
   }
@@ -6462,6 +10058,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId90relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId95cIso() const{
   if(!c_pf_els_simpleEleId95cIso_ && b_pf_els_simpleEleId95cIso_){
+    b_pf_els_simpleEleId95cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId95cIso", &pf_els_simpleEleId95cIso_, &b_pf_els_simpleEleId95cIso_);
     b_pf_els_simpleEleId95cIso_->GetEntry(entry_);
     c_pf_els_simpleEleId95cIso_ = true;
   }
@@ -6470,6 +10068,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId95cIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_simpleEleId95relIso() const{
   if(!c_pf_els_simpleEleId95relIso_ && b_pf_els_simpleEleId95relIso_){
+    b_pf_els_simpleEleId95relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_simpleEleId95relIso", &pf_els_simpleEleId95relIso_, &b_pf_els_simpleEleId95relIso_);
     b_pf_els_simpleEleId95relIso_->GetEntry(entry_);
     c_pf_els_simpleEleId95relIso_ = true;
   }
@@ -6478,6 +10078,8 @@ std::vector<float>* const & cfa_8::pf_els_simpleEleId95relIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_status() const{
   if(!c_pf_els_status_ && b_pf_els_status_){
+    b_pf_els_status_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_status", &pf_els_status_, &b_pf_els_status_);
     b_pf_els_status_->GetEntry(entry_);
     c_pf_els_status_ = true;
   }
@@ -6486,6 +10088,8 @@ std::vector<float>* const & cfa_8::pf_els_status() const{
 
 std::vector<float>* const & cfa_8::pf_els_tIso() const{
   if(!c_pf_els_tIso_ && b_pf_els_tIso_){
+    b_pf_els_tIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tIso", &pf_els_tIso_, &b_pf_els_tIso_);
     b_pf_els_tIso_->GetEntry(entry_);
     c_pf_els_tIso_ = true;
   }
@@ -6494,6 +10098,8 @@ std::vector<float>* const & cfa_8::pf_els_tIso() const{
 
 std::vector<float>* const & cfa_8::pf_els_theta() const{
   if(!c_pf_els_theta_ && b_pf_els_theta_){
+    b_pf_els_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_theta", &pf_els_theta_, &b_pf_els_theta_);
     b_pf_els_theta_->GetEntry(entry_);
     c_pf_els_theta_ = true;
   }
@@ -6502,6 +10108,8 @@ std::vector<float>* const & cfa_8::pf_els_theta() const{
 
 std::vector<float>* const & cfa_8::pf_els_tightId() const{
   if(!c_pf_els_tightId_ && b_pf_els_tightId_){
+    b_pf_els_tightId_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tightId", &pf_els_tightId_, &b_pf_els_tightId_);
     b_pf_els_tightId_->GetEntry(entry_);
     c_pf_els_tightId_ = true;
   }
@@ -6510,6 +10118,8 @@ std::vector<float>* const & cfa_8::pf_els_tightId() const{
 
 std::vector<float>* const & cfa_8::pf_els_tk_charge() const{
   if(!c_pf_els_tk_charge_ && b_pf_els_tk_charge_){
+    b_pf_els_tk_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tk_charge", &pf_els_tk_charge_, &b_pf_els_tk_charge_);
     b_pf_els_tk_charge_->GetEntry(entry_);
     c_pf_els_tk_charge_ = true;
   }
@@ -6518,6 +10128,8 @@ std::vector<float>* const & cfa_8::pf_els_tk_charge() const{
 
 std::vector<float>* const & cfa_8::pf_els_tk_eta() const{
   if(!c_pf_els_tk_eta_ && b_pf_els_tk_eta_){
+    b_pf_els_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tk_eta", &pf_els_tk_eta_, &b_pf_els_tk_eta_);
     b_pf_els_tk_eta_->GetEntry(entry_);
     c_pf_els_tk_eta_ = true;
   }
@@ -6526,6 +10138,8 @@ std::vector<float>* const & cfa_8::pf_els_tk_eta() const{
 
 std::vector<float>* const & cfa_8::pf_els_tk_phi() const{
   if(!c_pf_els_tk_phi_ && b_pf_els_tk_phi_){
+    b_pf_els_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tk_phi", &pf_els_tk_phi_, &b_pf_els_tk_phi_);
     b_pf_els_tk_phi_->GetEntry(entry_);
     c_pf_els_tk_phi_ = true;
   }
@@ -6534,6 +10148,8 @@ std::vector<float>* const & cfa_8::pf_els_tk_phi() const{
 
 std::vector<float>* const & cfa_8::pf_els_tk_pt() const{
   if(!c_pf_els_tk_pt_ && b_pf_els_tk_pt_){
+    b_pf_els_tk_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tk_pt", &pf_els_tk_pt_, &b_pf_els_tk_pt_);
     b_pf_els_tk_pt_->GetEntry(entry_);
     c_pf_els_tk_pt_ = true;
   }
@@ -6542,6 +10158,8 @@ std::vector<float>* const & cfa_8::pf_els_tk_pt() const{
 
 std::vector<float>* const & cfa_8::pf_els_tk_pz() const{
   if(!c_pf_els_tk_pz_ && b_pf_els_tk_pz_){
+    b_pf_els_tk_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_tk_pz", &pf_els_tk_pz_, &b_pf_els_tk_pz_);
     b_pf_els_tk_pz_->GetEntry(entry_);
     c_pf_els_tk_pz_ = true;
   }
@@ -6550,6 +10168,8 @@ std::vector<float>* const & cfa_8::pf_els_tk_pz() const{
 
 std::vector<float>* const & cfa_8::pf_els_vpx() const{
   if(!c_pf_els_vpx_ && b_pf_els_vpx_){
+    b_pf_els_vpx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vpx", &pf_els_vpx_, &b_pf_els_vpx_);
     b_pf_els_vpx_->GetEntry(entry_);
     c_pf_els_vpx_ = true;
   }
@@ -6558,6 +10178,8 @@ std::vector<float>* const & cfa_8::pf_els_vpx() const{
 
 std::vector<float>* const & cfa_8::pf_els_vpy() const{
   if(!c_pf_els_vpy_ && b_pf_els_vpy_){
+    b_pf_els_vpy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vpy", &pf_els_vpy_, &b_pf_els_vpy_);
     b_pf_els_vpy_->GetEntry(entry_);
     c_pf_els_vpy_ = true;
   }
@@ -6566,6 +10188,8 @@ std::vector<float>* const & cfa_8::pf_els_vpy() const{
 
 std::vector<float>* const & cfa_8::pf_els_vpz() const{
   if(!c_pf_els_vpz_ && b_pf_els_vpz_){
+    b_pf_els_vpz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vpz", &pf_els_vpz_, &b_pf_els_vpz_);
     b_pf_els_vpz_->GetEntry(entry_);
     c_pf_els_vpz_ = true;
   }
@@ -6574,6 +10198,8 @@ std::vector<float>* const & cfa_8::pf_els_vpz() const{
 
 std::vector<float>* const & cfa_8::pf_els_vx() const{
   if(!c_pf_els_vx_ && b_pf_els_vx_){
+    b_pf_els_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vx", &pf_els_vx_, &b_pf_els_vx_);
     b_pf_els_vx_->GetEntry(entry_);
     c_pf_els_vx_ = true;
   }
@@ -6582,6 +10208,8 @@ std::vector<float>* const & cfa_8::pf_els_vx() const{
 
 std::vector<float>* const & cfa_8::pf_els_vy() const{
   if(!c_pf_els_vy_ && b_pf_els_vy_){
+    b_pf_els_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vy", &pf_els_vy_, &b_pf_els_vy_);
     b_pf_els_vy_->GetEntry(entry_);
     c_pf_els_vy_ = true;
   }
@@ -6590,6 +10218,8 @@ std::vector<float>* const & cfa_8::pf_els_vy() const{
 
 std::vector<float>* const & cfa_8::pf_els_vz() const{
   if(!c_pf_els_vz_ && b_pf_els_vz_){
+    b_pf_els_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_els_vz", &pf_els_vz_, &b_pf_els_vz_);
     b_pf_els_vz_->GetEntry(entry_);
     c_pf_els_vz_ = true;
   }
@@ -6598,6 +10228,8 @@ std::vector<float>* const & cfa_8::pf_els_vz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cIso() const{
   if(!c_pf_mus_cIso_ && b_pf_mus_cIso_){
+    b_pf_mus_cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cIso", &pf_mus_cIso_, &b_pf_mus_cIso_);
     b_pf_mus_cIso_->GetEntry(entry_);
     c_pf_mus_cIso_ = true;
   }
@@ -6606,6 +10238,8 @@ std::vector<float>* const & cfa_8::pf_mus_cIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyEm() const{
   if(!c_pf_mus_calEnergyEm_ && b_pf_mus_calEnergyEm_){
+    b_pf_mus_calEnergyEm_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyEm", &pf_mus_calEnergyEm_, &b_pf_mus_calEnergyEm_);
     b_pf_mus_calEnergyEm_->GetEntry(entry_);
     c_pf_mus_calEnergyEm_ = true;
   }
@@ -6614,6 +10248,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyEm() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyEmS9() const{
   if(!c_pf_mus_calEnergyEmS9_ && b_pf_mus_calEnergyEmS9_){
+    b_pf_mus_calEnergyEmS9_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyEmS9", &pf_mus_calEnergyEmS9_, &b_pf_mus_calEnergyEmS9_);
     b_pf_mus_calEnergyEmS9_->GetEntry(entry_);
     c_pf_mus_calEnergyEmS9_ = true;
   }
@@ -6622,6 +10258,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyEmS9() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyHad() const{
   if(!c_pf_mus_calEnergyHad_ && b_pf_mus_calEnergyHad_){
+    b_pf_mus_calEnergyHad_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyHad", &pf_mus_calEnergyHad_, &b_pf_mus_calEnergyHad_);
     b_pf_mus_calEnergyHad_->GetEntry(entry_);
     c_pf_mus_calEnergyHad_ = true;
   }
@@ -6630,6 +10268,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyHad() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyHadS9() const{
   if(!c_pf_mus_calEnergyHadS9_ && b_pf_mus_calEnergyHadS9_){
+    b_pf_mus_calEnergyHadS9_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyHadS9", &pf_mus_calEnergyHadS9_, &b_pf_mus_calEnergyHadS9_);
     b_pf_mus_calEnergyHadS9_->GetEntry(entry_);
     c_pf_mus_calEnergyHadS9_ = true;
   }
@@ -6638,6 +10278,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyHadS9() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyHo() const{
   if(!c_pf_mus_calEnergyHo_ && b_pf_mus_calEnergyHo_){
+    b_pf_mus_calEnergyHo_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyHo", &pf_mus_calEnergyHo_, &b_pf_mus_calEnergyHo_);
     b_pf_mus_calEnergyHo_->GetEntry(entry_);
     c_pf_mus_calEnergyHo_ = true;
   }
@@ -6646,6 +10288,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyHo() const{
 
 std::vector<float>* const & cfa_8::pf_mus_calEnergyHoS9() const{
   if(!c_pf_mus_calEnergyHoS9_ && b_pf_mus_calEnergyHoS9_){
+    b_pf_mus_calEnergyHoS9_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_calEnergyHoS9", &pf_mus_calEnergyHoS9_, &b_pf_mus_calEnergyHoS9_);
     b_pf_mus_calEnergyHoS9_->GetEntry(entry_);
     c_pf_mus_calEnergyHoS9_ = true;
   }
@@ -6654,6 +10298,8 @@ std::vector<float>* const & cfa_8::pf_mus_calEnergyHoS9() const{
 
 std::vector<float>* const & cfa_8::pf_mus_charge() const{
   if(!c_pf_mus_charge_ && b_pf_mus_charge_){
+    b_pf_mus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_charge", &pf_mus_charge_, &b_pf_mus_charge_);
     b_pf_mus_charge_->GetEntry(entry_);
     c_pf_mus_charge_ = true;
   }
@@ -6662,6 +10308,8 @@ std::vector<float>* const & cfa_8::pf_mus_charge() const{
 
 std::vector<float>* const & cfa_8::pf_mus_chargedHadronIso() const{
   if(!c_pf_mus_chargedHadronIso_ && b_pf_mus_chargedHadronIso_){
+    b_pf_mus_chargedHadronIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_chargedHadronIso", &pf_mus_chargedHadronIso_, &b_pf_mus_chargedHadronIso_);
     b_pf_mus_chargedHadronIso_->GetEntry(entry_);
     c_pf_mus_chargedHadronIso_ = true;
   }
@@ -6670,6 +10318,8 @@ std::vector<float>* const & cfa_8::pf_mus_chargedHadronIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_ExpectedHitsInner() const{
   if(!c_pf_mus_cm_ExpectedHitsInner_ && b_pf_mus_cm_ExpectedHitsInner_){
+    b_pf_mus_cm_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_ExpectedHitsInner", &pf_mus_cm_ExpectedHitsInner_, &b_pf_mus_cm_ExpectedHitsInner_);
     b_pf_mus_cm_ExpectedHitsInner_->GetEntry(entry_);
     c_pf_mus_cm_ExpectedHitsInner_ = true;
   }
@@ -6678,6 +10328,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_ExpectedHitsOuter() const{
   if(!c_pf_mus_cm_ExpectedHitsOuter_ && b_pf_mus_cm_ExpectedHitsOuter_){
+    b_pf_mus_cm_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_ExpectedHitsOuter", &pf_mus_cm_ExpectedHitsOuter_, &b_pf_mus_cm_ExpectedHitsOuter_);
     b_pf_mus_cm_ExpectedHitsOuter_->GetEntry(entry_);
     c_pf_mus_cm_ExpectedHitsOuter_ = true;
   }
@@ -6686,6 +10338,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_LayersWithMeasurement() const{
   if(!c_pf_mus_cm_LayersWithMeasurement_ && b_pf_mus_cm_LayersWithMeasurement_){
+    b_pf_mus_cm_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_LayersWithMeasurement", &pf_mus_cm_LayersWithMeasurement_, &b_pf_mus_cm_LayersWithMeasurement_);
     b_pf_mus_cm_LayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_cm_LayersWithMeasurement_ = true;
   }
@@ -6694,6 +10348,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_LayersWithoutMeasurement() const{
   if(!c_pf_mus_cm_LayersWithoutMeasurement_ && b_pf_mus_cm_LayersWithoutMeasurement_){
+    b_pf_mus_cm_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_LayersWithoutMeasurement", &pf_mus_cm_LayersWithoutMeasurement_, &b_pf_mus_cm_LayersWithoutMeasurement_);
     b_pf_mus_cm_LayersWithoutMeasurement_->GetEntry(entry_);
     c_pf_mus_cm_LayersWithoutMeasurement_ = true;
   }
@@ -6702,6 +10358,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_LayersWithoutMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_PixelLayersWithMeasurement() const{
   if(!c_pf_mus_cm_PixelLayersWithMeasurement_ && b_pf_mus_cm_PixelLayersWithMeasurement_){
+    b_pf_mus_cm_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_PixelLayersWithMeasurement", &pf_mus_cm_PixelLayersWithMeasurement_, &b_pf_mus_cm_PixelLayersWithMeasurement_);
     b_pf_mus_cm_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_cm_PixelLayersWithMeasurement_ = true;
   }
@@ -6710,6 +10368,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_PixelLayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ && b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_){
+    b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_ValidStripLayersWithMonoAndStereoHit", &pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_, &b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_);
     b_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_pf_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -6718,6 +10378,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_ValidStripLayersWithMonoAndStereoHi
 
 std::vector<float>* const & cfa_8::pf_mus_cm_chg() const{
   if(!c_pf_mus_cm_chg_ && b_pf_mus_cm_chg_){
+    b_pf_mus_cm_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_chg", &pf_mus_cm_chg_, &b_pf_mus_cm_chg_);
     b_pf_mus_cm_chg_->GetEntry(entry_);
     c_pf_mus_cm_chg_ = true;
   }
@@ -6726,6 +10388,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_chg() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_chi2() const{
   if(!c_pf_mus_cm_chi2_ && b_pf_mus_cm_chi2_){
+    b_pf_mus_cm_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_chi2", &pf_mus_cm_chi2_, &b_pf_mus_cm_chi2_);
     b_pf_mus_cm_chi2_->GetEntry(entry_);
     c_pf_mus_cm_chi2_ = true;
   }
@@ -6734,6 +10398,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_d0dum() const{
   if(!c_pf_mus_cm_d0dum_ && b_pf_mus_cm_d0dum_){
+    b_pf_mus_cm_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_d0dum", &pf_mus_cm_d0dum_, &b_pf_mus_cm_d0dum_);
     b_pf_mus_cm_d0dum_->GetEntry(entry_);
     c_pf_mus_cm_d0dum_ = true;
   }
@@ -6742,6 +10408,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_d0dumErr() const{
   if(!c_pf_mus_cm_d0dumErr_ && b_pf_mus_cm_d0dumErr_){
+    b_pf_mus_cm_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_d0dumErr", &pf_mus_cm_d0dumErr_, &b_pf_mus_cm_d0dumErr_);
     b_pf_mus_cm_d0dumErr_->GetEntry(entry_);
     c_pf_mus_cm_d0dumErr_ = true;
   }
@@ -6750,6 +10418,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_dz() const{
   if(!c_pf_mus_cm_dz_ && b_pf_mus_cm_dz_){
+    b_pf_mus_cm_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_dz", &pf_mus_cm_dz_, &b_pf_mus_cm_dz_);
     b_pf_mus_cm_dz_->GetEntry(entry_);
     c_pf_mus_cm_dz_ = true;
   }
@@ -6758,6 +10428,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_dz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_dzErr() const{
   if(!c_pf_mus_cm_dzErr_ && b_pf_mus_cm_dzErr_){
+    b_pf_mus_cm_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_dzErr", &pf_mus_cm_dzErr_, &b_pf_mus_cm_dzErr_);
     b_pf_mus_cm_dzErr_->GetEntry(entry_);
     c_pf_mus_cm_dzErr_ = true;
   }
@@ -6766,6 +10438,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_dzErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_eta() const{
   if(!c_pf_mus_cm_eta_ && b_pf_mus_cm_eta_){
+    b_pf_mus_cm_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_eta", &pf_mus_cm_eta_, &b_pf_mus_cm_eta_);
     b_pf_mus_cm_eta_->GetEntry(entry_);
     c_pf_mus_cm_eta_ = true;
   }
@@ -6774,6 +10448,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_etaErr() const{
   if(!c_pf_mus_cm_etaErr_ && b_pf_mus_cm_etaErr_){
+    b_pf_mus_cm_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_etaErr", &pf_mus_cm_etaErr_, &b_pf_mus_cm_etaErr_);
     b_pf_mus_cm_etaErr_->GetEntry(entry_);
     c_pf_mus_cm_etaErr_ = true;
   }
@@ -6782,6 +10458,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_etaErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_ndof() const{
   if(!c_pf_mus_cm_ndof_ && b_pf_mus_cm_ndof_){
+    b_pf_mus_cm_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_ndof", &pf_mus_cm_ndof_, &b_pf_mus_cm_ndof_);
     b_pf_mus_cm_ndof_->GetEntry(entry_);
     c_pf_mus_cm_ndof_ = true;
   }
@@ -6790,6 +10468,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_numlosthits() const{
   if(!c_pf_mus_cm_numlosthits_ && b_pf_mus_cm_numlosthits_){
+    b_pf_mus_cm_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_numlosthits", &pf_mus_cm_numlosthits_, &b_pf_mus_cm_numlosthits_);
     b_pf_mus_cm_numlosthits_->GetEntry(entry_);
     c_pf_mus_cm_numlosthits_ = true;
   }
@@ -6798,6 +10478,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_numvalMuonhits() const{
   if(!c_pf_mus_cm_numvalMuonhits_ && b_pf_mus_cm_numvalMuonhits_){
+    b_pf_mus_cm_numvalMuonhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_numvalMuonhits", &pf_mus_cm_numvalMuonhits_, &b_pf_mus_cm_numvalMuonhits_);
     b_pf_mus_cm_numvalMuonhits_->GetEntry(entry_);
     c_pf_mus_cm_numvalMuonhits_ = true;
   }
@@ -6806,6 +10488,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_numvalMuonhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_numvalhits() const{
   if(!c_pf_mus_cm_numvalhits_ && b_pf_mus_cm_numvalhits_){
+    b_pf_mus_cm_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_numvalhits", &pf_mus_cm_numvalhits_, &b_pf_mus_cm_numvalhits_);
     b_pf_mus_cm_numvalhits_->GetEntry(entry_);
     c_pf_mus_cm_numvalhits_ = true;
   }
@@ -6814,6 +10498,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_phi() const{
   if(!c_pf_mus_cm_phi_ && b_pf_mus_cm_phi_){
+    b_pf_mus_cm_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_phi", &pf_mus_cm_phi_, &b_pf_mus_cm_phi_);
     b_pf_mus_cm_phi_->GetEntry(entry_);
     c_pf_mus_cm_phi_ = true;
   }
@@ -6822,6 +10508,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_phiErr() const{
   if(!c_pf_mus_cm_phiErr_ && b_pf_mus_cm_phiErr_){
+    b_pf_mus_cm_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_phiErr", &pf_mus_cm_phiErr_, &b_pf_mus_cm_phiErr_);
     b_pf_mus_cm_phiErr_->GetEntry(entry_);
     c_pf_mus_cm_phiErr_ = true;
   }
@@ -6830,6 +10518,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_phiErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_pt() const{
   if(!c_pf_mus_cm_pt_ && b_pf_mus_cm_pt_){
+    b_pf_mus_cm_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_pt", &pf_mus_cm_pt_, &b_pf_mus_cm_pt_);
     b_pf_mus_cm_pt_->GetEntry(entry_);
     c_pf_mus_cm_pt_ = true;
   }
@@ -6838,6 +10528,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_ptErr() const{
   if(!c_pf_mus_cm_ptErr_ && b_pf_mus_cm_ptErr_){
+    b_pf_mus_cm_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_ptErr", &pf_mus_cm_ptErr_, &b_pf_mus_cm_ptErr_);
     b_pf_mus_cm_ptErr_->GetEntry(entry_);
     c_pf_mus_cm_ptErr_ = true;
   }
@@ -6846,6 +10538,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_ptErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_px() const{
   if(!c_pf_mus_cm_px_ && b_pf_mus_cm_px_){
+    b_pf_mus_cm_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_px", &pf_mus_cm_px_, &b_pf_mus_cm_px_);
     b_pf_mus_cm_px_->GetEntry(entry_);
     c_pf_mus_cm_px_ = true;
   }
@@ -6854,6 +10548,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_py() const{
   if(!c_pf_mus_cm_py_ && b_pf_mus_cm_py_){
+    b_pf_mus_cm_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_py", &pf_mus_cm_py_, &b_pf_mus_cm_py_);
     b_pf_mus_cm_py_->GetEntry(entry_);
     c_pf_mus_cm_py_ = true;
   }
@@ -6862,6 +10558,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_pz() const{
   if(!c_pf_mus_cm_pz_ && b_pf_mus_cm_pz_){
+    b_pf_mus_cm_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_pz", &pf_mus_cm_pz_, &b_pf_mus_cm_pz_);
     b_pf_mus_cm_pz_->GetEntry(entry_);
     c_pf_mus_cm_pz_ = true;
   }
@@ -6870,6 +10568,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_theta() const{
   if(!c_pf_mus_cm_theta_ && b_pf_mus_cm_theta_){
+    b_pf_mus_cm_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_theta", &pf_mus_cm_theta_, &b_pf_mus_cm_theta_);
     b_pf_mus_cm_theta_->GetEntry(entry_);
     c_pf_mus_cm_theta_ = true;
   }
@@ -6878,6 +10578,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_vx() const{
   if(!c_pf_mus_cm_vx_ && b_pf_mus_cm_vx_){
+    b_pf_mus_cm_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_vx", &pf_mus_cm_vx_, &b_pf_mus_cm_vx_);
     b_pf_mus_cm_vx_->GetEntry(entry_);
     c_pf_mus_cm_vx_ = true;
   }
@@ -6886,6 +10588,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_vx() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_vy() const{
   if(!c_pf_mus_cm_vy_ && b_pf_mus_cm_vy_){
+    b_pf_mus_cm_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_vy", &pf_mus_cm_vy_, &b_pf_mus_cm_vy_);
     b_pf_mus_cm_vy_->GetEntry(entry_);
     c_pf_mus_cm_vy_ = true;
   }
@@ -6894,6 +10598,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_vy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_cm_vz() const{
   if(!c_pf_mus_cm_vz_ && b_pf_mus_cm_vz_){
+    b_pf_mus_cm_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_cm_vz", &pf_mus_cm_vz_, &b_pf_mus_cm_vz_);
     b_pf_mus_cm_vz_->GetEntry(entry_);
     c_pf_mus_cm_vz_ = true;
   }
@@ -6902,6 +10608,8 @@ std::vector<float>* const & cfa_8::pf_mus_cm_vz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_dB() const{
   if(!c_pf_mus_dB_ && b_pf_mus_dB_){
+    b_pf_mus_dB_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_dB", &pf_mus_dB_, &b_pf_mus_dB_);
     b_pf_mus_dB_->GetEntry(entry_);
     c_pf_mus_dB_ = true;
   }
@@ -6910,6 +10618,8 @@ std::vector<float>* const & cfa_8::pf_mus_dB() const{
 
 std::vector<float>* const & cfa_8::pf_mus_ecalIso() const{
   if(!c_pf_mus_ecalIso_ && b_pf_mus_ecalIso_){
+    b_pf_mus_ecalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_ecalIso", &pf_mus_ecalIso_, &b_pf_mus_ecalIso_);
     b_pf_mus_ecalIso_->GetEntry(entry_);
     c_pf_mus_ecalIso_ = true;
   }
@@ -6918,6 +10628,8 @@ std::vector<float>* const & cfa_8::pf_mus_ecalIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_energy() const{
   if(!c_pf_mus_energy_ && b_pf_mus_energy_){
+    b_pf_mus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_energy", &pf_mus_energy_, &b_pf_mus_energy_);
     b_pf_mus_energy_->GetEntry(entry_);
     c_pf_mus_energy_ = true;
   }
@@ -6926,6 +10638,8 @@ std::vector<float>* const & cfa_8::pf_mus_energy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_et() const{
   if(!c_pf_mus_et_ && b_pf_mus_et_){
+    b_pf_mus_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_et", &pf_mus_et_, &b_pf_mus_et_);
     b_pf_mus_et_->GetEntry(entry_);
     c_pf_mus_et_ = true;
   }
@@ -6934,6 +10648,8 @@ std::vector<float>* const & cfa_8::pf_mus_et() const{
 
 std::vector<float>* const & cfa_8::pf_mus_eta() const{
   if(!c_pf_mus_eta_ && b_pf_mus_eta_){
+    b_pf_mus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_eta", &pf_mus_eta_, &b_pf_mus_eta_);
     b_pf_mus_eta_->GetEntry(entry_);
     c_pf_mus_eta_ = true;
   }
@@ -6942,6 +10658,8 @@ std::vector<float>* const & cfa_8::pf_mus_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_et() const{
   if(!c_pf_mus_gen_et_ && b_pf_mus_gen_et_){
+    b_pf_mus_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_et", &pf_mus_gen_et_, &b_pf_mus_gen_et_);
     b_pf_mus_gen_et_->GetEntry(entry_);
     c_pf_mus_gen_et_ = true;
   }
@@ -6950,6 +10668,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_et() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_eta() const{
   if(!c_pf_mus_gen_eta_ && b_pf_mus_gen_eta_){
+    b_pf_mus_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_eta", &pf_mus_gen_eta_, &b_pf_mus_gen_eta_);
     b_pf_mus_gen_eta_->GetEntry(entry_);
     c_pf_mus_gen_eta_ = true;
   }
@@ -6958,6 +10678,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_id() const{
   if(!c_pf_mus_gen_id_ && b_pf_mus_gen_id_){
+    b_pf_mus_gen_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_id", &pf_mus_gen_id_, &b_pf_mus_gen_id_);
     b_pf_mus_gen_id_->GetEntry(entry_);
     c_pf_mus_gen_id_ = true;
   }
@@ -6966,6 +10688,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_id() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_et() const{
   if(!c_pf_mus_gen_mother_et_ && b_pf_mus_gen_mother_et_){
+    b_pf_mus_gen_mother_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_et", &pf_mus_gen_mother_et_, &b_pf_mus_gen_mother_et_);
     b_pf_mus_gen_mother_et_->GetEntry(entry_);
     c_pf_mus_gen_mother_et_ = true;
   }
@@ -6974,6 +10698,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_et() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_eta() const{
   if(!c_pf_mus_gen_mother_eta_ && b_pf_mus_gen_mother_eta_){
+    b_pf_mus_gen_mother_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_eta", &pf_mus_gen_mother_eta_, &b_pf_mus_gen_mother_eta_);
     b_pf_mus_gen_mother_eta_->GetEntry(entry_);
     c_pf_mus_gen_mother_eta_ = true;
   }
@@ -6982,6 +10708,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_id() const{
   if(!c_pf_mus_gen_mother_id_ && b_pf_mus_gen_mother_id_){
+    b_pf_mus_gen_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_id", &pf_mus_gen_mother_id_, &b_pf_mus_gen_mother_id_);
     b_pf_mus_gen_mother_id_->GetEntry(entry_);
     c_pf_mus_gen_mother_id_ = true;
   }
@@ -6990,6 +10718,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_id() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_phi() const{
   if(!c_pf_mus_gen_mother_phi_ && b_pf_mus_gen_mother_phi_){
+    b_pf_mus_gen_mother_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_phi", &pf_mus_gen_mother_phi_, &b_pf_mus_gen_mother_phi_);
     b_pf_mus_gen_mother_phi_->GetEntry(entry_);
     c_pf_mus_gen_mother_phi_ = true;
   }
@@ -6998,6 +10728,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_pt() const{
   if(!c_pf_mus_gen_mother_pt_ && b_pf_mus_gen_mother_pt_){
+    b_pf_mus_gen_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_pt", &pf_mus_gen_mother_pt_, &b_pf_mus_gen_mother_pt_);
     b_pf_mus_gen_mother_pt_->GetEntry(entry_);
     c_pf_mus_gen_mother_pt_ = true;
   }
@@ -7006,6 +10738,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_px() const{
   if(!c_pf_mus_gen_mother_px_ && b_pf_mus_gen_mother_px_){
+    b_pf_mus_gen_mother_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_px", &pf_mus_gen_mother_px_, &b_pf_mus_gen_mother_px_);
     b_pf_mus_gen_mother_px_->GetEntry(entry_);
     c_pf_mus_gen_mother_px_ = true;
   }
@@ -7014,6 +10748,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_py() const{
   if(!c_pf_mus_gen_mother_py_ && b_pf_mus_gen_mother_py_){
+    b_pf_mus_gen_mother_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_py", &pf_mus_gen_mother_py_, &b_pf_mus_gen_mother_py_);
     b_pf_mus_gen_mother_py_->GetEntry(entry_);
     c_pf_mus_gen_mother_py_ = true;
   }
@@ -7022,6 +10758,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_pz() const{
   if(!c_pf_mus_gen_mother_pz_ && b_pf_mus_gen_mother_pz_){
+    b_pf_mus_gen_mother_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_pz", &pf_mus_gen_mother_pz_, &b_pf_mus_gen_mother_pz_);
     b_pf_mus_gen_mother_pz_->GetEntry(entry_);
     c_pf_mus_gen_mother_pz_ = true;
   }
@@ -7030,6 +10768,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_mother_theta() const{
   if(!c_pf_mus_gen_mother_theta_ && b_pf_mus_gen_mother_theta_){
+    b_pf_mus_gen_mother_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_mother_theta", &pf_mus_gen_mother_theta_, &b_pf_mus_gen_mother_theta_);
     b_pf_mus_gen_mother_theta_->GetEntry(entry_);
     c_pf_mus_gen_mother_theta_ = true;
   }
@@ -7038,6 +10778,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_mother_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_phi() const{
   if(!c_pf_mus_gen_phi_ && b_pf_mus_gen_phi_){
+    b_pf_mus_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_phi", &pf_mus_gen_phi_, &b_pf_mus_gen_phi_);
     b_pf_mus_gen_phi_->GetEntry(entry_);
     c_pf_mus_gen_phi_ = true;
   }
@@ -7046,6 +10788,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_pt() const{
   if(!c_pf_mus_gen_pt_ && b_pf_mus_gen_pt_){
+    b_pf_mus_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_pt", &pf_mus_gen_pt_, &b_pf_mus_gen_pt_);
     b_pf_mus_gen_pt_->GetEntry(entry_);
     c_pf_mus_gen_pt_ = true;
   }
@@ -7054,6 +10798,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_px() const{
   if(!c_pf_mus_gen_px_ && b_pf_mus_gen_px_){
+    b_pf_mus_gen_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_px", &pf_mus_gen_px_, &b_pf_mus_gen_px_);
     b_pf_mus_gen_px_->GetEntry(entry_);
     c_pf_mus_gen_px_ = true;
   }
@@ -7062,6 +10808,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_py() const{
   if(!c_pf_mus_gen_py_ && b_pf_mus_gen_py_){
+    b_pf_mus_gen_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_py", &pf_mus_gen_py_, &b_pf_mus_gen_py_);
     b_pf_mus_gen_py_->GetEntry(entry_);
     c_pf_mus_gen_py_ = true;
   }
@@ -7070,6 +10818,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_pz() const{
   if(!c_pf_mus_gen_pz_ && b_pf_mus_gen_pz_){
+    b_pf_mus_gen_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_pz", &pf_mus_gen_pz_, &b_pf_mus_gen_pz_);
     b_pf_mus_gen_pz_->GetEntry(entry_);
     c_pf_mus_gen_pz_ = true;
   }
@@ -7078,6 +10828,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_gen_theta() const{
   if(!c_pf_mus_gen_theta_ && b_pf_mus_gen_theta_){
+    b_pf_mus_gen_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_gen_theta", &pf_mus_gen_theta_, &b_pf_mus_gen_theta_);
     b_pf_mus_gen_theta_->GetEntry(entry_);
     c_pf_mus_gen_theta_ = true;
   }
@@ -7086,6 +10838,8 @@ std::vector<float>* const & cfa_8::pf_mus_gen_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_hcalIso() const{
   if(!c_pf_mus_hcalIso_ && b_pf_mus_hcalIso_){
+    b_pf_mus_hcalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_hcalIso", &pf_mus_hcalIso_, &b_pf_mus_hcalIso_);
     b_pf_mus_hcalIso_->GetEntry(entry_);
     c_pf_mus_hcalIso_ = true;
   }
@@ -7094,6 +10848,8 @@ std::vector<float>* const & cfa_8::pf_mus_hcalIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_All() const{
   if(!c_pf_mus_id_All_ && b_pf_mus_id_All_){
+    b_pf_mus_id_All_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_All", &pf_mus_id_All_, &b_pf_mus_id_All_);
     b_pf_mus_id_All_->GetEntry(entry_);
     c_pf_mus_id_All_ = true;
   }
@@ -7102,6 +10858,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_All() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_AllArbitrated() const{
   if(!c_pf_mus_id_AllArbitrated_ && b_pf_mus_id_AllArbitrated_){
+    b_pf_mus_id_AllArbitrated_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_AllArbitrated", &pf_mus_id_AllArbitrated_, &b_pf_mus_id_AllArbitrated_);
     b_pf_mus_id_AllArbitrated_->GetEntry(entry_);
     c_pf_mus_id_AllArbitrated_ = true;
   }
@@ -7110,6 +10868,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_AllArbitrated() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_AllGlobalMuons() const{
   if(!c_pf_mus_id_AllGlobalMuons_ && b_pf_mus_id_AllGlobalMuons_){
+    b_pf_mus_id_AllGlobalMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_AllGlobalMuons", &pf_mus_id_AllGlobalMuons_, &b_pf_mus_id_AllGlobalMuons_);
     b_pf_mus_id_AllGlobalMuons_->GetEntry(entry_);
     c_pf_mus_id_AllGlobalMuons_ = true;
   }
@@ -7118,6 +10878,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_AllGlobalMuons() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_AllStandAloneMuons() const{
   if(!c_pf_mus_id_AllStandAloneMuons_ && b_pf_mus_id_AllStandAloneMuons_){
+    b_pf_mus_id_AllStandAloneMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_AllStandAloneMuons", &pf_mus_id_AllStandAloneMuons_, &b_pf_mus_id_AllStandAloneMuons_);
     b_pf_mus_id_AllStandAloneMuons_->GetEntry(entry_);
     c_pf_mus_id_AllStandAloneMuons_ = true;
   }
@@ -7126,6 +10888,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_AllStandAloneMuons() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_AllTrackerMuons() const{
   if(!c_pf_mus_id_AllTrackerMuons_ && b_pf_mus_id_AllTrackerMuons_){
+    b_pf_mus_id_AllTrackerMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_AllTrackerMuons", &pf_mus_id_AllTrackerMuons_, &b_pf_mus_id_AllTrackerMuons_);
     b_pf_mus_id_AllTrackerMuons_->GetEntry(entry_);
     c_pf_mus_id_AllTrackerMuons_ = true;
   }
@@ -7134,6 +10898,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_AllTrackerMuons() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_GlobalMuonPromptTight() const{
   if(!c_pf_mus_id_GlobalMuonPromptTight_ && b_pf_mus_id_GlobalMuonPromptTight_){
+    b_pf_mus_id_GlobalMuonPromptTight_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_GlobalMuonPromptTight", &pf_mus_id_GlobalMuonPromptTight_, &b_pf_mus_id_GlobalMuonPromptTight_);
     b_pf_mus_id_GlobalMuonPromptTight_->GetEntry(entry_);
     c_pf_mus_id_GlobalMuonPromptTight_ = true;
   }
@@ -7142,6 +10908,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_GlobalMuonPromptTight() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TM2DCompatibilityLoose() const{
   if(!c_pf_mus_id_TM2DCompatibilityLoose_ && b_pf_mus_id_TM2DCompatibilityLoose_){
+    b_pf_mus_id_TM2DCompatibilityLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TM2DCompatibilityLoose", &pf_mus_id_TM2DCompatibilityLoose_, &b_pf_mus_id_TM2DCompatibilityLoose_);
     b_pf_mus_id_TM2DCompatibilityLoose_->GetEntry(entry_);
     c_pf_mus_id_TM2DCompatibilityLoose_ = true;
   }
@@ -7150,6 +10918,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TM2DCompatibilityLoose() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TM2DCompatibilityTight() const{
   if(!c_pf_mus_id_TM2DCompatibilityTight_ && b_pf_mus_id_TM2DCompatibilityTight_){
+    b_pf_mus_id_TM2DCompatibilityTight_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TM2DCompatibilityTight", &pf_mus_id_TM2DCompatibilityTight_, &b_pf_mus_id_TM2DCompatibilityTight_);
     b_pf_mus_id_TM2DCompatibilityTight_->GetEntry(entry_);
     c_pf_mus_id_TM2DCompatibilityTight_ = true;
   }
@@ -7158,6 +10928,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TM2DCompatibilityTight() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationLoose() const{
   if(!c_pf_mus_id_TMLastStationLoose_ && b_pf_mus_id_TMLastStationLoose_){
+    b_pf_mus_id_TMLastStationLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMLastStationLoose", &pf_mus_id_TMLastStationLoose_, &b_pf_mus_id_TMLastStationLoose_);
     b_pf_mus_id_TMLastStationLoose_->GetEntry(entry_);
     c_pf_mus_id_TMLastStationLoose_ = true;
   }
@@ -7166,6 +10938,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationLoose() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationOptimizedLowPtLoose() const{
   if(!c_pf_mus_id_TMLastStationOptimizedLowPtLoose_ && b_pf_mus_id_TMLastStationOptimizedLowPtLoose_){
+    b_pf_mus_id_TMLastStationOptimizedLowPtLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMLastStationOptimizedLowPtLoose", &pf_mus_id_TMLastStationOptimizedLowPtLoose_, &b_pf_mus_id_TMLastStationOptimizedLowPtLoose_);
     b_pf_mus_id_TMLastStationOptimizedLowPtLoose_->GetEntry(entry_);
     c_pf_mus_id_TMLastStationOptimizedLowPtLoose_ = true;
   }
@@ -7174,6 +10948,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationOptimizedLowPtLoose() 
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationOptimizedLowPtTight() const{
   if(!c_pf_mus_id_TMLastStationOptimizedLowPtTight_ && b_pf_mus_id_TMLastStationOptimizedLowPtTight_){
+    b_pf_mus_id_TMLastStationOptimizedLowPtTight_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMLastStationOptimizedLowPtTight", &pf_mus_id_TMLastStationOptimizedLowPtTight_, &b_pf_mus_id_TMLastStationOptimizedLowPtTight_);
     b_pf_mus_id_TMLastStationOptimizedLowPtTight_->GetEntry(entry_);
     c_pf_mus_id_TMLastStationOptimizedLowPtTight_ = true;
   }
@@ -7182,6 +10958,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationOptimizedLowPtTight() 
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationTight() const{
   if(!c_pf_mus_id_TMLastStationTight_ && b_pf_mus_id_TMLastStationTight_){
+    b_pf_mus_id_TMLastStationTight_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMLastStationTight", &pf_mus_id_TMLastStationTight_, &b_pf_mus_id_TMLastStationTight_);
     b_pf_mus_id_TMLastStationTight_->GetEntry(entry_);
     c_pf_mus_id_TMLastStationTight_ = true;
   }
@@ -7190,6 +10968,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMLastStationTight() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMOneStationLoose() const{
   if(!c_pf_mus_id_TMOneStationLoose_ && b_pf_mus_id_TMOneStationLoose_){
+    b_pf_mus_id_TMOneStationLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMOneStationLoose", &pf_mus_id_TMOneStationLoose_, &b_pf_mus_id_TMOneStationLoose_);
     b_pf_mus_id_TMOneStationLoose_->GetEntry(entry_);
     c_pf_mus_id_TMOneStationLoose_ = true;
   }
@@ -7198,6 +10978,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMOneStationLoose() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TMOneStationTight() const{
   if(!c_pf_mus_id_TMOneStationTight_ && b_pf_mus_id_TMOneStationTight_){
+    b_pf_mus_id_TMOneStationTight_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TMOneStationTight", &pf_mus_id_TMOneStationTight_, &b_pf_mus_id_TMOneStationTight_);
     b_pf_mus_id_TMOneStationTight_->GetEntry(entry_);
     c_pf_mus_id_TMOneStationTight_ = true;
   }
@@ -7206,6 +10988,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TMOneStationTight() const{
 
 std::vector<float>* const & cfa_8::pf_mus_id_TrackerMuonArbitrated() const{
   if(!c_pf_mus_id_TrackerMuonArbitrated_ && b_pf_mus_id_TrackerMuonArbitrated_){
+    b_pf_mus_id_TrackerMuonArbitrated_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_id_TrackerMuonArbitrated", &pf_mus_id_TrackerMuonArbitrated_, &b_pf_mus_id_TrackerMuonArbitrated_);
     b_pf_mus_id_TrackerMuonArbitrated_->GetEntry(entry_);
     c_pf_mus_id_TrackerMuonArbitrated_ = true;
   }
@@ -7214,6 +10998,8 @@ std::vector<float>* const & cfa_8::pf_mus_id_TrackerMuonArbitrated() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isCaloMuon() const{
   if(!c_pf_mus_isCaloMuon_ && b_pf_mus_isCaloMuon_){
+    b_pf_mus_isCaloMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isCaloMuon", &pf_mus_isCaloMuon_, &b_pf_mus_isCaloMuon_);
     b_pf_mus_isCaloMuon_->GetEntry(entry_);
     c_pf_mus_isCaloMuon_ = true;
   }
@@ -7222,6 +11008,8 @@ std::vector<float>* const & cfa_8::pf_mus_isCaloMuon() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isConvertedPhoton() const{
   if(!c_pf_mus_isConvertedPhoton_ && b_pf_mus_isConvertedPhoton_){
+    b_pf_mus_isConvertedPhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isConvertedPhoton", &pf_mus_isConvertedPhoton_, &b_pf_mus_isConvertedPhoton_);
     b_pf_mus_isConvertedPhoton_->GetEntry(entry_);
     c_pf_mus_isConvertedPhoton_ = true;
   }
@@ -7230,6 +11018,8 @@ std::vector<float>* const & cfa_8::pf_mus_isConvertedPhoton() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isElectron() const{
   if(!c_pf_mus_isElectron_ && b_pf_mus_isElectron_){
+    b_pf_mus_isElectron_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isElectron", &pf_mus_isElectron_, &b_pf_mus_isElectron_);
     b_pf_mus_isElectron_->GetEntry(entry_);
     c_pf_mus_isElectron_ = true;
   }
@@ -7238,6 +11028,8 @@ std::vector<float>* const & cfa_8::pf_mus_isElectron() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isGlobalMuon() const{
   if(!c_pf_mus_isGlobalMuon_ && b_pf_mus_isGlobalMuon_){
+    b_pf_mus_isGlobalMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isGlobalMuon", &pf_mus_isGlobalMuon_, &b_pf_mus_isGlobalMuon_);
     b_pf_mus_isGlobalMuon_->GetEntry(entry_);
     c_pf_mus_isGlobalMuon_ = true;
   }
@@ -7246,6 +11038,8 @@ std::vector<float>* const & cfa_8::pf_mus_isGlobalMuon() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isPFMuon() const{
   if(!c_pf_mus_isPFMuon_ && b_pf_mus_isPFMuon_){
+    b_pf_mus_isPFMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isPFMuon", &pf_mus_isPFMuon_, &b_pf_mus_isPFMuon_);
     b_pf_mus_isPFMuon_->GetEntry(entry_);
     c_pf_mus_isPFMuon_ = true;
   }
@@ -7254,6 +11048,8 @@ std::vector<float>* const & cfa_8::pf_mus_isPFMuon() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isPhoton() const{
   if(!c_pf_mus_isPhoton_ && b_pf_mus_isPhoton_){
+    b_pf_mus_isPhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isPhoton", &pf_mus_isPhoton_, &b_pf_mus_isPhoton_);
     b_pf_mus_isPhoton_->GetEntry(entry_);
     c_pf_mus_isPhoton_ = true;
   }
@@ -7262,6 +11058,8 @@ std::vector<float>* const & cfa_8::pf_mus_isPhoton() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isStandAloneMuon() const{
   if(!c_pf_mus_isStandAloneMuon_ && b_pf_mus_isStandAloneMuon_){
+    b_pf_mus_isStandAloneMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isStandAloneMuon", &pf_mus_isStandAloneMuon_, &b_pf_mus_isStandAloneMuon_);
     b_pf_mus_isStandAloneMuon_->GetEntry(entry_);
     c_pf_mus_isStandAloneMuon_ = true;
   }
@@ -7270,6 +11068,8 @@ std::vector<float>* const & cfa_8::pf_mus_isStandAloneMuon() const{
 
 std::vector<float>* const & cfa_8::pf_mus_isTrackerMuon() const{
   if(!c_pf_mus_isTrackerMuon_ && b_pf_mus_isTrackerMuon_){
+    b_pf_mus_isTrackerMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_isTrackerMuon", &pf_mus_isTrackerMuon_, &b_pf_mus_isTrackerMuon_);
     b_pf_mus_isTrackerMuon_->GetEntry(entry_);
     c_pf_mus_isTrackerMuon_ = true;
   }
@@ -7278,6 +11078,8 @@ std::vector<float>* const & cfa_8::pf_mus_isTrackerMuon() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_emEt() const{
   if(!c_pf_mus_iso03_emEt_ && b_pf_mus_iso03_emEt_){
+    b_pf_mus_iso03_emEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_emEt", &pf_mus_iso03_emEt_, &b_pf_mus_iso03_emEt_);
     b_pf_mus_iso03_emEt_->GetEntry(entry_);
     c_pf_mus_iso03_emEt_ = true;
   }
@@ -7286,6 +11088,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_emEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_emVetoEt() const{
   if(!c_pf_mus_iso03_emVetoEt_ && b_pf_mus_iso03_emVetoEt_){
+    b_pf_mus_iso03_emVetoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_emVetoEt", &pf_mus_iso03_emVetoEt_, &b_pf_mus_iso03_emVetoEt_);
     b_pf_mus_iso03_emVetoEt_->GetEntry(entry_);
     c_pf_mus_iso03_emVetoEt_ = true;
   }
@@ -7294,6 +11098,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_emVetoEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_hadEt() const{
   if(!c_pf_mus_iso03_hadEt_ && b_pf_mus_iso03_hadEt_){
+    b_pf_mus_iso03_hadEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_hadEt", &pf_mus_iso03_hadEt_, &b_pf_mus_iso03_hadEt_);
     b_pf_mus_iso03_hadEt_->GetEntry(entry_);
     c_pf_mus_iso03_hadEt_ = true;
   }
@@ -7302,6 +11108,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_hadEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_hadVetoEt() const{
   if(!c_pf_mus_iso03_hadVetoEt_ && b_pf_mus_iso03_hadVetoEt_){
+    b_pf_mus_iso03_hadVetoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_hadVetoEt", &pf_mus_iso03_hadVetoEt_, &b_pf_mus_iso03_hadVetoEt_);
     b_pf_mus_iso03_hadVetoEt_->GetEntry(entry_);
     c_pf_mus_iso03_hadVetoEt_ = true;
   }
@@ -7310,6 +11118,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_hadVetoEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_hoEt() const{
   if(!c_pf_mus_iso03_hoEt_ && b_pf_mus_iso03_hoEt_){
+    b_pf_mus_iso03_hoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_hoEt", &pf_mus_iso03_hoEt_, &b_pf_mus_iso03_hoEt_);
     b_pf_mus_iso03_hoEt_->GetEntry(entry_);
     c_pf_mus_iso03_hoEt_ = true;
   }
@@ -7318,6 +11128,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_hoEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_nTracks() const{
   if(!c_pf_mus_iso03_nTracks_ && b_pf_mus_iso03_nTracks_){
+    b_pf_mus_iso03_nTracks_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_nTracks", &pf_mus_iso03_nTracks_, &b_pf_mus_iso03_nTracks_);
     b_pf_mus_iso03_nTracks_->GetEntry(entry_);
     c_pf_mus_iso03_nTracks_ = true;
   }
@@ -7326,6 +11138,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_nTracks() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso03_sumPt() const{
   if(!c_pf_mus_iso03_sumPt_ && b_pf_mus_iso03_sumPt_){
+    b_pf_mus_iso03_sumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso03_sumPt", &pf_mus_iso03_sumPt_, &b_pf_mus_iso03_sumPt_);
     b_pf_mus_iso03_sumPt_->GetEntry(entry_);
     c_pf_mus_iso03_sumPt_ = true;
   }
@@ -7334,6 +11148,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso03_sumPt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso05_emEt() const{
   if(!c_pf_mus_iso05_emEt_ && b_pf_mus_iso05_emEt_){
+    b_pf_mus_iso05_emEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso05_emEt", &pf_mus_iso05_emEt_, &b_pf_mus_iso05_emEt_);
     b_pf_mus_iso05_emEt_->GetEntry(entry_);
     c_pf_mus_iso05_emEt_ = true;
   }
@@ -7342,6 +11158,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso05_emEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso05_hadEt() const{
   if(!c_pf_mus_iso05_hadEt_ && b_pf_mus_iso05_hadEt_){
+    b_pf_mus_iso05_hadEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso05_hadEt", &pf_mus_iso05_hadEt_, &b_pf_mus_iso05_hadEt_);
     b_pf_mus_iso05_hadEt_->GetEntry(entry_);
     c_pf_mus_iso05_hadEt_ = true;
   }
@@ -7350,6 +11168,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso05_hadEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso05_hoEt() const{
   if(!c_pf_mus_iso05_hoEt_ && b_pf_mus_iso05_hoEt_){
+    b_pf_mus_iso05_hoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso05_hoEt", &pf_mus_iso05_hoEt_, &b_pf_mus_iso05_hoEt_);
     b_pf_mus_iso05_hoEt_->GetEntry(entry_);
     c_pf_mus_iso05_hoEt_ = true;
   }
@@ -7358,6 +11178,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso05_hoEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso05_nTracks() const{
   if(!c_pf_mus_iso05_nTracks_ && b_pf_mus_iso05_nTracks_){
+    b_pf_mus_iso05_nTracks_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso05_nTracks", &pf_mus_iso05_nTracks_, &b_pf_mus_iso05_nTracks_);
     b_pf_mus_iso05_nTracks_->GetEntry(entry_);
     c_pf_mus_iso05_nTracks_ = true;
   }
@@ -7366,6 +11188,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso05_nTracks() const{
 
 std::vector<float>* const & cfa_8::pf_mus_iso05_sumPt() const{
   if(!c_pf_mus_iso05_sumPt_ && b_pf_mus_iso05_sumPt_){
+    b_pf_mus_iso05_sumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_iso05_sumPt", &pf_mus_iso05_sumPt_, &b_pf_mus_iso05_sumPt_);
     b_pf_mus_iso05_sumPt_->GetEntry(entry_);
     c_pf_mus_iso05_sumPt_ = true;
   }
@@ -7374,6 +11198,8 @@ std::vector<float>* const & cfa_8::pf_mus_iso05_sumPt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_neutralHadronIso() const{
   if(!c_pf_mus_neutralHadronIso_ && b_pf_mus_neutralHadronIso_){
+    b_pf_mus_neutralHadronIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_neutralHadronIso", &pf_mus_neutralHadronIso_, &b_pf_mus_neutralHadronIso_);
     b_pf_mus_neutralHadronIso_->GetEntry(entry_);
     c_pf_mus_neutralHadronIso_ = true;
   }
@@ -7382,6 +11208,8 @@ std::vector<float>* const & cfa_8::pf_mus_neutralHadronIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_num_matches() const{
   if(!c_pf_mus_num_matches_ && b_pf_mus_num_matches_){
+    b_pf_mus_num_matches_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_num_matches", &pf_mus_num_matches_, &b_pf_mus_num_matches_);
     b_pf_mus_num_matches_->GetEntry(entry_);
     c_pf_mus_num_matches_ = true;
   }
@@ -7390,6 +11218,8 @@ std::vector<float>* const & cfa_8::pf_mus_num_matches() const{
 
 std::vector<float>* const & cfa_8::pf_mus_numberOfMatchedStations() const{
   if(!c_pf_mus_numberOfMatchedStations_ && b_pf_mus_numberOfMatchedStations_){
+    b_pf_mus_numberOfMatchedStations_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_numberOfMatchedStations", &pf_mus_numberOfMatchedStations_, &b_pf_mus_numberOfMatchedStations_);
     b_pf_mus_numberOfMatchedStations_->GetEntry(entry_);
     c_pf_mus_numberOfMatchedStations_ = true;
   }
@@ -7398,6 +11228,8 @@ std::vector<float>* const & cfa_8::pf_mus_numberOfMatchedStations() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumChargedHadronPt() const{
   if(!c_pf_mus_pfIsolationR03_sumChargedHadronPt_ && b_pf_mus_pfIsolationR03_sumChargedHadronPt_){
+    b_pf_mus_pfIsolationR03_sumChargedHadronPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumChargedHadronPt", &pf_mus_pfIsolationR03_sumChargedHadronPt_, &b_pf_mus_pfIsolationR03_sumChargedHadronPt_);
     b_pf_mus_pfIsolationR03_sumChargedHadronPt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumChargedHadronPt_ = true;
   }
@@ -7406,6 +11238,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumChargedHadronPt() co
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumChargedParticlePt() const{
   if(!c_pf_mus_pfIsolationR03_sumChargedParticlePt_ && b_pf_mus_pfIsolationR03_sumChargedParticlePt_){
+    b_pf_mus_pfIsolationR03_sumChargedParticlePt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumChargedParticlePt", &pf_mus_pfIsolationR03_sumChargedParticlePt_, &b_pf_mus_pfIsolationR03_sumChargedParticlePt_);
     b_pf_mus_pfIsolationR03_sumChargedParticlePt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumChargedParticlePt_ = true;
   }
@@ -7414,6 +11248,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumChargedParticlePt() 
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumNeutralHadronEt() const{
   if(!c_pf_mus_pfIsolationR03_sumNeutralHadronEt_ && b_pf_mus_pfIsolationR03_sumNeutralHadronEt_){
+    b_pf_mus_pfIsolationR03_sumNeutralHadronEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumNeutralHadronEt", &pf_mus_pfIsolationR03_sumNeutralHadronEt_, &b_pf_mus_pfIsolationR03_sumNeutralHadronEt_);
     b_pf_mus_pfIsolationR03_sumNeutralHadronEt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumNeutralHadronEt_ = true;
   }
@@ -7422,6 +11258,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumNeutralHadronEt() co
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold() const{
   if(!c_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ && b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_){
+    b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold", &pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_, &b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_);
     b_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = true;
   }
@@ -7430,6 +11268,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumNeutralHadronEtHighT
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPUPt() const{
   if(!c_pf_mus_pfIsolationR03_sumPUPt_ && b_pf_mus_pfIsolationR03_sumPUPt_){
+    b_pf_mus_pfIsolationR03_sumPUPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumPUPt", &pf_mus_pfIsolationR03_sumPUPt_, &b_pf_mus_pfIsolationR03_sumPUPt_);
     b_pf_mus_pfIsolationR03_sumPUPt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumPUPt_ = true;
   }
@@ -7438,6 +11278,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPUPt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPhotonEt() const{
   if(!c_pf_mus_pfIsolationR03_sumPhotonEt_ && b_pf_mus_pfIsolationR03_sumPhotonEt_){
+    b_pf_mus_pfIsolationR03_sumPhotonEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumPhotonEt", &pf_mus_pfIsolationR03_sumPhotonEt_, &b_pf_mus_pfIsolationR03_sumPhotonEt_);
     b_pf_mus_pfIsolationR03_sumPhotonEt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumPhotonEt_ = true;
   }
@@ -7446,6 +11288,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPhotonEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPhotonEtHighThreshold() const{
   if(!c_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ && b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_){
+    b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR03_sumPhotonEtHighThreshold", &pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_, &b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_);
     b_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_->GetEntry(entry_);
     c_pf_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = true;
   }
@@ -7454,6 +11298,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR03_sumPhotonEtHighThreshol
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumChargedHadronPt() const{
   if(!c_pf_mus_pfIsolationR04_sumChargedHadronPt_ && b_pf_mus_pfIsolationR04_sumChargedHadronPt_){
+    b_pf_mus_pfIsolationR04_sumChargedHadronPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumChargedHadronPt", &pf_mus_pfIsolationR04_sumChargedHadronPt_, &b_pf_mus_pfIsolationR04_sumChargedHadronPt_);
     b_pf_mus_pfIsolationR04_sumChargedHadronPt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumChargedHadronPt_ = true;
   }
@@ -7462,6 +11308,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumChargedHadronPt() co
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumChargedParticlePt() const{
   if(!c_pf_mus_pfIsolationR04_sumChargedParticlePt_ && b_pf_mus_pfIsolationR04_sumChargedParticlePt_){
+    b_pf_mus_pfIsolationR04_sumChargedParticlePt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumChargedParticlePt", &pf_mus_pfIsolationR04_sumChargedParticlePt_, &b_pf_mus_pfIsolationR04_sumChargedParticlePt_);
     b_pf_mus_pfIsolationR04_sumChargedParticlePt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumChargedParticlePt_ = true;
   }
@@ -7470,6 +11318,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumChargedParticlePt() 
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumNeutralHadronEt() const{
   if(!c_pf_mus_pfIsolationR04_sumNeutralHadronEt_ && b_pf_mus_pfIsolationR04_sumNeutralHadronEt_){
+    b_pf_mus_pfIsolationR04_sumNeutralHadronEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumNeutralHadronEt", &pf_mus_pfIsolationR04_sumNeutralHadronEt_, &b_pf_mus_pfIsolationR04_sumNeutralHadronEt_);
     b_pf_mus_pfIsolationR04_sumNeutralHadronEt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumNeutralHadronEt_ = true;
   }
@@ -7478,6 +11328,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumNeutralHadronEt() co
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold() const{
   if(!c_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ && b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_){
+    b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold", &pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_, &b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_);
     b_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = true;
   }
@@ -7486,6 +11338,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumNeutralHadronEtHighT
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPUPt() const{
   if(!c_pf_mus_pfIsolationR04_sumPUPt_ && b_pf_mus_pfIsolationR04_sumPUPt_){
+    b_pf_mus_pfIsolationR04_sumPUPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumPUPt", &pf_mus_pfIsolationR04_sumPUPt_, &b_pf_mus_pfIsolationR04_sumPUPt_);
     b_pf_mus_pfIsolationR04_sumPUPt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumPUPt_ = true;
   }
@@ -7494,6 +11348,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPUPt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPhotonEt() const{
   if(!c_pf_mus_pfIsolationR04_sumPhotonEt_ && b_pf_mus_pfIsolationR04_sumPhotonEt_){
+    b_pf_mus_pfIsolationR04_sumPhotonEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumPhotonEt", &pf_mus_pfIsolationR04_sumPhotonEt_, &b_pf_mus_pfIsolationR04_sumPhotonEt_);
     b_pf_mus_pfIsolationR04_sumPhotonEt_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumPhotonEt_ = true;
   }
@@ -7502,6 +11358,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPhotonEt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPhotonEtHighThreshold() const{
   if(!c_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ && b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_){
+    b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pfIsolationR04_sumPhotonEtHighThreshold", &pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_, &b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_);
     b_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_->GetEntry(entry_);
     c_pf_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = true;
   }
@@ -7510,6 +11368,8 @@ std::vector<float>* const & cfa_8::pf_mus_pfIsolationR04_sumPhotonEtHighThreshol
 
 std::vector<float>* const & cfa_8::pf_mus_phi() const{
   if(!c_pf_mus_phi_ && b_pf_mus_phi_){
+    b_pf_mus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_phi", &pf_mus_phi_, &b_pf_mus_phi_);
     b_pf_mus_phi_->GetEntry(entry_);
     c_pf_mus_phi_ = true;
   }
@@ -7518,6 +11378,8 @@ std::vector<float>* const & cfa_8::pf_mus_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_photonIso() const{
   if(!c_pf_mus_photonIso_ && b_pf_mus_photonIso_){
+    b_pf_mus_photonIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_photonIso", &pf_mus_photonIso_, &b_pf_mus_photonIso_);
     b_pf_mus_photonIso_->GetEntry(entry_);
     c_pf_mus_photonIso_ = true;
   }
@@ -7526,6 +11388,8 @@ std::vector<float>* const & cfa_8::pf_mus_photonIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_ExpectedHitsInner() const{
   if(!c_pf_mus_picky_ExpectedHitsInner_ && b_pf_mus_picky_ExpectedHitsInner_){
+    b_pf_mus_picky_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_ExpectedHitsInner", &pf_mus_picky_ExpectedHitsInner_, &b_pf_mus_picky_ExpectedHitsInner_);
     b_pf_mus_picky_ExpectedHitsInner_->GetEntry(entry_);
     c_pf_mus_picky_ExpectedHitsInner_ = true;
   }
@@ -7534,6 +11398,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_ExpectedHitsOuter() const{
   if(!c_pf_mus_picky_ExpectedHitsOuter_ && b_pf_mus_picky_ExpectedHitsOuter_){
+    b_pf_mus_picky_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_ExpectedHitsOuter", &pf_mus_picky_ExpectedHitsOuter_, &b_pf_mus_picky_ExpectedHitsOuter_);
     b_pf_mus_picky_ExpectedHitsOuter_->GetEntry(entry_);
     c_pf_mus_picky_ExpectedHitsOuter_ = true;
   }
@@ -7542,6 +11408,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_LayersWithMeasurement() const{
   if(!c_pf_mus_picky_LayersWithMeasurement_ && b_pf_mus_picky_LayersWithMeasurement_){
+    b_pf_mus_picky_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_LayersWithMeasurement", &pf_mus_picky_LayersWithMeasurement_, &b_pf_mus_picky_LayersWithMeasurement_);
     b_pf_mus_picky_LayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_picky_LayersWithMeasurement_ = true;
   }
@@ -7550,6 +11418,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_LayersWithoutMeasurement() const{
   if(!c_pf_mus_picky_LayersWithoutMeasurement_ && b_pf_mus_picky_LayersWithoutMeasurement_){
+    b_pf_mus_picky_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_LayersWithoutMeasurement", &pf_mus_picky_LayersWithoutMeasurement_, &b_pf_mus_picky_LayersWithoutMeasurement_);
     b_pf_mus_picky_LayersWithoutMeasurement_->GetEntry(entry_);
     c_pf_mus_picky_LayersWithoutMeasurement_ = true;
   }
@@ -7558,6 +11428,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_LayersWithoutMeasurement() const
 
 std::vector<float>* const & cfa_8::pf_mus_picky_PixelLayersWithMeasurement() const{
   if(!c_pf_mus_picky_PixelLayersWithMeasurement_ && b_pf_mus_picky_PixelLayersWithMeasurement_){
+    b_pf_mus_picky_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_PixelLayersWithMeasurement", &pf_mus_picky_PixelLayersWithMeasurement_, &b_pf_mus_picky_PixelLayersWithMeasurement_);
     b_pf_mus_picky_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_picky_PixelLayersWithMeasurement_ = true;
   }
@@ -7566,6 +11438,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_PixelLayersWithMeasurement() con
 
 std::vector<float>* const & cfa_8::pf_mus_picky_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ && b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_){
+    b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_ValidStripLayersWithMonoAndStereoHit", &pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_, &b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_);
     b_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_pf_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -7574,6 +11448,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_ValidStripLayersWithMonoAndStere
 
 std::vector<float>* const & cfa_8::pf_mus_picky_chg() const{
   if(!c_pf_mus_picky_chg_ && b_pf_mus_picky_chg_){
+    b_pf_mus_picky_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_chg", &pf_mus_picky_chg_, &b_pf_mus_picky_chg_);
     b_pf_mus_picky_chg_->GetEntry(entry_);
     c_pf_mus_picky_chg_ = true;
   }
@@ -7582,6 +11458,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_chg() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_chi2() const{
   if(!c_pf_mus_picky_chi2_ && b_pf_mus_picky_chi2_){
+    b_pf_mus_picky_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_chi2", &pf_mus_picky_chi2_, &b_pf_mus_picky_chi2_);
     b_pf_mus_picky_chi2_->GetEntry(entry_);
     c_pf_mus_picky_chi2_ = true;
   }
@@ -7590,6 +11468,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_d0dum() const{
   if(!c_pf_mus_picky_d0dum_ && b_pf_mus_picky_d0dum_){
+    b_pf_mus_picky_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_d0dum", &pf_mus_picky_d0dum_, &b_pf_mus_picky_d0dum_);
     b_pf_mus_picky_d0dum_->GetEntry(entry_);
     c_pf_mus_picky_d0dum_ = true;
   }
@@ -7598,6 +11478,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_d0dumErr() const{
   if(!c_pf_mus_picky_d0dumErr_ && b_pf_mus_picky_d0dumErr_){
+    b_pf_mus_picky_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_d0dumErr", &pf_mus_picky_d0dumErr_, &b_pf_mus_picky_d0dumErr_);
     b_pf_mus_picky_d0dumErr_->GetEntry(entry_);
     c_pf_mus_picky_d0dumErr_ = true;
   }
@@ -7606,6 +11488,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_dz() const{
   if(!c_pf_mus_picky_dz_ && b_pf_mus_picky_dz_){
+    b_pf_mus_picky_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_dz", &pf_mus_picky_dz_, &b_pf_mus_picky_dz_);
     b_pf_mus_picky_dz_->GetEntry(entry_);
     c_pf_mus_picky_dz_ = true;
   }
@@ -7614,6 +11498,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_dz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_dzErr() const{
   if(!c_pf_mus_picky_dzErr_ && b_pf_mus_picky_dzErr_){
+    b_pf_mus_picky_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_dzErr", &pf_mus_picky_dzErr_, &b_pf_mus_picky_dzErr_);
     b_pf_mus_picky_dzErr_->GetEntry(entry_);
     c_pf_mus_picky_dzErr_ = true;
   }
@@ -7622,6 +11508,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_dzErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_eta() const{
   if(!c_pf_mus_picky_eta_ && b_pf_mus_picky_eta_){
+    b_pf_mus_picky_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_eta", &pf_mus_picky_eta_, &b_pf_mus_picky_eta_);
     b_pf_mus_picky_eta_->GetEntry(entry_);
     c_pf_mus_picky_eta_ = true;
   }
@@ -7630,6 +11518,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_etaErr() const{
   if(!c_pf_mus_picky_etaErr_ && b_pf_mus_picky_etaErr_){
+    b_pf_mus_picky_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_etaErr", &pf_mus_picky_etaErr_, &b_pf_mus_picky_etaErr_);
     b_pf_mus_picky_etaErr_->GetEntry(entry_);
     c_pf_mus_picky_etaErr_ = true;
   }
@@ -7638,6 +11528,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_etaErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_id() const{
   if(!c_pf_mus_picky_id_ && b_pf_mus_picky_id_){
+    b_pf_mus_picky_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_id", &pf_mus_picky_id_, &b_pf_mus_picky_id_);
     b_pf_mus_picky_id_->GetEntry(entry_);
     c_pf_mus_picky_id_ = true;
   }
@@ -7646,6 +11538,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_id() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_ndof() const{
   if(!c_pf_mus_picky_ndof_ && b_pf_mus_picky_ndof_){
+    b_pf_mus_picky_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_ndof", &pf_mus_picky_ndof_, &b_pf_mus_picky_ndof_);
     b_pf_mus_picky_ndof_->GetEntry(entry_);
     c_pf_mus_picky_ndof_ = true;
   }
@@ -7654,6 +11548,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_numlosthits() const{
   if(!c_pf_mus_picky_numlosthits_ && b_pf_mus_picky_numlosthits_){
+    b_pf_mus_picky_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_numlosthits", &pf_mus_picky_numlosthits_, &b_pf_mus_picky_numlosthits_);
     b_pf_mus_picky_numlosthits_->GetEntry(entry_);
     c_pf_mus_picky_numlosthits_ = true;
   }
@@ -7662,6 +11558,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_numvalPixelhits() const{
   if(!c_pf_mus_picky_numvalPixelhits_ && b_pf_mus_picky_numvalPixelhits_){
+    b_pf_mus_picky_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_numvalPixelhits", &pf_mus_picky_numvalPixelhits_, &b_pf_mus_picky_numvalPixelhits_);
     b_pf_mus_picky_numvalPixelhits_->GetEntry(entry_);
     c_pf_mus_picky_numvalPixelhits_ = true;
   }
@@ -7670,6 +11568,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_numvalhits() const{
   if(!c_pf_mus_picky_numvalhits_ && b_pf_mus_picky_numvalhits_){
+    b_pf_mus_picky_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_numvalhits", &pf_mus_picky_numvalhits_, &b_pf_mus_picky_numvalhits_);
     b_pf_mus_picky_numvalhits_->GetEntry(entry_);
     c_pf_mus_picky_numvalhits_ = true;
   }
@@ -7678,6 +11578,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_phi() const{
   if(!c_pf_mus_picky_phi_ && b_pf_mus_picky_phi_){
+    b_pf_mus_picky_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_phi", &pf_mus_picky_phi_, &b_pf_mus_picky_phi_);
     b_pf_mus_picky_phi_->GetEntry(entry_);
     c_pf_mus_picky_phi_ = true;
   }
@@ -7686,6 +11588,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_phiErr() const{
   if(!c_pf_mus_picky_phiErr_ && b_pf_mus_picky_phiErr_){
+    b_pf_mus_picky_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_phiErr", &pf_mus_picky_phiErr_, &b_pf_mus_picky_phiErr_);
     b_pf_mus_picky_phiErr_->GetEntry(entry_);
     c_pf_mus_picky_phiErr_ = true;
   }
@@ -7694,6 +11598,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_phiErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_pt() const{
   if(!c_pf_mus_picky_pt_ && b_pf_mus_picky_pt_){
+    b_pf_mus_picky_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_pt", &pf_mus_picky_pt_, &b_pf_mus_picky_pt_);
     b_pf_mus_picky_pt_->GetEntry(entry_);
     c_pf_mus_picky_pt_ = true;
   }
@@ -7702,6 +11608,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_ptErr() const{
   if(!c_pf_mus_picky_ptErr_ && b_pf_mus_picky_ptErr_){
+    b_pf_mus_picky_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_ptErr", &pf_mus_picky_ptErr_, &b_pf_mus_picky_ptErr_);
     b_pf_mus_picky_ptErr_->GetEntry(entry_);
     c_pf_mus_picky_ptErr_ = true;
   }
@@ -7710,6 +11618,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_ptErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_px() const{
   if(!c_pf_mus_picky_px_ && b_pf_mus_picky_px_){
+    b_pf_mus_picky_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_px", &pf_mus_picky_px_, &b_pf_mus_picky_px_);
     b_pf_mus_picky_px_->GetEntry(entry_);
     c_pf_mus_picky_px_ = true;
   }
@@ -7718,6 +11628,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_py() const{
   if(!c_pf_mus_picky_py_ && b_pf_mus_picky_py_){
+    b_pf_mus_picky_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_py", &pf_mus_picky_py_, &b_pf_mus_picky_py_);
     b_pf_mus_picky_py_->GetEntry(entry_);
     c_pf_mus_picky_py_ = true;
   }
@@ -7726,6 +11638,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_pz() const{
   if(!c_pf_mus_picky_pz_ && b_pf_mus_picky_pz_){
+    b_pf_mus_picky_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_pz", &pf_mus_picky_pz_, &b_pf_mus_picky_pz_);
     b_pf_mus_picky_pz_->GetEntry(entry_);
     c_pf_mus_picky_pz_ = true;
   }
@@ -7734,6 +11648,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_theta() const{
   if(!c_pf_mus_picky_theta_ && b_pf_mus_picky_theta_){
+    b_pf_mus_picky_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_theta", &pf_mus_picky_theta_, &b_pf_mus_picky_theta_);
     b_pf_mus_picky_theta_->GetEntry(entry_);
     c_pf_mus_picky_theta_ = true;
   }
@@ -7742,6 +11658,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_vx() const{
   if(!c_pf_mus_picky_vx_ && b_pf_mus_picky_vx_){
+    b_pf_mus_picky_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_vx", &pf_mus_picky_vx_, &b_pf_mus_picky_vx_);
     b_pf_mus_picky_vx_->GetEntry(entry_);
     c_pf_mus_picky_vx_ = true;
   }
@@ -7750,6 +11668,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_vx() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_vy() const{
   if(!c_pf_mus_picky_vy_ && b_pf_mus_picky_vy_){
+    b_pf_mus_picky_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_vy", &pf_mus_picky_vy_, &b_pf_mus_picky_vy_);
     b_pf_mus_picky_vy_->GetEntry(entry_);
     c_pf_mus_picky_vy_ = true;
   }
@@ -7758,6 +11678,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_vy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_picky_vz() const{
   if(!c_pf_mus_picky_vz_ && b_pf_mus_picky_vz_){
+    b_pf_mus_picky_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_picky_vz", &pf_mus_picky_vz_, &b_pf_mus_picky_vz_);
     b_pf_mus_picky_vz_->GetEntry(entry_);
     c_pf_mus_picky_vz_ = true;
   }
@@ -7766,6 +11688,8 @@ std::vector<float>* const & cfa_8::pf_mus_picky_vz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pt() const{
   if(!c_pf_mus_pt_ && b_pf_mus_pt_){
+    b_pf_mus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pt", &pf_mus_pt_, &b_pf_mus_pt_);
     b_pf_mus_pt_->GetEntry(entry_);
     c_pf_mus_pt_ = true;
   }
@@ -7774,6 +11698,8 @@ std::vector<float>* const & cfa_8::pf_mus_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_px() const{
   if(!c_pf_mus_px_ && b_pf_mus_px_){
+    b_pf_mus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_px", &pf_mus_px_, &b_pf_mus_px_);
     b_pf_mus_px_->GetEntry(entry_);
     c_pf_mus_px_ = true;
   }
@@ -7782,6 +11708,8 @@ std::vector<float>* const & cfa_8::pf_mus_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_py() const{
   if(!c_pf_mus_py_ && b_pf_mus_py_){
+    b_pf_mus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_py", &pf_mus_py_, &b_pf_mus_py_);
     b_pf_mus_py_->GetEntry(entry_);
     c_pf_mus_py_ = true;
   }
@@ -7790,6 +11718,8 @@ std::vector<float>* const & cfa_8::pf_mus_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_pz() const{
   if(!c_pf_mus_pz_ && b_pf_mus_pz_){
+    b_pf_mus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_pz", &pf_mus_pz_, &b_pf_mus_pz_);
     b_pf_mus_pz_->GetEntry(entry_);
     c_pf_mus_pz_ = true;
   }
@@ -7798,6 +11728,8 @@ std::vector<float>* const & cfa_8::pf_mus_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_chg() const{
   if(!c_pf_mus_stamu_chg_ && b_pf_mus_stamu_chg_){
+    b_pf_mus_stamu_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_chg", &pf_mus_stamu_chg_, &b_pf_mus_stamu_chg_);
     b_pf_mus_stamu_chg_->GetEntry(entry_);
     c_pf_mus_stamu_chg_ = true;
   }
@@ -7806,6 +11738,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_chg() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_chi2() const{
   if(!c_pf_mus_stamu_chi2_ && b_pf_mus_stamu_chi2_){
+    b_pf_mus_stamu_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_chi2", &pf_mus_stamu_chi2_, &b_pf_mus_stamu_chi2_);
     b_pf_mus_stamu_chi2_->GetEntry(entry_);
     c_pf_mus_stamu_chi2_ = true;
   }
@@ -7814,6 +11748,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_d0dum() const{
   if(!c_pf_mus_stamu_d0dum_ && b_pf_mus_stamu_d0dum_){
+    b_pf_mus_stamu_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_d0dum", &pf_mus_stamu_d0dum_, &b_pf_mus_stamu_d0dum_);
     b_pf_mus_stamu_d0dum_->GetEntry(entry_);
     c_pf_mus_stamu_d0dum_ = true;
   }
@@ -7822,6 +11758,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_d0dumErr() const{
   if(!c_pf_mus_stamu_d0dumErr_ && b_pf_mus_stamu_d0dumErr_){
+    b_pf_mus_stamu_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_d0dumErr", &pf_mus_stamu_d0dumErr_, &b_pf_mus_stamu_d0dumErr_);
     b_pf_mus_stamu_d0dumErr_->GetEntry(entry_);
     c_pf_mus_stamu_d0dumErr_ = true;
   }
@@ -7830,6 +11768,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_dz() const{
   if(!c_pf_mus_stamu_dz_ && b_pf_mus_stamu_dz_){
+    b_pf_mus_stamu_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_dz", &pf_mus_stamu_dz_, &b_pf_mus_stamu_dz_);
     b_pf_mus_stamu_dz_->GetEntry(entry_);
     c_pf_mus_stamu_dz_ = true;
   }
@@ -7838,6 +11778,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_dz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_dzErr() const{
   if(!c_pf_mus_stamu_dzErr_ && b_pf_mus_stamu_dzErr_){
+    b_pf_mus_stamu_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_dzErr", &pf_mus_stamu_dzErr_, &b_pf_mus_stamu_dzErr_);
     b_pf_mus_stamu_dzErr_->GetEntry(entry_);
     c_pf_mus_stamu_dzErr_ = true;
   }
@@ -7846,6 +11788,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_dzErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_eta() const{
   if(!c_pf_mus_stamu_eta_ && b_pf_mus_stamu_eta_){
+    b_pf_mus_stamu_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_eta", &pf_mus_stamu_eta_, &b_pf_mus_stamu_eta_);
     b_pf_mus_stamu_eta_->GetEntry(entry_);
     c_pf_mus_stamu_eta_ = true;
   }
@@ -7854,6 +11798,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_etaErr() const{
   if(!c_pf_mus_stamu_etaErr_ && b_pf_mus_stamu_etaErr_){
+    b_pf_mus_stamu_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_etaErr", &pf_mus_stamu_etaErr_, &b_pf_mus_stamu_etaErr_);
     b_pf_mus_stamu_etaErr_->GetEntry(entry_);
     c_pf_mus_stamu_etaErr_ = true;
   }
@@ -7862,6 +11808,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_etaErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_ndof() const{
   if(!c_pf_mus_stamu_ndof_ && b_pf_mus_stamu_ndof_){
+    b_pf_mus_stamu_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_ndof", &pf_mus_stamu_ndof_, &b_pf_mus_stamu_ndof_);
     b_pf_mus_stamu_ndof_->GetEntry(entry_);
     c_pf_mus_stamu_ndof_ = true;
   }
@@ -7870,6 +11818,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_numlosthits() const{
   if(!c_pf_mus_stamu_numlosthits_ && b_pf_mus_stamu_numlosthits_){
+    b_pf_mus_stamu_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_numlosthits", &pf_mus_stamu_numlosthits_, &b_pf_mus_stamu_numlosthits_);
     b_pf_mus_stamu_numlosthits_->GetEntry(entry_);
     c_pf_mus_stamu_numlosthits_ = true;
   }
@@ -7878,6 +11828,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_numvalhits() const{
   if(!c_pf_mus_stamu_numvalhits_ && b_pf_mus_stamu_numvalhits_){
+    b_pf_mus_stamu_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_numvalhits", &pf_mus_stamu_numvalhits_, &b_pf_mus_stamu_numvalhits_);
     b_pf_mus_stamu_numvalhits_->GetEntry(entry_);
     c_pf_mus_stamu_numvalhits_ = true;
   }
@@ -7886,6 +11838,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_phi() const{
   if(!c_pf_mus_stamu_phi_ && b_pf_mus_stamu_phi_){
+    b_pf_mus_stamu_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_phi", &pf_mus_stamu_phi_, &b_pf_mus_stamu_phi_);
     b_pf_mus_stamu_phi_->GetEntry(entry_);
     c_pf_mus_stamu_phi_ = true;
   }
@@ -7894,6 +11848,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_phiErr() const{
   if(!c_pf_mus_stamu_phiErr_ && b_pf_mus_stamu_phiErr_){
+    b_pf_mus_stamu_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_phiErr", &pf_mus_stamu_phiErr_, &b_pf_mus_stamu_phiErr_);
     b_pf_mus_stamu_phiErr_->GetEntry(entry_);
     c_pf_mus_stamu_phiErr_ = true;
   }
@@ -7902,6 +11858,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_phiErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_pt() const{
   if(!c_pf_mus_stamu_pt_ && b_pf_mus_stamu_pt_){
+    b_pf_mus_stamu_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_pt", &pf_mus_stamu_pt_, &b_pf_mus_stamu_pt_);
     b_pf_mus_stamu_pt_->GetEntry(entry_);
     c_pf_mus_stamu_pt_ = true;
   }
@@ -7910,6 +11868,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_ptErr() const{
   if(!c_pf_mus_stamu_ptErr_ && b_pf_mus_stamu_ptErr_){
+    b_pf_mus_stamu_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_ptErr", &pf_mus_stamu_ptErr_, &b_pf_mus_stamu_ptErr_);
     b_pf_mus_stamu_ptErr_->GetEntry(entry_);
     c_pf_mus_stamu_ptErr_ = true;
   }
@@ -7918,6 +11878,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_ptErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_px() const{
   if(!c_pf_mus_stamu_px_ && b_pf_mus_stamu_px_){
+    b_pf_mus_stamu_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_px", &pf_mus_stamu_px_, &b_pf_mus_stamu_px_);
     b_pf_mus_stamu_px_->GetEntry(entry_);
     c_pf_mus_stamu_px_ = true;
   }
@@ -7926,6 +11888,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_py() const{
   if(!c_pf_mus_stamu_py_ && b_pf_mus_stamu_py_){
+    b_pf_mus_stamu_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_py", &pf_mus_stamu_py_, &b_pf_mus_stamu_py_);
     b_pf_mus_stamu_py_->GetEntry(entry_);
     c_pf_mus_stamu_py_ = true;
   }
@@ -7934,6 +11898,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_pz() const{
   if(!c_pf_mus_stamu_pz_ && b_pf_mus_stamu_pz_){
+    b_pf_mus_stamu_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_pz", &pf_mus_stamu_pz_, &b_pf_mus_stamu_pz_);
     b_pf_mus_stamu_pz_->GetEntry(entry_);
     c_pf_mus_stamu_pz_ = true;
   }
@@ -7942,6 +11908,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_theta() const{
   if(!c_pf_mus_stamu_theta_ && b_pf_mus_stamu_theta_){
+    b_pf_mus_stamu_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_theta", &pf_mus_stamu_theta_, &b_pf_mus_stamu_theta_);
     b_pf_mus_stamu_theta_->GetEntry(entry_);
     c_pf_mus_stamu_theta_ = true;
   }
@@ -7950,6 +11918,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_vx() const{
   if(!c_pf_mus_stamu_vx_ && b_pf_mus_stamu_vx_){
+    b_pf_mus_stamu_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_vx", &pf_mus_stamu_vx_, &b_pf_mus_stamu_vx_);
     b_pf_mus_stamu_vx_->GetEntry(entry_);
     c_pf_mus_stamu_vx_ = true;
   }
@@ -7958,6 +11928,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_vx() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_vy() const{
   if(!c_pf_mus_stamu_vy_ && b_pf_mus_stamu_vy_){
+    b_pf_mus_stamu_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_vy", &pf_mus_stamu_vy_, &b_pf_mus_stamu_vy_);
     b_pf_mus_stamu_vy_->GetEntry(entry_);
     c_pf_mus_stamu_vy_ = true;
   }
@@ -7966,6 +11938,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_vy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_stamu_vz() const{
   if(!c_pf_mus_stamu_vz_ && b_pf_mus_stamu_vz_){
+    b_pf_mus_stamu_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_stamu_vz", &pf_mus_stamu_vz_, &b_pf_mus_stamu_vz_);
     b_pf_mus_stamu_vz_->GetEntry(entry_);
     c_pf_mus_stamu_vz_ = true;
   }
@@ -7974,6 +11948,8 @@ std::vector<float>* const & cfa_8::pf_mus_stamu_vz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_status() const{
   if(!c_pf_mus_status_ && b_pf_mus_status_){
+    b_pf_mus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_status", &pf_mus_status_, &b_pf_mus_status_);
     b_pf_mus_status_->GetEntry(entry_);
     c_pf_mus_status_ = true;
   }
@@ -7982,6 +11958,8 @@ std::vector<float>* const & cfa_8::pf_mus_status() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tIso() const{
   if(!c_pf_mus_tIso_ && b_pf_mus_tIso_){
+    b_pf_mus_tIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tIso", &pf_mus_tIso_, &b_pf_mus_tIso_);
     b_pf_mus_tIso_->GetEntry(entry_);
     c_pf_mus_tIso_ = true;
   }
@@ -7990,6 +11968,8 @@ std::vector<float>* const & cfa_8::pf_mus_tIso() const{
 
 std::vector<float>* const & cfa_8::pf_mus_theta() const{
   if(!c_pf_mus_theta_ && b_pf_mus_theta_){
+    b_pf_mus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_theta", &pf_mus_theta_, &b_pf_mus_theta_);
     b_pf_mus_theta_->GetEntry(entry_);
     c_pf_mus_theta_ = true;
   }
@@ -7998,6 +11978,8 @@ std::vector<float>* const & cfa_8::pf_mus_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tkHits() const{
   if(!c_pf_mus_tkHits_ && b_pf_mus_tkHits_){
+    b_pf_mus_tkHits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tkHits", &pf_mus_tkHits_, &b_pf_mus_tkHits_);
     b_pf_mus_tkHits_->GetEntry(entry_);
     c_pf_mus_tkHits_ = true;
   }
@@ -8006,6 +11988,8 @@ std::vector<float>* const & cfa_8::pf_mus_tkHits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_ExpectedHitsInner() const{
   if(!c_pf_mus_tk_ExpectedHitsInner_ && b_pf_mus_tk_ExpectedHitsInner_){
+    b_pf_mus_tk_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_ExpectedHitsInner", &pf_mus_tk_ExpectedHitsInner_, &b_pf_mus_tk_ExpectedHitsInner_);
     b_pf_mus_tk_ExpectedHitsInner_->GetEntry(entry_);
     c_pf_mus_tk_ExpectedHitsInner_ = true;
   }
@@ -8014,6 +11998,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_ExpectedHitsOuter() const{
   if(!c_pf_mus_tk_ExpectedHitsOuter_ && b_pf_mus_tk_ExpectedHitsOuter_){
+    b_pf_mus_tk_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_ExpectedHitsOuter", &pf_mus_tk_ExpectedHitsOuter_, &b_pf_mus_tk_ExpectedHitsOuter_);
     b_pf_mus_tk_ExpectedHitsOuter_->GetEntry(entry_);
     c_pf_mus_tk_ExpectedHitsOuter_ = true;
   }
@@ -8022,6 +12008,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_LayersWithMeasurement() const{
   if(!c_pf_mus_tk_LayersWithMeasurement_ && b_pf_mus_tk_LayersWithMeasurement_){
+    b_pf_mus_tk_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_LayersWithMeasurement", &pf_mus_tk_LayersWithMeasurement_, &b_pf_mus_tk_LayersWithMeasurement_);
     b_pf_mus_tk_LayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_tk_LayersWithMeasurement_ = true;
   }
@@ -8030,6 +12018,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_LayersWithoutMeasurement() const{
   if(!c_pf_mus_tk_LayersWithoutMeasurement_ && b_pf_mus_tk_LayersWithoutMeasurement_){
+    b_pf_mus_tk_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_LayersWithoutMeasurement", &pf_mus_tk_LayersWithoutMeasurement_, &b_pf_mus_tk_LayersWithoutMeasurement_);
     b_pf_mus_tk_LayersWithoutMeasurement_->GetEntry(entry_);
     c_pf_mus_tk_LayersWithoutMeasurement_ = true;
   }
@@ -8038,6 +12028,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_LayersWithoutMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_PixelLayersWithMeasurement() const{
   if(!c_pf_mus_tk_PixelLayersWithMeasurement_ && b_pf_mus_tk_PixelLayersWithMeasurement_){
+    b_pf_mus_tk_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_PixelLayersWithMeasurement", &pf_mus_tk_PixelLayersWithMeasurement_, &b_pf_mus_tk_PixelLayersWithMeasurement_);
     b_pf_mus_tk_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_tk_PixelLayersWithMeasurement_ = true;
   }
@@ -8046,6 +12038,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_PixelLayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ && b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_){
+    b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_ValidStripLayersWithMonoAndStereoHit", &pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_, &b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_);
     b_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_pf_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -8054,6 +12048,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_ValidStripLayersWithMonoAndStereoHi
 
 std::vector<float>* const & cfa_8::pf_mus_tk_chg() const{
   if(!c_pf_mus_tk_chg_ && b_pf_mus_tk_chg_){
+    b_pf_mus_tk_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_chg", &pf_mus_tk_chg_, &b_pf_mus_tk_chg_);
     b_pf_mus_tk_chg_->GetEntry(entry_);
     c_pf_mus_tk_chg_ = true;
   }
@@ -8062,6 +12058,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_chg() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_chi2() const{
   if(!c_pf_mus_tk_chi2_ && b_pf_mus_tk_chi2_){
+    b_pf_mus_tk_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_chi2", &pf_mus_tk_chi2_, &b_pf_mus_tk_chi2_);
     b_pf_mus_tk_chi2_->GetEntry(entry_);
     c_pf_mus_tk_chi2_ = true;
   }
@@ -8070,6 +12068,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_d0dum() const{
   if(!c_pf_mus_tk_d0dum_ && b_pf_mus_tk_d0dum_){
+    b_pf_mus_tk_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_d0dum", &pf_mus_tk_d0dum_, &b_pf_mus_tk_d0dum_);
     b_pf_mus_tk_d0dum_->GetEntry(entry_);
     c_pf_mus_tk_d0dum_ = true;
   }
@@ -8078,6 +12078,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_d0dumErr() const{
   if(!c_pf_mus_tk_d0dumErr_ && b_pf_mus_tk_d0dumErr_){
+    b_pf_mus_tk_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_d0dumErr", &pf_mus_tk_d0dumErr_, &b_pf_mus_tk_d0dumErr_);
     b_pf_mus_tk_d0dumErr_->GetEntry(entry_);
     c_pf_mus_tk_d0dumErr_ = true;
   }
@@ -8086,6 +12088,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_dz() const{
   if(!c_pf_mus_tk_dz_ && b_pf_mus_tk_dz_){
+    b_pf_mus_tk_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_dz", &pf_mus_tk_dz_, &b_pf_mus_tk_dz_);
     b_pf_mus_tk_dz_->GetEntry(entry_);
     c_pf_mus_tk_dz_ = true;
   }
@@ -8094,6 +12098,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_dz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_dzErr() const{
   if(!c_pf_mus_tk_dzErr_ && b_pf_mus_tk_dzErr_){
+    b_pf_mus_tk_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_dzErr", &pf_mus_tk_dzErr_, &b_pf_mus_tk_dzErr_);
     b_pf_mus_tk_dzErr_->GetEntry(entry_);
     c_pf_mus_tk_dzErr_ = true;
   }
@@ -8102,6 +12108,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_dzErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_eta() const{
   if(!c_pf_mus_tk_eta_ && b_pf_mus_tk_eta_){
+    b_pf_mus_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_eta", &pf_mus_tk_eta_, &b_pf_mus_tk_eta_);
     b_pf_mus_tk_eta_->GetEntry(entry_);
     c_pf_mus_tk_eta_ = true;
   }
@@ -8110,6 +12118,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_etaErr() const{
   if(!c_pf_mus_tk_etaErr_ && b_pf_mus_tk_etaErr_){
+    b_pf_mus_tk_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_etaErr", &pf_mus_tk_etaErr_, &b_pf_mus_tk_etaErr_);
     b_pf_mus_tk_etaErr_->GetEntry(entry_);
     c_pf_mus_tk_etaErr_ = true;
   }
@@ -8118,6 +12128,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_etaErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_id() const{
   if(!c_pf_mus_tk_id_ && b_pf_mus_tk_id_){
+    b_pf_mus_tk_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_id", &pf_mus_tk_id_, &b_pf_mus_tk_id_);
     b_pf_mus_tk_id_->GetEntry(entry_);
     c_pf_mus_tk_id_ = true;
   }
@@ -8126,6 +12138,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_id() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_ndof() const{
   if(!c_pf_mus_tk_ndof_ && b_pf_mus_tk_ndof_){
+    b_pf_mus_tk_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_ndof", &pf_mus_tk_ndof_, &b_pf_mus_tk_ndof_);
     b_pf_mus_tk_ndof_->GetEntry(entry_);
     c_pf_mus_tk_ndof_ = true;
   }
@@ -8134,6 +12148,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_numlosthits() const{
   if(!c_pf_mus_tk_numlosthits_ && b_pf_mus_tk_numlosthits_){
+    b_pf_mus_tk_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_numlosthits", &pf_mus_tk_numlosthits_, &b_pf_mus_tk_numlosthits_);
     b_pf_mus_tk_numlosthits_->GetEntry(entry_);
     c_pf_mus_tk_numlosthits_ = true;
   }
@@ -8142,6 +12158,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_numpixelWthMeasr() const{
   if(!c_pf_mus_tk_numpixelWthMeasr_ && b_pf_mus_tk_numpixelWthMeasr_){
+    b_pf_mus_tk_numpixelWthMeasr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_numpixelWthMeasr", &pf_mus_tk_numpixelWthMeasr_, &b_pf_mus_tk_numpixelWthMeasr_);
     b_pf_mus_tk_numpixelWthMeasr_->GetEntry(entry_);
     c_pf_mus_tk_numpixelWthMeasr_ = true;
   }
@@ -8150,6 +12168,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_numpixelWthMeasr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_numvalPixelhits() const{
   if(!c_pf_mus_tk_numvalPixelhits_ && b_pf_mus_tk_numvalPixelhits_){
+    b_pf_mus_tk_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_numvalPixelhits", &pf_mus_tk_numvalPixelhits_, &b_pf_mus_tk_numvalPixelhits_);
     b_pf_mus_tk_numvalPixelhits_->GetEntry(entry_);
     c_pf_mus_tk_numvalPixelhits_ = true;
   }
@@ -8158,6 +12178,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_numvalhits() const{
   if(!c_pf_mus_tk_numvalhits_ && b_pf_mus_tk_numvalhits_){
+    b_pf_mus_tk_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_numvalhits", &pf_mus_tk_numvalhits_, &b_pf_mus_tk_numvalhits_);
     b_pf_mus_tk_numvalhits_->GetEntry(entry_);
     c_pf_mus_tk_numvalhits_ = true;
   }
@@ -8166,6 +12188,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_phi() const{
   if(!c_pf_mus_tk_phi_ && b_pf_mus_tk_phi_){
+    b_pf_mus_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_phi", &pf_mus_tk_phi_, &b_pf_mus_tk_phi_);
     b_pf_mus_tk_phi_->GetEntry(entry_);
     c_pf_mus_tk_phi_ = true;
   }
@@ -8174,6 +12198,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_phiErr() const{
   if(!c_pf_mus_tk_phiErr_ && b_pf_mus_tk_phiErr_){
+    b_pf_mus_tk_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_phiErr", &pf_mus_tk_phiErr_, &b_pf_mus_tk_phiErr_);
     b_pf_mus_tk_phiErr_->GetEntry(entry_);
     c_pf_mus_tk_phiErr_ = true;
   }
@@ -8182,6 +12208,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_phiErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_pt() const{
   if(!c_pf_mus_tk_pt_ && b_pf_mus_tk_pt_){
+    b_pf_mus_tk_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_pt", &pf_mus_tk_pt_, &b_pf_mus_tk_pt_);
     b_pf_mus_tk_pt_->GetEntry(entry_);
     c_pf_mus_tk_pt_ = true;
   }
@@ -8190,6 +12218,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_ptErr() const{
   if(!c_pf_mus_tk_ptErr_ && b_pf_mus_tk_ptErr_){
+    b_pf_mus_tk_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_ptErr", &pf_mus_tk_ptErr_, &b_pf_mus_tk_ptErr_);
     b_pf_mus_tk_ptErr_->GetEntry(entry_);
     c_pf_mus_tk_ptErr_ = true;
   }
@@ -8198,6 +12228,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_ptErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_px() const{
   if(!c_pf_mus_tk_px_ && b_pf_mus_tk_px_){
+    b_pf_mus_tk_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_px", &pf_mus_tk_px_, &b_pf_mus_tk_px_);
     b_pf_mus_tk_px_->GetEntry(entry_);
     c_pf_mus_tk_px_ = true;
   }
@@ -8206,6 +12238,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_py() const{
   if(!c_pf_mus_tk_py_ && b_pf_mus_tk_py_){
+    b_pf_mus_tk_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_py", &pf_mus_tk_py_, &b_pf_mus_tk_py_);
     b_pf_mus_tk_py_->GetEntry(entry_);
     c_pf_mus_tk_py_ = true;
   }
@@ -8214,6 +12248,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_pz() const{
   if(!c_pf_mus_tk_pz_ && b_pf_mus_tk_pz_){
+    b_pf_mus_tk_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_pz", &pf_mus_tk_pz_, &b_pf_mus_tk_pz_);
     b_pf_mus_tk_pz_->GetEntry(entry_);
     c_pf_mus_tk_pz_ = true;
   }
@@ -8222,6 +12258,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_theta() const{
   if(!c_pf_mus_tk_theta_ && b_pf_mus_tk_theta_){
+    b_pf_mus_tk_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_theta", &pf_mus_tk_theta_, &b_pf_mus_tk_theta_);
     b_pf_mus_tk_theta_->GetEntry(entry_);
     c_pf_mus_tk_theta_ = true;
   }
@@ -8230,6 +12268,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_vx() const{
   if(!c_pf_mus_tk_vx_ && b_pf_mus_tk_vx_){
+    b_pf_mus_tk_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_vx", &pf_mus_tk_vx_, &b_pf_mus_tk_vx_);
     b_pf_mus_tk_vx_->GetEntry(entry_);
     c_pf_mus_tk_vx_ = true;
   }
@@ -8238,6 +12278,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_vx() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_vy() const{
   if(!c_pf_mus_tk_vy_ && b_pf_mus_tk_vy_){
+    b_pf_mus_tk_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_vy", &pf_mus_tk_vy_, &b_pf_mus_tk_vy_);
     b_pf_mus_tk_vy_->GetEntry(entry_);
     c_pf_mus_tk_vy_ = true;
   }
@@ -8246,6 +12288,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_vy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tk_vz() const{
   if(!c_pf_mus_tk_vz_ && b_pf_mus_tk_vz_){
+    b_pf_mus_tk_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tk_vz", &pf_mus_tk_vz_, &b_pf_mus_tk_vz_);
     b_pf_mus_tk_vz_->GetEntry(entry_);
     c_pf_mus_tk_vz_ = true;
   }
@@ -8254,6 +12298,8 @@ std::vector<float>* const & cfa_8::pf_mus_tk_vz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_ExpectedHitsInner() const{
   if(!c_pf_mus_tpfms_ExpectedHitsInner_ && b_pf_mus_tpfms_ExpectedHitsInner_){
+    b_pf_mus_tpfms_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_ExpectedHitsInner", &pf_mus_tpfms_ExpectedHitsInner_, &b_pf_mus_tpfms_ExpectedHitsInner_);
     b_pf_mus_tpfms_ExpectedHitsInner_->GetEntry(entry_);
     c_pf_mus_tpfms_ExpectedHitsInner_ = true;
   }
@@ -8262,6 +12308,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_ExpectedHitsOuter() const{
   if(!c_pf_mus_tpfms_ExpectedHitsOuter_ && b_pf_mus_tpfms_ExpectedHitsOuter_){
+    b_pf_mus_tpfms_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_ExpectedHitsOuter", &pf_mus_tpfms_ExpectedHitsOuter_, &b_pf_mus_tpfms_ExpectedHitsOuter_);
     b_pf_mus_tpfms_ExpectedHitsOuter_->GetEntry(entry_);
     c_pf_mus_tpfms_ExpectedHitsOuter_ = true;
   }
@@ -8270,6 +12318,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_LayersWithMeasurement() const{
   if(!c_pf_mus_tpfms_LayersWithMeasurement_ && b_pf_mus_tpfms_LayersWithMeasurement_){
+    b_pf_mus_tpfms_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_LayersWithMeasurement", &pf_mus_tpfms_LayersWithMeasurement_, &b_pf_mus_tpfms_LayersWithMeasurement_);
     b_pf_mus_tpfms_LayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_tpfms_LayersWithMeasurement_ = true;
   }
@@ -8278,6 +12328,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_LayersWithoutMeasurement() const{
   if(!c_pf_mus_tpfms_LayersWithoutMeasurement_ && b_pf_mus_tpfms_LayersWithoutMeasurement_){
+    b_pf_mus_tpfms_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_LayersWithoutMeasurement", &pf_mus_tpfms_LayersWithoutMeasurement_, &b_pf_mus_tpfms_LayersWithoutMeasurement_);
     b_pf_mus_tpfms_LayersWithoutMeasurement_->GetEntry(entry_);
     c_pf_mus_tpfms_LayersWithoutMeasurement_ = true;
   }
@@ -8286,6 +12338,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_LayersWithoutMeasurement() const
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_PixelLayersWithMeasurement() const{
   if(!c_pf_mus_tpfms_PixelLayersWithMeasurement_ && b_pf_mus_tpfms_PixelLayersWithMeasurement_){
+    b_pf_mus_tpfms_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_PixelLayersWithMeasurement", &pf_mus_tpfms_PixelLayersWithMeasurement_, &b_pf_mus_tpfms_PixelLayersWithMeasurement_);
     b_pf_mus_tpfms_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_pf_mus_tpfms_PixelLayersWithMeasurement_ = true;
   }
@@ -8294,6 +12348,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_PixelLayersWithMeasurement() con
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ && b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_){
+    b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit", &pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_, &b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_);
     b_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_pf_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -8302,6 +12358,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_ValidStripLayersWithMonoAndStere
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_chg() const{
   if(!c_pf_mus_tpfms_chg_ && b_pf_mus_tpfms_chg_){
+    b_pf_mus_tpfms_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_chg", &pf_mus_tpfms_chg_, &b_pf_mus_tpfms_chg_);
     b_pf_mus_tpfms_chg_->GetEntry(entry_);
     c_pf_mus_tpfms_chg_ = true;
   }
@@ -8310,6 +12368,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_chg() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_chi2() const{
   if(!c_pf_mus_tpfms_chi2_ && b_pf_mus_tpfms_chi2_){
+    b_pf_mus_tpfms_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_chi2", &pf_mus_tpfms_chi2_, &b_pf_mus_tpfms_chi2_);
     b_pf_mus_tpfms_chi2_->GetEntry(entry_);
     c_pf_mus_tpfms_chi2_ = true;
   }
@@ -8318,6 +12378,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_chi2() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_d0dum() const{
   if(!c_pf_mus_tpfms_d0dum_ && b_pf_mus_tpfms_d0dum_){
+    b_pf_mus_tpfms_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_d0dum", &pf_mus_tpfms_d0dum_, &b_pf_mus_tpfms_d0dum_);
     b_pf_mus_tpfms_d0dum_->GetEntry(entry_);
     c_pf_mus_tpfms_d0dum_ = true;
   }
@@ -8326,6 +12388,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_d0dum() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_d0dumErr() const{
   if(!c_pf_mus_tpfms_d0dumErr_ && b_pf_mus_tpfms_d0dumErr_){
+    b_pf_mus_tpfms_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_d0dumErr", &pf_mus_tpfms_d0dumErr_, &b_pf_mus_tpfms_d0dumErr_);
     b_pf_mus_tpfms_d0dumErr_->GetEntry(entry_);
     c_pf_mus_tpfms_d0dumErr_ = true;
   }
@@ -8334,6 +12398,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_dz() const{
   if(!c_pf_mus_tpfms_dz_ && b_pf_mus_tpfms_dz_){
+    b_pf_mus_tpfms_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_dz", &pf_mus_tpfms_dz_, &b_pf_mus_tpfms_dz_);
     b_pf_mus_tpfms_dz_->GetEntry(entry_);
     c_pf_mus_tpfms_dz_ = true;
   }
@@ -8342,6 +12408,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_dz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_dzErr() const{
   if(!c_pf_mus_tpfms_dzErr_ && b_pf_mus_tpfms_dzErr_){
+    b_pf_mus_tpfms_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_dzErr", &pf_mus_tpfms_dzErr_, &b_pf_mus_tpfms_dzErr_);
     b_pf_mus_tpfms_dzErr_->GetEntry(entry_);
     c_pf_mus_tpfms_dzErr_ = true;
   }
@@ -8350,6 +12418,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_dzErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_eta() const{
   if(!c_pf_mus_tpfms_eta_ && b_pf_mus_tpfms_eta_){
+    b_pf_mus_tpfms_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_eta", &pf_mus_tpfms_eta_, &b_pf_mus_tpfms_eta_);
     b_pf_mus_tpfms_eta_->GetEntry(entry_);
     c_pf_mus_tpfms_eta_ = true;
   }
@@ -8358,6 +12428,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_eta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_etaErr() const{
   if(!c_pf_mus_tpfms_etaErr_ && b_pf_mus_tpfms_etaErr_){
+    b_pf_mus_tpfms_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_etaErr", &pf_mus_tpfms_etaErr_, &b_pf_mus_tpfms_etaErr_);
     b_pf_mus_tpfms_etaErr_->GetEntry(entry_);
     c_pf_mus_tpfms_etaErr_ = true;
   }
@@ -8366,6 +12438,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_etaErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_id() const{
   if(!c_pf_mus_tpfms_id_ && b_pf_mus_tpfms_id_){
+    b_pf_mus_tpfms_id_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_id", &pf_mus_tpfms_id_, &b_pf_mus_tpfms_id_);
     b_pf_mus_tpfms_id_->GetEntry(entry_);
     c_pf_mus_tpfms_id_ = true;
   }
@@ -8374,6 +12448,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_id() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_ndof() const{
   if(!c_pf_mus_tpfms_ndof_ && b_pf_mus_tpfms_ndof_){
+    b_pf_mus_tpfms_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_ndof", &pf_mus_tpfms_ndof_, &b_pf_mus_tpfms_ndof_);
     b_pf_mus_tpfms_ndof_->GetEntry(entry_);
     c_pf_mus_tpfms_ndof_ = true;
   }
@@ -8382,6 +12458,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_ndof() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_numlosthits() const{
   if(!c_pf_mus_tpfms_numlosthits_ && b_pf_mus_tpfms_numlosthits_){
+    b_pf_mus_tpfms_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_numlosthits", &pf_mus_tpfms_numlosthits_, &b_pf_mus_tpfms_numlosthits_);
     b_pf_mus_tpfms_numlosthits_->GetEntry(entry_);
     c_pf_mus_tpfms_numlosthits_ = true;
   }
@@ -8390,6 +12468,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_numlosthits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_numvalPixelhits() const{
   if(!c_pf_mus_tpfms_numvalPixelhits_ && b_pf_mus_tpfms_numvalPixelhits_){
+    b_pf_mus_tpfms_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_numvalPixelhits", &pf_mus_tpfms_numvalPixelhits_, &b_pf_mus_tpfms_numvalPixelhits_);
     b_pf_mus_tpfms_numvalPixelhits_->GetEntry(entry_);
     c_pf_mus_tpfms_numvalPixelhits_ = true;
   }
@@ -8398,6 +12478,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_numvalhits() const{
   if(!c_pf_mus_tpfms_numvalhits_ && b_pf_mus_tpfms_numvalhits_){
+    b_pf_mus_tpfms_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_numvalhits", &pf_mus_tpfms_numvalhits_, &b_pf_mus_tpfms_numvalhits_);
     b_pf_mus_tpfms_numvalhits_->GetEntry(entry_);
     c_pf_mus_tpfms_numvalhits_ = true;
   }
@@ -8406,6 +12488,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_numvalhits() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_phi() const{
   if(!c_pf_mus_tpfms_phi_ && b_pf_mus_tpfms_phi_){
+    b_pf_mus_tpfms_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_phi", &pf_mus_tpfms_phi_, &b_pf_mus_tpfms_phi_);
     b_pf_mus_tpfms_phi_->GetEntry(entry_);
     c_pf_mus_tpfms_phi_ = true;
   }
@@ -8414,6 +12498,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_phi() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_phiErr() const{
   if(!c_pf_mus_tpfms_phiErr_ && b_pf_mus_tpfms_phiErr_){
+    b_pf_mus_tpfms_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_phiErr", &pf_mus_tpfms_phiErr_, &b_pf_mus_tpfms_phiErr_);
     b_pf_mus_tpfms_phiErr_->GetEntry(entry_);
     c_pf_mus_tpfms_phiErr_ = true;
   }
@@ -8422,6 +12508,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_phiErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_pt() const{
   if(!c_pf_mus_tpfms_pt_ && b_pf_mus_tpfms_pt_){
+    b_pf_mus_tpfms_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_pt", &pf_mus_tpfms_pt_, &b_pf_mus_tpfms_pt_);
     b_pf_mus_tpfms_pt_->GetEntry(entry_);
     c_pf_mus_tpfms_pt_ = true;
   }
@@ -8430,6 +12518,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_pt() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_ptErr() const{
   if(!c_pf_mus_tpfms_ptErr_ && b_pf_mus_tpfms_ptErr_){
+    b_pf_mus_tpfms_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_ptErr", &pf_mus_tpfms_ptErr_, &b_pf_mus_tpfms_ptErr_);
     b_pf_mus_tpfms_ptErr_->GetEntry(entry_);
     c_pf_mus_tpfms_ptErr_ = true;
   }
@@ -8438,6 +12528,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_ptErr() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_px() const{
   if(!c_pf_mus_tpfms_px_ && b_pf_mus_tpfms_px_){
+    b_pf_mus_tpfms_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_px", &pf_mus_tpfms_px_, &b_pf_mus_tpfms_px_);
     b_pf_mus_tpfms_px_->GetEntry(entry_);
     c_pf_mus_tpfms_px_ = true;
   }
@@ -8446,6 +12538,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_px() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_py() const{
   if(!c_pf_mus_tpfms_py_ && b_pf_mus_tpfms_py_){
+    b_pf_mus_tpfms_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_py", &pf_mus_tpfms_py_, &b_pf_mus_tpfms_py_);
     b_pf_mus_tpfms_py_->GetEntry(entry_);
     c_pf_mus_tpfms_py_ = true;
   }
@@ -8454,6 +12548,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_py() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_pz() const{
   if(!c_pf_mus_tpfms_pz_ && b_pf_mus_tpfms_pz_){
+    b_pf_mus_tpfms_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_pz", &pf_mus_tpfms_pz_, &b_pf_mus_tpfms_pz_);
     b_pf_mus_tpfms_pz_->GetEntry(entry_);
     c_pf_mus_tpfms_pz_ = true;
   }
@@ -8462,6 +12558,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_pz() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_theta() const{
   if(!c_pf_mus_tpfms_theta_ && b_pf_mus_tpfms_theta_){
+    b_pf_mus_tpfms_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_theta", &pf_mus_tpfms_theta_, &b_pf_mus_tpfms_theta_);
     b_pf_mus_tpfms_theta_->GetEntry(entry_);
     c_pf_mus_tpfms_theta_ = true;
   }
@@ -8470,6 +12568,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_theta() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_vx() const{
   if(!c_pf_mus_tpfms_vx_ && b_pf_mus_tpfms_vx_){
+    b_pf_mus_tpfms_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_vx", &pf_mus_tpfms_vx_, &b_pf_mus_tpfms_vx_);
     b_pf_mus_tpfms_vx_->GetEntry(entry_);
     c_pf_mus_tpfms_vx_ = true;
   }
@@ -8478,6 +12578,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_vx() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_vy() const{
   if(!c_pf_mus_tpfms_vy_ && b_pf_mus_tpfms_vy_){
+    b_pf_mus_tpfms_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_vy", &pf_mus_tpfms_vy_, &b_pf_mus_tpfms_vy_);
     b_pf_mus_tpfms_vy_->GetEntry(entry_);
     c_pf_mus_tpfms_vy_ = true;
   }
@@ -8486,6 +12588,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_vy() const{
 
 std::vector<float>* const & cfa_8::pf_mus_tpfms_vz() const{
   if(!c_pf_mus_tpfms_vz_ && b_pf_mus_tpfms_vz_){
+    b_pf_mus_tpfms_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_mus_tpfms_vz", &pf_mus_tpfms_vz_, &b_pf_mus_tpfms_vz_);
     b_pf_mus_tpfms_vz_->GetEntry(entry_);
     c_pf_mus_tpfms_vz_ = true;
   }
@@ -8494,6 +12598,8 @@ std::vector<float>* const & cfa_8::pf_mus_tpfms_vz() const{
 
 std::vector<float>* const & cfa_8::pf_photons_chIso() const{
   if(!c_pf_photons_chIso_ && b_pf_photons_chIso_){
+    b_pf_photons_chIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_chIso", &pf_photons_chIso_, &b_pf_photons_chIso_);
     b_pf_photons_chIso_->GetEntry(entry_);
     c_pf_photons_chIso_ = true;
   }
@@ -8502,6 +12608,8 @@ std::vector<float>* const & cfa_8::pf_photons_chIso() const{
 
 std::vector<float>* const & cfa_8::pf_photons_e1x5() const{
   if(!c_pf_photons_e1x5_ && b_pf_photons_e1x5_){
+    b_pf_photons_e1x5_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_e1x5", &pf_photons_e1x5_, &b_pf_photons_e1x5_);
     b_pf_photons_e1x5_->GetEntry(entry_);
     c_pf_photons_e1x5_ = true;
   }
@@ -8510,6 +12618,8 @@ std::vector<float>* const & cfa_8::pf_photons_e1x5() const{
 
 std::vector<float>* const & cfa_8::pf_photons_e2x5() const{
   if(!c_pf_photons_e2x5_ && b_pf_photons_e2x5_){
+    b_pf_photons_e2x5_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_e2x5", &pf_photons_e2x5_, &b_pf_photons_e2x5_);
     b_pf_photons_e2x5_->GetEntry(entry_);
     c_pf_photons_e2x5_ = true;
   }
@@ -8518,6 +12628,8 @@ std::vector<float>* const & cfa_8::pf_photons_e2x5() const{
 
 std::vector<float>* const & cfa_8::pf_photons_e3x3() const{
   if(!c_pf_photons_e3x3_ && b_pf_photons_e3x3_){
+    b_pf_photons_e3x3_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_e3x3", &pf_photons_e3x3_, &b_pf_photons_e3x3_);
     b_pf_photons_e3x3_->GetEntry(entry_);
     c_pf_photons_e3x3_ = true;
   }
@@ -8526,6 +12638,8 @@ std::vector<float>* const & cfa_8::pf_photons_e3x3() const{
 
 std::vector<float>* const & cfa_8::pf_photons_e5x5() const{
   if(!c_pf_photons_e5x5_ && b_pf_photons_e5x5_){
+    b_pf_photons_e5x5_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_e5x5", &pf_photons_e5x5_, &b_pf_photons_e5x5_);
     b_pf_photons_e5x5_->GetEntry(entry_);
     c_pf_photons_e5x5_ = true;
   }
@@ -8534,6 +12648,8 @@ std::vector<float>* const & cfa_8::pf_photons_e5x5() const{
 
 std::vector<float>* const & cfa_8::pf_photons_energy() const{
   if(!c_pf_photons_energy_ && b_pf_photons_energy_){
+    b_pf_photons_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_energy", &pf_photons_energy_, &b_pf_photons_energy_);
     b_pf_photons_energy_->GetEntry(entry_);
     c_pf_photons_energy_ = true;
   }
@@ -8542,6 +12658,8 @@ std::vector<float>* const & cfa_8::pf_photons_energy() const{
 
 std::vector<float>* const & cfa_8::pf_photons_et() const{
   if(!c_pf_photons_et_ && b_pf_photons_et_){
+    b_pf_photons_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_et", &pf_photons_et_, &b_pf_photons_et_);
     b_pf_photons_et_->GetEntry(entry_);
     c_pf_photons_et_ = true;
   }
@@ -8550,6 +12668,8 @@ std::vector<float>* const & cfa_8::pf_photons_et() const{
 
 std::vector<float>* const & cfa_8::pf_photons_eta() const{
   if(!c_pf_photons_eta_ && b_pf_photons_eta_){
+    b_pf_photons_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_eta", &pf_photons_eta_, &b_pf_photons_eta_);
     b_pf_photons_eta_->GetEntry(entry_);
     c_pf_photons_eta_ = true;
   }
@@ -8558,6 +12678,8 @@ std::vector<float>* const & cfa_8::pf_photons_eta() const{
 
 std::vector<float>* const & cfa_8::pf_photons_hadOverEM() const{
   if(!c_pf_photons_hadOverEM_ && b_pf_photons_hadOverEM_){
+    b_pf_photons_hadOverEM_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_hadOverEM", &pf_photons_hadOverEM_, &b_pf_photons_hadOverEM_);
     b_pf_photons_hadOverEM_->GetEntry(entry_);
     c_pf_photons_hadOverEM_ = true;
   }
@@ -8566,6 +12688,8 @@ std::vector<float>* const & cfa_8::pf_photons_hadOverEM() const{
 
 std::vector<float>* const & cfa_8::pf_photons_hadTowOverEM() const{
   if(!c_pf_photons_hadTowOverEM_ && b_pf_photons_hadTowOverEM_){
+    b_pf_photons_hadTowOverEM_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_hadTowOverEM", &pf_photons_hadTowOverEM_, &b_pf_photons_hadTowOverEM_);
     b_pf_photons_hadTowOverEM_->GetEntry(entry_);
     c_pf_photons_hadTowOverEM_ = true;
   }
@@ -8574,6 +12698,8 @@ std::vector<float>* const & cfa_8::pf_photons_hadTowOverEM() const{
 
 std::vector<float>* const & cfa_8::pf_photons_hasPixelSeed() const{
   if(!c_pf_photons_hasPixelSeed_ && b_pf_photons_hasPixelSeed_){
+    b_pf_photons_hasPixelSeed_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_hasPixelSeed", &pf_photons_hasPixelSeed_, &b_pf_photons_hasPixelSeed_);
     b_pf_photons_hasPixelSeed_->GetEntry(entry_);
     c_pf_photons_hasPixelSeed_ = true;
   }
@@ -8582,6 +12708,8 @@ std::vector<float>* const & cfa_8::pf_photons_hasPixelSeed() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isAlsoElectron() const{
   if(!c_pf_photons_isAlsoElectron_ && b_pf_photons_isAlsoElectron_){
+    b_pf_photons_isAlsoElectron_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isAlsoElectron", &pf_photons_isAlsoElectron_, &b_pf_photons_isAlsoElectron_);
     b_pf_photons_isAlsoElectron_->GetEntry(entry_);
     c_pf_photons_isAlsoElectron_ = true;
   }
@@ -8590,6 +12718,8 @@ std::vector<float>* const & cfa_8::pf_photons_isAlsoElectron() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isConverted() const{
   if(!c_pf_photons_isConverted_ && b_pf_photons_isConverted_){
+    b_pf_photons_isConverted_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isConverted", &pf_photons_isConverted_, &b_pf_photons_isConverted_);
     b_pf_photons_isConverted_->GetEntry(entry_);
     c_pf_photons_isConverted_ = true;
   }
@@ -8598,6 +12728,8 @@ std::vector<float>* const & cfa_8::pf_photons_isConverted() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isEBEEGap() const{
   if(!c_pf_photons_isEBEEGap_ && b_pf_photons_isEBEEGap_){
+    b_pf_photons_isEBEEGap_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isEBEEGap", &pf_photons_isEBEEGap_, &b_pf_photons_isEBEEGap_);
     b_pf_photons_isEBEEGap_->GetEntry(entry_);
     c_pf_photons_isEBEEGap_ = true;
   }
@@ -8606,6 +12738,8 @@ std::vector<float>* const & cfa_8::pf_photons_isEBEEGap() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isEBGap() const{
   if(!c_pf_photons_isEBGap_ && b_pf_photons_isEBGap_){
+    b_pf_photons_isEBGap_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isEBGap", &pf_photons_isEBGap_, &b_pf_photons_isEBGap_);
     b_pf_photons_isEBGap_->GetEntry(entry_);
     c_pf_photons_isEBGap_ = true;
   }
@@ -8614,6 +12748,8 @@ std::vector<float>* const & cfa_8::pf_photons_isEBGap() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isEBPho() const{
   if(!c_pf_photons_isEBPho_ && b_pf_photons_isEBPho_){
+    b_pf_photons_isEBPho_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isEBPho", &pf_photons_isEBPho_, &b_pf_photons_isEBPho_);
     b_pf_photons_isEBPho_->GetEntry(entry_);
     c_pf_photons_isEBPho_ = true;
   }
@@ -8622,6 +12758,8 @@ std::vector<float>* const & cfa_8::pf_photons_isEBPho() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isEEGap() const{
   if(!c_pf_photons_isEEGap_ && b_pf_photons_isEEGap_){
+    b_pf_photons_isEEGap_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isEEGap", &pf_photons_isEEGap_, &b_pf_photons_isEEGap_);
     b_pf_photons_isEEGap_->GetEntry(entry_);
     c_pf_photons_isEEGap_ = true;
   }
@@ -8630,6 +12768,8 @@ std::vector<float>* const & cfa_8::pf_photons_isEEGap() const{
 
 std::vector<float>* const & cfa_8::pf_photons_isEEPho() const{
   if(!c_pf_photons_isEEPho_ && b_pf_photons_isEEPho_){
+    b_pf_photons_isEEPho_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_isEEPho", &pf_photons_isEEPho_, &b_pf_photons_isEEPho_);
     b_pf_photons_isEEPho_->GetEntry(entry_);
     c_pf_photons_isEEPho_ = true;
   }
@@ -8638,6 +12778,8 @@ std::vector<float>* const & cfa_8::pf_photons_isEEPho() const{
 
 std::vector<float>* const & cfa_8::pf_photons_maxEnergyXtal() const{
   if(!c_pf_photons_maxEnergyXtal_ && b_pf_photons_maxEnergyXtal_){
+    b_pf_photons_maxEnergyXtal_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_maxEnergyXtal", &pf_photons_maxEnergyXtal_, &b_pf_photons_maxEnergyXtal_);
     b_pf_photons_maxEnergyXtal_->GetEntry(entry_);
     c_pf_photons_maxEnergyXtal_ = true;
   }
@@ -8646,6 +12788,8 @@ std::vector<float>* const & cfa_8::pf_photons_maxEnergyXtal() const{
 
 std::vector<float>* const & cfa_8::pf_photons_nhIso() const{
   if(!c_pf_photons_nhIso_ && b_pf_photons_nhIso_){
+    b_pf_photons_nhIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_nhIso", &pf_photons_nhIso_, &b_pf_photons_nhIso_);
     b_pf_photons_nhIso_->GetEntry(entry_);
     c_pf_photons_nhIso_ = true;
   }
@@ -8654,6 +12798,8 @@ std::vector<float>* const & cfa_8::pf_photons_nhIso() const{
 
 std::vector<float>* const & cfa_8::pf_photons_phIso() const{
   if(!c_pf_photons_phIso_ && b_pf_photons_phIso_){
+    b_pf_photons_phIso_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_phIso", &pf_photons_phIso_, &b_pf_photons_phIso_);
     b_pf_photons_phIso_->GetEntry(entry_);
     c_pf_photons_phIso_ = true;
   }
@@ -8662,6 +12808,8 @@ std::vector<float>* const & cfa_8::pf_photons_phIso() const{
 
 std::vector<float>* const & cfa_8::pf_photons_phi() const{
   if(!c_pf_photons_phi_ && b_pf_photons_phi_){
+    b_pf_photons_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_phi", &pf_photons_phi_, &b_pf_photons_phi_);
     b_pf_photons_phi_->GetEntry(entry_);
     c_pf_photons_phi_ = true;
   }
@@ -8670,6 +12818,8 @@ std::vector<float>* const & cfa_8::pf_photons_phi() const{
 
 std::vector<float>* const & cfa_8::pf_photons_pt() const{
   if(!c_pf_photons_pt_ && b_pf_photons_pt_){
+    b_pf_photons_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_pt", &pf_photons_pt_, &b_pf_photons_pt_);
     b_pf_photons_pt_->GetEntry(entry_);
     c_pf_photons_pt_ = true;
   }
@@ -8678,6 +12828,8 @@ std::vector<float>* const & cfa_8::pf_photons_pt() const{
 
 std::vector<float>* const & cfa_8::pf_photons_px() const{
   if(!c_pf_photons_px_ && b_pf_photons_px_){
+    b_pf_photons_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_px", &pf_photons_px_, &b_pf_photons_px_);
     b_pf_photons_px_->GetEntry(entry_);
     c_pf_photons_px_ = true;
   }
@@ -8686,6 +12838,8 @@ std::vector<float>* const & cfa_8::pf_photons_px() const{
 
 std::vector<float>* const & cfa_8::pf_photons_py() const{
   if(!c_pf_photons_py_ && b_pf_photons_py_){
+    b_pf_photons_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_py", &pf_photons_py_, &b_pf_photons_py_);
     b_pf_photons_py_->GetEntry(entry_);
     c_pf_photons_py_ = true;
   }
@@ -8694,6 +12848,8 @@ std::vector<float>* const & cfa_8::pf_photons_py() const{
 
 std::vector<float>* const & cfa_8::pf_photons_pz() const{
   if(!c_pf_photons_pz_ && b_pf_photons_pz_){
+    b_pf_photons_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_pz", &pf_photons_pz_, &b_pf_photons_pz_);
     b_pf_photons_pz_->GetEntry(entry_);
     c_pf_photons_pz_ = true;
   }
@@ -8702,6 +12858,8 @@ std::vector<float>* const & cfa_8::pf_photons_pz() const{
 
 std::vector<float>* const & cfa_8::pf_photons_r9() const{
   if(!c_pf_photons_r9_ && b_pf_photons_r9_){
+    b_pf_photons_r9_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_r9", &pf_photons_r9_, &b_pf_photons_r9_);
     b_pf_photons_r9_->GetEntry(entry_);
     c_pf_photons_r9_ = true;
   }
@@ -8710,6 +12868,8 @@ std::vector<float>* const & cfa_8::pf_photons_r9() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scEnergy() const{
   if(!c_pf_photons_scEnergy_ && b_pf_photons_scEnergy_){
+    b_pf_photons_scEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scEnergy", &pf_photons_scEnergy_, &b_pf_photons_scEnergy_);
     b_pf_photons_scEnergy_->GetEntry(entry_);
     c_pf_photons_scEnergy_ = true;
   }
@@ -8718,6 +12878,8 @@ std::vector<float>* const & cfa_8::pf_photons_scEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scEta() const{
   if(!c_pf_photons_scEta_ && b_pf_photons_scEta_){
+    b_pf_photons_scEta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scEta", &pf_photons_scEta_, &b_pf_photons_scEta_);
     b_pf_photons_scEta_->GetEntry(entry_);
     c_pf_photons_scEta_ = true;
   }
@@ -8726,6 +12888,8 @@ std::vector<float>* const & cfa_8::pf_photons_scEta() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scEtaWidth() const{
   if(!c_pf_photons_scEtaWidth_ && b_pf_photons_scEtaWidth_){
+    b_pf_photons_scEtaWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scEtaWidth", &pf_photons_scEtaWidth_, &b_pf_photons_scEtaWidth_);
     b_pf_photons_scEtaWidth_->GetEntry(entry_);
     c_pf_photons_scEtaWidth_ = true;
   }
@@ -8734,6 +12898,8 @@ std::vector<float>* const & cfa_8::pf_photons_scEtaWidth() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scPhi() const{
   if(!c_pf_photons_scPhi_ && b_pf_photons_scPhi_){
+    b_pf_photons_scPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scPhi", &pf_photons_scPhi_, &b_pf_photons_scPhi_);
     b_pf_photons_scPhi_->GetEntry(entry_);
     c_pf_photons_scPhi_ = true;
   }
@@ -8742,6 +12908,8 @@ std::vector<float>* const & cfa_8::pf_photons_scPhi() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scPhiWidth() const{
   if(!c_pf_photons_scPhiWidth_ && b_pf_photons_scPhiWidth_){
+    b_pf_photons_scPhiWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scPhiWidth", &pf_photons_scPhiWidth_, &b_pf_photons_scPhiWidth_);
     b_pf_photons_scPhiWidth_->GetEntry(entry_);
     c_pf_photons_scPhiWidth_ = true;
   }
@@ -8750,6 +12918,8 @@ std::vector<float>* const & cfa_8::pf_photons_scPhiWidth() const{
 
 std::vector<float>* const & cfa_8::pf_photons_scRawEnergy() const{
   if(!c_pf_photons_scRawEnergy_ && b_pf_photons_scRawEnergy_){
+    b_pf_photons_scRawEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_scRawEnergy", &pf_photons_scRawEnergy_, &b_pf_photons_scRawEnergy_);
     b_pf_photons_scRawEnergy_->GetEntry(entry_);
     c_pf_photons_scRawEnergy_ = true;
   }
@@ -8758,6 +12928,8 @@ std::vector<float>* const & cfa_8::pf_photons_scRawEnergy() const{
 
 std::vector<float>* const & cfa_8::pf_photons_sigmaEtaEta() const{
   if(!c_pf_photons_sigmaEtaEta_ && b_pf_photons_sigmaEtaEta_){
+    b_pf_photons_sigmaEtaEta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_sigmaEtaEta", &pf_photons_sigmaEtaEta_, &b_pf_photons_sigmaEtaEta_);
     b_pf_photons_sigmaEtaEta_->GetEntry(entry_);
     c_pf_photons_sigmaEtaEta_ = true;
   }
@@ -8766,6 +12938,8 @@ std::vector<float>* const & cfa_8::pf_photons_sigmaEtaEta() const{
 
 std::vector<float>* const & cfa_8::pf_photons_sigmaIetaIeta() const{
   if(!c_pf_photons_sigmaIetaIeta_ && b_pf_photons_sigmaIetaIeta_){
+    b_pf_photons_sigmaIetaIeta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_sigmaIetaIeta", &pf_photons_sigmaIetaIeta_, &b_pf_photons_sigmaIetaIeta_);
     b_pf_photons_sigmaIetaIeta_->GetEntry(entry_);
     c_pf_photons_sigmaIetaIeta_ = true;
   }
@@ -8774,6 +12948,8 @@ std::vector<float>* const & cfa_8::pf_photons_sigmaIetaIeta() const{
 
 std::vector<float>* const & cfa_8::pf_photons_status() const{
   if(!c_pf_photons_status_ && b_pf_photons_status_){
+    b_pf_photons_status_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_status", &pf_photons_status_, &b_pf_photons_status_);
     b_pf_photons_status_->GetEntry(entry_);
     c_pf_photons_status_ = true;
   }
@@ -8782,6 +12958,8 @@ std::vector<float>* const & cfa_8::pf_photons_status() const{
 
 std::vector<float>* const & cfa_8::pf_photons_theta() const{
   if(!c_pf_photons_theta_ && b_pf_photons_theta_){
+    b_pf_photons_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pf_photons_theta", &pf_photons_theta_, &b_pf_photons_theta_);
     b_pf_photons_theta_->GetEntry(entry_);
     c_pf_photons_theta_ = true;
   }
@@ -8790,6 +12968,8 @@ std::vector<float>* const & cfa_8::pf_photons_theta() const{
 
 std::vector<float>* const & cfa_8::pfcand_particleId() const{
   if(!c_pfcand_particleId_ && b_pfcand_particleId_){
+    b_pfcand_particleId_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_particleId", &pfcand_particleId_, &b_pfcand_particleId_);
     b_pfcand_particleId_->GetEntry(entry_);
     c_pfcand_particleId_ = true;
   }
@@ -8798,6 +12978,8 @@ std::vector<float>* const & cfa_8::pfcand_particleId() const{
 
 std::vector<float>* const & cfa_8::pfmets_et() const{
   if(!c_pfmets_et_ && b_pfmets_et_){
+    b_pfmets_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_et", &pfmets_et_, &b_pfmets_et_);
     b_pfmets_et_->GetEntry(entry_);
     c_pfmets_et_ = true;
   }
@@ -8806,6 +12988,8 @@ std::vector<float>* const & cfa_8::pfmets_et() const{
 
 std::vector<float>* const & cfa_8::pfmets_ex() const{
   if(!c_pfmets_ex_ && b_pfmets_ex_){
+    b_pfmets_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_ex", &pfmets_ex_, &b_pfmets_ex_);
     b_pfmets_ex_->GetEntry(entry_);
     c_pfmets_ex_ = true;
   }
@@ -8814,6 +12998,8 @@ std::vector<float>* const & cfa_8::pfmets_ex() const{
 
 std::vector<float>* const & cfa_8::pfmets_ey() const{
   if(!c_pfmets_ey_ && b_pfmets_ey_){
+    b_pfmets_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_ey", &pfmets_ey_, &b_pfmets_ey_);
     b_pfmets_ey_->GetEntry(entry_);
     c_pfmets_ey_ = true;
   }
@@ -8822,6 +13008,8 @@ std::vector<float>* const & cfa_8::pfmets_ey() const{
 
 Float_t const & cfa_8::pfmets_fullSignif() const{
   if(!c_pfmets_fullSignif_ && b_pfmets_fullSignif_){
+    b_pfmets_fullSignif_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignif", &pfmets_fullSignif_, &b_pfmets_fullSignif_);
     b_pfmets_fullSignif_->GetEntry(entry_);
     c_pfmets_fullSignif_ = true;
   }
@@ -8830,6 +13018,8 @@ Float_t const & cfa_8::pfmets_fullSignif() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov00() const{
   if(!c_pfmets_fullSignifCov00_ && b_pfmets_fullSignifCov00_){
+    b_pfmets_fullSignifCov00_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov00", &pfmets_fullSignifCov00_, &b_pfmets_fullSignifCov00_);
     b_pfmets_fullSignifCov00_->GetEntry(entry_);
     c_pfmets_fullSignifCov00_ = true;
   }
@@ -8838,6 +13028,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov00() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov00_2012() const{
   if(!c_pfmets_fullSignifCov00_2012_ && b_pfmets_fullSignifCov00_2012_){
+    b_pfmets_fullSignifCov00_2012_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov00_2012", &pfmets_fullSignifCov00_2012_, &b_pfmets_fullSignifCov00_2012_);
     b_pfmets_fullSignifCov00_2012_->GetEntry(entry_);
     c_pfmets_fullSignifCov00_2012_ = true;
   }
@@ -8846,6 +13038,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov00_2012() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov00_2012_dataRes() const{
   if(!c_pfmets_fullSignifCov00_2012_dataRes_ && b_pfmets_fullSignifCov00_2012_dataRes_){
+    b_pfmets_fullSignifCov00_2012_dataRes_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov00_2012_dataRes", &pfmets_fullSignifCov00_2012_dataRes_, &b_pfmets_fullSignifCov00_2012_dataRes_);
     b_pfmets_fullSignifCov00_2012_dataRes_->GetEntry(entry_);
     c_pfmets_fullSignifCov00_2012_dataRes_ = true;
   }
@@ -8854,6 +13048,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov00_2012_dataRes() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov10() const{
   if(!c_pfmets_fullSignifCov10_ && b_pfmets_fullSignifCov10_){
+    b_pfmets_fullSignifCov10_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov10", &pfmets_fullSignifCov10_, &b_pfmets_fullSignifCov10_);
     b_pfmets_fullSignifCov10_->GetEntry(entry_);
     c_pfmets_fullSignifCov10_ = true;
   }
@@ -8862,6 +13058,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov10() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov10_2012() const{
   if(!c_pfmets_fullSignifCov10_2012_ && b_pfmets_fullSignifCov10_2012_){
+    b_pfmets_fullSignifCov10_2012_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov10_2012", &pfmets_fullSignifCov10_2012_, &b_pfmets_fullSignifCov10_2012_);
     b_pfmets_fullSignifCov10_2012_->GetEntry(entry_);
     c_pfmets_fullSignifCov10_2012_ = true;
   }
@@ -8870,6 +13068,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov10_2012() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov10_2012_dataRes() const{
   if(!c_pfmets_fullSignifCov10_2012_dataRes_ && b_pfmets_fullSignifCov10_2012_dataRes_){
+    b_pfmets_fullSignifCov10_2012_dataRes_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov10_2012_dataRes", &pfmets_fullSignifCov10_2012_dataRes_, &b_pfmets_fullSignifCov10_2012_dataRes_);
     b_pfmets_fullSignifCov10_2012_dataRes_->GetEntry(entry_);
     c_pfmets_fullSignifCov10_2012_dataRes_ = true;
   }
@@ -8878,6 +13078,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov10_2012_dataRes() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov11() const{
   if(!c_pfmets_fullSignifCov11_ && b_pfmets_fullSignifCov11_){
+    b_pfmets_fullSignifCov11_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov11", &pfmets_fullSignifCov11_, &b_pfmets_fullSignifCov11_);
     b_pfmets_fullSignifCov11_->GetEntry(entry_);
     c_pfmets_fullSignifCov11_ = true;
   }
@@ -8886,6 +13088,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov11() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov11_2012() const{
   if(!c_pfmets_fullSignifCov11_2012_ && b_pfmets_fullSignifCov11_2012_){
+    b_pfmets_fullSignifCov11_2012_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov11_2012", &pfmets_fullSignifCov11_2012_, &b_pfmets_fullSignifCov11_2012_);
     b_pfmets_fullSignifCov11_2012_->GetEntry(entry_);
     c_pfmets_fullSignifCov11_2012_ = true;
   }
@@ -8894,6 +13098,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov11_2012() const{
 
 Float_t const & cfa_8::pfmets_fullSignifCov11_2012_dataRes() const{
   if(!c_pfmets_fullSignifCov11_2012_dataRes_ && b_pfmets_fullSignifCov11_2012_dataRes_){
+    b_pfmets_fullSignifCov11_2012_dataRes_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignifCov11_2012_dataRes", &pfmets_fullSignifCov11_2012_dataRes_, &b_pfmets_fullSignifCov11_2012_dataRes_);
     b_pfmets_fullSignifCov11_2012_dataRes_->GetEntry(entry_);
     c_pfmets_fullSignifCov11_2012_dataRes_ = true;
   }
@@ -8902,6 +13108,8 @@ Float_t const & cfa_8::pfmets_fullSignifCov11_2012_dataRes() const{
 
 Float_t const & cfa_8::pfmets_fullSignif_2012() const{
   if(!c_pfmets_fullSignif_2012_ && b_pfmets_fullSignif_2012_){
+    b_pfmets_fullSignif_2012_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignif_2012", &pfmets_fullSignif_2012_, &b_pfmets_fullSignif_2012_);
     b_pfmets_fullSignif_2012_->GetEntry(entry_);
     c_pfmets_fullSignif_2012_ = true;
   }
@@ -8910,6 +13118,8 @@ Float_t const & cfa_8::pfmets_fullSignif_2012() const{
 
 Float_t const & cfa_8::pfmets_fullSignif_2012_dataRes() const{
   if(!c_pfmets_fullSignif_2012_dataRes_ && b_pfmets_fullSignif_2012_dataRes_){
+    b_pfmets_fullSignif_2012_dataRes_->SetStatus(true);
+    chainA_.SetBranchAddress("pfmets_fullSignif_2012_dataRes", &pfmets_fullSignif_2012_dataRes_, &b_pfmets_fullSignif_2012_dataRes_);
     b_pfmets_fullSignif_2012_dataRes_->GetEntry(entry_);
     c_pfmets_fullSignif_2012_dataRes_ = true;
   }
@@ -8918,6 +13128,8 @@ Float_t const & cfa_8::pfmets_fullSignif_2012_dataRes() const{
 
 std::vector<float>* const & cfa_8::pfmets_gen_et() const{
   if(!c_pfmets_gen_et_ && b_pfmets_gen_et_){
+    b_pfmets_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_gen_et", &pfmets_gen_et_, &b_pfmets_gen_et_);
     b_pfmets_gen_et_->GetEntry(entry_);
     c_pfmets_gen_et_ = true;
   }
@@ -8926,6 +13138,8 @@ std::vector<float>* const & cfa_8::pfmets_gen_et() const{
 
 std::vector<float>* const & cfa_8::pfmets_gen_phi() const{
   if(!c_pfmets_gen_phi_ && b_pfmets_gen_phi_){
+    b_pfmets_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_gen_phi", &pfmets_gen_phi_, &b_pfmets_gen_phi_);
     b_pfmets_gen_phi_->GetEntry(entry_);
     c_pfmets_gen_phi_ = true;
   }
@@ -8934,6 +13148,8 @@ std::vector<float>* const & cfa_8::pfmets_gen_phi() const{
 
 std::vector<float>* const & cfa_8::pfmets_phi() const{
   if(!c_pfmets_phi_ && b_pfmets_phi_){
+    b_pfmets_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_phi", &pfmets_phi_, &b_pfmets_phi_);
     b_pfmets_phi_->GetEntry(entry_);
     c_pfmets_phi_ = true;
   }
@@ -8942,6 +13158,8 @@ std::vector<float>* const & cfa_8::pfmets_phi() const{
 
 std::vector<float>* const & cfa_8::pfmets_sign() const{
   if(!c_pfmets_sign_ && b_pfmets_sign_){
+    b_pfmets_sign_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_sign", &pfmets_sign_, &b_pfmets_sign_);
     b_pfmets_sign_->GetEntry(entry_);
     c_pfmets_sign_ = true;
   }
@@ -8950,6 +13168,8 @@ std::vector<float>* const & cfa_8::pfmets_sign() const{
 
 std::vector<float>* const & cfa_8::pfmets_sumEt() const{
   if(!c_pfmets_sumEt_ && b_pfmets_sumEt_){
+    b_pfmets_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_sumEt", &pfmets_sumEt_, &b_pfmets_sumEt_);
     b_pfmets_sumEt_->GetEntry(entry_);
     c_pfmets_sumEt_ = true;
   }
@@ -8958,6 +13178,8 @@ std::vector<float>* const & cfa_8::pfmets_sumEt() const{
 
 std::vector<float>* const & cfa_8::pfmets_unCPhi() const{
   if(!c_pfmets_unCPhi_ && b_pfmets_unCPhi_){
+    b_pfmets_unCPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_unCPhi", &pfmets_unCPhi_, &b_pfmets_unCPhi_);
     b_pfmets_unCPhi_->GetEntry(entry_);
     c_pfmets_unCPhi_ = true;
   }
@@ -8966,6 +13188,8 @@ std::vector<float>* const & cfa_8::pfmets_unCPhi() const{
 
 std::vector<float>* const & cfa_8::pfmets_unCPt() const{
   if(!c_pfmets_unCPt_ && b_pfmets_unCPt_){
+    b_pfmets_unCPt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfmets_unCPt", &pfmets_unCPt_, &b_pfmets_unCPt_);
     b_pfmets_unCPt_->GetEntry(entry_);
     c_pfmets_unCPt_ = true;
   }
@@ -8974,6 +13198,8 @@ std::vector<float>* const & cfa_8::pfmets_unCPt() const{
 
 std::vector<float>* const & cfa_8::photon_chIsoValues() const{
   if(!c_photon_chIsoValues_ && b_photon_chIsoValues_){
+    b_photon_chIsoValues_->SetStatus(true);
+    chainA_.SetBranchAddress("photon_chIsoValues", &photon_chIsoValues_, &b_photon_chIsoValues_);
     b_photon_chIsoValues_->GetEntry(entry_);
     c_photon_chIsoValues_ = true;
   }
@@ -8982,6 +13208,8 @@ std::vector<float>* const & cfa_8::photon_chIsoValues() const{
 
 std::vector<float>* const & cfa_8::photon_nhIsoValues() const{
   if(!c_photon_nhIsoValues_ && b_photon_nhIsoValues_){
+    b_photon_nhIsoValues_->SetStatus(true);
+    chainA_.SetBranchAddress("photon_nhIsoValues", &photon_nhIsoValues_, &b_photon_nhIsoValues_);
     b_photon_nhIsoValues_->GetEntry(entry_);
     c_photon_nhIsoValues_ = true;
   }
@@ -8990,6 +13218,8 @@ std::vector<float>* const & cfa_8::photon_nhIsoValues() const{
 
 std::vector<bool>* const & cfa_8::photon_passElectronVeto() const{
   if(!c_photon_passElectronVeto_ && b_photon_passElectronVeto_){
+    b_photon_passElectronVeto_->SetStatus(true);
+    chainA_.SetBranchAddress("photon_passElectronVeto", &photon_passElectronVeto_, &b_photon_passElectronVeto_);
     b_photon_passElectronVeto_->GetEntry(entry_);
     c_photon_passElectronVeto_ = true;
   }
@@ -8998,6 +13228,8 @@ std::vector<bool>* const & cfa_8::photon_passElectronVeto() const{
 
 std::vector<float>* const & cfa_8::photon_phIsoValues() const{
   if(!c_photon_phIsoValues_ && b_photon_phIsoValues_){
+    b_photon_phIsoValues_->SetStatus(true);
+    chainA_.SetBranchAddress("photon_phIsoValues", &photon_phIsoValues_, &b_photon_phIsoValues_);
     b_photon_phIsoValues_->GetEntry(entry_);
     c_photon_phIsoValues_ = true;
   }
@@ -9006,6 +13238,8 @@ std::vector<float>* const & cfa_8::photon_phIsoValues() const{
 
 std::vector<std::vector<float> >* const & cfa_8::puJet_rejectionBeta() const{
   if(!c_puJet_rejectionBeta_ && b_puJet_rejectionBeta_){
+    b_puJet_rejectionBeta_->SetStatus(true);
+    chainA_.SetBranchAddress("puJet_rejectionBeta", &puJet_rejectionBeta_, &b_puJet_rejectionBeta_);
     b_puJet_rejectionBeta_->GetEntry(entry_);
     c_puJet_rejectionBeta_ = true;
   }
@@ -9014,6 +13248,8 @@ std::vector<std::vector<float> >* const & cfa_8::puJet_rejectionBeta() const{
 
 std::vector<std::vector<float> >* const & cfa_8::puJet_rejectionMVA() const{
   if(!c_puJet_rejectionMVA_ && b_puJet_rejectionMVA_){
+    b_puJet_rejectionMVA_->SetStatus(true);
+    chainA_.SetBranchAddress("puJet_rejectionMVA", &puJet_rejectionMVA_, &b_puJet_rejectionMVA_);
     b_puJet_rejectionMVA_->GetEntry(entry_);
     c_puJet_rejectionMVA_ = true;
   }
@@ -9022,6 +13258,8 @@ std::vector<std::vector<float> >* const & cfa_8::puJet_rejectionMVA() const{
 
 Float_t const & cfa_8::rho_kt6PFJetsForIsolation2011() const{
   if(!c_rho_kt6PFJetsForIsolation2011_ && b_rho_kt6PFJetsForIsolation2011_){
+    b_rho_kt6PFJetsForIsolation2011_->SetStatus(true);
+    chainA_.SetBranchAddress("rho_kt6PFJetsForIsolation2011", &rho_kt6PFJetsForIsolation2011_, &b_rho_kt6PFJetsForIsolation2011_);
     b_rho_kt6PFJetsForIsolation2011_->GetEntry(entry_);
     c_rho_kt6PFJetsForIsolation2011_ = true;
   }
@@ -9030,6 +13268,8 @@ Float_t const & cfa_8::rho_kt6PFJetsForIsolation2011() const{
 
 Float_t const & cfa_8::rho_kt6PFJetsForIsolation2012() const{
   if(!c_rho_kt6PFJetsForIsolation2012_ && b_rho_kt6PFJetsForIsolation2012_){
+    b_rho_kt6PFJetsForIsolation2012_->SetStatus(true);
+    chainA_.SetBranchAddress("rho_kt6PFJetsForIsolation2012", &rho_kt6PFJetsForIsolation2012_, &b_rho_kt6PFJetsForIsolation2012_);
     b_rho_kt6PFJetsForIsolation2012_->GetEntry(entry_);
     c_rho_kt6PFJetsForIsolation2012_ = true;
   }
@@ -9038,6 +13278,8 @@ Float_t const & cfa_8::rho_kt6PFJetsForIsolation2012() const{
 
 Int_t const & cfa_8::scrapingVeto_decision() const{
   if(!c_scrapingVeto_decision_ && b_scrapingVeto_decision_){
+    b_scrapingVeto_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("scrapingVeto_decision", &scrapingVeto_decision_, &b_scrapingVeto_decision_);
     b_scrapingVeto_decision_->GetEntry(entry_);
     c_scrapingVeto_decision_ = true;
   }
@@ -9046,6 +13288,8 @@ Int_t const & cfa_8::scrapingVeto_decision() const{
 
 Float_t const & cfa_8::softjetUp_dMEx() const{
   if(!c_softjetUp_dMEx_ && b_softjetUp_dMEx_){
+    b_softjetUp_dMEx_->SetStatus(true);
+    chainA_.SetBranchAddress("softjetUp_dMEx", &softjetUp_dMEx_, &b_softjetUp_dMEx_);
     b_softjetUp_dMEx_->GetEntry(entry_);
     c_softjetUp_dMEx_ = true;
   }
@@ -9054,6 +13298,8 @@ Float_t const & cfa_8::softjetUp_dMEx() const{
 
 Float_t const & cfa_8::softjetUp_dMEy() const{
   if(!c_softjetUp_dMEy_ && b_softjetUp_dMEy_){
+    b_softjetUp_dMEy_->SetStatus(true);
+    chainA_.SetBranchAddress("softjetUp_dMEy", &softjetUp_dMEy_, &b_softjetUp_dMEy_);
     b_softjetUp_dMEy_->GetEntry(entry_);
     c_softjetUp_dMEy_ = true;
   }
@@ -9062,6 +13308,8 @@ Float_t const & cfa_8::softjetUp_dMEy() const{
 
 std::vector<float>* const & cfa_8::tcmets_et() const{
   if(!c_tcmets_et_ && b_tcmets_et_){
+    b_tcmets_et_->SetStatus(true);
+    chainB_.SetBranchAddress("tcmets_et", &tcmets_et_, &b_tcmets_et_);
     b_tcmets_et_->GetEntry(entry_);
     c_tcmets_et_ = true;
   }
@@ -9070,6 +13318,8 @@ std::vector<float>* const & cfa_8::tcmets_et() const{
 
 std::vector<float>* const & cfa_8::tcmets_ex() const{
   if(!c_tcmets_ex_ && b_tcmets_ex_){
+    b_tcmets_ex_->SetStatus(true);
+    chainB_.SetBranchAddress("tcmets_ex", &tcmets_ex_, &b_tcmets_ex_);
     b_tcmets_ex_->GetEntry(entry_);
     c_tcmets_ex_ = true;
   }
@@ -9078,6 +13328,8 @@ std::vector<float>* const & cfa_8::tcmets_ex() const{
 
 std::vector<float>* const & cfa_8::tcmets_ey() const{
   if(!c_tcmets_ey_ && b_tcmets_ey_){
+    b_tcmets_ey_->SetStatus(true);
+    chainB_.SetBranchAddress("tcmets_ey", &tcmets_ey_, &b_tcmets_ey_);
     b_tcmets_ey_->GetEntry(entry_);
     c_tcmets_ey_ = true;
   }
@@ -9086,6 +13338,8 @@ std::vector<float>* const & cfa_8::tcmets_ey() const{
 
 std::vector<float>* const & cfa_8::tcmets_phi() const{
   if(!c_tcmets_phi_ && b_tcmets_phi_){
+    b_tcmets_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("tcmets_phi", &tcmets_phi_, &b_tcmets_phi_);
     b_tcmets_phi_->GetEntry(entry_);
     c_tcmets_phi_ = true;
   }
@@ -9094,6 +13348,8 @@ std::vector<float>* const & cfa_8::tcmets_phi() const{
 
 std::vector<float>* const & cfa_8::tcmets_sumEt() const{
   if(!c_tcmets_sumEt_ && b_tcmets_sumEt_){
+    b_tcmets_sumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("tcmets_sumEt", &tcmets_sumEt_, &b_tcmets_sumEt_);
     b_tcmets_sumEt_->GetEntry(entry_);
     c_tcmets_sumEt_ = true;
   }
@@ -9102,6 +13358,8 @@ std::vector<float>* const & cfa_8::tcmets_sumEt() const{
 
 Int_t const & cfa_8::trackercoherentnoisefilter1_decision() const{
   if(!c_trackercoherentnoisefilter1_decision_ && b_trackercoherentnoisefilter1_decision_){
+    b_trackercoherentnoisefilter1_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackercoherentnoisefilter1_decision", &trackercoherentnoisefilter1_decision_, &b_trackercoherentnoisefilter1_decision_);
     b_trackercoherentnoisefilter1_decision_->GetEntry(entry_);
     c_trackercoherentnoisefilter1_decision_ = true;
   }
@@ -9110,6 +13368,8 @@ Int_t const & cfa_8::trackercoherentnoisefilter1_decision() const{
 
 Int_t const & cfa_8::trackercoherentnoisefilter2_decision() const{
   if(!c_trackercoherentnoisefilter2_decision_ && b_trackercoherentnoisefilter2_decision_){
+    b_trackercoherentnoisefilter2_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackercoherentnoisefilter2_decision", &trackercoherentnoisefilter2_decision_, &b_trackercoherentnoisefilter2_decision_);
     b_trackercoherentnoisefilter2_decision_->GetEntry(entry_);
     c_trackercoherentnoisefilter2_decision_ = true;
   }
@@ -9118,6 +13378,8 @@ Int_t const & cfa_8::trackercoherentnoisefilter2_decision() const{
 
 Int_t const & cfa_8::trackertoomanyclustersfilter_decision() const{
   if(!c_trackertoomanyclustersfilter_decision_ && b_trackertoomanyclustersfilter_decision_){
+    b_trackertoomanyclustersfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackertoomanyclustersfilter_decision", &trackertoomanyclustersfilter_decision_, &b_trackertoomanyclustersfilter_decision_);
     b_trackertoomanyclustersfilter_decision_->GetEntry(entry_);
     c_trackertoomanyclustersfilter_decision_ = true;
   }
@@ -9126,6 +13388,8 @@ Int_t const & cfa_8::trackertoomanyclustersfilter_decision() const{
 
 Int_t const & cfa_8::trackertoomanyseedsfilter_decision() const{
   if(!c_trackertoomanyseedsfilter_decision_ && b_trackertoomanyseedsfilter_decision_){
+    b_trackertoomanyseedsfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackertoomanyseedsfilter_decision", &trackertoomanyseedsfilter_decision_, &b_trackertoomanyseedsfilter_decision_);
     b_trackertoomanyseedsfilter_decision_->GetEntry(entry_);
     c_trackertoomanyseedsfilter_decision_ = true;
   }
@@ -9134,6 +13398,8 @@ Int_t const & cfa_8::trackertoomanyseedsfilter_decision() const{
 
 Int_t const & cfa_8::trackertoomanytripletsfilter_decision() const{
   if(!c_trackertoomanytripletsfilter_decision_ && b_trackertoomanytripletsfilter_decision_){
+    b_trackertoomanytripletsfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackertoomanytripletsfilter_decision", &trackertoomanytripletsfilter_decision_, &b_trackertoomanytripletsfilter_decision_);
     b_trackertoomanytripletsfilter_decision_->GetEntry(entry_);
     c_trackertoomanytripletsfilter_decision_ = true;
   }
@@ -9142,6 +13408,8 @@ Int_t const & cfa_8::trackertoomanytripletsfilter_decision() const{
 
 std::vector<float>* const & cfa_8::tracks_chg() const{
   if(!c_tracks_chg_ && b_tracks_chg_){
+    b_tracks_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_chg", &tracks_chg_, &b_tracks_chg_);
     b_tracks_chg_->GetEntry(entry_);
     c_tracks_chg_ = true;
   }
@@ -9150,6 +13418,8 @@ std::vector<float>* const & cfa_8::tracks_chg() const{
 
 std::vector<float>* const & cfa_8::tracks_chi2() const{
   if(!c_tracks_chi2_ && b_tracks_chi2_){
+    b_tracks_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_chi2", &tracks_chi2_, &b_tracks_chi2_);
     b_tracks_chi2_->GetEntry(entry_);
     c_tracks_chi2_ = true;
   }
@@ -9158,6 +13428,8 @@ std::vector<float>* const & cfa_8::tracks_chi2() const{
 
 std::vector<float>* const & cfa_8::tracks_d0dum() const{
   if(!c_tracks_d0dum_ && b_tracks_d0dum_){
+    b_tracks_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_d0dum", &tracks_d0dum_, &b_tracks_d0dum_);
     b_tracks_d0dum_->GetEntry(entry_);
     c_tracks_d0dum_ = true;
   }
@@ -9166,6 +13438,8 @@ std::vector<float>* const & cfa_8::tracks_d0dum() const{
 
 std::vector<float>* const & cfa_8::tracks_d0dumErr() const{
   if(!c_tracks_d0dumErr_ && b_tracks_d0dumErr_){
+    b_tracks_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_d0dumErr", &tracks_d0dumErr_, &b_tracks_d0dumErr_);
     b_tracks_d0dumErr_->GetEntry(entry_);
     c_tracks_d0dumErr_ = true;
   }
@@ -9174,6 +13448,8 @@ std::vector<float>* const & cfa_8::tracks_d0dumErr() const{
 
 std::vector<float>* const & cfa_8::tracks_dz() const{
   if(!c_tracks_dz_ && b_tracks_dz_){
+    b_tracks_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_dz", &tracks_dz_, &b_tracks_dz_);
     b_tracks_dz_->GetEntry(entry_);
     c_tracks_dz_ = true;
   }
@@ -9182,6 +13458,8 @@ std::vector<float>* const & cfa_8::tracks_dz() const{
 
 std::vector<float>* const & cfa_8::tracks_dzErr() const{
   if(!c_tracks_dzErr_ && b_tracks_dzErr_){
+    b_tracks_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_dzErr", &tracks_dzErr_, &b_tracks_dzErr_);
     b_tracks_dzErr_->GetEntry(entry_);
     c_tracks_dzErr_ = true;
   }
@@ -9190,6 +13468,8 @@ std::vector<float>* const & cfa_8::tracks_dzErr() const{
 
 std::vector<float>* const & cfa_8::tracks_eta() const{
   if(!c_tracks_eta_ && b_tracks_eta_){
+    b_tracks_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_eta", &tracks_eta_, &b_tracks_eta_);
     b_tracks_eta_->GetEntry(entry_);
     c_tracks_eta_ = true;
   }
@@ -9198,6 +13478,8 @@ std::vector<float>* const & cfa_8::tracks_eta() const{
 
 std::vector<float>* const & cfa_8::tracks_etaErr() const{
   if(!c_tracks_etaErr_ && b_tracks_etaErr_){
+    b_tracks_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_etaErr", &tracks_etaErr_, &b_tracks_etaErr_);
     b_tracks_etaErr_->GetEntry(entry_);
     c_tracks_etaErr_ = true;
   }
@@ -9206,6 +13488,8 @@ std::vector<float>* const & cfa_8::tracks_etaErr() const{
 
 std::vector<float>* const & cfa_8::tracks_highPurity() const{
   if(!c_tracks_highPurity_ && b_tracks_highPurity_){
+    b_tracks_highPurity_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_highPurity", &tracks_highPurity_, &b_tracks_highPurity_);
     b_tracks_highPurity_->GetEntry(entry_);
     c_tracks_highPurity_ = true;
   }
@@ -9214,6 +13498,8 @@ std::vector<float>* const & cfa_8::tracks_highPurity() const{
 
 std::vector<float>* const & cfa_8::tracks_ndof() const{
   if(!c_tracks_ndof_ && b_tracks_ndof_){
+    b_tracks_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_ndof", &tracks_ndof_, &b_tracks_ndof_);
     b_tracks_ndof_->GetEntry(entry_);
     c_tracks_ndof_ = true;
   }
@@ -9222,6 +13508,8 @@ std::vector<float>* const & cfa_8::tracks_ndof() const{
 
 std::vector<float>* const & cfa_8::tracks_numlosthits() const{
   if(!c_tracks_numlosthits_ && b_tracks_numlosthits_){
+    b_tracks_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_numlosthits", &tracks_numlosthits_, &b_tracks_numlosthits_);
     b_tracks_numlosthits_->GetEntry(entry_);
     c_tracks_numlosthits_ = true;
   }
@@ -9230,6 +13518,8 @@ std::vector<float>* const & cfa_8::tracks_numlosthits() const{
 
 std::vector<float>* const & cfa_8::tracks_numvalhits() const{
   if(!c_tracks_numvalhits_ && b_tracks_numvalhits_){
+    b_tracks_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_numvalhits", &tracks_numvalhits_, &b_tracks_numvalhits_);
     b_tracks_numvalhits_->GetEntry(entry_);
     c_tracks_numvalhits_ = true;
   }
@@ -9238,6 +13528,8 @@ std::vector<float>* const & cfa_8::tracks_numvalhits() const{
 
 std::vector<float>* const & cfa_8::tracks_phi() const{
   if(!c_tracks_phi_ && b_tracks_phi_){
+    b_tracks_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_phi", &tracks_phi_, &b_tracks_phi_);
     b_tracks_phi_->GetEntry(entry_);
     c_tracks_phi_ = true;
   }
@@ -9246,6 +13538,8 @@ std::vector<float>* const & cfa_8::tracks_phi() const{
 
 std::vector<float>* const & cfa_8::tracks_phiErr() const{
   if(!c_tracks_phiErr_ && b_tracks_phiErr_){
+    b_tracks_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_phiErr", &tracks_phiErr_, &b_tracks_phiErr_);
     b_tracks_phiErr_->GetEntry(entry_);
     c_tracks_phiErr_ = true;
   }
@@ -9254,6 +13548,8 @@ std::vector<float>* const & cfa_8::tracks_phiErr() const{
 
 std::vector<float>* const & cfa_8::tracks_pt() const{
   if(!c_tracks_pt_ && b_tracks_pt_){
+    b_tracks_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_pt", &tracks_pt_, &b_tracks_pt_);
     b_tracks_pt_->GetEntry(entry_);
     c_tracks_pt_ = true;
   }
@@ -9262,6 +13558,8 @@ std::vector<float>* const & cfa_8::tracks_pt() const{
 
 std::vector<float>* const & cfa_8::tracks_ptErr() const{
   if(!c_tracks_ptErr_ && b_tracks_ptErr_){
+    b_tracks_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_ptErr", &tracks_ptErr_, &b_tracks_ptErr_);
     b_tracks_ptErr_->GetEntry(entry_);
     c_tracks_ptErr_ = true;
   }
@@ -9270,6 +13568,8 @@ std::vector<float>* const & cfa_8::tracks_ptErr() const{
 
 std::vector<float>* const & cfa_8::tracks_px() const{
   if(!c_tracks_px_ && b_tracks_px_){
+    b_tracks_px_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_px", &tracks_px_, &b_tracks_px_);
     b_tracks_px_->GetEntry(entry_);
     c_tracks_px_ = true;
   }
@@ -9278,6 +13578,8 @@ std::vector<float>* const & cfa_8::tracks_px() const{
 
 std::vector<float>* const & cfa_8::tracks_py() const{
   if(!c_tracks_py_ && b_tracks_py_){
+    b_tracks_py_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_py", &tracks_py_, &b_tracks_py_);
     b_tracks_py_->GetEntry(entry_);
     c_tracks_py_ = true;
   }
@@ -9286,6 +13588,8 @@ std::vector<float>* const & cfa_8::tracks_py() const{
 
 std::vector<float>* const & cfa_8::tracks_pz() const{
   if(!c_tracks_pz_ && b_tracks_pz_){
+    b_tracks_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_pz", &tracks_pz_, &b_tracks_pz_);
     b_tracks_pz_->GetEntry(entry_);
     c_tracks_pz_ = true;
   }
@@ -9294,6 +13598,8 @@ std::vector<float>* const & cfa_8::tracks_pz() const{
 
 std::vector<float>* const & cfa_8::tracks_vx() const{
   if(!c_tracks_vx_ && b_tracks_vx_){
+    b_tracks_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_vx", &tracks_vx_, &b_tracks_vx_);
     b_tracks_vx_->GetEntry(entry_);
     c_tracks_vx_ = true;
   }
@@ -9302,6 +13608,8 @@ std::vector<float>* const & cfa_8::tracks_vx() const{
 
 std::vector<float>* const & cfa_8::tracks_vy() const{
   if(!c_tracks_vy_ && b_tracks_vy_){
+    b_tracks_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_vy", &tracks_vy_, &b_tracks_vy_);
     b_tracks_vy_->GetEntry(entry_);
     c_tracks_vy_ = true;
   }
@@ -9310,6 +13618,8 @@ std::vector<float>* const & cfa_8::tracks_vy() const{
 
 std::vector<float>* const & cfa_8::tracks_vz() const{
   if(!c_tracks_vz_ && b_tracks_vz_){
+    b_tracks_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("tracks_vz", &tracks_vz_, &b_tracks_vz_);
     b_tracks_vz_->GetEntry(entry_);
     c_tracks_vz_ = true;
   }
@@ -9318,6 +13628,8 @@ std::vector<float>* const & cfa_8::tracks_vz() const{
 
 std::vector<bool>* const & cfa_8::trigger_decision() const{
   if(!c_trigger_decision_ && b_trigger_decision_){
+    b_trigger_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trigger_decision", &v_trigger_decision_, &b_trigger_decision_);
     b_trigger_decision_->GetEntry(entry_);
     trigger_decision_->resize(v_trigger_decision_->size());
     for(size_t i = 0; i < trigger_decision_->size(); ++i){
@@ -9330,6 +13642,8 @@ std::vector<bool>* const & cfa_8::trigger_decision() const{
 
 std::vector<std::string>* const & cfa_8::trigger_lastfiltername() const{
   if(!c_trigger_lastfiltername_ && b_trigger_lastfiltername_){
+    b_trigger_lastfiltername_->SetStatus(true);
+    chainA_.SetBranchAddress("trigger_lastfiltername", &trigger_lastfiltername_, &b_trigger_lastfiltername_);
     b_trigger_lastfiltername_->GetEntry(entry_);
     c_trigger_lastfiltername_ = true;
   }
@@ -9338,6 +13652,8 @@ std::vector<std::string>* const & cfa_8::trigger_lastfiltername() const{
 
 std::vector<std::vector<std::string> >* const & cfa_8::triggerobject_collectionname() const{
   if(!c_triggerobject_collectionname_ && b_triggerobject_collectionname_){
+    b_triggerobject_collectionname_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_collectionname", &triggerobject_collectionname_, &b_triggerobject_collectionname_);
     b_triggerobject_collectionname_->GetEntry(entry_);
     c_triggerobject_collectionname_ = true;
   }
@@ -9346,6 +13662,8 @@ std::vector<std::vector<std::string> >* const & cfa_8::triggerobject_collectionn
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_energy() const{
   if(!c_triggerobject_energy_ && b_triggerobject_energy_){
+    b_triggerobject_energy_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_energy", &triggerobject_energy_, &b_triggerobject_energy_);
     b_triggerobject_energy_->GetEntry(entry_);
     c_triggerobject_energy_ = true;
   }
@@ -9354,6 +13672,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_energy() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_et() const{
   if(!c_triggerobject_et_ && b_triggerobject_et_){
+    b_triggerobject_et_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_et", &triggerobject_et_, &b_triggerobject_et_);
     b_triggerobject_et_->GetEntry(entry_);
     c_triggerobject_et_ = true;
   }
@@ -9362,6 +13682,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_et() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_eta() const{
   if(!c_triggerobject_eta_ && b_triggerobject_eta_){
+    b_triggerobject_eta_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_eta", &triggerobject_eta_, &b_triggerobject_eta_);
     b_triggerobject_eta_->GetEntry(entry_);
     c_triggerobject_eta_ = true;
   }
@@ -9370,6 +13692,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_eta() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_phi() const{
   if(!c_triggerobject_phi_ && b_triggerobject_phi_){
+    b_triggerobject_phi_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_phi", &triggerobject_phi_, &b_triggerobject_phi_);
     b_triggerobject_phi_->GetEntry(entry_);
     c_triggerobject_phi_ = true;
   }
@@ -9378,6 +13702,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_phi() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_pt() const{
   if(!c_triggerobject_pt_ && b_triggerobject_pt_){
+    b_triggerobject_pt_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_pt", &triggerobject_pt_, &b_triggerobject_pt_);
     b_triggerobject_pt_->GetEntry(entry_);
     c_triggerobject_pt_ = true;
   }
@@ -9386,6 +13712,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_pt() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_px() const{
   if(!c_triggerobject_px_ && b_triggerobject_px_){
+    b_triggerobject_px_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_px", &triggerobject_px_, &b_triggerobject_px_);
     b_triggerobject_px_->GetEntry(entry_);
     c_triggerobject_px_ = true;
   }
@@ -9394,6 +13722,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_px() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_py() const{
   if(!c_triggerobject_py_ && b_triggerobject_py_){
+    b_triggerobject_py_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_py", &triggerobject_py_, &b_triggerobject_py_);
     b_triggerobject_py_->GetEntry(entry_);
     c_triggerobject_py_ = true;
   }
@@ -9402,6 +13732,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_py() const{
 
 std::vector<std::vector<float> >* const & cfa_8::triggerobject_pz() const{
   if(!c_triggerobject_pz_ && b_triggerobject_pz_){
+    b_triggerobject_pz_->SetStatus(true);
+    chainA_.SetBranchAddress("triggerobject_pz", &triggerobject_pz_, &b_triggerobject_pz_);
     b_triggerobject_pz_->GetEntry(entry_);
     c_triggerobject_pz_ = true;
   }
@@ -9410,6 +13742,8 @@ std::vector<std::vector<float> >* const & cfa_8::triggerobject_pz() const{
 
 Int_t const & cfa_8::trk_nTOBTEC() const{
   if(!c_trk_nTOBTEC_ && b_trk_nTOBTEC_){
+    b_trk_nTOBTEC_->SetStatus(true);
+    chainA_.SetBranchAddress("trk_nTOBTEC", &trk_nTOBTEC_, &b_trk_nTOBTEC_);
     b_trk_nTOBTEC_->GetEntry(entry_);
     c_trk_nTOBTEC_ = true;
   }
@@ -9418,6 +13752,8 @@ Int_t const & cfa_8::trk_nTOBTEC() const{
 
 Float_t const & cfa_8::trk_ratioAllTOBTEC() const{
   if(!c_trk_ratioAllTOBTEC_ && b_trk_ratioAllTOBTEC_){
+    b_trk_ratioAllTOBTEC_->SetStatus(true);
+    chainA_.SetBranchAddress("trk_ratioAllTOBTEC", &trk_ratioAllTOBTEC_, &b_trk_ratioAllTOBTEC_);
     b_trk_ratioAllTOBTEC_->GetEntry(entry_);
     c_trk_ratioAllTOBTEC_ = true;
   }
@@ -9426,6 +13762,8 @@ Float_t const & cfa_8::trk_ratioAllTOBTEC() const{
 
 Float_t const & cfa_8::trk_ratioJetTOBTEC() const{
   if(!c_trk_ratioJetTOBTEC_ && b_trk_ratioJetTOBTEC_){
+    b_trk_ratioJetTOBTEC_->SetStatus(true);
+    chainA_.SetBranchAddress("trk_ratioJetTOBTEC", &trk_ratioJetTOBTEC_, &b_trk_ratioJetTOBTEC_);
     b_trk_ratioJetTOBTEC_->GetEntry(entry_);
     c_trk_ratioJetTOBTEC_ = true;
   }

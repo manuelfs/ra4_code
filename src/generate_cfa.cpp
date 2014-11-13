@@ -190,7 +190,8 @@ void WriteBaseHeader(const std::vector<Variable> &base_vars,
 
   hpp_file << "#include <vector>\n";
   hpp_file << "#include <string>\n\n";
-
+  hpp_file << "#include <iostream>\n\n";
+  
   hpp_file << "#include \"TChain.h\"\n\n";
 
   hpp_file << "class cfa_base{\n";
@@ -233,7 +234,8 @@ void WriteBaseHeader(const std::vector<Variable> &base_vars,
   hpp_file << "  virtual void InitializeA();\n";
   hpp_file << "  virtual void InitializeB();\n\n";
 
-  hpp_file << "  TChain chainA_, chainB_;\n";
+  hpp_file << "  mutable TChain chainA_;\n";
+  hpp_file << "  mutable TChain chainB_;\n";
   hpp_file << "  long entry_;\n\n";
 
   hpp_file << "private:\n";
@@ -247,11 +249,11 @@ void WriteBaseHeader(const std::vector<Variable> &base_vars,
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
       ++var){
-    hpp_file << "  " << var->ToType() << ' ' << var->Name() << "_;\n";
+    hpp_file << "  mutable " << var->ToType() << ' ' << var->Name() << "_;\n";
     if(var->Converted()){
       throw std::runtime_error("Converted variable in base class.");
     }
-    hpp_file << "  TBranch *b_" << var->Name() << "_;\n";
+    hpp_file << "  mutable TBranch *b_" << var->Name() << "_;\n";
     hpp_file << "  mutable bool c_" << var->Name() << "_;\n";
   }
   hpp_file << '\n';
@@ -284,7 +286,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "  cfa_version_(-1),\n";
   if(base_vars.size()){
     cpp_file << "  cached_total_entries_(false),\n";
-        std::vector<Variable>::const_iterator last(base_vars.end());
+    std::vector<Variable>::const_iterator last(base_vars.end());
     --last;
     for(std::vector<Variable>::const_iterator var = base_vars.begin();
 	var != last;
@@ -324,16 +326,23 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::GetEntry(const long entry){\n";
-  //Reset cache
-  for(std::vector<Variable>::const_iterator var = base_vars.begin();
-      var != base_vars.end();
-      ++var){
-    cpp_file << "  c_" << var->Name() << "_ = false;\n";
-  }
   cpp_file << "  const long entry_a = chainA_.LoadTree(entry);\n";
   cpp_file << "  const long entry_b = chainB_.LoadTree(entry);\n";
   cpp_file << "  if(entry_a!=entry_b) throw std::runtime_error(\"Entry is in different trees for chains A and B\");\n";
   cpp_file << "  entry_ = entry_a;\n";
+  //Reset cache
+  for(std::vector<Variable>::const_iterator var = base_vars.begin();
+      var != base_vars.end();
+      ++var){
+    cpp_file << "  if(b_" << var->Name() << "_ && !b_"
+	     << var->Name() << "_->TestBit(kDoNotProcess)){\n";
+    cpp_file << "    c_" << var->Name() << "_ = true;\n";
+    cpp_file << "  }else{\n";
+    cpp_file << "    c_" << var->Name() << "_ = false;\n";
+    cpp_file << "  }\n";
+  }
+  cpp_file << "  chainA_.GetEntry(entry);\n";
+  cpp_file << "  chainB_.GetEntry(entry);\n";
   cpp_file << "}\n\n";
 
   cpp_file << "short cfa_base::GetVersion() const{\n";
@@ -381,6 +390,8 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::InitializeA(){\n";
+  cpp_file << "  chainA_.SetMakeClass(true);\n";
+  cpp_file << "  chainA_.SetBranchStatus(\"*\",0);\n";
   //Set chainA branch addresses
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
@@ -398,6 +409,8 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::InitializeB(){\n";
+  cpp_file << "  chainB_.SetMakeClass(true);\n";
+  cpp_file << "  chainB_.SetBranchStatus(\"*\",0);\n";
   //Set chainB branch addresses
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
@@ -475,11 +488,11 @@ void WriteDerivedHeader(const std::string &class_name,
   for(std::vector<Variable>::const_iterator var = vars.begin();
       var!=vars.end();
       ++var){
-    hpp_file << "  " << var->ToType() << ' ' << var->Name() << "_;\n";
+    hpp_file << "  mutable " << var->ToType() << ' ' << var->Name() << "_;\n";
     if(var->Converted()){
-      hpp_file << "  " << var->FromType() << " v_" << var->Name() << "_;\n";
+      hpp_file << "  mutable " << var->FromType() << " v_" << var->Name() << "_;\n";
     }
-    hpp_file << "  TBranch *b_" << var->Name() << "_;\n";
+    hpp_file << "  mutable TBranch *b_" << var->Name() << "_;\n";
     hpp_file << "  mutable bool c_" << var->Name() << "_;\n";
   }
   hpp_file << "};\n\n";
@@ -536,7 +549,13 @@ void WriteDerivedSource(const std::string &class_name,
   for(std::vector<Variable>::const_iterator var = vars.begin();
       var != vars.end();
       ++var){
-    cpp_file << "  c_" << var->Name() << "_ = false;\n";
+    const std::string chain = var->FromChainA()?"chainA_":"chainB_";
+    cpp_file << "  if(b_" << var->Name() << "_ && !b_"
+	     << var->Name() << "_->TestBit(kDoNotProcess)){\n";
+    cpp_file << "    c_" << var->Name() << "_ = true;\n";
+    cpp_file << "  }else{\n";
+    cpp_file << "    c_" << var->Name() << "_ = false;\n";
+    cpp_file << "  }\n";
   }
   cpp_file << "  cfa_base::GetEntry(entry);\n";
   cpp_file << "}\n\n";
@@ -602,6 +621,11 @@ void AddToTypelist(const std::vector<Variable> &vars,
 void PrintAccessor(const Variable &var, std::ofstream &file, const std::string &class_name){
   file << var.ToType() << " const & " << class_name << "::" << var.Name() << "() const{\n";
   file << "  if(!c_" << var.Name() << "_ && b_"<< var.Name() << "_){\n";
+  file << "    b_" << var.Name() << "_->SetStatus(true);\n";
+  const std::string chain = var.FromChainA()?"chainA_":"chainB_";
+  const std::string v = var.Converted()?"v_":"";
+  file << "    " << chain << ".SetBranchAddress(\"" << var.Name() << "\", &" << v 
+       << var.Name() << "_, &b_" << var.Name() << "_);\n";
   file << "    b_" << var.Name() << "_->GetEntry(entry_);\n";
   if(var.Converted()){
     if(var.FromType()=="std::vector<float>*" && var.ToType()=="std::vector<bool>*"){

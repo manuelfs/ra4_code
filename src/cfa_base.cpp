@@ -2184,727 +2184,3597 @@ long cfa_base::TotalEntries() const{
 }
 
 void cfa_base::GetEntry(const long entry){
-  c_NbeamSpot_ = false;
-  c_Nels_ = false;
-  c_Nmc_doc_ = false;
-  c_Nmc_electrons_ = false;
-  c_Nmc_mus_ = false;
-  c_Nmc_nues_ = false;
-  c_Nmc_numus_ = false;
-  c_Nmc_nutaus_ = false;
-  c_Nmc_photons_ = false;
-  c_Nmc_taus_ = false;
-  c_Nmus_ = false;
-  c_Npfcand_ = false;
-  c_Nphotons_ = false;
-  c_Npv_ = false;
-  c_Ntaus_ = false;
-  c_PU_NumInteractions_ = false;
-  c_PU_TrueNumInteractions_ = false;
-  c_PU_bunchCrossing_ = false;
-  c_PU_ntrks_highpT_ = false;
-  c_PU_ntrks_lowpT_ = false;
-  c_PU_sumpT_highpT_ = false;
-  c_PU_sumpT_lowpT_ = false;
-  c_PU_zpositions_ = false;
-  c_beamSpot_beamWidthX_ = false;
-  c_beamSpot_beamWidthXError_ = false;
-  c_beamSpot_beamWidthY_ = false;
-  c_beamSpot_beamWidthYError_ = false;
-  c_beamSpot_dxdz_ = false;
-  c_beamSpot_dxdzError_ = false;
-  c_beamSpot_dydz_ = false;
-  c_beamSpot_dydzError_ = false;
-  c_beamSpot_sigmaZ_ = false;
-  c_beamSpot_sigmaZ0Error_ = false;
-  c_beamSpot_x_ = false;
-  c_beamSpot_x0Error_ = false;
-  c_beamSpot_y_ = false;
-  c_beamSpot_y0Error_ = false;
-  c_beamSpot_z_ = false;
-  c_beamSpot_z0Error_ = false;
-  c_bunchCrossing_ = false;
-  c_cschalofilter_decision_ = false;
-  c_ecallaserfilter_decision_ = false;
-  c_eebadscfilter_decision_ = false;
-  c_els_PATpassConversionVeto_ = false;
-  c_els_basicClustersSize_ = false;
-  c_els_cIso_ = false;
-  c_els_caloEnergy_ = false;
-  c_els_charge_ = false;
-  c_els_chi2_ = false;
-  c_els_core_ecalDrivenSeed_ = false;
-  c_els_cpx_ = false;
-  c_els_cpy_ = false;
-  c_els_cpz_ = false;
-  c_els_ctf_tk_charge_ = false;
-  c_els_ctf_tk_eta_ = false;
-  c_els_ctf_tk_id_ = false;
-  c_els_ctf_tk_phi_ = false;
-  c_els_cx_ = false;
-  c_els_cy_ = false;
-  c_els_cz_ = false;
-  c_els_d0dum_ = false;
-  c_els_d0dumError_ = false;
-  c_els_dEtaIn_ = false;
-  c_els_dEtaOut_ = false;
-  c_els_dPhiIn_ = false;
-  c_els_dPhiOut_ = false;
-  c_els_dr03EcalRecHitSumEt_ = false;
-  c_els_dr03HcalDepth1TowerSumEt_ = false;
-  c_els_dr03HcalDepth2TowerSumEt_ = false;
-  c_els_dr03HcalTowerSumEt_ = false;
-  c_els_dr03TkSumPt_ = false;
-  c_els_dr04EcalRecHitSumEt_ = false;
-  c_els_dr04HcalDepth1TowerSumEt_ = false;
-  c_els_dr04HcalDepth2TowerSumEt_ = false;
-  c_els_dr04HcalTowerSumEt_ = false;
-  c_els_dr04TkSumPt_ = false;
-  c_els_dz_ = false;
-  c_els_dzError_ = false;
-  c_els_eOverPIn_ = false;
-  c_els_eSeedOverPOut_ = false;
-  c_els_ecalIso_ = false;
-  c_els_energy_ = false;
-  c_els_et_ = false;
-  c_els_eta_ = false;
-  c_els_etaError_ = false;
-  c_els_fbrem_ = false;
-  c_els_gen_et_ = false;
-  c_els_gen_eta_ = false;
-  c_els_gen_id_ = false;
-  c_els_gen_mother_et_ = false;
-  c_els_gen_mother_eta_ = false;
-  c_els_gen_mother_id_ = false;
-  c_els_gen_mother_phi_ = false;
-  c_els_gen_mother_pt_ = false;
-  c_els_gen_mother_px_ = false;
-  c_els_gen_mother_py_ = false;
-  c_els_gen_mother_pz_ = false;
-  c_els_gen_mother_theta_ = false;
-  c_els_gen_phi_ = false;
-  c_els_gen_pt_ = false;
-  c_els_gen_px_ = false;
-  c_els_gen_py_ = false;
-  c_els_gen_pz_ = false;
-  c_els_gen_theta_ = false;
-  c_els_hadOverEm_ = false;
-  c_els_hcalIso_ = false;
-  c_els_hcalOverEcalBc_ = false;
-  c_els_isEB_ = false;
-  c_els_isEE_ = false;
-  c_els_looseId_ = false;
-  c_els_n_inner_layer_ = false;
-  c_els_n_outer_layer_ = false;
-  c_els_ndof_ = false;
-  c_els_numlosthits_ = false;
-  c_els_numvalhits_ = false;
-  c_els_phi_ = false;
-  c_els_phiError_ = false;
-  c_els_pt_ = false;
-  c_els_ptError_ = false;
-  c_els_px_ = false;
-  c_els_py_ = false;
-  c_els_pz_ = false;
-  c_els_robustHighEnergyId_ = false;
-  c_els_robustLooseId_ = false;
-  c_els_robustTightId_ = false;
-  c_els_scE1x5_ = false;
-  c_els_scE2x5Max_ = false;
-  c_els_scE5x5_ = false;
-  c_els_scEnergy_ = false;
-  c_els_scEta_ = false;
-  c_els_scEtaWidth_ = false;
-  c_els_scPhi_ = false;
-  c_els_scPhiWidth_ = false;
-  c_els_scRawEnergy_ = false;
-  c_els_scSeedEnergy_ = false;
-  c_els_shFracInnerHits_ = false;
-  c_els_sigmaEtaEta_ = false;
-  c_els_sigmaIEtaIEta_ = false;
-  c_els_simpleEleId60cIso_ = false;
-  c_els_simpleEleId60relIso_ = false;
-  c_els_simpleEleId70cIso_ = false;
-  c_els_simpleEleId70relIso_ = false;
-  c_els_simpleEleId80cIso_ = false;
-  c_els_simpleEleId80relIso_ = false;
-  c_els_simpleEleId85cIso_ = false;
-  c_els_simpleEleId85relIso_ = false;
-  c_els_simpleEleId90cIso_ = false;
-  c_els_simpleEleId90relIso_ = false;
-  c_els_simpleEleId95cIso_ = false;
-  c_els_simpleEleId95relIso_ = false;
-  c_els_status_ = false;
-  c_els_tIso_ = false;
-  c_els_theta_ = false;
-  c_els_tightId_ = false;
-  c_els_tk_charge_ = false;
-  c_els_tk_eta_ = false;
-  c_els_tk_phi_ = false;
-  c_els_tk_pt_ = false;
-  c_els_tk_pz_ = false;
-  c_els_vpx_ = false;
-  c_els_vpy_ = false;
-  c_els_vpz_ = false;
-  c_els_vx_ = false;
-  c_els_vy_ = false;
-  c_els_vz_ = false;
-  c_event_ = false;
-  c_experimentType_ = false;
-  c_hcallaserfilter_decision_ = false;
-  c_lumiblock_ = false;
-  c_mc_doc_charge_ = false;
-  c_mc_doc_energy_ = false;
-  c_mc_doc_eta_ = false;
-  c_mc_doc_ggrandmother_id_ = false;
-  c_mc_doc_grandmother_id_ = false;
-  c_mc_doc_id_ = false;
-  c_mc_doc_mass_ = false;
-  c_mc_doc_mother_id_ = false;
-  c_mc_doc_mother_pt_ = false;
-  c_mc_doc_numOfDaughters_ = false;
-  c_mc_doc_numOfMothers_ = false;
-  c_mc_doc_phi_ = false;
-  c_mc_doc_pt_ = false;
-  c_mc_doc_px_ = false;
-  c_mc_doc_py_ = false;
-  c_mc_doc_pz_ = false;
-  c_mc_doc_status_ = false;
-  c_mc_doc_theta_ = false;
-  c_mc_doc_vertex_x_ = false;
-  c_mc_doc_vertex_y_ = false;
-  c_mc_doc_vertex_z_ = false;
-  c_mc_electrons_charge_ = false;
-  c_mc_electrons_energy_ = false;
-  c_mc_electrons_eta_ = false;
-  c_mc_electrons_ggrandmother_id_ = false;
-  c_mc_electrons_grandmother_id_ = false;
-  c_mc_electrons_id_ = false;
-  c_mc_electrons_mass_ = false;
-  c_mc_electrons_mother_id_ = false;
-  c_mc_electrons_mother_pt_ = false;
-  c_mc_electrons_numOfDaughters_ = false;
-  c_mc_electrons_phi_ = false;
-  c_mc_electrons_pt_ = false;
-  c_mc_electrons_px_ = false;
-  c_mc_electrons_py_ = false;
-  c_mc_electrons_pz_ = false;
-  c_mc_electrons_status_ = false;
-  c_mc_electrons_theta_ = false;
-  c_mc_electrons_vertex_x_ = false;
-  c_mc_electrons_vertex_y_ = false;
-  c_mc_electrons_vertex_z_ = false;
-  c_mc_mus_charge_ = false;
-  c_mc_mus_energy_ = false;
-  c_mc_mus_eta_ = false;
-  c_mc_mus_ggrandmother_id_ = false;
-  c_mc_mus_grandmother_id_ = false;
-  c_mc_mus_id_ = false;
-  c_mc_mus_mass_ = false;
-  c_mc_mus_mother_id_ = false;
-  c_mc_mus_mother_pt_ = false;
-  c_mc_mus_numOfDaughters_ = false;
-  c_mc_mus_phi_ = false;
-  c_mc_mus_pt_ = false;
-  c_mc_mus_px_ = false;
-  c_mc_mus_py_ = false;
-  c_mc_mus_pz_ = false;
-  c_mc_mus_status_ = false;
-  c_mc_mus_theta_ = false;
-  c_mc_mus_vertex_x_ = false;
-  c_mc_mus_vertex_y_ = false;
-  c_mc_mus_vertex_z_ = false;
-  c_mc_nues_charge_ = false;
-  c_mc_nues_energy_ = false;
-  c_mc_nues_eta_ = false;
-  c_mc_nues_ggrandmother_id_ = false;
-  c_mc_nues_grandmother_id_ = false;
-  c_mc_nues_id_ = false;
-  c_mc_nues_mass_ = false;
-  c_mc_nues_mother_id_ = false;
-  c_mc_nues_mother_pt_ = false;
-  c_mc_nues_numOfDaughters_ = false;
-  c_mc_nues_phi_ = false;
-  c_mc_nues_pt_ = false;
-  c_mc_nues_px_ = false;
-  c_mc_nues_py_ = false;
-  c_mc_nues_pz_ = false;
-  c_mc_nues_status_ = false;
-  c_mc_nues_theta_ = false;
-  c_mc_nues_vertex_x_ = false;
-  c_mc_nues_vertex_y_ = false;
-  c_mc_nues_vertex_z_ = false;
-  c_mc_numus_charge_ = false;
-  c_mc_numus_energy_ = false;
-  c_mc_numus_eta_ = false;
-  c_mc_numus_ggrandmother_id_ = false;
-  c_mc_numus_grandmother_id_ = false;
-  c_mc_numus_id_ = false;
-  c_mc_numus_mass_ = false;
-  c_mc_numus_mother_id_ = false;
-  c_mc_numus_mother_pt_ = false;
-  c_mc_numus_numOfDaughters_ = false;
-  c_mc_numus_phi_ = false;
-  c_mc_numus_pt_ = false;
-  c_mc_numus_px_ = false;
-  c_mc_numus_py_ = false;
-  c_mc_numus_pz_ = false;
-  c_mc_numus_status_ = false;
-  c_mc_numus_theta_ = false;
-  c_mc_numus_vertex_x_ = false;
-  c_mc_numus_vertex_y_ = false;
-  c_mc_numus_vertex_z_ = false;
-  c_mc_nutaus_charge_ = false;
-  c_mc_nutaus_energy_ = false;
-  c_mc_nutaus_eta_ = false;
-  c_mc_nutaus_ggrandmother_id_ = false;
-  c_mc_nutaus_grandmother_id_ = false;
-  c_mc_nutaus_id_ = false;
-  c_mc_nutaus_mass_ = false;
-  c_mc_nutaus_mother_id_ = false;
-  c_mc_nutaus_mother_pt_ = false;
-  c_mc_nutaus_numOfDaughters_ = false;
-  c_mc_nutaus_phi_ = false;
-  c_mc_nutaus_pt_ = false;
-  c_mc_nutaus_px_ = false;
-  c_mc_nutaus_py_ = false;
-  c_mc_nutaus_pz_ = false;
-  c_mc_nutaus_status_ = false;
-  c_mc_nutaus_theta_ = false;
-  c_mc_nutaus_vertex_x_ = false;
-  c_mc_nutaus_vertex_y_ = false;
-  c_mc_nutaus_vertex_z_ = false;
-  c_mc_photons_charge_ = false;
-  c_mc_photons_energy_ = false;
-  c_mc_photons_eta_ = false;
-  c_mc_photons_ggrandmother_id_ = false;
-  c_mc_photons_grandmother_id_ = false;
-  c_mc_photons_id_ = false;
-  c_mc_photons_mass_ = false;
-  c_mc_photons_mother_id_ = false;
-  c_mc_photons_mother_pt_ = false;
-  c_mc_photons_numOfDaughters_ = false;
-  c_mc_photons_phi_ = false;
-  c_mc_photons_pt_ = false;
-  c_mc_photons_px_ = false;
-  c_mc_photons_py_ = false;
-  c_mc_photons_pz_ = false;
-  c_mc_photons_status_ = false;
-  c_mc_photons_theta_ = false;
-  c_mc_photons_vertex_x_ = false;
-  c_mc_photons_vertex_y_ = false;
-  c_mc_photons_vertex_z_ = false;
-  c_mc_taus_charge_ = false;
-  c_mc_taus_energy_ = false;
-  c_mc_taus_eta_ = false;
-  c_mc_taus_ggrandmother_id_ = false;
-  c_mc_taus_grandmother_id_ = false;
-  c_mc_taus_id_ = false;
-  c_mc_taus_mass_ = false;
-  c_mc_taus_mother_id_ = false;
-  c_mc_taus_mother_pt_ = false;
-  c_mc_taus_numOfDaughters_ = false;
-  c_mc_taus_phi_ = false;
-  c_mc_taus_pt_ = false;
-  c_mc_taus_px_ = false;
-  c_mc_taus_py_ = false;
-  c_mc_taus_pz_ = false;
-  c_mc_taus_status_ = false;
-  c_mc_taus_theta_ = false;
-  c_mc_taus_vertex_x_ = false;
-  c_mc_taus_vertex_y_ = false;
-  c_mc_taus_vertex_z_ = false;
-  c_model_params_ = false;
-  c_mus_cIso_ = false;
-  c_mus_calEnergyEm_ = false;
-  c_mus_calEnergyEmS9_ = false;
-  c_mus_calEnergyHad_ = false;
-  c_mus_calEnergyHadS9_ = false;
-  c_mus_calEnergyHo_ = false;
-  c_mus_calEnergyHoS9_ = false;
-  c_mus_charge_ = false;
-  c_mus_cm_ExpectedHitsInner_ = false;
-  c_mus_cm_ExpectedHitsOuter_ = false;
-  c_mus_cm_LayersWithMeasurement_ = false;
-  c_mus_cm_LayersWithoutMeasurement_ = false;
-  c_mus_cm_PixelLayersWithMeasurement_ = false;
-  c_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_mus_cm_chg_ = false;
-  c_mus_cm_chi2_ = false;
-  c_mus_cm_d0dum_ = false;
-  c_mus_cm_d0dumErr_ = false;
-  c_mus_cm_dz_ = false;
-  c_mus_cm_dzErr_ = false;
-  c_mus_cm_eta_ = false;
-  c_mus_cm_etaErr_ = false;
-  c_mus_cm_ndof_ = false;
-  c_mus_cm_numlosthits_ = false;
-  c_mus_cm_numvalMuonhits_ = false;
-  c_mus_cm_numvalhits_ = false;
-  c_mus_cm_phi_ = false;
-  c_mus_cm_phiErr_ = false;
-  c_mus_cm_pt_ = false;
-  c_mus_cm_ptErr_ = false;
-  c_mus_cm_px_ = false;
-  c_mus_cm_py_ = false;
-  c_mus_cm_pz_ = false;
-  c_mus_cm_theta_ = false;
-  c_mus_cm_vx_ = false;
-  c_mus_cm_vy_ = false;
-  c_mus_cm_vz_ = false;
-  c_mus_dB_ = false;
-  c_mus_ecalIso_ = false;
-  c_mus_ecalvetoDep_ = false;
-  c_mus_energy_ = false;
-  c_mus_et_ = false;
-  c_mus_eta_ = false;
-  c_mus_gen_et_ = false;
-  c_mus_gen_eta_ = false;
-  c_mus_gen_id_ = false;
-  c_mus_gen_mother_et_ = false;
-  c_mus_gen_mother_eta_ = false;
-  c_mus_gen_mother_id_ = false;
-  c_mus_gen_mother_phi_ = false;
-  c_mus_gen_mother_pt_ = false;
-  c_mus_gen_mother_px_ = false;
-  c_mus_gen_mother_py_ = false;
-  c_mus_gen_mother_pz_ = false;
-  c_mus_gen_mother_theta_ = false;
-  c_mus_gen_phi_ = false;
-  c_mus_gen_pt_ = false;
-  c_mus_gen_px_ = false;
-  c_mus_gen_py_ = false;
-  c_mus_gen_pz_ = false;
-  c_mus_gen_theta_ = false;
-  c_mus_hcalIso_ = false;
-  c_mus_hcalvetoDep_ = false;
-  c_mus_id_All_ = false;
-  c_mus_id_AllArbitrated_ = false;
-  c_mus_id_AllGlobalMuons_ = false;
-  c_mus_id_AllStandAloneMuons_ = false;
-  c_mus_id_AllTrackerMuons_ = false;
-  c_mus_id_GlobalMuonPromptTight_ = false;
-  c_mus_id_TM2DCompatibilityLoose_ = false;
-  c_mus_id_TM2DCompatibilityTight_ = false;
-  c_mus_id_TMLastStationLoose_ = false;
-  c_mus_id_TMLastStationOptimizedLowPtLoose_ = false;
-  c_mus_id_TMLastStationOptimizedLowPtTight_ = false;
-  c_mus_id_TMLastStationTight_ = false;
-  c_mus_id_TMOneStationLoose_ = false;
-  c_mus_id_TMOneStationTight_ = false;
-  c_mus_id_TrackerMuonArbitrated_ = false;
-  c_mus_isCaloMuon_ = false;
-  c_mus_isConvertedPhoton_ = false;
-  c_mus_isElectron_ = false;
-  c_mus_isGlobalMuon_ = false;
-  c_mus_isPFMuon_ = false;
-  c_mus_isPhoton_ = false;
-  c_mus_isStandAloneMuon_ = false;
-  c_mus_isTrackerMuon_ = false;
-  c_mus_iso03_emEt_ = false;
-  c_mus_iso03_emVetoEt_ = false;
-  c_mus_iso03_hadEt_ = false;
-  c_mus_iso03_hadVetoEt_ = false;
-  c_mus_iso03_hoEt_ = false;
-  c_mus_iso03_nTracks_ = false;
-  c_mus_iso03_sumPt_ = false;
-  c_mus_iso05_emEt_ = false;
-  c_mus_iso05_hadEt_ = false;
-  c_mus_iso05_hoEt_ = false;
-  c_mus_iso05_nTracks_ = false;
-  c_mus_iso05_sumPt_ = false;
-  c_mus_num_matches_ = false;
-  c_mus_numberOfMatchedStations_ = false;
-  c_mus_pfIsolationR03_sumChargedHadronPt_ = false;
-  c_mus_pfIsolationR03_sumChargedParticlePt_ = false;
-  c_mus_pfIsolationR03_sumNeutralHadronEt_ = false;
-  c_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = false;
-  c_mus_pfIsolationR03_sumPUPt_ = false;
-  c_mus_pfIsolationR03_sumPhotonEt_ = false;
-  c_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = false;
-  c_mus_pfIsolationR04_sumChargedHadronPt_ = false;
-  c_mus_pfIsolationR04_sumChargedParticlePt_ = false;
-  c_mus_pfIsolationR04_sumNeutralHadronEt_ = false;
-  c_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = false;
-  c_mus_pfIsolationR04_sumPUPt_ = false;
-  c_mus_pfIsolationR04_sumPhotonEt_ = false;
-  c_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = false;
-  c_mus_phi_ = false;
-  c_mus_picky_ExpectedHitsInner_ = false;
-  c_mus_picky_ExpectedHitsOuter_ = false;
-  c_mus_picky_LayersWithMeasurement_ = false;
-  c_mus_picky_LayersWithoutMeasurement_ = false;
-  c_mus_picky_PixelLayersWithMeasurement_ = false;
-  c_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_mus_picky_chg_ = false;
-  c_mus_picky_chi2_ = false;
-  c_mus_picky_d0dum_ = false;
-  c_mus_picky_d0dumErr_ = false;
-  c_mus_picky_dz_ = false;
-  c_mus_picky_dzErr_ = false;
-  c_mus_picky_eta_ = false;
-  c_mus_picky_etaErr_ = false;
-  c_mus_picky_id_ = false;
-  c_mus_picky_ndof_ = false;
-  c_mus_picky_numlosthits_ = false;
-  c_mus_picky_numvalPixelhits_ = false;
-  c_mus_picky_numvalhits_ = false;
-  c_mus_picky_phi_ = false;
-  c_mus_picky_phiErr_ = false;
-  c_mus_picky_pt_ = false;
-  c_mus_picky_ptErr_ = false;
-  c_mus_picky_px_ = false;
-  c_mus_picky_py_ = false;
-  c_mus_picky_pz_ = false;
-  c_mus_picky_theta_ = false;
-  c_mus_picky_vx_ = false;
-  c_mus_picky_vy_ = false;
-  c_mus_picky_vz_ = false;
-  c_mus_pt_ = false;
-  c_mus_px_ = false;
-  c_mus_py_ = false;
-  c_mus_pz_ = false;
-  c_mus_stamu_chg_ = false;
-  c_mus_stamu_chi2_ = false;
-  c_mus_stamu_d0dum_ = false;
-  c_mus_stamu_d0dumErr_ = false;
-  c_mus_stamu_dz_ = false;
-  c_mus_stamu_dzErr_ = false;
-  c_mus_stamu_eta_ = false;
-  c_mus_stamu_etaErr_ = false;
-  c_mus_stamu_ndof_ = false;
-  c_mus_stamu_numlosthits_ = false;
-  c_mus_stamu_numvalhits_ = false;
-  c_mus_stamu_phi_ = false;
-  c_mus_stamu_phiErr_ = false;
-  c_mus_stamu_pt_ = false;
-  c_mus_stamu_ptErr_ = false;
-  c_mus_stamu_px_ = false;
-  c_mus_stamu_py_ = false;
-  c_mus_stamu_pz_ = false;
-  c_mus_stamu_theta_ = false;
-  c_mus_stamu_vx_ = false;
-  c_mus_stamu_vy_ = false;
-  c_mus_stamu_vz_ = false;
-  c_mus_status_ = false;
-  c_mus_tIso_ = false;
-  c_mus_theta_ = false;
-  c_mus_tkHits_ = false;
-  c_mus_tk_ExpectedHitsInner_ = false;
-  c_mus_tk_ExpectedHitsOuter_ = false;
-  c_mus_tk_LayersWithMeasurement_ = false;
-  c_mus_tk_LayersWithoutMeasurement_ = false;
-  c_mus_tk_PixelLayersWithMeasurement_ = false;
-  c_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_mus_tk_chg_ = false;
-  c_mus_tk_chi2_ = false;
-  c_mus_tk_d0dum_ = false;
-  c_mus_tk_d0dumErr_ = false;
-  c_mus_tk_dz_ = false;
-  c_mus_tk_dzErr_ = false;
-  c_mus_tk_eta_ = false;
-  c_mus_tk_etaErr_ = false;
-  c_mus_tk_id_ = false;
-  c_mus_tk_ndof_ = false;
-  c_mus_tk_numlosthits_ = false;
-  c_mus_tk_numpixelWthMeasr_ = false;
-  c_mus_tk_numvalPixelhits_ = false;
-  c_mus_tk_numvalhits_ = false;
-  c_mus_tk_phi_ = false;
-  c_mus_tk_phiErr_ = false;
-  c_mus_tk_pt_ = false;
-  c_mus_tk_ptErr_ = false;
-  c_mus_tk_px_ = false;
-  c_mus_tk_py_ = false;
-  c_mus_tk_pz_ = false;
-  c_mus_tk_theta_ = false;
-  c_mus_tk_vx_ = false;
-  c_mus_tk_vy_ = false;
-  c_mus_tk_vz_ = false;
-  c_mus_tpfms_ExpectedHitsInner_ = false;
-  c_mus_tpfms_ExpectedHitsOuter_ = false;
-  c_mus_tpfms_LayersWithMeasurement_ = false;
-  c_mus_tpfms_LayersWithoutMeasurement_ = false;
-  c_mus_tpfms_PixelLayersWithMeasurement_ = false;
-  c_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = false;
-  c_mus_tpfms_chg_ = false;
-  c_mus_tpfms_chi2_ = false;
-  c_mus_tpfms_d0dum_ = false;
-  c_mus_tpfms_d0dumErr_ = false;
-  c_mus_tpfms_dz_ = false;
-  c_mus_tpfms_dzErr_ = false;
-  c_mus_tpfms_eta_ = false;
-  c_mus_tpfms_etaErr_ = false;
-  c_mus_tpfms_id_ = false;
-  c_mus_tpfms_ndof_ = false;
-  c_mus_tpfms_numlosthits_ = false;
-  c_mus_tpfms_numvalPixelhits_ = false;
-  c_mus_tpfms_numvalhits_ = false;
-  c_mus_tpfms_phi_ = false;
-  c_mus_tpfms_phiErr_ = false;
-  c_mus_tpfms_pt_ = false;
-  c_mus_tpfms_ptErr_ = false;
-  c_mus_tpfms_px_ = false;
-  c_mus_tpfms_py_ = false;
-  c_mus_tpfms_pz_ = false;
-  c_mus_tpfms_theta_ = false;
-  c_mus_tpfms_vx_ = false;
-  c_mus_tpfms_vy_ = false;
-  c_mus_tpfms_vz_ = false;
-  c_orbitNumber_ = false;
-  c_pfcand_charge_ = false;
-  c_pfcand_energy_ = false;
-  c_pfcand_eta_ = false;
-  c_pfcand_pdgId_ = false;
-  c_pfcand_phi_ = false;
-  c_pfcand_pt_ = false;
-  c_pfcand_px_ = false;
-  c_pfcand_py_ = false;
-  c_pfcand_pz_ = false;
-  c_pfcand_theta_ = false;
-  c_photons_e1x5_ = false;
-  c_photons_e2x5_ = false;
-  c_photons_e3x3_ = false;
-  c_photons_e5x5_ = false;
-  c_photons_ecalIso_ = false;
-  c_photons_energy_ = false;
-  c_photons_et_ = false;
-  c_photons_eta_ = false;
-  c_photons_gen_et_ = false;
-  c_photons_gen_eta_ = false;
-  c_photons_gen_id_ = false;
-  c_photons_gen_phi_ = false;
-  c_photons_hadOverEM_ = false;
-  c_photons_hadTowOverEM_ = false;
-  c_photons_hasPixelSeed_ = false;
-  c_photons_hcalIso_ = false;
-  c_photons_isAlsoElectron_ = false;
-  c_photons_isConverted_ = false;
-  c_photons_isEBEEGap_ = false;
-  c_photons_isEBGap_ = false;
-  c_photons_isEBPho_ = false;
-  c_photons_isEEGap_ = false;
-  c_photons_isEEPho_ = false;
-  c_photons_isLoosePhoton_ = false;
-  c_photons_isTightPhoton_ = false;
-  c_photons_isoEcalRecHitDR03_ = false;
-  c_photons_isoEcalRecHitDR04_ = false;
-  c_photons_isoHcalRecHitDR03_ = false;
-  c_photons_isoHcalRecHitDR04_ = false;
-  c_photons_isoHollowTrkConeDR03_ = false;
-  c_photons_isoHollowTrkConeDR04_ = false;
-  c_photons_isoSolidTrkConeDR03_ = false;
-  c_photons_isoSolidTrkConeDR04_ = false;
-  c_photons_maxEnergyXtal_ = false;
-  c_photons_nTrkHollowConeDR03_ = false;
-  c_photons_nTrkHollowConeDR04_ = false;
-  c_photons_nTrkSolidConeDR03_ = false;
-  c_photons_nTrkSolidConeDR04_ = false;
-  c_photons_phi_ = false;
-  c_photons_pt_ = false;
-  c_photons_px_ = false;
-  c_photons_py_ = false;
-  c_photons_pz_ = false;
-  c_photons_r9_ = false;
-  c_photons_scEnergy_ = false;
-  c_photons_scEta_ = false;
-  c_photons_scEtaWidth_ = false;
-  c_photons_scPhi_ = false;
-  c_photons_scPhiWidth_ = false;
-  c_photons_scRawEnergy_ = false;
-  c_photons_sigmaEtaEta_ = false;
-  c_photons_sigmaIetaIeta_ = false;
-  c_photons_status_ = false;
-  c_photons_tIso_ = false;
-  c_photons_theta_ = false;
-  c_pv_chi2_ = false;
-  c_pv_isFake_ = false;
-  c_pv_isValid_ = false;
-  c_pv_ndof_ = false;
-  c_pv_tracksSize_ = false;
-  c_pv_x_ = false;
-  c_pv_xErr_ = false;
-  c_pv_y_ = false;
-  c_pv_yErr_ = false;
-  c_pv_z_ = false;
-  c_pv_zErr_ = false;
-  c_run_ = false;
-  c_standalone_triggerobject_collectionname_ = false;
-  c_standalone_triggerobject_energy_ = false;
-  c_standalone_triggerobject_et_ = false;
-  c_standalone_triggerobject_eta_ = false;
-  c_standalone_triggerobject_phi_ = false;
-  c_standalone_triggerobject_pt_ = false;
-  c_standalone_triggerobject_px_ = false;
-  c_standalone_triggerobject_py_ = false;
-  c_standalone_triggerobject_pz_ = false;
-  c_taus_Nprongs_ = false;
-  c_taus_againstElectron_ = false;
-  c_taus_againstElectronLoose_ = false;
-  c_taus_againstElectronMVA_ = false;
-  c_taus_againstElectronMedium_ = false;
-  c_taus_againstElectronTight_ = false;
-  c_taus_againstMuon_ = false;
-  c_taus_againstMuonLoose_ = false;
-  c_taus_againstMuonMedium_ = false;
-  c_taus_againstMuonTight_ = false;
-  c_taus_byIsoUsingLeadingPi_ = false;
-  c_taus_byIsolation_ = false;
-  c_taus_byLooseIsolation_ = false;
-  c_taus_byLooseIsolationDeltaBetaCorr_ = false;
-  c_taus_byMediumIsolation_ = false;
-  c_taus_byMediumIsolationDeltaBetaCorr_ = false;
-  c_taus_byTightIsolation_ = false;
-  c_taus_byTightIsolationDeltaBetaCorr_ = false;
-  c_taus_byVLooseIsolation_ = false;
-  c_taus_byVLooseIsolationDeltaBetaCorr_ = false;
-  c_taus_charge_ = false;
-  c_taus_decayModeFinding_ = false;
-  c_taus_ecalIsoUsingLeadingPi_ = false;
-  c_taus_ecalIsolation_ = false;
-  c_taus_ecalStripSumEOverPLead_ = false;
-  c_taus_elecPreIdDecision_ = false;
-  c_taus_elecPreIdOutput_ = false;
-  c_taus_emf_ = false;
-  c_taus_energy_ = false;
-  c_taus_et_ = false;
-  c_taus_eta_ = false;
-  c_taus_hcal3x3OverPLead_ = false;
-  c_taus_hcalMaxOverPLead_ = false;
-  c_taus_hcalTotOverPLead_ = false;
-  c_taus_isoPFChargedHadrCandsPtSum_ = false;
-  c_taus_isoPFGammaCandsEtSum_ = false;
-  c_taus_leadPFChargedHadrCand_ECAL_eta_ = false;
-  c_taus_leadPFChargedHadrCand_charge_ = false;
-  c_taus_leadPFChargedHadrCand_eta_ = false;
-  c_taus_leadPFChargedHadrCand_phi_ = false;
-  c_taus_leadPFChargedHadrCand_pt_ = false;
-  c_taus_leadingTrackFinding_ = false;
-  c_taus_leadingTrackPtCut_ = false;
-  c_taus_muDecision_ = false;
-  c_taus_phi_ = false;
-  c_taus_pt_ = false;
-  c_taus_px_ = false;
-  c_taus_py_ = false;
-  c_taus_pz_ = false;
-  c_taus_signalPFChargedHadrCandsSize_ = false;
-  c_taus_status_ = false;
-  c_taus_taNC_ = false;
-  c_taus_taNC_half_ = false;
-  c_taus_taNC_one_ = false;
-  c_taus_taNC_quarter_ = false;
-  c_taus_taNC_tenth_ = false;
-  c_taus_theta_ = false;
-  c_taus_tkIsoUsingLeadingPi_ = false;
-  c_taus_trackIsolation_ = false;
-  c_trackingfailurefilter_decision_ = false;
-  c_trigger_name_ = false;
-  c_trigger_prescalevalue_ = false;
-  c_weight_ = false;
   const long entry_a = chainA_.LoadTree(entry);
   const long entry_b = chainB_.LoadTree(entry);
   if(entry_a!=entry_b) throw std::runtime_error("Entry is in different trees for chains A and B");
   entry_ = entry_a;
+  if(b_NbeamSpot_ && !b_NbeamSpot_->TestBit(kDoNotProcess)){
+    c_NbeamSpot_ = true;
+  }else{
+    c_NbeamSpot_ = false;
+  }
+  if(b_Nels_ && !b_Nels_->TestBit(kDoNotProcess)){
+    c_Nels_ = true;
+  }else{
+    c_Nels_ = false;
+  }
+  if(b_Nmc_doc_ && !b_Nmc_doc_->TestBit(kDoNotProcess)){
+    c_Nmc_doc_ = true;
+  }else{
+    c_Nmc_doc_ = false;
+  }
+  if(b_Nmc_electrons_ && !b_Nmc_electrons_->TestBit(kDoNotProcess)){
+    c_Nmc_electrons_ = true;
+  }else{
+    c_Nmc_electrons_ = false;
+  }
+  if(b_Nmc_mus_ && !b_Nmc_mus_->TestBit(kDoNotProcess)){
+    c_Nmc_mus_ = true;
+  }else{
+    c_Nmc_mus_ = false;
+  }
+  if(b_Nmc_nues_ && !b_Nmc_nues_->TestBit(kDoNotProcess)){
+    c_Nmc_nues_ = true;
+  }else{
+    c_Nmc_nues_ = false;
+  }
+  if(b_Nmc_numus_ && !b_Nmc_numus_->TestBit(kDoNotProcess)){
+    c_Nmc_numus_ = true;
+  }else{
+    c_Nmc_numus_ = false;
+  }
+  if(b_Nmc_nutaus_ && !b_Nmc_nutaus_->TestBit(kDoNotProcess)){
+    c_Nmc_nutaus_ = true;
+  }else{
+    c_Nmc_nutaus_ = false;
+  }
+  if(b_Nmc_photons_ && !b_Nmc_photons_->TestBit(kDoNotProcess)){
+    c_Nmc_photons_ = true;
+  }else{
+    c_Nmc_photons_ = false;
+  }
+  if(b_Nmc_taus_ && !b_Nmc_taus_->TestBit(kDoNotProcess)){
+    c_Nmc_taus_ = true;
+  }else{
+    c_Nmc_taus_ = false;
+  }
+  if(b_Nmus_ && !b_Nmus_->TestBit(kDoNotProcess)){
+    c_Nmus_ = true;
+  }else{
+    c_Nmus_ = false;
+  }
+  if(b_Npfcand_ && !b_Npfcand_->TestBit(kDoNotProcess)){
+    c_Npfcand_ = true;
+  }else{
+    c_Npfcand_ = false;
+  }
+  if(b_Nphotons_ && !b_Nphotons_->TestBit(kDoNotProcess)){
+    c_Nphotons_ = true;
+  }else{
+    c_Nphotons_ = false;
+  }
+  if(b_Npv_ && !b_Npv_->TestBit(kDoNotProcess)){
+    c_Npv_ = true;
+  }else{
+    c_Npv_ = false;
+  }
+  if(b_Ntaus_ && !b_Ntaus_->TestBit(kDoNotProcess)){
+    c_Ntaus_ = true;
+  }else{
+    c_Ntaus_ = false;
+  }
+  if(b_PU_NumInteractions_ && !b_PU_NumInteractions_->TestBit(kDoNotProcess)){
+    c_PU_NumInteractions_ = true;
+  }else{
+    c_PU_NumInteractions_ = false;
+  }
+  if(b_PU_TrueNumInteractions_ && !b_PU_TrueNumInteractions_->TestBit(kDoNotProcess)){
+    c_PU_TrueNumInteractions_ = true;
+  }else{
+    c_PU_TrueNumInteractions_ = false;
+  }
+  if(b_PU_bunchCrossing_ && !b_PU_bunchCrossing_->TestBit(kDoNotProcess)){
+    c_PU_bunchCrossing_ = true;
+  }else{
+    c_PU_bunchCrossing_ = false;
+  }
+  if(b_PU_ntrks_highpT_ && !b_PU_ntrks_highpT_->TestBit(kDoNotProcess)){
+    c_PU_ntrks_highpT_ = true;
+  }else{
+    c_PU_ntrks_highpT_ = false;
+  }
+  if(b_PU_ntrks_lowpT_ && !b_PU_ntrks_lowpT_->TestBit(kDoNotProcess)){
+    c_PU_ntrks_lowpT_ = true;
+  }else{
+    c_PU_ntrks_lowpT_ = false;
+  }
+  if(b_PU_sumpT_highpT_ && !b_PU_sumpT_highpT_->TestBit(kDoNotProcess)){
+    c_PU_sumpT_highpT_ = true;
+  }else{
+    c_PU_sumpT_highpT_ = false;
+  }
+  if(b_PU_sumpT_lowpT_ && !b_PU_sumpT_lowpT_->TestBit(kDoNotProcess)){
+    c_PU_sumpT_lowpT_ = true;
+  }else{
+    c_PU_sumpT_lowpT_ = false;
+  }
+  if(b_PU_zpositions_ && !b_PU_zpositions_->TestBit(kDoNotProcess)){
+    c_PU_zpositions_ = true;
+  }else{
+    c_PU_zpositions_ = false;
+  }
+  if(b_beamSpot_beamWidthX_ && !b_beamSpot_beamWidthX_->TestBit(kDoNotProcess)){
+    c_beamSpot_beamWidthX_ = true;
+  }else{
+    c_beamSpot_beamWidthX_ = false;
+  }
+  if(b_beamSpot_beamWidthXError_ && !b_beamSpot_beamWidthXError_->TestBit(kDoNotProcess)){
+    c_beamSpot_beamWidthXError_ = true;
+  }else{
+    c_beamSpot_beamWidthXError_ = false;
+  }
+  if(b_beamSpot_beamWidthY_ && !b_beamSpot_beamWidthY_->TestBit(kDoNotProcess)){
+    c_beamSpot_beamWidthY_ = true;
+  }else{
+    c_beamSpot_beamWidthY_ = false;
+  }
+  if(b_beamSpot_beamWidthYError_ && !b_beamSpot_beamWidthYError_->TestBit(kDoNotProcess)){
+    c_beamSpot_beamWidthYError_ = true;
+  }else{
+    c_beamSpot_beamWidthYError_ = false;
+  }
+  if(b_beamSpot_dxdz_ && !b_beamSpot_dxdz_->TestBit(kDoNotProcess)){
+    c_beamSpot_dxdz_ = true;
+  }else{
+    c_beamSpot_dxdz_ = false;
+  }
+  if(b_beamSpot_dxdzError_ && !b_beamSpot_dxdzError_->TestBit(kDoNotProcess)){
+    c_beamSpot_dxdzError_ = true;
+  }else{
+    c_beamSpot_dxdzError_ = false;
+  }
+  if(b_beamSpot_dydz_ && !b_beamSpot_dydz_->TestBit(kDoNotProcess)){
+    c_beamSpot_dydz_ = true;
+  }else{
+    c_beamSpot_dydz_ = false;
+  }
+  if(b_beamSpot_dydzError_ && !b_beamSpot_dydzError_->TestBit(kDoNotProcess)){
+    c_beamSpot_dydzError_ = true;
+  }else{
+    c_beamSpot_dydzError_ = false;
+  }
+  if(b_beamSpot_sigmaZ_ && !b_beamSpot_sigmaZ_->TestBit(kDoNotProcess)){
+    c_beamSpot_sigmaZ_ = true;
+  }else{
+    c_beamSpot_sigmaZ_ = false;
+  }
+  if(b_beamSpot_sigmaZ0Error_ && !b_beamSpot_sigmaZ0Error_->TestBit(kDoNotProcess)){
+    c_beamSpot_sigmaZ0Error_ = true;
+  }else{
+    c_beamSpot_sigmaZ0Error_ = false;
+  }
+  if(b_beamSpot_x_ && !b_beamSpot_x_->TestBit(kDoNotProcess)){
+    c_beamSpot_x_ = true;
+  }else{
+    c_beamSpot_x_ = false;
+  }
+  if(b_beamSpot_x0Error_ && !b_beamSpot_x0Error_->TestBit(kDoNotProcess)){
+    c_beamSpot_x0Error_ = true;
+  }else{
+    c_beamSpot_x0Error_ = false;
+  }
+  if(b_beamSpot_y_ && !b_beamSpot_y_->TestBit(kDoNotProcess)){
+    c_beamSpot_y_ = true;
+  }else{
+    c_beamSpot_y_ = false;
+  }
+  if(b_beamSpot_y0Error_ && !b_beamSpot_y0Error_->TestBit(kDoNotProcess)){
+    c_beamSpot_y0Error_ = true;
+  }else{
+    c_beamSpot_y0Error_ = false;
+  }
+  if(b_beamSpot_z_ && !b_beamSpot_z_->TestBit(kDoNotProcess)){
+    c_beamSpot_z_ = true;
+  }else{
+    c_beamSpot_z_ = false;
+  }
+  if(b_beamSpot_z0Error_ && !b_beamSpot_z0Error_->TestBit(kDoNotProcess)){
+    c_beamSpot_z0Error_ = true;
+  }else{
+    c_beamSpot_z0Error_ = false;
+  }
+  if(b_bunchCrossing_ && !b_bunchCrossing_->TestBit(kDoNotProcess)){
+    c_bunchCrossing_ = true;
+  }else{
+    c_bunchCrossing_ = false;
+  }
+  if(b_cschalofilter_decision_ && !b_cschalofilter_decision_->TestBit(kDoNotProcess)){
+    c_cschalofilter_decision_ = true;
+  }else{
+    c_cschalofilter_decision_ = false;
+  }
+  if(b_ecallaserfilter_decision_ && !b_ecallaserfilter_decision_->TestBit(kDoNotProcess)){
+    c_ecallaserfilter_decision_ = true;
+  }else{
+    c_ecallaserfilter_decision_ = false;
+  }
+  if(b_eebadscfilter_decision_ && !b_eebadscfilter_decision_->TestBit(kDoNotProcess)){
+    c_eebadscfilter_decision_ = true;
+  }else{
+    c_eebadscfilter_decision_ = false;
+  }
+  if(b_els_PATpassConversionVeto_ && !b_els_PATpassConversionVeto_->TestBit(kDoNotProcess)){
+    c_els_PATpassConversionVeto_ = true;
+  }else{
+    c_els_PATpassConversionVeto_ = false;
+  }
+  if(b_els_basicClustersSize_ && !b_els_basicClustersSize_->TestBit(kDoNotProcess)){
+    c_els_basicClustersSize_ = true;
+  }else{
+    c_els_basicClustersSize_ = false;
+  }
+  if(b_els_cIso_ && !b_els_cIso_->TestBit(kDoNotProcess)){
+    c_els_cIso_ = true;
+  }else{
+    c_els_cIso_ = false;
+  }
+  if(b_els_caloEnergy_ && !b_els_caloEnergy_->TestBit(kDoNotProcess)){
+    c_els_caloEnergy_ = true;
+  }else{
+    c_els_caloEnergy_ = false;
+  }
+  if(b_els_charge_ && !b_els_charge_->TestBit(kDoNotProcess)){
+    c_els_charge_ = true;
+  }else{
+    c_els_charge_ = false;
+  }
+  if(b_els_chi2_ && !b_els_chi2_->TestBit(kDoNotProcess)){
+    c_els_chi2_ = true;
+  }else{
+    c_els_chi2_ = false;
+  }
+  if(b_els_core_ecalDrivenSeed_ && !b_els_core_ecalDrivenSeed_->TestBit(kDoNotProcess)){
+    c_els_core_ecalDrivenSeed_ = true;
+  }else{
+    c_els_core_ecalDrivenSeed_ = false;
+  }
+  if(b_els_cpx_ && !b_els_cpx_->TestBit(kDoNotProcess)){
+    c_els_cpx_ = true;
+  }else{
+    c_els_cpx_ = false;
+  }
+  if(b_els_cpy_ && !b_els_cpy_->TestBit(kDoNotProcess)){
+    c_els_cpy_ = true;
+  }else{
+    c_els_cpy_ = false;
+  }
+  if(b_els_cpz_ && !b_els_cpz_->TestBit(kDoNotProcess)){
+    c_els_cpz_ = true;
+  }else{
+    c_els_cpz_ = false;
+  }
+  if(b_els_ctf_tk_charge_ && !b_els_ctf_tk_charge_->TestBit(kDoNotProcess)){
+    c_els_ctf_tk_charge_ = true;
+  }else{
+    c_els_ctf_tk_charge_ = false;
+  }
+  if(b_els_ctf_tk_eta_ && !b_els_ctf_tk_eta_->TestBit(kDoNotProcess)){
+    c_els_ctf_tk_eta_ = true;
+  }else{
+    c_els_ctf_tk_eta_ = false;
+  }
+  if(b_els_ctf_tk_id_ && !b_els_ctf_tk_id_->TestBit(kDoNotProcess)){
+    c_els_ctf_tk_id_ = true;
+  }else{
+    c_els_ctf_tk_id_ = false;
+  }
+  if(b_els_ctf_tk_phi_ && !b_els_ctf_tk_phi_->TestBit(kDoNotProcess)){
+    c_els_ctf_tk_phi_ = true;
+  }else{
+    c_els_ctf_tk_phi_ = false;
+  }
+  if(b_els_cx_ && !b_els_cx_->TestBit(kDoNotProcess)){
+    c_els_cx_ = true;
+  }else{
+    c_els_cx_ = false;
+  }
+  if(b_els_cy_ && !b_els_cy_->TestBit(kDoNotProcess)){
+    c_els_cy_ = true;
+  }else{
+    c_els_cy_ = false;
+  }
+  if(b_els_cz_ && !b_els_cz_->TestBit(kDoNotProcess)){
+    c_els_cz_ = true;
+  }else{
+    c_els_cz_ = false;
+  }
+  if(b_els_d0dum_ && !b_els_d0dum_->TestBit(kDoNotProcess)){
+    c_els_d0dum_ = true;
+  }else{
+    c_els_d0dum_ = false;
+  }
+  if(b_els_d0dumError_ && !b_els_d0dumError_->TestBit(kDoNotProcess)){
+    c_els_d0dumError_ = true;
+  }else{
+    c_els_d0dumError_ = false;
+  }
+  if(b_els_dEtaIn_ && !b_els_dEtaIn_->TestBit(kDoNotProcess)){
+    c_els_dEtaIn_ = true;
+  }else{
+    c_els_dEtaIn_ = false;
+  }
+  if(b_els_dEtaOut_ && !b_els_dEtaOut_->TestBit(kDoNotProcess)){
+    c_els_dEtaOut_ = true;
+  }else{
+    c_els_dEtaOut_ = false;
+  }
+  if(b_els_dPhiIn_ && !b_els_dPhiIn_->TestBit(kDoNotProcess)){
+    c_els_dPhiIn_ = true;
+  }else{
+    c_els_dPhiIn_ = false;
+  }
+  if(b_els_dPhiOut_ && !b_els_dPhiOut_->TestBit(kDoNotProcess)){
+    c_els_dPhiOut_ = true;
+  }else{
+    c_els_dPhiOut_ = false;
+  }
+  if(b_els_dr03EcalRecHitSumEt_ && !b_els_dr03EcalRecHitSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr03EcalRecHitSumEt_ = true;
+  }else{
+    c_els_dr03EcalRecHitSumEt_ = false;
+  }
+  if(b_els_dr03HcalDepth1TowerSumEt_ && !b_els_dr03HcalDepth1TowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr03HcalDepth1TowerSumEt_ = true;
+  }else{
+    c_els_dr03HcalDepth1TowerSumEt_ = false;
+  }
+  if(b_els_dr03HcalDepth2TowerSumEt_ && !b_els_dr03HcalDepth2TowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr03HcalDepth2TowerSumEt_ = true;
+  }else{
+    c_els_dr03HcalDepth2TowerSumEt_ = false;
+  }
+  if(b_els_dr03HcalTowerSumEt_ && !b_els_dr03HcalTowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr03HcalTowerSumEt_ = true;
+  }else{
+    c_els_dr03HcalTowerSumEt_ = false;
+  }
+  if(b_els_dr03TkSumPt_ && !b_els_dr03TkSumPt_->TestBit(kDoNotProcess)){
+    c_els_dr03TkSumPt_ = true;
+  }else{
+    c_els_dr03TkSumPt_ = false;
+  }
+  if(b_els_dr04EcalRecHitSumEt_ && !b_els_dr04EcalRecHitSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr04EcalRecHitSumEt_ = true;
+  }else{
+    c_els_dr04EcalRecHitSumEt_ = false;
+  }
+  if(b_els_dr04HcalDepth1TowerSumEt_ && !b_els_dr04HcalDepth1TowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr04HcalDepth1TowerSumEt_ = true;
+  }else{
+    c_els_dr04HcalDepth1TowerSumEt_ = false;
+  }
+  if(b_els_dr04HcalDepth2TowerSumEt_ && !b_els_dr04HcalDepth2TowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr04HcalDepth2TowerSumEt_ = true;
+  }else{
+    c_els_dr04HcalDepth2TowerSumEt_ = false;
+  }
+  if(b_els_dr04HcalTowerSumEt_ && !b_els_dr04HcalTowerSumEt_->TestBit(kDoNotProcess)){
+    c_els_dr04HcalTowerSumEt_ = true;
+  }else{
+    c_els_dr04HcalTowerSumEt_ = false;
+  }
+  if(b_els_dr04TkSumPt_ && !b_els_dr04TkSumPt_->TestBit(kDoNotProcess)){
+    c_els_dr04TkSumPt_ = true;
+  }else{
+    c_els_dr04TkSumPt_ = false;
+  }
+  if(b_els_dz_ && !b_els_dz_->TestBit(kDoNotProcess)){
+    c_els_dz_ = true;
+  }else{
+    c_els_dz_ = false;
+  }
+  if(b_els_dzError_ && !b_els_dzError_->TestBit(kDoNotProcess)){
+    c_els_dzError_ = true;
+  }else{
+    c_els_dzError_ = false;
+  }
+  if(b_els_eOverPIn_ && !b_els_eOverPIn_->TestBit(kDoNotProcess)){
+    c_els_eOverPIn_ = true;
+  }else{
+    c_els_eOverPIn_ = false;
+  }
+  if(b_els_eSeedOverPOut_ && !b_els_eSeedOverPOut_->TestBit(kDoNotProcess)){
+    c_els_eSeedOverPOut_ = true;
+  }else{
+    c_els_eSeedOverPOut_ = false;
+  }
+  if(b_els_ecalIso_ && !b_els_ecalIso_->TestBit(kDoNotProcess)){
+    c_els_ecalIso_ = true;
+  }else{
+    c_els_ecalIso_ = false;
+  }
+  if(b_els_energy_ && !b_els_energy_->TestBit(kDoNotProcess)){
+    c_els_energy_ = true;
+  }else{
+    c_els_energy_ = false;
+  }
+  if(b_els_et_ && !b_els_et_->TestBit(kDoNotProcess)){
+    c_els_et_ = true;
+  }else{
+    c_els_et_ = false;
+  }
+  if(b_els_eta_ && !b_els_eta_->TestBit(kDoNotProcess)){
+    c_els_eta_ = true;
+  }else{
+    c_els_eta_ = false;
+  }
+  if(b_els_etaError_ && !b_els_etaError_->TestBit(kDoNotProcess)){
+    c_els_etaError_ = true;
+  }else{
+    c_els_etaError_ = false;
+  }
+  if(b_els_fbrem_ && !b_els_fbrem_->TestBit(kDoNotProcess)){
+    c_els_fbrem_ = true;
+  }else{
+    c_els_fbrem_ = false;
+  }
+  if(b_els_gen_et_ && !b_els_gen_et_->TestBit(kDoNotProcess)){
+    c_els_gen_et_ = true;
+  }else{
+    c_els_gen_et_ = false;
+  }
+  if(b_els_gen_eta_ && !b_els_gen_eta_->TestBit(kDoNotProcess)){
+    c_els_gen_eta_ = true;
+  }else{
+    c_els_gen_eta_ = false;
+  }
+  if(b_els_gen_id_ && !b_els_gen_id_->TestBit(kDoNotProcess)){
+    c_els_gen_id_ = true;
+  }else{
+    c_els_gen_id_ = false;
+  }
+  if(b_els_gen_mother_et_ && !b_els_gen_mother_et_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_et_ = true;
+  }else{
+    c_els_gen_mother_et_ = false;
+  }
+  if(b_els_gen_mother_eta_ && !b_els_gen_mother_eta_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_eta_ = true;
+  }else{
+    c_els_gen_mother_eta_ = false;
+  }
+  if(b_els_gen_mother_id_ && !b_els_gen_mother_id_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_id_ = true;
+  }else{
+    c_els_gen_mother_id_ = false;
+  }
+  if(b_els_gen_mother_phi_ && !b_els_gen_mother_phi_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_phi_ = true;
+  }else{
+    c_els_gen_mother_phi_ = false;
+  }
+  if(b_els_gen_mother_pt_ && !b_els_gen_mother_pt_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_pt_ = true;
+  }else{
+    c_els_gen_mother_pt_ = false;
+  }
+  if(b_els_gen_mother_px_ && !b_els_gen_mother_px_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_px_ = true;
+  }else{
+    c_els_gen_mother_px_ = false;
+  }
+  if(b_els_gen_mother_py_ && !b_els_gen_mother_py_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_py_ = true;
+  }else{
+    c_els_gen_mother_py_ = false;
+  }
+  if(b_els_gen_mother_pz_ && !b_els_gen_mother_pz_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_pz_ = true;
+  }else{
+    c_els_gen_mother_pz_ = false;
+  }
+  if(b_els_gen_mother_theta_ && !b_els_gen_mother_theta_->TestBit(kDoNotProcess)){
+    c_els_gen_mother_theta_ = true;
+  }else{
+    c_els_gen_mother_theta_ = false;
+  }
+  if(b_els_gen_phi_ && !b_els_gen_phi_->TestBit(kDoNotProcess)){
+    c_els_gen_phi_ = true;
+  }else{
+    c_els_gen_phi_ = false;
+  }
+  if(b_els_gen_pt_ && !b_els_gen_pt_->TestBit(kDoNotProcess)){
+    c_els_gen_pt_ = true;
+  }else{
+    c_els_gen_pt_ = false;
+  }
+  if(b_els_gen_px_ && !b_els_gen_px_->TestBit(kDoNotProcess)){
+    c_els_gen_px_ = true;
+  }else{
+    c_els_gen_px_ = false;
+  }
+  if(b_els_gen_py_ && !b_els_gen_py_->TestBit(kDoNotProcess)){
+    c_els_gen_py_ = true;
+  }else{
+    c_els_gen_py_ = false;
+  }
+  if(b_els_gen_pz_ && !b_els_gen_pz_->TestBit(kDoNotProcess)){
+    c_els_gen_pz_ = true;
+  }else{
+    c_els_gen_pz_ = false;
+  }
+  if(b_els_gen_theta_ && !b_els_gen_theta_->TestBit(kDoNotProcess)){
+    c_els_gen_theta_ = true;
+  }else{
+    c_els_gen_theta_ = false;
+  }
+  if(b_els_hadOverEm_ && !b_els_hadOverEm_->TestBit(kDoNotProcess)){
+    c_els_hadOverEm_ = true;
+  }else{
+    c_els_hadOverEm_ = false;
+  }
+  if(b_els_hcalIso_ && !b_els_hcalIso_->TestBit(kDoNotProcess)){
+    c_els_hcalIso_ = true;
+  }else{
+    c_els_hcalIso_ = false;
+  }
+  if(b_els_hcalOverEcalBc_ && !b_els_hcalOverEcalBc_->TestBit(kDoNotProcess)){
+    c_els_hcalOverEcalBc_ = true;
+  }else{
+    c_els_hcalOverEcalBc_ = false;
+  }
+  if(b_els_isEB_ && !b_els_isEB_->TestBit(kDoNotProcess)){
+    c_els_isEB_ = true;
+  }else{
+    c_els_isEB_ = false;
+  }
+  if(b_els_isEE_ && !b_els_isEE_->TestBit(kDoNotProcess)){
+    c_els_isEE_ = true;
+  }else{
+    c_els_isEE_ = false;
+  }
+  if(b_els_looseId_ && !b_els_looseId_->TestBit(kDoNotProcess)){
+    c_els_looseId_ = true;
+  }else{
+    c_els_looseId_ = false;
+  }
+  if(b_els_n_inner_layer_ && !b_els_n_inner_layer_->TestBit(kDoNotProcess)){
+    c_els_n_inner_layer_ = true;
+  }else{
+    c_els_n_inner_layer_ = false;
+  }
+  if(b_els_n_outer_layer_ && !b_els_n_outer_layer_->TestBit(kDoNotProcess)){
+    c_els_n_outer_layer_ = true;
+  }else{
+    c_els_n_outer_layer_ = false;
+  }
+  if(b_els_ndof_ && !b_els_ndof_->TestBit(kDoNotProcess)){
+    c_els_ndof_ = true;
+  }else{
+    c_els_ndof_ = false;
+  }
+  if(b_els_numlosthits_ && !b_els_numlosthits_->TestBit(kDoNotProcess)){
+    c_els_numlosthits_ = true;
+  }else{
+    c_els_numlosthits_ = false;
+  }
+  if(b_els_numvalhits_ && !b_els_numvalhits_->TestBit(kDoNotProcess)){
+    c_els_numvalhits_ = true;
+  }else{
+    c_els_numvalhits_ = false;
+  }
+  if(b_els_phi_ && !b_els_phi_->TestBit(kDoNotProcess)){
+    c_els_phi_ = true;
+  }else{
+    c_els_phi_ = false;
+  }
+  if(b_els_phiError_ && !b_els_phiError_->TestBit(kDoNotProcess)){
+    c_els_phiError_ = true;
+  }else{
+    c_els_phiError_ = false;
+  }
+  if(b_els_pt_ && !b_els_pt_->TestBit(kDoNotProcess)){
+    c_els_pt_ = true;
+  }else{
+    c_els_pt_ = false;
+  }
+  if(b_els_ptError_ && !b_els_ptError_->TestBit(kDoNotProcess)){
+    c_els_ptError_ = true;
+  }else{
+    c_els_ptError_ = false;
+  }
+  if(b_els_px_ && !b_els_px_->TestBit(kDoNotProcess)){
+    c_els_px_ = true;
+  }else{
+    c_els_px_ = false;
+  }
+  if(b_els_py_ && !b_els_py_->TestBit(kDoNotProcess)){
+    c_els_py_ = true;
+  }else{
+    c_els_py_ = false;
+  }
+  if(b_els_pz_ && !b_els_pz_->TestBit(kDoNotProcess)){
+    c_els_pz_ = true;
+  }else{
+    c_els_pz_ = false;
+  }
+  if(b_els_robustHighEnergyId_ && !b_els_robustHighEnergyId_->TestBit(kDoNotProcess)){
+    c_els_robustHighEnergyId_ = true;
+  }else{
+    c_els_robustHighEnergyId_ = false;
+  }
+  if(b_els_robustLooseId_ && !b_els_robustLooseId_->TestBit(kDoNotProcess)){
+    c_els_robustLooseId_ = true;
+  }else{
+    c_els_robustLooseId_ = false;
+  }
+  if(b_els_robustTightId_ && !b_els_robustTightId_->TestBit(kDoNotProcess)){
+    c_els_robustTightId_ = true;
+  }else{
+    c_els_robustTightId_ = false;
+  }
+  if(b_els_scE1x5_ && !b_els_scE1x5_->TestBit(kDoNotProcess)){
+    c_els_scE1x5_ = true;
+  }else{
+    c_els_scE1x5_ = false;
+  }
+  if(b_els_scE2x5Max_ && !b_els_scE2x5Max_->TestBit(kDoNotProcess)){
+    c_els_scE2x5Max_ = true;
+  }else{
+    c_els_scE2x5Max_ = false;
+  }
+  if(b_els_scE5x5_ && !b_els_scE5x5_->TestBit(kDoNotProcess)){
+    c_els_scE5x5_ = true;
+  }else{
+    c_els_scE5x5_ = false;
+  }
+  if(b_els_scEnergy_ && !b_els_scEnergy_->TestBit(kDoNotProcess)){
+    c_els_scEnergy_ = true;
+  }else{
+    c_els_scEnergy_ = false;
+  }
+  if(b_els_scEta_ && !b_els_scEta_->TestBit(kDoNotProcess)){
+    c_els_scEta_ = true;
+  }else{
+    c_els_scEta_ = false;
+  }
+  if(b_els_scEtaWidth_ && !b_els_scEtaWidth_->TestBit(kDoNotProcess)){
+    c_els_scEtaWidth_ = true;
+  }else{
+    c_els_scEtaWidth_ = false;
+  }
+  if(b_els_scPhi_ && !b_els_scPhi_->TestBit(kDoNotProcess)){
+    c_els_scPhi_ = true;
+  }else{
+    c_els_scPhi_ = false;
+  }
+  if(b_els_scPhiWidth_ && !b_els_scPhiWidth_->TestBit(kDoNotProcess)){
+    c_els_scPhiWidth_ = true;
+  }else{
+    c_els_scPhiWidth_ = false;
+  }
+  if(b_els_scRawEnergy_ && !b_els_scRawEnergy_->TestBit(kDoNotProcess)){
+    c_els_scRawEnergy_ = true;
+  }else{
+    c_els_scRawEnergy_ = false;
+  }
+  if(b_els_scSeedEnergy_ && !b_els_scSeedEnergy_->TestBit(kDoNotProcess)){
+    c_els_scSeedEnergy_ = true;
+  }else{
+    c_els_scSeedEnergy_ = false;
+  }
+  if(b_els_shFracInnerHits_ && !b_els_shFracInnerHits_->TestBit(kDoNotProcess)){
+    c_els_shFracInnerHits_ = true;
+  }else{
+    c_els_shFracInnerHits_ = false;
+  }
+  if(b_els_sigmaEtaEta_ && !b_els_sigmaEtaEta_->TestBit(kDoNotProcess)){
+    c_els_sigmaEtaEta_ = true;
+  }else{
+    c_els_sigmaEtaEta_ = false;
+  }
+  if(b_els_sigmaIEtaIEta_ && !b_els_sigmaIEtaIEta_->TestBit(kDoNotProcess)){
+    c_els_sigmaIEtaIEta_ = true;
+  }else{
+    c_els_sigmaIEtaIEta_ = false;
+  }
+  if(b_els_simpleEleId60cIso_ && !b_els_simpleEleId60cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId60cIso_ = true;
+  }else{
+    c_els_simpleEleId60cIso_ = false;
+  }
+  if(b_els_simpleEleId60relIso_ && !b_els_simpleEleId60relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId60relIso_ = true;
+  }else{
+    c_els_simpleEleId60relIso_ = false;
+  }
+  if(b_els_simpleEleId70cIso_ && !b_els_simpleEleId70cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId70cIso_ = true;
+  }else{
+    c_els_simpleEleId70cIso_ = false;
+  }
+  if(b_els_simpleEleId70relIso_ && !b_els_simpleEleId70relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId70relIso_ = true;
+  }else{
+    c_els_simpleEleId70relIso_ = false;
+  }
+  if(b_els_simpleEleId80cIso_ && !b_els_simpleEleId80cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId80cIso_ = true;
+  }else{
+    c_els_simpleEleId80cIso_ = false;
+  }
+  if(b_els_simpleEleId80relIso_ && !b_els_simpleEleId80relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId80relIso_ = true;
+  }else{
+    c_els_simpleEleId80relIso_ = false;
+  }
+  if(b_els_simpleEleId85cIso_ && !b_els_simpleEleId85cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId85cIso_ = true;
+  }else{
+    c_els_simpleEleId85cIso_ = false;
+  }
+  if(b_els_simpleEleId85relIso_ && !b_els_simpleEleId85relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId85relIso_ = true;
+  }else{
+    c_els_simpleEleId85relIso_ = false;
+  }
+  if(b_els_simpleEleId90cIso_ && !b_els_simpleEleId90cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId90cIso_ = true;
+  }else{
+    c_els_simpleEleId90cIso_ = false;
+  }
+  if(b_els_simpleEleId90relIso_ && !b_els_simpleEleId90relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId90relIso_ = true;
+  }else{
+    c_els_simpleEleId90relIso_ = false;
+  }
+  if(b_els_simpleEleId95cIso_ && !b_els_simpleEleId95cIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId95cIso_ = true;
+  }else{
+    c_els_simpleEleId95cIso_ = false;
+  }
+  if(b_els_simpleEleId95relIso_ && !b_els_simpleEleId95relIso_->TestBit(kDoNotProcess)){
+    c_els_simpleEleId95relIso_ = true;
+  }else{
+    c_els_simpleEleId95relIso_ = false;
+  }
+  if(b_els_status_ && !b_els_status_->TestBit(kDoNotProcess)){
+    c_els_status_ = true;
+  }else{
+    c_els_status_ = false;
+  }
+  if(b_els_tIso_ && !b_els_tIso_->TestBit(kDoNotProcess)){
+    c_els_tIso_ = true;
+  }else{
+    c_els_tIso_ = false;
+  }
+  if(b_els_theta_ && !b_els_theta_->TestBit(kDoNotProcess)){
+    c_els_theta_ = true;
+  }else{
+    c_els_theta_ = false;
+  }
+  if(b_els_tightId_ && !b_els_tightId_->TestBit(kDoNotProcess)){
+    c_els_tightId_ = true;
+  }else{
+    c_els_tightId_ = false;
+  }
+  if(b_els_tk_charge_ && !b_els_tk_charge_->TestBit(kDoNotProcess)){
+    c_els_tk_charge_ = true;
+  }else{
+    c_els_tk_charge_ = false;
+  }
+  if(b_els_tk_eta_ && !b_els_tk_eta_->TestBit(kDoNotProcess)){
+    c_els_tk_eta_ = true;
+  }else{
+    c_els_tk_eta_ = false;
+  }
+  if(b_els_tk_phi_ && !b_els_tk_phi_->TestBit(kDoNotProcess)){
+    c_els_tk_phi_ = true;
+  }else{
+    c_els_tk_phi_ = false;
+  }
+  if(b_els_tk_pt_ && !b_els_tk_pt_->TestBit(kDoNotProcess)){
+    c_els_tk_pt_ = true;
+  }else{
+    c_els_tk_pt_ = false;
+  }
+  if(b_els_tk_pz_ && !b_els_tk_pz_->TestBit(kDoNotProcess)){
+    c_els_tk_pz_ = true;
+  }else{
+    c_els_tk_pz_ = false;
+  }
+  if(b_els_vpx_ && !b_els_vpx_->TestBit(kDoNotProcess)){
+    c_els_vpx_ = true;
+  }else{
+    c_els_vpx_ = false;
+  }
+  if(b_els_vpy_ && !b_els_vpy_->TestBit(kDoNotProcess)){
+    c_els_vpy_ = true;
+  }else{
+    c_els_vpy_ = false;
+  }
+  if(b_els_vpz_ && !b_els_vpz_->TestBit(kDoNotProcess)){
+    c_els_vpz_ = true;
+  }else{
+    c_els_vpz_ = false;
+  }
+  if(b_els_vx_ && !b_els_vx_->TestBit(kDoNotProcess)){
+    c_els_vx_ = true;
+  }else{
+    c_els_vx_ = false;
+  }
+  if(b_els_vy_ && !b_els_vy_->TestBit(kDoNotProcess)){
+    c_els_vy_ = true;
+  }else{
+    c_els_vy_ = false;
+  }
+  if(b_els_vz_ && !b_els_vz_->TestBit(kDoNotProcess)){
+    c_els_vz_ = true;
+  }else{
+    c_els_vz_ = false;
+  }
+  if(b_event_ && !b_event_->TestBit(kDoNotProcess)){
+    c_event_ = true;
+  }else{
+    c_event_ = false;
+  }
+  if(b_experimentType_ && !b_experimentType_->TestBit(kDoNotProcess)){
+    c_experimentType_ = true;
+  }else{
+    c_experimentType_ = false;
+  }
+  if(b_hcallaserfilter_decision_ && !b_hcallaserfilter_decision_->TestBit(kDoNotProcess)){
+    c_hcallaserfilter_decision_ = true;
+  }else{
+    c_hcallaserfilter_decision_ = false;
+  }
+  if(b_lumiblock_ && !b_lumiblock_->TestBit(kDoNotProcess)){
+    c_lumiblock_ = true;
+  }else{
+    c_lumiblock_ = false;
+  }
+  if(b_mc_doc_charge_ && !b_mc_doc_charge_->TestBit(kDoNotProcess)){
+    c_mc_doc_charge_ = true;
+  }else{
+    c_mc_doc_charge_ = false;
+  }
+  if(b_mc_doc_energy_ && !b_mc_doc_energy_->TestBit(kDoNotProcess)){
+    c_mc_doc_energy_ = true;
+  }else{
+    c_mc_doc_energy_ = false;
+  }
+  if(b_mc_doc_eta_ && !b_mc_doc_eta_->TestBit(kDoNotProcess)){
+    c_mc_doc_eta_ = true;
+  }else{
+    c_mc_doc_eta_ = false;
+  }
+  if(b_mc_doc_ggrandmother_id_ && !b_mc_doc_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_doc_ggrandmother_id_ = true;
+  }else{
+    c_mc_doc_ggrandmother_id_ = false;
+  }
+  if(b_mc_doc_grandmother_id_ && !b_mc_doc_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_doc_grandmother_id_ = true;
+  }else{
+    c_mc_doc_grandmother_id_ = false;
+  }
+  if(b_mc_doc_id_ && !b_mc_doc_id_->TestBit(kDoNotProcess)){
+    c_mc_doc_id_ = true;
+  }else{
+    c_mc_doc_id_ = false;
+  }
+  if(b_mc_doc_mass_ && !b_mc_doc_mass_->TestBit(kDoNotProcess)){
+    c_mc_doc_mass_ = true;
+  }else{
+    c_mc_doc_mass_ = false;
+  }
+  if(b_mc_doc_mother_id_ && !b_mc_doc_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_doc_mother_id_ = true;
+  }else{
+    c_mc_doc_mother_id_ = false;
+  }
+  if(b_mc_doc_mother_pt_ && !b_mc_doc_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_doc_mother_pt_ = true;
+  }else{
+    c_mc_doc_mother_pt_ = false;
+  }
+  if(b_mc_doc_numOfDaughters_ && !b_mc_doc_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_doc_numOfDaughters_ = true;
+  }else{
+    c_mc_doc_numOfDaughters_ = false;
+  }
+  if(b_mc_doc_numOfMothers_ && !b_mc_doc_numOfMothers_->TestBit(kDoNotProcess)){
+    c_mc_doc_numOfMothers_ = true;
+  }else{
+    c_mc_doc_numOfMothers_ = false;
+  }
+  if(b_mc_doc_phi_ && !b_mc_doc_phi_->TestBit(kDoNotProcess)){
+    c_mc_doc_phi_ = true;
+  }else{
+    c_mc_doc_phi_ = false;
+  }
+  if(b_mc_doc_pt_ && !b_mc_doc_pt_->TestBit(kDoNotProcess)){
+    c_mc_doc_pt_ = true;
+  }else{
+    c_mc_doc_pt_ = false;
+  }
+  if(b_mc_doc_px_ && !b_mc_doc_px_->TestBit(kDoNotProcess)){
+    c_mc_doc_px_ = true;
+  }else{
+    c_mc_doc_px_ = false;
+  }
+  if(b_mc_doc_py_ && !b_mc_doc_py_->TestBit(kDoNotProcess)){
+    c_mc_doc_py_ = true;
+  }else{
+    c_mc_doc_py_ = false;
+  }
+  if(b_mc_doc_pz_ && !b_mc_doc_pz_->TestBit(kDoNotProcess)){
+    c_mc_doc_pz_ = true;
+  }else{
+    c_mc_doc_pz_ = false;
+  }
+  if(b_mc_doc_status_ && !b_mc_doc_status_->TestBit(kDoNotProcess)){
+    c_mc_doc_status_ = true;
+  }else{
+    c_mc_doc_status_ = false;
+  }
+  if(b_mc_doc_theta_ && !b_mc_doc_theta_->TestBit(kDoNotProcess)){
+    c_mc_doc_theta_ = true;
+  }else{
+    c_mc_doc_theta_ = false;
+  }
+  if(b_mc_doc_vertex_x_ && !b_mc_doc_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_doc_vertex_x_ = true;
+  }else{
+    c_mc_doc_vertex_x_ = false;
+  }
+  if(b_mc_doc_vertex_y_ && !b_mc_doc_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_doc_vertex_y_ = true;
+  }else{
+    c_mc_doc_vertex_y_ = false;
+  }
+  if(b_mc_doc_vertex_z_ && !b_mc_doc_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_doc_vertex_z_ = true;
+  }else{
+    c_mc_doc_vertex_z_ = false;
+  }
+  if(b_mc_electrons_charge_ && !b_mc_electrons_charge_->TestBit(kDoNotProcess)){
+    c_mc_electrons_charge_ = true;
+  }else{
+    c_mc_electrons_charge_ = false;
+  }
+  if(b_mc_electrons_energy_ && !b_mc_electrons_energy_->TestBit(kDoNotProcess)){
+    c_mc_electrons_energy_ = true;
+  }else{
+    c_mc_electrons_energy_ = false;
+  }
+  if(b_mc_electrons_eta_ && !b_mc_electrons_eta_->TestBit(kDoNotProcess)){
+    c_mc_electrons_eta_ = true;
+  }else{
+    c_mc_electrons_eta_ = false;
+  }
+  if(b_mc_electrons_ggrandmother_id_ && !b_mc_electrons_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_electrons_ggrandmother_id_ = true;
+  }else{
+    c_mc_electrons_ggrandmother_id_ = false;
+  }
+  if(b_mc_electrons_grandmother_id_ && !b_mc_electrons_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_electrons_grandmother_id_ = true;
+  }else{
+    c_mc_electrons_grandmother_id_ = false;
+  }
+  if(b_mc_electrons_id_ && !b_mc_electrons_id_->TestBit(kDoNotProcess)){
+    c_mc_electrons_id_ = true;
+  }else{
+    c_mc_electrons_id_ = false;
+  }
+  if(b_mc_electrons_mass_ && !b_mc_electrons_mass_->TestBit(kDoNotProcess)){
+    c_mc_electrons_mass_ = true;
+  }else{
+    c_mc_electrons_mass_ = false;
+  }
+  if(b_mc_electrons_mother_id_ && !b_mc_electrons_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_electrons_mother_id_ = true;
+  }else{
+    c_mc_electrons_mother_id_ = false;
+  }
+  if(b_mc_electrons_mother_pt_ && !b_mc_electrons_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_electrons_mother_pt_ = true;
+  }else{
+    c_mc_electrons_mother_pt_ = false;
+  }
+  if(b_mc_electrons_numOfDaughters_ && !b_mc_electrons_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_electrons_numOfDaughters_ = true;
+  }else{
+    c_mc_electrons_numOfDaughters_ = false;
+  }
+  if(b_mc_electrons_phi_ && !b_mc_electrons_phi_->TestBit(kDoNotProcess)){
+    c_mc_electrons_phi_ = true;
+  }else{
+    c_mc_electrons_phi_ = false;
+  }
+  if(b_mc_electrons_pt_ && !b_mc_electrons_pt_->TestBit(kDoNotProcess)){
+    c_mc_electrons_pt_ = true;
+  }else{
+    c_mc_electrons_pt_ = false;
+  }
+  if(b_mc_electrons_px_ && !b_mc_electrons_px_->TestBit(kDoNotProcess)){
+    c_mc_electrons_px_ = true;
+  }else{
+    c_mc_electrons_px_ = false;
+  }
+  if(b_mc_electrons_py_ && !b_mc_electrons_py_->TestBit(kDoNotProcess)){
+    c_mc_electrons_py_ = true;
+  }else{
+    c_mc_electrons_py_ = false;
+  }
+  if(b_mc_electrons_pz_ && !b_mc_electrons_pz_->TestBit(kDoNotProcess)){
+    c_mc_electrons_pz_ = true;
+  }else{
+    c_mc_electrons_pz_ = false;
+  }
+  if(b_mc_electrons_status_ && !b_mc_electrons_status_->TestBit(kDoNotProcess)){
+    c_mc_electrons_status_ = true;
+  }else{
+    c_mc_electrons_status_ = false;
+  }
+  if(b_mc_electrons_theta_ && !b_mc_electrons_theta_->TestBit(kDoNotProcess)){
+    c_mc_electrons_theta_ = true;
+  }else{
+    c_mc_electrons_theta_ = false;
+  }
+  if(b_mc_electrons_vertex_x_ && !b_mc_electrons_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_electrons_vertex_x_ = true;
+  }else{
+    c_mc_electrons_vertex_x_ = false;
+  }
+  if(b_mc_electrons_vertex_y_ && !b_mc_electrons_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_electrons_vertex_y_ = true;
+  }else{
+    c_mc_electrons_vertex_y_ = false;
+  }
+  if(b_mc_electrons_vertex_z_ && !b_mc_electrons_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_electrons_vertex_z_ = true;
+  }else{
+    c_mc_electrons_vertex_z_ = false;
+  }
+  if(b_mc_mus_charge_ && !b_mc_mus_charge_->TestBit(kDoNotProcess)){
+    c_mc_mus_charge_ = true;
+  }else{
+    c_mc_mus_charge_ = false;
+  }
+  if(b_mc_mus_energy_ && !b_mc_mus_energy_->TestBit(kDoNotProcess)){
+    c_mc_mus_energy_ = true;
+  }else{
+    c_mc_mus_energy_ = false;
+  }
+  if(b_mc_mus_eta_ && !b_mc_mus_eta_->TestBit(kDoNotProcess)){
+    c_mc_mus_eta_ = true;
+  }else{
+    c_mc_mus_eta_ = false;
+  }
+  if(b_mc_mus_ggrandmother_id_ && !b_mc_mus_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_mus_ggrandmother_id_ = true;
+  }else{
+    c_mc_mus_ggrandmother_id_ = false;
+  }
+  if(b_mc_mus_grandmother_id_ && !b_mc_mus_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_mus_grandmother_id_ = true;
+  }else{
+    c_mc_mus_grandmother_id_ = false;
+  }
+  if(b_mc_mus_id_ && !b_mc_mus_id_->TestBit(kDoNotProcess)){
+    c_mc_mus_id_ = true;
+  }else{
+    c_mc_mus_id_ = false;
+  }
+  if(b_mc_mus_mass_ && !b_mc_mus_mass_->TestBit(kDoNotProcess)){
+    c_mc_mus_mass_ = true;
+  }else{
+    c_mc_mus_mass_ = false;
+  }
+  if(b_mc_mus_mother_id_ && !b_mc_mus_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_mus_mother_id_ = true;
+  }else{
+    c_mc_mus_mother_id_ = false;
+  }
+  if(b_mc_mus_mother_pt_ && !b_mc_mus_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_mus_mother_pt_ = true;
+  }else{
+    c_mc_mus_mother_pt_ = false;
+  }
+  if(b_mc_mus_numOfDaughters_ && !b_mc_mus_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_mus_numOfDaughters_ = true;
+  }else{
+    c_mc_mus_numOfDaughters_ = false;
+  }
+  if(b_mc_mus_phi_ && !b_mc_mus_phi_->TestBit(kDoNotProcess)){
+    c_mc_mus_phi_ = true;
+  }else{
+    c_mc_mus_phi_ = false;
+  }
+  if(b_mc_mus_pt_ && !b_mc_mus_pt_->TestBit(kDoNotProcess)){
+    c_mc_mus_pt_ = true;
+  }else{
+    c_mc_mus_pt_ = false;
+  }
+  if(b_mc_mus_px_ && !b_mc_mus_px_->TestBit(kDoNotProcess)){
+    c_mc_mus_px_ = true;
+  }else{
+    c_mc_mus_px_ = false;
+  }
+  if(b_mc_mus_py_ && !b_mc_mus_py_->TestBit(kDoNotProcess)){
+    c_mc_mus_py_ = true;
+  }else{
+    c_mc_mus_py_ = false;
+  }
+  if(b_mc_mus_pz_ && !b_mc_mus_pz_->TestBit(kDoNotProcess)){
+    c_mc_mus_pz_ = true;
+  }else{
+    c_mc_mus_pz_ = false;
+  }
+  if(b_mc_mus_status_ && !b_mc_mus_status_->TestBit(kDoNotProcess)){
+    c_mc_mus_status_ = true;
+  }else{
+    c_mc_mus_status_ = false;
+  }
+  if(b_mc_mus_theta_ && !b_mc_mus_theta_->TestBit(kDoNotProcess)){
+    c_mc_mus_theta_ = true;
+  }else{
+    c_mc_mus_theta_ = false;
+  }
+  if(b_mc_mus_vertex_x_ && !b_mc_mus_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_mus_vertex_x_ = true;
+  }else{
+    c_mc_mus_vertex_x_ = false;
+  }
+  if(b_mc_mus_vertex_y_ && !b_mc_mus_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_mus_vertex_y_ = true;
+  }else{
+    c_mc_mus_vertex_y_ = false;
+  }
+  if(b_mc_mus_vertex_z_ && !b_mc_mus_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_mus_vertex_z_ = true;
+  }else{
+    c_mc_mus_vertex_z_ = false;
+  }
+  if(b_mc_nues_charge_ && !b_mc_nues_charge_->TestBit(kDoNotProcess)){
+    c_mc_nues_charge_ = true;
+  }else{
+    c_mc_nues_charge_ = false;
+  }
+  if(b_mc_nues_energy_ && !b_mc_nues_energy_->TestBit(kDoNotProcess)){
+    c_mc_nues_energy_ = true;
+  }else{
+    c_mc_nues_energy_ = false;
+  }
+  if(b_mc_nues_eta_ && !b_mc_nues_eta_->TestBit(kDoNotProcess)){
+    c_mc_nues_eta_ = true;
+  }else{
+    c_mc_nues_eta_ = false;
+  }
+  if(b_mc_nues_ggrandmother_id_ && !b_mc_nues_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_nues_ggrandmother_id_ = true;
+  }else{
+    c_mc_nues_ggrandmother_id_ = false;
+  }
+  if(b_mc_nues_grandmother_id_ && !b_mc_nues_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_nues_grandmother_id_ = true;
+  }else{
+    c_mc_nues_grandmother_id_ = false;
+  }
+  if(b_mc_nues_id_ && !b_mc_nues_id_->TestBit(kDoNotProcess)){
+    c_mc_nues_id_ = true;
+  }else{
+    c_mc_nues_id_ = false;
+  }
+  if(b_mc_nues_mass_ && !b_mc_nues_mass_->TestBit(kDoNotProcess)){
+    c_mc_nues_mass_ = true;
+  }else{
+    c_mc_nues_mass_ = false;
+  }
+  if(b_mc_nues_mother_id_ && !b_mc_nues_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_nues_mother_id_ = true;
+  }else{
+    c_mc_nues_mother_id_ = false;
+  }
+  if(b_mc_nues_mother_pt_ && !b_mc_nues_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_nues_mother_pt_ = true;
+  }else{
+    c_mc_nues_mother_pt_ = false;
+  }
+  if(b_mc_nues_numOfDaughters_ && !b_mc_nues_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_nues_numOfDaughters_ = true;
+  }else{
+    c_mc_nues_numOfDaughters_ = false;
+  }
+  if(b_mc_nues_phi_ && !b_mc_nues_phi_->TestBit(kDoNotProcess)){
+    c_mc_nues_phi_ = true;
+  }else{
+    c_mc_nues_phi_ = false;
+  }
+  if(b_mc_nues_pt_ && !b_mc_nues_pt_->TestBit(kDoNotProcess)){
+    c_mc_nues_pt_ = true;
+  }else{
+    c_mc_nues_pt_ = false;
+  }
+  if(b_mc_nues_px_ && !b_mc_nues_px_->TestBit(kDoNotProcess)){
+    c_mc_nues_px_ = true;
+  }else{
+    c_mc_nues_px_ = false;
+  }
+  if(b_mc_nues_py_ && !b_mc_nues_py_->TestBit(kDoNotProcess)){
+    c_mc_nues_py_ = true;
+  }else{
+    c_mc_nues_py_ = false;
+  }
+  if(b_mc_nues_pz_ && !b_mc_nues_pz_->TestBit(kDoNotProcess)){
+    c_mc_nues_pz_ = true;
+  }else{
+    c_mc_nues_pz_ = false;
+  }
+  if(b_mc_nues_status_ && !b_mc_nues_status_->TestBit(kDoNotProcess)){
+    c_mc_nues_status_ = true;
+  }else{
+    c_mc_nues_status_ = false;
+  }
+  if(b_mc_nues_theta_ && !b_mc_nues_theta_->TestBit(kDoNotProcess)){
+    c_mc_nues_theta_ = true;
+  }else{
+    c_mc_nues_theta_ = false;
+  }
+  if(b_mc_nues_vertex_x_ && !b_mc_nues_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_nues_vertex_x_ = true;
+  }else{
+    c_mc_nues_vertex_x_ = false;
+  }
+  if(b_mc_nues_vertex_y_ && !b_mc_nues_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_nues_vertex_y_ = true;
+  }else{
+    c_mc_nues_vertex_y_ = false;
+  }
+  if(b_mc_nues_vertex_z_ && !b_mc_nues_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_nues_vertex_z_ = true;
+  }else{
+    c_mc_nues_vertex_z_ = false;
+  }
+  if(b_mc_numus_charge_ && !b_mc_numus_charge_->TestBit(kDoNotProcess)){
+    c_mc_numus_charge_ = true;
+  }else{
+    c_mc_numus_charge_ = false;
+  }
+  if(b_mc_numus_energy_ && !b_mc_numus_energy_->TestBit(kDoNotProcess)){
+    c_mc_numus_energy_ = true;
+  }else{
+    c_mc_numus_energy_ = false;
+  }
+  if(b_mc_numus_eta_ && !b_mc_numus_eta_->TestBit(kDoNotProcess)){
+    c_mc_numus_eta_ = true;
+  }else{
+    c_mc_numus_eta_ = false;
+  }
+  if(b_mc_numus_ggrandmother_id_ && !b_mc_numus_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_numus_ggrandmother_id_ = true;
+  }else{
+    c_mc_numus_ggrandmother_id_ = false;
+  }
+  if(b_mc_numus_grandmother_id_ && !b_mc_numus_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_numus_grandmother_id_ = true;
+  }else{
+    c_mc_numus_grandmother_id_ = false;
+  }
+  if(b_mc_numus_id_ && !b_mc_numus_id_->TestBit(kDoNotProcess)){
+    c_mc_numus_id_ = true;
+  }else{
+    c_mc_numus_id_ = false;
+  }
+  if(b_mc_numus_mass_ && !b_mc_numus_mass_->TestBit(kDoNotProcess)){
+    c_mc_numus_mass_ = true;
+  }else{
+    c_mc_numus_mass_ = false;
+  }
+  if(b_mc_numus_mother_id_ && !b_mc_numus_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_numus_mother_id_ = true;
+  }else{
+    c_mc_numus_mother_id_ = false;
+  }
+  if(b_mc_numus_mother_pt_ && !b_mc_numus_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_numus_mother_pt_ = true;
+  }else{
+    c_mc_numus_mother_pt_ = false;
+  }
+  if(b_mc_numus_numOfDaughters_ && !b_mc_numus_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_numus_numOfDaughters_ = true;
+  }else{
+    c_mc_numus_numOfDaughters_ = false;
+  }
+  if(b_mc_numus_phi_ && !b_mc_numus_phi_->TestBit(kDoNotProcess)){
+    c_mc_numus_phi_ = true;
+  }else{
+    c_mc_numus_phi_ = false;
+  }
+  if(b_mc_numus_pt_ && !b_mc_numus_pt_->TestBit(kDoNotProcess)){
+    c_mc_numus_pt_ = true;
+  }else{
+    c_mc_numus_pt_ = false;
+  }
+  if(b_mc_numus_px_ && !b_mc_numus_px_->TestBit(kDoNotProcess)){
+    c_mc_numus_px_ = true;
+  }else{
+    c_mc_numus_px_ = false;
+  }
+  if(b_mc_numus_py_ && !b_mc_numus_py_->TestBit(kDoNotProcess)){
+    c_mc_numus_py_ = true;
+  }else{
+    c_mc_numus_py_ = false;
+  }
+  if(b_mc_numus_pz_ && !b_mc_numus_pz_->TestBit(kDoNotProcess)){
+    c_mc_numus_pz_ = true;
+  }else{
+    c_mc_numus_pz_ = false;
+  }
+  if(b_mc_numus_status_ && !b_mc_numus_status_->TestBit(kDoNotProcess)){
+    c_mc_numus_status_ = true;
+  }else{
+    c_mc_numus_status_ = false;
+  }
+  if(b_mc_numus_theta_ && !b_mc_numus_theta_->TestBit(kDoNotProcess)){
+    c_mc_numus_theta_ = true;
+  }else{
+    c_mc_numus_theta_ = false;
+  }
+  if(b_mc_numus_vertex_x_ && !b_mc_numus_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_numus_vertex_x_ = true;
+  }else{
+    c_mc_numus_vertex_x_ = false;
+  }
+  if(b_mc_numus_vertex_y_ && !b_mc_numus_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_numus_vertex_y_ = true;
+  }else{
+    c_mc_numus_vertex_y_ = false;
+  }
+  if(b_mc_numus_vertex_z_ && !b_mc_numus_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_numus_vertex_z_ = true;
+  }else{
+    c_mc_numus_vertex_z_ = false;
+  }
+  if(b_mc_nutaus_charge_ && !b_mc_nutaus_charge_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_charge_ = true;
+  }else{
+    c_mc_nutaus_charge_ = false;
+  }
+  if(b_mc_nutaus_energy_ && !b_mc_nutaus_energy_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_energy_ = true;
+  }else{
+    c_mc_nutaus_energy_ = false;
+  }
+  if(b_mc_nutaus_eta_ && !b_mc_nutaus_eta_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_eta_ = true;
+  }else{
+    c_mc_nutaus_eta_ = false;
+  }
+  if(b_mc_nutaus_ggrandmother_id_ && !b_mc_nutaus_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_ggrandmother_id_ = true;
+  }else{
+    c_mc_nutaus_ggrandmother_id_ = false;
+  }
+  if(b_mc_nutaus_grandmother_id_ && !b_mc_nutaus_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_grandmother_id_ = true;
+  }else{
+    c_mc_nutaus_grandmother_id_ = false;
+  }
+  if(b_mc_nutaus_id_ && !b_mc_nutaus_id_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_id_ = true;
+  }else{
+    c_mc_nutaus_id_ = false;
+  }
+  if(b_mc_nutaus_mass_ && !b_mc_nutaus_mass_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_mass_ = true;
+  }else{
+    c_mc_nutaus_mass_ = false;
+  }
+  if(b_mc_nutaus_mother_id_ && !b_mc_nutaus_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_mother_id_ = true;
+  }else{
+    c_mc_nutaus_mother_id_ = false;
+  }
+  if(b_mc_nutaus_mother_pt_ && !b_mc_nutaus_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_mother_pt_ = true;
+  }else{
+    c_mc_nutaus_mother_pt_ = false;
+  }
+  if(b_mc_nutaus_numOfDaughters_ && !b_mc_nutaus_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_numOfDaughters_ = true;
+  }else{
+    c_mc_nutaus_numOfDaughters_ = false;
+  }
+  if(b_mc_nutaus_phi_ && !b_mc_nutaus_phi_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_phi_ = true;
+  }else{
+    c_mc_nutaus_phi_ = false;
+  }
+  if(b_mc_nutaus_pt_ && !b_mc_nutaus_pt_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_pt_ = true;
+  }else{
+    c_mc_nutaus_pt_ = false;
+  }
+  if(b_mc_nutaus_px_ && !b_mc_nutaus_px_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_px_ = true;
+  }else{
+    c_mc_nutaus_px_ = false;
+  }
+  if(b_mc_nutaus_py_ && !b_mc_nutaus_py_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_py_ = true;
+  }else{
+    c_mc_nutaus_py_ = false;
+  }
+  if(b_mc_nutaus_pz_ && !b_mc_nutaus_pz_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_pz_ = true;
+  }else{
+    c_mc_nutaus_pz_ = false;
+  }
+  if(b_mc_nutaus_status_ && !b_mc_nutaus_status_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_status_ = true;
+  }else{
+    c_mc_nutaus_status_ = false;
+  }
+  if(b_mc_nutaus_theta_ && !b_mc_nutaus_theta_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_theta_ = true;
+  }else{
+    c_mc_nutaus_theta_ = false;
+  }
+  if(b_mc_nutaus_vertex_x_ && !b_mc_nutaus_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_vertex_x_ = true;
+  }else{
+    c_mc_nutaus_vertex_x_ = false;
+  }
+  if(b_mc_nutaus_vertex_y_ && !b_mc_nutaus_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_vertex_y_ = true;
+  }else{
+    c_mc_nutaus_vertex_y_ = false;
+  }
+  if(b_mc_nutaus_vertex_z_ && !b_mc_nutaus_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_nutaus_vertex_z_ = true;
+  }else{
+    c_mc_nutaus_vertex_z_ = false;
+  }
+  if(b_mc_photons_charge_ && !b_mc_photons_charge_->TestBit(kDoNotProcess)){
+    c_mc_photons_charge_ = true;
+  }else{
+    c_mc_photons_charge_ = false;
+  }
+  if(b_mc_photons_energy_ && !b_mc_photons_energy_->TestBit(kDoNotProcess)){
+    c_mc_photons_energy_ = true;
+  }else{
+    c_mc_photons_energy_ = false;
+  }
+  if(b_mc_photons_eta_ && !b_mc_photons_eta_->TestBit(kDoNotProcess)){
+    c_mc_photons_eta_ = true;
+  }else{
+    c_mc_photons_eta_ = false;
+  }
+  if(b_mc_photons_ggrandmother_id_ && !b_mc_photons_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_photons_ggrandmother_id_ = true;
+  }else{
+    c_mc_photons_ggrandmother_id_ = false;
+  }
+  if(b_mc_photons_grandmother_id_ && !b_mc_photons_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_photons_grandmother_id_ = true;
+  }else{
+    c_mc_photons_grandmother_id_ = false;
+  }
+  if(b_mc_photons_id_ && !b_mc_photons_id_->TestBit(kDoNotProcess)){
+    c_mc_photons_id_ = true;
+  }else{
+    c_mc_photons_id_ = false;
+  }
+  if(b_mc_photons_mass_ && !b_mc_photons_mass_->TestBit(kDoNotProcess)){
+    c_mc_photons_mass_ = true;
+  }else{
+    c_mc_photons_mass_ = false;
+  }
+  if(b_mc_photons_mother_id_ && !b_mc_photons_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_photons_mother_id_ = true;
+  }else{
+    c_mc_photons_mother_id_ = false;
+  }
+  if(b_mc_photons_mother_pt_ && !b_mc_photons_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_photons_mother_pt_ = true;
+  }else{
+    c_mc_photons_mother_pt_ = false;
+  }
+  if(b_mc_photons_numOfDaughters_ && !b_mc_photons_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_photons_numOfDaughters_ = true;
+  }else{
+    c_mc_photons_numOfDaughters_ = false;
+  }
+  if(b_mc_photons_phi_ && !b_mc_photons_phi_->TestBit(kDoNotProcess)){
+    c_mc_photons_phi_ = true;
+  }else{
+    c_mc_photons_phi_ = false;
+  }
+  if(b_mc_photons_pt_ && !b_mc_photons_pt_->TestBit(kDoNotProcess)){
+    c_mc_photons_pt_ = true;
+  }else{
+    c_mc_photons_pt_ = false;
+  }
+  if(b_mc_photons_px_ && !b_mc_photons_px_->TestBit(kDoNotProcess)){
+    c_mc_photons_px_ = true;
+  }else{
+    c_mc_photons_px_ = false;
+  }
+  if(b_mc_photons_py_ && !b_mc_photons_py_->TestBit(kDoNotProcess)){
+    c_mc_photons_py_ = true;
+  }else{
+    c_mc_photons_py_ = false;
+  }
+  if(b_mc_photons_pz_ && !b_mc_photons_pz_->TestBit(kDoNotProcess)){
+    c_mc_photons_pz_ = true;
+  }else{
+    c_mc_photons_pz_ = false;
+  }
+  if(b_mc_photons_status_ && !b_mc_photons_status_->TestBit(kDoNotProcess)){
+    c_mc_photons_status_ = true;
+  }else{
+    c_mc_photons_status_ = false;
+  }
+  if(b_mc_photons_theta_ && !b_mc_photons_theta_->TestBit(kDoNotProcess)){
+    c_mc_photons_theta_ = true;
+  }else{
+    c_mc_photons_theta_ = false;
+  }
+  if(b_mc_photons_vertex_x_ && !b_mc_photons_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_photons_vertex_x_ = true;
+  }else{
+    c_mc_photons_vertex_x_ = false;
+  }
+  if(b_mc_photons_vertex_y_ && !b_mc_photons_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_photons_vertex_y_ = true;
+  }else{
+    c_mc_photons_vertex_y_ = false;
+  }
+  if(b_mc_photons_vertex_z_ && !b_mc_photons_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_photons_vertex_z_ = true;
+  }else{
+    c_mc_photons_vertex_z_ = false;
+  }
+  if(b_mc_taus_charge_ && !b_mc_taus_charge_->TestBit(kDoNotProcess)){
+    c_mc_taus_charge_ = true;
+  }else{
+    c_mc_taus_charge_ = false;
+  }
+  if(b_mc_taus_energy_ && !b_mc_taus_energy_->TestBit(kDoNotProcess)){
+    c_mc_taus_energy_ = true;
+  }else{
+    c_mc_taus_energy_ = false;
+  }
+  if(b_mc_taus_eta_ && !b_mc_taus_eta_->TestBit(kDoNotProcess)){
+    c_mc_taus_eta_ = true;
+  }else{
+    c_mc_taus_eta_ = false;
+  }
+  if(b_mc_taus_ggrandmother_id_ && !b_mc_taus_ggrandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_taus_ggrandmother_id_ = true;
+  }else{
+    c_mc_taus_ggrandmother_id_ = false;
+  }
+  if(b_mc_taus_grandmother_id_ && !b_mc_taus_grandmother_id_->TestBit(kDoNotProcess)){
+    c_mc_taus_grandmother_id_ = true;
+  }else{
+    c_mc_taus_grandmother_id_ = false;
+  }
+  if(b_mc_taus_id_ && !b_mc_taus_id_->TestBit(kDoNotProcess)){
+    c_mc_taus_id_ = true;
+  }else{
+    c_mc_taus_id_ = false;
+  }
+  if(b_mc_taus_mass_ && !b_mc_taus_mass_->TestBit(kDoNotProcess)){
+    c_mc_taus_mass_ = true;
+  }else{
+    c_mc_taus_mass_ = false;
+  }
+  if(b_mc_taus_mother_id_ && !b_mc_taus_mother_id_->TestBit(kDoNotProcess)){
+    c_mc_taus_mother_id_ = true;
+  }else{
+    c_mc_taus_mother_id_ = false;
+  }
+  if(b_mc_taus_mother_pt_ && !b_mc_taus_mother_pt_->TestBit(kDoNotProcess)){
+    c_mc_taus_mother_pt_ = true;
+  }else{
+    c_mc_taus_mother_pt_ = false;
+  }
+  if(b_mc_taus_numOfDaughters_ && !b_mc_taus_numOfDaughters_->TestBit(kDoNotProcess)){
+    c_mc_taus_numOfDaughters_ = true;
+  }else{
+    c_mc_taus_numOfDaughters_ = false;
+  }
+  if(b_mc_taus_phi_ && !b_mc_taus_phi_->TestBit(kDoNotProcess)){
+    c_mc_taus_phi_ = true;
+  }else{
+    c_mc_taus_phi_ = false;
+  }
+  if(b_mc_taus_pt_ && !b_mc_taus_pt_->TestBit(kDoNotProcess)){
+    c_mc_taus_pt_ = true;
+  }else{
+    c_mc_taus_pt_ = false;
+  }
+  if(b_mc_taus_px_ && !b_mc_taus_px_->TestBit(kDoNotProcess)){
+    c_mc_taus_px_ = true;
+  }else{
+    c_mc_taus_px_ = false;
+  }
+  if(b_mc_taus_py_ && !b_mc_taus_py_->TestBit(kDoNotProcess)){
+    c_mc_taus_py_ = true;
+  }else{
+    c_mc_taus_py_ = false;
+  }
+  if(b_mc_taus_pz_ && !b_mc_taus_pz_->TestBit(kDoNotProcess)){
+    c_mc_taus_pz_ = true;
+  }else{
+    c_mc_taus_pz_ = false;
+  }
+  if(b_mc_taus_status_ && !b_mc_taus_status_->TestBit(kDoNotProcess)){
+    c_mc_taus_status_ = true;
+  }else{
+    c_mc_taus_status_ = false;
+  }
+  if(b_mc_taus_theta_ && !b_mc_taus_theta_->TestBit(kDoNotProcess)){
+    c_mc_taus_theta_ = true;
+  }else{
+    c_mc_taus_theta_ = false;
+  }
+  if(b_mc_taus_vertex_x_ && !b_mc_taus_vertex_x_->TestBit(kDoNotProcess)){
+    c_mc_taus_vertex_x_ = true;
+  }else{
+    c_mc_taus_vertex_x_ = false;
+  }
+  if(b_mc_taus_vertex_y_ && !b_mc_taus_vertex_y_->TestBit(kDoNotProcess)){
+    c_mc_taus_vertex_y_ = true;
+  }else{
+    c_mc_taus_vertex_y_ = false;
+  }
+  if(b_mc_taus_vertex_z_ && !b_mc_taus_vertex_z_->TestBit(kDoNotProcess)){
+    c_mc_taus_vertex_z_ = true;
+  }else{
+    c_mc_taus_vertex_z_ = false;
+  }
+  if(b_model_params_ && !b_model_params_->TestBit(kDoNotProcess)){
+    c_model_params_ = true;
+  }else{
+    c_model_params_ = false;
+  }
+  if(b_mus_cIso_ && !b_mus_cIso_->TestBit(kDoNotProcess)){
+    c_mus_cIso_ = true;
+  }else{
+    c_mus_cIso_ = false;
+  }
+  if(b_mus_calEnergyEm_ && !b_mus_calEnergyEm_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyEm_ = true;
+  }else{
+    c_mus_calEnergyEm_ = false;
+  }
+  if(b_mus_calEnergyEmS9_ && !b_mus_calEnergyEmS9_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyEmS9_ = true;
+  }else{
+    c_mus_calEnergyEmS9_ = false;
+  }
+  if(b_mus_calEnergyHad_ && !b_mus_calEnergyHad_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyHad_ = true;
+  }else{
+    c_mus_calEnergyHad_ = false;
+  }
+  if(b_mus_calEnergyHadS9_ && !b_mus_calEnergyHadS9_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyHadS9_ = true;
+  }else{
+    c_mus_calEnergyHadS9_ = false;
+  }
+  if(b_mus_calEnergyHo_ && !b_mus_calEnergyHo_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyHo_ = true;
+  }else{
+    c_mus_calEnergyHo_ = false;
+  }
+  if(b_mus_calEnergyHoS9_ && !b_mus_calEnergyHoS9_->TestBit(kDoNotProcess)){
+    c_mus_calEnergyHoS9_ = true;
+  }else{
+    c_mus_calEnergyHoS9_ = false;
+  }
+  if(b_mus_charge_ && !b_mus_charge_->TestBit(kDoNotProcess)){
+    c_mus_charge_ = true;
+  }else{
+    c_mus_charge_ = false;
+  }
+  if(b_mus_cm_ExpectedHitsInner_ && !b_mus_cm_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_mus_cm_ExpectedHitsInner_ = true;
+  }else{
+    c_mus_cm_ExpectedHitsInner_ = false;
+  }
+  if(b_mus_cm_ExpectedHitsOuter_ && !b_mus_cm_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_mus_cm_ExpectedHitsOuter_ = true;
+  }else{
+    c_mus_cm_ExpectedHitsOuter_ = false;
+  }
+  if(b_mus_cm_LayersWithMeasurement_ && !b_mus_cm_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_cm_LayersWithMeasurement_ = true;
+  }else{
+    c_mus_cm_LayersWithMeasurement_ = false;
+  }
+  if(b_mus_cm_LayersWithoutMeasurement_ && !b_mus_cm_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_cm_LayersWithoutMeasurement_ = true;
+  }else{
+    c_mus_cm_LayersWithoutMeasurement_ = false;
+  }
+  if(b_mus_cm_PixelLayersWithMeasurement_ && !b_mus_cm_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_cm_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_mus_cm_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_mus_cm_ValidStripLayersWithMonoAndStereoHit_ && !b_mus_cm_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_mus_cm_chg_ && !b_mus_cm_chg_->TestBit(kDoNotProcess)){
+    c_mus_cm_chg_ = true;
+  }else{
+    c_mus_cm_chg_ = false;
+  }
+  if(b_mus_cm_chi2_ && !b_mus_cm_chi2_->TestBit(kDoNotProcess)){
+    c_mus_cm_chi2_ = true;
+  }else{
+    c_mus_cm_chi2_ = false;
+  }
+  if(b_mus_cm_d0dum_ && !b_mus_cm_d0dum_->TestBit(kDoNotProcess)){
+    c_mus_cm_d0dum_ = true;
+  }else{
+    c_mus_cm_d0dum_ = false;
+  }
+  if(b_mus_cm_d0dumErr_ && !b_mus_cm_d0dumErr_->TestBit(kDoNotProcess)){
+    c_mus_cm_d0dumErr_ = true;
+  }else{
+    c_mus_cm_d0dumErr_ = false;
+  }
+  if(b_mus_cm_dz_ && !b_mus_cm_dz_->TestBit(kDoNotProcess)){
+    c_mus_cm_dz_ = true;
+  }else{
+    c_mus_cm_dz_ = false;
+  }
+  if(b_mus_cm_dzErr_ && !b_mus_cm_dzErr_->TestBit(kDoNotProcess)){
+    c_mus_cm_dzErr_ = true;
+  }else{
+    c_mus_cm_dzErr_ = false;
+  }
+  if(b_mus_cm_eta_ && !b_mus_cm_eta_->TestBit(kDoNotProcess)){
+    c_mus_cm_eta_ = true;
+  }else{
+    c_mus_cm_eta_ = false;
+  }
+  if(b_mus_cm_etaErr_ && !b_mus_cm_etaErr_->TestBit(kDoNotProcess)){
+    c_mus_cm_etaErr_ = true;
+  }else{
+    c_mus_cm_etaErr_ = false;
+  }
+  if(b_mus_cm_ndof_ && !b_mus_cm_ndof_->TestBit(kDoNotProcess)){
+    c_mus_cm_ndof_ = true;
+  }else{
+    c_mus_cm_ndof_ = false;
+  }
+  if(b_mus_cm_numlosthits_ && !b_mus_cm_numlosthits_->TestBit(kDoNotProcess)){
+    c_mus_cm_numlosthits_ = true;
+  }else{
+    c_mus_cm_numlosthits_ = false;
+  }
+  if(b_mus_cm_numvalMuonhits_ && !b_mus_cm_numvalMuonhits_->TestBit(kDoNotProcess)){
+    c_mus_cm_numvalMuonhits_ = true;
+  }else{
+    c_mus_cm_numvalMuonhits_ = false;
+  }
+  if(b_mus_cm_numvalhits_ && !b_mus_cm_numvalhits_->TestBit(kDoNotProcess)){
+    c_mus_cm_numvalhits_ = true;
+  }else{
+    c_mus_cm_numvalhits_ = false;
+  }
+  if(b_mus_cm_phi_ && !b_mus_cm_phi_->TestBit(kDoNotProcess)){
+    c_mus_cm_phi_ = true;
+  }else{
+    c_mus_cm_phi_ = false;
+  }
+  if(b_mus_cm_phiErr_ && !b_mus_cm_phiErr_->TestBit(kDoNotProcess)){
+    c_mus_cm_phiErr_ = true;
+  }else{
+    c_mus_cm_phiErr_ = false;
+  }
+  if(b_mus_cm_pt_ && !b_mus_cm_pt_->TestBit(kDoNotProcess)){
+    c_mus_cm_pt_ = true;
+  }else{
+    c_mus_cm_pt_ = false;
+  }
+  if(b_mus_cm_ptErr_ && !b_mus_cm_ptErr_->TestBit(kDoNotProcess)){
+    c_mus_cm_ptErr_ = true;
+  }else{
+    c_mus_cm_ptErr_ = false;
+  }
+  if(b_mus_cm_px_ && !b_mus_cm_px_->TestBit(kDoNotProcess)){
+    c_mus_cm_px_ = true;
+  }else{
+    c_mus_cm_px_ = false;
+  }
+  if(b_mus_cm_py_ && !b_mus_cm_py_->TestBit(kDoNotProcess)){
+    c_mus_cm_py_ = true;
+  }else{
+    c_mus_cm_py_ = false;
+  }
+  if(b_mus_cm_pz_ && !b_mus_cm_pz_->TestBit(kDoNotProcess)){
+    c_mus_cm_pz_ = true;
+  }else{
+    c_mus_cm_pz_ = false;
+  }
+  if(b_mus_cm_theta_ && !b_mus_cm_theta_->TestBit(kDoNotProcess)){
+    c_mus_cm_theta_ = true;
+  }else{
+    c_mus_cm_theta_ = false;
+  }
+  if(b_mus_cm_vx_ && !b_mus_cm_vx_->TestBit(kDoNotProcess)){
+    c_mus_cm_vx_ = true;
+  }else{
+    c_mus_cm_vx_ = false;
+  }
+  if(b_mus_cm_vy_ && !b_mus_cm_vy_->TestBit(kDoNotProcess)){
+    c_mus_cm_vy_ = true;
+  }else{
+    c_mus_cm_vy_ = false;
+  }
+  if(b_mus_cm_vz_ && !b_mus_cm_vz_->TestBit(kDoNotProcess)){
+    c_mus_cm_vz_ = true;
+  }else{
+    c_mus_cm_vz_ = false;
+  }
+  if(b_mus_dB_ && !b_mus_dB_->TestBit(kDoNotProcess)){
+    c_mus_dB_ = true;
+  }else{
+    c_mus_dB_ = false;
+  }
+  if(b_mus_ecalIso_ && !b_mus_ecalIso_->TestBit(kDoNotProcess)){
+    c_mus_ecalIso_ = true;
+  }else{
+    c_mus_ecalIso_ = false;
+  }
+  if(b_mus_ecalvetoDep_ && !b_mus_ecalvetoDep_->TestBit(kDoNotProcess)){
+    c_mus_ecalvetoDep_ = true;
+  }else{
+    c_mus_ecalvetoDep_ = false;
+  }
+  if(b_mus_energy_ && !b_mus_energy_->TestBit(kDoNotProcess)){
+    c_mus_energy_ = true;
+  }else{
+    c_mus_energy_ = false;
+  }
+  if(b_mus_et_ && !b_mus_et_->TestBit(kDoNotProcess)){
+    c_mus_et_ = true;
+  }else{
+    c_mus_et_ = false;
+  }
+  if(b_mus_eta_ && !b_mus_eta_->TestBit(kDoNotProcess)){
+    c_mus_eta_ = true;
+  }else{
+    c_mus_eta_ = false;
+  }
+  if(b_mus_gen_et_ && !b_mus_gen_et_->TestBit(kDoNotProcess)){
+    c_mus_gen_et_ = true;
+  }else{
+    c_mus_gen_et_ = false;
+  }
+  if(b_mus_gen_eta_ && !b_mus_gen_eta_->TestBit(kDoNotProcess)){
+    c_mus_gen_eta_ = true;
+  }else{
+    c_mus_gen_eta_ = false;
+  }
+  if(b_mus_gen_id_ && !b_mus_gen_id_->TestBit(kDoNotProcess)){
+    c_mus_gen_id_ = true;
+  }else{
+    c_mus_gen_id_ = false;
+  }
+  if(b_mus_gen_mother_et_ && !b_mus_gen_mother_et_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_et_ = true;
+  }else{
+    c_mus_gen_mother_et_ = false;
+  }
+  if(b_mus_gen_mother_eta_ && !b_mus_gen_mother_eta_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_eta_ = true;
+  }else{
+    c_mus_gen_mother_eta_ = false;
+  }
+  if(b_mus_gen_mother_id_ && !b_mus_gen_mother_id_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_id_ = true;
+  }else{
+    c_mus_gen_mother_id_ = false;
+  }
+  if(b_mus_gen_mother_phi_ && !b_mus_gen_mother_phi_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_phi_ = true;
+  }else{
+    c_mus_gen_mother_phi_ = false;
+  }
+  if(b_mus_gen_mother_pt_ && !b_mus_gen_mother_pt_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_pt_ = true;
+  }else{
+    c_mus_gen_mother_pt_ = false;
+  }
+  if(b_mus_gen_mother_px_ && !b_mus_gen_mother_px_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_px_ = true;
+  }else{
+    c_mus_gen_mother_px_ = false;
+  }
+  if(b_mus_gen_mother_py_ && !b_mus_gen_mother_py_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_py_ = true;
+  }else{
+    c_mus_gen_mother_py_ = false;
+  }
+  if(b_mus_gen_mother_pz_ && !b_mus_gen_mother_pz_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_pz_ = true;
+  }else{
+    c_mus_gen_mother_pz_ = false;
+  }
+  if(b_mus_gen_mother_theta_ && !b_mus_gen_mother_theta_->TestBit(kDoNotProcess)){
+    c_mus_gen_mother_theta_ = true;
+  }else{
+    c_mus_gen_mother_theta_ = false;
+  }
+  if(b_mus_gen_phi_ && !b_mus_gen_phi_->TestBit(kDoNotProcess)){
+    c_mus_gen_phi_ = true;
+  }else{
+    c_mus_gen_phi_ = false;
+  }
+  if(b_mus_gen_pt_ && !b_mus_gen_pt_->TestBit(kDoNotProcess)){
+    c_mus_gen_pt_ = true;
+  }else{
+    c_mus_gen_pt_ = false;
+  }
+  if(b_mus_gen_px_ && !b_mus_gen_px_->TestBit(kDoNotProcess)){
+    c_mus_gen_px_ = true;
+  }else{
+    c_mus_gen_px_ = false;
+  }
+  if(b_mus_gen_py_ && !b_mus_gen_py_->TestBit(kDoNotProcess)){
+    c_mus_gen_py_ = true;
+  }else{
+    c_mus_gen_py_ = false;
+  }
+  if(b_mus_gen_pz_ && !b_mus_gen_pz_->TestBit(kDoNotProcess)){
+    c_mus_gen_pz_ = true;
+  }else{
+    c_mus_gen_pz_ = false;
+  }
+  if(b_mus_gen_theta_ && !b_mus_gen_theta_->TestBit(kDoNotProcess)){
+    c_mus_gen_theta_ = true;
+  }else{
+    c_mus_gen_theta_ = false;
+  }
+  if(b_mus_hcalIso_ && !b_mus_hcalIso_->TestBit(kDoNotProcess)){
+    c_mus_hcalIso_ = true;
+  }else{
+    c_mus_hcalIso_ = false;
+  }
+  if(b_mus_hcalvetoDep_ && !b_mus_hcalvetoDep_->TestBit(kDoNotProcess)){
+    c_mus_hcalvetoDep_ = true;
+  }else{
+    c_mus_hcalvetoDep_ = false;
+  }
+  if(b_mus_id_All_ && !b_mus_id_All_->TestBit(kDoNotProcess)){
+    c_mus_id_All_ = true;
+  }else{
+    c_mus_id_All_ = false;
+  }
+  if(b_mus_id_AllArbitrated_ && !b_mus_id_AllArbitrated_->TestBit(kDoNotProcess)){
+    c_mus_id_AllArbitrated_ = true;
+  }else{
+    c_mus_id_AllArbitrated_ = false;
+  }
+  if(b_mus_id_AllGlobalMuons_ && !b_mus_id_AllGlobalMuons_->TestBit(kDoNotProcess)){
+    c_mus_id_AllGlobalMuons_ = true;
+  }else{
+    c_mus_id_AllGlobalMuons_ = false;
+  }
+  if(b_mus_id_AllStandAloneMuons_ && !b_mus_id_AllStandAloneMuons_->TestBit(kDoNotProcess)){
+    c_mus_id_AllStandAloneMuons_ = true;
+  }else{
+    c_mus_id_AllStandAloneMuons_ = false;
+  }
+  if(b_mus_id_AllTrackerMuons_ && !b_mus_id_AllTrackerMuons_->TestBit(kDoNotProcess)){
+    c_mus_id_AllTrackerMuons_ = true;
+  }else{
+    c_mus_id_AllTrackerMuons_ = false;
+  }
+  if(b_mus_id_GlobalMuonPromptTight_ && !b_mus_id_GlobalMuonPromptTight_->TestBit(kDoNotProcess)){
+    c_mus_id_GlobalMuonPromptTight_ = true;
+  }else{
+    c_mus_id_GlobalMuonPromptTight_ = false;
+  }
+  if(b_mus_id_TM2DCompatibilityLoose_ && !b_mus_id_TM2DCompatibilityLoose_->TestBit(kDoNotProcess)){
+    c_mus_id_TM2DCompatibilityLoose_ = true;
+  }else{
+    c_mus_id_TM2DCompatibilityLoose_ = false;
+  }
+  if(b_mus_id_TM2DCompatibilityTight_ && !b_mus_id_TM2DCompatibilityTight_->TestBit(kDoNotProcess)){
+    c_mus_id_TM2DCompatibilityTight_ = true;
+  }else{
+    c_mus_id_TM2DCompatibilityTight_ = false;
+  }
+  if(b_mus_id_TMLastStationLoose_ && !b_mus_id_TMLastStationLoose_->TestBit(kDoNotProcess)){
+    c_mus_id_TMLastStationLoose_ = true;
+  }else{
+    c_mus_id_TMLastStationLoose_ = false;
+  }
+  if(b_mus_id_TMLastStationOptimizedLowPtLoose_ && !b_mus_id_TMLastStationOptimizedLowPtLoose_->TestBit(kDoNotProcess)){
+    c_mus_id_TMLastStationOptimizedLowPtLoose_ = true;
+  }else{
+    c_mus_id_TMLastStationOptimizedLowPtLoose_ = false;
+  }
+  if(b_mus_id_TMLastStationOptimizedLowPtTight_ && !b_mus_id_TMLastStationOptimizedLowPtTight_->TestBit(kDoNotProcess)){
+    c_mus_id_TMLastStationOptimizedLowPtTight_ = true;
+  }else{
+    c_mus_id_TMLastStationOptimizedLowPtTight_ = false;
+  }
+  if(b_mus_id_TMLastStationTight_ && !b_mus_id_TMLastStationTight_->TestBit(kDoNotProcess)){
+    c_mus_id_TMLastStationTight_ = true;
+  }else{
+    c_mus_id_TMLastStationTight_ = false;
+  }
+  if(b_mus_id_TMOneStationLoose_ && !b_mus_id_TMOneStationLoose_->TestBit(kDoNotProcess)){
+    c_mus_id_TMOneStationLoose_ = true;
+  }else{
+    c_mus_id_TMOneStationLoose_ = false;
+  }
+  if(b_mus_id_TMOneStationTight_ && !b_mus_id_TMOneStationTight_->TestBit(kDoNotProcess)){
+    c_mus_id_TMOneStationTight_ = true;
+  }else{
+    c_mus_id_TMOneStationTight_ = false;
+  }
+  if(b_mus_id_TrackerMuonArbitrated_ && !b_mus_id_TrackerMuonArbitrated_->TestBit(kDoNotProcess)){
+    c_mus_id_TrackerMuonArbitrated_ = true;
+  }else{
+    c_mus_id_TrackerMuonArbitrated_ = false;
+  }
+  if(b_mus_isCaloMuon_ && !b_mus_isCaloMuon_->TestBit(kDoNotProcess)){
+    c_mus_isCaloMuon_ = true;
+  }else{
+    c_mus_isCaloMuon_ = false;
+  }
+  if(b_mus_isConvertedPhoton_ && !b_mus_isConvertedPhoton_->TestBit(kDoNotProcess)){
+    c_mus_isConvertedPhoton_ = true;
+  }else{
+    c_mus_isConvertedPhoton_ = false;
+  }
+  if(b_mus_isElectron_ && !b_mus_isElectron_->TestBit(kDoNotProcess)){
+    c_mus_isElectron_ = true;
+  }else{
+    c_mus_isElectron_ = false;
+  }
+  if(b_mus_isGlobalMuon_ && !b_mus_isGlobalMuon_->TestBit(kDoNotProcess)){
+    c_mus_isGlobalMuon_ = true;
+  }else{
+    c_mus_isGlobalMuon_ = false;
+  }
+  if(b_mus_isPFMuon_ && !b_mus_isPFMuon_->TestBit(kDoNotProcess)){
+    c_mus_isPFMuon_ = true;
+  }else{
+    c_mus_isPFMuon_ = false;
+  }
+  if(b_mus_isPhoton_ && !b_mus_isPhoton_->TestBit(kDoNotProcess)){
+    c_mus_isPhoton_ = true;
+  }else{
+    c_mus_isPhoton_ = false;
+  }
+  if(b_mus_isStandAloneMuon_ && !b_mus_isStandAloneMuon_->TestBit(kDoNotProcess)){
+    c_mus_isStandAloneMuon_ = true;
+  }else{
+    c_mus_isStandAloneMuon_ = false;
+  }
+  if(b_mus_isTrackerMuon_ && !b_mus_isTrackerMuon_->TestBit(kDoNotProcess)){
+    c_mus_isTrackerMuon_ = true;
+  }else{
+    c_mus_isTrackerMuon_ = false;
+  }
+  if(b_mus_iso03_emEt_ && !b_mus_iso03_emEt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_emEt_ = true;
+  }else{
+    c_mus_iso03_emEt_ = false;
+  }
+  if(b_mus_iso03_emVetoEt_ && !b_mus_iso03_emVetoEt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_emVetoEt_ = true;
+  }else{
+    c_mus_iso03_emVetoEt_ = false;
+  }
+  if(b_mus_iso03_hadEt_ && !b_mus_iso03_hadEt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_hadEt_ = true;
+  }else{
+    c_mus_iso03_hadEt_ = false;
+  }
+  if(b_mus_iso03_hadVetoEt_ && !b_mus_iso03_hadVetoEt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_hadVetoEt_ = true;
+  }else{
+    c_mus_iso03_hadVetoEt_ = false;
+  }
+  if(b_mus_iso03_hoEt_ && !b_mus_iso03_hoEt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_hoEt_ = true;
+  }else{
+    c_mus_iso03_hoEt_ = false;
+  }
+  if(b_mus_iso03_nTracks_ && !b_mus_iso03_nTracks_->TestBit(kDoNotProcess)){
+    c_mus_iso03_nTracks_ = true;
+  }else{
+    c_mus_iso03_nTracks_ = false;
+  }
+  if(b_mus_iso03_sumPt_ && !b_mus_iso03_sumPt_->TestBit(kDoNotProcess)){
+    c_mus_iso03_sumPt_ = true;
+  }else{
+    c_mus_iso03_sumPt_ = false;
+  }
+  if(b_mus_iso05_emEt_ && !b_mus_iso05_emEt_->TestBit(kDoNotProcess)){
+    c_mus_iso05_emEt_ = true;
+  }else{
+    c_mus_iso05_emEt_ = false;
+  }
+  if(b_mus_iso05_hadEt_ && !b_mus_iso05_hadEt_->TestBit(kDoNotProcess)){
+    c_mus_iso05_hadEt_ = true;
+  }else{
+    c_mus_iso05_hadEt_ = false;
+  }
+  if(b_mus_iso05_hoEt_ && !b_mus_iso05_hoEt_->TestBit(kDoNotProcess)){
+    c_mus_iso05_hoEt_ = true;
+  }else{
+    c_mus_iso05_hoEt_ = false;
+  }
+  if(b_mus_iso05_nTracks_ && !b_mus_iso05_nTracks_->TestBit(kDoNotProcess)){
+    c_mus_iso05_nTracks_ = true;
+  }else{
+    c_mus_iso05_nTracks_ = false;
+  }
+  if(b_mus_iso05_sumPt_ && !b_mus_iso05_sumPt_->TestBit(kDoNotProcess)){
+    c_mus_iso05_sumPt_ = true;
+  }else{
+    c_mus_iso05_sumPt_ = false;
+  }
+  if(b_mus_num_matches_ && !b_mus_num_matches_->TestBit(kDoNotProcess)){
+    c_mus_num_matches_ = true;
+  }else{
+    c_mus_num_matches_ = false;
+  }
+  if(b_mus_numberOfMatchedStations_ && !b_mus_numberOfMatchedStations_->TestBit(kDoNotProcess)){
+    c_mus_numberOfMatchedStations_ = true;
+  }else{
+    c_mus_numberOfMatchedStations_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumChargedHadronPt_ && !b_mus_pfIsolationR03_sumChargedHadronPt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumChargedHadronPt_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumChargedHadronPt_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumChargedParticlePt_ && !b_mus_pfIsolationR03_sumChargedParticlePt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumChargedParticlePt_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumChargedParticlePt_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumNeutralHadronEt_ && !b_mus_pfIsolationR03_sumNeutralHadronEt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumNeutralHadronEt_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumNeutralHadronEt_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ && !b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumPUPt_ && !b_mus_pfIsolationR03_sumPUPt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumPUPt_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumPUPt_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumPhotonEt_ && !b_mus_pfIsolationR03_sumPhotonEt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumPhotonEt_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumPhotonEt_ = false;
+  }
+  if(b_mus_pfIsolationR03_sumPhotonEtHighThreshold_ && !b_mus_pfIsolationR03_sumPhotonEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = true;
+  }else{
+    c_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumChargedHadronPt_ && !b_mus_pfIsolationR04_sumChargedHadronPt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumChargedHadronPt_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumChargedHadronPt_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumChargedParticlePt_ && !b_mus_pfIsolationR04_sumChargedParticlePt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumChargedParticlePt_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumChargedParticlePt_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumNeutralHadronEt_ && !b_mus_pfIsolationR04_sumNeutralHadronEt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumNeutralHadronEt_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumNeutralHadronEt_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ && !b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumPUPt_ && !b_mus_pfIsolationR04_sumPUPt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumPUPt_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumPUPt_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumPhotonEt_ && !b_mus_pfIsolationR04_sumPhotonEt_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumPhotonEt_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumPhotonEt_ = false;
+  }
+  if(b_mus_pfIsolationR04_sumPhotonEtHighThreshold_ && !b_mus_pfIsolationR04_sumPhotonEtHighThreshold_->TestBit(kDoNotProcess)){
+    c_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = true;
+  }else{
+    c_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = false;
+  }
+  if(b_mus_phi_ && !b_mus_phi_->TestBit(kDoNotProcess)){
+    c_mus_phi_ = true;
+  }else{
+    c_mus_phi_ = false;
+  }
+  if(b_mus_picky_ExpectedHitsInner_ && !b_mus_picky_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_mus_picky_ExpectedHitsInner_ = true;
+  }else{
+    c_mus_picky_ExpectedHitsInner_ = false;
+  }
+  if(b_mus_picky_ExpectedHitsOuter_ && !b_mus_picky_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_mus_picky_ExpectedHitsOuter_ = true;
+  }else{
+    c_mus_picky_ExpectedHitsOuter_ = false;
+  }
+  if(b_mus_picky_LayersWithMeasurement_ && !b_mus_picky_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_picky_LayersWithMeasurement_ = true;
+  }else{
+    c_mus_picky_LayersWithMeasurement_ = false;
+  }
+  if(b_mus_picky_LayersWithoutMeasurement_ && !b_mus_picky_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_picky_LayersWithoutMeasurement_ = true;
+  }else{
+    c_mus_picky_LayersWithoutMeasurement_ = false;
+  }
+  if(b_mus_picky_PixelLayersWithMeasurement_ && !b_mus_picky_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_picky_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_mus_picky_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_mus_picky_ValidStripLayersWithMonoAndStereoHit_ && !b_mus_picky_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_mus_picky_chg_ && !b_mus_picky_chg_->TestBit(kDoNotProcess)){
+    c_mus_picky_chg_ = true;
+  }else{
+    c_mus_picky_chg_ = false;
+  }
+  if(b_mus_picky_chi2_ && !b_mus_picky_chi2_->TestBit(kDoNotProcess)){
+    c_mus_picky_chi2_ = true;
+  }else{
+    c_mus_picky_chi2_ = false;
+  }
+  if(b_mus_picky_d0dum_ && !b_mus_picky_d0dum_->TestBit(kDoNotProcess)){
+    c_mus_picky_d0dum_ = true;
+  }else{
+    c_mus_picky_d0dum_ = false;
+  }
+  if(b_mus_picky_d0dumErr_ && !b_mus_picky_d0dumErr_->TestBit(kDoNotProcess)){
+    c_mus_picky_d0dumErr_ = true;
+  }else{
+    c_mus_picky_d0dumErr_ = false;
+  }
+  if(b_mus_picky_dz_ && !b_mus_picky_dz_->TestBit(kDoNotProcess)){
+    c_mus_picky_dz_ = true;
+  }else{
+    c_mus_picky_dz_ = false;
+  }
+  if(b_mus_picky_dzErr_ && !b_mus_picky_dzErr_->TestBit(kDoNotProcess)){
+    c_mus_picky_dzErr_ = true;
+  }else{
+    c_mus_picky_dzErr_ = false;
+  }
+  if(b_mus_picky_eta_ && !b_mus_picky_eta_->TestBit(kDoNotProcess)){
+    c_mus_picky_eta_ = true;
+  }else{
+    c_mus_picky_eta_ = false;
+  }
+  if(b_mus_picky_etaErr_ && !b_mus_picky_etaErr_->TestBit(kDoNotProcess)){
+    c_mus_picky_etaErr_ = true;
+  }else{
+    c_mus_picky_etaErr_ = false;
+  }
+  if(b_mus_picky_id_ && !b_mus_picky_id_->TestBit(kDoNotProcess)){
+    c_mus_picky_id_ = true;
+  }else{
+    c_mus_picky_id_ = false;
+  }
+  if(b_mus_picky_ndof_ && !b_mus_picky_ndof_->TestBit(kDoNotProcess)){
+    c_mus_picky_ndof_ = true;
+  }else{
+    c_mus_picky_ndof_ = false;
+  }
+  if(b_mus_picky_numlosthits_ && !b_mus_picky_numlosthits_->TestBit(kDoNotProcess)){
+    c_mus_picky_numlosthits_ = true;
+  }else{
+    c_mus_picky_numlosthits_ = false;
+  }
+  if(b_mus_picky_numvalPixelhits_ && !b_mus_picky_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_mus_picky_numvalPixelhits_ = true;
+  }else{
+    c_mus_picky_numvalPixelhits_ = false;
+  }
+  if(b_mus_picky_numvalhits_ && !b_mus_picky_numvalhits_->TestBit(kDoNotProcess)){
+    c_mus_picky_numvalhits_ = true;
+  }else{
+    c_mus_picky_numvalhits_ = false;
+  }
+  if(b_mus_picky_phi_ && !b_mus_picky_phi_->TestBit(kDoNotProcess)){
+    c_mus_picky_phi_ = true;
+  }else{
+    c_mus_picky_phi_ = false;
+  }
+  if(b_mus_picky_phiErr_ && !b_mus_picky_phiErr_->TestBit(kDoNotProcess)){
+    c_mus_picky_phiErr_ = true;
+  }else{
+    c_mus_picky_phiErr_ = false;
+  }
+  if(b_mus_picky_pt_ && !b_mus_picky_pt_->TestBit(kDoNotProcess)){
+    c_mus_picky_pt_ = true;
+  }else{
+    c_mus_picky_pt_ = false;
+  }
+  if(b_mus_picky_ptErr_ && !b_mus_picky_ptErr_->TestBit(kDoNotProcess)){
+    c_mus_picky_ptErr_ = true;
+  }else{
+    c_mus_picky_ptErr_ = false;
+  }
+  if(b_mus_picky_px_ && !b_mus_picky_px_->TestBit(kDoNotProcess)){
+    c_mus_picky_px_ = true;
+  }else{
+    c_mus_picky_px_ = false;
+  }
+  if(b_mus_picky_py_ && !b_mus_picky_py_->TestBit(kDoNotProcess)){
+    c_mus_picky_py_ = true;
+  }else{
+    c_mus_picky_py_ = false;
+  }
+  if(b_mus_picky_pz_ && !b_mus_picky_pz_->TestBit(kDoNotProcess)){
+    c_mus_picky_pz_ = true;
+  }else{
+    c_mus_picky_pz_ = false;
+  }
+  if(b_mus_picky_theta_ && !b_mus_picky_theta_->TestBit(kDoNotProcess)){
+    c_mus_picky_theta_ = true;
+  }else{
+    c_mus_picky_theta_ = false;
+  }
+  if(b_mus_picky_vx_ && !b_mus_picky_vx_->TestBit(kDoNotProcess)){
+    c_mus_picky_vx_ = true;
+  }else{
+    c_mus_picky_vx_ = false;
+  }
+  if(b_mus_picky_vy_ && !b_mus_picky_vy_->TestBit(kDoNotProcess)){
+    c_mus_picky_vy_ = true;
+  }else{
+    c_mus_picky_vy_ = false;
+  }
+  if(b_mus_picky_vz_ && !b_mus_picky_vz_->TestBit(kDoNotProcess)){
+    c_mus_picky_vz_ = true;
+  }else{
+    c_mus_picky_vz_ = false;
+  }
+  if(b_mus_pt_ && !b_mus_pt_->TestBit(kDoNotProcess)){
+    c_mus_pt_ = true;
+  }else{
+    c_mus_pt_ = false;
+  }
+  if(b_mus_px_ && !b_mus_px_->TestBit(kDoNotProcess)){
+    c_mus_px_ = true;
+  }else{
+    c_mus_px_ = false;
+  }
+  if(b_mus_py_ && !b_mus_py_->TestBit(kDoNotProcess)){
+    c_mus_py_ = true;
+  }else{
+    c_mus_py_ = false;
+  }
+  if(b_mus_pz_ && !b_mus_pz_->TestBit(kDoNotProcess)){
+    c_mus_pz_ = true;
+  }else{
+    c_mus_pz_ = false;
+  }
+  if(b_mus_stamu_chg_ && !b_mus_stamu_chg_->TestBit(kDoNotProcess)){
+    c_mus_stamu_chg_ = true;
+  }else{
+    c_mus_stamu_chg_ = false;
+  }
+  if(b_mus_stamu_chi2_ && !b_mus_stamu_chi2_->TestBit(kDoNotProcess)){
+    c_mus_stamu_chi2_ = true;
+  }else{
+    c_mus_stamu_chi2_ = false;
+  }
+  if(b_mus_stamu_d0dum_ && !b_mus_stamu_d0dum_->TestBit(kDoNotProcess)){
+    c_mus_stamu_d0dum_ = true;
+  }else{
+    c_mus_stamu_d0dum_ = false;
+  }
+  if(b_mus_stamu_d0dumErr_ && !b_mus_stamu_d0dumErr_->TestBit(kDoNotProcess)){
+    c_mus_stamu_d0dumErr_ = true;
+  }else{
+    c_mus_stamu_d0dumErr_ = false;
+  }
+  if(b_mus_stamu_dz_ && !b_mus_stamu_dz_->TestBit(kDoNotProcess)){
+    c_mus_stamu_dz_ = true;
+  }else{
+    c_mus_stamu_dz_ = false;
+  }
+  if(b_mus_stamu_dzErr_ && !b_mus_stamu_dzErr_->TestBit(kDoNotProcess)){
+    c_mus_stamu_dzErr_ = true;
+  }else{
+    c_mus_stamu_dzErr_ = false;
+  }
+  if(b_mus_stamu_eta_ && !b_mus_stamu_eta_->TestBit(kDoNotProcess)){
+    c_mus_stamu_eta_ = true;
+  }else{
+    c_mus_stamu_eta_ = false;
+  }
+  if(b_mus_stamu_etaErr_ && !b_mus_stamu_etaErr_->TestBit(kDoNotProcess)){
+    c_mus_stamu_etaErr_ = true;
+  }else{
+    c_mus_stamu_etaErr_ = false;
+  }
+  if(b_mus_stamu_ndof_ && !b_mus_stamu_ndof_->TestBit(kDoNotProcess)){
+    c_mus_stamu_ndof_ = true;
+  }else{
+    c_mus_stamu_ndof_ = false;
+  }
+  if(b_mus_stamu_numlosthits_ && !b_mus_stamu_numlosthits_->TestBit(kDoNotProcess)){
+    c_mus_stamu_numlosthits_ = true;
+  }else{
+    c_mus_stamu_numlosthits_ = false;
+  }
+  if(b_mus_stamu_numvalhits_ && !b_mus_stamu_numvalhits_->TestBit(kDoNotProcess)){
+    c_mus_stamu_numvalhits_ = true;
+  }else{
+    c_mus_stamu_numvalhits_ = false;
+  }
+  if(b_mus_stamu_phi_ && !b_mus_stamu_phi_->TestBit(kDoNotProcess)){
+    c_mus_stamu_phi_ = true;
+  }else{
+    c_mus_stamu_phi_ = false;
+  }
+  if(b_mus_stamu_phiErr_ && !b_mus_stamu_phiErr_->TestBit(kDoNotProcess)){
+    c_mus_stamu_phiErr_ = true;
+  }else{
+    c_mus_stamu_phiErr_ = false;
+  }
+  if(b_mus_stamu_pt_ && !b_mus_stamu_pt_->TestBit(kDoNotProcess)){
+    c_mus_stamu_pt_ = true;
+  }else{
+    c_mus_stamu_pt_ = false;
+  }
+  if(b_mus_stamu_ptErr_ && !b_mus_stamu_ptErr_->TestBit(kDoNotProcess)){
+    c_mus_stamu_ptErr_ = true;
+  }else{
+    c_mus_stamu_ptErr_ = false;
+  }
+  if(b_mus_stamu_px_ && !b_mus_stamu_px_->TestBit(kDoNotProcess)){
+    c_mus_stamu_px_ = true;
+  }else{
+    c_mus_stamu_px_ = false;
+  }
+  if(b_mus_stamu_py_ && !b_mus_stamu_py_->TestBit(kDoNotProcess)){
+    c_mus_stamu_py_ = true;
+  }else{
+    c_mus_stamu_py_ = false;
+  }
+  if(b_mus_stamu_pz_ && !b_mus_stamu_pz_->TestBit(kDoNotProcess)){
+    c_mus_stamu_pz_ = true;
+  }else{
+    c_mus_stamu_pz_ = false;
+  }
+  if(b_mus_stamu_theta_ && !b_mus_stamu_theta_->TestBit(kDoNotProcess)){
+    c_mus_stamu_theta_ = true;
+  }else{
+    c_mus_stamu_theta_ = false;
+  }
+  if(b_mus_stamu_vx_ && !b_mus_stamu_vx_->TestBit(kDoNotProcess)){
+    c_mus_stamu_vx_ = true;
+  }else{
+    c_mus_stamu_vx_ = false;
+  }
+  if(b_mus_stamu_vy_ && !b_mus_stamu_vy_->TestBit(kDoNotProcess)){
+    c_mus_stamu_vy_ = true;
+  }else{
+    c_mus_stamu_vy_ = false;
+  }
+  if(b_mus_stamu_vz_ && !b_mus_stamu_vz_->TestBit(kDoNotProcess)){
+    c_mus_stamu_vz_ = true;
+  }else{
+    c_mus_stamu_vz_ = false;
+  }
+  if(b_mus_status_ && !b_mus_status_->TestBit(kDoNotProcess)){
+    c_mus_status_ = true;
+  }else{
+    c_mus_status_ = false;
+  }
+  if(b_mus_tIso_ && !b_mus_tIso_->TestBit(kDoNotProcess)){
+    c_mus_tIso_ = true;
+  }else{
+    c_mus_tIso_ = false;
+  }
+  if(b_mus_theta_ && !b_mus_theta_->TestBit(kDoNotProcess)){
+    c_mus_theta_ = true;
+  }else{
+    c_mus_theta_ = false;
+  }
+  if(b_mus_tkHits_ && !b_mus_tkHits_->TestBit(kDoNotProcess)){
+    c_mus_tkHits_ = true;
+  }else{
+    c_mus_tkHits_ = false;
+  }
+  if(b_mus_tk_ExpectedHitsInner_ && !b_mus_tk_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_mus_tk_ExpectedHitsInner_ = true;
+  }else{
+    c_mus_tk_ExpectedHitsInner_ = false;
+  }
+  if(b_mus_tk_ExpectedHitsOuter_ && !b_mus_tk_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_mus_tk_ExpectedHitsOuter_ = true;
+  }else{
+    c_mus_tk_ExpectedHitsOuter_ = false;
+  }
+  if(b_mus_tk_LayersWithMeasurement_ && !b_mus_tk_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tk_LayersWithMeasurement_ = true;
+  }else{
+    c_mus_tk_LayersWithMeasurement_ = false;
+  }
+  if(b_mus_tk_LayersWithoutMeasurement_ && !b_mus_tk_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tk_LayersWithoutMeasurement_ = true;
+  }else{
+    c_mus_tk_LayersWithoutMeasurement_ = false;
+  }
+  if(b_mus_tk_PixelLayersWithMeasurement_ && !b_mus_tk_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tk_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_mus_tk_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_mus_tk_ValidStripLayersWithMonoAndStereoHit_ && !b_mus_tk_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_mus_tk_chg_ && !b_mus_tk_chg_->TestBit(kDoNotProcess)){
+    c_mus_tk_chg_ = true;
+  }else{
+    c_mus_tk_chg_ = false;
+  }
+  if(b_mus_tk_chi2_ && !b_mus_tk_chi2_->TestBit(kDoNotProcess)){
+    c_mus_tk_chi2_ = true;
+  }else{
+    c_mus_tk_chi2_ = false;
+  }
+  if(b_mus_tk_d0dum_ && !b_mus_tk_d0dum_->TestBit(kDoNotProcess)){
+    c_mus_tk_d0dum_ = true;
+  }else{
+    c_mus_tk_d0dum_ = false;
+  }
+  if(b_mus_tk_d0dumErr_ && !b_mus_tk_d0dumErr_->TestBit(kDoNotProcess)){
+    c_mus_tk_d0dumErr_ = true;
+  }else{
+    c_mus_tk_d0dumErr_ = false;
+  }
+  if(b_mus_tk_dz_ && !b_mus_tk_dz_->TestBit(kDoNotProcess)){
+    c_mus_tk_dz_ = true;
+  }else{
+    c_mus_tk_dz_ = false;
+  }
+  if(b_mus_tk_dzErr_ && !b_mus_tk_dzErr_->TestBit(kDoNotProcess)){
+    c_mus_tk_dzErr_ = true;
+  }else{
+    c_mus_tk_dzErr_ = false;
+  }
+  if(b_mus_tk_eta_ && !b_mus_tk_eta_->TestBit(kDoNotProcess)){
+    c_mus_tk_eta_ = true;
+  }else{
+    c_mus_tk_eta_ = false;
+  }
+  if(b_mus_tk_etaErr_ && !b_mus_tk_etaErr_->TestBit(kDoNotProcess)){
+    c_mus_tk_etaErr_ = true;
+  }else{
+    c_mus_tk_etaErr_ = false;
+  }
+  if(b_mus_tk_id_ && !b_mus_tk_id_->TestBit(kDoNotProcess)){
+    c_mus_tk_id_ = true;
+  }else{
+    c_mus_tk_id_ = false;
+  }
+  if(b_mus_tk_ndof_ && !b_mus_tk_ndof_->TestBit(kDoNotProcess)){
+    c_mus_tk_ndof_ = true;
+  }else{
+    c_mus_tk_ndof_ = false;
+  }
+  if(b_mus_tk_numlosthits_ && !b_mus_tk_numlosthits_->TestBit(kDoNotProcess)){
+    c_mus_tk_numlosthits_ = true;
+  }else{
+    c_mus_tk_numlosthits_ = false;
+  }
+  if(b_mus_tk_numpixelWthMeasr_ && !b_mus_tk_numpixelWthMeasr_->TestBit(kDoNotProcess)){
+    c_mus_tk_numpixelWthMeasr_ = true;
+  }else{
+    c_mus_tk_numpixelWthMeasr_ = false;
+  }
+  if(b_mus_tk_numvalPixelhits_ && !b_mus_tk_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_mus_tk_numvalPixelhits_ = true;
+  }else{
+    c_mus_tk_numvalPixelhits_ = false;
+  }
+  if(b_mus_tk_numvalhits_ && !b_mus_tk_numvalhits_->TestBit(kDoNotProcess)){
+    c_mus_tk_numvalhits_ = true;
+  }else{
+    c_mus_tk_numvalhits_ = false;
+  }
+  if(b_mus_tk_phi_ && !b_mus_tk_phi_->TestBit(kDoNotProcess)){
+    c_mus_tk_phi_ = true;
+  }else{
+    c_mus_tk_phi_ = false;
+  }
+  if(b_mus_tk_phiErr_ && !b_mus_tk_phiErr_->TestBit(kDoNotProcess)){
+    c_mus_tk_phiErr_ = true;
+  }else{
+    c_mus_tk_phiErr_ = false;
+  }
+  if(b_mus_tk_pt_ && !b_mus_tk_pt_->TestBit(kDoNotProcess)){
+    c_mus_tk_pt_ = true;
+  }else{
+    c_mus_tk_pt_ = false;
+  }
+  if(b_mus_tk_ptErr_ && !b_mus_tk_ptErr_->TestBit(kDoNotProcess)){
+    c_mus_tk_ptErr_ = true;
+  }else{
+    c_mus_tk_ptErr_ = false;
+  }
+  if(b_mus_tk_px_ && !b_mus_tk_px_->TestBit(kDoNotProcess)){
+    c_mus_tk_px_ = true;
+  }else{
+    c_mus_tk_px_ = false;
+  }
+  if(b_mus_tk_py_ && !b_mus_tk_py_->TestBit(kDoNotProcess)){
+    c_mus_tk_py_ = true;
+  }else{
+    c_mus_tk_py_ = false;
+  }
+  if(b_mus_tk_pz_ && !b_mus_tk_pz_->TestBit(kDoNotProcess)){
+    c_mus_tk_pz_ = true;
+  }else{
+    c_mus_tk_pz_ = false;
+  }
+  if(b_mus_tk_theta_ && !b_mus_tk_theta_->TestBit(kDoNotProcess)){
+    c_mus_tk_theta_ = true;
+  }else{
+    c_mus_tk_theta_ = false;
+  }
+  if(b_mus_tk_vx_ && !b_mus_tk_vx_->TestBit(kDoNotProcess)){
+    c_mus_tk_vx_ = true;
+  }else{
+    c_mus_tk_vx_ = false;
+  }
+  if(b_mus_tk_vy_ && !b_mus_tk_vy_->TestBit(kDoNotProcess)){
+    c_mus_tk_vy_ = true;
+  }else{
+    c_mus_tk_vy_ = false;
+  }
+  if(b_mus_tk_vz_ && !b_mus_tk_vz_->TestBit(kDoNotProcess)){
+    c_mus_tk_vz_ = true;
+  }else{
+    c_mus_tk_vz_ = false;
+  }
+  if(b_mus_tpfms_ExpectedHitsInner_ && !b_mus_tpfms_ExpectedHitsInner_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_ExpectedHitsInner_ = true;
+  }else{
+    c_mus_tpfms_ExpectedHitsInner_ = false;
+  }
+  if(b_mus_tpfms_ExpectedHitsOuter_ && !b_mus_tpfms_ExpectedHitsOuter_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_ExpectedHitsOuter_ = true;
+  }else{
+    c_mus_tpfms_ExpectedHitsOuter_ = false;
+  }
+  if(b_mus_tpfms_LayersWithMeasurement_ && !b_mus_tpfms_LayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_LayersWithMeasurement_ = true;
+  }else{
+    c_mus_tpfms_LayersWithMeasurement_ = false;
+  }
+  if(b_mus_tpfms_LayersWithoutMeasurement_ && !b_mus_tpfms_LayersWithoutMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_LayersWithoutMeasurement_ = true;
+  }else{
+    c_mus_tpfms_LayersWithoutMeasurement_ = false;
+  }
+  if(b_mus_tpfms_PixelLayersWithMeasurement_ && !b_mus_tpfms_PixelLayersWithMeasurement_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_PixelLayersWithMeasurement_ = true;
+  }else{
+    c_mus_tpfms_PixelLayersWithMeasurement_ = false;
+  }
+  if(b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ && !b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = true;
+  }else{
+    c_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = false;
+  }
+  if(b_mus_tpfms_chg_ && !b_mus_tpfms_chg_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_chg_ = true;
+  }else{
+    c_mus_tpfms_chg_ = false;
+  }
+  if(b_mus_tpfms_chi2_ && !b_mus_tpfms_chi2_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_chi2_ = true;
+  }else{
+    c_mus_tpfms_chi2_ = false;
+  }
+  if(b_mus_tpfms_d0dum_ && !b_mus_tpfms_d0dum_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_d0dum_ = true;
+  }else{
+    c_mus_tpfms_d0dum_ = false;
+  }
+  if(b_mus_tpfms_d0dumErr_ && !b_mus_tpfms_d0dumErr_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_d0dumErr_ = true;
+  }else{
+    c_mus_tpfms_d0dumErr_ = false;
+  }
+  if(b_mus_tpfms_dz_ && !b_mus_tpfms_dz_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_dz_ = true;
+  }else{
+    c_mus_tpfms_dz_ = false;
+  }
+  if(b_mus_tpfms_dzErr_ && !b_mus_tpfms_dzErr_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_dzErr_ = true;
+  }else{
+    c_mus_tpfms_dzErr_ = false;
+  }
+  if(b_mus_tpfms_eta_ && !b_mus_tpfms_eta_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_eta_ = true;
+  }else{
+    c_mus_tpfms_eta_ = false;
+  }
+  if(b_mus_tpfms_etaErr_ && !b_mus_tpfms_etaErr_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_etaErr_ = true;
+  }else{
+    c_mus_tpfms_etaErr_ = false;
+  }
+  if(b_mus_tpfms_id_ && !b_mus_tpfms_id_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_id_ = true;
+  }else{
+    c_mus_tpfms_id_ = false;
+  }
+  if(b_mus_tpfms_ndof_ && !b_mus_tpfms_ndof_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_ndof_ = true;
+  }else{
+    c_mus_tpfms_ndof_ = false;
+  }
+  if(b_mus_tpfms_numlosthits_ && !b_mus_tpfms_numlosthits_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_numlosthits_ = true;
+  }else{
+    c_mus_tpfms_numlosthits_ = false;
+  }
+  if(b_mus_tpfms_numvalPixelhits_ && !b_mus_tpfms_numvalPixelhits_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_numvalPixelhits_ = true;
+  }else{
+    c_mus_tpfms_numvalPixelhits_ = false;
+  }
+  if(b_mus_tpfms_numvalhits_ && !b_mus_tpfms_numvalhits_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_numvalhits_ = true;
+  }else{
+    c_mus_tpfms_numvalhits_ = false;
+  }
+  if(b_mus_tpfms_phi_ && !b_mus_tpfms_phi_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_phi_ = true;
+  }else{
+    c_mus_tpfms_phi_ = false;
+  }
+  if(b_mus_tpfms_phiErr_ && !b_mus_tpfms_phiErr_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_phiErr_ = true;
+  }else{
+    c_mus_tpfms_phiErr_ = false;
+  }
+  if(b_mus_tpfms_pt_ && !b_mus_tpfms_pt_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_pt_ = true;
+  }else{
+    c_mus_tpfms_pt_ = false;
+  }
+  if(b_mus_tpfms_ptErr_ && !b_mus_tpfms_ptErr_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_ptErr_ = true;
+  }else{
+    c_mus_tpfms_ptErr_ = false;
+  }
+  if(b_mus_tpfms_px_ && !b_mus_tpfms_px_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_px_ = true;
+  }else{
+    c_mus_tpfms_px_ = false;
+  }
+  if(b_mus_tpfms_py_ && !b_mus_tpfms_py_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_py_ = true;
+  }else{
+    c_mus_tpfms_py_ = false;
+  }
+  if(b_mus_tpfms_pz_ && !b_mus_tpfms_pz_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_pz_ = true;
+  }else{
+    c_mus_tpfms_pz_ = false;
+  }
+  if(b_mus_tpfms_theta_ && !b_mus_tpfms_theta_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_theta_ = true;
+  }else{
+    c_mus_tpfms_theta_ = false;
+  }
+  if(b_mus_tpfms_vx_ && !b_mus_tpfms_vx_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_vx_ = true;
+  }else{
+    c_mus_tpfms_vx_ = false;
+  }
+  if(b_mus_tpfms_vy_ && !b_mus_tpfms_vy_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_vy_ = true;
+  }else{
+    c_mus_tpfms_vy_ = false;
+  }
+  if(b_mus_tpfms_vz_ && !b_mus_tpfms_vz_->TestBit(kDoNotProcess)){
+    c_mus_tpfms_vz_ = true;
+  }else{
+    c_mus_tpfms_vz_ = false;
+  }
+  if(b_orbitNumber_ && !b_orbitNumber_->TestBit(kDoNotProcess)){
+    c_orbitNumber_ = true;
+  }else{
+    c_orbitNumber_ = false;
+  }
+  if(b_pfcand_charge_ && !b_pfcand_charge_->TestBit(kDoNotProcess)){
+    c_pfcand_charge_ = true;
+  }else{
+    c_pfcand_charge_ = false;
+  }
+  if(b_pfcand_energy_ && !b_pfcand_energy_->TestBit(kDoNotProcess)){
+    c_pfcand_energy_ = true;
+  }else{
+    c_pfcand_energy_ = false;
+  }
+  if(b_pfcand_eta_ && !b_pfcand_eta_->TestBit(kDoNotProcess)){
+    c_pfcand_eta_ = true;
+  }else{
+    c_pfcand_eta_ = false;
+  }
+  if(b_pfcand_pdgId_ && !b_pfcand_pdgId_->TestBit(kDoNotProcess)){
+    c_pfcand_pdgId_ = true;
+  }else{
+    c_pfcand_pdgId_ = false;
+  }
+  if(b_pfcand_phi_ && !b_pfcand_phi_->TestBit(kDoNotProcess)){
+    c_pfcand_phi_ = true;
+  }else{
+    c_pfcand_phi_ = false;
+  }
+  if(b_pfcand_pt_ && !b_pfcand_pt_->TestBit(kDoNotProcess)){
+    c_pfcand_pt_ = true;
+  }else{
+    c_pfcand_pt_ = false;
+  }
+  if(b_pfcand_px_ && !b_pfcand_px_->TestBit(kDoNotProcess)){
+    c_pfcand_px_ = true;
+  }else{
+    c_pfcand_px_ = false;
+  }
+  if(b_pfcand_py_ && !b_pfcand_py_->TestBit(kDoNotProcess)){
+    c_pfcand_py_ = true;
+  }else{
+    c_pfcand_py_ = false;
+  }
+  if(b_pfcand_pz_ && !b_pfcand_pz_->TestBit(kDoNotProcess)){
+    c_pfcand_pz_ = true;
+  }else{
+    c_pfcand_pz_ = false;
+  }
+  if(b_pfcand_theta_ && !b_pfcand_theta_->TestBit(kDoNotProcess)){
+    c_pfcand_theta_ = true;
+  }else{
+    c_pfcand_theta_ = false;
+  }
+  if(b_photons_e1x5_ && !b_photons_e1x5_->TestBit(kDoNotProcess)){
+    c_photons_e1x5_ = true;
+  }else{
+    c_photons_e1x5_ = false;
+  }
+  if(b_photons_e2x5_ && !b_photons_e2x5_->TestBit(kDoNotProcess)){
+    c_photons_e2x5_ = true;
+  }else{
+    c_photons_e2x5_ = false;
+  }
+  if(b_photons_e3x3_ && !b_photons_e3x3_->TestBit(kDoNotProcess)){
+    c_photons_e3x3_ = true;
+  }else{
+    c_photons_e3x3_ = false;
+  }
+  if(b_photons_e5x5_ && !b_photons_e5x5_->TestBit(kDoNotProcess)){
+    c_photons_e5x5_ = true;
+  }else{
+    c_photons_e5x5_ = false;
+  }
+  if(b_photons_ecalIso_ && !b_photons_ecalIso_->TestBit(kDoNotProcess)){
+    c_photons_ecalIso_ = true;
+  }else{
+    c_photons_ecalIso_ = false;
+  }
+  if(b_photons_energy_ && !b_photons_energy_->TestBit(kDoNotProcess)){
+    c_photons_energy_ = true;
+  }else{
+    c_photons_energy_ = false;
+  }
+  if(b_photons_et_ && !b_photons_et_->TestBit(kDoNotProcess)){
+    c_photons_et_ = true;
+  }else{
+    c_photons_et_ = false;
+  }
+  if(b_photons_eta_ && !b_photons_eta_->TestBit(kDoNotProcess)){
+    c_photons_eta_ = true;
+  }else{
+    c_photons_eta_ = false;
+  }
+  if(b_photons_gen_et_ && !b_photons_gen_et_->TestBit(kDoNotProcess)){
+    c_photons_gen_et_ = true;
+  }else{
+    c_photons_gen_et_ = false;
+  }
+  if(b_photons_gen_eta_ && !b_photons_gen_eta_->TestBit(kDoNotProcess)){
+    c_photons_gen_eta_ = true;
+  }else{
+    c_photons_gen_eta_ = false;
+  }
+  if(b_photons_gen_id_ && !b_photons_gen_id_->TestBit(kDoNotProcess)){
+    c_photons_gen_id_ = true;
+  }else{
+    c_photons_gen_id_ = false;
+  }
+  if(b_photons_gen_phi_ && !b_photons_gen_phi_->TestBit(kDoNotProcess)){
+    c_photons_gen_phi_ = true;
+  }else{
+    c_photons_gen_phi_ = false;
+  }
+  if(b_photons_hadOverEM_ && !b_photons_hadOverEM_->TestBit(kDoNotProcess)){
+    c_photons_hadOverEM_ = true;
+  }else{
+    c_photons_hadOverEM_ = false;
+  }
+  if(b_photons_hadTowOverEM_ && !b_photons_hadTowOverEM_->TestBit(kDoNotProcess)){
+    c_photons_hadTowOverEM_ = true;
+  }else{
+    c_photons_hadTowOverEM_ = false;
+  }
+  if(b_photons_hasPixelSeed_ && !b_photons_hasPixelSeed_->TestBit(kDoNotProcess)){
+    c_photons_hasPixelSeed_ = true;
+  }else{
+    c_photons_hasPixelSeed_ = false;
+  }
+  if(b_photons_hcalIso_ && !b_photons_hcalIso_->TestBit(kDoNotProcess)){
+    c_photons_hcalIso_ = true;
+  }else{
+    c_photons_hcalIso_ = false;
+  }
+  if(b_photons_isAlsoElectron_ && !b_photons_isAlsoElectron_->TestBit(kDoNotProcess)){
+    c_photons_isAlsoElectron_ = true;
+  }else{
+    c_photons_isAlsoElectron_ = false;
+  }
+  if(b_photons_isConverted_ && !b_photons_isConverted_->TestBit(kDoNotProcess)){
+    c_photons_isConverted_ = true;
+  }else{
+    c_photons_isConverted_ = false;
+  }
+  if(b_photons_isEBEEGap_ && !b_photons_isEBEEGap_->TestBit(kDoNotProcess)){
+    c_photons_isEBEEGap_ = true;
+  }else{
+    c_photons_isEBEEGap_ = false;
+  }
+  if(b_photons_isEBGap_ && !b_photons_isEBGap_->TestBit(kDoNotProcess)){
+    c_photons_isEBGap_ = true;
+  }else{
+    c_photons_isEBGap_ = false;
+  }
+  if(b_photons_isEBPho_ && !b_photons_isEBPho_->TestBit(kDoNotProcess)){
+    c_photons_isEBPho_ = true;
+  }else{
+    c_photons_isEBPho_ = false;
+  }
+  if(b_photons_isEEGap_ && !b_photons_isEEGap_->TestBit(kDoNotProcess)){
+    c_photons_isEEGap_ = true;
+  }else{
+    c_photons_isEEGap_ = false;
+  }
+  if(b_photons_isEEPho_ && !b_photons_isEEPho_->TestBit(kDoNotProcess)){
+    c_photons_isEEPho_ = true;
+  }else{
+    c_photons_isEEPho_ = false;
+  }
+  if(b_photons_isLoosePhoton_ && !b_photons_isLoosePhoton_->TestBit(kDoNotProcess)){
+    c_photons_isLoosePhoton_ = true;
+  }else{
+    c_photons_isLoosePhoton_ = false;
+  }
+  if(b_photons_isTightPhoton_ && !b_photons_isTightPhoton_->TestBit(kDoNotProcess)){
+    c_photons_isTightPhoton_ = true;
+  }else{
+    c_photons_isTightPhoton_ = false;
+  }
+  if(b_photons_isoEcalRecHitDR03_ && !b_photons_isoEcalRecHitDR03_->TestBit(kDoNotProcess)){
+    c_photons_isoEcalRecHitDR03_ = true;
+  }else{
+    c_photons_isoEcalRecHitDR03_ = false;
+  }
+  if(b_photons_isoEcalRecHitDR04_ && !b_photons_isoEcalRecHitDR04_->TestBit(kDoNotProcess)){
+    c_photons_isoEcalRecHitDR04_ = true;
+  }else{
+    c_photons_isoEcalRecHitDR04_ = false;
+  }
+  if(b_photons_isoHcalRecHitDR03_ && !b_photons_isoHcalRecHitDR03_->TestBit(kDoNotProcess)){
+    c_photons_isoHcalRecHitDR03_ = true;
+  }else{
+    c_photons_isoHcalRecHitDR03_ = false;
+  }
+  if(b_photons_isoHcalRecHitDR04_ && !b_photons_isoHcalRecHitDR04_->TestBit(kDoNotProcess)){
+    c_photons_isoHcalRecHitDR04_ = true;
+  }else{
+    c_photons_isoHcalRecHitDR04_ = false;
+  }
+  if(b_photons_isoHollowTrkConeDR03_ && !b_photons_isoHollowTrkConeDR03_->TestBit(kDoNotProcess)){
+    c_photons_isoHollowTrkConeDR03_ = true;
+  }else{
+    c_photons_isoHollowTrkConeDR03_ = false;
+  }
+  if(b_photons_isoHollowTrkConeDR04_ && !b_photons_isoHollowTrkConeDR04_->TestBit(kDoNotProcess)){
+    c_photons_isoHollowTrkConeDR04_ = true;
+  }else{
+    c_photons_isoHollowTrkConeDR04_ = false;
+  }
+  if(b_photons_isoSolidTrkConeDR03_ && !b_photons_isoSolidTrkConeDR03_->TestBit(kDoNotProcess)){
+    c_photons_isoSolidTrkConeDR03_ = true;
+  }else{
+    c_photons_isoSolidTrkConeDR03_ = false;
+  }
+  if(b_photons_isoSolidTrkConeDR04_ && !b_photons_isoSolidTrkConeDR04_->TestBit(kDoNotProcess)){
+    c_photons_isoSolidTrkConeDR04_ = true;
+  }else{
+    c_photons_isoSolidTrkConeDR04_ = false;
+  }
+  if(b_photons_maxEnergyXtal_ && !b_photons_maxEnergyXtal_->TestBit(kDoNotProcess)){
+    c_photons_maxEnergyXtal_ = true;
+  }else{
+    c_photons_maxEnergyXtal_ = false;
+  }
+  if(b_photons_nTrkHollowConeDR03_ && !b_photons_nTrkHollowConeDR03_->TestBit(kDoNotProcess)){
+    c_photons_nTrkHollowConeDR03_ = true;
+  }else{
+    c_photons_nTrkHollowConeDR03_ = false;
+  }
+  if(b_photons_nTrkHollowConeDR04_ && !b_photons_nTrkHollowConeDR04_->TestBit(kDoNotProcess)){
+    c_photons_nTrkHollowConeDR04_ = true;
+  }else{
+    c_photons_nTrkHollowConeDR04_ = false;
+  }
+  if(b_photons_nTrkSolidConeDR03_ && !b_photons_nTrkSolidConeDR03_->TestBit(kDoNotProcess)){
+    c_photons_nTrkSolidConeDR03_ = true;
+  }else{
+    c_photons_nTrkSolidConeDR03_ = false;
+  }
+  if(b_photons_nTrkSolidConeDR04_ && !b_photons_nTrkSolidConeDR04_->TestBit(kDoNotProcess)){
+    c_photons_nTrkSolidConeDR04_ = true;
+  }else{
+    c_photons_nTrkSolidConeDR04_ = false;
+  }
+  if(b_photons_phi_ && !b_photons_phi_->TestBit(kDoNotProcess)){
+    c_photons_phi_ = true;
+  }else{
+    c_photons_phi_ = false;
+  }
+  if(b_photons_pt_ && !b_photons_pt_->TestBit(kDoNotProcess)){
+    c_photons_pt_ = true;
+  }else{
+    c_photons_pt_ = false;
+  }
+  if(b_photons_px_ && !b_photons_px_->TestBit(kDoNotProcess)){
+    c_photons_px_ = true;
+  }else{
+    c_photons_px_ = false;
+  }
+  if(b_photons_py_ && !b_photons_py_->TestBit(kDoNotProcess)){
+    c_photons_py_ = true;
+  }else{
+    c_photons_py_ = false;
+  }
+  if(b_photons_pz_ && !b_photons_pz_->TestBit(kDoNotProcess)){
+    c_photons_pz_ = true;
+  }else{
+    c_photons_pz_ = false;
+  }
+  if(b_photons_r9_ && !b_photons_r9_->TestBit(kDoNotProcess)){
+    c_photons_r9_ = true;
+  }else{
+    c_photons_r9_ = false;
+  }
+  if(b_photons_scEnergy_ && !b_photons_scEnergy_->TestBit(kDoNotProcess)){
+    c_photons_scEnergy_ = true;
+  }else{
+    c_photons_scEnergy_ = false;
+  }
+  if(b_photons_scEta_ && !b_photons_scEta_->TestBit(kDoNotProcess)){
+    c_photons_scEta_ = true;
+  }else{
+    c_photons_scEta_ = false;
+  }
+  if(b_photons_scEtaWidth_ && !b_photons_scEtaWidth_->TestBit(kDoNotProcess)){
+    c_photons_scEtaWidth_ = true;
+  }else{
+    c_photons_scEtaWidth_ = false;
+  }
+  if(b_photons_scPhi_ && !b_photons_scPhi_->TestBit(kDoNotProcess)){
+    c_photons_scPhi_ = true;
+  }else{
+    c_photons_scPhi_ = false;
+  }
+  if(b_photons_scPhiWidth_ && !b_photons_scPhiWidth_->TestBit(kDoNotProcess)){
+    c_photons_scPhiWidth_ = true;
+  }else{
+    c_photons_scPhiWidth_ = false;
+  }
+  if(b_photons_scRawEnergy_ && !b_photons_scRawEnergy_->TestBit(kDoNotProcess)){
+    c_photons_scRawEnergy_ = true;
+  }else{
+    c_photons_scRawEnergy_ = false;
+  }
+  if(b_photons_sigmaEtaEta_ && !b_photons_sigmaEtaEta_->TestBit(kDoNotProcess)){
+    c_photons_sigmaEtaEta_ = true;
+  }else{
+    c_photons_sigmaEtaEta_ = false;
+  }
+  if(b_photons_sigmaIetaIeta_ && !b_photons_sigmaIetaIeta_->TestBit(kDoNotProcess)){
+    c_photons_sigmaIetaIeta_ = true;
+  }else{
+    c_photons_sigmaIetaIeta_ = false;
+  }
+  if(b_photons_status_ && !b_photons_status_->TestBit(kDoNotProcess)){
+    c_photons_status_ = true;
+  }else{
+    c_photons_status_ = false;
+  }
+  if(b_photons_tIso_ && !b_photons_tIso_->TestBit(kDoNotProcess)){
+    c_photons_tIso_ = true;
+  }else{
+    c_photons_tIso_ = false;
+  }
+  if(b_photons_theta_ && !b_photons_theta_->TestBit(kDoNotProcess)){
+    c_photons_theta_ = true;
+  }else{
+    c_photons_theta_ = false;
+  }
+  if(b_pv_chi2_ && !b_pv_chi2_->TestBit(kDoNotProcess)){
+    c_pv_chi2_ = true;
+  }else{
+    c_pv_chi2_ = false;
+  }
+  if(b_pv_isFake_ && !b_pv_isFake_->TestBit(kDoNotProcess)){
+    c_pv_isFake_ = true;
+  }else{
+    c_pv_isFake_ = false;
+  }
+  if(b_pv_isValid_ && !b_pv_isValid_->TestBit(kDoNotProcess)){
+    c_pv_isValid_ = true;
+  }else{
+    c_pv_isValid_ = false;
+  }
+  if(b_pv_ndof_ && !b_pv_ndof_->TestBit(kDoNotProcess)){
+    c_pv_ndof_ = true;
+  }else{
+    c_pv_ndof_ = false;
+  }
+  if(b_pv_tracksSize_ && !b_pv_tracksSize_->TestBit(kDoNotProcess)){
+    c_pv_tracksSize_ = true;
+  }else{
+    c_pv_tracksSize_ = false;
+  }
+  if(b_pv_x_ && !b_pv_x_->TestBit(kDoNotProcess)){
+    c_pv_x_ = true;
+  }else{
+    c_pv_x_ = false;
+  }
+  if(b_pv_xErr_ && !b_pv_xErr_->TestBit(kDoNotProcess)){
+    c_pv_xErr_ = true;
+  }else{
+    c_pv_xErr_ = false;
+  }
+  if(b_pv_y_ && !b_pv_y_->TestBit(kDoNotProcess)){
+    c_pv_y_ = true;
+  }else{
+    c_pv_y_ = false;
+  }
+  if(b_pv_yErr_ && !b_pv_yErr_->TestBit(kDoNotProcess)){
+    c_pv_yErr_ = true;
+  }else{
+    c_pv_yErr_ = false;
+  }
+  if(b_pv_z_ && !b_pv_z_->TestBit(kDoNotProcess)){
+    c_pv_z_ = true;
+  }else{
+    c_pv_z_ = false;
+  }
+  if(b_pv_zErr_ && !b_pv_zErr_->TestBit(kDoNotProcess)){
+    c_pv_zErr_ = true;
+  }else{
+    c_pv_zErr_ = false;
+  }
+  if(b_run_ && !b_run_->TestBit(kDoNotProcess)){
+    c_run_ = true;
+  }else{
+    c_run_ = false;
+  }
+  if(b_standalone_triggerobject_collectionname_ && !b_standalone_triggerobject_collectionname_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_collectionname_ = true;
+  }else{
+    c_standalone_triggerobject_collectionname_ = false;
+  }
+  if(b_standalone_triggerobject_energy_ && !b_standalone_triggerobject_energy_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_energy_ = true;
+  }else{
+    c_standalone_triggerobject_energy_ = false;
+  }
+  if(b_standalone_triggerobject_et_ && !b_standalone_triggerobject_et_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_et_ = true;
+  }else{
+    c_standalone_triggerobject_et_ = false;
+  }
+  if(b_standalone_triggerobject_eta_ && !b_standalone_triggerobject_eta_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_eta_ = true;
+  }else{
+    c_standalone_triggerobject_eta_ = false;
+  }
+  if(b_standalone_triggerobject_phi_ && !b_standalone_triggerobject_phi_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_phi_ = true;
+  }else{
+    c_standalone_triggerobject_phi_ = false;
+  }
+  if(b_standalone_triggerobject_pt_ && !b_standalone_triggerobject_pt_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_pt_ = true;
+  }else{
+    c_standalone_triggerobject_pt_ = false;
+  }
+  if(b_standalone_triggerobject_px_ && !b_standalone_triggerobject_px_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_px_ = true;
+  }else{
+    c_standalone_triggerobject_px_ = false;
+  }
+  if(b_standalone_triggerobject_py_ && !b_standalone_triggerobject_py_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_py_ = true;
+  }else{
+    c_standalone_triggerobject_py_ = false;
+  }
+  if(b_standalone_triggerobject_pz_ && !b_standalone_triggerobject_pz_->TestBit(kDoNotProcess)){
+    c_standalone_triggerobject_pz_ = true;
+  }else{
+    c_standalone_triggerobject_pz_ = false;
+  }
+  if(b_taus_Nprongs_ && !b_taus_Nprongs_->TestBit(kDoNotProcess)){
+    c_taus_Nprongs_ = true;
+  }else{
+    c_taus_Nprongs_ = false;
+  }
+  if(b_taus_againstElectron_ && !b_taus_againstElectron_->TestBit(kDoNotProcess)){
+    c_taus_againstElectron_ = true;
+  }else{
+    c_taus_againstElectron_ = false;
+  }
+  if(b_taus_againstElectronLoose_ && !b_taus_againstElectronLoose_->TestBit(kDoNotProcess)){
+    c_taus_againstElectronLoose_ = true;
+  }else{
+    c_taus_againstElectronLoose_ = false;
+  }
+  if(b_taus_againstElectronMVA_ && !b_taus_againstElectronMVA_->TestBit(kDoNotProcess)){
+    c_taus_againstElectronMVA_ = true;
+  }else{
+    c_taus_againstElectronMVA_ = false;
+  }
+  if(b_taus_againstElectronMedium_ && !b_taus_againstElectronMedium_->TestBit(kDoNotProcess)){
+    c_taus_againstElectronMedium_ = true;
+  }else{
+    c_taus_againstElectronMedium_ = false;
+  }
+  if(b_taus_againstElectronTight_ && !b_taus_againstElectronTight_->TestBit(kDoNotProcess)){
+    c_taus_againstElectronTight_ = true;
+  }else{
+    c_taus_againstElectronTight_ = false;
+  }
+  if(b_taus_againstMuon_ && !b_taus_againstMuon_->TestBit(kDoNotProcess)){
+    c_taus_againstMuon_ = true;
+  }else{
+    c_taus_againstMuon_ = false;
+  }
+  if(b_taus_againstMuonLoose_ && !b_taus_againstMuonLoose_->TestBit(kDoNotProcess)){
+    c_taus_againstMuonLoose_ = true;
+  }else{
+    c_taus_againstMuonLoose_ = false;
+  }
+  if(b_taus_againstMuonMedium_ && !b_taus_againstMuonMedium_->TestBit(kDoNotProcess)){
+    c_taus_againstMuonMedium_ = true;
+  }else{
+    c_taus_againstMuonMedium_ = false;
+  }
+  if(b_taus_againstMuonTight_ && !b_taus_againstMuonTight_->TestBit(kDoNotProcess)){
+    c_taus_againstMuonTight_ = true;
+  }else{
+    c_taus_againstMuonTight_ = false;
+  }
+  if(b_taus_byIsoUsingLeadingPi_ && !b_taus_byIsoUsingLeadingPi_->TestBit(kDoNotProcess)){
+    c_taus_byIsoUsingLeadingPi_ = true;
+  }else{
+    c_taus_byIsoUsingLeadingPi_ = false;
+  }
+  if(b_taus_byIsolation_ && !b_taus_byIsolation_->TestBit(kDoNotProcess)){
+    c_taus_byIsolation_ = true;
+  }else{
+    c_taus_byIsolation_ = false;
+  }
+  if(b_taus_byLooseIsolation_ && !b_taus_byLooseIsolation_->TestBit(kDoNotProcess)){
+    c_taus_byLooseIsolation_ = true;
+  }else{
+    c_taus_byLooseIsolation_ = false;
+  }
+  if(b_taus_byLooseIsolationDeltaBetaCorr_ && !b_taus_byLooseIsolationDeltaBetaCorr_->TestBit(kDoNotProcess)){
+    c_taus_byLooseIsolationDeltaBetaCorr_ = true;
+  }else{
+    c_taus_byLooseIsolationDeltaBetaCorr_ = false;
+  }
+  if(b_taus_byMediumIsolation_ && !b_taus_byMediumIsolation_->TestBit(kDoNotProcess)){
+    c_taus_byMediumIsolation_ = true;
+  }else{
+    c_taus_byMediumIsolation_ = false;
+  }
+  if(b_taus_byMediumIsolationDeltaBetaCorr_ && !b_taus_byMediumIsolationDeltaBetaCorr_->TestBit(kDoNotProcess)){
+    c_taus_byMediumIsolationDeltaBetaCorr_ = true;
+  }else{
+    c_taus_byMediumIsolationDeltaBetaCorr_ = false;
+  }
+  if(b_taus_byTightIsolation_ && !b_taus_byTightIsolation_->TestBit(kDoNotProcess)){
+    c_taus_byTightIsolation_ = true;
+  }else{
+    c_taus_byTightIsolation_ = false;
+  }
+  if(b_taus_byTightIsolationDeltaBetaCorr_ && !b_taus_byTightIsolationDeltaBetaCorr_->TestBit(kDoNotProcess)){
+    c_taus_byTightIsolationDeltaBetaCorr_ = true;
+  }else{
+    c_taus_byTightIsolationDeltaBetaCorr_ = false;
+  }
+  if(b_taus_byVLooseIsolation_ && !b_taus_byVLooseIsolation_->TestBit(kDoNotProcess)){
+    c_taus_byVLooseIsolation_ = true;
+  }else{
+    c_taus_byVLooseIsolation_ = false;
+  }
+  if(b_taus_byVLooseIsolationDeltaBetaCorr_ && !b_taus_byVLooseIsolationDeltaBetaCorr_->TestBit(kDoNotProcess)){
+    c_taus_byVLooseIsolationDeltaBetaCorr_ = true;
+  }else{
+    c_taus_byVLooseIsolationDeltaBetaCorr_ = false;
+  }
+  if(b_taus_charge_ && !b_taus_charge_->TestBit(kDoNotProcess)){
+    c_taus_charge_ = true;
+  }else{
+    c_taus_charge_ = false;
+  }
+  if(b_taus_decayModeFinding_ && !b_taus_decayModeFinding_->TestBit(kDoNotProcess)){
+    c_taus_decayModeFinding_ = true;
+  }else{
+    c_taus_decayModeFinding_ = false;
+  }
+  if(b_taus_ecalIsoUsingLeadingPi_ && !b_taus_ecalIsoUsingLeadingPi_->TestBit(kDoNotProcess)){
+    c_taus_ecalIsoUsingLeadingPi_ = true;
+  }else{
+    c_taus_ecalIsoUsingLeadingPi_ = false;
+  }
+  if(b_taus_ecalIsolation_ && !b_taus_ecalIsolation_->TestBit(kDoNotProcess)){
+    c_taus_ecalIsolation_ = true;
+  }else{
+    c_taus_ecalIsolation_ = false;
+  }
+  if(b_taus_ecalStripSumEOverPLead_ && !b_taus_ecalStripSumEOverPLead_->TestBit(kDoNotProcess)){
+    c_taus_ecalStripSumEOverPLead_ = true;
+  }else{
+    c_taus_ecalStripSumEOverPLead_ = false;
+  }
+  if(b_taus_elecPreIdDecision_ && !b_taus_elecPreIdDecision_->TestBit(kDoNotProcess)){
+    c_taus_elecPreIdDecision_ = true;
+  }else{
+    c_taus_elecPreIdDecision_ = false;
+  }
+  if(b_taus_elecPreIdOutput_ && !b_taus_elecPreIdOutput_->TestBit(kDoNotProcess)){
+    c_taus_elecPreIdOutput_ = true;
+  }else{
+    c_taus_elecPreIdOutput_ = false;
+  }
+  if(b_taus_emf_ && !b_taus_emf_->TestBit(kDoNotProcess)){
+    c_taus_emf_ = true;
+  }else{
+    c_taus_emf_ = false;
+  }
+  if(b_taus_energy_ && !b_taus_energy_->TestBit(kDoNotProcess)){
+    c_taus_energy_ = true;
+  }else{
+    c_taus_energy_ = false;
+  }
+  if(b_taus_et_ && !b_taus_et_->TestBit(kDoNotProcess)){
+    c_taus_et_ = true;
+  }else{
+    c_taus_et_ = false;
+  }
+  if(b_taus_eta_ && !b_taus_eta_->TestBit(kDoNotProcess)){
+    c_taus_eta_ = true;
+  }else{
+    c_taus_eta_ = false;
+  }
+  if(b_taus_hcal3x3OverPLead_ && !b_taus_hcal3x3OverPLead_->TestBit(kDoNotProcess)){
+    c_taus_hcal3x3OverPLead_ = true;
+  }else{
+    c_taus_hcal3x3OverPLead_ = false;
+  }
+  if(b_taus_hcalMaxOverPLead_ && !b_taus_hcalMaxOverPLead_->TestBit(kDoNotProcess)){
+    c_taus_hcalMaxOverPLead_ = true;
+  }else{
+    c_taus_hcalMaxOverPLead_ = false;
+  }
+  if(b_taus_hcalTotOverPLead_ && !b_taus_hcalTotOverPLead_->TestBit(kDoNotProcess)){
+    c_taus_hcalTotOverPLead_ = true;
+  }else{
+    c_taus_hcalTotOverPLead_ = false;
+  }
+  if(b_taus_isoPFChargedHadrCandsPtSum_ && !b_taus_isoPFChargedHadrCandsPtSum_->TestBit(kDoNotProcess)){
+    c_taus_isoPFChargedHadrCandsPtSum_ = true;
+  }else{
+    c_taus_isoPFChargedHadrCandsPtSum_ = false;
+  }
+  if(b_taus_isoPFGammaCandsEtSum_ && !b_taus_isoPFGammaCandsEtSum_->TestBit(kDoNotProcess)){
+    c_taus_isoPFGammaCandsEtSum_ = true;
+  }else{
+    c_taus_isoPFGammaCandsEtSum_ = false;
+  }
+  if(b_taus_leadPFChargedHadrCand_ECAL_eta_ && !b_taus_leadPFChargedHadrCand_ECAL_eta_->TestBit(kDoNotProcess)){
+    c_taus_leadPFChargedHadrCand_ECAL_eta_ = true;
+  }else{
+    c_taus_leadPFChargedHadrCand_ECAL_eta_ = false;
+  }
+  if(b_taus_leadPFChargedHadrCand_charge_ && !b_taus_leadPFChargedHadrCand_charge_->TestBit(kDoNotProcess)){
+    c_taus_leadPFChargedHadrCand_charge_ = true;
+  }else{
+    c_taus_leadPFChargedHadrCand_charge_ = false;
+  }
+  if(b_taus_leadPFChargedHadrCand_eta_ && !b_taus_leadPFChargedHadrCand_eta_->TestBit(kDoNotProcess)){
+    c_taus_leadPFChargedHadrCand_eta_ = true;
+  }else{
+    c_taus_leadPFChargedHadrCand_eta_ = false;
+  }
+  if(b_taus_leadPFChargedHadrCand_phi_ && !b_taus_leadPFChargedHadrCand_phi_->TestBit(kDoNotProcess)){
+    c_taus_leadPFChargedHadrCand_phi_ = true;
+  }else{
+    c_taus_leadPFChargedHadrCand_phi_ = false;
+  }
+  if(b_taus_leadPFChargedHadrCand_pt_ && !b_taus_leadPFChargedHadrCand_pt_->TestBit(kDoNotProcess)){
+    c_taus_leadPFChargedHadrCand_pt_ = true;
+  }else{
+    c_taus_leadPFChargedHadrCand_pt_ = false;
+  }
+  if(b_taus_leadingTrackFinding_ && !b_taus_leadingTrackFinding_->TestBit(kDoNotProcess)){
+    c_taus_leadingTrackFinding_ = true;
+  }else{
+    c_taus_leadingTrackFinding_ = false;
+  }
+  if(b_taus_leadingTrackPtCut_ && !b_taus_leadingTrackPtCut_->TestBit(kDoNotProcess)){
+    c_taus_leadingTrackPtCut_ = true;
+  }else{
+    c_taus_leadingTrackPtCut_ = false;
+  }
+  if(b_taus_muDecision_ && !b_taus_muDecision_->TestBit(kDoNotProcess)){
+    c_taus_muDecision_ = true;
+  }else{
+    c_taus_muDecision_ = false;
+  }
+  if(b_taus_phi_ && !b_taus_phi_->TestBit(kDoNotProcess)){
+    c_taus_phi_ = true;
+  }else{
+    c_taus_phi_ = false;
+  }
+  if(b_taus_pt_ && !b_taus_pt_->TestBit(kDoNotProcess)){
+    c_taus_pt_ = true;
+  }else{
+    c_taus_pt_ = false;
+  }
+  if(b_taus_px_ && !b_taus_px_->TestBit(kDoNotProcess)){
+    c_taus_px_ = true;
+  }else{
+    c_taus_px_ = false;
+  }
+  if(b_taus_py_ && !b_taus_py_->TestBit(kDoNotProcess)){
+    c_taus_py_ = true;
+  }else{
+    c_taus_py_ = false;
+  }
+  if(b_taus_pz_ && !b_taus_pz_->TestBit(kDoNotProcess)){
+    c_taus_pz_ = true;
+  }else{
+    c_taus_pz_ = false;
+  }
+  if(b_taus_signalPFChargedHadrCandsSize_ && !b_taus_signalPFChargedHadrCandsSize_->TestBit(kDoNotProcess)){
+    c_taus_signalPFChargedHadrCandsSize_ = true;
+  }else{
+    c_taus_signalPFChargedHadrCandsSize_ = false;
+  }
+  if(b_taus_status_ && !b_taus_status_->TestBit(kDoNotProcess)){
+    c_taus_status_ = true;
+  }else{
+    c_taus_status_ = false;
+  }
+  if(b_taus_taNC_ && !b_taus_taNC_->TestBit(kDoNotProcess)){
+    c_taus_taNC_ = true;
+  }else{
+    c_taus_taNC_ = false;
+  }
+  if(b_taus_taNC_half_ && !b_taus_taNC_half_->TestBit(kDoNotProcess)){
+    c_taus_taNC_half_ = true;
+  }else{
+    c_taus_taNC_half_ = false;
+  }
+  if(b_taus_taNC_one_ && !b_taus_taNC_one_->TestBit(kDoNotProcess)){
+    c_taus_taNC_one_ = true;
+  }else{
+    c_taus_taNC_one_ = false;
+  }
+  if(b_taus_taNC_quarter_ && !b_taus_taNC_quarter_->TestBit(kDoNotProcess)){
+    c_taus_taNC_quarter_ = true;
+  }else{
+    c_taus_taNC_quarter_ = false;
+  }
+  if(b_taus_taNC_tenth_ && !b_taus_taNC_tenth_->TestBit(kDoNotProcess)){
+    c_taus_taNC_tenth_ = true;
+  }else{
+    c_taus_taNC_tenth_ = false;
+  }
+  if(b_taus_theta_ && !b_taus_theta_->TestBit(kDoNotProcess)){
+    c_taus_theta_ = true;
+  }else{
+    c_taus_theta_ = false;
+  }
+  if(b_taus_tkIsoUsingLeadingPi_ && !b_taus_tkIsoUsingLeadingPi_->TestBit(kDoNotProcess)){
+    c_taus_tkIsoUsingLeadingPi_ = true;
+  }else{
+    c_taus_tkIsoUsingLeadingPi_ = false;
+  }
+  if(b_taus_trackIsolation_ && !b_taus_trackIsolation_->TestBit(kDoNotProcess)){
+    c_taus_trackIsolation_ = true;
+  }else{
+    c_taus_trackIsolation_ = false;
+  }
+  if(b_trackingfailurefilter_decision_ && !b_trackingfailurefilter_decision_->TestBit(kDoNotProcess)){
+    c_trackingfailurefilter_decision_ = true;
+  }else{
+    c_trackingfailurefilter_decision_ = false;
+  }
+  if(b_trigger_name_ && !b_trigger_name_->TestBit(kDoNotProcess)){
+    c_trigger_name_ = true;
+  }else{
+    c_trigger_name_ = false;
+  }
+  if(b_trigger_prescalevalue_ && !b_trigger_prescalevalue_->TestBit(kDoNotProcess)){
+    c_trigger_prescalevalue_ = true;
+  }else{
+    c_trigger_prescalevalue_ = false;
+  }
+  if(b_weight_ && !b_weight_->TestBit(kDoNotProcess)){
+    c_weight_ = true;
+  }else{
+    c_weight_ = false;
+  }
+  chainA_.GetEntry(entry);
+  chainB_.GetEntry(entry);
 }
 
 short cfa_base::GetVersion() const{
@@ -2952,6 +5822,8 @@ void cfa_base::PrepareNewChains(){
 }
 
 void cfa_base::InitializeA(){
+  chainA_.SetMakeClass(true);
+  chainA_.SetBranchStatus("*",0);
   chainA_.SetBranchAddress("PU_NumInteractions", &PU_NumInteractions_, &b_PU_NumInteractions_);
   chainA_.SetBranchAddress("PU_TrueNumInteractions", &PU_TrueNumInteractions_, &b_PU_TrueNumInteractions_);
   chainA_.SetBranchAddress("PU_bunchCrossing", &PU_bunchCrossing_, &b_PU_bunchCrossing_);
@@ -2979,6 +5851,8 @@ void cfa_base::InitializeA(){
 }
 
 void cfa_base::InitializeB(){
+  chainB_.SetMakeClass(true);
+  chainB_.SetBranchStatus("*",0);
   chainB_.SetBranchAddress("NbeamSpot", &NbeamSpot_, &b_NbeamSpot_);
   chainB_.SetBranchAddress("Nels", &Nels_, &b_Nels_);
   chainB_.SetBranchAddress("Nmc_doc", &Nmc_doc_, &b_Nmc_doc_);
@@ -3676,6 +6550,8 @@ void cfa_base::InitializeB(){
 
 UInt_t const & cfa_base::NbeamSpot() const{
   if(!c_NbeamSpot_ && b_NbeamSpot_){
+    b_NbeamSpot_->SetStatus(true);
+    chainB_.SetBranchAddress("NbeamSpot", &NbeamSpot_, &b_NbeamSpot_);
     b_NbeamSpot_->GetEntry(entry_);
     c_NbeamSpot_ = true;
   }
@@ -3684,6 +6560,8 @@ UInt_t const & cfa_base::NbeamSpot() const{
 
 UInt_t const & cfa_base::Nels() const{
   if(!c_Nels_ && b_Nels_){
+    b_Nels_->SetStatus(true);
+    chainB_.SetBranchAddress("Nels", &Nels_, &b_Nels_);
     b_Nels_->GetEntry(entry_);
     c_Nels_ = true;
   }
@@ -3692,6 +6570,8 @@ UInt_t const & cfa_base::Nels() const{
 
 UInt_t const & cfa_base::Nmc_doc() const{
   if(!c_Nmc_doc_ && b_Nmc_doc_){
+    b_Nmc_doc_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_doc", &Nmc_doc_, &b_Nmc_doc_);
     b_Nmc_doc_->GetEntry(entry_);
     c_Nmc_doc_ = true;
   }
@@ -3700,6 +6580,8 @@ UInt_t const & cfa_base::Nmc_doc() const{
 
 UInt_t const & cfa_base::Nmc_electrons() const{
   if(!c_Nmc_electrons_ && b_Nmc_electrons_){
+    b_Nmc_electrons_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_electrons", &Nmc_electrons_, &b_Nmc_electrons_);
     b_Nmc_electrons_->GetEntry(entry_);
     c_Nmc_electrons_ = true;
   }
@@ -3708,6 +6590,8 @@ UInt_t const & cfa_base::Nmc_electrons() const{
 
 UInt_t const & cfa_base::Nmc_mus() const{
   if(!c_Nmc_mus_ && b_Nmc_mus_){
+    b_Nmc_mus_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_mus", &Nmc_mus_, &b_Nmc_mus_);
     b_Nmc_mus_->GetEntry(entry_);
     c_Nmc_mus_ = true;
   }
@@ -3716,6 +6600,8 @@ UInt_t const & cfa_base::Nmc_mus() const{
 
 UInt_t const & cfa_base::Nmc_nues() const{
   if(!c_Nmc_nues_ && b_Nmc_nues_){
+    b_Nmc_nues_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_nues", &Nmc_nues_, &b_Nmc_nues_);
     b_Nmc_nues_->GetEntry(entry_);
     c_Nmc_nues_ = true;
   }
@@ -3724,6 +6610,8 @@ UInt_t const & cfa_base::Nmc_nues() const{
 
 UInt_t const & cfa_base::Nmc_numus() const{
   if(!c_Nmc_numus_ && b_Nmc_numus_){
+    b_Nmc_numus_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_numus", &Nmc_numus_, &b_Nmc_numus_);
     b_Nmc_numus_->GetEntry(entry_);
     c_Nmc_numus_ = true;
   }
@@ -3732,6 +6620,8 @@ UInt_t const & cfa_base::Nmc_numus() const{
 
 UInt_t const & cfa_base::Nmc_nutaus() const{
   if(!c_Nmc_nutaus_ && b_Nmc_nutaus_){
+    b_Nmc_nutaus_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_nutaus", &Nmc_nutaus_, &b_Nmc_nutaus_);
     b_Nmc_nutaus_->GetEntry(entry_);
     c_Nmc_nutaus_ = true;
   }
@@ -3740,6 +6630,8 @@ UInt_t const & cfa_base::Nmc_nutaus() const{
 
 UInt_t const & cfa_base::Nmc_photons() const{
   if(!c_Nmc_photons_ && b_Nmc_photons_){
+    b_Nmc_photons_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_photons", &Nmc_photons_, &b_Nmc_photons_);
     b_Nmc_photons_->GetEntry(entry_);
     c_Nmc_photons_ = true;
   }
@@ -3748,6 +6640,8 @@ UInt_t const & cfa_base::Nmc_photons() const{
 
 UInt_t const & cfa_base::Nmc_taus() const{
   if(!c_Nmc_taus_ && b_Nmc_taus_){
+    b_Nmc_taus_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmc_taus", &Nmc_taus_, &b_Nmc_taus_);
     b_Nmc_taus_->GetEntry(entry_);
     c_Nmc_taus_ = true;
   }
@@ -3756,6 +6650,8 @@ UInt_t const & cfa_base::Nmc_taus() const{
 
 UInt_t const & cfa_base::Nmus() const{
   if(!c_Nmus_ && b_Nmus_){
+    b_Nmus_->SetStatus(true);
+    chainB_.SetBranchAddress("Nmus", &Nmus_, &b_Nmus_);
     b_Nmus_->GetEntry(entry_);
     c_Nmus_ = true;
   }
@@ -3764,6 +6660,8 @@ UInt_t const & cfa_base::Nmus() const{
 
 UInt_t const & cfa_base::Npfcand() const{
   if(!c_Npfcand_ && b_Npfcand_){
+    b_Npfcand_->SetStatus(true);
+    chainB_.SetBranchAddress("Npfcand", &Npfcand_, &b_Npfcand_);
     b_Npfcand_->GetEntry(entry_);
     c_Npfcand_ = true;
   }
@@ -3772,6 +6670,8 @@ UInt_t const & cfa_base::Npfcand() const{
 
 UInt_t const & cfa_base::Nphotons() const{
   if(!c_Nphotons_ && b_Nphotons_){
+    b_Nphotons_->SetStatus(true);
+    chainB_.SetBranchAddress("Nphotons", &Nphotons_, &b_Nphotons_);
     b_Nphotons_->GetEntry(entry_);
     c_Nphotons_ = true;
   }
@@ -3780,6 +6680,8 @@ UInt_t const & cfa_base::Nphotons() const{
 
 UInt_t const & cfa_base::Npv() const{
   if(!c_Npv_ && b_Npv_){
+    b_Npv_->SetStatus(true);
+    chainB_.SetBranchAddress("Npv", &Npv_, &b_Npv_);
     b_Npv_->GetEntry(entry_);
     c_Npv_ = true;
   }
@@ -3788,6 +6690,8 @@ UInt_t const & cfa_base::Npv() const{
 
 UInt_t const & cfa_base::Ntaus() const{
   if(!c_Ntaus_ && b_Ntaus_){
+    b_Ntaus_->SetStatus(true);
+    chainB_.SetBranchAddress("Ntaus", &Ntaus_, &b_Ntaus_);
     b_Ntaus_->GetEntry(entry_);
     c_Ntaus_ = true;
   }
@@ -3796,6 +6700,8 @@ UInt_t const & cfa_base::Ntaus() const{
 
 std::vector<int>* const & cfa_base::PU_NumInteractions() const{
   if(!c_PU_NumInteractions_ && b_PU_NumInteractions_){
+    b_PU_NumInteractions_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_NumInteractions", &PU_NumInteractions_, &b_PU_NumInteractions_);
     b_PU_NumInteractions_->GetEntry(entry_);
     c_PU_NumInteractions_ = true;
   }
@@ -3804,6 +6710,8 @@ std::vector<int>* const & cfa_base::PU_NumInteractions() const{
 
 std::vector<float>* const & cfa_base::PU_TrueNumInteractions() const{
   if(!c_PU_TrueNumInteractions_ && b_PU_TrueNumInteractions_){
+    b_PU_TrueNumInteractions_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_TrueNumInteractions", &PU_TrueNumInteractions_, &b_PU_TrueNumInteractions_);
     b_PU_TrueNumInteractions_->GetEntry(entry_);
     c_PU_TrueNumInteractions_ = true;
   }
@@ -3812,6 +6720,8 @@ std::vector<float>* const & cfa_base::PU_TrueNumInteractions() const{
 
 std::vector<int>* const & cfa_base::PU_bunchCrossing() const{
   if(!c_PU_bunchCrossing_ && b_PU_bunchCrossing_){
+    b_PU_bunchCrossing_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_bunchCrossing", &PU_bunchCrossing_, &b_PU_bunchCrossing_);
     b_PU_bunchCrossing_->GetEntry(entry_);
     c_PU_bunchCrossing_ = true;
   }
@@ -3820,6 +6730,8 @@ std::vector<int>* const & cfa_base::PU_bunchCrossing() const{
 
 std::vector<std::vector<int> >* const & cfa_base::PU_ntrks_highpT() const{
   if(!c_PU_ntrks_highpT_ && b_PU_ntrks_highpT_){
+    b_PU_ntrks_highpT_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_ntrks_highpT", &PU_ntrks_highpT_, &b_PU_ntrks_highpT_);
     b_PU_ntrks_highpT_->GetEntry(entry_);
     c_PU_ntrks_highpT_ = true;
   }
@@ -3828,6 +6740,8 @@ std::vector<std::vector<int> >* const & cfa_base::PU_ntrks_highpT() const{
 
 std::vector<std::vector<int> >* const & cfa_base::PU_ntrks_lowpT() const{
   if(!c_PU_ntrks_lowpT_ && b_PU_ntrks_lowpT_){
+    b_PU_ntrks_lowpT_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_ntrks_lowpT", &PU_ntrks_lowpT_, &b_PU_ntrks_lowpT_);
     b_PU_ntrks_lowpT_->GetEntry(entry_);
     c_PU_ntrks_lowpT_ = true;
   }
@@ -3836,6 +6750,8 @@ std::vector<std::vector<int> >* const & cfa_base::PU_ntrks_lowpT() const{
 
 std::vector<std::vector<float> >* const & cfa_base::PU_sumpT_highpT() const{
   if(!c_PU_sumpT_highpT_ && b_PU_sumpT_highpT_){
+    b_PU_sumpT_highpT_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_sumpT_highpT", &PU_sumpT_highpT_, &b_PU_sumpT_highpT_);
     b_PU_sumpT_highpT_->GetEntry(entry_);
     c_PU_sumpT_highpT_ = true;
   }
@@ -3844,6 +6760,8 @@ std::vector<std::vector<float> >* const & cfa_base::PU_sumpT_highpT() const{
 
 std::vector<std::vector<float> >* const & cfa_base::PU_sumpT_lowpT() const{
   if(!c_PU_sumpT_lowpT_ && b_PU_sumpT_lowpT_){
+    b_PU_sumpT_lowpT_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_sumpT_lowpT", &PU_sumpT_lowpT_, &b_PU_sumpT_lowpT_);
     b_PU_sumpT_lowpT_->GetEntry(entry_);
     c_PU_sumpT_lowpT_ = true;
   }
@@ -3852,6 +6770,8 @@ std::vector<std::vector<float> >* const & cfa_base::PU_sumpT_lowpT() const{
 
 std::vector<std::vector<float> >* const & cfa_base::PU_zpositions() const{
   if(!c_PU_zpositions_ && b_PU_zpositions_){
+    b_PU_zpositions_->SetStatus(true);
+    chainA_.SetBranchAddress("PU_zpositions", &PU_zpositions_, &b_PU_zpositions_);
     b_PU_zpositions_->GetEntry(entry_);
     c_PU_zpositions_ = true;
   }
@@ -3860,6 +6780,8 @@ std::vector<std::vector<float> >* const & cfa_base::PU_zpositions() const{
 
 std::vector<float>* const & cfa_base::beamSpot_beamWidthX() const{
   if(!c_beamSpot_beamWidthX_ && b_beamSpot_beamWidthX_){
+    b_beamSpot_beamWidthX_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_beamWidthX", &beamSpot_beamWidthX_, &b_beamSpot_beamWidthX_);
     b_beamSpot_beamWidthX_->GetEntry(entry_);
     c_beamSpot_beamWidthX_ = true;
   }
@@ -3868,6 +6790,8 @@ std::vector<float>* const & cfa_base::beamSpot_beamWidthX() const{
 
 std::vector<float>* const & cfa_base::beamSpot_beamWidthXError() const{
   if(!c_beamSpot_beamWidthXError_ && b_beamSpot_beamWidthXError_){
+    b_beamSpot_beamWidthXError_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_beamWidthXError", &beamSpot_beamWidthXError_, &b_beamSpot_beamWidthXError_);
     b_beamSpot_beamWidthXError_->GetEntry(entry_);
     c_beamSpot_beamWidthXError_ = true;
   }
@@ -3876,6 +6800,8 @@ std::vector<float>* const & cfa_base::beamSpot_beamWidthXError() const{
 
 std::vector<float>* const & cfa_base::beamSpot_beamWidthY() const{
   if(!c_beamSpot_beamWidthY_ && b_beamSpot_beamWidthY_){
+    b_beamSpot_beamWidthY_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_beamWidthY", &beamSpot_beamWidthY_, &b_beamSpot_beamWidthY_);
     b_beamSpot_beamWidthY_->GetEntry(entry_);
     c_beamSpot_beamWidthY_ = true;
   }
@@ -3884,6 +6810,8 @@ std::vector<float>* const & cfa_base::beamSpot_beamWidthY() const{
 
 std::vector<float>* const & cfa_base::beamSpot_beamWidthYError() const{
   if(!c_beamSpot_beamWidthYError_ && b_beamSpot_beamWidthYError_){
+    b_beamSpot_beamWidthYError_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_beamWidthYError", &beamSpot_beamWidthYError_, &b_beamSpot_beamWidthYError_);
     b_beamSpot_beamWidthYError_->GetEntry(entry_);
     c_beamSpot_beamWidthYError_ = true;
   }
@@ -3892,6 +6820,8 @@ std::vector<float>* const & cfa_base::beamSpot_beamWidthYError() const{
 
 std::vector<float>* const & cfa_base::beamSpot_dxdz() const{
   if(!c_beamSpot_dxdz_ && b_beamSpot_dxdz_){
+    b_beamSpot_dxdz_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_dxdz", &beamSpot_dxdz_, &b_beamSpot_dxdz_);
     b_beamSpot_dxdz_->GetEntry(entry_);
     c_beamSpot_dxdz_ = true;
   }
@@ -3900,6 +6830,8 @@ std::vector<float>* const & cfa_base::beamSpot_dxdz() const{
 
 std::vector<float>* const & cfa_base::beamSpot_dxdzError() const{
   if(!c_beamSpot_dxdzError_ && b_beamSpot_dxdzError_){
+    b_beamSpot_dxdzError_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_dxdzError", &beamSpot_dxdzError_, &b_beamSpot_dxdzError_);
     b_beamSpot_dxdzError_->GetEntry(entry_);
     c_beamSpot_dxdzError_ = true;
   }
@@ -3908,6 +6840,8 @@ std::vector<float>* const & cfa_base::beamSpot_dxdzError() const{
 
 std::vector<float>* const & cfa_base::beamSpot_dydz() const{
   if(!c_beamSpot_dydz_ && b_beamSpot_dydz_){
+    b_beamSpot_dydz_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_dydz", &beamSpot_dydz_, &b_beamSpot_dydz_);
     b_beamSpot_dydz_->GetEntry(entry_);
     c_beamSpot_dydz_ = true;
   }
@@ -3916,6 +6850,8 @@ std::vector<float>* const & cfa_base::beamSpot_dydz() const{
 
 std::vector<float>* const & cfa_base::beamSpot_dydzError() const{
   if(!c_beamSpot_dydzError_ && b_beamSpot_dydzError_){
+    b_beamSpot_dydzError_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_dydzError", &beamSpot_dydzError_, &b_beamSpot_dydzError_);
     b_beamSpot_dydzError_->GetEntry(entry_);
     c_beamSpot_dydzError_ = true;
   }
@@ -3924,6 +6860,8 @@ std::vector<float>* const & cfa_base::beamSpot_dydzError() const{
 
 std::vector<float>* const & cfa_base::beamSpot_sigmaZ() const{
   if(!c_beamSpot_sigmaZ_ && b_beamSpot_sigmaZ_){
+    b_beamSpot_sigmaZ_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_sigmaZ", &beamSpot_sigmaZ_, &b_beamSpot_sigmaZ_);
     b_beamSpot_sigmaZ_->GetEntry(entry_);
     c_beamSpot_sigmaZ_ = true;
   }
@@ -3932,6 +6870,8 @@ std::vector<float>* const & cfa_base::beamSpot_sigmaZ() const{
 
 std::vector<float>* const & cfa_base::beamSpot_sigmaZ0Error() const{
   if(!c_beamSpot_sigmaZ0Error_ && b_beamSpot_sigmaZ0Error_){
+    b_beamSpot_sigmaZ0Error_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_sigmaZ0Error", &beamSpot_sigmaZ0Error_, &b_beamSpot_sigmaZ0Error_);
     b_beamSpot_sigmaZ0Error_->GetEntry(entry_);
     c_beamSpot_sigmaZ0Error_ = true;
   }
@@ -3940,6 +6880,8 @@ std::vector<float>* const & cfa_base::beamSpot_sigmaZ0Error() const{
 
 std::vector<float>* const & cfa_base::beamSpot_x() const{
   if(!c_beamSpot_x_ && b_beamSpot_x_){
+    b_beamSpot_x_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_x", &beamSpot_x_, &b_beamSpot_x_);
     b_beamSpot_x_->GetEntry(entry_);
     c_beamSpot_x_ = true;
   }
@@ -3948,6 +6890,8 @@ std::vector<float>* const & cfa_base::beamSpot_x() const{
 
 std::vector<float>* const & cfa_base::beamSpot_x0Error() const{
   if(!c_beamSpot_x0Error_ && b_beamSpot_x0Error_){
+    b_beamSpot_x0Error_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_x0Error", &beamSpot_x0Error_, &b_beamSpot_x0Error_);
     b_beamSpot_x0Error_->GetEntry(entry_);
     c_beamSpot_x0Error_ = true;
   }
@@ -3956,6 +6900,8 @@ std::vector<float>* const & cfa_base::beamSpot_x0Error() const{
 
 std::vector<float>* const & cfa_base::beamSpot_y() const{
   if(!c_beamSpot_y_ && b_beamSpot_y_){
+    b_beamSpot_y_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_y", &beamSpot_y_, &b_beamSpot_y_);
     b_beamSpot_y_->GetEntry(entry_);
     c_beamSpot_y_ = true;
   }
@@ -3964,6 +6910,8 @@ std::vector<float>* const & cfa_base::beamSpot_y() const{
 
 std::vector<float>* const & cfa_base::beamSpot_y0Error() const{
   if(!c_beamSpot_y0Error_ && b_beamSpot_y0Error_){
+    b_beamSpot_y0Error_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_y0Error", &beamSpot_y0Error_, &b_beamSpot_y0Error_);
     b_beamSpot_y0Error_->GetEntry(entry_);
     c_beamSpot_y0Error_ = true;
   }
@@ -3972,6 +6920,8 @@ std::vector<float>* const & cfa_base::beamSpot_y0Error() const{
 
 std::vector<float>* const & cfa_base::beamSpot_z() const{
   if(!c_beamSpot_z_ && b_beamSpot_z_){
+    b_beamSpot_z_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_z", &beamSpot_z_, &b_beamSpot_z_);
     b_beamSpot_z_->GetEntry(entry_);
     c_beamSpot_z_ = true;
   }
@@ -3980,6 +6930,8 @@ std::vector<float>* const & cfa_base::beamSpot_z() const{
 
 std::vector<float>* const & cfa_base::beamSpot_z0Error() const{
   if(!c_beamSpot_z0Error_ && b_beamSpot_z0Error_){
+    b_beamSpot_z0Error_->SetStatus(true);
+    chainB_.SetBranchAddress("beamSpot_z0Error", &beamSpot_z0Error_, &b_beamSpot_z0Error_);
     b_beamSpot_z0Error_->GetEntry(entry_);
     c_beamSpot_z0Error_ = true;
   }
@@ -3988,6 +6940,8 @@ std::vector<float>* const & cfa_base::beamSpot_z0Error() const{
 
 UInt_t const & cfa_base::bunchCrossing() const{
   if(!c_bunchCrossing_ && b_bunchCrossing_){
+    b_bunchCrossing_->SetStatus(true);
+    chainB_.SetBranchAddress("bunchCrossing", &bunchCrossing_, &b_bunchCrossing_);
     b_bunchCrossing_->GetEntry(entry_);
     c_bunchCrossing_ = true;
   }
@@ -3996,6 +6950,8 @@ UInt_t const & cfa_base::bunchCrossing() const{
 
 Int_t const & cfa_base::cschalofilter_decision() const{
   if(!c_cschalofilter_decision_ && b_cschalofilter_decision_){
+    b_cschalofilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("cschalofilter_decision", &cschalofilter_decision_, &b_cschalofilter_decision_);
     b_cschalofilter_decision_->GetEntry(entry_);
     c_cschalofilter_decision_ = true;
   }
@@ -4004,6 +6960,8 @@ Int_t const & cfa_base::cschalofilter_decision() const{
 
 Int_t const & cfa_base::ecallaserfilter_decision() const{
   if(!c_ecallaserfilter_decision_ && b_ecallaserfilter_decision_){
+    b_ecallaserfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("ecallaserfilter_decision", &ecallaserfilter_decision_, &b_ecallaserfilter_decision_);
     b_ecallaserfilter_decision_->GetEntry(entry_);
     c_ecallaserfilter_decision_ = true;
   }
@@ -4012,6 +6970,8 @@ Int_t const & cfa_base::ecallaserfilter_decision() const{
 
 Int_t const & cfa_base::eebadscfilter_decision() const{
   if(!c_eebadscfilter_decision_ && b_eebadscfilter_decision_){
+    b_eebadscfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("eebadscfilter_decision", &eebadscfilter_decision_, &b_eebadscfilter_decision_);
     b_eebadscfilter_decision_->GetEntry(entry_);
     c_eebadscfilter_decision_ = true;
   }
@@ -4020,6 +6980,8 @@ Int_t const & cfa_base::eebadscfilter_decision() const{
 
 std::vector<float>* const & cfa_base::els_PATpassConversionVeto() const{
   if(!c_els_PATpassConversionVeto_ && b_els_PATpassConversionVeto_){
+    b_els_PATpassConversionVeto_->SetStatus(true);
+    chainB_.SetBranchAddress("els_PATpassConversionVeto", &els_PATpassConversionVeto_, &b_els_PATpassConversionVeto_);
     b_els_PATpassConversionVeto_->GetEntry(entry_);
     c_els_PATpassConversionVeto_ = true;
   }
@@ -4028,6 +6990,8 @@ std::vector<float>* const & cfa_base::els_PATpassConversionVeto() const{
 
 std::vector<float>* const & cfa_base::els_basicClustersSize() const{
   if(!c_els_basicClustersSize_ && b_els_basicClustersSize_){
+    b_els_basicClustersSize_->SetStatus(true);
+    chainB_.SetBranchAddress("els_basicClustersSize", &els_basicClustersSize_, &b_els_basicClustersSize_);
     b_els_basicClustersSize_->GetEntry(entry_);
     c_els_basicClustersSize_ = true;
   }
@@ -4036,6 +7000,8 @@ std::vector<float>* const & cfa_base::els_basicClustersSize() const{
 
 std::vector<float>* const & cfa_base::els_cIso() const{
   if(!c_els_cIso_ && b_els_cIso_){
+    b_els_cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cIso", &els_cIso_, &b_els_cIso_);
     b_els_cIso_->GetEntry(entry_);
     c_els_cIso_ = true;
   }
@@ -4044,6 +7010,8 @@ std::vector<float>* const & cfa_base::els_cIso() const{
 
 std::vector<float>* const & cfa_base::els_caloEnergy() const{
   if(!c_els_caloEnergy_ && b_els_caloEnergy_){
+    b_els_caloEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_caloEnergy", &els_caloEnergy_, &b_els_caloEnergy_);
     b_els_caloEnergy_->GetEntry(entry_);
     c_els_caloEnergy_ = true;
   }
@@ -4052,6 +7020,8 @@ std::vector<float>* const & cfa_base::els_caloEnergy() const{
 
 std::vector<float>* const & cfa_base::els_charge() const{
   if(!c_els_charge_ && b_els_charge_){
+    b_els_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("els_charge", &els_charge_, &b_els_charge_);
     b_els_charge_->GetEntry(entry_);
     c_els_charge_ = true;
   }
@@ -4060,6 +7030,8 @@ std::vector<float>* const & cfa_base::els_charge() const{
 
 std::vector<float>* const & cfa_base::els_chi2() const{
   if(!c_els_chi2_ && b_els_chi2_){
+    b_els_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("els_chi2", &els_chi2_, &b_els_chi2_);
     b_els_chi2_->GetEntry(entry_);
     c_els_chi2_ = true;
   }
@@ -4068,6 +7040,8 @@ std::vector<float>* const & cfa_base::els_chi2() const{
 
 std::vector<float>* const & cfa_base::els_core_ecalDrivenSeed() const{
   if(!c_els_core_ecalDrivenSeed_ && b_els_core_ecalDrivenSeed_){
+    b_els_core_ecalDrivenSeed_->SetStatus(true);
+    chainB_.SetBranchAddress("els_core_ecalDrivenSeed", &els_core_ecalDrivenSeed_, &b_els_core_ecalDrivenSeed_);
     b_els_core_ecalDrivenSeed_->GetEntry(entry_);
     c_els_core_ecalDrivenSeed_ = true;
   }
@@ -4076,6 +7050,8 @@ std::vector<float>* const & cfa_base::els_core_ecalDrivenSeed() const{
 
 std::vector<float>* const & cfa_base::els_cpx() const{
   if(!c_els_cpx_ && b_els_cpx_){
+    b_els_cpx_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cpx", &els_cpx_, &b_els_cpx_);
     b_els_cpx_->GetEntry(entry_);
     c_els_cpx_ = true;
   }
@@ -4084,6 +7060,8 @@ std::vector<float>* const & cfa_base::els_cpx() const{
 
 std::vector<float>* const & cfa_base::els_cpy() const{
   if(!c_els_cpy_ && b_els_cpy_){
+    b_els_cpy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cpy", &els_cpy_, &b_els_cpy_);
     b_els_cpy_->GetEntry(entry_);
     c_els_cpy_ = true;
   }
@@ -4092,6 +7070,8 @@ std::vector<float>* const & cfa_base::els_cpy() const{
 
 std::vector<float>* const & cfa_base::els_cpz() const{
   if(!c_els_cpz_ && b_els_cpz_){
+    b_els_cpz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cpz", &els_cpz_, &b_els_cpz_);
     b_els_cpz_->GetEntry(entry_);
     c_els_cpz_ = true;
   }
@@ -4100,6 +7080,8 @@ std::vector<float>* const & cfa_base::els_cpz() const{
 
 std::vector<float>* const & cfa_base::els_ctf_tk_charge() const{
   if(!c_els_ctf_tk_charge_ && b_els_ctf_tk_charge_){
+    b_els_ctf_tk_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ctf_tk_charge", &els_ctf_tk_charge_, &b_els_ctf_tk_charge_);
     b_els_ctf_tk_charge_->GetEntry(entry_);
     c_els_ctf_tk_charge_ = true;
   }
@@ -4108,6 +7090,8 @@ std::vector<float>* const & cfa_base::els_ctf_tk_charge() const{
 
 std::vector<float>* const & cfa_base::els_ctf_tk_eta() const{
   if(!c_els_ctf_tk_eta_ && b_els_ctf_tk_eta_){
+    b_els_ctf_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ctf_tk_eta", &els_ctf_tk_eta_, &b_els_ctf_tk_eta_);
     b_els_ctf_tk_eta_->GetEntry(entry_);
     c_els_ctf_tk_eta_ = true;
   }
@@ -4116,6 +7100,8 @@ std::vector<float>* const & cfa_base::els_ctf_tk_eta() const{
 
 std::vector<float>* const & cfa_base::els_ctf_tk_id() const{
   if(!c_els_ctf_tk_id_ && b_els_ctf_tk_id_){
+    b_els_ctf_tk_id_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ctf_tk_id", &els_ctf_tk_id_, &b_els_ctf_tk_id_);
     b_els_ctf_tk_id_->GetEntry(entry_);
     c_els_ctf_tk_id_ = true;
   }
@@ -4124,6 +7110,8 @@ std::vector<float>* const & cfa_base::els_ctf_tk_id() const{
 
 std::vector<float>* const & cfa_base::els_ctf_tk_phi() const{
   if(!c_els_ctf_tk_phi_ && b_els_ctf_tk_phi_){
+    b_els_ctf_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ctf_tk_phi", &els_ctf_tk_phi_, &b_els_ctf_tk_phi_);
     b_els_ctf_tk_phi_->GetEntry(entry_);
     c_els_ctf_tk_phi_ = true;
   }
@@ -4132,6 +7120,8 @@ std::vector<float>* const & cfa_base::els_ctf_tk_phi() const{
 
 std::vector<float>* const & cfa_base::els_cx() const{
   if(!c_els_cx_ && b_els_cx_){
+    b_els_cx_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cx", &els_cx_, &b_els_cx_);
     b_els_cx_->GetEntry(entry_);
     c_els_cx_ = true;
   }
@@ -4140,6 +7130,8 @@ std::vector<float>* const & cfa_base::els_cx() const{
 
 std::vector<float>* const & cfa_base::els_cy() const{
   if(!c_els_cy_ && b_els_cy_){
+    b_els_cy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cy", &els_cy_, &b_els_cy_);
     b_els_cy_->GetEntry(entry_);
     c_els_cy_ = true;
   }
@@ -4148,6 +7140,8 @@ std::vector<float>* const & cfa_base::els_cy() const{
 
 std::vector<float>* const & cfa_base::els_cz() const{
   if(!c_els_cz_ && b_els_cz_){
+    b_els_cz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_cz", &els_cz_, &b_els_cz_);
     b_els_cz_->GetEntry(entry_);
     c_els_cz_ = true;
   }
@@ -4156,6 +7150,8 @@ std::vector<float>* const & cfa_base::els_cz() const{
 
 std::vector<float>* const & cfa_base::els_d0dum() const{
   if(!c_els_d0dum_ && b_els_d0dum_){
+    b_els_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("els_d0dum", &els_d0dum_, &b_els_d0dum_);
     b_els_d0dum_->GetEntry(entry_);
     c_els_d0dum_ = true;
   }
@@ -4164,6 +7160,8 @@ std::vector<float>* const & cfa_base::els_d0dum() const{
 
 std::vector<float>* const & cfa_base::els_d0dumError() const{
   if(!c_els_d0dumError_ && b_els_d0dumError_){
+    b_els_d0dumError_->SetStatus(true);
+    chainB_.SetBranchAddress("els_d0dumError", &els_d0dumError_, &b_els_d0dumError_);
     b_els_d0dumError_->GetEntry(entry_);
     c_els_d0dumError_ = true;
   }
@@ -4172,6 +7170,8 @@ std::vector<float>* const & cfa_base::els_d0dumError() const{
 
 std::vector<float>* const & cfa_base::els_dEtaIn() const{
   if(!c_els_dEtaIn_ && b_els_dEtaIn_){
+    b_els_dEtaIn_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dEtaIn", &els_dEtaIn_, &b_els_dEtaIn_);
     b_els_dEtaIn_->GetEntry(entry_);
     c_els_dEtaIn_ = true;
   }
@@ -4180,6 +7180,8 @@ std::vector<float>* const & cfa_base::els_dEtaIn() const{
 
 std::vector<float>* const & cfa_base::els_dEtaOut() const{
   if(!c_els_dEtaOut_ && b_els_dEtaOut_){
+    b_els_dEtaOut_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dEtaOut", &els_dEtaOut_, &b_els_dEtaOut_);
     b_els_dEtaOut_->GetEntry(entry_);
     c_els_dEtaOut_ = true;
   }
@@ -4188,6 +7190,8 @@ std::vector<float>* const & cfa_base::els_dEtaOut() const{
 
 std::vector<float>* const & cfa_base::els_dPhiIn() const{
   if(!c_els_dPhiIn_ && b_els_dPhiIn_){
+    b_els_dPhiIn_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dPhiIn", &els_dPhiIn_, &b_els_dPhiIn_);
     b_els_dPhiIn_->GetEntry(entry_);
     c_els_dPhiIn_ = true;
   }
@@ -4196,6 +7200,8 @@ std::vector<float>* const & cfa_base::els_dPhiIn() const{
 
 std::vector<float>* const & cfa_base::els_dPhiOut() const{
   if(!c_els_dPhiOut_ && b_els_dPhiOut_){
+    b_els_dPhiOut_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dPhiOut", &els_dPhiOut_, &b_els_dPhiOut_);
     b_els_dPhiOut_->GetEntry(entry_);
     c_els_dPhiOut_ = true;
   }
@@ -4204,6 +7210,8 @@ std::vector<float>* const & cfa_base::els_dPhiOut() const{
 
 std::vector<float>* const & cfa_base::els_dr03EcalRecHitSumEt() const{
   if(!c_els_dr03EcalRecHitSumEt_ && b_els_dr03EcalRecHitSumEt_){
+    b_els_dr03EcalRecHitSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr03EcalRecHitSumEt", &els_dr03EcalRecHitSumEt_, &b_els_dr03EcalRecHitSumEt_);
     b_els_dr03EcalRecHitSumEt_->GetEntry(entry_);
     c_els_dr03EcalRecHitSumEt_ = true;
   }
@@ -4212,6 +7220,8 @@ std::vector<float>* const & cfa_base::els_dr03EcalRecHitSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr03HcalDepth1TowerSumEt() const{
   if(!c_els_dr03HcalDepth1TowerSumEt_ && b_els_dr03HcalDepth1TowerSumEt_){
+    b_els_dr03HcalDepth1TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr03HcalDepth1TowerSumEt", &els_dr03HcalDepth1TowerSumEt_, &b_els_dr03HcalDepth1TowerSumEt_);
     b_els_dr03HcalDepth1TowerSumEt_->GetEntry(entry_);
     c_els_dr03HcalDepth1TowerSumEt_ = true;
   }
@@ -4220,6 +7230,8 @@ std::vector<float>* const & cfa_base::els_dr03HcalDepth1TowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr03HcalDepth2TowerSumEt() const{
   if(!c_els_dr03HcalDepth2TowerSumEt_ && b_els_dr03HcalDepth2TowerSumEt_){
+    b_els_dr03HcalDepth2TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr03HcalDepth2TowerSumEt", &els_dr03HcalDepth2TowerSumEt_, &b_els_dr03HcalDepth2TowerSumEt_);
     b_els_dr03HcalDepth2TowerSumEt_->GetEntry(entry_);
     c_els_dr03HcalDepth2TowerSumEt_ = true;
   }
@@ -4228,6 +7240,8 @@ std::vector<float>* const & cfa_base::els_dr03HcalDepth2TowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr03HcalTowerSumEt() const{
   if(!c_els_dr03HcalTowerSumEt_ && b_els_dr03HcalTowerSumEt_){
+    b_els_dr03HcalTowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr03HcalTowerSumEt", &els_dr03HcalTowerSumEt_, &b_els_dr03HcalTowerSumEt_);
     b_els_dr03HcalTowerSumEt_->GetEntry(entry_);
     c_els_dr03HcalTowerSumEt_ = true;
   }
@@ -4236,6 +7250,8 @@ std::vector<float>* const & cfa_base::els_dr03HcalTowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr03TkSumPt() const{
   if(!c_els_dr03TkSumPt_ && b_els_dr03TkSumPt_){
+    b_els_dr03TkSumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr03TkSumPt", &els_dr03TkSumPt_, &b_els_dr03TkSumPt_);
     b_els_dr03TkSumPt_->GetEntry(entry_);
     c_els_dr03TkSumPt_ = true;
   }
@@ -4244,6 +7260,8 @@ std::vector<float>* const & cfa_base::els_dr03TkSumPt() const{
 
 std::vector<float>* const & cfa_base::els_dr04EcalRecHitSumEt() const{
   if(!c_els_dr04EcalRecHitSumEt_ && b_els_dr04EcalRecHitSumEt_){
+    b_els_dr04EcalRecHitSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr04EcalRecHitSumEt", &els_dr04EcalRecHitSumEt_, &b_els_dr04EcalRecHitSumEt_);
     b_els_dr04EcalRecHitSumEt_->GetEntry(entry_);
     c_els_dr04EcalRecHitSumEt_ = true;
   }
@@ -4252,6 +7270,8 @@ std::vector<float>* const & cfa_base::els_dr04EcalRecHitSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr04HcalDepth1TowerSumEt() const{
   if(!c_els_dr04HcalDepth1TowerSumEt_ && b_els_dr04HcalDepth1TowerSumEt_){
+    b_els_dr04HcalDepth1TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr04HcalDepth1TowerSumEt", &els_dr04HcalDepth1TowerSumEt_, &b_els_dr04HcalDepth1TowerSumEt_);
     b_els_dr04HcalDepth1TowerSumEt_->GetEntry(entry_);
     c_els_dr04HcalDepth1TowerSumEt_ = true;
   }
@@ -4260,6 +7280,8 @@ std::vector<float>* const & cfa_base::els_dr04HcalDepth1TowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr04HcalDepth2TowerSumEt() const{
   if(!c_els_dr04HcalDepth2TowerSumEt_ && b_els_dr04HcalDepth2TowerSumEt_){
+    b_els_dr04HcalDepth2TowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr04HcalDepth2TowerSumEt", &els_dr04HcalDepth2TowerSumEt_, &b_els_dr04HcalDepth2TowerSumEt_);
     b_els_dr04HcalDepth2TowerSumEt_->GetEntry(entry_);
     c_els_dr04HcalDepth2TowerSumEt_ = true;
   }
@@ -4268,6 +7290,8 @@ std::vector<float>* const & cfa_base::els_dr04HcalDepth2TowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr04HcalTowerSumEt() const{
   if(!c_els_dr04HcalTowerSumEt_ && b_els_dr04HcalTowerSumEt_){
+    b_els_dr04HcalTowerSumEt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr04HcalTowerSumEt", &els_dr04HcalTowerSumEt_, &b_els_dr04HcalTowerSumEt_);
     b_els_dr04HcalTowerSumEt_->GetEntry(entry_);
     c_els_dr04HcalTowerSumEt_ = true;
   }
@@ -4276,6 +7300,8 @@ std::vector<float>* const & cfa_base::els_dr04HcalTowerSumEt() const{
 
 std::vector<float>* const & cfa_base::els_dr04TkSumPt() const{
   if(!c_els_dr04TkSumPt_ && b_els_dr04TkSumPt_){
+    b_els_dr04TkSumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dr04TkSumPt", &els_dr04TkSumPt_, &b_els_dr04TkSumPt_);
     b_els_dr04TkSumPt_->GetEntry(entry_);
     c_els_dr04TkSumPt_ = true;
   }
@@ -4284,6 +7310,8 @@ std::vector<float>* const & cfa_base::els_dr04TkSumPt() const{
 
 std::vector<float>* const & cfa_base::els_dz() const{
   if(!c_els_dz_ && b_els_dz_){
+    b_els_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dz", &els_dz_, &b_els_dz_);
     b_els_dz_->GetEntry(entry_);
     c_els_dz_ = true;
   }
@@ -4292,6 +7320,8 @@ std::vector<float>* const & cfa_base::els_dz() const{
 
 std::vector<float>* const & cfa_base::els_dzError() const{
   if(!c_els_dzError_ && b_els_dzError_){
+    b_els_dzError_->SetStatus(true);
+    chainB_.SetBranchAddress("els_dzError", &els_dzError_, &b_els_dzError_);
     b_els_dzError_->GetEntry(entry_);
     c_els_dzError_ = true;
   }
@@ -4300,6 +7330,8 @@ std::vector<float>* const & cfa_base::els_dzError() const{
 
 std::vector<float>* const & cfa_base::els_eOverPIn() const{
   if(!c_els_eOverPIn_ && b_els_eOverPIn_){
+    b_els_eOverPIn_->SetStatus(true);
+    chainB_.SetBranchAddress("els_eOverPIn", &els_eOverPIn_, &b_els_eOverPIn_);
     b_els_eOverPIn_->GetEntry(entry_);
     c_els_eOverPIn_ = true;
   }
@@ -4308,6 +7340,8 @@ std::vector<float>* const & cfa_base::els_eOverPIn() const{
 
 std::vector<float>* const & cfa_base::els_eSeedOverPOut() const{
   if(!c_els_eSeedOverPOut_ && b_els_eSeedOverPOut_){
+    b_els_eSeedOverPOut_->SetStatus(true);
+    chainB_.SetBranchAddress("els_eSeedOverPOut", &els_eSeedOverPOut_, &b_els_eSeedOverPOut_);
     b_els_eSeedOverPOut_->GetEntry(entry_);
     c_els_eSeedOverPOut_ = true;
   }
@@ -4316,6 +7350,8 @@ std::vector<float>* const & cfa_base::els_eSeedOverPOut() const{
 
 std::vector<float>* const & cfa_base::els_ecalIso() const{
   if(!c_els_ecalIso_ && b_els_ecalIso_){
+    b_els_ecalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ecalIso", &els_ecalIso_, &b_els_ecalIso_);
     b_els_ecalIso_->GetEntry(entry_);
     c_els_ecalIso_ = true;
   }
@@ -4324,6 +7360,8 @@ std::vector<float>* const & cfa_base::els_ecalIso() const{
 
 std::vector<float>* const & cfa_base::els_energy() const{
   if(!c_els_energy_ && b_els_energy_){
+    b_els_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_energy", &els_energy_, &b_els_energy_);
     b_els_energy_->GetEntry(entry_);
     c_els_energy_ = true;
   }
@@ -4332,6 +7370,8 @@ std::vector<float>* const & cfa_base::els_energy() const{
 
 std::vector<float>* const & cfa_base::els_et() const{
   if(!c_els_et_ && b_els_et_){
+    b_els_et_->SetStatus(true);
+    chainB_.SetBranchAddress("els_et", &els_et_, &b_els_et_);
     b_els_et_->GetEntry(entry_);
     c_els_et_ = true;
   }
@@ -4340,6 +7380,8 @@ std::vector<float>* const & cfa_base::els_et() const{
 
 std::vector<float>* const & cfa_base::els_eta() const{
   if(!c_els_eta_ && b_els_eta_){
+    b_els_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_eta", &els_eta_, &b_els_eta_);
     b_els_eta_->GetEntry(entry_);
     c_els_eta_ = true;
   }
@@ -4348,6 +7390,8 @@ std::vector<float>* const & cfa_base::els_eta() const{
 
 std::vector<float>* const & cfa_base::els_etaError() const{
   if(!c_els_etaError_ && b_els_etaError_){
+    b_els_etaError_->SetStatus(true);
+    chainB_.SetBranchAddress("els_etaError", &els_etaError_, &b_els_etaError_);
     b_els_etaError_->GetEntry(entry_);
     c_els_etaError_ = true;
   }
@@ -4356,6 +7400,8 @@ std::vector<float>* const & cfa_base::els_etaError() const{
 
 std::vector<float>* const & cfa_base::els_fbrem() const{
   if(!c_els_fbrem_ && b_els_fbrem_){
+    b_els_fbrem_->SetStatus(true);
+    chainB_.SetBranchAddress("els_fbrem", &els_fbrem_, &b_els_fbrem_);
     b_els_fbrem_->GetEntry(entry_);
     c_els_fbrem_ = true;
   }
@@ -4364,6 +7410,8 @@ std::vector<float>* const & cfa_base::els_fbrem() const{
 
 std::vector<float>* const & cfa_base::els_gen_et() const{
   if(!c_els_gen_et_ && b_els_gen_et_){
+    b_els_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_et", &els_gen_et_, &b_els_gen_et_);
     b_els_gen_et_->GetEntry(entry_);
     c_els_gen_et_ = true;
   }
@@ -4372,6 +7420,8 @@ std::vector<float>* const & cfa_base::els_gen_et() const{
 
 std::vector<float>* const & cfa_base::els_gen_eta() const{
   if(!c_els_gen_eta_ && b_els_gen_eta_){
+    b_els_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_eta", &els_gen_eta_, &b_els_gen_eta_);
     b_els_gen_eta_->GetEntry(entry_);
     c_els_gen_eta_ = true;
   }
@@ -4380,6 +7430,8 @@ std::vector<float>* const & cfa_base::els_gen_eta() const{
 
 std::vector<float>* const & cfa_base::els_gen_id() const{
   if(!c_els_gen_id_ && b_els_gen_id_){
+    b_els_gen_id_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_id", &els_gen_id_, &b_els_gen_id_);
     b_els_gen_id_->GetEntry(entry_);
     c_els_gen_id_ = true;
   }
@@ -4388,6 +7440,8 @@ std::vector<float>* const & cfa_base::els_gen_id() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_et() const{
   if(!c_els_gen_mother_et_ && b_els_gen_mother_et_){
+    b_els_gen_mother_et_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_et", &els_gen_mother_et_, &b_els_gen_mother_et_);
     b_els_gen_mother_et_->GetEntry(entry_);
     c_els_gen_mother_et_ = true;
   }
@@ -4396,6 +7450,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_et() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_eta() const{
   if(!c_els_gen_mother_eta_ && b_els_gen_mother_eta_){
+    b_els_gen_mother_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_eta", &els_gen_mother_eta_, &b_els_gen_mother_eta_);
     b_els_gen_mother_eta_->GetEntry(entry_);
     c_els_gen_mother_eta_ = true;
   }
@@ -4404,6 +7460,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_eta() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_id() const{
   if(!c_els_gen_mother_id_ && b_els_gen_mother_id_){
+    b_els_gen_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_id", &els_gen_mother_id_, &b_els_gen_mother_id_);
     b_els_gen_mother_id_->GetEntry(entry_);
     c_els_gen_mother_id_ = true;
   }
@@ -4412,6 +7470,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_id() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_phi() const{
   if(!c_els_gen_mother_phi_ && b_els_gen_mother_phi_){
+    b_els_gen_mother_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_phi", &els_gen_mother_phi_, &b_els_gen_mother_phi_);
     b_els_gen_mother_phi_->GetEntry(entry_);
     c_els_gen_mother_phi_ = true;
   }
@@ -4420,6 +7480,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_phi() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_pt() const{
   if(!c_els_gen_mother_pt_ && b_els_gen_mother_pt_){
+    b_els_gen_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_pt", &els_gen_mother_pt_, &b_els_gen_mother_pt_);
     b_els_gen_mother_pt_->GetEntry(entry_);
     c_els_gen_mother_pt_ = true;
   }
@@ -4428,6 +7490,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_pt() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_px() const{
   if(!c_els_gen_mother_px_ && b_els_gen_mother_px_){
+    b_els_gen_mother_px_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_px", &els_gen_mother_px_, &b_els_gen_mother_px_);
     b_els_gen_mother_px_->GetEntry(entry_);
     c_els_gen_mother_px_ = true;
   }
@@ -4436,6 +7500,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_px() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_py() const{
   if(!c_els_gen_mother_py_ && b_els_gen_mother_py_){
+    b_els_gen_mother_py_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_py", &els_gen_mother_py_, &b_els_gen_mother_py_);
     b_els_gen_mother_py_->GetEntry(entry_);
     c_els_gen_mother_py_ = true;
   }
@@ -4444,6 +7510,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_py() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_pz() const{
   if(!c_els_gen_mother_pz_ && b_els_gen_mother_pz_){
+    b_els_gen_mother_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_pz", &els_gen_mother_pz_, &b_els_gen_mother_pz_);
     b_els_gen_mother_pz_->GetEntry(entry_);
     c_els_gen_mother_pz_ = true;
   }
@@ -4452,6 +7520,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_pz() const{
 
 std::vector<float>* const & cfa_base::els_gen_mother_theta() const{
   if(!c_els_gen_mother_theta_ && b_els_gen_mother_theta_){
+    b_els_gen_mother_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_mother_theta", &els_gen_mother_theta_, &b_els_gen_mother_theta_);
     b_els_gen_mother_theta_->GetEntry(entry_);
     c_els_gen_mother_theta_ = true;
   }
@@ -4460,6 +7530,8 @@ std::vector<float>* const & cfa_base::els_gen_mother_theta() const{
 
 std::vector<float>* const & cfa_base::els_gen_phi() const{
   if(!c_els_gen_phi_ && b_els_gen_phi_){
+    b_els_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_phi", &els_gen_phi_, &b_els_gen_phi_);
     b_els_gen_phi_->GetEntry(entry_);
     c_els_gen_phi_ = true;
   }
@@ -4468,6 +7540,8 @@ std::vector<float>* const & cfa_base::els_gen_phi() const{
 
 std::vector<float>* const & cfa_base::els_gen_pt() const{
   if(!c_els_gen_pt_ && b_els_gen_pt_){
+    b_els_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_pt", &els_gen_pt_, &b_els_gen_pt_);
     b_els_gen_pt_->GetEntry(entry_);
     c_els_gen_pt_ = true;
   }
@@ -4476,6 +7550,8 @@ std::vector<float>* const & cfa_base::els_gen_pt() const{
 
 std::vector<float>* const & cfa_base::els_gen_px() const{
   if(!c_els_gen_px_ && b_els_gen_px_){
+    b_els_gen_px_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_px", &els_gen_px_, &b_els_gen_px_);
     b_els_gen_px_->GetEntry(entry_);
     c_els_gen_px_ = true;
   }
@@ -4484,6 +7560,8 @@ std::vector<float>* const & cfa_base::els_gen_px() const{
 
 std::vector<float>* const & cfa_base::els_gen_py() const{
   if(!c_els_gen_py_ && b_els_gen_py_){
+    b_els_gen_py_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_py", &els_gen_py_, &b_els_gen_py_);
     b_els_gen_py_->GetEntry(entry_);
     c_els_gen_py_ = true;
   }
@@ -4492,6 +7570,8 @@ std::vector<float>* const & cfa_base::els_gen_py() const{
 
 std::vector<float>* const & cfa_base::els_gen_pz() const{
   if(!c_els_gen_pz_ && b_els_gen_pz_){
+    b_els_gen_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_pz", &els_gen_pz_, &b_els_gen_pz_);
     b_els_gen_pz_->GetEntry(entry_);
     c_els_gen_pz_ = true;
   }
@@ -4500,6 +7580,8 @@ std::vector<float>* const & cfa_base::els_gen_pz() const{
 
 std::vector<float>* const & cfa_base::els_gen_theta() const{
   if(!c_els_gen_theta_ && b_els_gen_theta_){
+    b_els_gen_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_gen_theta", &els_gen_theta_, &b_els_gen_theta_);
     b_els_gen_theta_->GetEntry(entry_);
     c_els_gen_theta_ = true;
   }
@@ -4508,6 +7590,8 @@ std::vector<float>* const & cfa_base::els_gen_theta() const{
 
 std::vector<float>* const & cfa_base::els_hadOverEm() const{
   if(!c_els_hadOverEm_ && b_els_hadOverEm_){
+    b_els_hadOverEm_->SetStatus(true);
+    chainB_.SetBranchAddress("els_hadOverEm", &els_hadOverEm_, &b_els_hadOverEm_);
     b_els_hadOverEm_->GetEntry(entry_);
     c_els_hadOverEm_ = true;
   }
@@ -4516,6 +7600,8 @@ std::vector<float>* const & cfa_base::els_hadOverEm() const{
 
 std::vector<float>* const & cfa_base::els_hcalIso() const{
   if(!c_els_hcalIso_ && b_els_hcalIso_){
+    b_els_hcalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_hcalIso", &els_hcalIso_, &b_els_hcalIso_);
     b_els_hcalIso_->GetEntry(entry_);
     c_els_hcalIso_ = true;
   }
@@ -4524,6 +7610,8 @@ std::vector<float>* const & cfa_base::els_hcalIso() const{
 
 std::vector<float>* const & cfa_base::els_hcalOverEcalBc() const{
   if(!c_els_hcalOverEcalBc_ && b_els_hcalOverEcalBc_){
+    b_els_hcalOverEcalBc_->SetStatus(true);
+    chainB_.SetBranchAddress("els_hcalOverEcalBc", &els_hcalOverEcalBc_, &b_els_hcalOverEcalBc_);
     b_els_hcalOverEcalBc_->GetEntry(entry_);
     c_els_hcalOverEcalBc_ = true;
   }
@@ -4532,6 +7620,8 @@ std::vector<float>* const & cfa_base::els_hcalOverEcalBc() const{
 
 std::vector<float>* const & cfa_base::els_isEB() const{
   if(!c_els_isEB_ && b_els_isEB_){
+    b_els_isEB_->SetStatus(true);
+    chainB_.SetBranchAddress("els_isEB", &els_isEB_, &b_els_isEB_);
     b_els_isEB_->GetEntry(entry_);
     c_els_isEB_ = true;
   }
@@ -4540,6 +7630,8 @@ std::vector<float>* const & cfa_base::els_isEB() const{
 
 std::vector<float>* const & cfa_base::els_isEE() const{
   if(!c_els_isEE_ && b_els_isEE_){
+    b_els_isEE_->SetStatus(true);
+    chainB_.SetBranchAddress("els_isEE", &els_isEE_, &b_els_isEE_);
     b_els_isEE_->GetEntry(entry_);
     c_els_isEE_ = true;
   }
@@ -4548,6 +7640,8 @@ std::vector<float>* const & cfa_base::els_isEE() const{
 
 std::vector<float>* const & cfa_base::els_looseId() const{
   if(!c_els_looseId_ && b_els_looseId_){
+    b_els_looseId_->SetStatus(true);
+    chainB_.SetBranchAddress("els_looseId", &els_looseId_, &b_els_looseId_);
     b_els_looseId_->GetEntry(entry_);
     c_els_looseId_ = true;
   }
@@ -4556,6 +7650,8 @@ std::vector<float>* const & cfa_base::els_looseId() const{
 
 std::vector<float>* const & cfa_base::els_n_inner_layer() const{
   if(!c_els_n_inner_layer_ && b_els_n_inner_layer_){
+    b_els_n_inner_layer_->SetStatus(true);
+    chainB_.SetBranchAddress("els_n_inner_layer", &els_n_inner_layer_, &b_els_n_inner_layer_);
     b_els_n_inner_layer_->GetEntry(entry_);
     c_els_n_inner_layer_ = true;
   }
@@ -4564,6 +7660,8 @@ std::vector<float>* const & cfa_base::els_n_inner_layer() const{
 
 std::vector<float>* const & cfa_base::els_n_outer_layer() const{
   if(!c_els_n_outer_layer_ && b_els_n_outer_layer_){
+    b_els_n_outer_layer_->SetStatus(true);
+    chainB_.SetBranchAddress("els_n_outer_layer", &els_n_outer_layer_, &b_els_n_outer_layer_);
     b_els_n_outer_layer_->GetEntry(entry_);
     c_els_n_outer_layer_ = true;
   }
@@ -4572,6 +7670,8 @@ std::vector<float>* const & cfa_base::els_n_outer_layer() const{
 
 std::vector<float>* const & cfa_base::els_ndof() const{
   if(!c_els_ndof_ && b_els_ndof_){
+    b_els_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ndof", &els_ndof_, &b_els_ndof_);
     b_els_ndof_->GetEntry(entry_);
     c_els_ndof_ = true;
   }
@@ -4580,6 +7680,8 @@ std::vector<float>* const & cfa_base::els_ndof() const{
 
 std::vector<float>* const & cfa_base::els_numlosthits() const{
   if(!c_els_numlosthits_ && b_els_numlosthits_){
+    b_els_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("els_numlosthits", &els_numlosthits_, &b_els_numlosthits_);
     b_els_numlosthits_->GetEntry(entry_);
     c_els_numlosthits_ = true;
   }
@@ -4588,6 +7690,8 @@ std::vector<float>* const & cfa_base::els_numlosthits() const{
 
 std::vector<float>* const & cfa_base::els_numvalhits() const{
   if(!c_els_numvalhits_ && b_els_numvalhits_){
+    b_els_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("els_numvalhits", &els_numvalhits_, &b_els_numvalhits_);
     b_els_numvalhits_->GetEntry(entry_);
     c_els_numvalhits_ = true;
   }
@@ -4596,6 +7700,8 @@ std::vector<float>* const & cfa_base::els_numvalhits() const{
 
 std::vector<float>* const & cfa_base::els_phi() const{
   if(!c_els_phi_ && b_els_phi_){
+    b_els_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_phi", &els_phi_, &b_els_phi_);
     b_els_phi_->GetEntry(entry_);
     c_els_phi_ = true;
   }
@@ -4604,6 +7710,8 @@ std::vector<float>* const & cfa_base::els_phi() const{
 
 std::vector<float>* const & cfa_base::els_phiError() const{
   if(!c_els_phiError_ && b_els_phiError_){
+    b_els_phiError_->SetStatus(true);
+    chainB_.SetBranchAddress("els_phiError", &els_phiError_, &b_els_phiError_);
     b_els_phiError_->GetEntry(entry_);
     c_els_phiError_ = true;
   }
@@ -4612,6 +7720,8 @@ std::vector<float>* const & cfa_base::els_phiError() const{
 
 std::vector<float>* const & cfa_base::els_pt() const{
   if(!c_els_pt_ && b_els_pt_){
+    b_els_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_pt", &els_pt_, &b_els_pt_);
     b_els_pt_->GetEntry(entry_);
     c_els_pt_ = true;
   }
@@ -4620,6 +7730,8 @@ std::vector<float>* const & cfa_base::els_pt() const{
 
 std::vector<float>* const & cfa_base::els_ptError() const{
   if(!c_els_ptError_ && b_els_ptError_){
+    b_els_ptError_->SetStatus(true);
+    chainB_.SetBranchAddress("els_ptError", &els_ptError_, &b_els_ptError_);
     b_els_ptError_->GetEntry(entry_);
     c_els_ptError_ = true;
   }
@@ -4628,6 +7740,8 @@ std::vector<float>* const & cfa_base::els_ptError() const{
 
 std::vector<float>* const & cfa_base::els_px() const{
   if(!c_els_px_ && b_els_px_){
+    b_els_px_->SetStatus(true);
+    chainB_.SetBranchAddress("els_px", &els_px_, &b_els_px_);
     b_els_px_->GetEntry(entry_);
     c_els_px_ = true;
   }
@@ -4636,6 +7750,8 @@ std::vector<float>* const & cfa_base::els_px() const{
 
 std::vector<float>* const & cfa_base::els_py() const{
   if(!c_els_py_ && b_els_py_){
+    b_els_py_->SetStatus(true);
+    chainB_.SetBranchAddress("els_py", &els_py_, &b_els_py_);
     b_els_py_->GetEntry(entry_);
     c_els_py_ = true;
   }
@@ -4644,6 +7760,8 @@ std::vector<float>* const & cfa_base::els_py() const{
 
 std::vector<float>* const & cfa_base::els_pz() const{
   if(!c_els_pz_ && b_els_pz_){
+    b_els_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_pz", &els_pz_, &b_els_pz_);
     b_els_pz_->GetEntry(entry_);
     c_els_pz_ = true;
   }
@@ -4652,6 +7770,8 @@ std::vector<float>* const & cfa_base::els_pz() const{
 
 std::vector<float>* const & cfa_base::els_robustHighEnergyId() const{
   if(!c_els_robustHighEnergyId_ && b_els_robustHighEnergyId_){
+    b_els_robustHighEnergyId_->SetStatus(true);
+    chainB_.SetBranchAddress("els_robustHighEnergyId", &els_robustHighEnergyId_, &b_els_robustHighEnergyId_);
     b_els_robustHighEnergyId_->GetEntry(entry_);
     c_els_robustHighEnergyId_ = true;
   }
@@ -4660,6 +7780,8 @@ std::vector<float>* const & cfa_base::els_robustHighEnergyId() const{
 
 std::vector<float>* const & cfa_base::els_robustLooseId() const{
   if(!c_els_robustLooseId_ && b_els_robustLooseId_){
+    b_els_robustLooseId_->SetStatus(true);
+    chainB_.SetBranchAddress("els_robustLooseId", &els_robustLooseId_, &b_els_robustLooseId_);
     b_els_robustLooseId_->GetEntry(entry_);
     c_els_robustLooseId_ = true;
   }
@@ -4668,6 +7790,8 @@ std::vector<float>* const & cfa_base::els_robustLooseId() const{
 
 std::vector<float>* const & cfa_base::els_robustTightId() const{
   if(!c_els_robustTightId_ && b_els_robustTightId_){
+    b_els_robustTightId_->SetStatus(true);
+    chainB_.SetBranchAddress("els_robustTightId", &els_robustTightId_, &b_els_robustTightId_);
     b_els_robustTightId_->GetEntry(entry_);
     c_els_robustTightId_ = true;
   }
@@ -4676,6 +7800,8 @@ std::vector<float>* const & cfa_base::els_robustTightId() const{
 
 std::vector<float>* const & cfa_base::els_scE1x5() const{
   if(!c_els_scE1x5_ && b_els_scE1x5_){
+    b_els_scE1x5_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scE1x5", &els_scE1x5_, &b_els_scE1x5_);
     b_els_scE1x5_->GetEntry(entry_);
     c_els_scE1x5_ = true;
   }
@@ -4684,6 +7810,8 @@ std::vector<float>* const & cfa_base::els_scE1x5() const{
 
 std::vector<float>* const & cfa_base::els_scE2x5Max() const{
   if(!c_els_scE2x5Max_ && b_els_scE2x5Max_){
+    b_els_scE2x5Max_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scE2x5Max", &els_scE2x5Max_, &b_els_scE2x5Max_);
     b_els_scE2x5Max_->GetEntry(entry_);
     c_els_scE2x5Max_ = true;
   }
@@ -4692,6 +7820,8 @@ std::vector<float>* const & cfa_base::els_scE2x5Max() const{
 
 std::vector<float>* const & cfa_base::els_scE5x5() const{
   if(!c_els_scE5x5_ && b_els_scE5x5_){
+    b_els_scE5x5_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scE5x5", &els_scE5x5_, &b_els_scE5x5_);
     b_els_scE5x5_->GetEntry(entry_);
     c_els_scE5x5_ = true;
   }
@@ -4700,6 +7830,8 @@ std::vector<float>* const & cfa_base::els_scE5x5() const{
 
 std::vector<float>* const & cfa_base::els_scEnergy() const{
   if(!c_els_scEnergy_ && b_els_scEnergy_){
+    b_els_scEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scEnergy", &els_scEnergy_, &b_els_scEnergy_);
     b_els_scEnergy_->GetEntry(entry_);
     c_els_scEnergy_ = true;
   }
@@ -4708,6 +7840,8 @@ std::vector<float>* const & cfa_base::els_scEnergy() const{
 
 std::vector<float>* const & cfa_base::els_scEta() const{
   if(!c_els_scEta_ && b_els_scEta_){
+    b_els_scEta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scEta", &els_scEta_, &b_els_scEta_);
     b_els_scEta_->GetEntry(entry_);
     c_els_scEta_ = true;
   }
@@ -4716,6 +7850,8 @@ std::vector<float>* const & cfa_base::els_scEta() const{
 
 std::vector<float>* const & cfa_base::els_scEtaWidth() const{
   if(!c_els_scEtaWidth_ && b_els_scEtaWidth_){
+    b_els_scEtaWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scEtaWidth", &els_scEtaWidth_, &b_els_scEtaWidth_);
     b_els_scEtaWidth_->GetEntry(entry_);
     c_els_scEtaWidth_ = true;
   }
@@ -4724,6 +7860,8 @@ std::vector<float>* const & cfa_base::els_scEtaWidth() const{
 
 std::vector<float>* const & cfa_base::els_scPhi() const{
   if(!c_els_scPhi_ && b_els_scPhi_){
+    b_els_scPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scPhi", &els_scPhi_, &b_els_scPhi_);
     b_els_scPhi_->GetEntry(entry_);
     c_els_scPhi_ = true;
   }
@@ -4732,6 +7870,8 @@ std::vector<float>* const & cfa_base::els_scPhi() const{
 
 std::vector<float>* const & cfa_base::els_scPhiWidth() const{
   if(!c_els_scPhiWidth_ && b_els_scPhiWidth_){
+    b_els_scPhiWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scPhiWidth", &els_scPhiWidth_, &b_els_scPhiWidth_);
     b_els_scPhiWidth_->GetEntry(entry_);
     c_els_scPhiWidth_ = true;
   }
@@ -4740,6 +7880,8 @@ std::vector<float>* const & cfa_base::els_scPhiWidth() const{
 
 std::vector<float>* const & cfa_base::els_scRawEnergy() const{
   if(!c_els_scRawEnergy_ && b_els_scRawEnergy_){
+    b_els_scRawEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scRawEnergy", &els_scRawEnergy_, &b_els_scRawEnergy_);
     b_els_scRawEnergy_->GetEntry(entry_);
     c_els_scRawEnergy_ = true;
   }
@@ -4748,6 +7890,8 @@ std::vector<float>* const & cfa_base::els_scRawEnergy() const{
 
 std::vector<float>* const & cfa_base::els_scSeedEnergy() const{
   if(!c_els_scSeedEnergy_ && b_els_scSeedEnergy_){
+    b_els_scSeedEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_scSeedEnergy", &els_scSeedEnergy_, &b_els_scSeedEnergy_);
     b_els_scSeedEnergy_->GetEntry(entry_);
     c_els_scSeedEnergy_ = true;
   }
@@ -4756,6 +7900,8 @@ std::vector<float>* const & cfa_base::els_scSeedEnergy() const{
 
 std::vector<float>* const & cfa_base::els_shFracInnerHits() const{
   if(!c_els_shFracInnerHits_ && b_els_shFracInnerHits_){
+    b_els_shFracInnerHits_->SetStatus(true);
+    chainB_.SetBranchAddress("els_shFracInnerHits", &els_shFracInnerHits_, &b_els_shFracInnerHits_);
     b_els_shFracInnerHits_->GetEntry(entry_);
     c_els_shFracInnerHits_ = true;
   }
@@ -4764,6 +7910,8 @@ std::vector<float>* const & cfa_base::els_shFracInnerHits() const{
 
 std::vector<float>* const & cfa_base::els_sigmaEtaEta() const{
   if(!c_els_sigmaEtaEta_ && b_els_sigmaEtaEta_){
+    b_els_sigmaEtaEta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_sigmaEtaEta", &els_sigmaEtaEta_, &b_els_sigmaEtaEta_);
     b_els_sigmaEtaEta_->GetEntry(entry_);
     c_els_sigmaEtaEta_ = true;
   }
@@ -4772,6 +7920,8 @@ std::vector<float>* const & cfa_base::els_sigmaEtaEta() const{
 
 std::vector<float>* const & cfa_base::els_sigmaIEtaIEta() const{
   if(!c_els_sigmaIEtaIEta_ && b_els_sigmaIEtaIEta_){
+    b_els_sigmaIEtaIEta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_sigmaIEtaIEta", &els_sigmaIEtaIEta_, &b_els_sigmaIEtaIEta_);
     b_els_sigmaIEtaIEta_->GetEntry(entry_);
     c_els_sigmaIEtaIEta_ = true;
   }
@@ -4780,6 +7930,8 @@ std::vector<float>* const & cfa_base::els_sigmaIEtaIEta() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId60cIso() const{
   if(!c_els_simpleEleId60cIso_ && b_els_simpleEleId60cIso_){
+    b_els_simpleEleId60cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId60cIso", &els_simpleEleId60cIso_, &b_els_simpleEleId60cIso_);
     b_els_simpleEleId60cIso_->GetEntry(entry_);
     c_els_simpleEleId60cIso_ = true;
   }
@@ -4788,6 +7940,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId60cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId60relIso() const{
   if(!c_els_simpleEleId60relIso_ && b_els_simpleEleId60relIso_){
+    b_els_simpleEleId60relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId60relIso", &els_simpleEleId60relIso_, &b_els_simpleEleId60relIso_);
     b_els_simpleEleId60relIso_->GetEntry(entry_);
     c_els_simpleEleId60relIso_ = true;
   }
@@ -4796,6 +7950,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId60relIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId70cIso() const{
   if(!c_els_simpleEleId70cIso_ && b_els_simpleEleId70cIso_){
+    b_els_simpleEleId70cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId70cIso", &els_simpleEleId70cIso_, &b_els_simpleEleId70cIso_);
     b_els_simpleEleId70cIso_->GetEntry(entry_);
     c_els_simpleEleId70cIso_ = true;
   }
@@ -4804,6 +7960,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId70cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId70relIso() const{
   if(!c_els_simpleEleId70relIso_ && b_els_simpleEleId70relIso_){
+    b_els_simpleEleId70relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId70relIso", &els_simpleEleId70relIso_, &b_els_simpleEleId70relIso_);
     b_els_simpleEleId70relIso_->GetEntry(entry_);
     c_els_simpleEleId70relIso_ = true;
   }
@@ -4812,6 +7970,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId70relIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId80cIso() const{
   if(!c_els_simpleEleId80cIso_ && b_els_simpleEleId80cIso_){
+    b_els_simpleEleId80cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId80cIso", &els_simpleEleId80cIso_, &b_els_simpleEleId80cIso_);
     b_els_simpleEleId80cIso_->GetEntry(entry_);
     c_els_simpleEleId80cIso_ = true;
   }
@@ -4820,6 +7980,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId80cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId80relIso() const{
   if(!c_els_simpleEleId80relIso_ && b_els_simpleEleId80relIso_){
+    b_els_simpleEleId80relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId80relIso", &els_simpleEleId80relIso_, &b_els_simpleEleId80relIso_);
     b_els_simpleEleId80relIso_->GetEntry(entry_);
     c_els_simpleEleId80relIso_ = true;
   }
@@ -4828,6 +7990,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId80relIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId85cIso() const{
   if(!c_els_simpleEleId85cIso_ && b_els_simpleEleId85cIso_){
+    b_els_simpleEleId85cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId85cIso", &els_simpleEleId85cIso_, &b_els_simpleEleId85cIso_);
     b_els_simpleEleId85cIso_->GetEntry(entry_);
     c_els_simpleEleId85cIso_ = true;
   }
@@ -4836,6 +8000,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId85cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId85relIso() const{
   if(!c_els_simpleEleId85relIso_ && b_els_simpleEleId85relIso_){
+    b_els_simpleEleId85relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId85relIso", &els_simpleEleId85relIso_, &b_els_simpleEleId85relIso_);
     b_els_simpleEleId85relIso_->GetEntry(entry_);
     c_els_simpleEleId85relIso_ = true;
   }
@@ -4844,6 +8010,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId85relIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId90cIso() const{
   if(!c_els_simpleEleId90cIso_ && b_els_simpleEleId90cIso_){
+    b_els_simpleEleId90cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId90cIso", &els_simpleEleId90cIso_, &b_els_simpleEleId90cIso_);
     b_els_simpleEleId90cIso_->GetEntry(entry_);
     c_els_simpleEleId90cIso_ = true;
   }
@@ -4852,6 +8020,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId90cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId90relIso() const{
   if(!c_els_simpleEleId90relIso_ && b_els_simpleEleId90relIso_){
+    b_els_simpleEleId90relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId90relIso", &els_simpleEleId90relIso_, &b_els_simpleEleId90relIso_);
     b_els_simpleEleId90relIso_->GetEntry(entry_);
     c_els_simpleEleId90relIso_ = true;
   }
@@ -4860,6 +8030,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId90relIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId95cIso() const{
   if(!c_els_simpleEleId95cIso_ && b_els_simpleEleId95cIso_){
+    b_els_simpleEleId95cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId95cIso", &els_simpleEleId95cIso_, &b_els_simpleEleId95cIso_);
     b_els_simpleEleId95cIso_->GetEntry(entry_);
     c_els_simpleEleId95cIso_ = true;
   }
@@ -4868,6 +8040,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId95cIso() const{
 
 std::vector<float>* const & cfa_base::els_simpleEleId95relIso() const{
   if(!c_els_simpleEleId95relIso_ && b_els_simpleEleId95relIso_){
+    b_els_simpleEleId95relIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_simpleEleId95relIso", &els_simpleEleId95relIso_, &b_els_simpleEleId95relIso_);
     b_els_simpleEleId95relIso_->GetEntry(entry_);
     c_els_simpleEleId95relIso_ = true;
   }
@@ -4876,6 +8050,8 @@ std::vector<float>* const & cfa_base::els_simpleEleId95relIso() const{
 
 std::vector<float>* const & cfa_base::els_status() const{
   if(!c_els_status_ && b_els_status_){
+    b_els_status_->SetStatus(true);
+    chainB_.SetBranchAddress("els_status", &els_status_, &b_els_status_);
     b_els_status_->GetEntry(entry_);
     c_els_status_ = true;
   }
@@ -4884,6 +8060,8 @@ std::vector<float>* const & cfa_base::els_status() const{
 
 std::vector<float>* const & cfa_base::els_tIso() const{
   if(!c_els_tIso_ && b_els_tIso_){
+    b_els_tIso_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tIso", &els_tIso_, &b_els_tIso_);
     b_els_tIso_->GetEntry(entry_);
     c_els_tIso_ = true;
   }
@@ -4892,6 +8070,8 @@ std::vector<float>* const & cfa_base::els_tIso() const{
 
 std::vector<float>* const & cfa_base::els_theta() const{
   if(!c_els_theta_ && b_els_theta_){
+    b_els_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_theta", &els_theta_, &b_els_theta_);
     b_els_theta_->GetEntry(entry_);
     c_els_theta_ = true;
   }
@@ -4900,6 +8080,8 @@ std::vector<float>* const & cfa_base::els_theta() const{
 
 std::vector<float>* const & cfa_base::els_tightId() const{
   if(!c_els_tightId_ && b_els_tightId_){
+    b_els_tightId_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tightId", &els_tightId_, &b_els_tightId_);
     b_els_tightId_->GetEntry(entry_);
     c_els_tightId_ = true;
   }
@@ -4908,6 +8090,8 @@ std::vector<float>* const & cfa_base::els_tightId() const{
 
 std::vector<float>* const & cfa_base::els_tk_charge() const{
   if(!c_els_tk_charge_ && b_els_tk_charge_){
+    b_els_tk_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tk_charge", &els_tk_charge_, &b_els_tk_charge_);
     b_els_tk_charge_->GetEntry(entry_);
     c_els_tk_charge_ = true;
   }
@@ -4916,6 +8100,8 @@ std::vector<float>* const & cfa_base::els_tk_charge() const{
 
 std::vector<float>* const & cfa_base::els_tk_eta() const{
   if(!c_els_tk_eta_ && b_els_tk_eta_){
+    b_els_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tk_eta", &els_tk_eta_, &b_els_tk_eta_);
     b_els_tk_eta_->GetEntry(entry_);
     c_els_tk_eta_ = true;
   }
@@ -4924,6 +8110,8 @@ std::vector<float>* const & cfa_base::els_tk_eta() const{
 
 std::vector<float>* const & cfa_base::els_tk_phi() const{
   if(!c_els_tk_phi_ && b_els_tk_phi_){
+    b_els_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tk_phi", &els_tk_phi_, &b_els_tk_phi_);
     b_els_tk_phi_->GetEntry(entry_);
     c_els_tk_phi_ = true;
   }
@@ -4932,6 +8120,8 @@ std::vector<float>* const & cfa_base::els_tk_phi() const{
 
 std::vector<float>* const & cfa_base::els_tk_pt() const{
   if(!c_els_tk_pt_ && b_els_tk_pt_){
+    b_els_tk_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tk_pt", &els_tk_pt_, &b_els_tk_pt_);
     b_els_tk_pt_->GetEntry(entry_);
     c_els_tk_pt_ = true;
   }
@@ -4940,6 +8130,8 @@ std::vector<float>* const & cfa_base::els_tk_pt() const{
 
 std::vector<float>* const & cfa_base::els_tk_pz() const{
   if(!c_els_tk_pz_ && b_els_tk_pz_){
+    b_els_tk_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_tk_pz", &els_tk_pz_, &b_els_tk_pz_);
     b_els_tk_pz_->GetEntry(entry_);
     c_els_tk_pz_ = true;
   }
@@ -4948,6 +8140,8 @@ std::vector<float>* const & cfa_base::els_tk_pz() const{
 
 std::vector<float>* const & cfa_base::els_vpx() const{
   if(!c_els_vpx_ && b_els_vpx_){
+    b_els_vpx_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vpx", &els_vpx_, &b_els_vpx_);
     b_els_vpx_->GetEntry(entry_);
     c_els_vpx_ = true;
   }
@@ -4956,6 +8150,8 @@ std::vector<float>* const & cfa_base::els_vpx() const{
 
 std::vector<float>* const & cfa_base::els_vpy() const{
   if(!c_els_vpy_ && b_els_vpy_){
+    b_els_vpy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vpy", &els_vpy_, &b_els_vpy_);
     b_els_vpy_->GetEntry(entry_);
     c_els_vpy_ = true;
   }
@@ -4964,6 +8160,8 @@ std::vector<float>* const & cfa_base::els_vpy() const{
 
 std::vector<float>* const & cfa_base::els_vpz() const{
   if(!c_els_vpz_ && b_els_vpz_){
+    b_els_vpz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vpz", &els_vpz_, &b_els_vpz_);
     b_els_vpz_->GetEntry(entry_);
     c_els_vpz_ = true;
   }
@@ -4972,6 +8170,8 @@ std::vector<float>* const & cfa_base::els_vpz() const{
 
 std::vector<float>* const & cfa_base::els_vx() const{
   if(!c_els_vx_ && b_els_vx_){
+    b_els_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vx", &els_vx_, &b_els_vx_);
     b_els_vx_->GetEntry(entry_);
     c_els_vx_ = true;
   }
@@ -4980,6 +8180,8 @@ std::vector<float>* const & cfa_base::els_vx() const{
 
 std::vector<float>* const & cfa_base::els_vy() const{
   if(!c_els_vy_ && b_els_vy_){
+    b_els_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vy", &els_vy_, &b_els_vy_);
     b_els_vy_->GetEntry(entry_);
     c_els_vy_ = true;
   }
@@ -4988,6 +8190,8 @@ std::vector<float>* const & cfa_base::els_vy() const{
 
 std::vector<float>* const & cfa_base::els_vz() const{
   if(!c_els_vz_ && b_els_vz_){
+    b_els_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("els_vz", &els_vz_, &b_els_vz_);
     b_els_vz_->GetEntry(entry_);
     c_els_vz_ = true;
   }
@@ -4996,6 +8200,8 @@ std::vector<float>* const & cfa_base::els_vz() const{
 
 UInt_t const & cfa_base::event() const{
   if(!c_event_ && b_event_){
+    b_event_->SetStatus(true);
+    chainB_.SetBranchAddress("event", &event_, &b_event_);
     b_event_->GetEntry(entry_);
     c_event_ = true;
   }
@@ -5004,6 +8210,8 @@ UInt_t const & cfa_base::event() const{
 
 UInt_t const & cfa_base::experimentType() const{
   if(!c_experimentType_ && b_experimentType_){
+    b_experimentType_->SetStatus(true);
+    chainB_.SetBranchAddress("experimentType", &experimentType_, &b_experimentType_);
     b_experimentType_->GetEntry(entry_);
     c_experimentType_ = true;
   }
@@ -5012,6 +8220,8 @@ UInt_t const & cfa_base::experimentType() const{
 
 Int_t const & cfa_base::hcallaserfilter_decision() const{
   if(!c_hcallaserfilter_decision_ && b_hcallaserfilter_decision_){
+    b_hcallaserfilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("hcallaserfilter_decision", &hcallaserfilter_decision_, &b_hcallaserfilter_decision_);
     b_hcallaserfilter_decision_->GetEntry(entry_);
     c_hcallaserfilter_decision_ = true;
   }
@@ -5020,6 +8230,8 @@ Int_t const & cfa_base::hcallaserfilter_decision() const{
 
 UInt_t const & cfa_base::lumiblock() const{
   if(!c_lumiblock_ && b_lumiblock_){
+    b_lumiblock_->SetStatus(true);
+    chainB_.SetBranchAddress("lumiblock", &lumiblock_, &b_lumiblock_);
     b_lumiblock_->GetEntry(entry_);
     c_lumiblock_ = true;
   }
@@ -5028,6 +8240,8 @@ UInt_t const & cfa_base::lumiblock() const{
 
 std::vector<float>* const & cfa_base::mc_doc_charge() const{
   if(!c_mc_doc_charge_ && b_mc_doc_charge_){
+    b_mc_doc_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_charge", &mc_doc_charge_, &b_mc_doc_charge_);
     b_mc_doc_charge_->GetEntry(entry_);
     c_mc_doc_charge_ = true;
   }
@@ -5036,6 +8250,8 @@ std::vector<float>* const & cfa_base::mc_doc_charge() const{
 
 std::vector<float>* const & cfa_base::mc_doc_energy() const{
   if(!c_mc_doc_energy_ && b_mc_doc_energy_){
+    b_mc_doc_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_energy", &mc_doc_energy_, &b_mc_doc_energy_);
     b_mc_doc_energy_->GetEntry(entry_);
     c_mc_doc_energy_ = true;
   }
@@ -5044,6 +8260,8 @@ std::vector<float>* const & cfa_base::mc_doc_energy() const{
 
 std::vector<float>* const & cfa_base::mc_doc_eta() const{
   if(!c_mc_doc_eta_ && b_mc_doc_eta_){
+    b_mc_doc_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_eta", &mc_doc_eta_, &b_mc_doc_eta_);
     b_mc_doc_eta_->GetEntry(entry_);
     c_mc_doc_eta_ = true;
   }
@@ -5052,6 +8270,8 @@ std::vector<float>* const & cfa_base::mc_doc_eta() const{
 
 std::vector<float>* const & cfa_base::mc_doc_ggrandmother_id() const{
   if(!c_mc_doc_ggrandmother_id_ && b_mc_doc_ggrandmother_id_){
+    b_mc_doc_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_ggrandmother_id", &mc_doc_ggrandmother_id_, &b_mc_doc_ggrandmother_id_);
     b_mc_doc_ggrandmother_id_->GetEntry(entry_);
     c_mc_doc_ggrandmother_id_ = true;
   }
@@ -5060,6 +8280,8 @@ std::vector<float>* const & cfa_base::mc_doc_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_doc_grandmother_id() const{
   if(!c_mc_doc_grandmother_id_ && b_mc_doc_grandmother_id_){
+    b_mc_doc_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_grandmother_id", &mc_doc_grandmother_id_, &b_mc_doc_grandmother_id_);
     b_mc_doc_grandmother_id_->GetEntry(entry_);
     c_mc_doc_grandmother_id_ = true;
   }
@@ -5068,6 +8290,8 @@ std::vector<float>* const & cfa_base::mc_doc_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_doc_id() const{
   if(!c_mc_doc_id_ && b_mc_doc_id_){
+    b_mc_doc_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_id", &mc_doc_id_, &b_mc_doc_id_);
     b_mc_doc_id_->GetEntry(entry_);
     c_mc_doc_id_ = true;
   }
@@ -5076,6 +8300,8 @@ std::vector<float>* const & cfa_base::mc_doc_id() const{
 
 std::vector<float>* const & cfa_base::mc_doc_mass() const{
   if(!c_mc_doc_mass_ && b_mc_doc_mass_){
+    b_mc_doc_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_mass", &mc_doc_mass_, &b_mc_doc_mass_);
     b_mc_doc_mass_->GetEntry(entry_);
     c_mc_doc_mass_ = true;
   }
@@ -5084,6 +8310,8 @@ std::vector<float>* const & cfa_base::mc_doc_mass() const{
 
 std::vector<float>* const & cfa_base::mc_doc_mother_id() const{
   if(!c_mc_doc_mother_id_ && b_mc_doc_mother_id_){
+    b_mc_doc_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_mother_id", &mc_doc_mother_id_, &b_mc_doc_mother_id_);
     b_mc_doc_mother_id_->GetEntry(entry_);
     c_mc_doc_mother_id_ = true;
   }
@@ -5092,6 +8320,8 @@ std::vector<float>* const & cfa_base::mc_doc_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_doc_mother_pt() const{
   if(!c_mc_doc_mother_pt_ && b_mc_doc_mother_pt_){
+    b_mc_doc_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_mother_pt", &mc_doc_mother_pt_, &b_mc_doc_mother_pt_);
     b_mc_doc_mother_pt_->GetEntry(entry_);
     c_mc_doc_mother_pt_ = true;
   }
@@ -5100,6 +8330,8 @@ std::vector<float>* const & cfa_base::mc_doc_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_doc_numOfDaughters() const{
   if(!c_mc_doc_numOfDaughters_ && b_mc_doc_numOfDaughters_){
+    b_mc_doc_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_numOfDaughters", &mc_doc_numOfDaughters_, &b_mc_doc_numOfDaughters_);
     b_mc_doc_numOfDaughters_->GetEntry(entry_);
     c_mc_doc_numOfDaughters_ = true;
   }
@@ -5108,6 +8340,8 @@ std::vector<float>* const & cfa_base::mc_doc_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_doc_numOfMothers() const{
   if(!c_mc_doc_numOfMothers_ && b_mc_doc_numOfMothers_){
+    b_mc_doc_numOfMothers_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_numOfMothers", &mc_doc_numOfMothers_, &b_mc_doc_numOfMothers_);
     b_mc_doc_numOfMothers_->GetEntry(entry_);
     c_mc_doc_numOfMothers_ = true;
   }
@@ -5116,6 +8350,8 @@ std::vector<float>* const & cfa_base::mc_doc_numOfMothers() const{
 
 std::vector<float>* const & cfa_base::mc_doc_phi() const{
   if(!c_mc_doc_phi_ && b_mc_doc_phi_){
+    b_mc_doc_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_phi", &mc_doc_phi_, &b_mc_doc_phi_);
     b_mc_doc_phi_->GetEntry(entry_);
     c_mc_doc_phi_ = true;
   }
@@ -5124,6 +8360,8 @@ std::vector<float>* const & cfa_base::mc_doc_phi() const{
 
 std::vector<float>* const & cfa_base::mc_doc_pt() const{
   if(!c_mc_doc_pt_ && b_mc_doc_pt_){
+    b_mc_doc_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_pt", &mc_doc_pt_, &b_mc_doc_pt_);
     b_mc_doc_pt_->GetEntry(entry_);
     c_mc_doc_pt_ = true;
   }
@@ -5132,6 +8370,8 @@ std::vector<float>* const & cfa_base::mc_doc_pt() const{
 
 std::vector<float>* const & cfa_base::mc_doc_px() const{
   if(!c_mc_doc_px_ && b_mc_doc_px_){
+    b_mc_doc_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_px", &mc_doc_px_, &b_mc_doc_px_);
     b_mc_doc_px_->GetEntry(entry_);
     c_mc_doc_px_ = true;
   }
@@ -5140,6 +8380,8 @@ std::vector<float>* const & cfa_base::mc_doc_px() const{
 
 std::vector<float>* const & cfa_base::mc_doc_py() const{
   if(!c_mc_doc_py_ && b_mc_doc_py_){
+    b_mc_doc_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_py", &mc_doc_py_, &b_mc_doc_py_);
     b_mc_doc_py_->GetEntry(entry_);
     c_mc_doc_py_ = true;
   }
@@ -5148,6 +8390,8 @@ std::vector<float>* const & cfa_base::mc_doc_py() const{
 
 std::vector<float>* const & cfa_base::mc_doc_pz() const{
   if(!c_mc_doc_pz_ && b_mc_doc_pz_){
+    b_mc_doc_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_pz", &mc_doc_pz_, &b_mc_doc_pz_);
     b_mc_doc_pz_->GetEntry(entry_);
     c_mc_doc_pz_ = true;
   }
@@ -5156,6 +8400,8 @@ std::vector<float>* const & cfa_base::mc_doc_pz() const{
 
 std::vector<float>* const & cfa_base::mc_doc_status() const{
   if(!c_mc_doc_status_ && b_mc_doc_status_){
+    b_mc_doc_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_status", &mc_doc_status_, &b_mc_doc_status_);
     b_mc_doc_status_->GetEntry(entry_);
     c_mc_doc_status_ = true;
   }
@@ -5164,6 +8410,8 @@ std::vector<float>* const & cfa_base::mc_doc_status() const{
 
 std::vector<float>* const & cfa_base::mc_doc_theta() const{
   if(!c_mc_doc_theta_ && b_mc_doc_theta_){
+    b_mc_doc_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_theta", &mc_doc_theta_, &b_mc_doc_theta_);
     b_mc_doc_theta_->GetEntry(entry_);
     c_mc_doc_theta_ = true;
   }
@@ -5172,6 +8420,8 @@ std::vector<float>* const & cfa_base::mc_doc_theta() const{
 
 std::vector<float>* const & cfa_base::mc_doc_vertex_x() const{
   if(!c_mc_doc_vertex_x_ && b_mc_doc_vertex_x_){
+    b_mc_doc_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_vertex_x", &mc_doc_vertex_x_, &b_mc_doc_vertex_x_);
     b_mc_doc_vertex_x_->GetEntry(entry_);
     c_mc_doc_vertex_x_ = true;
   }
@@ -5180,6 +8430,8 @@ std::vector<float>* const & cfa_base::mc_doc_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_doc_vertex_y() const{
   if(!c_mc_doc_vertex_y_ && b_mc_doc_vertex_y_){
+    b_mc_doc_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_vertex_y", &mc_doc_vertex_y_, &b_mc_doc_vertex_y_);
     b_mc_doc_vertex_y_->GetEntry(entry_);
     c_mc_doc_vertex_y_ = true;
   }
@@ -5188,6 +8440,8 @@ std::vector<float>* const & cfa_base::mc_doc_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_doc_vertex_z() const{
   if(!c_mc_doc_vertex_z_ && b_mc_doc_vertex_z_){
+    b_mc_doc_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_doc_vertex_z", &mc_doc_vertex_z_, &b_mc_doc_vertex_z_);
     b_mc_doc_vertex_z_->GetEntry(entry_);
     c_mc_doc_vertex_z_ = true;
   }
@@ -5196,6 +8450,8 @@ std::vector<float>* const & cfa_base::mc_doc_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_charge() const{
   if(!c_mc_electrons_charge_ && b_mc_electrons_charge_){
+    b_mc_electrons_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_charge", &mc_electrons_charge_, &b_mc_electrons_charge_);
     b_mc_electrons_charge_->GetEntry(entry_);
     c_mc_electrons_charge_ = true;
   }
@@ -5204,6 +8460,8 @@ std::vector<float>* const & cfa_base::mc_electrons_charge() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_energy() const{
   if(!c_mc_electrons_energy_ && b_mc_electrons_energy_){
+    b_mc_electrons_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_energy", &mc_electrons_energy_, &b_mc_electrons_energy_);
     b_mc_electrons_energy_->GetEntry(entry_);
     c_mc_electrons_energy_ = true;
   }
@@ -5212,6 +8470,8 @@ std::vector<float>* const & cfa_base::mc_electrons_energy() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_eta() const{
   if(!c_mc_electrons_eta_ && b_mc_electrons_eta_){
+    b_mc_electrons_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_eta", &mc_electrons_eta_, &b_mc_electrons_eta_);
     b_mc_electrons_eta_->GetEntry(entry_);
     c_mc_electrons_eta_ = true;
   }
@@ -5220,6 +8480,8 @@ std::vector<float>* const & cfa_base::mc_electrons_eta() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_ggrandmother_id() const{
   if(!c_mc_electrons_ggrandmother_id_ && b_mc_electrons_ggrandmother_id_){
+    b_mc_electrons_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_ggrandmother_id", &mc_electrons_ggrandmother_id_, &b_mc_electrons_ggrandmother_id_);
     b_mc_electrons_ggrandmother_id_->GetEntry(entry_);
     c_mc_electrons_ggrandmother_id_ = true;
   }
@@ -5228,6 +8490,8 @@ std::vector<float>* const & cfa_base::mc_electrons_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_grandmother_id() const{
   if(!c_mc_electrons_grandmother_id_ && b_mc_electrons_grandmother_id_){
+    b_mc_electrons_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_grandmother_id", &mc_electrons_grandmother_id_, &b_mc_electrons_grandmother_id_);
     b_mc_electrons_grandmother_id_->GetEntry(entry_);
     c_mc_electrons_grandmother_id_ = true;
   }
@@ -5236,6 +8500,8 @@ std::vector<float>* const & cfa_base::mc_electrons_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_id() const{
   if(!c_mc_electrons_id_ && b_mc_electrons_id_){
+    b_mc_electrons_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_id", &mc_electrons_id_, &b_mc_electrons_id_);
     b_mc_electrons_id_->GetEntry(entry_);
     c_mc_electrons_id_ = true;
   }
@@ -5244,6 +8510,8 @@ std::vector<float>* const & cfa_base::mc_electrons_id() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_mass() const{
   if(!c_mc_electrons_mass_ && b_mc_electrons_mass_){
+    b_mc_electrons_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_mass", &mc_electrons_mass_, &b_mc_electrons_mass_);
     b_mc_electrons_mass_->GetEntry(entry_);
     c_mc_electrons_mass_ = true;
   }
@@ -5252,6 +8520,8 @@ std::vector<float>* const & cfa_base::mc_electrons_mass() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_mother_id() const{
   if(!c_mc_electrons_mother_id_ && b_mc_electrons_mother_id_){
+    b_mc_electrons_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_mother_id", &mc_electrons_mother_id_, &b_mc_electrons_mother_id_);
     b_mc_electrons_mother_id_->GetEntry(entry_);
     c_mc_electrons_mother_id_ = true;
   }
@@ -5260,6 +8530,8 @@ std::vector<float>* const & cfa_base::mc_electrons_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_mother_pt() const{
   if(!c_mc_electrons_mother_pt_ && b_mc_electrons_mother_pt_){
+    b_mc_electrons_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_mother_pt", &mc_electrons_mother_pt_, &b_mc_electrons_mother_pt_);
     b_mc_electrons_mother_pt_->GetEntry(entry_);
     c_mc_electrons_mother_pt_ = true;
   }
@@ -5268,6 +8540,8 @@ std::vector<float>* const & cfa_base::mc_electrons_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_numOfDaughters() const{
   if(!c_mc_electrons_numOfDaughters_ && b_mc_electrons_numOfDaughters_){
+    b_mc_electrons_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_numOfDaughters", &mc_electrons_numOfDaughters_, &b_mc_electrons_numOfDaughters_);
     b_mc_electrons_numOfDaughters_->GetEntry(entry_);
     c_mc_electrons_numOfDaughters_ = true;
   }
@@ -5276,6 +8550,8 @@ std::vector<float>* const & cfa_base::mc_electrons_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_phi() const{
   if(!c_mc_electrons_phi_ && b_mc_electrons_phi_){
+    b_mc_electrons_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_phi", &mc_electrons_phi_, &b_mc_electrons_phi_);
     b_mc_electrons_phi_->GetEntry(entry_);
     c_mc_electrons_phi_ = true;
   }
@@ -5284,6 +8560,8 @@ std::vector<float>* const & cfa_base::mc_electrons_phi() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_pt() const{
   if(!c_mc_electrons_pt_ && b_mc_electrons_pt_){
+    b_mc_electrons_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_pt", &mc_electrons_pt_, &b_mc_electrons_pt_);
     b_mc_electrons_pt_->GetEntry(entry_);
     c_mc_electrons_pt_ = true;
   }
@@ -5292,6 +8570,8 @@ std::vector<float>* const & cfa_base::mc_electrons_pt() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_px() const{
   if(!c_mc_electrons_px_ && b_mc_electrons_px_){
+    b_mc_electrons_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_px", &mc_electrons_px_, &b_mc_electrons_px_);
     b_mc_electrons_px_->GetEntry(entry_);
     c_mc_electrons_px_ = true;
   }
@@ -5300,6 +8580,8 @@ std::vector<float>* const & cfa_base::mc_electrons_px() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_py() const{
   if(!c_mc_electrons_py_ && b_mc_electrons_py_){
+    b_mc_electrons_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_py", &mc_electrons_py_, &b_mc_electrons_py_);
     b_mc_electrons_py_->GetEntry(entry_);
     c_mc_electrons_py_ = true;
   }
@@ -5308,6 +8590,8 @@ std::vector<float>* const & cfa_base::mc_electrons_py() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_pz() const{
   if(!c_mc_electrons_pz_ && b_mc_electrons_pz_){
+    b_mc_electrons_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_pz", &mc_electrons_pz_, &b_mc_electrons_pz_);
     b_mc_electrons_pz_->GetEntry(entry_);
     c_mc_electrons_pz_ = true;
   }
@@ -5316,6 +8600,8 @@ std::vector<float>* const & cfa_base::mc_electrons_pz() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_status() const{
   if(!c_mc_electrons_status_ && b_mc_electrons_status_){
+    b_mc_electrons_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_status", &mc_electrons_status_, &b_mc_electrons_status_);
     b_mc_electrons_status_->GetEntry(entry_);
     c_mc_electrons_status_ = true;
   }
@@ -5324,6 +8610,8 @@ std::vector<float>* const & cfa_base::mc_electrons_status() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_theta() const{
   if(!c_mc_electrons_theta_ && b_mc_electrons_theta_){
+    b_mc_electrons_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_theta", &mc_electrons_theta_, &b_mc_electrons_theta_);
     b_mc_electrons_theta_->GetEntry(entry_);
     c_mc_electrons_theta_ = true;
   }
@@ -5332,6 +8620,8 @@ std::vector<float>* const & cfa_base::mc_electrons_theta() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_vertex_x() const{
   if(!c_mc_electrons_vertex_x_ && b_mc_electrons_vertex_x_){
+    b_mc_electrons_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_vertex_x", &mc_electrons_vertex_x_, &b_mc_electrons_vertex_x_);
     b_mc_electrons_vertex_x_->GetEntry(entry_);
     c_mc_electrons_vertex_x_ = true;
   }
@@ -5340,6 +8630,8 @@ std::vector<float>* const & cfa_base::mc_electrons_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_vertex_y() const{
   if(!c_mc_electrons_vertex_y_ && b_mc_electrons_vertex_y_){
+    b_mc_electrons_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_vertex_y", &mc_electrons_vertex_y_, &b_mc_electrons_vertex_y_);
     b_mc_electrons_vertex_y_->GetEntry(entry_);
     c_mc_electrons_vertex_y_ = true;
   }
@@ -5348,6 +8640,8 @@ std::vector<float>* const & cfa_base::mc_electrons_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_electrons_vertex_z() const{
   if(!c_mc_electrons_vertex_z_ && b_mc_electrons_vertex_z_){
+    b_mc_electrons_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_electrons_vertex_z", &mc_electrons_vertex_z_, &b_mc_electrons_vertex_z_);
     b_mc_electrons_vertex_z_->GetEntry(entry_);
     c_mc_electrons_vertex_z_ = true;
   }
@@ -5356,6 +8650,8 @@ std::vector<float>* const & cfa_base::mc_electrons_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_mus_charge() const{
   if(!c_mc_mus_charge_ && b_mc_mus_charge_){
+    b_mc_mus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_charge", &mc_mus_charge_, &b_mc_mus_charge_);
     b_mc_mus_charge_->GetEntry(entry_);
     c_mc_mus_charge_ = true;
   }
@@ -5364,6 +8660,8 @@ std::vector<float>* const & cfa_base::mc_mus_charge() const{
 
 std::vector<float>* const & cfa_base::mc_mus_energy() const{
   if(!c_mc_mus_energy_ && b_mc_mus_energy_){
+    b_mc_mus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_energy", &mc_mus_energy_, &b_mc_mus_energy_);
     b_mc_mus_energy_->GetEntry(entry_);
     c_mc_mus_energy_ = true;
   }
@@ -5372,6 +8670,8 @@ std::vector<float>* const & cfa_base::mc_mus_energy() const{
 
 std::vector<float>* const & cfa_base::mc_mus_eta() const{
   if(!c_mc_mus_eta_ && b_mc_mus_eta_){
+    b_mc_mus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_eta", &mc_mus_eta_, &b_mc_mus_eta_);
     b_mc_mus_eta_->GetEntry(entry_);
     c_mc_mus_eta_ = true;
   }
@@ -5380,6 +8680,8 @@ std::vector<float>* const & cfa_base::mc_mus_eta() const{
 
 std::vector<float>* const & cfa_base::mc_mus_ggrandmother_id() const{
   if(!c_mc_mus_ggrandmother_id_ && b_mc_mus_ggrandmother_id_){
+    b_mc_mus_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_ggrandmother_id", &mc_mus_ggrandmother_id_, &b_mc_mus_ggrandmother_id_);
     b_mc_mus_ggrandmother_id_->GetEntry(entry_);
     c_mc_mus_ggrandmother_id_ = true;
   }
@@ -5388,6 +8690,8 @@ std::vector<float>* const & cfa_base::mc_mus_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_mus_grandmother_id() const{
   if(!c_mc_mus_grandmother_id_ && b_mc_mus_grandmother_id_){
+    b_mc_mus_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_grandmother_id", &mc_mus_grandmother_id_, &b_mc_mus_grandmother_id_);
     b_mc_mus_grandmother_id_->GetEntry(entry_);
     c_mc_mus_grandmother_id_ = true;
   }
@@ -5396,6 +8700,8 @@ std::vector<float>* const & cfa_base::mc_mus_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_mus_id() const{
   if(!c_mc_mus_id_ && b_mc_mus_id_){
+    b_mc_mus_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_id", &mc_mus_id_, &b_mc_mus_id_);
     b_mc_mus_id_->GetEntry(entry_);
     c_mc_mus_id_ = true;
   }
@@ -5404,6 +8710,8 @@ std::vector<float>* const & cfa_base::mc_mus_id() const{
 
 std::vector<float>* const & cfa_base::mc_mus_mass() const{
   if(!c_mc_mus_mass_ && b_mc_mus_mass_){
+    b_mc_mus_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_mass", &mc_mus_mass_, &b_mc_mus_mass_);
     b_mc_mus_mass_->GetEntry(entry_);
     c_mc_mus_mass_ = true;
   }
@@ -5412,6 +8720,8 @@ std::vector<float>* const & cfa_base::mc_mus_mass() const{
 
 std::vector<float>* const & cfa_base::mc_mus_mother_id() const{
   if(!c_mc_mus_mother_id_ && b_mc_mus_mother_id_){
+    b_mc_mus_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_mother_id", &mc_mus_mother_id_, &b_mc_mus_mother_id_);
     b_mc_mus_mother_id_->GetEntry(entry_);
     c_mc_mus_mother_id_ = true;
   }
@@ -5420,6 +8730,8 @@ std::vector<float>* const & cfa_base::mc_mus_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_mus_mother_pt() const{
   if(!c_mc_mus_mother_pt_ && b_mc_mus_mother_pt_){
+    b_mc_mus_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_mother_pt", &mc_mus_mother_pt_, &b_mc_mus_mother_pt_);
     b_mc_mus_mother_pt_->GetEntry(entry_);
     c_mc_mus_mother_pt_ = true;
   }
@@ -5428,6 +8740,8 @@ std::vector<float>* const & cfa_base::mc_mus_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_mus_numOfDaughters() const{
   if(!c_mc_mus_numOfDaughters_ && b_mc_mus_numOfDaughters_){
+    b_mc_mus_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_numOfDaughters", &mc_mus_numOfDaughters_, &b_mc_mus_numOfDaughters_);
     b_mc_mus_numOfDaughters_->GetEntry(entry_);
     c_mc_mus_numOfDaughters_ = true;
   }
@@ -5436,6 +8750,8 @@ std::vector<float>* const & cfa_base::mc_mus_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_mus_phi() const{
   if(!c_mc_mus_phi_ && b_mc_mus_phi_){
+    b_mc_mus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_phi", &mc_mus_phi_, &b_mc_mus_phi_);
     b_mc_mus_phi_->GetEntry(entry_);
     c_mc_mus_phi_ = true;
   }
@@ -5444,6 +8760,8 @@ std::vector<float>* const & cfa_base::mc_mus_phi() const{
 
 std::vector<float>* const & cfa_base::mc_mus_pt() const{
   if(!c_mc_mus_pt_ && b_mc_mus_pt_){
+    b_mc_mus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_pt", &mc_mus_pt_, &b_mc_mus_pt_);
     b_mc_mus_pt_->GetEntry(entry_);
     c_mc_mus_pt_ = true;
   }
@@ -5452,6 +8770,8 @@ std::vector<float>* const & cfa_base::mc_mus_pt() const{
 
 std::vector<float>* const & cfa_base::mc_mus_px() const{
   if(!c_mc_mus_px_ && b_mc_mus_px_){
+    b_mc_mus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_px", &mc_mus_px_, &b_mc_mus_px_);
     b_mc_mus_px_->GetEntry(entry_);
     c_mc_mus_px_ = true;
   }
@@ -5460,6 +8780,8 @@ std::vector<float>* const & cfa_base::mc_mus_px() const{
 
 std::vector<float>* const & cfa_base::mc_mus_py() const{
   if(!c_mc_mus_py_ && b_mc_mus_py_){
+    b_mc_mus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_py", &mc_mus_py_, &b_mc_mus_py_);
     b_mc_mus_py_->GetEntry(entry_);
     c_mc_mus_py_ = true;
   }
@@ -5468,6 +8790,8 @@ std::vector<float>* const & cfa_base::mc_mus_py() const{
 
 std::vector<float>* const & cfa_base::mc_mus_pz() const{
   if(!c_mc_mus_pz_ && b_mc_mus_pz_){
+    b_mc_mus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_pz", &mc_mus_pz_, &b_mc_mus_pz_);
     b_mc_mus_pz_->GetEntry(entry_);
     c_mc_mus_pz_ = true;
   }
@@ -5476,6 +8800,8 @@ std::vector<float>* const & cfa_base::mc_mus_pz() const{
 
 std::vector<float>* const & cfa_base::mc_mus_status() const{
   if(!c_mc_mus_status_ && b_mc_mus_status_){
+    b_mc_mus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_status", &mc_mus_status_, &b_mc_mus_status_);
     b_mc_mus_status_->GetEntry(entry_);
     c_mc_mus_status_ = true;
   }
@@ -5484,6 +8810,8 @@ std::vector<float>* const & cfa_base::mc_mus_status() const{
 
 std::vector<float>* const & cfa_base::mc_mus_theta() const{
   if(!c_mc_mus_theta_ && b_mc_mus_theta_){
+    b_mc_mus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_theta", &mc_mus_theta_, &b_mc_mus_theta_);
     b_mc_mus_theta_->GetEntry(entry_);
     c_mc_mus_theta_ = true;
   }
@@ -5492,6 +8820,8 @@ std::vector<float>* const & cfa_base::mc_mus_theta() const{
 
 std::vector<float>* const & cfa_base::mc_mus_vertex_x() const{
   if(!c_mc_mus_vertex_x_ && b_mc_mus_vertex_x_){
+    b_mc_mus_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_vertex_x", &mc_mus_vertex_x_, &b_mc_mus_vertex_x_);
     b_mc_mus_vertex_x_->GetEntry(entry_);
     c_mc_mus_vertex_x_ = true;
   }
@@ -5500,6 +8830,8 @@ std::vector<float>* const & cfa_base::mc_mus_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_mus_vertex_y() const{
   if(!c_mc_mus_vertex_y_ && b_mc_mus_vertex_y_){
+    b_mc_mus_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_vertex_y", &mc_mus_vertex_y_, &b_mc_mus_vertex_y_);
     b_mc_mus_vertex_y_->GetEntry(entry_);
     c_mc_mus_vertex_y_ = true;
   }
@@ -5508,6 +8840,8 @@ std::vector<float>* const & cfa_base::mc_mus_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_mus_vertex_z() const{
   if(!c_mc_mus_vertex_z_ && b_mc_mus_vertex_z_){
+    b_mc_mus_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_mus_vertex_z", &mc_mus_vertex_z_, &b_mc_mus_vertex_z_);
     b_mc_mus_vertex_z_->GetEntry(entry_);
     c_mc_mus_vertex_z_ = true;
   }
@@ -5516,6 +8850,8 @@ std::vector<float>* const & cfa_base::mc_mus_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_nues_charge() const{
   if(!c_mc_nues_charge_ && b_mc_nues_charge_){
+    b_mc_nues_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_charge", &mc_nues_charge_, &b_mc_nues_charge_);
     b_mc_nues_charge_->GetEntry(entry_);
     c_mc_nues_charge_ = true;
   }
@@ -5524,6 +8860,8 @@ std::vector<float>* const & cfa_base::mc_nues_charge() const{
 
 std::vector<float>* const & cfa_base::mc_nues_energy() const{
   if(!c_mc_nues_energy_ && b_mc_nues_energy_){
+    b_mc_nues_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_energy", &mc_nues_energy_, &b_mc_nues_energy_);
     b_mc_nues_energy_->GetEntry(entry_);
     c_mc_nues_energy_ = true;
   }
@@ -5532,6 +8870,8 @@ std::vector<float>* const & cfa_base::mc_nues_energy() const{
 
 std::vector<float>* const & cfa_base::mc_nues_eta() const{
   if(!c_mc_nues_eta_ && b_mc_nues_eta_){
+    b_mc_nues_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_eta", &mc_nues_eta_, &b_mc_nues_eta_);
     b_mc_nues_eta_->GetEntry(entry_);
     c_mc_nues_eta_ = true;
   }
@@ -5540,6 +8880,8 @@ std::vector<float>* const & cfa_base::mc_nues_eta() const{
 
 std::vector<float>* const & cfa_base::mc_nues_ggrandmother_id() const{
   if(!c_mc_nues_ggrandmother_id_ && b_mc_nues_ggrandmother_id_){
+    b_mc_nues_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_ggrandmother_id", &mc_nues_ggrandmother_id_, &b_mc_nues_ggrandmother_id_);
     b_mc_nues_ggrandmother_id_->GetEntry(entry_);
     c_mc_nues_ggrandmother_id_ = true;
   }
@@ -5548,6 +8890,8 @@ std::vector<float>* const & cfa_base::mc_nues_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nues_grandmother_id() const{
   if(!c_mc_nues_grandmother_id_ && b_mc_nues_grandmother_id_){
+    b_mc_nues_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_grandmother_id", &mc_nues_grandmother_id_, &b_mc_nues_grandmother_id_);
     b_mc_nues_grandmother_id_->GetEntry(entry_);
     c_mc_nues_grandmother_id_ = true;
   }
@@ -5556,6 +8900,8 @@ std::vector<float>* const & cfa_base::mc_nues_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nues_id() const{
   if(!c_mc_nues_id_ && b_mc_nues_id_){
+    b_mc_nues_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_id", &mc_nues_id_, &b_mc_nues_id_);
     b_mc_nues_id_->GetEntry(entry_);
     c_mc_nues_id_ = true;
   }
@@ -5564,6 +8910,8 @@ std::vector<float>* const & cfa_base::mc_nues_id() const{
 
 std::vector<float>* const & cfa_base::mc_nues_mass() const{
   if(!c_mc_nues_mass_ && b_mc_nues_mass_){
+    b_mc_nues_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_mass", &mc_nues_mass_, &b_mc_nues_mass_);
     b_mc_nues_mass_->GetEntry(entry_);
     c_mc_nues_mass_ = true;
   }
@@ -5572,6 +8920,8 @@ std::vector<float>* const & cfa_base::mc_nues_mass() const{
 
 std::vector<float>* const & cfa_base::mc_nues_mother_id() const{
   if(!c_mc_nues_mother_id_ && b_mc_nues_mother_id_){
+    b_mc_nues_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_mother_id", &mc_nues_mother_id_, &b_mc_nues_mother_id_);
     b_mc_nues_mother_id_->GetEntry(entry_);
     c_mc_nues_mother_id_ = true;
   }
@@ -5580,6 +8930,8 @@ std::vector<float>* const & cfa_base::mc_nues_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nues_mother_pt() const{
   if(!c_mc_nues_mother_pt_ && b_mc_nues_mother_pt_){
+    b_mc_nues_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_mother_pt", &mc_nues_mother_pt_, &b_mc_nues_mother_pt_);
     b_mc_nues_mother_pt_->GetEntry(entry_);
     c_mc_nues_mother_pt_ = true;
   }
@@ -5588,6 +8940,8 @@ std::vector<float>* const & cfa_base::mc_nues_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_nues_numOfDaughters() const{
   if(!c_mc_nues_numOfDaughters_ && b_mc_nues_numOfDaughters_){
+    b_mc_nues_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_numOfDaughters", &mc_nues_numOfDaughters_, &b_mc_nues_numOfDaughters_);
     b_mc_nues_numOfDaughters_->GetEntry(entry_);
     c_mc_nues_numOfDaughters_ = true;
   }
@@ -5596,6 +8950,8 @@ std::vector<float>* const & cfa_base::mc_nues_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_nues_phi() const{
   if(!c_mc_nues_phi_ && b_mc_nues_phi_){
+    b_mc_nues_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_phi", &mc_nues_phi_, &b_mc_nues_phi_);
     b_mc_nues_phi_->GetEntry(entry_);
     c_mc_nues_phi_ = true;
   }
@@ -5604,6 +8960,8 @@ std::vector<float>* const & cfa_base::mc_nues_phi() const{
 
 std::vector<float>* const & cfa_base::mc_nues_pt() const{
   if(!c_mc_nues_pt_ && b_mc_nues_pt_){
+    b_mc_nues_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_pt", &mc_nues_pt_, &b_mc_nues_pt_);
     b_mc_nues_pt_->GetEntry(entry_);
     c_mc_nues_pt_ = true;
   }
@@ -5612,6 +8970,8 @@ std::vector<float>* const & cfa_base::mc_nues_pt() const{
 
 std::vector<float>* const & cfa_base::mc_nues_px() const{
   if(!c_mc_nues_px_ && b_mc_nues_px_){
+    b_mc_nues_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_px", &mc_nues_px_, &b_mc_nues_px_);
     b_mc_nues_px_->GetEntry(entry_);
     c_mc_nues_px_ = true;
   }
@@ -5620,6 +8980,8 @@ std::vector<float>* const & cfa_base::mc_nues_px() const{
 
 std::vector<float>* const & cfa_base::mc_nues_py() const{
   if(!c_mc_nues_py_ && b_mc_nues_py_){
+    b_mc_nues_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_py", &mc_nues_py_, &b_mc_nues_py_);
     b_mc_nues_py_->GetEntry(entry_);
     c_mc_nues_py_ = true;
   }
@@ -5628,6 +8990,8 @@ std::vector<float>* const & cfa_base::mc_nues_py() const{
 
 std::vector<float>* const & cfa_base::mc_nues_pz() const{
   if(!c_mc_nues_pz_ && b_mc_nues_pz_){
+    b_mc_nues_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_pz", &mc_nues_pz_, &b_mc_nues_pz_);
     b_mc_nues_pz_->GetEntry(entry_);
     c_mc_nues_pz_ = true;
   }
@@ -5636,6 +9000,8 @@ std::vector<float>* const & cfa_base::mc_nues_pz() const{
 
 std::vector<float>* const & cfa_base::mc_nues_status() const{
   if(!c_mc_nues_status_ && b_mc_nues_status_){
+    b_mc_nues_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_status", &mc_nues_status_, &b_mc_nues_status_);
     b_mc_nues_status_->GetEntry(entry_);
     c_mc_nues_status_ = true;
   }
@@ -5644,6 +9010,8 @@ std::vector<float>* const & cfa_base::mc_nues_status() const{
 
 std::vector<float>* const & cfa_base::mc_nues_theta() const{
   if(!c_mc_nues_theta_ && b_mc_nues_theta_){
+    b_mc_nues_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_theta", &mc_nues_theta_, &b_mc_nues_theta_);
     b_mc_nues_theta_->GetEntry(entry_);
     c_mc_nues_theta_ = true;
   }
@@ -5652,6 +9020,8 @@ std::vector<float>* const & cfa_base::mc_nues_theta() const{
 
 std::vector<float>* const & cfa_base::mc_nues_vertex_x() const{
   if(!c_mc_nues_vertex_x_ && b_mc_nues_vertex_x_){
+    b_mc_nues_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_vertex_x", &mc_nues_vertex_x_, &b_mc_nues_vertex_x_);
     b_mc_nues_vertex_x_->GetEntry(entry_);
     c_mc_nues_vertex_x_ = true;
   }
@@ -5660,6 +9030,8 @@ std::vector<float>* const & cfa_base::mc_nues_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_nues_vertex_y() const{
   if(!c_mc_nues_vertex_y_ && b_mc_nues_vertex_y_){
+    b_mc_nues_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_vertex_y", &mc_nues_vertex_y_, &b_mc_nues_vertex_y_);
     b_mc_nues_vertex_y_->GetEntry(entry_);
     c_mc_nues_vertex_y_ = true;
   }
@@ -5668,6 +9040,8 @@ std::vector<float>* const & cfa_base::mc_nues_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_nues_vertex_z() const{
   if(!c_mc_nues_vertex_z_ && b_mc_nues_vertex_z_){
+    b_mc_nues_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nues_vertex_z", &mc_nues_vertex_z_, &b_mc_nues_vertex_z_);
     b_mc_nues_vertex_z_->GetEntry(entry_);
     c_mc_nues_vertex_z_ = true;
   }
@@ -5676,6 +9050,8 @@ std::vector<float>* const & cfa_base::mc_nues_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_numus_charge() const{
   if(!c_mc_numus_charge_ && b_mc_numus_charge_){
+    b_mc_numus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_charge", &mc_numus_charge_, &b_mc_numus_charge_);
     b_mc_numus_charge_->GetEntry(entry_);
     c_mc_numus_charge_ = true;
   }
@@ -5684,6 +9060,8 @@ std::vector<float>* const & cfa_base::mc_numus_charge() const{
 
 std::vector<float>* const & cfa_base::mc_numus_energy() const{
   if(!c_mc_numus_energy_ && b_mc_numus_energy_){
+    b_mc_numus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_energy", &mc_numus_energy_, &b_mc_numus_energy_);
     b_mc_numus_energy_->GetEntry(entry_);
     c_mc_numus_energy_ = true;
   }
@@ -5692,6 +9070,8 @@ std::vector<float>* const & cfa_base::mc_numus_energy() const{
 
 std::vector<float>* const & cfa_base::mc_numus_eta() const{
   if(!c_mc_numus_eta_ && b_mc_numus_eta_){
+    b_mc_numus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_eta", &mc_numus_eta_, &b_mc_numus_eta_);
     b_mc_numus_eta_->GetEntry(entry_);
     c_mc_numus_eta_ = true;
   }
@@ -5700,6 +9080,8 @@ std::vector<float>* const & cfa_base::mc_numus_eta() const{
 
 std::vector<float>* const & cfa_base::mc_numus_ggrandmother_id() const{
   if(!c_mc_numus_ggrandmother_id_ && b_mc_numus_ggrandmother_id_){
+    b_mc_numus_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_ggrandmother_id", &mc_numus_ggrandmother_id_, &b_mc_numus_ggrandmother_id_);
     b_mc_numus_ggrandmother_id_->GetEntry(entry_);
     c_mc_numus_ggrandmother_id_ = true;
   }
@@ -5708,6 +9090,8 @@ std::vector<float>* const & cfa_base::mc_numus_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_numus_grandmother_id() const{
   if(!c_mc_numus_grandmother_id_ && b_mc_numus_grandmother_id_){
+    b_mc_numus_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_grandmother_id", &mc_numus_grandmother_id_, &b_mc_numus_grandmother_id_);
     b_mc_numus_grandmother_id_->GetEntry(entry_);
     c_mc_numus_grandmother_id_ = true;
   }
@@ -5716,6 +9100,8 @@ std::vector<float>* const & cfa_base::mc_numus_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_numus_id() const{
   if(!c_mc_numus_id_ && b_mc_numus_id_){
+    b_mc_numus_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_id", &mc_numus_id_, &b_mc_numus_id_);
     b_mc_numus_id_->GetEntry(entry_);
     c_mc_numus_id_ = true;
   }
@@ -5724,6 +9110,8 @@ std::vector<float>* const & cfa_base::mc_numus_id() const{
 
 std::vector<float>* const & cfa_base::mc_numus_mass() const{
   if(!c_mc_numus_mass_ && b_mc_numus_mass_){
+    b_mc_numus_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_mass", &mc_numus_mass_, &b_mc_numus_mass_);
     b_mc_numus_mass_->GetEntry(entry_);
     c_mc_numus_mass_ = true;
   }
@@ -5732,6 +9120,8 @@ std::vector<float>* const & cfa_base::mc_numus_mass() const{
 
 std::vector<float>* const & cfa_base::mc_numus_mother_id() const{
   if(!c_mc_numus_mother_id_ && b_mc_numus_mother_id_){
+    b_mc_numus_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_mother_id", &mc_numus_mother_id_, &b_mc_numus_mother_id_);
     b_mc_numus_mother_id_->GetEntry(entry_);
     c_mc_numus_mother_id_ = true;
   }
@@ -5740,6 +9130,8 @@ std::vector<float>* const & cfa_base::mc_numus_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_numus_mother_pt() const{
   if(!c_mc_numus_mother_pt_ && b_mc_numus_mother_pt_){
+    b_mc_numus_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_mother_pt", &mc_numus_mother_pt_, &b_mc_numus_mother_pt_);
     b_mc_numus_mother_pt_->GetEntry(entry_);
     c_mc_numus_mother_pt_ = true;
   }
@@ -5748,6 +9140,8 @@ std::vector<float>* const & cfa_base::mc_numus_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_numus_numOfDaughters() const{
   if(!c_mc_numus_numOfDaughters_ && b_mc_numus_numOfDaughters_){
+    b_mc_numus_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_numOfDaughters", &mc_numus_numOfDaughters_, &b_mc_numus_numOfDaughters_);
     b_mc_numus_numOfDaughters_->GetEntry(entry_);
     c_mc_numus_numOfDaughters_ = true;
   }
@@ -5756,6 +9150,8 @@ std::vector<float>* const & cfa_base::mc_numus_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_numus_phi() const{
   if(!c_mc_numus_phi_ && b_mc_numus_phi_){
+    b_mc_numus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_phi", &mc_numus_phi_, &b_mc_numus_phi_);
     b_mc_numus_phi_->GetEntry(entry_);
     c_mc_numus_phi_ = true;
   }
@@ -5764,6 +9160,8 @@ std::vector<float>* const & cfa_base::mc_numus_phi() const{
 
 std::vector<float>* const & cfa_base::mc_numus_pt() const{
   if(!c_mc_numus_pt_ && b_mc_numus_pt_){
+    b_mc_numus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_pt", &mc_numus_pt_, &b_mc_numus_pt_);
     b_mc_numus_pt_->GetEntry(entry_);
     c_mc_numus_pt_ = true;
   }
@@ -5772,6 +9170,8 @@ std::vector<float>* const & cfa_base::mc_numus_pt() const{
 
 std::vector<float>* const & cfa_base::mc_numus_px() const{
   if(!c_mc_numus_px_ && b_mc_numus_px_){
+    b_mc_numus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_px", &mc_numus_px_, &b_mc_numus_px_);
     b_mc_numus_px_->GetEntry(entry_);
     c_mc_numus_px_ = true;
   }
@@ -5780,6 +9180,8 @@ std::vector<float>* const & cfa_base::mc_numus_px() const{
 
 std::vector<float>* const & cfa_base::mc_numus_py() const{
   if(!c_mc_numus_py_ && b_mc_numus_py_){
+    b_mc_numus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_py", &mc_numus_py_, &b_mc_numus_py_);
     b_mc_numus_py_->GetEntry(entry_);
     c_mc_numus_py_ = true;
   }
@@ -5788,6 +9190,8 @@ std::vector<float>* const & cfa_base::mc_numus_py() const{
 
 std::vector<float>* const & cfa_base::mc_numus_pz() const{
   if(!c_mc_numus_pz_ && b_mc_numus_pz_){
+    b_mc_numus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_pz", &mc_numus_pz_, &b_mc_numus_pz_);
     b_mc_numus_pz_->GetEntry(entry_);
     c_mc_numus_pz_ = true;
   }
@@ -5796,6 +9200,8 @@ std::vector<float>* const & cfa_base::mc_numus_pz() const{
 
 std::vector<float>* const & cfa_base::mc_numus_status() const{
   if(!c_mc_numus_status_ && b_mc_numus_status_){
+    b_mc_numus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_status", &mc_numus_status_, &b_mc_numus_status_);
     b_mc_numus_status_->GetEntry(entry_);
     c_mc_numus_status_ = true;
   }
@@ -5804,6 +9210,8 @@ std::vector<float>* const & cfa_base::mc_numus_status() const{
 
 std::vector<float>* const & cfa_base::mc_numus_theta() const{
   if(!c_mc_numus_theta_ && b_mc_numus_theta_){
+    b_mc_numus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_theta", &mc_numus_theta_, &b_mc_numus_theta_);
     b_mc_numus_theta_->GetEntry(entry_);
     c_mc_numus_theta_ = true;
   }
@@ -5812,6 +9220,8 @@ std::vector<float>* const & cfa_base::mc_numus_theta() const{
 
 std::vector<float>* const & cfa_base::mc_numus_vertex_x() const{
   if(!c_mc_numus_vertex_x_ && b_mc_numus_vertex_x_){
+    b_mc_numus_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_vertex_x", &mc_numus_vertex_x_, &b_mc_numus_vertex_x_);
     b_mc_numus_vertex_x_->GetEntry(entry_);
     c_mc_numus_vertex_x_ = true;
   }
@@ -5820,6 +9230,8 @@ std::vector<float>* const & cfa_base::mc_numus_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_numus_vertex_y() const{
   if(!c_mc_numus_vertex_y_ && b_mc_numus_vertex_y_){
+    b_mc_numus_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_vertex_y", &mc_numus_vertex_y_, &b_mc_numus_vertex_y_);
     b_mc_numus_vertex_y_->GetEntry(entry_);
     c_mc_numus_vertex_y_ = true;
   }
@@ -5828,6 +9240,8 @@ std::vector<float>* const & cfa_base::mc_numus_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_numus_vertex_z() const{
   if(!c_mc_numus_vertex_z_ && b_mc_numus_vertex_z_){
+    b_mc_numus_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_numus_vertex_z", &mc_numus_vertex_z_, &b_mc_numus_vertex_z_);
     b_mc_numus_vertex_z_->GetEntry(entry_);
     c_mc_numus_vertex_z_ = true;
   }
@@ -5836,6 +9250,8 @@ std::vector<float>* const & cfa_base::mc_numus_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_charge() const{
   if(!c_mc_nutaus_charge_ && b_mc_nutaus_charge_){
+    b_mc_nutaus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_charge", &mc_nutaus_charge_, &b_mc_nutaus_charge_);
     b_mc_nutaus_charge_->GetEntry(entry_);
     c_mc_nutaus_charge_ = true;
   }
@@ -5844,6 +9260,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_charge() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_energy() const{
   if(!c_mc_nutaus_energy_ && b_mc_nutaus_energy_){
+    b_mc_nutaus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_energy", &mc_nutaus_energy_, &b_mc_nutaus_energy_);
     b_mc_nutaus_energy_->GetEntry(entry_);
     c_mc_nutaus_energy_ = true;
   }
@@ -5852,6 +9270,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_energy() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_eta() const{
   if(!c_mc_nutaus_eta_ && b_mc_nutaus_eta_){
+    b_mc_nutaus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_eta", &mc_nutaus_eta_, &b_mc_nutaus_eta_);
     b_mc_nutaus_eta_->GetEntry(entry_);
     c_mc_nutaus_eta_ = true;
   }
@@ -5860,6 +9280,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_eta() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_ggrandmother_id() const{
   if(!c_mc_nutaus_ggrandmother_id_ && b_mc_nutaus_ggrandmother_id_){
+    b_mc_nutaus_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_ggrandmother_id", &mc_nutaus_ggrandmother_id_, &b_mc_nutaus_ggrandmother_id_);
     b_mc_nutaus_ggrandmother_id_->GetEntry(entry_);
     c_mc_nutaus_ggrandmother_id_ = true;
   }
@@ -5868,6 +9290,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_grandmother_id() const{
   if(!c_mc_nutaus_grandmother_id_ && b_mc_nutaus_grandmother_id_){
+    b_mc_nutaus_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_grandmother_id", &mc_nutaus_grandmother_id_, &b_mc_nutaus_grandmother_id_);
     b_mc_nutaus_grandmother_id_->GetEntry(entry_);
     c_mc_nutaus_grandmother_id_ = true;
   }
@@ -5876,6 +9300,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_id() const{
   if(!c_mc_nutaus_id_ && b_mc_nutaus_id_){
+    b_mc_nutaus_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_id", &mc_nutaus_id_, &b_mc_nutaus_id_);
     b_mc_nutaus_id_->GetEntry(entry_);
     c_mc_nutaus_id_ = true;
   }
@@ -5884,6 +9310,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_id() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_mass() const{
   if(!c_mc_nutaus_mass_ && b_mc_nutaus_mass_){
+    b_mc_nutaus_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_mass", &mc_nutaus_mass_, &b_mc_nutaus_mass_);
     b_mc_nutaus_mass_->GetEntry(entry_);
     c_mc_nutaus_mass_ = true;
   }
@@ -5892,6 +9320,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_mass() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_mother_id() const{
   if(!c_mc_nutaus_mother_id_ && b_mc_nutaus_mother_id_){
+    b_mc_nutaus_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_mother_id", &mc_nutaus_mother_id_, &b_mc_nutaus_mother_id_);
     b_mc_nutaus_mother_id_->GetEntry(entry_);
     c_mc_nutaus_mother_id_ = true;
   }
@@ -5900,6 +9330,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_mother_pt() const{
   if(!c_mc_nutaus_mother_pt_ && b_mc_nutaus_mother_pt_){
+    b_mc_nutaus_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_mother_pt", &mc_nutaus_mother_pt_, &b_mc_nutaus_mother_pt_);
     b_mc_nutaus_mother_pt_->GetEntry(entry_);
     c_mc_nutaus_mother_pt_ = true;
   }
@@ -5908,6 +9340,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_numOfDaughters() const{
   if(!c_mc_nutaus_numOfDaughters_ && b_mc_nutaus_numOfDaughters_){
+    b_mc_nutaus_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_numOfDaughters", &mc_nutaus_numOfDaughters_, &b_mc_nutaus_numOfDaughters_);
     b_mc_nutaus_numOfDaughters_->GetEntry(entry_);
     c_mc_nutaus_numOfDaughters_ = true;
   }
@@ -5916,6 +9350,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_phi() const{
   if(!c_mc_nutaus_phi_ && b_mc_nutaus_phi_){
+    b_mc_nutaus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_phi", &mc_nutaus_phi_, &b_mc_nutaus_phi_);
     b_mc_nutaus_phi_->GetEntry(entry_);
     c_mc_nutaus_phi_ = true;
   }
@@ -5924,6 +9360,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_phi() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_pt() const{
   if(!c_mc_nutaus_pt_ && b_mc_nutaus_pt_){
+    b_mc_nutaus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_pt", &mc_nutaus_pt_, &b_mc_nutaus_pt_);
     b_mc_nutaus_pt_->GetEntry(entry_);
     c_mc_nutaus_pt_ = true;
   }
@@ -5932,6 +9370,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_pt() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_px() const{
   if(!c_mc_nutaus_px_ && b_mc_nutaus_px_){
+    b_mc_nutaus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_px", &mc_nutaus_px_, &b_mc_nutaus_px_);
     b_mc_nutaus_px_->GetEntry(entry_);
     c_mc_nutaus_px_ = true;
   }
@@ -5940,6 +9380,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_px() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_py() const{
   if(!c_mc_nutaus_py_ && b_mc_nutaus_py_){
+    b_mc_nutaus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_py", &mc_nutaus_py_, &b_mc_nutaus_py_);
     b_mc_nutaus_py_->GetEntry(entry_);
     c_mc_nutaus_py_ = true;
   }
@@ -5948,6 +9390,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_py() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_pz() const{
   if(!c_mc_nutaus_pz_ && b_mc_nutaus_pz_){
+    b_mc_nutaus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_pz", &mc_nutaus_pz_, &b_mc_nutaus_pz_);
     b_mc_nutaus_pz_->GetEntry(entry_);
     c_mc_nutaus_pz_ = true;
   }
@@ -5956,6 +9400,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_pz() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_status() const{
   if(!c_mc_nutaus_status_ && b_mc_nutaus_status_){
+    b_mc_nutaus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_status", &mc_nutaus_status_, &b_mc_nutaus_status_);
     b_mc_nutaus_status_->GetEntry(entry_);
     c_mc_nutaus_status_ = true;
   }
@@ -5964,6 +9410,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_status() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_theta() const{
   if(!c_mc_nutaus_theta_ && b_mc_nutaus_theta_){
+    b_mc_nutaus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_theta", &mc_nutaus_theta_, &b_mc_nutaus_theta_);
     b_mc_nutaus_theta_->GetEntry(entry_);
     c_mc_nutaus_theta_ = true;
   }
@@ -5972,6 +9420,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_theta() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_vertex_x() const{
   if(!c_mc_nutaus_vertex_x_ && b_mc_nutaus_vertex_x_){
+    b_mc_nutaus_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_vertex_x", &mc_nutaus_vertex_x_, &b_mc_nutaus_vertex_x_);
     b_mc_nutaus_vertex_x_->GetEntry(entry_);
     c_mc_nutaus_vertex_x_ = true;
   }
@@ -5980,6 +9430,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_vertex_y() const{
   if(!c_mc_nutaus_vertex_y_ && b_mc_nutaus_vertex_y_){
+    b_mc_nutaus_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_vertex_y", &mc_nutaus_vertex_y_, &b_mc_nutaus_vertex_y_);
     b_mc_nutaus_vertex_y_->GetEntry(entry_);
     c_mc_nutaus_vertex_y_ = true;
   }
@@ -5988,6 +9440,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_nutaus_vertex_z() const{
   if(!c_mc_nutaus_vertex_z_ && b_mc_nutaus_vertex_z_){
+    b_mc_nutaus_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_nutaus_vertex_z", &mc_nutaus_vertex_z_, &b_mc_nutaus_vertex_z_);
     b_mc_nutaus_vertex_z_->GetEntry(entry_);
     c_mc_nutaus_vertex_z_ = true;
   }
@@ -5996,6 +9450,8 @@ std::vector<float>* const & cfa_base::mc_nutaus_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_photons_charge() const{
   if(!c_mc_photons_charge_ && b_mc_photons_charge_){
+    b_mc_photons_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_charge", &mc_photons_charge_, &b_mc_photons_charge_);
     b_mc_photons_charge_->GetEntry(entry_);
     c_mc_photons_charge_ = true;
   }
@@ -6004,6 +9460,8 @@ std::vector<float>* const & cfa_base::mc_photons_charge() const{
 
 std::vector<float>* const & cfa_base::mc_photons_energy() const{
   if(!c_mc_photons_energy_ && b_mc_photons_energy_){
+    b_mc_photons_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_energy", &mc_photons_energy_, &b_mc_photons_energy_);
     b_mc_photons_energy_->GetEntry(entry_);
     c_mc_photons_energy_ = true;
   }
@@ -6012,6 +9470,8 @@ std::vector<float>* const & cfa_base::mc_photons_energy() const{
 
 std::vector<float>* const & cfa_base::mc_photons_eta() const{
   if(!c_mc_photons_eta_ && b_mc_photons_eta_){
+    b_mc_photons_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_eta", &mc_photons_eta_, &b_mc_photons_eta_);
     b_mc_photons_eta_->GetEntry(entry_);
     c_mc_photons_eta_ = true;
   }
@@ -6020,6 +9480,8 @@ std::vector<float>* const & cfa_base::mc_photons_eta() const{
 
 std::vector<float>* const & cfa_base::mc_photons_ggrandmother_id() const{
   if(!c_mc_photons_ggrandmother_id_ && b_mc_photons_ggrandmother_id_){
+    b_mc_photons_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_ggrandmother_id", &mc_photons_ggrandmother_id_, &b_mc_photons_ggrandmother_id_);
     b_mc_photons_ggrandmother_id_->GetEntry(entry_);
     c_mc_photons_ggrandmother_id_ = true;
   }
@@ -6028,6 +9490,8 @@ std::vector<float>* const & cfa_base::mc_photons_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_photons_grandmother_id() const{
   if(!c_mc_photons_grandmother_id_ && b_mc_photons_grandmother_id_){
+    b_mc_photons_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_grandmother_id", &mc_photons_grandmother_id_, &b_mc_photons_grandmother_id_);
     b_mc_photons_grandmother_id_->GetEntry(entry_);
     c_mc_photons_grandmother_id_ = true;
   }
@@ -6036,6 +9500,8 @@ std::vector<float>* const & cfa_base::mc_photons_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_photons_id() const{
   if(!c_mc_photons_id_ && b_mc_photons_id_){
+    b_mc_photons_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_id", &mc_photons_id_, &b_mc_photons_id_);
     b_mc_photons_id_->GetEntry(entry_);
     c_mc_photons_id_ = true;
   }
@@ -6044,6 +9510,8 @@ std::vector<float>* const & cfa_base::mc_photons_id() const{
 
 std::vector<float>* const & cfa_base::mc_photons_mass() const{
   if(!c_mc_photons_mass_ && b_mc_photons_mass_){
+    b_mc_photons_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_mass", &mc_photons_mass_, &b_mc_photons_mass_);
     b_mc_photons_mass_->GetEntry(entry_);
     c_mc_photons_mass_ = true;
   }
@@ -6052,6 +9520,8 @@ std::vector<float>* const & cfa_base::mc_photons_mass() const{
 
 std::vector<float>* const & cfa_base::mc_photons_mother_id() const{
   if(!c_mc_photons_mother_id_ && b_mc_photons_mother_id_){
+    b_mc_photons_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_mother_id", &mc_photons_mother_id_, &b_mc_photons_mother_id_);
     b_mc_photons_mother_id_->GetEntry(entry_);
     c_mc_photons_mother_id_ = true;
   }
@@ -6060,6 +9530,8 @@ std::vector<float>* const & cfa_base::mc_photons_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_photons_mother_pt() const{
   if(!c_mc_photons_mother_pt_ && b_mc_photons_mother_pt_){
+    b_mc_photons_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_mother_pt", &mc_photons_mother_pt_, &b_mc_photons_mother_pt_);
     b_mc_photons_mother_pt_->GetEntry(entry_);
     c_mc_photons_mother_pt_ = true;
   }
@@ -6068,6 +9540,8 @@ std::vector<float>* const & cfa_base::mc_photons_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_photons_numOfDaughters() const{
   if(!c_mc_photons_numOfDaughters_ && b_mc_photons_numOfDaughters_){
+    b_mc_photons_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_numOfDaughters", &mc_photons_numOfDaughters_, &b_mc_photons_numOfDaughters_);
     b_mc_photons_numOfDaughters_->GetEntry(entry_);
     c_mc_photons_numOfDaughters_ = true;
   }
@@ -6076,6 +9550,8 @@ std::vector<float>* const & cfa_base::mc_photons_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_photons_phi() const{
   if(!c_mc_photons_phi_ && b_mc_photons_phi_){
+    b_mc_photons_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_phi", &mc_photons_phi_, &b_mc_photons_phi_);
     b_mc_photons_phi_->GetEntry(entry_);
     c_mc_photons_phi_ = true;
   }
@@ -6084,6 +9560,8 @@ std::vector<float>* const & cfa_base::mc_photons_phi() const{
 
 std::vector<float>* const & cfa_base::mc_photons_pt() const{
   if(!c_mc_photons_pt_ && b_mc_photons_pt_){
+    b_mc_photons_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_pt", &mc_photons_pt_, &b_mc_photons_pt_);
     b_mc_photons_pt_->GetEntry(entry_);
     c_mc_photons_pt_ = true;
   }
@@ -6092,6 +9570,8 @@ std::vector<float>* const & cfa_base::mc_photons_pt() const{
 
 std::vector<float>* const & cfa_base::mc_photons_px() const{
   if(!c_mc_photons_px_ && b_mc_photons_px_){
+    b_mc_photons_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_px", &mc_photons_px_, &b_mc_photons_px_);
     b_mc_photons_px_->GetEntry(entry_);
     c_mc_photons_px_ = true;
   }
@@ -6100,6 +9580,8 @@ std::vector<float>* const & cfa_base::mc_photons_px() const{
 
 std::vector<float>* const & cfa_base::mc_photons_py() const{
   if(!c_mc_photons_py_ && b_mc_photons_py_){
+    b_mc_photons_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_py", &mc_photons_py_, &b_mc_photons_py_);
     b_mc_photons_py_->GetEntry(entry_);
     c_mc_photons_py_ = true;
   }
@@ -6108,6 +9590,8 @@ std::vector<float>* const & cfa_base::mc_photons_py() const{
 
 std::vector<float>* const & cfa_base::mc_photons_pz() const{
   if(!c_mc_photons_pz_ && b_mc_photons_pz_){
+    b_mc_photons_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_pz", &mc_photons_pz_, &b_mc_photons_pz_);
     b_mc_photons_pz_->GetEntry(entry_);
     c_mc_photons_pz_ = true;
   }
@@ -6116,6 +9600,8 @@ std::vector<float>* const & cfa_base::mc_photons_pz() const{
 
 std::vector<float>* const & cfa_base::mc_photons_status() const{
   if(!c_mc_photons_status_ && b_mc_photons_status_){
+    b_mc_photons_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_status", &mc_photons_status_, &b_mc_photons_status_);
     b_mc_photons_status_->GetEntry(entry_);
     c_mc_photons_status_ = true;
   }
@@ -6124,6 +9610,8 @@ std::vector<float>* const & cfa_base::mc_photons_status() const{
 
 std::vector<float>* const & cfa_base::mc_photons_theta() const{
   if(!c_mc_photons_theta_ && b_mc_photons_theta_){
+    b_mc_photons_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_theta", &mc_photons_theta_, &b_mc_photons_theta_);
     b_mc_photons_theta_->GetEntry(entry_);
     c_mc_photons_theta_ = true;
   }
@@ -6132,6 +9620,8 @@ std::vector<float>* const & cfa_base::mc_photons_theta() const{
 
 std::vector<float>* const & cfa_base::mc_photons_vertex_x() const{
   if(!c_mc_photons_vertex_x_ && b_mc_photons_vertex_x_){
+    b_mc_photons_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_vertex_x", &mc_photons_vertex_x_, &b_mc_photons_vertex_x_);
     b_mc_photons_vertex_x_->GetEntry(entry_);
     c_mc_photons_vertex_x_ = true;
   }
@@ -6140,6 +9630,8 @@ std::vector<float>* const & cfa_base::mc_photons_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_photons_vertex_y() const{
   if(!c_mc_photons_vertex_y_ && b_mc_photons_vertex_y_){
+    b_mc_photons_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_vertex_y", &mc_photons_vertex_y_, &b_mc_photons_vertex_y_);
     b_mc_photons_vertex_y_->GetEntry(entry_);
     c_mc_photons_vertex_y_ = true;
   }
@@ -6148,6 +9640,8 @@ std::vector<float>* const & cfa_base::mc_photons_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_photons_vertex_z() const{
   if(!c_mc_photons_vertex_z_ && b_mc_photons_vertex_z_){
+    b_mc_photons_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_photons_vertex_z", &mc_photons_vertex_z_, &b_mc_photons_vertex_z_);
     b_mc_photons_vertex_z_->GetEntry(entry_);
     c_mc_photons_vertex_z_ = true;
   }
@@ -6156,6 +9650,8 @@ std::vector<float>* const & cfa_base::mc_photons_vertex_z() const{
 
 std::vector<float>* const & cfa_base::mc_taus_charge() const{
   if(!c_mc_taus_charge_ && b_mc_taus_charge_){
+    b_mc_taus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_charge", &mc_taus_charge_, &b_mc_taus_charge_);
     b_mc_taus_charge_->GetEntry(entry_);
     c_mc_taus_charge_ = true;
   }
@@ -6164,6 +9660,8 @@ std::vector<float>* const & cfa_base::mc_taus_charge() const{
 
 std::vector<float>* const & cfa_base::mc_taus_energy() const{
   if(!c_mc_taus_energy_ && b_mc_taus_energy_){
+    b_mc_taus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_energy", &mc_taus_energy_, &b_mc_taus_energy_);
     b_mc_taus_energy_->GetEntry(entry_);
     c_mc_taus_energy_ = true;
   }
@@ -6172,6 +9670,8 @@ std::vector<float>* const & cfa_base::mc_taus_energy() const{
 
 std::vector<float>* const & cfa_base::mc_taus_eta() const{
   if(!c_mc_taus_eta_ && b_mc_taus_eta_){
+    b_mc_taus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_eta", &mc_taus_eta_, &b_mc_taus_eta_);
     b_mc_taus_eta_->GetEntry(entry_);
     c_mc_taus_eta_ = true;
   }
@@ -6180,6 +9680,8 @@ std::vector<float>* const & cfa_base::mc_taus_eta() const{
 
 std::vector<float>* const & cfa_base::mc_taus_ggrandmother_id() const{
   if(!c_mc_taus_ggrandmother_id_ && b_mc_taus_ggrandmother_id_){
+    b_mc_taus_ggrandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_ggrandmother_id", &mc_taus_ggrandmother_id_, &b_mc_taus_ggrandmother_id_);
     b_mc_taus_ggrandmother_id_->GetEntry(entry_);
     c_mc_taus_ggrandmother_id_ = true;
   }
@@ -6188,6 +9690,8 @@ std::vector<float>* const & cfa_base::mc_taus_ggrandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_taus_grandmother_id() const{
   if(!c_mc_taus_grandmother_id_ && b_mc_taus_grandmother_id_){
+    b_mc_taus_grandmother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_grandmother_id", &mc_taus_grandmother_id_, &b_mc_taus_grandmother_id_);
     b_mc_taus_grandmother_id_->GetEntry(entry_);
     c_mc_taus_grandmother_id_ = true;
   }
@@ -6196,6 +9700,8 @@ std::vector<float>* const & cfa_base::mc_taus_grandmother_id() const{
 
 std::vector<float>* const & cfa_base::mc_taus_id() const{
   if(!c_mc_taus_id_ && b_mc_taus_id_){
+    b_mc_taus_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_id", &mc_taus_id_, &b_mc_taus_id_);
     b_mc_taus_id_->GetEntry(entry_);
     c_mc_taus_id_ = true;
   }
@@ -6204,6 +9710,8 @@ std::vector<float>* const & cfa_base::mc_taus_id() const{
 
 std::vector<float>* const & cfa_base::mc_taus_mass() const{
   if(!c_mc_taus_mass_ && b_mc_taus_mass_){
+    b_mc_taus_mass_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_mass", &mc_taus_mass_, &b_mc_taus_mass_);
     b_mc_taus_mass_->GetEntry(entry_);
     c_mc_taus_mass_ = true;
   }
@@ -6212,6 +9720,8 @@ std::vector<float>* const & cfa_base::mc_taus_mass() const{
 
 std::vector<float>* const & cfa_base::mc_taus_mother_id() const{
   if(!c_mc_taus_mother_id_ && b_mc_taus_mother_id_){
+    b_mc_taus_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_mother_id", &mc_taus_mother_id_, &b_mc_taus_mother_id_);
     b_mc_taus_mother_id_->GetEntry(entry_);
     c_mc_taus_mother_id_ = true;
   }
@@ -6220,6 +9730,8 @@ std::vector<float>* const & cfa_base::mc_taus_mother_id() const{
 
 std::vector<float>* const & cfa_base::mc_taus_mother_pt() const{
   if(!c_mc_taus_mother_pt_ && b_mc_taus_mother_pt_){
+    b_mc_taus_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_mother_pt", &mc_taus_mother_pt_, &b_mc_taus_mother_pt_);
     b_mc_taus_mother_pt_->GetEntry(entry_);
     c_mc_taus_mother_pt_ = true;
   }
@@ -6228,6 +9740,8 @@ std::vector<float>* const & cfa_base::mc_taus_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mc_taus_numOfDaughters() const{
   if(!c_mc_taus_numOfDaughters_ && b_mc_taus_numOfDaughters_){
+    b_mc_taus_numOfDaughters_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_numOfDaughters", &mc_taus_numOfDaughters_, &b_mc_taus_numOfDaughters_);
     b_mc_taus_numOfDaughters_->GetEntry(entry_);
     c_mc_taus_numOfDaughters_ = true;
   }
@@ -6236,6 +9750,8 @@ std::vector<float>* const & cfa_base::mc_taus_numOfDaughters() const{
 
 std::vector<float>* const & cfa_base::mc_taus_phi() const{
   if(!c_mc_taus_phi_ && b_mc_taus_phi_){
+    b_mc_taus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_phi", &mc_taus_phi_, &b_mc_taus_phi_);
     b_mc_taus_phi_->GetEntry(entry_);
     c_mc_taus_phi_ = true;
   }
@@ -6244,6 +9760,8 @@ std::vector<float>* const & cfa_base::mc_taus_phi() const{
 
 std::vector<float>* const & cfa_base::mc_taus_pt() const{
   if(!c_mc_taus_pt_ && b_mc_taus_pt_){
+    b_mc_taus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_pt", &mc_taus_pt_, &b_mc_taus_pt_);
     b_mc_taus_pt_->GetEntry(entry_);
     c_mc_taus_pt_ = true;
   }
@@ -6252,6 +9770,8 @@ std::vector<float>* const & cfa_base::mc_taus_pt() const{
 
 std::vector<float>* const & cfa_base::mc_taus_px() const{
   if(!c_mc_taus_px_ && b_mc_taus_px_){
+    b_mc_taus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_px", &mc_taus_px_, &b_mc_taus_px_);
     b_mc_taus_px_->GetEntry(entry_);
     c_mc_taus_px_ = true;
   }
@@ -6260,6 +9780,8 @@ std::vector<float>* const & cfa_base::mc_taus_px() const{
 
 std::vector<float>* const & cfa_base::mc_taus_py() const{
   if(!c_mc_taus_py_ && b_mc_taus_py_){
+    b_mc_taus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_py", &mc_taus_py_, &b_mc_taus_py_);
     b_mc_taus_py_->GetEntry(entry_);
     c_mc_taus_py_ = true;
   }
@@ -6268,6 +9790,8 @@ std::vector<float>* const & cfa_base::mc_taus_py() const{
 
 std::vector<float>* const & cfa_base::mc_taus_pz() const{
   if(!c_mc_taus_pz_ && b_mc_taus_pz_){
+    b_mc_taus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_pz", &mc_taus_pz_, &b_mc_taus_pz_);
     b_mc_taus_pz_->GetEntry(entry_);
     c_mc_taus_pz_ = true;
   }
@@ -6276,6 +9800,8 @@ std::vector<float>* const & cfa_base::mc_taus_pz() const{
 
 std::vector<float>* const & cfa_base::mc_taus_status() const{
   if(!c_mc_taus_status_ && b_mc_taus_status_){
+    b_mc_taus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_status", &mc_taus_status_, &b_mc_taus_status_);
     b_mc_taus_status_->GetEntry(entry_);
     c_mc_taus_status_ = true;
   }
@@ -6284,6 +9810,8 @@ std::vector<float>* const & cfa_base::mc_taus_status() const{
 
 std::vector<float>* const & cfa_base::mc_taus_theta() const{
   if(!c_mc_taus_theta_ && b_mc_taus_theta_){
+    b_mc_taus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_theta", &mc_taus_theta_, &b_mc_taus_theta_);
     b_mc_taus_theta_->GetEntry(entry_);
     c_mc_taus_theta_ = true;
   }
@@ -6292,6 +9820,8 @@ std::vector<float>* const & cfa_base::mc_taus_theta() const{
 
 std::vector<float>* const & cfa_base::mc_taus_vertex_x() const{
   if(!c_mc_taus_vertex_x_ && b_mc_taus_vertex_x_){
+    b_mc_taus_vertex_x_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_vertex_x", &mc_taus_vertex_x_, &b_mc_taus_vertex_x_);
     b_mc_taus_vertex_x_->GetEntry(entry_);
     c_mc_taus_vertex_x_ = true;
   }
@@ -6300,6 +9830,8 @@ std::vector<float>* const & cfa_base::mc_taus_vertex_x() const{
 
 std::vector<float>* const & cfa_base::mc_taus_vertex_y() const{
   if(!c_mc_taus_vertex_y_ && b_mc_taus_vertex_y_){
+    b_mc_taus_vertex_y_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_vertex_y", &mc_taus_vertex_y_, &b_mc_taus_vertex_y_);
     b_mc_taus_vertex_y_->GetEntry(entry_);
     c_mc_taus_vertex_y_ = true;
   }
@@ -6308,6 +9840,8 @@ std::vector<float>* const & cfa_base::mc_taus_vertex_y() const{
 
 std::vector<float>* const & cfa_base::mc_taus_vertex_z() const{
   if(!c_mc_taus_vertex_z_ && b_mc_taus_vertex_z_){
+    b_mc_taus_vertex_z_->SetStatus(true);
+    chainB_.SetBranchAddress("mc_taus_vertex_z", &mc_taus_vertex_z_, &b_mc_taus_vertex_z_);
     b_mc_taus_vertex_z_->GetEntry(entry_);
     c_mc_taus_vertex_z_ = true;
   }
@@ -6316,6 +9850,8 @@ std::vector<float>* const & cfa_base::mc_taus_vertex_z() const{
 
 std::string* const & cfa_base::model_params() const{
   if(!c_model_params_ && b_model_params_){
+    b_model_params_->SetStatus(true);
+    chainB_.SetBranchAddress("model_params", &model_params_, &b_model_params_);
     b_model_params_->GetEntry(entry_);
     c_model_params_ = true;
   }
@@ -6324,6 +9860,8 @@ std::string* const & cfa_base::model_params() const{
 
 std::vector<float>* const & cfa_base::mus_cIso() const{
   if(!c_mus_cIso_ && b_mus_cIso_){
+    b_mus_cIso_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cIso", &mus_cIso_, &b_mus_cIso_);
     b_mus_cIso_->GetEntry(entry_);
     c_mus_cIso_ = true;
   }
@@ -6332,6 +9870,8 @@ std::vector<float>* const & cfa_base::mus_cIso() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyEm() const{
   if(!c_mus_calEnergyEm_ && b_mus_calEnergyEm_){
+    b_mus_calEnergyEm_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyEm", &mus_calEnergyEm_, &b_mus_calEnergyEm_);
     b_mus_calEnergyEm_->GetEntry(entry_);
     c_mus_calEnergyEm_ = true;
   }
@@ -6340,6 +9880,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyEm() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyEmS9() const{
   if(!c_mus_calEnergyEmS9_ && b_mus_calEnergyEmS9_){
+    b_mus_calEnergyEmS9_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyEmS9", &mus_calEnergyEmS9_, &b_mus_calEnergyEmS9_);
     b_mus_calEnergyEmS9_->GetEntry(entry_);
     c_mus_calEnergyEmS9_ = true;
   }
@@ -6348,6 +9890,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyEmS9() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyHad() const{
   if(!c_mus_calEnergyHad_ && b_mus_calEnergyHad_){
+    b_mus_calEnergyHad_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyHad", &mus_calEnergyHad_, &b_mus_calEnergyHad_);
     b_mus_calEnergyHad_->GetEntry(entry_);
     c_mus_calEnergyHad_ = true;
   }
@@ -6356,6 +9900,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyHad() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyHadS9() const{
   if(!c_mus_calEnergyHadS9_ && b_mus_calEnergyHadS9_){
+    b_mus_calEnergyHadS9_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyHadS9", &mus_calEnergyHadS9_, &b_mus_calEnergyHadS9_);
     b_mus_calEnergyHadS9_->GetEntry(entry_);
     c_mus_calEnergyHadS9_ = true;
   }
@@ -6364,6 +9910,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyHadS9() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyHo() const{
   if(!c_mus_calEnergyHo_ && b_mus_calEnergyHo_){
+    b_mus_calEnergyHo_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyHo", &mus_calEnergyHo_, &b_mus_calEnergyHo_);
     b_mus_calEnergyHo_->GetEntry(entry_);
     c_mus_calEnergyHo_ = true;
   }
@@ -6372,6 +9920,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyHo() const{
 
 std::vector<float>* const & cfa_base::mus_calEnergyHoS9() const{
   if(!c_mus_calEnergyHoS9_ && b_mus_calEnergyHoS9_){
+    b_mus_calEnergyHoS9_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_calEnergyHoS9", &mus_calEnergyHoS9_, &b_mus_calEnergyHoS9_);
     b_mus_calEnergyHoS9_->GetEntry(entry_);
     c_mus_calEnergyHoS9_ = true;
   }
@@ -6380,6 +9930,8 @@ std::vector<float>* const & cfa_base::mus_calEnergyHoS9() const{
 
 std::vector<float>* const & cfa_base::mus_charge() const{
   if(!c_mus_charge_ && b_mus_charge_){
+    b_mus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_charge", &mus_charge_, &b_mus_charge_);
     b_mus_charge_->GetEntry(entry_);
     c_mus_charge_ = true;
   }
@@ -6388,6 +9940,8 @@ std::vector<float>* const & cfa_base::mus_charge() const{
 
 std::vector<float>* const & cfa_base::mus_cm_ExpectedHitsInner() const{
   if(!c_mus_cm_ExpectedHitsInner_ && b_mus_cm_ExpectedHitsInner_){
+    b_mus_cm_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_ExpectedHitsInner", &mus_cm_ExpectedHitsInner_, &b_mus_cm_ExpectedHitsInner_);
     b_mus_cm_ExpectedHitsInner_->GetEntry(entry_);
     c_mus_cm_ExpectedHitsInner_ = true;
   }
@@ -6396,6 +9950,8 @@ std::vector<float>* const & cfa_base::mus_cm_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_base::mus_cm_ExpectedHitsOuter() const{
   if(!c_mus_cm_ExpectedHitsOuter_ && b_mus_cm_ExpectedHitsOuter_){
+    b_mus_cm_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_ExpectedHitsOuter", &mus_cm_ExpectedHitsOuter_, &b_mus_cm_ExpectedHitsOuter_);
     b_mus_cm_ExpectedHitsOuter_->GetEntry(entry_);
     c_mus_cm_ExpectedHitsOuter_ = true;
   }
@@ -6404,6 +9960,8 @@ std::vector<float>* const & cfa_base::mus_cm_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_base::mus_cm_LayersWithMeasurement() const{
   if(!c_mus_cm_LayersWithMeasurement_ && b_mus_cm_LayersWithMeasurement_){
+    b_mus_cm_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_LayersWithMeasurement", &mus_cm_LayersWithMeasurement_, &b_mus_cm_LayersWithMeasurement_);
     b_mus_cm_LayersWithMeasurement_->GetEntry(entry_);
     c_mus_cm_LayersWithMeasurement_ = true;
   }
@@ -6412,6 +9970,8 @@ std::vector<float>* const & cfa_base::mus_cm_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_cm_LayersWithoutMeasurement() const{
   if(!c_mus_cm_LayersWithoutMeasurement_ && b_mus_cm_LayersWithoutMeasurement_){
+    b_mus_cm_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_LayersWithoutMeasurement", &mus_cm_LayersWithoutMeasurement_, &b_mus_cm_LayersWithoutMeasurement_);
     b_mus_cm_LayersWithoutMeasurement_->GetEntry(entry_);
     c_mus_cm_LayersWithoutMeasurement_ = true;
   }
@@ -6420,6 +9980,8 @@ std::vector<float>* const & cfa_base::mus_cm_LayersWithoutMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_cm_PixelLayersWithMeasurement() const{
   if(!c_mus_cm_PixelLayersWithMeasurement_ && b_mus_cm_PixelLayersWithMeasurement_){
+    b_mus_cm_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_PixelLayersWithMeasurement", &mus_cm_PixelLayersWithMeasurement_, &b_mus_cm_PixelLayersWithMeasurement_);
     b_mus_cm_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_mus_cm_PixelLayersWithMeasurement_ = true;
   }
@@ -6428,6 +9990,8 @@ std::vector<float>* const & cfa_base::mus_cm_PixelLayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_cm_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_mus_cm_ValidStripLayersWithMonoAndStereoHit_ && b_mus_cm_ValidStripLayersWithMonoAndStereoHit_){
+    b_mus_cm_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_ValidStripLayersWithMonoAndStereoHit", &mus_cm_ValidStripLayersWithMonoAndStereoHit_, &b_mus_cm_ValidStripLayersWithMonoAndStereoHit_);
     b_mus_cm_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_mus_cm_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -6436,6 +10000,8 @@ std::vector<float>* const & cfa_base::mus_cm_ValidStripLayersWithMonoAndStereoHi
 
 std::vector<float>* const & cfa_base::mus_cm_chg() const{
   if(!c_mus_cm_chg_ && b_mus_cm_chg_){
+    b_mus_cm_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_chg", &mus_cm_chg_, &b_mus_cm_chg_);
     b_mus_cm_chg_->GetEntry(entry_);
     c_mus_cm_chg_ = true;
   }
@@ -6444,6 +10010,8 @@ std::vector<float>* const & cfa_base::mus_cm_chg() const{
 
 std::vector<float>* const & cfa_base::mus_cm_chi2() const{
   if(!c_mus_cm_chi2_ && b_mus_cm_chi2_){
+    b_mus_cm_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_chi2", &mus_cm_chi2_, &b_mus_cm_chi2_);
     b_mus_cm_chi2_->GetEntry(entry_);
     c_mus_cm_chi2_ = true;
   }
@@ -6452,6 +10020,8 @@ std::vector<float>* const & cfa_base::mus_cm_chi2() const{
 
 std::vector<float>* const & cfa_base::mus_cm_d0dum() const{
   if(!c_mus_cm_d0dum_ && b_mus_cm_d0dum_){
+    b_mus_cm_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_d0dum", &mus_cm_d0dum_, &b_mus_cm_d0dum_);
     b_mus_cm_d0dum_->GetEntry(entry_);
     c_mus_cm_d0dum_ = true;
   }
@@ -6460,6 +10030,8 @@ std::vector<float>* const & cfa_base::mus_cm_d0dum() const{
 
 std::vector<float>* const & cfa_base::mus_cm_d0dumErr() const{
   if(!c_mus_cm_d0dumErr_ && b_mus_cm_d0dumErr_){
+    b_mus_cm_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_d0dumErr", &mus_cm_d0dumErr_, &b_mus_cm_d0dumErr_);
     b_mus_cm_d0dumErr_->GetEntry(entry_);
     c_mus_cm_d0dumErr_ = true;
   }
@@ -6468,6 +10040,8 @@ std::vector<float>* const & cfa_base::mus_cm_d0dumErr() const{
 
 std::vector<float>* const & cfa_base::mus_cm_dz() const{
   if(!c_mus_cm_dz_ && b_mus_cm_dz_){
+    b_mus_cm_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_dz", &mus_cm_dz_, &b_mus_cm_dz_);
     b_mus_cm_dz_->GetEntry(entry_);
     c_mus_cm_dz_ = true;
   }
@@ -6476,6 +10050,8 @@ std::vector<float>* const & cfa_base::mus_cm_dz() const{
 
 std::vector<float>* const & cfa_base::mus_cm_dzErr() const{
   if(!c_mus_cm_dzErr_ && b_mus_cm_dzErr_){
+    b_mus_cm_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_dzErr", &mus_cm_dzErr_, &b_mus_cm_dzErr_);
     b_mus_cm_dzErr_->GetEntry(entry_);
     c_mus_cm_dzErr_ = true;
   }
@@ -6484,6 +10060,8 @@ std::vector<float>* const & cfa_base::mus_cm_dzErr() const{
 
 std::vector<float>* const & cfa_base::mus_cm_eta() const{
   if(!c_mus_cm_eta_ && b_mus_cm_eta_){
+    b_mus_cm_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_eta", &mus_cm_eta_, &b_mus_cm_eta_);
     b_mus_cm_eta_->GetEntry(entry_);
     c_mus_cm_eta_ = true;
   }
@@ -6492,6 +10070,8 @@ std::vector<float>* const & cfa_base::mus_cm_eta() const{
 
 std::vector<float>* const & cfa_base::mus_cm_etaErr() const{
   if(!c_mus_cm_etaErr_ && b_mus_cm_etaErr_){
+    b_mus_cm_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_etaErr", &mus_cm_etaErr_, &b_mus_cm_etaErr_);
     b_mus_cm_etaErr_->GetEntry(entry_);
     c_mus_cm_etaErr_ = true;
   }
@@ -6500,6 +10080,8 @@ std::vector<float>* const & cfa_base::mus_cm_etaErr() const{
 
 std::vector<float>* const & cfa_base::mus_cm_ndof() const{
   if(!c_mus_cm_ndof_ && b_mus_cm_ndof_){
+    b_mus_cm_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_ndof", &mus_cm_ndof_, &b_mus_cm_ndof_);
     b_mus_cm_ndof_->GetEntry(entry_);
     c_mus_cm_ndof_ = true;
   }
@@ -6508,6 +10090,8 @@ std::vector<float>* const & cfa_base::mus_cm_ndof() const{
 
 std::vector<float>* const & cfa_base::mus_cm_numlosthits() const{
   if(!c_mus_cm_numlosthits_ && b_mus_cm_numlosthits_){
+    b_mus_cm_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_numlosthits", &mus_cm_numlosthits_, &b_mus_cm_numlosthits_);
     b_mus_cm_numlosthits_->GetEntry(entry_);
     c_mus_cm_numlosthits_ = true;
   }
@@ -6516,6 +10100,8 @@ std::vector<float>* const & cfa_base::mus_cm_numlosthits() const{
 
 std::vector<float>* const & cfa_base::mus_cm_numvalMuonhits() const{
   if(!c_mus_cm_numvalMuonhits_ && b_mus_cm_numvalMuonhits_){
+    b_mus_cm_numvalMuonhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_numvalMuonhits", &mus_cm_numvalMuonhits_, &b_mus_cm_numvalMuonhits_);
     b_mus_cm_numvalMuonhits_->GetEntry(entry_);
     c_mus_cm_numvalMuonhits_ = true;
   }
@@ -6524,6 +10110,8 @@ std::vector<float>* const & cfa_base::mus_cm_numvalMuonhits() const{
 
 std::vector<float>* const & cfa_base::mus_cm_numvalhits() const{
   if(!c_mus_cm_numvalhits_ && b_mus_cm_numvalhits_){
+    b_mus_cm_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_numvalhits", &mus_cm_numvalhits_, &b_mus_cm_numvalhits_);
     b_mus_cm_numvalhits_->GetEntry(entry_);
     c_mus_cm_numvalhits_ = true;
   }
@@ -6532,6 +10120,8 @@ std::vector<float>* const & cfa_base::mus_cm_numvalhits() const{
 
 std::vector<float>* const & cfa_base::mus_cm_phi() const{
   if(!c_mus_cm_phi_ && b_mus_cm_phi_){
+    b_mus_cm_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_phi", &mus_cm_phi_, &b_mus_cm_phi_);
     b_mus_cm_phi_->GetEntry(entry_);
     c_mus_cm_phi_ = true;
   }
@@ -6540,6 +10130,8 @@ std::vector<float>* const & cfa_base::mus_cm_phi() const{
 
 std::vector<float>* const & cfa_base::mus_cm_phiErr() const{
   if(!c_mus_cm_phiErr_ && b_mus_cm_phiErr_){
+    b_mus_cm_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_phiErr", &mus_cm_phiErr_, &b_mus_cm_phiErr_);
     b_mus_cm_phiErr_->GetEntry(entry_);
     c_mus_cm_phiErr_ = true;
   }
@@ -6548,6 +10140,8 @@ std::vector<float>* const & cfa_base::mus_cm_phiErr() const{
 
 std::vector<float>* const & cfa_base::mus_cm_pt() const{
   if(!c_mus_cm_pt_ && b_mus_cm_pt_){
+    b_mus_cm_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_pt", &mus_cm_pt_, &b_mus_cm_pt_);
     b_mus_cm_pt_->GetEntry(entry_);
     c_mus_cm_pt_ = true;
   }
@@ -6556,6 +10150,8 @@ std::vector<float>* const & cfa_base::mus_cm_pt() const{
 
 std::vector<float>* const & cfa_base::mus_cm_ptErr() const{
   if(!c_mus_cm_ptErr_ && b_mus_cm_ptErr_){
+    b_mus_cm_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_ptErr", &mus_cm_ptErr_, &b_mus_cm_ptErr_);
     b_mus_cm_ptErr_->GetEntry(entry_);
     c_mus_cm_ptErr_ = true;
   }
@@ -6564,6 +10160,8 @@ std::vector<float>* const & cfa_base::mus_cm_ptErr() const{
 
 std::vector<float>* const & cfa_base::mus_cm_px() const{
   if(!c_mus_cm_px_ && b_mus_cm_px_){
+    b_mus_cm_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_px", &mus_cm_px_, &b_mus_cm_px_);
     b_mus_cm_px_->GetEntry(entry_);
     c_mus_cm_px_ = true;
   }
@@ -6572,6 +10170,8 @@ std::vector<float>* const & cfa_base::mus_cm_px() const{
 
 std::vector<float>* const & cfa_base::mus_cm_py() const{
   if(!c_mus_cm_py_ && b_mus_cm_py_){
+    b_mus_cm_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_py", &mus_cm_py_, &b_mus_cm_py_);
     b_mus_cm_py_->GetEntry(entry_);
     c_mus_cm_py_ = true;
   }
@@ -6580,6 +10180,8 @@ std::vector<float>* const & cfa_base::mus_cm_py() const{
 
 std::vector<float>* const & cfa_base::mus_cm_pz() const{
   if(!c_mus_cm_pz_ && b_mus_cm_pz_){
+    b_mus_cm_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_pz", &mus_cm_pz_, &b_mus_cm_pz_);
     b_mus_cm_pz_->GetEntry(entry_);
     c_mus_cm_pz_ = true;
   }
@@ -6588,6 +10190,8 @@ std::vector<float>* const & cfa_base::mus_cm_pz() const{
 
 std::vector<float>* const & cfa_base::mus_cm_theta() const{
   if(!c_mus_cm_theta_ && b_mus_cm_theta_){
+    b_mus_cm_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_theta", &mus_cm_theta_, &b_mus_cm_theta_);
     b_mus_cm_theta_->GetEntry(entry_);
     c_mus_cm_theta_ = true;
   }
@@ -6596,6 +10200,8 @@ std::vector<float>* const & cfa_base::mus_cm_theta() const{
 
 std::vector<float>* const & cfa_base::mus_cm_vx() const{
   if(!c_mus_cm_vx_ && b_mus_cm_vx_){
+    b_mus_cm_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_vx", &mus_cm_vx_, &b_mus_cm_vx_);
     b_mus_cm_vx_->GetEntry(entry_);
     c_mus_cm_vx_ = true;
   }
@@ -6604,6 +10210,8 @@ std::vector<float>* const & cfa_base::mus_cm_vx() const{
 
 std::vector<float>* const & cfa_base::mus_cm_vy() const{
   if(!c_mus_cm_vy_ && b_mus_cm_vy_){
+    b_mus_cm_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_vy", &mus_cm_vy_, &b_mus_cm_vy_);
     b_mus_cm_vy_->GetEntry(entry_);
     c_mus_cm_vy_ = true;
   }
@@ -6612,6 +10220,8 @@ std::vector<float>* const & cfa_base::mus_cm_vy() const{
 
 std::vector<float>* const & cfa_base::mus_cm_vz() const{
   if(!c_mus_cm_vz_ && b_mus_cm_vz_){
+    b_mus_cm_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_cm_vz", &mus_cm_vz_, &b_mus_cm_vz_);
     b_mus_cm_vz_->GetEntry(entry_);
     c_mus_cm_vz_ = true;
   }
@@ -6620,6 +10230,8 @@ std::vector<float>* const & cfa_base::mus_cm_vz() const{
 
 std::vector<float>* const & cfa_base::mus_dB() const{
   if(!c_mus_dB_ && b_mus_dB_){
+    b_mus_dB_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_dB", &mus_dB_, &b_mus_dB_);
     b_mus_dB_->GetEntry(entry_);
     c_mus_dB_ = true;
   }
@@ -6628,6 +10240,8 @@ std::vector<float>* const & cfa_base::mus_dB() const{
 
 std::vector<float>* const & cfa_base::mus_ecalIso() const{
   if(!c_mus_ecalIso_ && b_mus_ecalIso_){
+    b_mus_ecalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_ecalIso", &mus_ecalIso_, &b_mus_ecalIso_);
     b_mus_ecalIso_->GetEntry(entry_);
     c_mus_ecalIso_ = true;
   }
@@ -6636,6 +10250,8 @@ std::vector<float>* const & cfa_base::mus_ecalIso() const{
 
 std::vector<float>* const & cfa_base::mus_ecalvetoDep() const{
   if(!c_mus_ecalvetoDep_ && b_mus_ecalvetoDep_){
+    b_mus_ecalvetoDep_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_ecalvetoDep", &mus_ecalvetoDep_, &b_mus_ecalvetoDep_);
     b_mus_ecalvetoDep_->GetEntry(entry_);
     c_mus_ecalvetoDep_ = true;
   }
@@ -6644,6 +10260,8 @@ std::vector<float>* const & cfa_base::mus_ecalvetoDep() const{
 
 std::vector<float>* const & cfa_base::mus_energy() const{
   if(!c_mus_energy_ && b_mus_energy_){
+    b_mus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_energy", &mus_energy_, &b_mus_energy_);
     b_mus_energy_->GetEntry(entry_);
     c_mus_energy_ = true;
   }
@@ -6652,6 +10270,8 @@ std::vector<float>* const & cfa_base::mus_energy() const{
 
 std::vector<float>* const & cfa_base::mus_et() const{
   if(!c_mus_et_ && b_mus_et_){
+    b_mus_et_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_et", &mus_et_, &b_mus_et_);
     b_mus_et_->GetEntry(entry_);
     c_mus_et_ = true;
   }
@@ -6660,6 +10280,8 @@ std::vector<float>* const & cfa_base::mus_et() const{
 
 std::vector<float>* const & cfa_base::mus_eta() const{
   if(!c_mus_eta_ && b_mus_eta_){
+    b_mus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_eta", &mus_eta_, &b_mus_eta_);
     b_mus_eta_->GetEntry(entry_);
     c_mus_eta_ = true;
   }
@@ -6668,6 +10290,8 @@ std::vector<float>* const & cfa_base::mus_eta() const{
 
 std::vector<float>* const & cfa_base::mus_gen_et() const{
   if(!c_mus_gen_et_ && b_mus_gen_et_){
+    b_mus_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_et", &mus_gen_et_, &b_mus_gen_et_);
     b_mus_gen_et_->GetEntry(entry_);
     c_mus_gen_et_ = true;
   }
@@ -6676,6 +10300,8 @@ std::vector<float>* const & cfa_base::mus_gen_et() const{
 
 std::vector<float>* const & cfa_base::mus_gen_eta() const{
   if(!c_mus_gen_eta_ && b_mus_gen_eta_){
+    b_mus_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_eta", &mus_gen_eta_, &b_mus_gen_eta_);
     b_mus_gen_eta_->GetEntry(entry_);
     c_mus_gen_eta_ = true;
   }
@@ -6684,6 +10310,8 @@ std::vector<float>* const & cfa_base::mus_gen_eta() const{
 
 std::vector<float>* const & cfa_base::mus_gen_id() const{
   if(!c_mus_gen_id_ && b_mus_gen_id_){
+    b_mus_gen_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_id", &mus_gen_id_, &b_mus_gen_id_);
     b_mus_gen_id_->GetEntry(entry_);
     c_mus_gen_id_ = true;
   }
@@ -6692,6 +10320,8 @@ std::vector<float>* const & cfa_base::mus_gen_id() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_et() const{
   if(!c_mus_gen_mother_et_ && b_mus_gen_mother_et_){
+    b_mus_gen_mother_et_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_et", &mus_gen_mother_et_, &b_mus_gen_mother_et_);
     b_mus_gen_mother_et_->GetEntry(entry_);
     c_mus_gen_mother_et_ = true;
   }
@@ -6700,6 +10330,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_et() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_eta() const{
   if(!c_mus_gen_mother_eta_ && b_mus_gen_mother_eta_){
+    b_mus_gen_mother_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_eta", &mus_gen_mother_eta_, &b_mus_gen_mother_eta_);
     b_mus_gen_mother_eta_->GetEntry(entry_);
     c_mus_gen_mother_eta_ = true;
   }
@@ -6708,6 +10340,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_eta() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_id() const{
   if(!c_mus_gen_mother_id_ && b_mus_gen_mother_id_){
+    b_mus_gen_mother_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_id", &mus_gen_mother_id_, &b_mus_gen_mother_id_);
     b_mus_gen_mother_id_->GetEntry(entry_);
     c_mus_gen_mother_id_ = true;
   }
@@ -6716,6 +10350,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_id() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_phi() const{
   if(!c_mus_gen_mother_phi_ && b_mus_gen_mother_phi_){
+    b_mus_gen_mother_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_phi", &mus_gen_mother_phi_, &b_mus_gen_mother_phi_);
     b_mus_gen_mother_phi_->GetEntry(entry_);
     c_mus_gen_mother_phi_ = true;
   }
@@ -6724,6 +10360,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_phi() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_pt() const{
   if(!c_mus_gen_mother_pt_ && b_mus_gen_mother_pt_){
+    b_mus_gen_mother_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_pt", &mus_gen_mother_pt_, &b_mus_gen_mother_pt_);
     b_mus_gen_mother_pt_->GetEntry(entry_);
     c_mus_gen_mother_pt_ = true;
   }
@@ -6732,6 +10370,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_pt() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_px() const{
   if(!c_mus_gen_mother_px_ && b_mus_gen_mother_px_){
+    b_mus_gen_mother_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_px", &mus_gen_mother_px_, &b_mus_gen_mother_px_);
     b_mus_gen_mother_px_->GetEntry(entry_);
     c_mus_gen_mother_px_ = true;
   }
@@ -6740,6 +10380,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_px() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_py() const{
   if(!c_mus_gen_mother_py_ && b_mus_gen_mother_py_){
+    b_mus_gen_mother_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_py", &mus_gen_mother_py_, &b_mus_gen_mother_py_);
     b_mus_gen_mother_py_->GetEntry(entry_);
     c_mus_gen_mother_py_ = true;
   }
@@ -6748,6 +10390,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_py() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_pz() const{
   if(!c_mus_gen_mother_pz_ && b_mus_gen_mother_pz_){
+    b_mus_gen_mother_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_pz", &mus_gen_mother_pz_, &b_mus_gen_mother_pz_);
     b_mus_gen_mother_pz_->GetEntry(entry_);
     c_mus_gen_mother_pz_ = true;
   }
@@ -6756,6 +10400,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_pz() const{
 
 std::vector<float>* const & cfa_base::mus_gen_mother_theta() const{
   if(!c_mus_gen_mother_theta_ && b_mus_gen_mother_theta_){
+    b_mus_gen_mother_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_mother_theta", &mus_gen_mother_theta_, &b_mus_gen_mother_theta_);
     b_mus_gen_mother_theta_->GetEntry(entry_);
     c_mus_gen_mother_theta_ = true;
   }
@@ -6764,6 +10410,8 @@ std::vector<float>* const & cfa_base::mus_gen_mother_theta() const{
 
 std::vector<float>* const & cfa_base::mus_gen_phi() const{
   if(!c_mus_gen_phi_ && b_mus_gen_phi_){
+    b_mus_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_phi", &mus_gen_phi_, &b_mus_gen_phi_);
     b_mus_gen_phi_->GetEntry(entry_);
     c_mus_gen_phi_ = true;
   }
@@ -6772,6 +10420,8 @@ std::vector<float>* const & cfa_base::mus_gen_phi() const{
 
 std::vector<float>* const & cfa_base::mus_gen_pt() const{
   if(!c_mus_gen_pt_ && b_mus_gen_pt_){
+    b_mus_gen_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_pt", &mus_gen_pt_, &b_mus_gen_pt_);
     b_mus_gen_pt_->GetEntry(entry_);
     c_mus_gen_pt_ = true;
   }
@@ -6780,6 +10430,8 @@ std::vector<float>* const & cfa_base::mus_gen_pt() const{
 
 std::vector<float>* const & cfa_base::mus_gen_px() const{
   if(!c_mus_gen_px_ && b_mus_gen_px_){
+    b_mus_gen_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_px", &mus_gen_px_, &b_mus_gen_px_);
     b_mus_gen_px_->GetEntry(entry_);
     c_mus_gen_px_ = true;
   }
@@ -6788,6 +10440,8 @@ std::vector<float>* const & cfa_base::mus_gen_px() const{
 
 std::vector<float>* const & cfa_base::mus_gen_py() const{
   if(!c_mus_gen_py_ && b_mus_gen_py_){
+    b_mus_gen_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_py", &mus_gen_py_, &b_mus_gen_py_);
     b_mus_gen_py_->GetEntry(entry_);
     c_mus_gen_py_ = true;
   }
@@ -6796,6 +10450,8 @@ std::vector<float>* const & cfa_base::mus_gen_py() const{
 
 std::vector<float>* const & cfa_base::mus_gen_pz() const{
   if(!c_mus_gen_pz_ && b_mus_gen_pz_){
+    b_mus_gen_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_pz", &mus_gen_pz_, &b_mus_gen_pz_);
     b_mus_gen_pz_->GetEntry(entry_);
     c_mus_gen_pz_ = true;
   }
@@ -6804,6 +10460,8 @@ std::vector<float>* const & cfa_base::mus_gen_pz() const{
 
 std::vector<float>* const & cfa_base::mus_gen_theta() const{
   if(!c_mus_gen_theta_ && b_mus_gen_theta_){
+    b_mus_gen_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_gen_theta", &mus_gen_theta_, &b_mus_gen_theta_);
     b_mus_gen_theta_->GetEntry(entry_);
     c_mus_gen_theta_ = true;
   }
@@ -6812,6 +10470,8 @@ std::vector<float>* const & cfa_base::mus_gen_theta() const{
 
 std::vector<float>* const & cfa_base::mus_hcalIso() const{
   if(!c_mus_hcalIso_ && b_mus_hcalIso_){
+    b_mus_hcalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_hcalIso", &mus_hcalIso_, &b_mus_hcalIso_);
     b_mus_hcalIso_->GetEntry(entry_);
     c_mus_hcalIso_ = true;
   }
@@ -6820,6 +10480,8 @@ std::vector<float>* const & cfa_base::mus_hcalIso() const{
 
 std::vector<float>* const & cfa_base::mus_hcalvetoDep() const{
   if(!c_mus_hcalvetoDep_ && b_mus_hcalvetoDep_){
+    b_mus_hcalvetoDep_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_hcalvetoDep", &mus_hcalvetoDep_, &b_mus_hcalvetoDep_);
     b_mus_hcalvetoDep_->GetEntry(entry_);
     c_mus_hcalvetoDep_ = true;
   }
@@ -6828,6 +10490,8 @@ std::vector<float>* const & cfa_base::mus_hcalvetoDep() const{
 
 std::vector<float>* const & cfa_base::mus_id_All() const{
   if(!c_mus_id_All_ && b_mus_id_All_){
+    b_mus_id_All_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_All", &mus_id_All_, &b_mus_id_All_);
     b_mus_id_All_->GetEntry(entry_);
     c_mus_id_All_ = true;
   }
@@ -6836,6 +10500,8 @@ std::vector<float>* const & cfa_base::mus_id_All() const{
 
 std::vector<float>* const & cfa_base::mus_id_AllArbitrated() const{
   if(!c_mus_id_AllArbitrated_ && b_mus_id_AllArbitrated_){
+    b_mus_id_AllArbitrated_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_AllArbitrated", &mus_id_AllArbitrated_, &b_mus_id_AllArbitrated_);
     b_mus_id_AllArbitrated_->GetEntry(entry_);
     c_mus_id_AllArbitrated_ = true;
   }
@@ -6844,6 +10510,8 @@ std::vector<float>* const & cfa_base::mus_id_AllArbitrated() const{
 
 std::vector<float>* const & cfa_base::mus_id_AllGlobalMuons() const{
   if(!c_mus_id_AllGlobalMuons_ && b_mus_id_AllGlobalMuons_){
+    b_mus_id_AllGlobalMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_AllGlobalMuons", &mus_id_AllGlobalMuons_, &b_mus_id_AllGlobalMuons_);
     b_mus_id_AllGlobalMuons_->GetEntry(entry_);
     c_mus_id_AllGlobalMuons_ = true;
   }
@@ -6852,6 +10520,8 @@ std::vector<float>* const & cfa_base::mus_id_AllGlobalMuons() const{
 
 std::vector<float>* const & cfa_base::mus_id_AllStandAloneMuons() const{
   if(!c_mus_id_AllStandAloneMuons_ && b_mus_id_AllStandAloneMuons_){
+    b_mus_id_AllStandAloneMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_AllStandAloneMuons", &mus_id_AllStandAloneMuons_, &b_mus_id_AllStandAloneMuons_);
     b_mus_id_AllStandAloneMuons_->GetEntry(entry_);
     c_mus_id_AllStandAloneMuons_ = true;
   }
@@ -6860,6 +10530,8 @@ std::vector<float>* const & cfa_base::mus_id_AllStandAloneMuons() const{
 
 std::vector<float>* const & cfa_base::mus_id_AllTrackerMuons() const{
   if(!c_mus_id_AllTrackerMuons_ && b_mus_id_AllTrackerMuons_){
+    b_mus_id_AllTrackerMuons_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_AllTrackerMuons", &mus_id_AllTrackerMuons_, &b_mus_id_AllTrackerMuons_);
     b_mus_id_AllTrackerMuons_->GetEntry(entry_);
     c_mus_id_AllTrackerMuons_ = true;
   }
@@ -6868,6 +10540,8 @@ std::vector<float>* const & cfa_base::mus_id_AllTrackerMuons() const{
 
 std::vector<float>* const & cfa_base::mus_id_GlobalMuonPromptTight() const{
   if(!c_mus_id_GlobalMuonPromptTight_ && b_mus_id_GlobalMuonPromptTight_){
+    b_mus_id_GlobalMuonPromptTight_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_GlobalMuonPromptTight", &mus_id_GlobalMuonPromptTight_, &b_mus_id_GlobalMuonPromptTight_);
     b_mus_id_GlobalMuonPromptTight_->GetEntry(entry_);
     c_mus_id_GlobalMuonPromptTight_ = true;
   }
@@ -6876,6 +10550,8 @@ std::vector<float>* const & cfa_base::mus_id_GlobalMuonPromptTight() const{
 
 std::vector<float>* const & cfa_base::mus_id_TM2DCompatibilityLoose() const{
   if(!c_mus_id_TM2DCompatibilityLoose_ && b_mus_id_TM2DCompatibilityLoose_){
+    b_mus_id_TM2DCompatibilityLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TM2DCompatibilityLoose", &mus_id_TM2DCompatibilityLoose_, &b_mus_id_TM2DCompatibilityLoose_);
     b_mus_id_TM2DCompatibilityLoose_->GetEntry(entry_);
     c_mus_id_TM2DCompatibilityLoose_ = true;
   }
@@ -6884,6 +10560,8 @@ std::vector<float>* const & cfa_base::mus_id_TM2DCompatibilityLoose() const{
 
 std::vector<float>* const & cfa_base::mus_id_TM2DCompatibilityTight() const{
   if(!c_mus_id_TM2DCompatibilityTight_ && b_mus_id_TM2DCompatibilityTight_){
+    b_mus_id_TM2DCompatibilityTight_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TM2DCompatibilityTight", &mus_id_TM2DCompatibilityTight_, &b_mus_id_TM2DCompatibilityTight_);
     b_mus_id_TM2DCompatibilityTight_->GetEntry(entry_);
     c_mus_id_TM2DCompatibilityTight_ = true;
   }
@@ -6892,6 +10570,8 @@ std::vector<float>* const & cfa_base::mus_id_TM2DCompatibilityTight() const{
 
 std::vector<float>* const & cfa_base::mus_id_TMLastStationLoose() const{
   if(!c_mus_id_TMLastStationLoose_ && b_mus_id_TMLastStationLoose_){
+    b_mus_id_TMLastStationLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMLastStationLoose", &mus_id_TMLastStationLoose_, &b_mus_id_TMLastStationLoose_);
     b_mus_id_TMLastStationLoose_->GetEntry(entry_);
     c_mus_id_TMLastStationLoose_ = true;
   }
@@ -6900,6 +10580,8 @@ std::vector<float>* const & cfa_base::mus_id_TMLastStationLoose() const{
 
 std::vector<float>* const & cfa_base::mus_id_TMLastStationOptimizedLowPtLoose() const{
   if(!c_mus_id_TMLastStationOptimizedLowPtLoose_ && b_mus_id_TMLastStationOptimizedLowPtLoose_){
+    b_mus_id_TMLastStationOptimizedLowPtLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMLastStationOptimizedLowPtLoose", &mus_id_TMLastStationOptimizedLowPtLoose_, &b_mus_id_TMLastStationOptimizedLowPtLoose_);
     b_mus_id_TMLastStationOptimizedLowPtLoose_->GetEntry(entry_);
     c_mus_id_TMLastStationOptimizedLowPtLoose_ = true;
   }
@@ -6908,6 +10590,8 @@ std::vector<float>* const & cfa_base::mus_id_TMLastStationOptimizedLowPtLoose() 
 
 std::vector<float>* const & cfa_base::mus_id_TMLastStationOptimizedLowPtTight() const{
   if(!c_mus_id_TMLastStationOptimizedLowPtTight_ && b_mus_id_TMLastStationOptimizedLowPtTight_){
+    b_mus_id_TMLastStationOptimizedLowPtTight_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMLastStationOptimizedLowPtTight", &mus_id_TMLastStationOptimizedLowPtTight_, &b_mus_id_TMLastStationOptimizedLowPtTight_);
     b_mus_id_TMLastStationOptimizedLowPtTight_->GetEntry(entry_);
     c_mus_id_TMLastStationOptimizedLowPtTight_ = true;
   }
@@ -6916,6 +10600,8 @@ std::vector<float>* const & cfa_base::mus_id_TMLastStationOptimizedLowPtTight() 
 
 std::vector<float>* const & cfa_base::mus_id_TMLastStationTight() const{
   if(!c_mus_id_TMLastStationTight_ && b_mus_id_TMLastStationTight_){
+    b_mus_id_TMLastStationTight_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMLastStationTight", &mus_id_TMLastStationTight_, &b_mus_id_TMLastStationTight_);
     b_mus_id_TMLastStationTight_->GetEntry(entry_);
     c_mus_id_TMLastStationTight_ = true;
   }
@@ -6924,6 +10610,8 @@ std::vector<float>* const & cfa_base::mus_id_TMLastStationTight() const{
 
 std::vector<float>* const & cfa_base::mus_id_TMOneStationLoose() const{
   if(!c_mus_id_TMOneStationLoose_ && b_mus_id_TMOneStationLoose_){
+    b_mus_id_TMOneStationLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMOneStationLoose", &mus_id_TMOneStationLoose_, &b_mus_id_TMOneStationLoose_);
     b_mus_id_TMOneStationLoose_->GetEntry(entry_);
     c_mus_id_TMOneStationLoose_ = true;
   }
@@ -6932,6 +10620,8 @@ std::vector<float>* const & cfa_base::mus_id_TMOneStationLoose() const{
 
 std::vector<float>* const & cfa_base::mus_id_TMOneStationTight() const{
   if(!c_mus_id_TMOneStationTight_ && b_mus_id_TMOneStationTight_){
+    b_mus_id_TMOneStationTight_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TMOneStationTight", &mus_id_TMOneStationTight_, &b_mus_id_TMOneStationTight_);
     b_mus_id_TMOneStationTight_->GetEntry(entry_);
     c_mus_id_TMOneStationTight_ = true;
   }
@@ -6940,6 +10630,8 @@ std::vector<float>* const & cfa_base::mus_id_TMOneStationTight() const{
 
 std::vector<float>* const & cfa_base::mus_id_TrackerMuonArbitrated() const{
   if(!c_mus_id_TrackerMuonArbitrated_ && b_mus_id_TrackerMuonArbitrated_){
+    b_mus_id_TrackerMuonArbitrated_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_id_TrackerMuonArbitrated", &mus_id_TrackerMuonArbitrated_, &b_mus_id_TrackerMuonArbitrated_);
     b_mus_id_TrackerMuonArbitrated_->GetEntry(entry_);
     c_mus_id_TrackerMuonArbitrated_ = true;
   }
@@ -6948,6 +10640,8 @@ std::vector<float>* const & cfa_base::mus_id_TrackerMuonArbitrated() const{
 
 std::vector<float>* const & cfa_base::mus_isCaloMuon() const{
   if(!c_mus_isCaloMuon_ && b_mus_isCaloMuon_){
+    b_mus_isCaloMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isCaloMuon", &mus_isCaloMuon_, &b_mus_isCaloMuon_);
     b_mus_isCaloMuon_->GetEntry(entry_);
     c_mus_isCaloMuon_ = true;
   }
@@ -6956,6 +10650,8 @@ std::vector<float>* const & cfa_base::mus_isCaloMuon() const{
 
 std::vector<float>* const & cfa_base::mus_isConvertedPhoton() const{
   if(!c_mus_isConvertedPhoton_ && b_mus_isConvertedPhoton_){
+    b_mus_isConvertedPhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isConvertedPhoton", &mus_isConvertedPhoton_, &b_mus_isConvertedPhoton_);
     b_mus_isConvertedPhoton_->GetEntry(entry_);
     c_mus_isConvertedPhoton_ = true;
   }
@@ -6964,6 +10660,8 @@ std::vector<float>* const & cfa_base::mus_isConvertedPhoton() const{
 
 std::vector<float>* const & cfa_base::mus_isElectron() const{
   if(!c_mus_isElectron_ && b_mus_isElectron_){
+    b_mus_isElectron_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isElectron", &mus_isElectron_, &b_mus_isElectron_);
     b_mus_isElectron_->GetEntry(entry_);
     c_mus_isElectron_ = true;
   }
@@ -6972,6 +10670,8 @@ std::vector<float>* const & cfa_base::mus_isElectron() const{
 
 std::vector<float>* const & cfa_base::mus_isGlobalMuon() const{
   if(!c_mus_isGlobalMuon_ && b_mus_isGlobalMuon_){
+    b_mus_isGlobalMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isGlobalMuon", &mus_isGlobalMuon_, &b_mus_isGlobalMuon_);
     b_mus_isGlobalMuon_->GetEntry(entry_);
     c_mus_isGlobalMuon_ = true;
   }
@@ -6980,6 +10680,8 @@ std::vector<float>* const & cfa_base::mus_isGlobalMuon() const{
 
 std::vector<float>* const & cfa_base::mus_isPFMuon() const{
   if(!c_mus_isPFMuon_ && b_mus_isPFMuon_){
+    b_mus_isPFMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isPFMuon", &mus_isPFMuon_, &b_mus_isPFMuon_);
     b_mus_isPFMuon_->GetEntry(entry_);
     c_mus_isPFMuon_ = true;
   }
@@ -6988,6 +10690,8 @@ std::vector<float>* const & cfa_base::mus_isPFMuon() const{
 
 std::vector<float>* const & cfa_base::mus_isPhoton() const{
   if(!c_mus_isPhoton_ && b_mus_isPhoton_){
+    b_mus_isPhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isPhoton", &mus_isPhoton_, &b_mus_isPhoton_);
     b_mus_isPhoton_->GetEntry(entry_);
     c_mus_isPhoton_ = true;
   }
@@ -6996,6 +10700,8 @@ std::vector<float>* const & cfa_base::mus_isPhoton() const{
 
 std::vector<float>* const & cfa_base::mus_isStandAloneMuon() const{
   if(!c_mus_isStandAloneMuon_ && b_mus_isStandAloneMuon_){
+    b_mus_isStandAloneMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isStandAloneMuon", &mus_isStandAloneMuon_, &b_mus_isStandAloneMuon_);
     b_mus_isStandAloneMuon_->GetEntry(entry_);
     c_mus_isStandAloneMuon_ = true;
   }
@@ -7004,6 +10710,8 @@ std::vector<float>* const & cfa_base::mus_isStandAloneMuon() const{
 
 std::vector<float>* const & cfa_base::mus_isTrackerMuon() const{
   if(!c_mus_isTrackerMuon_ && b_mus_isTrackerMuon_){
+    b_mus_isTrackerMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_isTrackerMuon", &mus_isTrackerMuon_, &b_mus_isTrackerMuon_);
     b_mus_isTrackerMuon_->GetEntry(entry_);
     c_mus_isTrackerMuon_ = true;
   }
@@ -7012,6 +10720,8 @@ std::vector<float>* const & cfa_base::mus_isTrackerMuon() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_emEt() const{
   if(!c_mus_iso03_emEt_ && b_mus_iso03_emEt_){
+    b_mus_iso03_emEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_emEt", &mus_iso03_emEt_, &b_mus_iso03_emEt_);
     b_mus_iso03_emEt_->GetEntry(entry_);
     c_mus_iso03_emEt_ = true;
   }
@@ -7020,6 +10730,8 @@ std::vector<float>* const & cfa_base::mus_iso03_emEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_emVetoEt() const{
   if(!c_mus_iso03_emVetoEt_ && b_mus_iso03_emVetoEt_){
+    b_mus_iso03_emVetoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_emVetoEt", &mus_iso03_emVetoEt_, &b_mus_iso03_emVetoEt_);
     b_mus_iso03_emVetoEt_->GetEntry(entry_);
     c_mus_iso03_emVetoEt_ = true;
   }
@@ -7028,6 +10740,8 @@ std::vector<float>* const & cfa_base::mus_iso03_emVetoEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_hadEt() const{
   if(!c_mus_iso03_hadEt_ && b_mus_iso03_hadEt_){
+    b_mus_iso03_hadEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_hadEt", &mus_iso03_hadEt_, &b_mus_iso03_hadEt_);
     b_mus_iso03_hadEt_->GetEntry(entry_);
     c_mus_iso03_hadEt_ = true;
   }
@@ -7036,6 +10750,8 @@ std::vector<float>* const & cfa_base::mus_iso03_hadEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_hadVetoEt() const{
   if(!c_mus_iso03_hadVetoEt_ && b_mus_iso03_hadVetoEt_){
+    b_mus_iso03_hadVetoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_hadVetoEt", &mus_iso03_hadVetoEt_, &b_mus_iso03_hadVetoEt_);
     b_mus_iso03_hadVetoEt_->GetEntry(entry_);
     c_mus_iso03_hadVetoEt_ = true;
   }
@@ -7044,6 +10760,8 @@ std::vector<float>* const & cfa_base::mus_iso03_hadVetoEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_hoEt() const{
   if(!c_mus_iso03_hoEt_ && b_mus_iso03_hoEt_){
+    b_mus_iso03_hoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_hoEt", &mus_iso03_hoEt_, &b_mus_iso03_hoEt_);
     b_mus_iso03_hoEt_->GetEntry(entry_);
     c_mus_iso03_hoEt_ = true;
   }
@@ -7052,6 +10770,8 @@ std::vector<float>* const & cfa_base::mus_iso03_hoEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_nTracks() const{
   if(!c_mus_iso03_nTracks_ && b_mus_iso03_nTracks_){
+    b_mus_iso03_nTracks_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_nTracks", &mus_iso03_nTracks_, &b_mus_iso03_nTracks_);
     b_mus_iso03_nTracks_->GetEntry(entry_);
     c_mus_iso03_nTracks_ = true;
   }
@@ -7060,6 +10780,8 @@ std::vector<float>* const & cfa_base::mus_iso03_nTracks() const{
 
 std::vector<float>* const & cfa_base::mus_iso03_sumPt() const{
   if(!c_mus_iso03_sumPt_ && b_mus_iso03_sumPt_){
+    b_mus_iso03_sumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso03_sumPt", &mus_iso03_sumPt_, &b_mus_iso03_sumPt_);
     b_mus_iso03_sumPt_->GetEntry(entry_);
     c_mus_iso03_sumPt_ = true;
   }
@@ -7068,6 +10790,8 @@ std::vector<float>* const & cfa_base::mus_iso03_sumPt() const{
 
 std::vector<float>* const & cfa_base::mus_iso05_emEt() const{
   if(!c_mus_iso05_emEt_ && b_mus_iso05_emEt_){
+    b_mus_iso05_emEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso05_emEt", &mus_iso05_emEt_, &b_mus_iso05_emEt_);
     b_mus_iso05_emEt_->GetEntry(entry_);
     c_mus_iso05_emEt_ = true;
   }
@@ -7076,6 +10800,8 @@ std::vector<float>* const & cfa_base::mus_iso05_emEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso05_hadEt() const{
   if(!c_mus_iso05_hadEt_ && b_mus_iso05_hadEt_){
+    b_mus_iso05_hadEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso05_hadEt", &mus_iso05_hadEt_, &b_mus_iso05_hadEt_);
     b_mus_iso05_hadEt_->GetEntry(entry_);
     c_mus_iso05_hadEt_ = true;
   }
@@ -7084,6 +10810,8 @@ std::vector<float>* const & cfa_base::mus_iso05_hadEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso05_hoEt() const{
   if(!c_mus_iso05_hoEt_ && b_mus_iso05_hoEt_){
+    b_mus_iso05_hoEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso05_hoEt", &mus_iso05_hoEt_, &b_mus_iso05_hoEt_);
     b_mus_iso05_hoEt_->GetEntry(entry_);
     c_mus_iso05_hoEt_ = true;
   }
@@ -7092,6 +10820,8 @@ std::vector<float>* const & cfa_base::mus_iso05_hoEt() const{
 
 std::vector<float>* const & cfa_base::mus_iso05_nTracks() const{
   if(!c_mus_iso05_nTracks_ && b_mus_iso05_nTracks_){
+    b_mus_iso05_nTracks_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso05_nTracks", &mus_iso05_nTracks_, &b_mus_iso05_nTracks_);
     b_mus_iso05_nTracks_->GetEntry(entry_);
     c_mus_iso05_nTracks_ = true;
   }
@@ -7100,6 +10830,8 @@ std::vector<float>* const & cfa_base::mus_iso05_nTracks() const{
 
 std::vector<float>* const & cfa_base::mus_iso05_sumPt() const{
   if(!c_mus_iso05_sumPt_ && b_mus_iso05_sumPt_){
+    b_mus_iso05_sumPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_iso05_sumPt", &mus_iso05_sumPt_, &b_mus_iso05_sumPt_);
     b_mus_iso05_sumPt_->GetEntry(entry_);
     c_mus_iso05_sumPt_ = true;
   }
@@ -7108,6 +10840,8 @@ std::vector<float>* const & cfa_base::mus_iso05_sumPt() const{
 
 std::vector<float>* const & cfa_base::mus_num_matches() const{
   if(!c_mus_num_matches_ && b_mus_num_matches_){
+    b_mus_num_matches_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_num_matches", &mus_num_matches_, &b_mus_num_matches_);
     b_mus_num_matches_->GetEntry(entry_);
     c_mus_num_matches_ = true;
   }
@@ -7116,6 +10850,8 @@ std::vector<float>* const & cfa_base::mus_num_matches() const{
 
 std::vector<float>* const & cfa_base::mus_numberOfMatchedStations() const{
   if(!c_mus_numberOfMatchedStations_ && b_mus_numberOfMatchedStations_){
+    b_mus_numberOfMatchedStations_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_numberOfMatchedStations", &mus_numberOfMatchedStations_, &b_mus_numberOfMatchedStations_);
     b_mus_numberOfMatchedStations_->GetEntry(entry_);
     c_mus_numberOfMatchedStations_ = true;
   }
@@ -7124,6 +10860,8 @@ std::vector<float>* const & cfa_base::mus_numberOfMatchedStations() const{
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumChargedHadronPt() const{
   if(!c_mus_pfIsolationR03_sumChargedHadronPt_ && b_mus_pfIsolationR03_sumChargedHadronPt_){
+    b_mus_pfIsolationR03_sumChargedHadronPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumChargedHadronPt", &mus_pfIsolationR03_sumChargedHadronPt_, &b_mus_pfIsolationR03_sumChargedHadronPt_);
     b_mus_pfIsolationR03_sumChargedHadronPt_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumChargedHadronPt_ = true;
   }
@@ -7132,6 +10870,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumChargedHadronPt() co
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumChargedParticlePt() const{
   if(!c_mus_pfIsolationR03_sumChargedParticlePt_ && b_mus_pfIsolationR03_sumChargedParticlePt_){
+    b_mus_pfIsolationR03_sumChargedParticlePt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumChargedParticlePt", &mus_pfIsolationR03_sumChargedParticlePt_, &b_mus_pfIsolationR03_sumChargedParticlePt_);
     b_mus_pfIsolationR03_sumChargedParticlePt_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumChargedParticlePt_ = true;
   }
@@ -7140,6 +10880,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumChargedParticlePt() 
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumNeutralHadronEt() const{
   if(!c_mus_pfIsolationR03_sumNeutralHadronEt_ && b_mus_pfIsolationR03_sumNeutralHadronEt_){
+    b_mus_pfIsolationR03_sumNeutralHadronEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumNeutralHadronEt", &mus_pfIsolationR03_sumNeutralHadronEt_, &b_mus_pfIsolationR03_sumNeutralHadronEt_);
     b_mus_pfIsolationR03_sumNeutralHadronEt_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumNeutralHadronEt_ = true;
   }
@@ -7148,6 +10890,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumNeutralHadronEt() co
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumNeutralHadronEtHighThreshold() const{
   if(!c_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ && b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_){
+    b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumNeutralHadronEtHighThreshold", &mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_, &b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_);
     b_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumNeutralHadronEtHighThreshold_ = true;
   }
@@ -7156,6 +10900,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumNeutralHadronEtHighT
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPUPt() const{
   if(!c_mus_pfIsolationR03_sumPUPt_ && b_mus_pfIsolationR03_sumPUPt_){
+    b_mus_pfIsolationR03_sumPUPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumPUPt", &mus_pfIsolationR03_sumPUPt_, &b_mus_pfIsolationR03_sumPUPt_);
     b_mus_pfIsolationR03_sumPUPt_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumPUPt_ = true;
   }
@@ -7164,6 +10910,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPUPt() const{
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPhotonEt() const{
   if(!c_mus_pfIsolationR03_sumPhotonEt_ && b_mus_pfIsolationR03_sumPhotonEt_){
+    b_mus_pfIsolationR03_sumPhotonEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumPhotonEt", &mus_pfIsolationR03_sumPhotonEt_, &b_mus_pfIsolationR03_sumPhotonEt_);
     b_mus_pfIsolationR03_sumPhotonEt_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumPhotonEt_ = true;
   }
@@ -7172,6 +10920,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPhotonEt() const{
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPhotonEtHighThreshold() const{
   if(!c_mus_pfIsolationR03_sumPhotonEtHighThreshold_ && b_mus_pfIsolationR03_sumPhotonEtHighThreshold_){
+    b_mus_pfIsolationR03_sumPhotonEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR03_sumPhotonEtHighThreshold", &mus_pfIsolationR03_sumPhotonEtHighThreshold_, &b_mus_pfIsolationR03_sumPhotonEtHighThreshold_);
     b_mus_pfIsolationR03_sumPhotonEtHighThreshold_->GetEntry(entry_);
     c_mus_pfIsolationR03_sumPhotonEtHighThreshold_ = true;
   }
@@ -7180,6 +10930,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR03_sumPhotonEtHighThreshol
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumChargedHadronPt() const{
   if(!c_mus_pfIsolationR04_sumChargedHadronPt_ && b_mus_pfIsolationR04_sumChargedHadronPt_){
+    b_mus_pfIsolationR04_sumChargedHadronPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumChargedHadronPt", &mus_pfIsolationR04_sumChargedHadronPt_, &b_mus_pfIsolationR04_sumChargedHadronPt_);
     b_mus_pfIsolationR04_sumChargedHadronPt_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumChargedHadronPt_ = true;
   }
@@ -7188,6 +10940,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumChargedHadronPt() co
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumChargedParticlePt() const{
   if(!c_mus_pfIsolationR04_sumChargedParticlePt_ && b_mus_pfIsolationR04_sumChargedParticlePt_){
+    b_mus_pfIsolationR04_sumChargedParticlePt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumChargedParticlePt", &mus_pfIsolationR04_sumChargedParticlePt_, &b_mus_pfIsolationR04_sumChargedParticlePt_);
     b_mus_pfIsolationR04_sumChargedParticlePt_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumChargedParticlePt_ = true;
   }
@@ -7196,6 +10950,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumChargedParticlePt() 
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumNeutralHadronEt() const{
   if(!c_mus_pfIsolationR04_sumNeutralHadronEt_ && b_mus_pfIsolationR04_sumNeutralHadronEt_){
+    b_mus_pfIsolationR04_sumNeutralHadronEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumNeutralHadronEt", &mus_pfIsolationR04_sumNeutralHadronEt_, &b_mus_pfIsolationR04_sumNeutralHadronEt_);
     b_mus_pfIsolationR04_sumNeutralHadronEt_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumNeutralHadronEt_ = true;
   }
@@ -7204,6 +10960,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumNeutralHadronEt() co
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumNeutralHadronEtHighThreshold() const{
   if(!c_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ && b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_){
+    b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumNeutralHadronEtHighThreshold", &mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_, &b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_);
     b_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumNeutralHadronEtHighThreshold_ = true;
   }
@@ -7212,6 +10970,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumNeutralHadronEtHighT
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPUPt() const{
   if(!c_mus_pfIsolationR04_sumPUPt_ && b_mus_pfIsolationR04_sumPUPt_){
+    b_mus_pfIsolationR04_sumPUPt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumPUPt", &mus_pfIsolationR04_sumPUPt_, &b_mus_pfIsolationR04_sumPUPt_);
     b_mus_pfIsolationR04_sumPUPt_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumPUPt_ = true;
   }
@@ -7220,6 +10980,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPUPt() const{
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPhotonEt() const{
   if(!c_mus_pfIsolationR04_sumPhotonEt_ && b_mus_pfIsolationR04_sumPhotonEt_){
+    b_mus_pfIsolationR04_sumPhotonEt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumPhotonEt", &mus_pfIsolationR04_sumPhotonEt_, &b_mus_pfIsolationR04_sumPhotonEt_);
     b_mus_pfIsolationR04_sumPhotonEt_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumPhotonEt_ = true;
   }
@@ -7228,6 +10990,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPhotonEt() const{
 
 std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPhotonEtHighThreshold() const{
   if(!c_mus_pfIsolationR04_sumPhotonEtHighThreshold_ && b_mus_pfIsolationR04_sumPhotonEtHighThreshold_){
+    b_mus_pfIsolationR04_sumPhotonEtHighThreshold_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pfIsolationR04_sumPhotonEtHighThreshold", &mus_pfIsolationR04_sumPhotonEtHighThreshold_, &b_mus_pfIsolationR04_sumPhotonEtHighThreshold_);
     b_mus_pfIsolationR04_sumPhotonEtHighThreshold_->GetEntry(entry_);
     c_mus_pfIsolationR04_sumPhotonEtHighThreshold_ = true;
   }
@@ -7236,6 +11000,8 @@ std::vector<float>* const & cfa_base::mus_pfIsolationR04_sumPhotonEtHighThreshol
 
 std::vector<float>* const & cfa_base::mus_phi() const{
   if(!c_mus_phi_ && b_mus_phi_){
+    b_mus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_phi", &mus_phi_, &b_mus_phi_);
     b_mus_phi_->GetEntry(entry_);
     c_mus_phi_ = true;
   }
@@ -7244,6 +11010,8 @@ std::vector<float>* const & cfa_base::mus_phi() const{
 
 std::vector<float>* const & cfa_base::mus_picky_ExpectedHitsInner() const{
   if(!c_mus_picky_ExpectedHitsInner_ && b_mus_picky_ExpectedHitsInner_){
+    b_mus_picky_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_ExpectedHitsInner", &mus_picky_ExpectedHitsInner_, &b_mus_picky_ExpectedHitsInner_);
     b_mus_picky_ExpectedHitsInner_->GetEntry(entry_);
     c_mus_picky_ExpectedHitsInner_ = true;
   }
@@ -7252,6 +11020,8 @@ std::vector<float>* const & cfa_base::mus_picky_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_base::mus_picky_ExpectedHitsOuter() const{
   if(!c_mus_picky_ExpectedHitsOuter_ && b_mus_picky_ExpectedHitsOuter_){
+    b_mus_picky_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_ExpectedHitsOuter", &mus_picky_ExpectedHitsOuter_, &b_mus_picky_ExpectedHitsOuter_);
     b_mus_picky_ExpectedHitsOuter_->GetEntry(entry_);
     c_mus_picky_ExpectedHitsOuter_ = true;
   }
@@ -7260,6 +11030,8 @@ std::vector<float>* const & cfa_base::mus_picky_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_base::mus_picky_LayersWithMeasurement() const{
   if(!c_mus_picky_LayersWithMeasurement_ && b_mus_picky_LayersWithMeasurement_){
+    b_mus_picky_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_LayersWithMeasurement", &mus_picky_LayersWithMeasurement_, &b_mus_picky_LayersWithMeasurement_);
     b_mus_picky_LayersWithMeasurement_->GetEntry(entry_);
     c_mus_picky_LayersWithMeasurement_ = true;
   }
@@ -7268,6 +11040,8 @@ std::vector<float>* const & cfa_base::mus_picky_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_picky_LayersWithoutMeasurement() const{
   if(!c_mus_picky_LayersWithoutMeasurement_ && b_mus_picky_LayersWithoutMeasurement_){
+    b_mus_picky_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_LayersWithoutMeasurement", &mus_picky_LayersWithoutMeasurement_, &b_mus_picky_LayersWithoutMeasurement_);
     b_mus_picky_LayersWithoutMeasurement_->GetEntry(entry_);
     c_mus_picky_LayersWithoutMeasurement_ = true;
   }
@@ -7276,6 +11050,8 @@ std::vector<float>* const & cfa_base::mus_picky_LayersWithoutMeasurement() const
 
 std::vector<float>* const & cfa_base::mus_picky_PixelLayersWithMeasurement() const{
   if(!c_mus_picky_PixelLayersWithMeasurement_ && b_mus_picky_PixelLayersWithMeasurement_){
+    b_mus_picky_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_PixelLayersWithMeasurement", &mus_picky_PixelLayersWithMeasurement_, &b_mus_picky_PixelLayersWithMeasurement_);
     b_mus_picky_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_mus_picky_PixelLayersWithMeasurement_ = true;
   }
@@ -7284,6 +11060,8 @@ std::vector<float>* const & cfa_base::mus_picky_PixelLayersWithMeasurement() con
 
 std::vector<float>* const & cfa_base::mus_picky_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_mus_picky_ValidStripLayersWithMonoAndStereoHit_ && b_mus_picky_ValidStripLayersWithMonoAndStereoHit_){
+    b_mus_picky_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_ValidStripLayersWithMonoAndStereoHit", &mus_picky_ValidStripLayersWithMonoAndStereoHit_, &b_mus_picky_ValidStripLayersWithMonoAndStereoHit_);
     b_mus_picky_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_mus_picky_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -7292,6 +11070,8 @@ std::vector<float>* const & cfa_base::mus_picky_ValidStripLayersWithMonoAndStere
 
 std::vector<float>* const & cfa_base::mus_picky_chg() const{
   if(!c_mus_picky_chg_ && b_mus_picky_chg_){
+    b_mus_picky_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_chg", &mus_picky_chg_, &b_mus_picky_chg_);
     b_mus_picky_chg_->GetEntry(entry_);
     c_mus_picky_chg_ = true;
   }
@@ -7300,6 +11080,8 @@ std::vector<float>* const & cfa_base::mus_picky_chg() const{
 
 std::vector<float>* const & cfa_base::mus_picky_chi2() const{
   if(!c_mus_picky_chi2_ && b_mus_picky_chi2_){
+    b_mus_picky_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_chi2", &mus_picky_chi2_, &b_mus_picky_chi2_);
     b_mus_picky_chi2_->GetEntry(entry_);
     c_mus_picky_chi2_ = true;
   }
@@ -7308,6 +11090,8 @@ std::vector<float>* const & cfa_base::mus_picky_chi2() const{
 
 std::vector<float>* const & cfa_base::mus_picky_d0dum() const{
   if(!c_mus_picky_d0dum_ && b_mus_picky_d0dum_){
+    b_mus_picky_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_d0dum", &mus_picky_d0dum_, &b_mus_picky_d0dum_);
     b_mus_picky_d0dum_->GetEntry(entry_);
     c_mus_picky_d0dum_ = true;
   }
@@ -7316,6 +11100,8 @@ std::vector<float>* const & cfa_base::mus_picky_d0dum() const{
 
 std::vector<float>* const & cfa_base::mus_picky_d0dumErr() const{
   if(!c_mus_picky_d0dumErr_ && b_mus_picky_d0dumErr_){
+    b_mus_picky_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_d0dumErr", &mus_picky_d0dumErr_, &b_mus_picky_d0dumErr_);
     b_mus_picky_d0dumErr_->GetEntry(entry_);
     c_mus_picky_d0dumErr_ = true;
   }
@@ -7324,6 +11110,8 @@ std::vector<float>* const & cfa_base::mus_picky_d0dumErr() const{
 
 std::vector<float>* const & cfa_base::mus_picky_dz() const{
   if(!c_mus_picky_dz_ && b_mus_picky_dz_){
+    b_mus_picky_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_dz", &mus_picky_dz_, &b_mus_picky_dz_);
     b_mus_picky_dz_->GetEntry(entry_);
     c_mus_picky_dz_ = true;
   }
@@ -7332,6 +11120,8 @@ std::vector<float>* const & cfa_base::mus_picky_dz() const{
 
 std::vector<float>* const & cfa_base::mus_picky_dzErr() const{
   if(!c_mus_picky_dzErr_ && b_mus_picky_dzErr_){
+    b_mus_picky_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_dzErr", &mus_picky_dzErr_, &b_mus_picky_dzErr_);
     b_mus_picky_dzErr_->GetEntry(entry_);
     c_mus_picky_dzErr_ = true;
   }
@@ -7340,6 +11130,8 @@ std::vector<float>* const & cfa_base::mus_picky_dzErr() const{
 
 std::vector<float>* const & cfa_base::mus_picky_eta() const{
   if(!c_mus_picky_eta_ && b_mus_picky_eta_){
+    b_mus_picky_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_eta", &mus_picky_eta_, &b_mus_picky_eta_);
     b_mus_picky_eta_->GetEntry(entry_);
     c_mus_picky_eta_ = true;
   }
@@ -7348,6 +11140,8 @@ std::vector<float>* const & cfa_base::mus_picky_eta() const{
 
 std::vector<float>* const & cfa_base::mus_picky_etaErr() const{
   if(!c_mus_picky_etaErr_ && b_mus_picky_etaErr_){
+    b_mus_picky_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_etaErr", &mus_picky_etaErr_, &b_mus_picky_etaErr_);
     b_mus_picky_etaErr_->GetEntry(entry_);
     c_mus_picky_etaErr_ = true;
   }
@@ -7356,6 +11150,8 @@ std::vector<float>* const & cfa_base::mus_picky_etaErr() const{
 
 std::vector<float>* const & cfa_base::mus_picky_id() const{
   if(!c_mus_picky_id_ && b_mus_picky_id_){
+    b_mus_picky_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_id", &mus_picky_id_, &b_mus_picky_id_);
     b_mus_picky_id_->GetEntry(entry_);
     c_mus_picky_id_ = true;
   }
@@ -7364,6 +11160,8 @@ std::vector<float>* const & cfa_base::mus_picky_id() const{
 
 std::vector<float>* const & cfa_base::mus_picky_ndof() const{
   if(!c_mus_picky_ndof_ && b_mus_picky_ndof_){
+    b_mus_picky_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_ndof", &mus_picky_ndof_, &b_mus_picky_ndof_);
     b_mus_picky_ndof_->GetEntry(entry_);
     c_mus_picky_ndof_ = true;
   }
@@ -7372,6 +11170,8 @@ std::vector<float>* const & cfa_base::mus_picky_ndof() const{
 
 std::vector<float>* const & cfa_base::mus_picky_numlosthits() const{
   if(!c_mus_picky_numlosthits_ && b_mus_picky_numlosthits_){
+    b_mus_picky_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_numlosthits", &mus_picky_numlosthits_, &b_mus_picky_numlosthits_);
     b_mus_picky_numlosthits_->GetEntry(entry_);
     c_mus_picky_numlosthits_ = true;
   }
@@ -7380,6 +11180,8 @@ std::vector<float>* const & cfa_base::mus_picky_numlosthits() const{
 
 std::vector<float>* const & cfa_base::mus_picky_numvalPixelhits() const{
   if(!c_mus_picky_numvalPixelhits_ && b_mus_picky_numvalPixelhits_){
+    b_mus_picky_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_numvalPixelhits", &mus_picky_numvalPixelhits_, &b_mus_picky_numvalPixelhits_);
     b_mus_picky_numvalPixelhits_->GetEntry(entry_);
     c_mus_picky_numvalPixelhits_ = true;
   }
@@ -7388,6 +11190,8 @@ std::vector<float>* const & cfa_base::mus_picky_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_base::mus_picky_numvalhits() const{
   if(!c_mus_picky_numvalhits_ && b_mus_picky_numvalhits_){
+    b_mus_picky_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_numvalhits", &mus_picky_numvalhits_, &b_mus_picky_numvalhits_);
     b_mus_picky_numvalhits_->GetEntry(entry_);
     c_mus_picky_numvalhits_ = true;
   }
@@ -7396,6 +11200,8 @@ std::vector<float>* const & cfa_base::mus_picky_numvalhits() const{
 
 std::vector<float>* const & cfa_base::mus_picky_phi() const{
   if(!c_mus_picky_phi_ && b_mus_picky_phi_){
+    b_mus_picky_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_phi", &mus_picky_phi_, &b_mus_picky_phi_);
     b_mus_picky_phi_->GetEntry(entry_);
     c_mus_picky_phi_ = true;
   }
@@ -7404,6 +11210,8 @@ std::vector<float>* const & cfa_base::mus_picky_phi() const{
 
 std::vector<float>* const & cfa_base::mus_picky_phiErr() const{
   if(!c_mus_picky_phiErr_ && b_mus_picky_phiErr_){
+    b_mus_picky_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_phiErr", &mus_picky_phiErr_, &b_mus_picky_phiErr_);
     b_mus_picky_phiErr_->GetEntry(entry_);
     c_mus_picky_phiErr_ = true;
   }
@@ -7412,6 +11220,8 @@ std::vector<float>* const & cfa_base::mus_picky_phiErr() const{
 
 std::vector<float>* const & cfa_base::mus_picky_pt() const{
   if(!c_mus_picky_pt_ && b_mus_picky_pt_){
+    b_mus_picky_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_pt", &mus_picky_pt_, &b_mus_picky_pt_);
     b_mus_picky_pt_->GetEntry(entry_);
     c_mus_picky_pt_ = true;
   }
@@ -7420,6 +11230,8 @@ std::vector<float>* const & cfa_base::mus_picky_pt() const{
 
 std::vector<float>* const & cfa_base::mus_picky_ptErr() const{
   if(!c_mus_picky_ptErr_ && b_mus_picky_ptErr_){
+    b_mus_picky_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_ptErr", &mus_picky_ptErr_, &b_mus_picky_ptErr_);
     b_mus_picky_ptErr_->GetEntry(entry_);
     c_mus_picky_ptErr_ = true;
   }
@@ -7428,6 +11240,8 @@ std::vector<float>* const & cfa_base::mus_picky_ptErr() const{
 
 std::vector<float>* const & cfa_base::mus_picky_px() const{
   if(!c_mus_picky_px_ && b_mus_picky_px_){
+    b_mus_picky_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_px", &mus_picky_px_, &b_mus_picky_px_);
     b_mus_picky_px_->GetEntry(entry_);
     c_mus_picky_px_ = true;
   }
@@ -7436,6 +11250,8 @@ std::vector<float>* const & cfa_base::mus_picky_px() const{
 
 std::vector<float>* const & cfa_base::mus_picky_py() const{
   if(!c_mus_picky_py_ && b_mus_picky_py_){
+    b_mus_picky_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_py", &mus_picky_py_, &b_mus_picky_py_);
     b_mus_picky_py_->GetEntry(entry_);
     c_mus_picky_py_ = true;
   }
@@ -7444,6 +11260,8 @@ std::vector<float>* const & cfa_base::mus_picky_py() const{
 
 std::vector<float>* const & cfa_base::mus_picky_pz() const{
   if(!c_mus_picky_pz_ && b_mus_picky_pz_){
+    b_mus_picky_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_pz", &mus_picky_pz_, &b_mus_picky_pz_);
     b_mus_picky_pz_->GetEntry(entry_);
     c_mus_picky_pz_ = true;
   }
@@ -7452,6 +11270,8 @@ std::vector<float>* const & cfa_base::mus_picky_pz() const{
 
 std::vector<float>* const & cfa_base::mus_picky_theta() const{
   if(!c_mus_picky_theta_ && b_mus_picky_theta_){
+    b_mus_picky_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_theta", &mus_picky_theta_, &b_mus_picky_theta_);
     b_mus_picky_theta_->GetEntry(entry_);
     c_mus_picky_theta_ = true;
   }
@@ -7460,6 +11280,8 @@ std::vector<float>* const & cfa_base::mus_picky_theta() const{
 
 std::vector<float>* const & cfa_base::mus_picky_vx() const{
   if(!c_mus_picky_vx_ && b_mus_picky_vx_){
+    b_mus_picky_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_vx", &mus_picky_vx_, &b_mus_picky_vx_);
     b_mus_picky_vx_->GetEntry(entry_);
     c_mus_picky_vx_ = true;
   }
@@ -7468,6 +11290,8 @@ std::vector<float>* const & cfa_base::mus_picky_vx() const{
 
 std::vector<float>* const & cfa_base::mus_picky_vy() const{
   if(!c_mus_picky_vy_ && b_mus_picky_vy_){
+    b_mus_picky_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_vy", &mus_picky_vy_, &b_mus_picky_vy_);
     b_mus_picky_vy_->GetEntry(entry_);
     c_mus_picky_vy_ = true;
   }
@@ -7476,6 +11300,8 @@ std::vector<float>* const & cfa_base::mus_picky_vy() const{
 
 std::vector<float>* const & cfa_base::mus_picky_vz() const{
   if(!c_mus_picky_vz_ && b_mus_picky_vz_){
+    b_mus_picky_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_picky_vz", &mus_picky_vz_, &b_mus_picky_vz_);
     b_mus_picky_vz_->GetEntry(entry_);
     c_mus_picky_vz_ = true;
   }
@@ -7484,6 +11310,8 @@ std::vector<float>* const & cfa_base::mus_picky_vz() const{
 
 std::vector<float>* const & cfa_base::mus_pt() const{
   if(!c_mus_pt_ && b_mus_pt_){
+    b_mus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pt", &mus_pt_, &b_mus_pt_);
     b_mus_pt_->GetEntry(entry_);
     c_mus_pt_ = true;
   }
@@ -7492,6 +11320,8 @@ std::vector<float>* const & cfa_base::mus_pt() const{
 
 std::vector<float>* const & cfa_base::mus_px() const{
   if(!c_mus_px_ && b_mus_px_){
+    b_mus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_px", &mus_px_, &b_mus_px_);
     b_mus_px_->GetEntry(entry_);
     c_mus_px_ = true;
   }
@@ -7500,6 +11330,8 @@ std::vector<float>* const & cfa_base::mus_px() const{
 
 std::vector<float>* const & cfa_base::mus_py() const{
   if(!c_mus_py_ && b_mus_py_){
+    b_mus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_py", &mus_py_, &b_mus_py_);
     b_mus_py_->GetEntry(entry_);
     c_mus_py_ = true;
   }
@@ -7508,6 +11340,8 @@ std::vector<float>* const & cfa_base::mus_py() const{
 
 std::vector<float>* const & cfa_base::mus_pz() const{
   if(!c_mus_pz_ && b_mus_pz_){
+    b_mus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_pz", &mus_pz_, &b_mus_pz_);
     b_mus_pz_->GetEntry(entry_);
     c_mus_pz_ = true;
   }
@@ -7516,6 +11350,8 @@ std::vector<float>* const & cfa_base::mus_pz() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_chg() const{
   if(!c_mus_stamu_chg_ && b_mus_stamu_chg_){
+    b_mus_stamu_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_chg", &mus_stamu_chg_, &b_mus_stamu_chg_);
     b_mus_stamu_chg_->GetEntry(entry_);
     c_mus_stamu_chg_ = true;
   }
@@ -7524,6 +11360,8 @@ std::vector<float>* const & cfa_base::mus_stamu_chg() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_chi2() const{
   if(!c_mus_stamu_chi2_ && b_mus_stamu_chi2_){
+    b_mus_stamu_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_chi2", &mus_stamu_chi2_, &b_mus_stamu_chi2_);
     b_mus_stamu_chi2_->GetEntry(entry_);
     c_mus_stamu_chi2_ = true;
   }
@@ -7532,6 +11370,8 @@ std::vector<float>* const & cfa_base::mus_stamu_chi2() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_d0dum() const{
   if(!c_mus_stamu_d0dum_ && b_mus_stamu_d0dum_){
+    b_mus_stamu_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_d0dum", &mus_stamu_d0dum_, &b_mus_stamu_d0dum_);
     b_mus_stamu_d0dum_->GetEntry(entry_);
     c_mus_stamu_d0dum_ = true;
   }
@@ -7540,6 +11380,8 @@ std::vector<float>* const & cfa_base::mus_stamu_d0dum() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_d0dumErr() const{
   if(!c_mus_stamu_d0dumErr_ && b_mus_stamu_d0dumErr_){
+    b_mus_stamu_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_d0dumErr", &mus_stamu_d0dumErr_, &b_mus_stamu_d0dumErr_);
     b_mus_stamu_d0dumErr_->GetEntry(entry_);
     c_mus_stamu_d0dumErr_ = true;
   }
@@ -7548,6 +11390,8 @@ std::vector<float>* const & cfa_base::mus_stamu_d0dumErr() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_dz() const{
   if(!c_mus_stamu_dz_ && b_mus_stamu_dz_){
+    b_mus_stamu_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_dz", &mus_stamu_dz_, &b_mus_stamu_dz_);
     b_mus_stamu_dz_->GetEntry(entry_);
     c_mus_stamu_dz_ = true;
   }
@@ -7556,6 +11400,8 @@ std::vector<float>* const & cfa_base::mus_stamu_dz() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_dzErr() const{
   if(!c_mus_stamu_dzErr_ && b_mus_stamu_dzErr_){
+    b_mus_stamu_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_dzErr", &mus_stamu_dzErr_, &b_mus_stamu_dzErr_);
     b_mus_stamu_dzErr_->GetEntry(entry_);
     c_mus_stamu_dzErr_ = true;
   }
@@ -7564,6 +11410,8 @@ std::vector<float>* const & cfa_base::mus_stamu_dzErr() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_eta() const{
   if(!c_mus_stamu_eta_ && b_mus_stamu_eta_){
+    b_mus_stamu_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_eta", &mus_stamu_eta_, &b_mus_stamu_eta_);
     b_mus_stamu_eta_->GetEntry(entry_);
     c_mus_stamu_eta_ = true;
   }
@@ -7572,6 +11420,8 @@ std::vector<float>* const & cfa_base::mus_stamu_eta() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_etaErr() const{
   if(!c_mus_stamu_etaErr_ && b_mus_stamu_etaErr_){
+    b_mus_stamu_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_etaErr", &mus_stamu_etaErr_, &b_mus_stamu_etaErr_);
     b_mus_stamu_etaErr_->GetEntry(entry_);
     c_mus_stamu_etaErr_ = true;
   }
@@ -7580,6 +11430,8 @@ std::vector<float>* const & cfa_base::mus_stamu_etaErr() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_ndof() const{
   if(!c_mus_stamu_ndof_ && b_mus_stamu_ndof_){
+    b_mus_stamu_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_ndof", &mus_stamu_ndof_, &b_mus_stamu_ndof_);
     b_mus_stamu_ndof_->GetEntry(entry_);
     c_mus_stamu_ndof_ = true;
   }
@@ -7588,6 +11440,8 @@ std::vector<float>* const & cfa_base::mus_stamu_ndof() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_numlosthits() const{
   if(!c_mus_stamu_numlosthits_ && b_mus_stamu_numlosthits_){
+    b_mus_stamu_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_numlosthits", &mus_stamu_numlosthits_, &b_mus_stamu_numlosthits_);
     b_mus_stamu_numlosthits_->GetEntry(entry_);
     c_mus_stamu_numlosthits_ = true;
   }
@@ -7596,6 +11450,8 @@ std::vector<float>* const & cfa_base::mus_stamu_numlosthits() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_numvalhits() const{
   if(!c_mus_stamu_numvalhits_ && b_mus_stamu_numvalhits_){
+    b_mus_stamu_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_numvalhits", &mus_stamu_numvalhits_, &b_mus_stamu_numvalhits_);
     b_mus_stamu_numvalhits_->GetEntry(entry_);
     c_mus_stamu_numvalhits_ = true;
   }
@@ -7604,6 +11460,8 @@ std::vector<float>* const & cfa_base::mus_stamu_numvalhits() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_phi() const{
   if(!c_mus_stamu_phi_ && b_mus_stamu_phi_){
+    b_mus_stamu_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_phi", &mus_stamu_phi_, &b_mus_stamu_phi_);
     b_mus_stamu_phi_->GetEntry(entry_);
     c_mus_stamu_phi_ = true;
   }
@@ -7612,6 +11470,8 @@ std::vector<float>* const & cfa_base::mus_stamu_phi() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_phiErr() const{
   if(!c_mus_stamu_phiErr_ && b_mus_stamu_phiErr_){
+    b_mus_stamu_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_phiErr", &mus_stamu_phiErr_, &b_mus_stamu_phiErr_);
     b_mus_stamu_phiErr_->GetEntry(entry_);
     c_mus_stamu_phiErr_ = true;
   }
@@ -7620,6 +11480,8 @@ std::vector<float>* const & cfa_base::mus_stamu_phiErr() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_pt() const{
   if(!c_mus_stamu_pt_ && b_mus_stamu_pt_){
+    b_mus_stamu_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_pt", &mus_stamu_pt_, &b_mus_stamu_pt_);
     b_mus_stamu_pt_->GetEntry(entry_);
     c_mus_stamu_pt_ = true;
   }
@@ -7628,6 +11490,8 @@ std::vector<float>* const & cfa_base::mus_stamu_pt() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_ptErr() const{
   if(!c_mus_stamu_ptErr_ && b_mus_stamu_ptErr_){
+    b_mus_stamu_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_ptErr", &mus_stamu_ptErr_, &b_mus_stamu_ptErr_);
     b_mus_stamu_ptErr_->GetEntry(entry_);
     c_mus_stamu_ptErr_ = true;
   }
@@ -7636,6 +11500,8 @@ std::vector<float>* const & cfa_base::mus_stamu_ptErr() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_px() const{
   if(!c_mus_stamu_px_ && b_mus_stamu_px_){
+    b_mus_stamu_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_px", &mus_stamu_px_, &b_mus_stamu_px_);
     b_mus_stamu_px_->GetEntry(entry_);
     c_mus_stamu_px_ = true;
   }
@@ -7644,6 +11510,8 @@ std::vector<float>* const & cfa_base::mus_stamu_px() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_py() const{
   if(!c_mus_stamu_py_ && b_mus_stamu_py_){
+    b_mus_stamu_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_py", &mus_stamu_py_, &b_mus_stamu_py_);
     b_mus_stamu_py_->GetEntry(entry_);
     c_mus_stamu_py_ = true;
   }
@@ -7652,6 +11520,8 @@ std::vector<float>* const & cfa_base::mus_stamu_py() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_pz() const{
   if(!c_mus_stamu_pz_ && b_mus_stamu_pz_){
+    b_mus_stamu_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_pz", &mus_stamu_pz_, &b_mus_stamu_pz_);
     b_mus_stamu_pz_->GetEntry(entry_);
     c_mus_stamu_pz_ = true;
   }
@@ -7660,6 +11530,8 @@ std::vector<float>* const & cfa_base::mus_stamu_pz() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_theta() const{
   if(!c_mus_stamu_theta_ && b_mus_stamu_theta_){
+    b_mus_stamu_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_theta", &mus_stamu_theta_, &b_mus_stamu_theta_);
     b_mus_stamu_theta_->GetEntry(entry_);
     c_mus_stamu_theta_ = true;
   }
@@ -7668,6 +11540,8 @@ std::vector<float>* const & cfa_base::mus_stamu_theta() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_vx() const{
   if(!c_mus_stamu_vx_ && b_mus_stamu_vx_){
+    b_mus_stamu_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_vx", &mus_stamu_vx_, &b_mus_stamu_vx_);
     b_mus_stamu_vx_->GetEntry(entry_);
     c_mus_stamu_vx_ = true;
   }
@@ -7676,6 +11550,8 @@ std::vector<float>* const & cfa_base::mus_stamu_vx() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_vy() const{
   if(!c_mus_stamu_vy_ && b_mus_stamu_vy_){
+    b_mus_stamu_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_vy", &mus_stamu_vy_, &b_mus_stamu_vy_);
     b_mus_stamu_vy_->GetEntry(entry_);
     c_mus_stamu_vy_ = true;
   }
@@ -7684,6 +11560,8 @@ std::vector<float>* const & cfa_base::mus_stamu_vy() const{
 
 std::vector<float>* const & cfa_base::mus_stamu_vz() const{
   if(!c_mus_stamu_vz_ && b_mus_stamu_vz_){
+    b_mus_stamu_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_stamu_vz", &mus_stamu_vz_, &b_mus_stamu_vz_);
     b_mus_stamu_vz_->GetEntry(entry_);
     c_mus_stamu_vz_ = true;
   }
@@ -7692,6 +11570,8 @@ std::vector<float>* const & cfa_base::mus_stamu_vz() const{
 
 std::vector<float>* const & cfa_base::mus_status() const{
   if(!c_mus_status_ && b_mus_status_){
+    b_mus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_status", &mus_status_, &b_mus_status_);
     b_mus_status_->GetEntry(entry_);
     c_mus_status_ = true;
   }
@@ -7700,6 +11580,8 @@ std::vector<float>* const & cfa_base::mus_status() const{
 
 std::vector<float>* const & cfa_base::mus_tIso() const{
   if(!c_mus_tIso_ && b_mus_tIso_){
+    b_mus_tIso_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tIso", &mus_tIso_, &b_mus_tIso_);
     b_mus_tIso_->GetEntry(entry_);
     c_mus_tIso_ = true;
   }
@@ -7708,6 +11590,8 @@ std::vector<float>* const & cfa_base::mus_tIso() const{
 
 std::vector<float>* const & cfa_base::mus_theta() const{
   if(!c_mus_theta_ && b_mus_theta_){
+    b_mus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_theta", &mus_theta_, &b_mus_theta_);
     b_mus_theta_->GetEntry(entry_);
     c_mus_theta_ = true;
   }
@@ -7716,6 +11600,8 @@ std::vector<float>* const & cfa_base::mus_theta() const{
 
 std::vector<float>* const & cfa_base::mus_tkHits() const{
   if(!c_mus_tkHits_ && b_mus_tkHits_){
+    b_mus_tkHits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tkHits", &mus_tkHits_, &b_mus_tkHits_);
     b_mus_tkHits_->GetEntry(entry_);
     c_mus_tkHits_ = true;
   }
@@ -7724,6 +11610,8 @@ std::vector<float>* const & cfa_base::mus_tkHits() const{
 
 std::vector<float>* const & cfa_base::mus_tk_ExpectedHitsInner() const{
   if(!c_mus_tk_ExpectedHitsInner_ && b_mus_tk_ExpectedHitsInner_){
+    b_mus_tk_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_ExpectedHitsInner", &mus_tk_ExpectedHitsInner_, &b_mus_tk_ExpectedHitsInner_);
     b_mus_tk_ExpectedHitsInner_->GetEntry(entry_);
     c_mus_tk_ExpectedHitsInner_ = true;
   }
@@ -7732,6 +11620,8 @@ std::vector<float>* const & cfa_base::mus_tk_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_base::mus_tk_ExpectedHitsOuter() const{
   if(!c_mus_tk_ExpectedHitsOuter_ && b_mus_tk_ExpectedHitsOuter_){
+    b_mus_tk_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_ExpectedHitsOuter", &mus_tk_ExpectedHitsOuter_, &b_mus_tk_ExpectedHitsOuter_);
     b_mus_tk_ExpectedHitsOuter_->GetEntry(entry_);
     c_mus_tk_ExpectedHitsOuter_ = true;
   }
@@ -7740,6 +11630,8 @@ std::vector<float>* const & cfa_base::mus_tk_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_base::mus_tk_LayersWithMeasurement() const{
   if(!c_mus_tk_LayersWithMeasurement_ && b_mus_tk_LayersWithMeasurement_){
+    b_mus_tk_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_LayersWithMeasurement", &mus_tk_LayersWithMeasurement_, &b_mus_tk_LayersWithMeasurement_);
     b_mus_tk_LayersWithMeasurement_->GetEntry(entry_);
     c_mus_tk_LayersWithMeasurement_ = true;
   }
@@ -7748,6 +11640,8 @@ std::vector<float>* const & cfa_base::mus_tk_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_tk_LayersWithoutMeasurement() const{
   if(!c_mus_tk_LayersWithoutMeasurement_ && b_mus_tk_LayersWithoutMeasurement_){
+    b_mus_tk_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_LayersWithoutMeasurement", &mus_tk_LayersWithoutMeasurement_, &b_mus_tk_LayersWithoutMeasurement_);
     b_mus_tk_LayersWithoutMeasurement_->GetEntry(entry_);
     c_mus_tk_LayersWithoutMeasurement_ = true;
   }
@@ -7756,6 +11650,8 @@ std::vector<float>* const & cfa_base::mus_tk_LayersWithoutMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_tk_PixelLayersWithMeasurement() const{
   if(!c_mus_tk_PixelLayersWithMeasurement_ && b_mus_tk_PixelLayersWithMeasurement_){
+    b_mus_tk_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_PixelLayersWithMeasurement", &mus_tk_PixelLayersWithMeasurement_, &b_mus_tk_PixelLayersWithMeasurement_);
     b_mus_tk_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_mus_tk_PixelLayersWithMeasurement_ = true;
   }
@@ -7764,6 +11660,8 @@ std::vector<float>* const & cfa_base::mus_tk_PixelLayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_tk_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_mus_tk_ValidStripLayersWithMonoAndStereoHit_ && b_mus_tk_ValidStripLayersWithMonoAndStereoHit_){
+    b_mus_tk_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_ValidStripLayersWithMonoAndStereoHit", &mus_tk_ValidStripLayersWithMonoAndStereoHit_, &b_mus_tk_ValidStripLayersWithMonoAndStereoHit_);
     b_mus_tk_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_mus_tk_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -7772,6 +11670,8 @@ std::vector<float>* const & cfa_base::mus_tk_ValidStripLayersWithMonoAndStereoHi
 
 std::vector<float>* const & cfa_base::mus_tk_chg() const{
   if(!c_mus_tk_chg_ && b_mus_tk_chg_){
+    b_mus_tk_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_chg", &mus_tk_chg_, &b_mus_tk_chg_);
     b_mus_tk_chg_->GetEntry(entry_);
     c_mus_tk_chg_ = true;
   }
@@ -7780,6 +11680,8 @@ std::vector<float>* const & cfa_base::mus_tk_chg() const{
 
 std::vector<float>* const & cfa_base::mus_tk_chi2() const{
   if(!c_mus_tk_chi2_ && b_mus_tk_chi2_){
+    b_mus_tk_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_chi2", &mus_tk_chi2_, &b_mus_tk_chi2_);
     b_mus_tk_chi2_->GetEntry(entry_);
     c_mus_tk_chi2_ = true;
   }
@@ -7788,6 +11690,8 @@ std::vector<float>* const & cfa_base::mus_tk_chi2() const{
 
 std::vector<float>* const & cfa_base::mus_tk_d0dum() const{
   if(!c_mus_tk_d0dum_ && b_mus_tk_d0dum_){
+    b_mus_tk_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_d0dum", &mus_tk_d0dum_, &b_mus_tk_d0dum_);
     b_mus_tk_d0dum_->GetEntry(entry_);
     c_mus_tk_d0dum_ = true;
   }
@@ -7796,6 +11700,8 @@ std::vector<float>* const & cfa_base::mus_tk_d0dum() const{
 
 std::vector<float>* const & cfa_base::mus_tk_d0dumErr() const{
   if(!c_mus_tk_d0dumErr_ && b_mus_tk_d0dumErr_){
+    b_mus_tk_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_d0dumErr", &mus_tk_d0dumErr_, &b_mus_tk_d0dumErr_);
     b_mus_tk_d0dumErr_->GetEntry(entry_);
     c_mus_tk_d0dumErr_ = true;
   }
@@ -7804,6 +11710,8 @@ std::vector<float>* const & cfa_base::mus_tk_d0dumErr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_dz() const{
   if(!c_mus_tk_dz_ && b_mus_tk_dz_){
+    b_mus_tk_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_dz", &mus_tk_dz_, &b_mus_tk_dz_);
     b_mus_tk_dz_->GetEntry(entry_);
     c_mus_tk_dz_ = true;
   }
@@ -7812,6 +11720,8 @@ std::vector<float>* const & cfa_base::mus_tk_dz() const{
 
 std::vector<float>* const & cfa_base::mus_tk_dzErr() const{
   if(!c_mus_tk_dzErr_ && b_mus_tk_dzErr_){
+    b_mus_tk_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_dzErr", &mus_tk_dzErr_, &b_mus_tk_dzErr_);
     b_mus_tk_dzErr_->GetEntry(entry_);
     c_mus_tk_dzErr_ = true;
   }
@@ -7820,6 +11730,8 @@ std::vector<float>* const & cfa_base::mus_tk_dzErr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_eta() const{
   if(!c_mus_tk_eta_ && b_mus_tk_eta_){
+    b_mus_tk_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_eta", &mus_tk_eta_, &b_mus_tk_eta_);
     b_mus_tk_eta_->GetEntry(entry_);
     c_mus_tk_eta_ = true;
   }
@@ -7828,6 +11740,8 @@ std::vector<float>* const & cfa_base::mus_tk_eta() const{
 
 std::vector<float>* const & cfa_base::mus_tk_etaErr() const{
   if(!c_mus_tk_etaErr_ && b_mus_tk_etaErr_){
+    b_mus_tk_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_etaErr", &mus_tk_etaErr_, &b_mus_tk_etaErr_);
     b_mus_tk_etaErr_->GetEntry(entry_);
     c_mus_tk_etaErr_ = true;
   }
@@ -7836,6 +11750,8 @@ std::vector<float>* const & cfa_base::mus_tk_etaErr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_id() const{
   if(!c_mus_tk_id_ && b_mus_tk_id_){
+    b_mus_tk_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_id", &mus_tk_id_, &b_mus_tk_id_);
     b_mus_tk_id_->GetEntry(entry_);
     c_mus_tk_id_ = true;
   }
@@ -7844,6 +11760,8 @@ std::vector<float>* const & cfa_base::mus_tk_id() const{
 
 std::vector<float>* const & cfa_base::mus_tk_ndof() const{
   if(!c_mus_tk_ndof_ && b_mus_tk_ndof_){
+    b_mus_tk_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_ndof", &mus_tk_ndof_, &b_mus_tk_ndof_);
     b_mus_tk_ndof_->GetEntry(entry_);
     c_mus_tk_ndof_ = true;
   }
@@ -7852,6 +11770,8 @@ std::vector<float>* const & cfa_base::mus_tk_ndof() const{
 
 std::vector<float>* const & cfa_base::mus_tk_numlosthits() const{
   if(!c_mus_tk_numlosthits_ && b_mus_tk_numlosthits_){
+    b_mus_tk_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_numlosthits", &mus_tk_numlosthits_, &b_mus_tk_numlosthits_);
     b_mus_tk_numlosthits_->GetEntry(entry_);
     c_mus_tk_numlosthits_ = true;
   }
@@ -7860,6 +11780,8 @@ std::vector<float>* const & cfa_base::mus_tk_numlosthits() const{
 
 std::vector<float>* const & cfa_base::mus_tk_numpixelWthMeasr() const{
   if(!c_mus_tk_numpixelWthMeasr_ && b_mus_tk_numpixelWthMeasr_){
+    b_mus_tk_numpixelWthMeasr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_numpixelWthMeasr", &mus_tk_numpixelWthMeasr_, &b_mus_tk_numpixelWthMeasr_);
     b_mus_tk_numpixelWthMeasr_->GetEntry(entry_);
     c_mus_tk_numpixelWthMeasr_ = true;
   }
@@ -7868,6 +11790,8 @@ std::vector<float>* const & cfa_base::mus_tk_numpixelWthMeasr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_numvalPixelhits() const{
   if(!c_mus_tk_numvalPixelhits_ && b_mus_tk_numvalPixelhits_){
+    b_mus_tk_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_numvalPixelhits", &mus_tk_numvalPixelhits_, &b_mus_tk_numvalPixelhits_);
     b_mus_tk_numvalPixelhits_->GetEntry(entry_);
     c_mus_tk_numvalPixelhits_ = true;
   }
@@ -7876,6 +11800,8 @@ std::vector<float>* const & cfa_base::mus_tk_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_base::mus_tk_numvalhits() const{
   if(!c_mus_tk_numvalhits_ && b_mus_tk_numvalhits_){
+    b_mus_tk_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_numvalhits", &mus_tk_numvalhits_, &b_mus_tk_numvalhits_);
     b_mus_tk_numvalhits_->GetEntry(entry_);
     c_mus_tk_numvalhits_ = true;
   }
@@ -7884,6 +11810,8 @@ std::vector<float>* const & cfa_base::mus_tk_numvalhits() const{
 
 std::vector<float>* const & cfa_base::mus_tk_phi() const{
   if(!c_mus_tk_phi_ && b_mus_tk_phi_){
+    b_mus_tk_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_phi", &mus_tk_phi_, &b_mus_tk_phi_);
     b_mus_tk_phi_->GetEntry(entry_);
     c_mus_tk_phi_ = true;
   }
@@ -7892,6 +11820,8 @@ std::vector<float>* const & cfa_base::mus_tk_phi() const{
 
 std::vector<float>* const & cfa_base::mus_tk_phiErr() const{
   if(!c_mus_tk_phiErr_ && b_mus_tk_phiErr_){
+    b_mus_tk_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_phiErr", &mus_tk_phiErr_, &b_mus_tk_phiErr_);
     b_mus_tk_phiErr_->GetEntry(entry_);
     c_mus_tk_phiErr_ = true;
   }
@@ -7900,6 +11830,8 @@ std::vector<float>* const & cfa_base::mus_tk_phiErr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_pt() const{
   if(!c_mus_tk_pt_ && b_mus_tk_pt_){
+    b_mus_tk_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_pt", &mus_tk_pt_, &b_mus_tk_pt_);
     b_mus_tk_pt_->GetEntry(entry_);
     c_mus_tk_pt_ = true;
   }
@@ -7908,6 +11840,8 @@ std::vector<float>* const & cfa_base::mus_tk_pt() const{
 
 std::vector<float>* const & cfa_base::mus_tk_ptErr() const{
   if(!c_mus_tk_ptErr_ && b_mus_tk_ptErr_){
+    b_mus_tk_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_ptErr", &mus_tk_ptErr_, &b_mus_tk_ptErr_);
     b_mus_tk_ptErr_->GetEntry(entry_);
     c_mus_tk_ptErr_ = true;
   }
@@ -7916,6 +11850,8 @@ std::vector<float>* const & cfa_base::mus_tk_ptErr() const{
 
 std::vector<float>* const & cfa_base::mus_tk_px() const{
   if(!c_mus_tk_px_ && b_mus_tk_px_){
+    b_mus_tk_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_px", &mus_tk_px_, &b_mus_tk_px_);
     b_mus_tk_px_->GetEntry(entry_);
     c_mus_tk_px_ = true;
   }
@@ -7924,6 +11860,8 @@ std::vector<float>* const & cfa_base::mus_tk_px() const{
 
 std::vector<float>* const & cfa_base::mus_tk_py() const{
   if(!c_mus_tk_py_ && b_mus_tk_py_){
+    b_mus_tk_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_py", &mus_tk_py_, &b_mus_tk_py_);
     b_mus_tk_py_->GetEntry(entry_);
     c_mus_tk_py_ = true;
   }
@@ -7932,6 +11870,8 @@ std::vector<float>* const & cfa_base::mus_tk_py() const{
 
 std::vector<float>* const & cfa_base::mus_tk_pz() const{
   if(!c_mus_tk_pz_ && b_mus_tk_pz_){
+    b_mus_tk_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_pz", &mus_tk_pz_, &b_mus_tk_pz_);
     b_mus_tk_pz_->GetEntry(entry_);
     c_mus_tk_pz_ = true;
   }
@@ -7940,6 +11880,8 @@ std::vector<float>* const & cfa_base::mus_tk_pz() const{
 
 std::vector<float>* const & cfa_base::mus_tk_theta() const{
   if(!c_mus_tk_theta_ && b_mus_tk_theta_){
+    b_mus_tk_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_theta", &mus_tk_theta_, &b_mus_tk_theta_);
     b_mus_tk_theta_->GetEntry(entry_);
     c_mus_tk_theta_ = true;
   }
@@ -7948,6 +11890,8 @@ std::vector<float>* const & cfa_base::mus_tk_theta() const{
 
 std::vector<float>* const & cfa_base::mus_tk_vx() const{
   if(!c_mus_tk_vx_ && b_mus_tk_vx_){
+    b_mus_tk_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_vx", &mus_tk_vx_, &b_mus_tk_vx_);
     b_mus_tk_vx_->GetEntry(entry_);
     c_mus_tk_vx_ = true;
   }
@@ -7956,6 +11900,8 @@ std::vector<float>* const & cfa_base::mus_tk_vx() const{
 
 std::vector<float>* const & cfa_base::mus_tk_vy() const{
   if(!c_mus_tk_vy_ && b_mus_tk_vy_){
+    b_mus_tk_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_vy", &mus_tk_vy_, &b_mus_tk_vy_);
     b_mus_tk_vy_->GetEntry(entry_);
     c_mus_tk_vy_ = true;
   }
@@ -7964,6 +11910,8 @@ std::vector<float>* const & cfa_base::mus_tk_vy() const{
 
 std::vector<float>* const & cfa_base::mus_tk_vz() const{
   if(!c_mus_tk_vz_ && b_mus_tk_vz_){
+    b_mus_tk_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tk_vz", &mus_tk_vz_, &b_mus_tk_vz_);
     b_mus_tk_vz_->GetEntry(entry_);
     c_mus_tk_vz_ = true;
   }
@@ -7972,6 +11920,8 @@ std::vector<float>* const & cfa_base::mus_tk_vz() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_ExpectedHitsInner() const{
   if(!c_mus_tpfms_ExpectedHitsInner_ && b_mus_tpfms_ExpectedHitsInner_){
+    b_mus_tpfms_ExpectedHitsInner_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_ExpectedHitsInner", &mus_tpfms_ExpectedHitsInner_, &b_mus_tpfms_ExpectedHitsInner_);
     b_mus_tpfms_ExpectedHitsInner_->GetEntry(entry_);
     c_mus_tpfms_ExpectedHitsInner_ = true;
   }
@@ -7980,6 +11930,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_ExpectedHitsInner() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_ExpectedHitsOuter() const{
   if(!c_mus_tpfms_ExpectedHitsOuter_ && b_mus_tpfms_ExpectedHitsOuter_){
+    b_mus_tpfms_ExpectedHitsOuter_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_ExpectedHitsOuter", &mus_tpfms_ExpectedHitsOuter_, &b_mus_tpfms_ExpectedHitsOuter_);
     b_mus_tpfms_ExpectedHitsOuter_->GetEntry(entry_);
     c_mus_tpfms_ExpectedHitsOuter_ = true;
   }
@@ -7988,6 +11940,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_ExpectedHitsOuter() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_LayersWithMeasurement() const{
   if(!c_mus_tpfms_LayersWithMeasurement_ && b_mus_tpfms_LayersWithMeasurement_){
+    b_mus_tpfms_LayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_LayersWithMeasurement", &mus_tpfms_LayersWithMeasurement_, &b_mus_tpfms_LayersWithMeasurement_);
     b_mus_tpfms_LayersWithMeasurement_->GetEntry(entry_);
     c_mus_tpfms_LayersWithMeasurement_ = true;
   }
@@ -7996,6 +11950,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_LayersWithMeasurement() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_LayersWithoutMeasurement() const{
   if(!c_mus_tpfms_LayersWithoutMeasurement_ && b_mus_tpfms_LayersWithoutMeasurement_){
+    b_mus_tpfms_LayersWithoutMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_LayersWithoutMeasurement", &mus_tpfms_LayersWithoutMeasurement_, &b_mus_tpfms_LayersWithoutMeasurement_);
     b_mus_tpfms_LayersWithoutMeasurement_->GetEntry(entry_);
     c_mus_tpfms_LayersWithoutMeasurement_ = true;
   }
@@ -8004,6 +11960,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_LayersWithoutMeasurement() const
 
 std::vector<float>* const & cfa_base::mus_tpfms_PixelLayersWithMeasurement() const{
   if(!c_mus_tpfms_PixelLayersWithMeasurement_ && b_mus_tpfms_PixelLayersWithMeasurement_){
+    b_mus_tpfms_PixelLayersWithMeasurement_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_PixelLayersWithMeasurement", &mus_tpfms_PixelLayersWithMeasurement_, &b_mus_tpfms_PixelLayersWithMeasurement_);
     b_mus_tpfms_PixelLayersWithMeasurement_->GetEntry(entry_);
     c_mus_tpfms_PixelLayersWithMeasurement_ = true;
   }
@@ -8012,6 +11970,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_PixelLayersWithMeasurement() con
 
 std::vector<float>* const & cfa_base::mus_tpfms_ValidStripLayersWithMonoAndStereoHit() const{
   if(!c_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ && b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_){
+    b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_ValidStripLayersWithMonoAndStereoHit", &mus_tpfms_ValidStripLayersWithMonoAndStereoHit_, &b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_);
     b_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_->GetEntry(entry_);
     c_mus_tpfms_ValidStripLayersWithMonoAndStereoHit_ = true;
   }
@@ -8020,6 +11980,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_ValidStripLayersWithMonoAndStere
 
 std::vector<float>* const & cfa_base::mus_tpfms_chg() const{
   if(!c_mus_tpfms_chg_ && b_mus_tpfms_chg_){
+    b_mus_tpfms_chg_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_chg", &mus_tpfms_chg_, &b_mus_tpfms_chg_);
     b_mus_tpfms_chg_->GetEntry(entry_);
     c_mus_tpfms_chg_ = true;
   }
@@ -8028,6 +11990,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_chg() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_chi2() const{
   if(!c_mus_tpfms_chi2_ && b_mus_tpfms_chi2_){
+    b_mus_tpfms_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_chi2", &mus_tpfms_chi2_, &b_mus_tpfms_chi2_);
     b_mus_tpfms_chi2_->GetEntry(entry_);
     c_mus_tpfms_chi2_ = true;
   }
@@ -8036,6 +12000,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_chi2() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_d0dum() const{
   if(!c_mus_tpfms_d0dum_ && b_mus_tpfms_d0dum_){
+    b_mus_tpfms_d0dum_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_d0dum", &mus_tpfms_d0dum_, &b_mus_tpfms_d0dum_);
     b_mus_tpfms_d0dum_->GetEntry(entry_);
     c_mus_tpfms_d0dum_ = true;
   }
@@ -8044,6 +12010,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_d0dum() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_d0dumErr() const{
   if(!c_mus_tpfms_d0dumErr_ && b_mus_tpfms_d0dumErr_){
+    b_mus_tpfms_d0dumErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_d0dumErr", &mus_tpfms_d0dumErr_, &b_mus_tpfms_d0dumErr_);
     b_mus_tpfms_d0dumErr_->GetEntry(entry_);
     c_mus_tpfms_d0dumErr_ = true;
   }
@@ -8052,6 +12020,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_d0dumErr() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_dz() const{
   if(!c_mus_tpfms_dz_ && b_mus_tpfms_dz_){
+    b_mus_tpfms_dz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_dz", &mus_tpfms_dz_, &b_mus_tpfms_dz_);
     b_mus_tpfms_dz_->GetEntry(entry_);
     c_mus_tpfms_dz_ = true;
   }
@@ -8060,6 +12030,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_dz() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_dzErr() const{
   if(!c_mus_tpfms_dzErr_ && b_mus_tpfms_dzErr_){
+    b_mus_tpfms_dzErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_dzErr", &mus_tpfms_dzErr_, &b_mus_tpfms_dzErr_);
     b_mus_tpfms_dzErr_->GetEntry(entry_);
     c_mus_tpfms_dzErr_ = true;
   }
@@ -8068,6 +12040,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_dzErr() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_eta() const{
   if(!c_mus_tpfms_eta_ && b_mus_tpfms_eta_){
+    b_mus_tpfms_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_eta", &mus_tpfms_eta_, &b_mus_tpfms_eta_);
     b_mus_tpfms_eta_->GetEntry(entry_);
     c_mus_tpfms_eta_ = true;
   }
@@ -8076,6 +12050,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_eta() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_etaErr() const{
   if(!c_mus_tpfms_etaErr_ && b_mus_tpfms_etaErr_){
+    b_mus_tpfms_etaErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_etaErr", &mus_tpfms_etaErr_, &b_mus_tpfms_etaErr_);
     b_mus_tpfms_etaErr_->GetEntry(entry_);
     c_mus_tpfms_etaErr_ = true;
   }
@@ -8084,6 +12060,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_etaErr() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_id() const{
   if(!c_mus_tpfms_id_ && b_mus_tpfms_id_){
+    b_mus_tpfms_id_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_id", &mus_tpfms_id_, &b_mus_tpfms_id_);
     b_mus_tpfms_id_->GetEntry(entry_);
     c_mus_tpfms_id_ = true;
   }
@@ -8092,6 +12070,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_id() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_ndof() const{
   if(!c_mus_tpfms_ndof_ && b_mus_tpfms_ndof_){
+    b_mus_tpfms_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_ndof", &mus_tpfms_ndof_, &b_mus_tpfms_ndof_);
     b_mus_tpfms_ndof_->GetEntry(entry_);
     c_mus_tpfms_ndof_ = true;
   }
@@ -8100,6 +12080,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_ndof() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_numlosthits() const{
   if(!c_mus_tpfms_numlosthits_ && b_mus_tpfms_numlosthits_){
+    b_mus_tpfms_numlosthits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_numlosthits", &mus_tpfms_numlosthits_, &b_mus_tpfms_numlosthits_);
     b_mus_tpfms_numlosthits_->GetEntry(entry_);
     c_mus_tpfms_numlosthits_ = true;
   }
@@ -8108,6 +12090,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_numlosthits() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_numvalPixelhits() const{
   if(!c_mus_tpfms_numvalPixelhits_ && b_mus_tpfms_numvalPixelhits_){
+    b_mus_tpfms_numvalPixelhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_numvalPixelhits", &mus_tpfms_numvalPixelhits_, &b_mus_tpfms_numvalPixelhits_);
     b_mus_tpfms_numvalPixelhits_->GetEntry(entry_);
     c_mus_tpfms_numvalPixelhits_ = true;
   }
@@ -8116,6 +12100,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_numvalPixelhits() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_numvalhits() const{
   if(!c_mus_tpfms_numvalhits_ && b_mus_tpfms_numvalhits_){
+    b_mus_tpfms_numvalhits_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_numvalhits", &mus_tpfms_numvalhits_, &b_mus_tpfms_numvalhits_);
     b_mus_tpfms_numvalhits_->GetEntry(entry_);
     c_mus_tpfms_numvalhits_ = true;
   }
@@ -8124,6 +12110,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_numvalhits() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_phi() const{
   if(!c_mus_tpfms_phi_ && b_mus_tpfms_phi_){
+    b_mus_tpfms_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_phi", &mus_tpfms_phi_, &b_mus_tpfms_phi_);
     b_mus_tpfms_phi_->GetEntry(entry_);
     c_mus_tpfms_phi_ = true;
   }
@@ -8132,6 +12120,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_phi() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_phiErr() const{
   if(!c_mus_tpfms_phiErr_ && b_mus_tpfms_phiErr_){
+    b_mus_tpfms_phiErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_phiErr", &mus_tpfms_phiErr_, &b_mus_tpfms_phiErr_);
     b_mus_tpfms_phiErr_->GetEntry(entry_);
     c_mus_tpfms_phiErr_ = true;
   }
@@ -8140,6 +12130,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_phiErr() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_pt() const{
   if(!c_mus_tpfms_pt_ && b_mus_tpfms_pt_){
+    b_mus_tpfms_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_pt", &mus_tpfms_pt_, &b_mus_tpfms_pt_);
     b_mus_tpfms_pt_->GetEntry(entry_);
     c_mus_tpfms_pt_ = true;
   }
@@ -8148,6 +12140,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_pt() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_ptErr() const{
   if(!c_mus_tpfms_ptErr_ && b_mus_tpfms_ptErr_){
+    b_mus_tpfms_ptErr_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_ptErr", &mus_tpfms_ptErr_, &b_mus_tpfms_ptErr_);
     b_mus_tpfms_ptErr_->GetEntry(entry_);
     c_mus_tpfms_ptErr_ = true;
   }
@@ -8156,6 +12150,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_ptErr() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_px() const{
   if(!c_mus_tpfms_px_ && b_mus_tpfms_px_){
+    b_mus_tpfms_px_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_px", &mus_tpfms_px_, &b_mus_tpfms_px_);
     b_mus_tpfms_px_->GetEntry(entry_);
     c_mus_tpfms_px_ = true;
   }
@@ -8164,6 +12160,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_px() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_py() const{
   if(!c_mus_tpfms_py_ && b_mus_tpfms_py_){
+    b_mus_tpfms_py_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_py", &mus_tpfms_py_, &b_mus_tpfms_py_);
     b_mus_tpfms_py_->GetEntry(entry_);
     c_mus_tpfms_py_ = true;
   }
@@ -8172,6 +12170,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_py() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_pz() const{
   if(!c_mus_tpfms_pz_ && b_mus_tpfms_pz_){
+    b_mus_tpfms_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_pz", &mus_tpfms_pz_, &b_mus_tpfms_pz_);
     b_mus_tpfms_pz_->GetEntry(entry_);
     c_mus_tpfms_pz_ = true;
   }
@@ -8180,6 +12180,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_pz() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_theta() const{
   if(!c_mus_tpfms_theta_ && b_mus_tpfms_theta_){
+    b_mus_tpfms_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_theta", &mus_tpfms_theta_, &b_mus_tpfms_theta_);
     b_mus_tpfms_theta_->GetEntry(entry_);
     c_mus_tpfms_theta_ = true;
   }
@@ -8188,6 +12190,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_theta() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_vx() const{
   if(!c_mus_tpfms_vx_ && b_mus_tpfms_vx_){
+    b_mus_tpfms_vx_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_vx", &mus_tpfms_vx_, &b_mus_tpfms_vx_);
     b_mus_tpfms_vx_->GetEntry(entry_);
     c_mus_tpfms_vx_ = true;
   }
@@ -8196,6 +12200,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_vx() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_vy() const{
   if(!c_mus_tpfms_vy_ && b_mus_tpfms_vy_){
+    b_mus_tpfms_vy_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_vy", &mus_tpfms_vy_, &b_mus_tpfms_vy_);
     b_mus_tpfms_vy_->GetEntry(entry_);
     c_mus_tpfms_vy_ = true;
   }
@@ -8204,6 +12210,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_vy() const{
 
 std::vector<float>* const & cfa_base::mus_tpfms_vz() const{
   if(!c_mus_tpfms_vz_ && b_mus_tpfms_vz_){
+    b_mus_tpfms_vz_->SetStatus(true);
+    chainB_.SetBranchAddress("mus_tpfms_vz", &mus_tpfms_vz_, &b_mus_tpfms_vz_);
     b_mus_tpfms_vz_->GetEntry(entry_);
     c_mus_tpfms_vz_ = true;
   }
@@ -8212,6 +12220,8 @@ std::vector<float>* const & cfa_base::mus_tpfms_vz() const{
 
 UInt_t const & cfa_base::orbitNumber() const{
   if(!c_orbitNumber_ && b_orbitNumber_){
+    b_orbitNumber_->SetStatus(true);
+    chainB_.SetBranchAddress("orbitNumber", &orbitNumber_, &b_orbitNumber_);
     b_orbitNumber_->GetEntry(entry_);
     c_orbitNumber_ = true;
   }
@@ -8220,6 +12230,8 @@ UInt_t const & cfa_base::orbitNumber() const{
 
 std::vector<float>* const & cfa_base::pfcand_charge() const{
   if(!c_pfcand_charge_ && b_pfcand_charge_){
+    b_pfcand_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_charge", &pfcand_charge_, &b_pfcand_charge_);
     b_pfcand_charge_->GetEntry(entry_);
     c_pfcand_charge_ = true;
   }
@@ -8228,6 +12240,8 @@ std::vector<float>* const & cfa_base::pfcand_charge() const{
 
 std::vector<float>* const & cfa_base::pfcand_energy() const{
   if(!c_pfcand_energy_ && b_pfcand_energy_){
+    b_pfcand_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_energy", &pfcand_energy_, &b_pfcand_energy_);
     b_pfcand_energy_->GetEntry(entry_);
     c_pfcand_energy_ = true;
   }
@@ -8236,6 +12250,8 @@ std::vector<float>* const & cfa_base::pfcand_energy() const{
 
 std::vector<float>* const & cfa_base::pfcand_eta() const{
   if(!c_pfcand_eta_ && b_pfcand_eta_){
+    b_pfcand_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_eta", &pfcand_eta_, &b_pfcand_eta_);
     b_pfcand_eta_->GetEntry(entry_);
     c_pfcand_eta_ = true;
   }
@@ -8244,6 +12260,8 @@ std::vector<float>* const & cfa_base::pfcand_eta() const{
 
 std::vector<float>* const & cfa_base::pfcand_pdgId() const{
   if(!c_pfcand_pdgId_ && b_pfcand_pdgId_){
+    b_pfcand_pdgId_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_pdgId", &pfcand_pdgId_, &b_pfcand_pdgId_);
     b_pfcand_pdgId_->GetEntry(entry_);
     c_pfcand_pdgId_ = true;
   }
@@ -8252,6 +12270,8 @@ std::vector<float>* const & cfa_base::pfcand_pdgId() const{
 
 std::vector<float>* const & cfa_base::pfcand_phi() const{
   if(!c_pfcand_phi_ && b_pfcand_phi_){
+    b_pfcand_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_phi", &pfcand_phi_, &b_pfcand_phi_);
     b_pfcand_phi_->GetEntry(entry_);
     c_pfcand_phi_ = true;
   }
@@ -8260,6 +12280,8 @@ std::vector<float>* const & cfa_base::pfcand_phi() const{
 
 std::vector<float>* const & cfa_base::pfcand_pt() const{
   if(!c_pfcand_pt_ && b_pfcand_pt_){
+    b_pfcand_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_pt", &pfcand_pt_, &b_pfcand_pt_);
     b_pfcand_pt_->GetEntry(entry_);
     c_pfcand_pt_ = true;
   }
@@ -8268,6 +12290,8 @@ std::vector<float>* const & cfa_base::pfcand_pt() const{
 
 std::vector<float>* const & cfa_base::pfcand_px() const{
   if(!c_pfcand_px_ && b_pfcand_px_){
+    b_pfcand_px_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_px", &pfcand_px_, &b_pfcand_px_);
     b_pfcand_px_->GetEntry(entry_);
     c_pfcand_px_ = true;
   }
@@ -8276,6 +12300,8 @@ std::vector<float>* const & cfa_base::pfcand_px() const{
 
 std::vector<float>* const & cfa_base::pfcand_py() const{
   if(!c_pfcand_py_ && b_pfcand_py_){
+    b_pfcand_py_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_py", &pfcand_py_, &b_pfcand_py_);
     b_pfcand_py_->GetEntry(entry_);
     c_pfcand_py_ = true;
   }
@@ -8284,6 +12310,8 @@ std::vector<float>* const & cfa_base::pfcand_py() const{
 
 std::vector<float>* const & cfa_base::pfcand_pz() const{
   if(!c_pfcand_pz_ && b_pfcand_pz_){
+    b_pfcand_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_pz", &pfcand_pz_, &b_pfcand_pz_);
     b_pfcand_pz_->GetEntry(entry_);
     c_pfcand_pz_ = true;
   }
@@ -8292,6 +12320,8 @@ std::vector<float>* const & cfa_base::pfcand_pz() const{
 
 std::vector<float>* const & cfa_base::pfcand_theta() const{
   if(!c_pfcand_theta_ && b_pfcand_theta_){
+    b_pfcand_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("pfcand_theta", &pfcand_theta_, &b_pfcand_theta_);
     b_pfcand_theta_->GetEntry(entry_);
     c_pfcand_theta_ = true;
   }
@@ -8300,6 +12330,8 @@ std::vector<float>* const & cfa_base::pfcand_theta() const{
 
 std::vector<float>* const & cfa_base::photons_e1x5() const{
   if(!c_photons_e1x5_ && b_photons_e1x5_){
+    b_photons_e1x5_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_e1x5", &photons_e1x5_, &b_photons_e1x5_);
     b_photons_e1x5_->GetEntry(entry_);
     c_photons_e1x5_ = true;
   }
@@ -8308,6 +12340,8 @@ std::vector<float>* const & cfa_base::photons_e1x5() const{
 
 std::vector<float>* const & cfa_base::photons_e2x5() const{
   if(!c_photons_e2x5_ && b_photons_e2x5_){
+    b_photons_e2x5_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_e2x5", &photons_e2x5_, &b_photons_e2x5_);
     b_photons_e2x5_->GetEntry(entry_);
     c_photons_e2x5_ = true;
   }
@@ -8316,6 +12350,8 @@ std::vector<float>* const & cfa_base::photons_e2x5() const{
 
 std::vector<float>* const & cfa_base::photons_e3x3() const{
   if(!c_photons_e3x3_ && b_photons_e3x3_){
+    b_photons_e3x3_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_e3x3", &photons_e3x3_, &b_photons_e3x3_);
     b_photons_e3x3_->GetEntry(entry_);
     c_photons_e3x3_ = true;
   }
@@ -8324,6 +12360,8 @@ std::vector<float>* const & cfa_base::photons_e3x3() const{
 
 std::vector<float>* const & cfa_base::photons_e5x5() const{
   if(!c_photons_e5x5_ && b_photons_e5x5_){
+    b_photons_e5x5_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_e5x5", &photons_e5x5_, &b_photons_e5x5_);
     b_photons_e5x5_->GetEntry(entry_);
     c_photons_e5x5_ = true;
   }
@@ -8332,6 +12370,8 @@ std::vector<float>* const & cfa_base::photons_e5x5() const{
 
 std::vector<float>* const & cfa_base::photons_ecalIso() const{
   if(!c_photons_ecalIso_ && b_photons_ecalIso_){
+    b_photons_ecalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_ecalIso", &photons_ecalIso_, &b_photons_ecalIso_);
     b_photons_ecalIso_->GetEntry(entry_);
     c_photons_ecalIso_ = true;
   }
@@ -8340,6 +12380,8 @@ std::vector<float>* const & cfa_base::photons_ecalIso() const{
 
 std::vector<float>* const & cfa_base::photons_energy() const{
   if(!c_photons_energy_ && b_photons_energy_){
+    b_photons_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_energy", &photons_energy_, &b_photons_energy_);
     b_photons_energy_->GetEntry(entry_);
     c_photons_energy_ = true;
   }
@@ -8348,6 +12390,8 @@ std::vector<float>* const & cfa_base::photons_energy() const{
 
 std::vector<float>* const & cfa_base::photons_et() const{
   if(!c_photons_et_ && b_photons_et_){
+    b_photons_et_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_et", &photons_et_, &b_photons_et_);
     b_photons_et_->GetEntry(entry_);
     c_photons_et_ = true;
   }
@@ -8356,6 +12400,8 @@ std::vector<float>* const & cfa_base::photons_et() const{
 
 std::vector<float>* const & cfa_base::photons_eta() const{
   if(!c_photons_eta_ && b_photons_eta_){
+    b_photons_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_eta", &photons_eta_, &b_photons_eta_);
     b_photons_eta_->GetEntry(entry_);
     c_photons_eta_ = true;
   }
@@ -8364,6 +12410,8 @@ std::vector<float>* const & cfa_base::photons_eta() const{
 
 std::vector<float>* const & cfa_base::photons_gen_et() const{
   if(!c_photons_gen_et_ && b_photons_gen_et_){
+    b_photons_gen_et_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_gen_et", &photons_gen_et_, &b_photons_gen_et_);
     b_photons_gen_et_->GetEntry(entry_);
     c_photons_gen_et_ = true;
   }
@@ -8372,6 +12420,8 @@ std::vector<float>* const & cfa_base::photons_gen_et() const{
 
 std::vector<float>* const & cfa_base::photons_gen_eta() const{
   if(!c_photons_gen_eta_ && b_photons_gen_eta_){
+    b_photons_gen_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_gen_eta", &photons_gen_eta_, &b_photons_gen_eta_);
     b_photons_gen_eta_->GetEntry(entry_);
     c_photons_gen_eta_ = true;
   }
@@ -8380,6 +12430,8 @@ std::vector<float>* const & cfa_base::photons_gen_eta() const{
 
 std::vector<float>* const & cfa_base::photons_gen_id() const{
   if(!c_photons_gen_id_ && b_photons_gen_id_){
+    b_photons_gen_id_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_gen_id", &photons_gen_id_, &b_photons_gen_id_);
     b_photons_gen_id_->GetEntry(entry_);
     c_photons_gen_id_ = true;
   }
@@ -8388,6 +12440,8 @@ std::vector<float>* const & cfa_base::photons_gen_id() const{
 
 std::vector<float>* const & cfa_base::photons_gen_phi() const{
   if(!c_photons_gen_phi_ && b_photons_gen_phi_){
+    b_photons_gen_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_gen_phi", &photons_gen_phi_, &b_photons_gen_phi_);
     b_photons_gen_phi_->GetEntry(entry_);
     c_photons_gen_phi_ = true;
   }
@@ -8396,6 +12450,8 @@ std::vector<float>* const & cfa_base::photons_gen_phi() const{
 
 std::vector<float>* const & cfa_base::photons_hadOverEM() const{
   if(!c_photons_hadOverEM_ && b_photons_hadOverEM_){
+    b_photons_hadOverEM_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_hadOverEM", &photons_hadOverEM_, &b_photons_hadOverEM_);
     b_photons_hadOverEM_->GetEntry(entry_);
     c_photons_hadOverEM_ = true;
   }
@@ -8404,6 +12460,8 @@ std::vector<float>* const & cfa_base::photons_hadOverEM() const{
 
 std::vector<float>* const & cfa_base::photons_hadTowOverEM() const{
   if(!c_photons_hadTowOverEM_ && b_photons_hadTowOverEM_){
+    b_photons_hadTowOverEM_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_hadTowOverEM", &photons_hadTowOverEM_, &b_photons_hadTowOverEM_);
     b_photons_hadTowOverEM_->GetEntry(entry_);
     c_photons_hadTowOverEM_ = true;
   }
@@ -8412,6 +12470,8 @@ std::vector<float>* const & cfa_base::photons_hadTowOverEM() const{
 
 std::vector<float>* const & cfa_base::photons_hasPixelSeed() const{
   if(!c_photons_hasPixelSeed_ && b_photons_hasPixelSeed_){
+    b_photons_hasPixelSeed_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_hasPixelSeed", &photons_hasPixelSeed_, &b_photons_hasPixelSeed_);
     b_photons_hasPixelSeed_->GetEntry(entry_);
     c_photons_hasPixelSeed_ = true;
   }
@@ -8420,6 +12480,8 @@ std::vector<float>* const & cfa_base::photons_hasPixelSeed() const{
 
 std::vector<float>* const & cfa_base::photons_hcalIso() const{
   if(!c_photons_hcalIso_ && b_photons_hcalIso_){
+    b_photons_hcalIso_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_hcalIso", &photons_hcalIso_, &b_photons_hcalIso_);
     b_photons_hcalIso_->GetEntry(entry_);
     c_photons_hcalIso_ = true;
   }
@@ -8428,6 +12490,8 @@ std::vector<float>* const & cfa_base::photons_hcalIso() const{
 
 std::vector<float>* const & cfa_base::photons_isAlsoElectron() const{
   if(!c_photons_isAlsoElectron_ && b_photons_isAlsoElectron_){
+    b_photons_isAlsoElectron_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isAlsoElectron", &photons_isAlsoElectron_, &b_photons_isAlsoElectron_);
     b_photons_isAlsoElectron_->GetEntry(entry_);
     c_photons_isAlsoElectron_ = true;
   }
@@ -8436,6 +12500,8 @@ std::vector<float>* const & cfa_base::photons_isAlsoElectron() const{
 
 std::vector<float>* const & cfa_base::photons_isConverted() const{
   if(!c_photons_isConverted_ && b_photons_isConverted_){
+    b_photons_isConverted_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isConverted", &photons_isConverted_, &b_photons_isConverted_);
     b_photons_isConverted_->GetEntry(entry_);
     c_photons_isConverted_ = true;
   }
@@ -8444,6 +12510,8 @@ std::vector<float>* const & cfa_base::photons_isConverted() const{
 
 std::vector<float>* const & cfa_base::photons_isEBEEGap() const{
   if(!c_photons_isEBEEGap_ && b_photons_isEBEEGap_){
+    b_photons_isEBEEGap_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isEBEEGap", &photons_isEBEEGap_, &b_photons_isEBEEGap_);
     b_photons_isEBEEGap_->GetEntry(entry_);
     c_photons_isEBEEGap_ = true;
   }
@@ -8452,6 +12520,8 @@ std::vector<float>* const & cfa_base::photons_isEBEEGap() const{
 
 std::vector<float>* const & cfa_base::photons_isEBGap() const{
   if(!c_photons_isEBGap_ && b_photons_isEBGap_){
+    b_photons_isEBGap_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isEBGap", &photons_isEBGap_, &b_photons_isEBGap_);
     b_photons_isEBGap_->GetEntry(entry_);
     c_photons_isEBGap_ = true;
   }
@@ -8460,6 +12530,8 @@ std::vector<float>* const & cfa_base::photons_isEBGap() const{
 
 std::vector<float>* const & cfa_base::photons_isEBPho() const{
   if(!c_photons_isEBPho_ && b_photons_isEBPho_){
+    b_photons_isEBPho_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isEBPho", &photons_isEBPho_, &b_photons_isEBPho_);
     b_photons_isEBPho_->GetEntry(entry_);
     c_photons_isEBPho_ = true;
   }
@@ -8468,6 +12540,8 @@ std::vector<float>* const & cfa_base::photons_isEBPho() const{
 
 std::vector<float>* const & cfa_base::photons_isEEGap() const{
   if(!c_photons_isEEGap_ && b_photons_isEEGap_){
+    b_photons_isEEGap_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isEEGap", &photons_isEEGap_, &b_photons_isEEGap_);
     b_photons_isEEGap_->GetEntry(entry_);
     c_photons_isEEGap_ = true;
   }
@@ -8476,6 +12550,8 @@ std::vector<float>* const & cfa_base::photons_isEEGap() const{
 
 std::vector<float>* const & cfa_base::photons_isEEPho() const{
   if(!c_photons_isEEPho_ && b_photons_isEEPho_){
+    b_photons_isEEPho_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isEEPho", &photons_isEEPho_, &b_photons_isEEPho_);
     b_photons_isEEPho_->GetEntry(entry_);
     c_photons_isEEPho_ = true;
   }
@@ -8484,6 +12560,8 @@ std::vector<float>* const & cfa_base::photons_isEEPho() const{
 
 std::vector<float>* const & cfa_base::photons_isLoosePhoton() const{
   if(!c_photons_isLoosePhoton_ && b_photons_isLoosePhoton_){
+    b_photons_isLoosePhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isLoosePhoton", &photons_isLoosePhoton_, &b_photons_isLoosePhoton_);
     b_photons_isLoosePhoton_->GetEntry(entry_);
     c_photons_isLoosePhoton_ = true;
   }
@@ -8492,6 +12570,8 @@ std::vector<float>* const & cfa_base::photons_isLoosePhoton() const{
 
 std::vector<float>* const & cfa_base::photons_isTightPhoton() const{
   if(!c_photons_isTightPhoton_ && b_photons_isTightPhoton_){
+    b_photons_isTightPhoton_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isTightPhoton", &photons_isTightPhoton_, &b_photons_isTightPhoton_);
     b_photons_isTightPhoton_->GetEntry(entry_);
     c_photons_isTightPhoton_ = true;
   }
@@ -8500,6 +12580,8 @@ std::vector<float>* const & cfa_base::photons_isTightPhoton() const{
 
 std::vector<float>* const & cfa_base::photons_isoEcalRecHitDR03() const{
   if(!c_photons_isoEcalRecHitDR03_ && b_photons_isoEcalRecHitDR03_){
+    b_photons_isoEcalRecHitDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoEcalRecHitDR03", &photons_isoEcalRecHitDR03_, &b_photons_isoEcalRecHitDR03_);
     b_photons_isoEcalRecHitDR03_->GetEntry(entry_);
     c_photons_isoEcalRecHitDR03_ = true;
   }
@@ -8508,6 +12590,8 @@ std::vector<float>* const & cfa_base::photons_isoEcalRecHitDR03() const{
 
 std::vector<float>* const & cfa_base::photons_isoEcalRecHitDR04() const{
   if(!c_photons_isoEcalRecHitDR04_ && b_photons_isoEcalRecHitDR04_){
+    b_photons_isoEcalRecHitDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoEcalRecHitDR04", &photons_isoEcalRecHitDR04_, &b_photons_isoEcalRecHitDR04_);
     b_photons_isoEcalRecHitDR04_->GetEntry(entry_);
     c_photons_isoEcalRecHitDR04_ = true;
   }
@@ -8516,6 +12600,8 @@ std::vector<float>* const & cfa_base::photons_isoEcalRecHitDR04() const{
 
 std::vector<float>* const & cfa_base::photons_isoHcalRecHitDR03() const{
   if(!c_photons_isoHcalRecHitDR03_ && b_photons_isoHcalRecHitDR03_){
+    b_photons_isoHcalRecHitDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoHcalRecHitDR03", &photons_isoHcalRecHitDR03_, &b_photons_isoHcalRecHitDR03_);
     b_photons_isoHcalRecHitDR03_->GetEntry(entry_);
     c_photons_isoHcalRecHitDR03_ = true;
   }
@@ -8524,6 +12610,8 @@ std::vector<float>* const & cfa_base::photons_isoHcalRecHitDR03() const{
 
 std::vector<float>* const & cfa_base::photons_isoHcalRecHitDR04() const{
   if(!c_photons_isoHcalRecHitDR04_ && b_photons_isoHcalRecHitDR04_){
+    b_photons_isoHcalRecHitDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoHcalRecHitDR04", &photons_isoHcalRecHitDR04_, &b_photons_isoHcalRecHitDR04_);
     b_photons_isoHcalRecHitDR04_->GetEntry(entry_);
     c_photons_isoHcalRecHitDR04_ = true;
   }
@@ -8532,6 +12620,8 @@ std::vector<float>* const & cfa_base::photons_isoHcalRecHitDR04() const{
 
 std::vector<float>* const & cfa_base::photons_isoHollowTrkConeDR03() const{
   if(!c_photons_isoHollowTrkConeDR03_ && b_photons_isoHollowTrkConeDR03_){
+    b_photons_isoHollowTrkConeDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoHollowTrkConeDR03", &photons_isoHollowTrkConeDR03_, &b_photons_isoHollowTrkConeDR03_);
     b_photons_isoHollowTrkConeDR03_->GetEntry(entry_);
     c_photons_isoHollowTrkConeDR03_ = true;
   }
@@ -8540,6 +12630,8 @@ std::vector<float>* const & cfa_base::photons_isoHollowTrkConeDR03() const{
 
 std::vector<float>* const & cfa_base::photons_isoHollowTrkConeDR04() const{
   if(!c_photons_isoHollowTrkConeDR04_ && b_photons_isoHollowTrkConeDR04_){
+    b_photons_isoHollowTrkConeDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoHollowTrkConeDR04", &photons_isoHollowTrkConeDR04_, &b_photons_isoHollowTrkConeDR04_);
     b_photons_isoHollowTrkConeDR04_->GetEntry(entry_);
     c_photons_isoHollowTrkConeDR04_ = true;
   }
@@ -8548,6 +12640,8 @@ std::vector<float>* const & cfa_base::photons_isoHollowTrkConeDR04() const{
 
 std::vector<float>* const & cfa_base::photons_isoSolidTrkConeDR03() const{
   if(!c_photons_isoSolidTrkConeDR03_ && b_photons_isoSolidTrkConeDR03_){
+    b_photons_isoSolidTrkConeDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoSolidTrkConeDR03", &photons_isoSolidTrkConeDR03_, &b_photons_isoSolidTrkConeDR03_);
     b_photons_isoSolidTrkConeDR03_->GetEntry(entry_);
     c_photons_isoSolidTrkConeDR03_ = true;
   }
@@ -8556,6 +12650,8 @@ std::vector<float>* const & cfa_base::photons_isoSolidTrkConeDR03() const{
 
 std::vector<float>* const & cfa_base::photons_isoSolidTrkConeDR04() const{
   if(!c_photons_isoSolidTrkConeDR04_ && b_photons_isoSolidTrkConeDR04_){
+    b_photons_isoSolidTrkConeDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_isoSolidTrkConeDR04", &photons_isoSolidTrkConeDR04_, &b_photons_isoSolidTrkConeDR04_);
     b_photons_isoSolidTrkConeDR04_->GetEntry(entry_);
     c_photons_isoSolidTrkConeDR04_ = true;
   }
@@ -8564,6 +12660,8 @@ std::vector<float>* const & cfa_base::photons_isoSolidTrkConeDR04() const{
 
 std::vector<float>* const & cfa_base::photons_maxEnergyXtal() const{
   if(!c_photons_maxEnergyXtal_ && b_photons_maxEnergyXtal_){
+    b_photons_maxEnergyXtal_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_maxEnergyXtal", &photons_maxEnergyXtal_, &b_photons_maxEnergyXtal_);
     b_photons_maxEnergyXtal_->GetEntry(entry_);
     c_photons_maxEnergyXtal_ = true;
   }
@@ -8572,6 +12670,8 @@ std::vector<float>* const & cfa_base::photons_maxEnergyXtal() const{
 
 std::vector<float>* const & cfa_base::photons_nTrkHollowConeDR03() const{
   if(!c_photons_nTrkHollowConeDR03_ && b_photons_nTrkHollowConeDR03_){
+    b_photons_nTrkHollowConeDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_nTrkHollowConeDR03", &photons_nTrkHollowConeDR03_, &b_photons_nTrkHollowConeDR03_);
     b_photons_nTrkHollowConeDR03_->GetEntry(entry_);
     c_photons_nTrkHollowConeDR03_ = true;
   }
@@ -8580,6 +12680,8 @@ std::vector<float>* const & cfa_base::photons_nTrkHollowConeDR03() const{
 
 std::vector<float>* const & cfa_base::photons_nTrkHollowConeDR04() const{
   if(!c_photons_nTrkHollowConeDR04_ && b_photons_nTrkHollowConeDR04_){
+    b_photons_nTrkHollowConeDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_nTrkHollowConeDR04", &photons_nTrkHollowConeDR04_, &b_photons_nTrkHollowConeDR04_);
     b_photons_nTrkHollowConeDR04_->GetEntry(entry_);
     c_photons_nTrkHollowConeDR04_ = true;
   }
@@ -8588,6 +12690,8 @@ std::vector<float>* const & cfa_base::photons_nTrkHollowConeDR04() const{
 
 std::vector<float>* const & cfa_base::photons_nTrkSolidConeDR03() const{
   if(!c_photons_nTrkSolidConeDR03_ && b_photons_nTrkSolidConeDR03_){
+    b_photons_nTrkSolidConeDR03_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_nTrkSolidConeDR03", &photons_nTrkSolidConeDR03_, &b_photons_nTrkSolidConeDR03_);
     b_photons_nTrkSolidConeDR03_->GetEntry(entry_);
     c_photons_nTrkSolidConeDR03_ = true;
   }
@@ -8596,6 +12700,8 @@ std::vector<float>* const & cfa_base::photons_nTrkSolidConeDR03() const{
 
 std::vector<float>* const & cfa_base::photons_nTrkSolidConeDR04() const{
   if(!c_photons_nTrkSolidConeDR04_ && b_photons_nTrkSolidConeDR04_){
+    b_photons_nTrkSolidConeDR04_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_nTrkSolidConeDR04", &photons_nTrkSolidConeDR04_, &b_photons_nTrkSolidConeDR04_);
     b_photons_nTrkSolidConeDR04_->GetEntry(entry_);
     c_photons_nTrkSolidConeDR04_ = true;
   }
@@ -8604,6 +12710,8 @@ std::vector<float>* const & cfa_base::photons_nTrkSolidConeDR04() const{
 
 std::vector<float>* const & cfa_base::photons_phi() const{
   if(!c_photons_phi_ && b_photons_phi_){
+    b_photons_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_phi", &photons_phi_, &b_photons_phi_);
     b_photons_phi_->GetEntry(entry_);
     c_photons_phi_ = true;
   }
@@ -8612,6 +12720,8 @@ std::vector<float>* const & cfa_base::photons_phi() const{
 
 std::vector<float>* const & cfa_base::photons_pt() const{
   if(!c_photons_pt_ && b_photons_pt_){
+    b_photons_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_pt", &photons_pt_, &b_photons_pt_);
     b_photons_pt_->GetEntry(entry_);
     c_photons_pt_ = true;
   }
@@ -8620,6 +12730,8 @@ std::vector<float>* const & cfa_base::photons_pt() const{
 
 std::vector<float>* const & cfa_base::photons_px() const{
   if(!c_photons_px_ && b_photons_px_){
+    b_photons_px_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_px", &photons_px_, &b_photons_px_);
     b_photons_px_->GetEntry(entry_);
     c_photons_px_ = true;
   }
@@ -8628,6 +12740,8 @@ std::vector<float>* const & cfa_base::photons_px() const{
 
 std::vector<float>* const & cfa_base::photons_py() const{
   if(!c_photons_py_ && b_photons_py_){
+    b_photons_py_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_py", &photons_py_, &b_photons_py_);
     b_photons_py_->GetEntry(entry_);
     c_photons_py_ = true;
   }
@@ -8636,6 +12750,8 @@ std::vector<float>* const & cfa_base::photons_py() const{
 
 std::vector<float>* const & cfa_base::photons_pz() const{
   if(!c_photons_pz_ && b_photons_pz_){
+    b_photons_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_pz", &photons_pz_, &b_photons_pz_);
     b_photons_pz_->GetEntry(entry_);
     c_photons_pz_ = true;
   }
@@ -8644,6 +12760,8 @@ std::vector<float>* const & cfa_base::photons_pz() const{
 
 std::vector<float>* const & cfa_base::photons_r9() const{
   if(!c_photons_r9_ && b_photons_r9_){
+    b_photons_r9_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_r9", &photons_r9_, &b_photons_r9_);
     b_photons_r9_->GetEntry(entry_);
     c_photons_r9_ = true;
   }
@@ -8652,6 +12770,8 @@ std::vector<float>* const & cfa_base::photons_r9() const{
 
 std::vector<float>* const & cfa_base::photons_scEnergy() const{
   if(!c_photons_scEnergy_ && b_photons_scEnergy_){
+    b_photons_scEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scEnergy", &photons_scEnergy_, &b_photons_scEnergy_);
     b_photons_scEnergy_->GetEntry(entry_);
     c_photons_scEnergy_ = true;
   }
@@ -8660,6 +12780,8 @@ std::vector<float>* const & cfa_base::photons_scEnergy() const{
 
 std::vector<float>* const & cfa_base::photons_scEta() const{
   if(!c_photons_scEta_ && b_photons_scEta_){
+    b_photons_scEta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scEta", &photons_scEta_, &b_photons_scEta_);
     b_photons_scEta_->GetEntry(entry_);
     c_photons_scEta_ = true;
   }
@@ -8668,6 +12790,8 @@ std::vector<float>* const & cfa_base::photons_scEta() const{
 
 std::vector<float>* const & cfa_base::photons_scEtaWidth() const{
   if(!c_photons_scEtaWidth_ && b_photons_scEtaWidth_){
+    b_photons_scEtaWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scEtaWidth", &photons_scEtaWidth_, &b_photons_scEtaWidth_);
     b_photons_scEtaWidth_->GetEntry(entry_);
     c_photons_scEtaWidth_ = true;
   }
@@ -8676,6 +12800,8 @@ std::vector<float>* const & cfa_base::photons_scEtaWidth() const{
 
 std::vector<float>* const & cfa_base::photons_scPhi() const{
   if(!c_photons_scPhi_ && b_photons_scPhi_){
+    b_photons_scPhi_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scPhi", &photons_scPhi_, &b_photons_scPhi_);
     b_photons_scPhi_->GetEntry(entry_);
     c_photons_scPhi_ = true;
   }
@@ -8684,6 +12810,8 @@ std::vector<float>* const & cfa_base::photons_scPhi() const{
 
 std::vector<float>* const & cfa_base::photons_scPhiWidth() const{
   if(!c_photons_scPhiWidth_ && b_photons_scPhiWidth_){
+    b_photons_scPhiWidth_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scPhiWidth", &photons_scPhiWidth_, &b_photons_scPhiWidth_);
     b_photons_scPhiWidth_->GetEntry(entry_);
     c_photons_scPhiWidth_ = true;
   }
@@ -8692,6 +12820,8 @@ std::vector<float>* const & cfa_base::photons_scPhiWidth() const{
 
 std::vector<float>* const & cfa_base::photons_scRawEnergy() const{
   if(!c_photons_scRawEnergy_ && b_photons_scRawEnergy_){
+    b_photons_scRawEnergy_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_scRawEnergy", &photons_scRawEnergy_, &b_photons_scRawEnergy_);
     b_photons_scRawEnergy_->GetEntry(entry_);
     c_photons_scRawEnergy_ = true;
   }
@@ -8700,6 +12830,8 @@ std::vector<float>* const & cfa_base::photons_scRawEnergy() const{
 
 std::vector<float>* const & cfa_base::photons_sigmaEtaEta() const{
   if(!c_photons_sigmaEtaEta_ && b_photons_sigmaEtaEta_){
+    b_photons_sigmaEtaEta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_sigmaEtaEta", &photons_sigmaEtaEta_, &b_photons_sigmaEtaEta_);
     b_photons_sigmaEtaEta_->GetEntry(entry_);
     c_photons_sigmaEtaEta_ = true;
   }
@@ -8708,6 +12840,8 @@ std::vector<float>* const & cfa_base::photons_sigmaEtaEta() const{
 
 std::vector<float>* const & cfa_base::photons_sigmaIetaIeta() const{
   if(!c_photons_sigmaIetaIeta_ && b_photons_sigmaIetaIeta_){
+    b_photons_sigmaIetaIeta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_sigmaIetaIeta", &photons_sigmaIetaIeta_, &b_photons_sigmaIetaIeta_);
     b_photons_sigmaIetaIeta_->GetEntry(entry_);
     c_photons_sigmaIetaIeta_ = true;
   }
@@ -8716,6 +12850,8 @@ std::vector<float>* const & cfa_base::photons_sigmaIetaIeta() const{
 
 std::vector<float>* const & cfa_base::photons_status() const{
   if(!c_photons_status_ && b_photons_status_){
+    b_photons_status_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_status", &photons_status_, &b_photons_status_);
     b_photons_status_->GetEntry(entry_);
     c_photons_status_ = true;
   }
@@ -8724,6 +12860,8 @@ std::vector<float>* const & cfa_base::photons_status() const{
 
 std::vector<float>* const & cfa_base::photons_tIso() const{
   if(!c_photons_tIso_ && b_photons_tIso_){
+    b_photons_tIso_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_tIso", &photons_tIso_, &b_photons_tIso_);
     b_photons_tIso_->GetEntry(entry_);
     c_photons_tIso_ = true;
   }
@@ -8732,6 +12870,8 @@ std::vector<float>* const & cfa_base::photons_tIso() const{
 
 std::vector<float>* const & cfa_base::photons_theta() const{
   if(!c_photons_theta_ && b_photons_theta_){
+    b_photons_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("photons_theta", &photons_theta_, &b_photons_theta_);
     b_photons_theta_->GetEntry(entry_);
     c_photons_theta_ = true;
   }
@@ -8740,6 +12880,8 @@ std::vector<float>* const & cfa_base::photons_theta() const{
 
 std::vector<float>* const & cfa_base::pv_chi2() const{
   if(!c_pv_chi2_ && b_pv_chi2_){
+    b_pv_chi2_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_chi2", &pv_chi2_, &b_pv_chi2_);
     b_pv_chi2_->GetEntry(entry_);
     c_pv_chi2_ = true;
   }
@@ -8748,6 +12890,8 @@ std::vector<float>* const & cfa_base::pv_chi2() const{
 
 std::vector<float>* const & cfa_base::pv_isFake() const{
   if(!c_pv_isFake_ && b_pv_isFake_){
+    b_pv_isFake_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_isFake", &pv_isFake_, &b_pv_isFake_);
     b_pv_isFake_->GetEntry(entry_);
     c_pv_isFake_ = true;
   }
@@ -8756,6 +12900,8 @@ std::vector<float>* const & cfa_base::pv_isFake() const{
 
 std::vector<float>* const & cfa_base::pv_isValid() const{
   if(!c_pv_isValid_ && b_pv_isValid_){
+    b_pv_isValid_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_isValid", &pv_isValid_, &b_pv_isValid_);
     b_pv_isValid_->GetEntry(entry_);
     c_pv_isValid_ = true;
   }
@@ -8764,6 +12910,8 @@ std::vector<float>* const & cfa_base::pv_isValid() const{
 
 std::vector<float>* const & cfa_base::pv_ndof() const{
   if(!c_pv_ndof_ && b_pv_ndof_){
+    b_pv_ndof_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_ndof", &pv_ndof_, &b_pv_ndof_);
     b_pv_ndof_->GetEntry(entry_);
     c_pv_ndof_ = true;
   }
@@ -8772,6 +12920,8 @@ std::vector<float>* const & cfa_base::pv_ndof() const{
 
 std::vector<float>* const & cfa_base::pv_tracksSize() const{
   if(!c_pv_tracksSize_ && b_pv_tracksSize_){
+    b_pv_tracksSize_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_tracksSize", &pv_tracksSize_, &b_pv_tracksSize_);
     b_pv_tracksSize_->GetEntry(entry_);
     c_pv_tracksSize_ = true;
   }
@@ -8780,6 +12930,8 @@ std::vector<float>* const & cfa_base::pv_tracksSize() const{
 
 std::vector<float>* const & cfa_base::pv_x() const{
   if(!c_pv_x_ && b_pv_x_){
+    b_pv_x_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_x", &pv_x_, &b_pv_x_);
     b_pv_x_->GetEntry(entry_);
     c_pv_x_ = true;
   }
@@ -8788,6 +12940,8 @@ std::vector<float>* const & cfa_base::pv_x() const{
 
 std::vector<float>* const & cfa_base::pv_xErr() const{
   if(!c_pv_xErr_ && b_pv_xErr_){
+    b_pv_xErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_xErr", &pv_xErr_, &b_pv_xErr_);
     b_pv_xErr_->GetEntry(entry_);
     c_pv_xErr_ = true;
   }
@@ -8796,6 +12950,8 @@ std::vector<float>* const & cfa_base::pv_xErr() const{
 
 std::vector<float>* const & cfa_base::pv_y() const{
   if(!c_pv_y_ && b_pv_y_){
+    b_pv_y_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_y", &pv_y_, &b_pv_y_);
     b_pv_y_->GetEntry(entry_);
     c_pv_y_ = true;
   }
@@ -8804,6 +12960,8 @@ std::vector<float>* const & cfa_base::pv_y() const{
 
 std::vector<float>* const & cfa_base::pv_yErr() const{
   if(!c_pv_yErr_ && b_pv_yErr_){
+    b_pv_yErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_yErr", &pv_yErr_, &b_pv_yErr_);
     b_pv_yErr_->GetEntry(entry_);
     c_pv_yErr_ = true;
   }
@@ -8812,6 +12970,8 @@ std::vector<float>* const & cfa_base::pv_yErr() const{
 
 std::vector<float>* const & cfa_base::pv_z() const{
   if(!c_pv_z_ && b_pv_z_){
+    b_pv_z_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_z", &pv_z_, &b_pv_z_);
     b_pv_z_->GetEntry(entry_);
     c_pv_z_ = true;
   }
@@ -8820,6 +12980,8 @@ std::vector<float>* const & cfa_base::pv_z() const{
 
 std::vector<float>* const & cfa_base::pv_zErr() const{
   if(!c_pv_zErr_ && b_pv_zErr_){
+    b_pv_zErr_->SetStatus(true);
+    chainB_.SetBranchAddress("pv_zErr", &pv_zErr_, &b_pv_zErr_);
     b_pv_zErr_->GetEntry(entry_);
     c_pv_zErr_ = true;
   }
@@ -8828,6 +12990,8 @@ std::vector<float>* const & cfa_base::pv_zErr() const{
 
 UInt_t const & cfa_base::run() const{
   if(!c_run_ && b_run_){
+    b_run_->SetStatus(true);
+    chainB_.SetBranchAddress("run", &run_, &b_run_);
     b_run_->GetEntry(entry_);
     c_run_ = true;
   }
@@ -8836,6 +13000,8 @@ UInt_t const & cfa_base::run() const{
 
 std::vector<std::string>* const & cfa_base::standalone_triggerobject_collectionname() const{
   if(!c_standalone_triggerobject_collectionname_ && b_standalone_triggerobject_collectionname_){
+    b_standalone_triggerobject_collectionname_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_collectionname", &standalone_triggerobject_collectionname_, &b_standalone_triggerobject_collectionname_);
     b_standalone_triggerobject_collectionname_->GetEntry(entry_);
     c_standalone_triggerobject_collectionname_ = true;
   }
@@ -8844,6 +13010,8 @@ std::vector<std::string>* const & cfa_base::standalone_triggerobject_collectionn
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_energy() const{
   if(!c_standalone_triggerobject_energy_ && b_standalone_triggerobject_energy_){
+    b_standalone_triggerobject_energy_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_energy", &standalone_triggerobject_energy_, &b_standalone_triggerobject_energy_);
     b_standalone_triggerobject_energy_->GetEntry(entry_);
     c_standalone_triggerobject_energy_ = true;
   }
@@ -8852,6 +13020,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_energy() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_et() const{
   if(!c_standalone_triggerobject_et_ && b_standalone_triggerobject_et_){
+    b_standalone_triggerobject_et_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_et", &standalone_triggerobject_et_, &b_standalone_triggerobject_et_);
     b_standalone_triggerobject_et_->GetEntry(entry_);
     c_standalone_triggerobject_et_ = true;
   }
@@ -8860,6 +13030,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_et() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_eta() const{
   if(!c_standalone_triggerobject_eta_ && b_standalone_triggerobject_eta_){
+    b_standalone_triggerobject_eta_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_eta", &standalone_triggerobject_eta_, &b_standalone_triggerobject_eta_);
     b_standalone_triggerobject_eta_->GetEntry(entry_);
     c_standalone_triggerobject_eta_ = true;
   }
@@ -8868,6 +13040,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_eta() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_phi() const{
   if(!c_standalone_triggerobject_phi_ && b_standalone_triggerobject_phi_){
+    b_standalone_triggerobject_phi_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_phi", &standalone_triggerobject_phi_, &b_standalone_triggerobject_phi_);
     b_standalone_triggerobject_phi_->GetEntry(entry_);
     c_standalone_triggerobject_phi_ = true;
   }
@@ -8876,6 +13050,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_phi() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_pt() const{
   if(!c_standalone_triggerobject_pt_ && b_standalone_triggerobject_pt_){
+    b_standalone_triggerobject_pt_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_pt", &standalone_triggerobject_pt_, &b_standalone_triggerobject_pt_);
     b_standalone_triggerobject_pt_->GetEntry(entry_);
     c_standalone_triggerobject_pt_ = true;
   }
@@ -8884,6 +13060,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_pt() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_px() const{
   if(!c_standalone_triggerobject_px_ && b_standalone_triggerobject_px_){
+    b_standalone_triggerobject_px_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_px", &standalone_triggerobject_px_, &b_standalone_triggerobject_px_);
     b_standalone_triggerobject_px_->GetEntry(entry_);
     c_standalone_triggerobject_px_ = true;
   }
@@ -8892,6 +13070,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_px() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_py() const{
   if(!c_standalone_triggerobject_py_ && b_standalone_triggerobject_py_){
+    b_standalone_triggerobject_py_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_py", &standalone_triggerobject_py_, &b_standalone_triggerobject_py_);
     b_standalone_triggerobject_py_->GetEntry(entry_);
     c_standalone_triggerobject_py_ = true;
   }
@@ -8900,6 +13080,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_py() const{
 
 std::vector<float>* const & cfa_base::standalone_triggerobject_pz() const{
   if(!c_standalone_triggerobject_pz_ && b_standalone_triggerobject_pz_){
+    b_standalone_triggerobject_pz_->SetStatus(true);
+    chainA_.SetBranchAddress("standalone_triggerobject_pz", &standalone_triggerobject_pz_, &b_standalone_triggerobject_pz_);
     b_standalone_triggerobject_pz_->GetEntry(entry_);
     c_standalone_triggerobject_pz_ = true;
   }
@@ -8908,6 +13090,8 @@ std::vector<float>* const & cfa_base::standalone_triggerobject_pz() const{
 
 std::vector<float>* const & cfa_base::taus_Nprongs() const{
   if(!c_taus_Nprongs_ && b_taus_Nprongs_){
+    b_taus_Nprongs_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_Nprongs", &taus_Nprongs_, &b_taus_Nprongs_);
     b_taus_Nprongs_->GetEntry(entry_);
     c_taus_Nprongs_ = true;
   }
@@ -8916,6 +13100,8 @@ std::vector<float>* const & cfa_base::taus_Nprongs() const{
 
 std::vector<float>* const & cfa_base::taus_againstElectron() const{
   if(!c_taus_againstElectron_ && b_taus_againstElectron_){
+    b_taus_againstElectron_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstElectron", &taus_againstElectron_, &b_taus_againstElectron_);
     b_taus_againstElectron_->GetEntry(entry_);
     c_taus_againstElectron_ = true;
   }
@@ -8924,6 +13110,8 @@ std::vector<float>* const & cfa_base::taus_againstElectron() const{
 
 std::vector<float>* const & cfa_base::taus_againstElectronLoose() const{
   if(!c_taus_againstElectronLoose_ && b_taus_againstElectronLoose_){
+    b_taus_againstElectronLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstElectronLoose", &taus_againstElectronLoose_, &b_taus_againstElectronLoose_);
     b_taus_againstElectronLoose_->GetEntry(entry_);
     c_taus_againstElectronLoose_ = true;
   }
@@ -8932,6 +13120,8 @@ std::vector<float>* const & cfa_base::taus_againstElectronLoose() const{
 
 std::vector<float>* const & cfa_base::taus_againstElectronMVA() const{
   if(!c_taus_againstElectronMVA_ && b_taus_againstElectronMVA_){
+    b_taus_againstElectronMVA_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstElectronMVA", &taus_againstElectronMVA_, &b_taus_againstElectronMVA_);
     b_taus_againstElectronMVA_->GetEntry(entry_);
     c_taus_againstElectronMVA_ = true;
   }
@@ -8940,6 +13130,8 @@ std::vector<float>* const & cfa_base::taus_againstElectronMVA() const{
 
 std::vector<float>* const & cfa_base::taus_againstElectronMedium() const{
   if(!c_taus_againstElectronMedium_ && b_taus_againstElectronMedium_){
+    b_taus_againstElectronMedium_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstElectronMedium", &taus_againstElectronMedium_, &b_taus_againstElectronMedium_);
     b_taus_againstElectronMedium_->GetEntry(entry_);
     c_taus_againstElectronMedium_ = true;
   }
@@ -8948,6 +13140,8 @@ std::vector<float>* const & cfa_base::taus_againstElectronMedium() const{
 
 std::vector<float>* const & cfa_base::taus_againstElectronTight() const{
   if(!c_taus_againstElectronTight_ && b_taus_againstElectronTight_){
+    b_taus_againstElectronTight_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstElectronTight", &taus_againstElectronTight_, &b_taus_againstElectronTight_);
     b_taus_againstElectronTight_->GetEntry(entry_);
     c_taus_againstElectronTight_ = true;
   }
@@ -8956,6 +13150,8 @@ std::vector<float>* const & cfa_base::taus_againstElectronTight() const{
 
 std::vector<float>* const & cfa_base::taus_againstMuon() const{
   if(!c_taus_againstMuon_ && b_taus_againstMuon_){
+    b_taus_againstMuon_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstMuon", &taus_againstMuon_, &b_taus_againstMuon_);
     b_taus_againstMuon_->GetEntry(entry_);
     c_taus_againstMuon_ = true;
   }
@@ -8964,6 +13160,8 @@ std::vector<float>* const & cfa_base::taus_againstMuon() const{
 
 std::vector<float>* const & cfa_base::taus_againstMuonLoose() const{
   if(!c_taus_againstMuonLoose_ && b_taus_againstMuonLoose_){
+    b_taus_againstMuonLoose_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstMuonLoose", &taus_againstMuonLoose_, &b_taus_againstMuonLoose_);
     b_taus_againstMuonLoose_->GetEntry(entry_);
     c_taus_againstMuonLoose_ = true;
   }
@@ -8972,6 +13170,8 @@ std::vector<float>* const & cfa_base::taus_againstMuonLoose() const{
 
 std::vector<float>* const & cfa_base::taus_againstMuonMedium() const{
   if(!c_taus_againstMuonMedium_ && b_taus_againstMuonMedium_){
+    b_taus_againstMuonMedium_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstMuonMedium", &taus_againstMuonMedium_, &b_taus_againstMuonMedium_);
     b_taus_againstMuonMedium_->GetEntry(entry_);
     c_taus_againstMuonMedium_ = true;
   }
@@ -8980,6 +13180,8 @@ std::vector<float>* const & cfa_base::taus_againstMuonMedium() const{
 
 std::vector<float>* const & cfa_base::taus_againstMuonTight() const{
   if(!c_taus_againstMuonTight_ && b_taus_againstMuonTight_){
+    b_taus_againstMuonTight_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_againstMuonTight", &taus_againstMuonTight_, &b_taus_againstMuonTight_);
     b_taus_againstMuonTight_->GetEntry(entry_);
     c_taus_againstMuonTight_ = true;
   }
@@ -8988,6 +13190,8 @@ std::vector<float>* const & cfa_base::taus_againstMuonTight() const{
 
 std::vector<float>* const & cfa_base::taus_byIsoUsingLeadingPi() const{
   if(!c_taus_byIsoUsingLeadingPi_ && b_taus_byIsoUsingLeadingPi_){
+    b_taus_byIsoUsingLeadingPi_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byIsoUsingLeadingPi", &taus_byIsoUsingLeadingPi_, &b_taus_byIsoUsingLeadingPi_);
     b_taus_byIsoUsingLeadingPi_->GetEntry(entry_);
     c_taus_byIsoUsingLeadingPi_ = true;
   }
@@ -8996,6 +13200,8 @@ std::vector<float>* const & cfa_base::taus_byIsoUsingLeadingPi() const{
 
 std::vector<float>* const & cfa_base::taus_byIsolation() const{
   if(!c_taus_byIsolation_ && b_taus_byIsolation_){
+    b_taus_byIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byIsolation", &taus_byIsolation_, &b_taus_byIsolation_);
     b_taus_byIsolation_->GetEntry(entry_);
     c_taus_byIsolation_ = true;
   }
@@ -9004,6 +13210,8 @@ std::vector<float>* const & cfa_base::taus_byIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_byLooseIsolation() const{
   if(!c_taus_byLooseIsolation_ && b_taus_byLooseIsolation_){
+    b_taus_byLooseIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byLooseIsolation", &taus_byLooseIsolation_, &b_taus_byLooseIsolation_);
     b_taus_byLooseIsolation_->GetEntry(entry_);
     c_taus_byLooseIsolation_ = true;
   }
@@ -9012,6 +13220,8 @@ std::vector<float>* const & cfa_base::taus_byLooseIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_byLooseIsolationDeltaBetaCorr() const{
   if(!c_taus_byLooseIsolationDeltaBetaCorr_ && b_taus_byLooseIsolationDeltaBetaCorr_){
+    b_taus_byLooseIsolationDeltaBetaCorr_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byLooseIsolationDeltaBetaCorr", &taus_byLooseIsolationDeltaBetaCorr_, &b_taus_byLooseIsolationDeltaBetaCorr_);
     b_taus_byLooseIsolationDeltaBetaCorr_->GetEntry(entry_);
     c_taus_byLooseIsolationDeltaBetaCorr_ = true;
   }
@@ -9020,6 +13230,8 @@ std::vector<float>* const & cfa_base::taus_byLooseIsolationDeltaBetaCorr() const
 
 std::vector<float>* const & cfa_base::taus_byMediumIsolation() const{
   if(!c_taus_byMediumIsolation_ && b_taus_byMediumIsolation_){
+    b_taus_byMediumIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byMediumIsolation", &taus_byMediumIsolation_, &b_taus_byMediumIsolation_);
     b_taus_byMediumIsolation_->GetEntry(entry_);
     c_taus_byMediumIsolation_ = true;
   }
@@ -9028,6 +13240,8 @@ std::vector<float>* const & cfa_base::taus_byMediumIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_byMediumIsolationDeltaBetaCorr() const{
   if(!c_taus_byMediumIsolationDeltaBetaCorr_ && b_taus_byMediumIsolationDeltaBetaCorr_){
+    b_taus_byMediumIsolationDeltaBetaCorr_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byMediumIsolationDeltaBetaCorr", &taus_byMediumIsolationDeltaBetaCorr_, &b_taus_byMediumIsolationDeltaBetaCorr_);
     b_taus_byMediumIsolationDeltaBetaCorr_->GetEntry(entry_);
     c_taus_byMediumIsolationDeltaBetaCorr_ = true;
   }
@@ -9036,6 +13250,8 @@ std::vector<float>* const & cfa_base::taus_byMediumIsolationDeltaBetaCorr() cons
 
 std::vector<float>* const & cfa_base::taus_byTightIsolation() const{
   if(!c_taus_byTightIsolation_ && b_taus_byTightIsolation_){
+    b_taus_byTightIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byTightIsolation", &taus_byTightIsolation_, &b_taus_byTightIsolation_);
     b_taus_byTightIsolation_->GetEntry(entry_);
     c_taus_byTightIsolation_ = true;
   }
@@ -9044,6 +13260,8 @@ std::vector<float>* const & cfa_base::taus_byTightIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_byTightIsolationDeltaBetaCorr() const{
   if(!c_taus_byTightIsolationDeltaBetaCorr_ && b_taus_byTightIsolationDeltaBetaCorr_){
+    b_taus_byTightIsolationDeltaBetaCorr_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byTightIsolationDeltaBetaCorr", &taus_byTightIsolationDeltaBetaCorr_, &b_taus_byTightIsolationDeltaBetaCorr_);
     b_taus_byTightIsolationDeltaBetaCorr_->GetEntry(entry_);
     c_taus_byTightIsolationDeltaBetaCorr_ = true;
   }
@@ -9052,6 +13270,8 @@ std::vector<float>* const & cfa_base::taus_byTightIsolationDeltaBetaCorr() const
 
 std::vector<float>* const & cfa_base::taus_byVLooseIsolation() const{
   if(!c_taus_byVLooseIsolation_ && b_taus_byVLooseIsolation_){
+    b_taus_byVLooseIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byVLooseIsolation", &taus_byVLooseIsolation_, &b_taus_byVLooseIsolation_);
     b_taus_byVLooseIsolation_->GetEntry(entry_);
     c_taus_byVLooseIsolation_ = true;
   }
@@ -9060,6 +13280,8 @@ std::vector<float>* const & cfa_base::taus_byVLooseIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_byVLooseIsolationDeltaBetaCorr() const{
   if(!c_taus_byVLooseIsolationDeltaBetaCorr_ && b_taus_byVLooseIsolationDeltaBetaCorr_){
+    b_taus_byVLooseIsolationDeltaBetaCorr_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_byVLooseIsolationDeltaBetaCorr", &taus_byVLooseIsolationDeltaBetaCorr_, &b_taus_byVLooseIsolationDeltaBetaCorr_);
     b_taus_byVLooseIsolationDeltaBetaCorr_->GetEntry(entry_);
     c_taus_byVLooseIsolationDeltaBetaCorr_ = true;
   }
@@ -9068,6 +13290,8 @@ std::vector<float>* const & cfa_base::taus_byVLooseIsolationDeltaBetaCorr() cons
 
 std::vector<float>* const & cfa_base::taus_charge() const{
   if(!c_taus_charge_ && b_taus_charge_){
+    b_taus_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_charge", &taus_charge_, &b_taus_charge_);
     b_taus_charge_->GetEntry(entry_);
     c_taus_charge_ = true;
   }
@@ -9076,6 +13300,8 @@ std::vector<float>* const & cfa_base::taus_charge() const{
 
 std::vector<float>* const & cfa_base::taus_decayModeFinding() const{
   if(!c_taus_decayModeFinding_ && b_taus_decayModeFinding_){
+    b_taus_decayModeFinding_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_decayModeFinding", &taus_decayModeFinding_, &b_taus_decayModeFinding_);
     b_taus_decayModeFinding_->GetEntry(entry_);
     c_taus_decayModeFinding_ = true;
   }
@@ -9084,6 +13310,8 @@ std::vector<float>* const & cfa_base::taus_decayModeFinding() const{
 
 std::vector<float>* const & cfa_base::taus_ecalIsoUsingLeadingPi() const{
   if(!c_taus_ecalIsoUsingLeadingPi_ && b_taus_ecalIsoUsingLeadingPi_){
+    b_taus_ecalIsoUsingLeadingPi_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_ecalIsoUsingLeadingPi", &taus_ecalIsoUsingLeadingPi_, &b_taus_ecalIsoUsingLeadingPi_);
     b_taus_ecalIsoUsingLeadingPi_->GetEntry(entry_);
     c_taus_ecalIsoUsingLeadingPi_ = true;
   }
@@ -9092,6 +13320,8 @@ std::vector<float>* const & cfa_base::taus_ecalIsoUsingLeadingPi() const{
 
 std::vector<float>* const & cfa_base::taus_ecalIsolation() const{
   if(!c_taus_ecalIsolation_ && b_taus_ecalIsolation_){
+    b_taus_ecalIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_ecalIsolation", &taus_ecalIsolation_, &b_taus_ecalIsolation_);
     b_taus_ecalIsolation_->GetEntry(entry_);
     c_taus_ecalIsolation_ = true;
   }
@@ -9100,6 +13330,8 @@ std::vector<float>* const & cfa_base::taus_ecalIsolation() const{
 
 std::vector<float>* const & cfa_base::taus_ecalStripSumEOverPLead() const{
   if(!c_taus_ecalStripSumEOverPLead_ && b_taus_ecalStripSumEOverPLead_){
+    b_taus_ecalStripSumEOverPLead_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_ecalStripSumEOverPLead", &taus_ecalStripSumEOverPLead_, &b_taus_ecalStripSumEOverPLead_);
     b_taus_ecalStripSumEOverPLead_->GetEntry(entry_);
     c_taus_ecalStripSumEOverPLead_ = true;
   }
@@ -9108,6 +13340,8 @@ std::vector<float>* const & cfa_base::taus_ecalStripSumEOverPLead() const{
 
 std::vector<float>* const & cfa_base::taus_elecPreIdDecision() const{
   if(!c_taus_elecPreIdDecision_ && b_taus_elecPreIdDecision_){
+    b_taus_elecPreIdDecision_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_elecPreIdDecision", &taus_elecPreIdDecision_, &b_taus_elecPreIdDecision_);
     b_taus_elecPreIdDecision_->GetEntry(entry_);
     c_taus_elecPreIdDecision_ = true;
   }
@@ -9116,6 +13350,8 @@ std::vector<float>* const & cfa_base::taus_elecPreIdDecision() const{
 
 std::vector<float>* const & cfa_base::taus_elecPreIdOutput() const{
   if(!c_taus_elecPreIdOutput_ && b_taus_elecPreIdOutput_){
+    b_taus_elecPreIdOutput_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_elecPreIdOutput", &taus_elecPreIdOutput_, &b_taus_elecPreIdOutput_);
     b_taus_elecPreIdOutput_->GetEntry(entry_);
     c_taus_elecPreIdOutput_ = true;
   }
@@ -9124,6 +13360,8 @@ std::vector<float>* const & cfa_base::taus_elecPreIdOutput() const{
 
 std::vector<float>* const & cfa_base::taus_emf() const{
   if(!c_taus_emf_ && b_taus_emf_){
+    b_taus_emf_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_emf", &taus_emf_, &b_taus_emf_);
     b_taus_emf_->GetEntry(entry_);
     c_taus_emf_ = true;
   }
@@ -9132,6 +13370,8 @@ std::vector<float>* const & cfa_base::taus_emf() const{
 
 std::vector<float>* const & cfa_base::taus_energy() const{
   if(!c_taus_energy_ && b_taus_energy_){
+    b_taus_energy_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_energy", &taus_energy_, &b_taus_energy_);
     b_taus_energy_->GetEntry(entry_);
     c_taus_energy_ = true;
   }
@@ -9140,6 +13380,8 @@ std::vector<float>* const & cfa_base::taus_energy() const{
 
 std::vector<float>* const & cfa_base::taus_et() const{
   if(!c_taus_et_ && b_taus_et_){
+    b_taus_et_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_et", &taus_et_, &b_taus_et_);
     b_taus_et_->GetEntry(entry_);
     c_taus_et_ = true;
   }
@@ -9148,6 +13390,8 @@ std::vector<float>* const & cfa_base::taus_et() const{
 
 std::vector<float>* const & cfa_base::taus_eta() const{
   if(!c_taus_eta_ && b_taus_eta_){
+    b_taus_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_eta", &taus_eta_, &b_taus_eta_);
     b_taus_eta_->GetEntry(entry_);
     c_taus_eta_ = true;
   }
@@ -9156,6 +13400,8 @@ std::vector<float>* const & cfa_base::taus_eta() const{
 
 std::vector<float>* const & cfa_base::taus_hcal3x3OverPLead() const{
   if(!c_taus_hcal3x3OverPLead_ && b_taus_hcal3x3OverPLead_){
+    b_taus_hcal3x3OverPLead_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_hcal3x3OverPLead", &taus_hcal3x3OverPLead_, &b_taus_hcal3x3OverPLead_);
     b_taus_hcal3x3OverPLead_->GetEntry(entry_);
     c_taus_hcal3x3OverPLead_ = true;
   }
@@ -9164,6 +13410,8 @@ std::vector<float>* const & cfa_base::taus_hcal3x3OverPLead() const{
 
 std::vector<float>* const & cfa_base::taus_hcalMaxOverPLead() const{
   if(!c_taus_hcalMaxOverPLead_ && b_taus_hcalMaxOverPLead_){
+    b_taus_hcalMaxOverPLead_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_hcalMaxOverPLead", &taus_hcalMaxOverPLead_, &b_taus_hcalMaxOverPLead_);
     b_taus_hcalMaxOverPLead_->GetEntry(entry_);
     c_taus_hcalMaxOverPLead_ = true;
   }
@@ -9172,6 +13420,8 @@ std::vector<float>* const & cfa_base::taus_hcalMaxOverPLead() const{
 
 std::vector<float>* const & cfa_base::taus_hcalTotOverPLead() const{
   if(!c_taus_hcalTotOverPLead_ && b_taus_hcalTotOverPLead_){
+    b_taus_hcalTotOverPLead_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_hcalTotOverPLead", &taus_hcalTotOverPLead_, &b_taus_hcalTotOverPLead_);
     b_taus_hcalTotOverPLead_->GetEntry(entry_);
     c_taus_hcalTotOverPLead_ = true;
   }
@@ -9180,6 +13430,8 @@ std::vector<float>* const & cfa_base::taus_hcalTotOverPLead() const{
 
 std::vector<float>* const & cfa_base::taus_isoPFChargedHadrCandsPtSum() const{
   if(!c_taus_isoPFChargedHadrCandsPtSum_ && b_taus_isoPFChargedHadrCandsPtSum_){
+    b_taus_isoPFChargedHadrCandsPtSum_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_isoPFChargedHadrCandsPtSum", &taus_isoPFChargedHadrCandsPtSum_, &b_taus_isoPFChargedHadrCandsPtSum_);
     b_taus_isoPFChargedHadrCandsPtSum_->GetEntry(entry_);
     c_taus_isoPFChargedHadrCandsPtSum_ = true;
   }
@@ -9188,6 +13440,8 @@ std::vector<float>* const & cfa_base::taus_isoPFChargedHadrCandsPtSum() const{
 
 std::vector<float>* const & cfa_base::taus_isoPFGammaCandsEtSum() const{
   if(!c_taus_isoPFGammaCandsEtSum_ && b_taus_isoPFGammaCandsEtSum_){
+    b_taus_isoPFGammaCandsEtSum_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_isoPFGammaCandsEtSum", &taus_isoPFGammaCandsEtSum_, &b_taus_isoPFGammaCandsEtSum_);
     b_taus_isoPFGammaCandsEtSum_->GetEntry(entry_);
     c_taus_isoPFGammaCandsEtSum_ = true;
   }
@@ -9196,6 +13450,8 @@ std::vector<float>* const & cfa_base::taus_isoPFGammaCandsEtSum() const{
 
 std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_ECAL_eta() const{
   if(!c_taus_leadPFChargedHadrCand_ECAL_eta_ && b_taus_leadPFChargedHadrCand_ECAL_eta_){
+    b_taus_leadPFChargedHadrCand_ECAL_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadPFChargedHadrCand_ECAL_eta", &taus_leadPFChargedHadrCand_ECAL_eta_, &b_taus_leadPFChargedHadrCand_ECAL_eta_);
     b_taus_leadPFChargedHadrCand_ECAL_eta_->GetEntry(entry_);
     c_taus_leadPFChargedHadrCand_ECAL_eta_ = true;
   }
@@ -9204,6 +13460,8 @@ std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_ECAL_eta() cons
 
 std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_charge() const{
   if(!c_taus_leadPFChargedHadrCand_charge_ && b_taus_leadPFChargedHadrCand_charge_){
+    b_taus_leadPFChargedHadrCand_charge_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadPFChargedHadrCand_charge", &taus_leadPFChargedHadrCand_charge_, &b_taus_leadPFChargedHadrCand_charge_);
     b_taus_leadPFChargedHadrCand_charge_->GetEntry(entry_);
     c_taus_leadPFChargedHadrCand_charge_ = true;
   }
@@ -9212,6 +13470,8 @@ std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_charge() const{
 
 std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_eta() const{
   if(!c_taus_leadPFChargedHadrCand_eta_ && b_taus_leadPFChargedHadrCand_eta_){
+    b_taus_leadPFChargedHadrCand_eta_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadPFChargedHadrCand_eta", &taus_leadPFChargedHadrCand_eta_, &b_taus_leadPFChargedHadrCand_eta_);
     b_taus_leadPFChargedHadrCand_eta_->GetEntry(entry_);
     c_taus_leadPFChargedHadrCand_eta_ = true;
   }
@@ -9220,6 +13480,8 @@ std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_eta() const{
 
 std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_phi() const{
   if(!c_taus_leadPFChargedHadrCand_phi_ && b_taus_leadPFChargedHadrCand_phi_){
+    b_taus_leadPFChargedHadrCand_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadPFChargedHadrCand_phi", &taus_leadPFChargedHadrCand_phi_, &b_taus_leadPFChargedHadrCand_phi_);
     b_taus_leadPFChargedHadrCand_phi_->GetEntry(entry_);
     c_taus_leadPFChargedHadrCand_phi_ = true;
   }
@@ -9228,6 +13490,8 @@ std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_phi() const{
 
 std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_pt() const{
   if(!c_taus_leadPFChargedHadrCand_pt_ && b_taus_leadPFChargedHadrCand_pt_){
+    b_taus_leadPFChargedHadrCand_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadPFChargedHadrCand_pt", &taus_leadPFChargedHadrCand_pt_, &b_taus_leadPFChargedHadrCand_pt_);
     b_taus_leadPFChargedHadrCand_pt_->GetEntry(entry_);
     c_taus_leadPFChargedHadrCand_pt_ = true;
   }
@@ -9236,6 +13500,8 @@ std::vector<float>* const & cfa_base::taus_leadPFChargedHadrCand_pt() const{
 
 std::vector<float>* const & cfa_base::taus_leadingTrackFinding() const{
   if(!c_taus_leadingTrackFinding_ && b_taus_leadingTrackFinding_){
+    b_taus_leadingTrackFinding_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadingTrackFinding", &taus_leadingTrackFinding_, &b_taus_leadingTrackFinding_);
     b_taus_leadingTrackFinding_->GetEntry(entry_);
     c_taus_leadingTrackFinding_ = true;
   }
@@ -9244,6 +13510,8 @@ std::vector<float>* const & cfa_base::taus_leadingTrackFinding() const{
 
 std::vector<float>* const & cfa_base::taus_leadingTrackPtCut() const{
   if(!c_taus_leadingTrackPtCut_ && b_taus_leadingTrackPtCut_){
+    b_taus_leadingTrackPtCut_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_leadingTrackPtCut", &taus_leadingTrackPtCut_, &b_taus_leadingTrackPtCut_);
     b_taus_leadingTrackPtCut_->GetEntry(entry_);
     c_taus_leadingTrackPtCut_ = true;
   }
@@ -9252,6 +13520,8 @@ std::vector<float>* const & cfa_base::taus_leadingTrackPtCut() const{
 
 std::vector<float>* const & cfa_base::taus_muDecision() const{
   if(!c_taus_muDecision_ && b_taus_muDecision_){
+    b_taus_muDecision_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_muDecision", &taus_muDecision_, &b_taus_muDecision_);
     b_taus_muDecision_->GetEntry(entry_);
     c_taus_muDecision_ = true;
   }
@@ -9260,6 +13530,8 @@ std::vector<float>* const & cfa_base::taus_muDecision() const{
 
 std::vector<float>* const & cfa_base::taus_phi() const{
   if(!c_taus_phi_ && b_taus_phi_){
+    b_taus_phi_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_phi", &taus_phi_, &b_taus_phi_);
     b_taus_phi_->GetEntry(entry_);
     c_taus_phi_ = true;
   }
@@ -9268,6 +13540,8 @@ std::vector<float>* const & cfa_base::taus_phi() const{
 
 std::vector<float>* const & cfa_base::taus_pt() const{
   if(!c_taus_pt_ && b_taus_pt_){
+    b_taus_pt_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_pt", &taus_pt_, &b_taus_pt_);
     b_taus_pt_->GetEntry(entry_);
     c_taus_pt_ = true;
   }
@@ -9276,6 +13550,8 @@ std::vector<float>* const & cfa_base::taus_pt() const{
 
 std::vector<float>* const & cfa_base::taus_px() const{
   if(!c_taus_px_ && b_taus_px_){
+    b_taus_px_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_px", &taus_px_, &b_taus_px_);
     b_taus_px_->GetEntry(entry_);
     c_taus_px_ = true;
   }
@@ -9284,6 +13560,8 @@ std::vector<float>* const & cfa_base::taus_px() const{
 
 std::vector<float>* const & cfa_base::taus_py() const{
   if(!c_taus_py_ && b_taus_py_){
+    b_taus_py_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_py", &taus_py_, &b_taus_py_);
     b_taus_py_->GetEntry(entry_);
     c_taus_py_ = true;
   }
@@ -9292,6 +13570,8 @@ std::vector<float>* const & cfa_base::taus_py() const{
 
 std::vector<float>* const & cfa_base::taus_pz() const{
   if(!c_taus_pz_ && b_taus_pz_){
+    b_taus_pz_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_pz", &taus_pz_, &b_taus_pz_);
     b_taus_pz_->GetEntry(entry_);
     c_taus_pz_ = true;
   }
@@ -9300,6 +13580,8 @@ std::vector<float>* const & cfa_base::taus_pz() const{
 
 std::vector<float>* const & cfa_base::taus_signalPFChargedHadrCandsSize() const{
   if(!c_taus_signalPFChargedHadrCandsSize_ && b_taus_signalPFChargedHadrCandsSize_){
+    b_taus_signalPFChargedHadrCandsSize_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_signalPFChargedHadrCandsSize", &taus_signalPFChargedHadrCandsSize_, &b_taus_signalPFChargedHadrCandsSize_);
     b_taus_signalPFChargedHadrCandsSize_->GetEntry(entry_);
     c_taus_signalPFChargedHadrCandsSize_ = true;
   }
@@ -9308,6 +13590,8 @@ std::vector<float>* const & cfa_base::taus_signalPFChargedHadrCandsSize() const{
 
 std::vector<float>* const & cfa_base::taus_status() const{
   if(!c_taus_status_ && b_taus_status_){
+    b_taus_status_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_status", &taus_status_, &b_taus_status_);
     b_taus_status_->GetEntry(entry_);
     c_taus_status_ = true;
   }
@@ -9316,6 +13600,8 @@ std::vector<float>* const & cfa_base::taus_status() const{
 
 std::vector<float>* const & cfa_base::taus_taNC() const{
   if(!c_taus_taNC_ && b_taus_taNC_){
+    b_taus_taNC_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_taNC", &taus_taNC_, &b_taus_taNC_);
     b_taus_taNC_->GetEntry(entry_);
     c_taus_taNC_ = true;
   }
@@ -9324,6 +13610,8 @@ std::vector<float>* const & cfa_base::taus_taNC() const{
 
 std::vector<float>* const & cfa_base::taus_taNC_half() const{
   if(!c_taus_taNC_half_ && b_taus_taNC_half_){
+    b_taus_taNC_half_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_taNC_half", &taus_taNC_half_, &b_taus_taNC_half_);
     b_taus_taNC_half_->GetEntry(entry_);
     c_taus_taNC_half_ = true;
   }
@@ -9332,6 +13620,8 @@ std::vector<float>* const & cfa_base::taus_taNC_half() const{
 
 std::vector<float>* const & cfa_base::taus_taNC_one() const{
   if(!c_taus_taNC_one_ && b_taus_taNC_one_){
+    b_taus_taNC_one_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_taNC_one", &taus_taNC_one_, &b_taus_taNC_one_);
     b_taus_taNC_one_->GetEntry(entry_);
     c_taus_taNC_one_ = true;
   }
@@ -9340,6 +13630,8 @@ std::vector<float>* const & cfa_base::taus_taNC_one() const{
 
 std::vector<float>* const & cfa_base::taus_taNC_quarter() const{
   if(!c_taus_taNC_quarter_ && b_taus_taNC_quarter_){
+    b_taus_taNC_quarter_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_taNC_quarter", &taus_taNC_quarter_, &b_taus_taNC_quarter_);
     b_taus_taNC_quarter_->GetEntry(entry_);
     c_taus_taNC_quarter_ = true;
   }
@@ -9348,6 +13640,8 @@ std::vector<float>* const & cfa_base::taus_taNC_quarter() const{
 
 std::vector<float>* const & cfa_base::taus_taNC_tenth() const{
   if(!c_taus_taNC_tenth_ && b_taus_taNC_tenth_){
+    b_taus_taNC_tenth_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_taNC_tenth", &taus_taNC_tenth_, &b_taus_taNC_tenth_);
     b_taus_taNC_tenth_->GetEntry(entry_);
     c_taus_taNC_tenth_ = true;
   }
@@ -9356,6 +13650,8 @@ std::vector<float>* const & cfa_base::taus_taNC_tenth() const{
 
 std::vector<float>* const & cfa_base::taus_theta() const{
   if(!c_taus_theta_ && b_taus_theta_){
+    b_taus_theta_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_theta", &taus_theta_, &b_taus_theta_);
     b_taus_theta_->GetEntry(entry_);
     c_taus_theta_ = true;
   }
@@ -9364,6 +13660,8 @@ std::vector<float>* const & cfa_base::taus_theta() const{
 
 std::vector<float>* const & cfa_base::taus_tkIsoUsingLeadingPi() const{
   if(!c_taus_tkIsoUsingLeadingPi_ && b_taus_tkIsoUsingLeadingPi_){
+    b_taus_tkIsoUsingLeadingPi_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_tkIsoUsingLeadingPi", &taus_tkIsoUsingLeadingPi_, &b_taus_tkIsoUsingLeadingPi_);
     b_taus_tkIsoUsingLeadingPi_->GetEntry(entry_);
     c_taus_tkIsoUsingLeadingPi_ = true;
   }
@@ -9372,6 +13670,8 @@ std::vector<float>* const & cfa_base::taus_tkIsoUsingLeadingPi() const{
 
 std::vector<float>* const & cfa_base::taus_trackIsolation() const{
   if(!c_taus_trackIsolation_ && b_taus_trackIsolation_){
+    b_taus_trackIsolation_->SetStatus(true);
+    chainB_.SetBranchAddress("taus_trackIsolation", &taus_trackIsolation_, &b_taus_trackIsolation_);
     b_taus_trackIsolation_->GetEntry(entry_);
     c_taus_trackIsolation_ = true;
   }
@@ -9380,6 +13680,8 @@ std::vector<float>* const & cfa_base::taus_trackIsolation() const{
 
 Int_t const & cfa_base::trackingfailurefilter_decision() const{
   if(!c_trackingfailurefilter_decision_ && b_trackingfailurefilter_decision_){
+    b_trackingfailurefilter_decision_->SetStatus(true);
+    chainA_.SetBranchAddress("trackingfailurefilter_decision", &trackingfailurefilter_decision_, &b_trackingfailurefilter_decision_);
     b_trackingfailurefilter_decision_->GetEntry(entry_);
     c_trackingfailurefilter_decision_ = true;
   }
@@ -9388,6 +13690,8 @@ Int_t const & cfa_base::trackingfailurefilter_decision() const{
 
 std::vector<std::string>* const & cfa_base::trigger_name() const{
   if(!c_trigger_name_ && b_trigger_name_){
+    b_trigger_name_->SetStatus(true);
+    chainA_.SetBranchAddress("trigger_name", &trigger_name_, &b_trigger_name_);
     b_trigger_name_->GetEntry(entry_);
     c_trigger_name_ = true;
   }
@@ -9396,6 +13700,8 @@ std::vector<std::string>* const & cfa_base::trigger_name() const{
 
 std::vector<float>* const & cfa_base::trigger_prescalevalue() const{
   if(!c_trigger_prescalevalue_ && b_trigger_prescalevalue_){
+    b_trigger_prescalevalue_->SetStatus(true);
+    chainA_.SetBranchAddress("trigger_prescalevalue", &trigger_prescalevalue_, &b_trigger_prescalevalue_);
     b_trigger_prescalevalue_->GetEntry(entry_);
     c_trigger_prescalevalue_ = true;
   }
@@ -9404,6 +13710,8 @@ std::vector<float>* const & cfa_base::trigger_prescalevalue() const{
 
 Float_t const & cfa_base::weight() const{
   if(!c_weight_ && b_weight_){
+    b_weight_->SetStatus(true);
+    chainB_.SetBranchAddress("weight", &weight_, &b_weight_);
     b_weight_->GetEntry(entry_);
     c_weight_ = true;
   }
