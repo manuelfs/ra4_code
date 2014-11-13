@@ -94,7 +94,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> signal_muons = GetMuons();
     vector<int> veto_muons = GetMuons(false);
-    vector<int> good_jets = GetJets(signal_electrons, signal_muons, veto_electrons, veto_muons, 20.0, 2.4, tree.ht);
+    vector<int> good_jets = GetJets(signal_electrons, signal_muons, veto_electrons, veto_muons, 20.0, 2.4);
     tree.nels  = signal_electrons.size();
     tree.nvels = veto_electrons.size();
     tree.nmus  = signal_muons.size();

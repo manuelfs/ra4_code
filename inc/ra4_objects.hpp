@@ -53,7 +53,7 @@ public:
   // Jets
   std::vector<int> GetJets(const std::vector<int> &SigEl, const std::vector<int> &SigMu, 
                            const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
-			   const double pt_thresh, const double eta_thresh, float &HT) const;
+			   const double pt_thresh, const double eta_thresh) const;
   bool IsGoodJet(const unsigned ijet, const double ptThresh, const double etaThresh) const;
   bool IsBasicJet(const unsigned ijet) const;
 

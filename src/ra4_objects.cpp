@@ -79,7 +79,6 @@ bool ra4_objects::IsVetoIdMuon(unsigned imu) const {
 
 bool ra4_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-
   float d0PV = mus_tk_d0dum()->at(imu)-pv_x()->at(0)*sin(mus_tk_phi()->at(imu))+pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
 
   bool isPF(false);
@@ -278,8 +277,7 @@ bool ra4_objects::IsGoodIsoTrack(unsigned itrk) const{
 /////////////////////////////////////////////////////////////////////////
 vector<int> ra4_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
 				 const vector<int> &VetoEl, const vector<int> &VetoMu,
-                                 const double pt_thresh, const double eta_thresh,
-				 float &HT) const {
+                                 const double pt_thresh, const double eta_thresh) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_pt()->size(), false);
 
@@ -326,11 +324,7 @@ vector<int> ra4_objects::GetJets(const vector<int> &SigEl, const vector<int> &Si
     // }
     // if(!useJet) continue;
 
-    HT = 0.;
-    if(jets_pt()->at(ijet) > 40.) {
-      HT += jets_pt()->at(ijet);
-      jets.push_back(ijet);
-    }
+    jets.push_back(ijet);
   } // Loop over jets
   return jets;
 }
