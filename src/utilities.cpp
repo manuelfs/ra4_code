@@ -154,6 +154,21 @@ TString RoundNumber(double num, int decimals, double denom){
   return result;
 }
 
+long double AddInQuadrature(long double x, long double y){
+  if(fabs(y)>fabs(x)){
+    const long double temp = y;
+    y=x;
+    x=temp;
+  }
+  const long double rat=y/x;
+  return fabs(x)*sqrt(1.0L+rat*rat);
+}
+
+long double GetMass(long double e, long double px, long double py, long double pz){
+  px/=e; py/=e; pz/=e;
+  return fabs(e)*sqrt(1.0L-px*px-py*py-pz*pz);
+}
+
 bool Contains(const std::string& text, const std::string& pattern){
   return text.find(pattern) != std::string::npos;
 }

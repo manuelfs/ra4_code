@@ -24,6 +24,8 @@ bool dd_small2big(const double_double& left, const double_double& right);
 double deltaphi(double phi1, double phi2);
 float dR(float eta1, float phi1, float eta2, float phi2);
 TString RoundNumber(double num, int decimals, double denom=1.);
+long double AddInQuadrature(long double x, long double y);
+long double GetMass(long double e, long double px, long double py, long double pz);
 bool Contains(const std::string& text, const std::string& pattern);
 
 std::vector<std::string> Tokenize(const std::string& input,

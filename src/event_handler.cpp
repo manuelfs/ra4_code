@@ -173,30 +173,19 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////   Fat Jets   ////////////////
     tree.nfjets = 0;
     tree.mj = 0;
-    csv_sorted.resize(0);
     tree.v_fjets_pt.resize(0); tree.v_fjets_mj.resize(0); 
     tree.v_fjets_eta.resize(0); tree.v_fjets_phi.resize(0);
-    std::vector<std::vector<int> > constituent_indices(0);
     for(size_t ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
-      pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
-      csv_sorted.push_back(make_pair(ijet, pt));
-    }
-    if(csv_sorted.size() >= 2)
-      sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
-    for(size_t iijet(0); iijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++iijet){
-      size_t ijet(csv_sorted[iijet].first);
-      pt = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)+pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2));
-      tree.v_fjets_pt.push_back(pt);
-      tree.v_fjets_eta.push_back(fastjets_AK4_R1p2_R0p5pT30_eta()->at(ijet));
-      tree.v_fjets_phi.push_back(fastjets_AK4_R1p2_R0p5pT30_phi()->at(ijet));
-      float mj = sqrt(pow(fastjets_AK4_R1p2_R0p5pT30_energy()->at(ijet),2)
-                      -pow(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),2)
-                      -pow(fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),2)
-                      -pow(fastjets_AK4_R1p2_R0p5pT30_pz()->at(ijet),2));
-      tree.v_fjets_mj.push_back(mj);
-      constituent_indices.push_back(fastjets_AK4_R1p2_R0p5pT30_index()->at(ijet));
-      if(pt>50){
-        tree.mj += mj;
+      const TLorentzVector fastjet(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),
+				   fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),
+				   fastjets_AK4_R1p2_R0p5pT30_pz()->at(ijet),
+				   fastjets_AK4_R1p2_R0p5pT30_energy()->at(ijet));
+      tree.v_fjets_pt.push_back(fastjet.Pt());
+      tree.v_fjets_eta.push_back(fastjet.Eta());
+      tree.v_fjets_phi.push_back(fastjet.Phi());
+      tree.v_fjets_mj.push_back(fastjet.M());
+      if(fastjet.Pt()>50){
+        tree.mj += fastjet.M();
         ++tree.nfjets;
       }
     }
@@ -209,39 +198,35 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_cfjets_eta.resize(0);
     tree.v_cfjets_phi.resize(0);
     for(size_t ijet = 0; ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
-      TLorentzVector p4jet(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),
-			   fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),
-			   fastjets_AK4_R1p2_R0p5pT30_pz()->at(ijet),
-			   fastjets_AK4_R1p2_R0p5pT30_energy()->at(ijet));
-      for(size_t i = 0; i<veto_electrons.size(); ++i){
-	const size_t iel = veto_electrons.at(i);
-	const int ijetel(els_jet_ind()->at(iel));
-	if(find(constituent_indices.at(ijet).begin(),
-		constituent_indices.at(ijet).end(),
-		ijetel) != constituent_indices.at(ijet).end()){
+      TLorentzVector p4jet;
+      const std::vector<int> indices(fastjets_AK4_R1p2_R0p5pT30_index()->at(ijet));
+      for(size_t idx = 0; idx < indices.size(); ++idx){
+	//Loop over skinny (AK4) jet constituents of the original fat jet
+	const int iskinny = indices.at(idx);
+	const TLorentzVector p4skinny(jets_px()->at(iskinny), jets_py()->at(iskinny),
+				      jets_pz()->at(iskinny), jets_energy()->at(iskinny));
+	bool add = true;
+	for(size_t ele = 0; ele<veto_electrons.size() && add; ++ele){
+	  //Make sure skinny jet is not matched to veto electron
+	  const size_t iel = veto_electrons.at(ele);
+	  if(els_jet_ind()->at(iel) != iskinny) continue;
 	  const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
 				    els_pz()->at(iel), els_energy()->at(iel));
-	  const TLorentzVector p4jetel(jets_px()->at(ijetel), jets_py()->at(ijetel),
-				       jets_pz()->at(ijetel), jets_energy()->at(ijetel));
-	  if(p4jetel.Pt()>30.0 && p4jetel.DeltaR(p4el)<0.3) p4jet-=p4jetel;
+	  if(p4el.DeltaR(p4skinny)<0.3) add=false;
 	}
-      }
-      for(size_t i = 0; i<veto_muons.size(); ++i){
-	const size_t imu = veto_muons.at(i);
-	const int ijetmu(mus_jet_ind()->at(imu));
-	if(find(constituent_indices.at(ijet).begin(),
-		constituent_indices.at(ijet).end(),
-		ijetmu) != constituent_indices.at(ijet).end()){
+	for(size_t mu = 0; mu<veto_muons.size() && add; ++mu){
+	  //Make sure skinny jet is not matched to veto muon
+	  const size_t imu = veto_muons.at(mu);
+	  if(mus_jet_ind()->at(imu) != iskinny) continue;
 	  const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
 				    mus_pz()->at(imu), mus_energy()->at(imu));
-	  const TLorentzVector p4jetmu(jets_px()->at(ijetmu), jets_py()->at(ijetmu),
-				       jets_pz()->at(ijetmu), jets_energy()->at(ijetmu));
-	  if(p4jetmu.Pt()>30.0 && p4jetmu.DeltaR(p4mu)<0.3) p4jet-=p4jetmu;
+	  if(p4mu.DeltaR(p4skinny)<0.3) add=false;
 	}
+	if(add) p4jet+=p4skinny;
       }
 
       const float eps = std::numeric_limits<float>::epsilon();
-      if(fabs(p4jet.E())>eps
+      if(p4jet.E()>eps
 	 && fabs(p4jet.Px())>eps
 	 && fabs(p4jet.Py())>eps
 	 && fabs(p4jet.Pz())>eps){
@@ -404,7 +389,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
         mety += mc_final_py()->at(imc);
       }
     }
-    tree.genmet = sqrt(pow(metx,2)+pow(mety,2));
+    tree.genmet = AddInQuadrature(metx,mety);
     tree.genht = 0;
     for(size_t imc = 0; imc < mc_jets_pt()->size(); imc++)
       if(mc_jets_pt()->at(imc)>40 && mc_jets_eta()->at(imc)<3) tree.genht += mc_jets_pt()->at(imc);
