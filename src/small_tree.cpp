@@ -92,6 +92,16 @@ small_tree::small_tree():
   cfjets_phi = &v_cfjets_phi;
   tree.Branch("cfjets_mj", &cfjets_mj);
   cfjets_mj = &v_cfjets_mj;
+  tree.Branch("nrcfjets", &nrcfjets);
+  tree.Branch("rcmj", &rcmj);
+  tree.Branch("rcfjets_pt", &rcfjets_pt);
+  rcfjets_pt = &v_rcfjets_pt;
+  tree.Branch("rcfjets_eta", &rcfjets_eta);
+  rcfjets_eta = &v_rcfjets_eta;
+  tree.Branch("rcfjets_phi", &rcfjets_phi);
+  rcfjets_phi = &v_rcfjets_phi;
+  tree.Branch("rcfjets_mj", &rcfjets_mj);
+  rcfjets_mj = &v_rcfjets_mj;
   tree.Branch("mc_type", &mc_type);
   tree.Branch("mc_pt", &mc_pt);
   mc_pt = &v_mc_pt;
@@ -115,8 +125,6 @@ small_tree::small_tree():
   tree.Branch("mt", &mt);
   tree.Branch("met", &met);
   tree.Branch("met_phi", &met_phi);
-  tree.Branch("met_unc_pt", &met_unc_pt);
-  tree.Branch("met_unc_phi", &met_unc_phi);
   tree.Branch("dphi_wlep", &dphi_wlep);
   tree.Branch("mindphin_metjet", &mindphin_metjet);
   tree.Branch("dr_bb", &dr_bb);
@@ -199,6 +207,12 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("cfjets_eta", &cfjets_eta);
   chain.SetBranchAddress("cfjets_phi", &cfjets_phi);
   chain.SetBranchAddress("cfjets_mj", &cfjets_mj);
+  chain.SetBranchAddress("nrcfjets", &nrcfjets);
+  chain.SetBranchAddress("rcmj", &rcmj);
+  chain.SetBranchAddress("rcfjets_pt", &rcfjets_pt);
+  chain.SetBranchAddress("rcfjets_eta", &rcfjets_eta);
+  chain.SetBranchAddress("rcfjets_phi", &rcfjets_phi);
+  chain.SetBranchAddress("rcfjets_mj", &rcfjets_mj);
   chain.SetBranchAddress("mc_type", &mc_type);
   chain.SetBranchAddress("mc_pt", &mc_pt);
   chain.SetBranchAddress("mc_eta", &mc_eta);
@@ -217,8 +231,6 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("mt", &mt);
   chain.SetBranchAddress("met", &met);
   chain.SetBranchAddress("met_phi", &met_phi);
-  chain.SetBranchAddress("met_unc_pt", &met_unc_pt);
-  chain.SetBranchAddress("met_unc_phi", &met_unc_phi);
   chain.SetBranchAddress("dphi_wlep", &dphi_wlep);
   chain.SetBranchAddress("mindphin_metjet", &mindphin_metjet);
   chain.SetBranchAddress("dr_bb", &dr_bb);

@@ -136,7 +136,7 @@ bool ra4_objects::IsVetoElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
   return IsVetoIdElectron(iel)
     && els_pt()->at(iel)>=MinVetoLeptonPt
-    && GetElectronIsolation(iel)<0.5;
+    && GetElectronIsolation(iel)<0.15;
 }
 
 bool ra4_objects::IsVetoIdElectron(unsigned iel) const {

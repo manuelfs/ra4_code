@@ -98,6 +98,16 @@ public:
   std::vector<double> v_cfjets_phi;
   std::vector<double>* cfjets_mj;
   std::vector<double> v_cfjets_mj;
+  int nrcfjets;
+  float rcmj;
+  std::vector<double>* rcfjets_pt;
+  std::vector<double> v_rcfjets_pt;
+  std::vector<double>* rcfjets_eta;
+  std::vector<double> v_rcfjets_eta;
+  std::vector<double>* rcfjets_phi;
+  std::vector<double> v_rcfjets_phi;
+  std::vector<double>* rcfjets_mj;
+  std::vector<double> v_rcfjets_mj;
   unsigned mc_type;
   std::vector<double>* mc_pt;
   std::vector<double> v_mc_pt;
@@ -121,8 +131,6 @@ public:
   float mt;
   float met;
   float met_phi;
-  float met_unc_pt;
-  float met_unc_phi;
   float dphi_wlep;
   float mindphin_metjet;
   float dr_bb;

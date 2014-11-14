@@ -2952,6 +2952,7 @@ void cfa_base::PrepareNewChains(){
 }
 
 void cfa_base::InitializeA(){
+  chainA_.SetMakeClass(1);
   chainA_.SetBranchAddress("PU_NumInteractions", &PU_NumInteractions_, &b_PU_NumInteractions_);
   chainA_.SetBranchAddress("PU_TrueNumInteractions", &PU_TrueNumInteractions_, &b_PU_TrueNumInteractions_);
   chainA_.SetBranchAddress("PU_bunchCrossing", &PU_bunchCrossing_, &b_PU_bunchCrossing_);
@@ -2979,6 +2980,7 @@ void cfa_base::InitializeA(){
 }
 
 void cfa_base::InitializeB(){
+  chainB_.SetMakeClass(1);
   chainB_.SetBranchAddress("NbeamSpot", &NbeamSpot_, &b_NbeamSpot_);
   chainB_.SetBranchAddress("Nels", &Nels_, &b_Nels_);
   chainB_.SetBranchAddress("Nmc_doc", &Nmc_doc_, &b_Nmc_doc_);

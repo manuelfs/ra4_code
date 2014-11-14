@@ -381,6 +381,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::InitializeA(){\n";
+  cpp_file << "  chainA_.SetMakeClass(1);\n";
   //Set chainA branch addresses
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
@@ -398,6 +399,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "}\n\n";
 
   cpp_file << "void cfa_base::InitializeB(){\n";
+  cpp_file << "  chainB_.SetMakeClass(1);\n";
   //Set chainB branch addresses
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
