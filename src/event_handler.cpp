@@ -208,10 +208,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_cfjets_pt.resize(0);
     tree.v_cfjets_eta.resize(0);
     tree.v_cfjets_phi.resize(0);
-    for(size_t ijet = 0; ijet<tree.v_fjets_pt.size(); ++ijet){
-      TLorentzVector p4jet;
-      p4jet.SetPtEtaPhiM(tree.v_fjets_pt.at(ijet), tree.v_fjets_eta.at(ijet),
-			 tree.v_fjets_phi.at(ijet), tree.v_fjets_mj.at(ijet));
+    for(size_t ijet = 0; ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
+      TLorentzVector p4jet(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),
+			   fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),
+			   fastjets_AK4_R1p2_R0p5pT30_pz()->at(ijet),
+			   fastjets_AK4_R1p2_R0p5pT30_energy()->at(ijet));
       for(size_t i = 0; i<veto_electrons.size(); ++i){
 	const size_t iel = veto_electrons.at(i);
 	const int ijetel(els_jet_ind()->at(iel));
@@ -239,13 +240,20 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 	}
       }
 
-      tree.v_cfjets_mj.push_back(p4jet.M());
-      tree.v_cfjets_pt.push_back(p4jet.Pt());
-      tree.v_cfjets_eta.push_back(p4jet.Eta());
-      tree.v_cfjets_phi.push_back(p4jet.Phi());
-      if(p4jet.Pt()>50.0){
-	tree.cmj+=p4jet.M();
-	++tree.ncfjets;
+      const float eps = std::numeric_limits<float>::epsilon();
+      if(fabs(p4jet.E())>eps
+	 && fabs(p4jet.Px())>eps
+	 && fabs(p4jet.Py())>eps
+	 && fabs(p4jet.Pz())>eps){
+	//Don't fill with jets we've completely cleaned away
+	tree.v_cfjets_mj.push_back(p4jet.M());
+	tree.v_cfjets_pt.push_back(p4jet.Pt());
+	tree.v_cfjets_eta.push_back(p4jet.Eta());
+	tree.v_cfjets_phi.push_back(p4jet.Phi());
+	if(p4jet.Pt()>50.0){
+	  tree.cmj+=p4jet.M();
+	  ++tree.ncfjets;
+	}
       }
     }
 
