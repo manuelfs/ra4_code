@@ -50,24 +50,63 @@ int main(){
   variables.push_back("std::vector<double>* jets_eta");
   variables.push_back("std::vector<double>* jets_phi");
   variables.push_back("std::vector<double>* jets_csv");
-  variables.push_back("int nfjets");  // for fjets_pt>50, all with skinny jets pt>30
-  variables.push_back("float mj");    // for fjets_pt>50, all with skinny jets pt>30
-  variables.push_back("std::vector<double>* fjets_pt");
-  variables.push_back("std::vector<double>* fjets_eta");
-  variables.push_back("std::vector<double>* fjets_phi");
-  variables.push_back("std::vector<double>* fjets_mj");
-  variables.push_back("int ncfjets");  // for cfjets_pt>50, all with skinny jets pt>30
-  variables.push_back("float cmj");    // for cfjets_pt>50, all with skinny jets pt>30
-  variables.push_back("std::vector<double>* cfjets_pt");
-  variables.push_back("std::vector<double>* cfjets_eta");
-  variables.push_back("std::vector<double>* cfjets_phi");
-  variables.push_back("std::vector<double>* cfjets_mj");
-  variables.push_back("int nrcfjets");  // for rcfjets_pt>50, all with skinny jets pt>30
-  variables.push_back("float rcmj");    // for rcfjets_pt>50, all with skinny jets pt>30
-  variables.push_back("std::vector<double>* rcfjets_pt");
-  variables.push_back("std::vector<double>* rcfjets_eta");
-  variables.push_back("std::vector<double>* rcfjets_phi");
-  variables.push_back("std::vector<double>* rcfjets_mj");
+
+  /////////////////   Fat Jets   //////////////
+  variables.push_back("int nfjets_30");  // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("float mj_30");    // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("std::vector<double>* fjets_30_pt");
+  variables.push_back("std::vector<double>* fjets_30_eta");
+  variables.push_back("std::vector<double>* fjets_30_phi");
+  variables.push_back("std::vector<double>* fjets_30_mj");
+
+  variables.push_back("int nfjets_scln_30");  // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("float mj_scln_30");    // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("std::vector<double>* fjets_scln_30_pt");
+  variables.push_back("std::vector<double>* fjets_scln_30_eta");
+  variables.push_back("std::vector<double>* fjets_scln_30_phi");
+  variables.push_back("std::vector<double>* fjets_scln_30_mj");
+
+  variables.push_back("int nfjets_vcln_30");  // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("float mj_vcln_30");    // for fjets_pt>50, all with skinny jets pt>30
+  variables.push_back("std::vector<double>* fjets_vcln_30_pt");
+  variables.push_back("std::vector<double>* fjets_vcln_30_eta");
+  variables.push_back("std::vector<double>* fjets_vcln_30_phi");
+  variables.push_back("std::vector<double>* fjets_vcln_30_mj");
+  
+  variables.push_back("int nfjets_0");  // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("float mj_0");    // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("std::vector<double>* fjets_0_pt");
+  variables.push_back("std::vector<double>* fjets_0_eta");
+  variables.push_back("std::vector<double>* fjets_0_phi");
+  variables.push_back("std::vector<double>* fjets_0_mj");
+
+  variables.push_back("int nfjets_scln_0");  // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("float mj_scln_0");    // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("std::vector<double>* fjets_scln_0_pt");
+  variables.push_back("std::vector<double>* fjets_scln_0_eta");
+  variables.push_back("std::vector<double>* fjets_scln_0_phi");
+  variables.push_back("std::vector<double>* fjets_scln_0_mj");
+
+  variables.push_back("int nfjets_vcln_0");  // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("float mj_vcln_0");    // for fjets_pt>50, all with skinny jets pt>0
+  variables.push_back("std::vector<double>* fjets_vcln_0_pt");
+  variables.push_back("std::vector<double>* fjets_vcln_0_eta");
+  variables.push_back("std::vector<double>* fjets_vcln_0_phi");
+  variables.push_back("std::vector<double>* fjets_vcln_0_mj");
+
+  variables.push_back("int nfjets_cands");  // for fjets_pt>50, all pfcands
+  variables.push_back("float mj_cands");    // for fjets_pt>50, all pfcands
+  variables.push_back("std::vector<double>* fjets_cands_pt");
+  variables.push_back("std::vector<double>* fjets_cands_eta");
+  variables.push_back("std::vector<double>* fjets_cands_phi");
+  variables.push_back("std::vector<double>* fjets_cands_mj");
+  
+  variables.push_back("int nfjets_cands_trim");  // for fjets_pt>50, all pfcands
+  variables.push_back("float mj_cands_trim");    // for fjets_pt>50, all pfcands
+  variables.push_back("std::vector<double>* fjets_cands_trim_pt");
+  variables.push_back("std::vector<double>* fjets_cands_trim_eta");
+  variables.push_back("std::vector<double>* fjets_cands_trim_phi");
+  variables.push_back("std::vector<double>* fjets_cands_trim_mj");
   
   //////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");

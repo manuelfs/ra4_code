@@ -171,104 +171,210 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     } else tree.dr_bb = bad_val;
     
     ////////////////   Fat Jets   ////////////////
-    tree.nfjets = 0;
-    tree.mj = 0;
-    tree.v_fjets_pt.resize(0); tree.v_fjets_mj.resize(0); 
-    tree.v_fjets_eta.resize(0); tree.v_fjets_phi.resize(0);
-    for(size_t ijet(0); ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
-      const TLorentzVector fastjet(fastjets_AK4_R1p2_R0p5pT30_px()->at(ijet),
-				   fastjets_AK4_R1p2_R0p5pT30_py()->at(ijet),
-				   fastjets_AK4_R1p2_R0p5pT30_pz()->at(ijet),
-				   fastjets_AK4_R1p2_R0p5pT30_energy()->at(ijet));
-      tree.v_fjets_pt.push_back(fastjet.Pt());
-      tree.v_fjets_eta.push_back(fastjet.Eta());
-      tree.v_fjets_phi.push_back(fastjet.Phi());
-      tree.v_fjets_mj.push_back(fastjet.M());
-      if(fastjet.Pt()>50){
-        tree.mj += fastjet.M();
-        ++tree.nfjets;
-      }
-    }
-
-    ////////////////  Clean Fat Jets ////////////
-    tree.ncfjets = 0;
-    tree.cmj = 0.;
-    tree.v_cfjets_mj.resize(0);
-    tree.v_cfjets_pt.resize(0);
-    tree.v_cfjets_eta.resize(0);
-    tree.v_cfjets_phi.resize(0);
-    for(size_t ijet = 0; ijet<fastjets_AK4_R1p2_R0p5pT30_px()->size(); ++ijet){
-      TLorentzVector p4jet;
-      const std::vector<int> indices(fastjets_AK4_R1p2_R0p5pT30_index()->at(ijet));
-      for(size_t idx = 0; idx < indices.size(); ++idx){
-	//Loop over skinny (AK4) jet constituents of the original fat jet
-	const int iskinny = indices.at(idx);
-	const TLorentzVector p4skinny(jets_px()->at(iskinny), jets_py()->at(iskinny),
-				      jets_pz()->at(iskinny), jets_energy()->at(iskinny));
-	bool add = true;
-	for(size_t ele = 0; ele<veto_electrons.size() && add; ++ele){
-	  //Make sure skinny jet is not matched to veto electron
-	  const size_t iel = veto_electrons.at(ele);
-	  if(els_jet_ind()->at(iel) != iskinny) continue;
-	  const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
-				    els_pz()->at(iel), els_energy()->at(iel));
-	  if(p4el.DeltaR(p4skinny)<0.3) add=false;
-	}
-	for(size_t mu = 0; mu<veto_muons.size() && add; ++mu){
-	  //Make sure skinny jet is not matched to veto muon
-	  const size_t imu = veto_muons.at(mu);
-	  if(mus_jet_ind()->at(imu) != iskinny) continue;
-	  const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
-				    mus_pz()->at(imu), mus_energy()->at(imu));
-	  if(p4mu.DeltaR(p4skinny)<0.3) add=false;
-	}
-	if(add) p4jet+=p4skinny;
-      }
-
-      const float eps = std::numeric_limits<float>::epsilon();
-      if(p4jet.E()>eps
-	 && fabs(p4jet.Px())>eps
-	 && fabs(p4jet.Py())>eps
-	 && fabs(p4jet.Pz())>eps){
-	//Don't fill with jets we've completely cleaned away
-	tree.v_cfjets_mj.push_back(p4jet.M());
-	tree.v_cfjets_pt.push_back(p4jet.Pt());
-	tree.v_cfjets_eta.push_back(p4jet.Eta());
-	tree.v_cfjets_phi.push_back(p4jet.Phi());
-	if(p4jet.Pt()>50.0){
-	  tree.cmj+=p4jet.M();
-	  ++tree.ncfjets;
+    vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30, veto_clean_jets_pt30;
+    vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
+    vector<PseudoJet> cands;
+    for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
+      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
+			      jets_pz()->at(jet), jets_energy()->at(jet));
+      const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
+				   jets_pz()->at(jet), jets_energy()->at(jet));
+      
+      bool veto_add = true, sig_add = true;
+      for(size_t ele = 0; ele<veto_electrons.size() && sig_add; ++ele){
+	//Make sure skinny jet is not matched to veto electron
+	const size_t iel = veto_electrons.at(ele);
+	if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
+	const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
+				  els_pz()->at(iel), els_energy()->at(iel));
+	if(p4el.DeltaR(this_lv)<0.3){
+	  veto_add=false;
+	  if(IsSignalIdElectron(iel)) sig_add=false;
 	}
       }
+      for(size_t mu = 0; mu<veto_muons.size() && sig_add; ++mu){
+	//Make sure skinny jet is not matched to veto muon
+	const size_t imu = veto_muons.at(mu);
+	if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
+	const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
+				  mus_pz()->at(imu), mus_energy()->at(imu));
+	if(p4mu.DeltaR(this_lv)<0.3){
+	  veto_add=false;
+	  if(IsSignalIdMuon(imu)) sig_add=false;
+	}
+      }
+
+      skinny_jets_pt0.push_back(this_pj);
+      if(sig_add) sig_clean_jets_pt0.push_back(this_pj);
+      if(veto_add) veto_clean_jets_pt0.push_back(this_pj);
+      if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
+      if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
+      if(veto_add && this_pj.pt()>30.0) veto_clean_jets_pt30.push_back(this_pj);
     }
 
-    ////////// Reclustered pfcands fat jets /////
-    double jet_radius = 1.2;
-    JetDefinition jet_def(antikt_algorithm, jet_radius);
-    vector<PseudoJet> particles;
-    for(size_t jet = 0; jet < jets_pt()->size(); ++jet){
-      if(jets_pt()->at(jet)<0.0) continue;//Matches fat jet collection above with pt cut of 30
-      particles.push_back(PseudoJet(jets_px()->at(jet), jets_py()->at(jet),
-				    jets_pz()->at(jet), jets_energy()->at(jet)));
+    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      cands.push_back(PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
+				pfcand_pz()->at(cand), pfcand_energy()->at(cand)));
     }
-    ClusterSequence cluster_sequence(particles, jet_def);
-    vector<PseudoJet> reclustered_jets = sorted_by_pt(cluster_sequence.inclusive_jets());
-    tree.nrcfjets = 0;
-    tree.rcmj = 0.;
-    tree.v_rcfjets_mj.resize(0);
-    tree.v_rcfjets_pt.resize(0);
-    tree.v_rcfjets_eta.resize(0);
-    tree.v_rcfjets_phi.resize(0);
-    for(vector<PseudoJet>::const_iterator jet = reclustered_jets.begin();
-	jet != reclustered_jets.end();
-	++jet){
-      tree.v_rcfjets_mj.push_back(jet->m());
-      tree.v_rcfjets_pt.push_back(jet->pt());
-      tree.v_rcfjets_eta.push_back(jet->eta());
-      tree.v_rcfjets_phi.push_back(jet->phi_std());
-      if(jet->pt()>50.0){
-	tree.rcmj+=jet->m();
-	++tree.nrcfjets;
+
+    JetDefinition jet_def_12(antikt_algorithm, 1.2);
+    ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
+    ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
+    ClusterSequence cs_veto_clean_30(veto_clean_jets_pt30, jet_def_12);
+    ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
+    ClusterSequence cs_sig_clean_0(sig_clean_jets_pt0, jet_def_12);
+    ClusterSequence cs_veto_clean_0(veto_clean_jets_pt0, jet_def_12);
+    ClusterSequence cs_cands(cands, jet_def_12);
+
+    const vector<PseudoJet> fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
+    const vector<PseudoJet> fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
+    const vector<PseudoJet> fjets_veto_clean_30 = sorted_by_pt(cs_veto_clean_30.inclusive_jets());
+    const vector<PseudoJet> fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
+    const vector<PseudoJet> fjets_sig_clean_0 = sorted_by_pt(cs_sig_clean_0.inclusive_jets());
+    const vector<PseudoJet> fjets_veto_clean_0 = sorted_by_pt(cs_veto_clean_0.inclusive_jets());
+    const vector<PseudoJet> fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
+
+    vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
+    vector<PseudoJet> fjets_cands_trim;
+    for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
+      vector<PseudoJet> pjs;
+      for(size_t sj = 0; sj < cands.size(); ++sj){
+	if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
+      }
+      ClusterSequence cs(pjs, JetDefinition(antikt_algorithm, 0.2));
+      pjs = cs.inclusive_jets();
+      PseudoJet sum;
+      for(size_t pj = 0; pj < pjs.size(); ++pj){
+	sum += pjs.at(pj);
+      }
+      const double sumpt = sum.pt();
+      sum=PseudoJet(0.0,0.0,0.0,0.0);
+      for(size_t pj = 0; pj < pjs.size(); ++pj){
+	if(pjs.at(pj).pt()>0.03*sumpt){
+	  sum += pjs.at(pj);
+	}
+      }
+      fjets_cands_trim.push_back(sum);
+    }
+
+    tree.nfjets_30 = 0;
+    tree.mj_30 = 0;
+    tree.v_fjets_30_pt.resize(0); tree.v_fjets_30_eta.resize(0);
+    tree.v_fjets_30_phi.resize(0); tree.v_fjets_30_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_skinny_30.begin();
+	pj != fjets_skinny_30.end(); ++pj){
+      tree.v_fjets_30_pt.push_back(pj->pt());
+      tree.v_fjets_30_eta.push_back(pj->eta());
+      tree.v_fjets_30_phi.push_back(pj->phi_std());
+      tree.v_fjets_30_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_30 += pj->m();
+	++tree.nfjets_30;
+      }
+    }
+    tree.nfjets_scln_30 = 0;
+    tree.mj_scln_30 = 0;
+    tree.v_fjets_scln_30_pt.resize(0); tree.v_fjets_scln_30_eta.resize(0);
+    tree.v_fjets_scln_30_phi.resize(0); tree.v_fjets_scln_30_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_veto_clean_30.begin();
+	pj != fjets_veto_clean_30.end(); ++pj){
+      tree.v_fjets_scln_30_pt.push_back(pj->pt());
+      tree.v_fjets_scln_30_eta.push_back(pj->eta());
+      tree.v_fjets_scln_30_phi.push_back(pj->phi_std());
+      tree.v_fjets_scln_30_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_scln_30 += pj->m();
+	++tree.nfjets_scln_30;
+      }
+    }
+    tree.nfjets_vcln_30 = 0;
+    tree.mj_vcln_30 = 0;
+    tree.v_fjets_vcln_30_pt.resize(0); tree.v_fjets_vcln_30_eta.resize(0);
+    tree.v_fjets_vcln_30_phi.resize(0); tree.v_fjets_vcln_30_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_sig_clean_30.begin();
+	pj != fjets_sig_clean_30.end(); ++pj){
+      tree.v_fjets_vcln_30_pt.push_back(pj->pt());
+      tree.v_fjets_vcln_30_eta.push_back(pj->eta());
+      tree.v_fjets_vcln_30_phi.push_back(pj->phi_std());
+      tree.v_fjets_vcln_30_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_vcln_30 += pj->m();
+	++tree.nfjets_vcln_30;
+      }
+    }
+    tree.nfjets_0 = 0;
+    tree.mj_0 = 0;
+    tree.v_fjets_0_pt.resize(0); tree.v_fjets_0_eta.resize(0);
+    tree.v_fjets_0_phi.resize(0); tree.v_fjets_0_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_skinny_0.begin();
+	pj != fjets_skinny_0.end(); ++pj){
+      tree.v_fjets_0_pt.push_back(pj->pt());
+      tree.v_fjets_0_eta.push_back(pj->eta());
+      tree.v_fjets_0_phi.push_back(pj->phi_std());
+      tree.v_fjets_0_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_0 += pj->m();
+	++tree.nfjets_0;
+      }
+    }
+    tree.nfjets_vcln_0 = 0;
+    tree.mj_vcln_0 = 0;
+    tree.v_fjets_vcln_0_pt.resize(0); tree.v_fjets_vcln_0_eta.resize(0);
+    tree.v_fjets_vcln_0_phi.resize(0); tree.v_fjets_vcln_0_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_veto_clean_0.begin();
+	pj != fjets_veto_clean_0.end(); ++pj){
+      tree.v_fjets_vcln_0_pt.push_back(pj->pt());
+      tree.v_fjets_vcln_0_eta.push_back(pj->eta());
+      tree.v_fjets_vcln_0_phi.push_back(pj->phi_std());
+      tree.v_fjets_vcln_0_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_vcln_0 += pj->m();
+	++tree.nfjets_vcln_0;
+      }
+    }
+    tree.nfjets_scln_0 = 0;
+    tree.mj_scln_0 = 0;
+    tree.v_fjets_scln_0_pt.resize(0); tree.v_fjets_scln_0_eta.resize(0);
+    tree.v_fjets_scln_0_phi.resize(0); tree.v_fjets_scln_0_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_sig_clean_0.begin();
+	pj != fjets_sig_clean_0.end(); ++pj){
+      tree.v_fjets_scln_0_pt.push_back(pj->pt());
+      tree.v_fjets_scln_0_eta.push_back(pj->eta());
+      tree.v_fjets_scln_0_phi.push_back(pj->phi_std());
+      tree.v_fjets_scln_0_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_scln_0 += pj->m();
+	++tree.nfjets_scln_0;
+      }
+    }
+    tree.nfjets_cands = 0;
+    tree.mj_cands = 0;
+    tree.v_fjets_cands_pt.resize(0); tree.v_fjets_cands_eta.resize(0);
+    tree.v_fjets_cands_phi.resize(0); tree.v_fjets_cands_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_cands.begin();
+	pj != fjets_cands.end(); ++pj){
+      tree.v_fjets_cands_pt.push_back(pj->pt());
+      tree.v_fjets_cands_eta.push_back(pj->eta());
+      tree.v_fjets_cands_phi.push_back(pj->phi_std());
+      tree.v_fjets_cands_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_cands += pj->m();
+	++tree.nfjets_cands;
+      }
+    }
+    tree.nfjets_cands_trim = 0;
+    tree.mj_cands_trim = 0;
+    tree.v_fjets_cands_trim_pt.resize(0); tree.v_fjets_cands_trim_eta.resize(0);
+    tree.v_fjets_cands_trim_phi.resize(0); tree.v_fjets_cands_trim_mj.resize(0);
+    for(vector<PseudoJet>::const_iterator pj = fjets_cands_trim.begin();
+	pj != fjets_cands_trim.end(); ++pj){
+      tree.v_fjets_cands_trim_pt.push_back(pj->pt());
+      tree.v_fjets_cands_trim_eta.push_back(pj->eta());
+      tree.v_fjets_cands_trim_phi.push_back(pj->phi_std());
+      tree.v_fjets_cands_trim_mj.push_back(pj->m());
+      if(pj->pt()>50.0){
+	tree.mj_cands_trim += pj->m();
+	++tree.nfjets_cands_trim;
       }
     }
 
