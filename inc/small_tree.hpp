@@ -178,7 +178,6 @@ public:
   float wl1;
   int npv;
   float ht;
-  float mt;
   float met;
   float met_phi;
   float dphi_wlep;
@@ -187,6 +186,7 @@ public:
   float spher;
   float spher_jets;
   float spher_nolin;
+  float mt;
   float mt2_max;
   float mt2_min;
   float mt2_ref_max;
@@ -209,6 +209,7 @@ public:
   float mblnu_min;
   float mblnu_high_pt;
   float mblnu_high_csv;
+  float mt_bmet_min;
 
   void Fill();
   void Write();

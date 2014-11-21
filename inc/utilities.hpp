@@ -26,6 +26,8 @@ float dR(float eta1, float phi1, float eta2, float phi2);
 TString RoundNumber(double num, int decimals, double denom=1.);
 long double AddInQuadrature(long double x, long double y);
 long double GetMass(long double e, long double px, long double py, long double pz);
+long double GetMT(const long double m1, const long double px1, const long double py1,
+		  const long double m2, const long double px2, const long double py2);
 bool Contains(const std::string& text, const std::string& pattern);
 
 std::vector<std::string> Tokenize(const std::string& input,

@@ -174,7 +174,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     ////////////////   Fat Jets   ////////////////
     vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30, veto_clean_jets_pt30;
     vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
-    vector<PseudoJet> cands;
+    vector<PseudoJet> cands(pfcand_pt()->size());
     for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
       const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
                               jets_pz()->at(jet), jets_energy()->at(jet));
@@ -218,8 +218,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
          && pfcand_py()->at(cand)==pfcand_py()->at(cand)
          && pfcand_pz()->at(cand) == pfcand_pz()->at(cand)
          && pfcand_energy()->at(cand)==pfcand_energy()->at(cand)){//check for nan
-        cands.push_back(PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
-                                  pfcand_pz()->at(cand), pfcand_energy()->at(cand)));
+        cands.at(cand)=PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
+				 pfcand_pz()->at(cand), pfcand_energy()->at(cand));
+      }else{
+	//Bad. We read nan for one of the momentum components. Filling with null 4-vector.
+	cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
       }
     }
 
@@ -241,7 +244,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     const vector<PseudoJet> fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
 
     vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
-    vector<PseudoJet> fjets_cands_trim;
+    vector<PseudoJet> fjets_cands_trim(fjets_cands.size());
     for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
       vector<PseudoJet> pjs;
       for(size_t sj = 0; sj < cands.size(); ++sj){
@@ -249,30 +252,36 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       }
       ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
       pjs = cs.inclusive_jets();
-      PseudoJet sum;
+
+      //Sum the fat jet components in place
+      fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
       for(size_t pj = 0; pj < pjs.size(); ++pj){
-        sum += pjs.at(pj);
+        fjets_cands_trim.at(fj) += pjs.at(pj);
       }
-      const double sumpt = sum.pt();
-      sum=PseudoJet(0.0,0.0,0.0,0.0);
+      const double sumpt = fjets_cands_trim.at(fj).pt();
+      fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
+      //Trim the low momentum-fraction components
       for(size_t pj = 0; pj < pjs.size(); ++pj){
         if(pjs.at(pj).pt()>0.03*sumpt){
-          sum += pjs.at(pj);
+          fjets_cands_trim.at(fj) += pjs.at(pj);
         }
       }
-      fjets_cands_trim.push_back(sum);
     }
 
     tree.nfjets_30 = 0;
     tree.mj_30 = 0;
-    tree.v_fjets_30_pt.resize(0); tree.v_fjets_30_eta.resize(0);
-    tree.v_fjets_30_phi.resize(0); tree.v_fjets_30_mj.resize(0);
+    tree.v_fjets_30_pt.resize(fjets_skinny_30.size());
+    tree.v_fjets_30_eta.resize(fjets_skinny_30.size());
+    tree.v_fjets_30_phi.resize(fjets_skinny_30.size());
+    tree.v_fjets_30_mj.resize(fjets_skinny_30.size());
+    size_t ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_skinny_30.begin();
         pj != fjets_skinny_30.end(); ++pj){
-      tree.v_fjets_30_pt.push_back(pj->pt());
-      tree.v_fjets_30_eta.push_back(pj->eta());
-      tree.v_fjets_30_phi.push_back(pj->phi_std());
-      tree.v_fjets_30_mj.push_back(pj->m());
+      tree.v_fjets_30_pt.at(ipj)=pj->pt();
+      tree.v_fjets_30_eta.at(ipj)=pj->eta();
+      tree.v_fjets_30_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_30_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_30 += pj->m();
         ++tree.nfjets_30;
@@ -280,14 +289,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_scln_30 = 0;
     tree.mj_scln_30 = 0;
-    tree.v_fjets_scln_30_pt.resize(0); tree.v_fjets_scln_30_eta.resize(0);
-    tree.v_fjets_scln_30_phi.resize(0); tree.v_fjets_scln_30_mj.resize(0);
+    tree.v_fjets_scln_30_pt.resize(fjets_veto_clean_30.size());
+    tree.v_fjets_scln_30_eta.resize(fjets_veto_clean_30.size());
+    tree.v_fjets_scln_30_phi.resize(fjets_veto_clean_30.size());
+    tree.v_fjets_scln_30_mj.resize(fjets_veto_clean_30.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_veto_clean_30.begin();
         pj != fjets_veto_clean_30.end(); ++pj){
-      tree.v_fjets_scln_30_pt.push_back(pj->pt());
-      tree.v_fjets_scln_30_eta.push_back(pj->eta());
-      tree.v_fjets_scln_30_phi.push_back(pj->phi_std());
-      tree.v_fjets_scln_30_mj.push_back(pj->m());
+      tree.v_fjets_scln_30_pt.at(ipj)=pj->pt();
+      tree.v_fjets_scln_30_eta.at(ipj)=pj->eta();
+      tree.v_fjets_scln_30_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_scln_30_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_scln_30 += pj->m();
         ++tree.nfjets_scln_30;
@@ -295,14 +308,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_vcln_30 = 0;
     tree.mj_vcln_30 = 0;
-    tree.v_fjets_vcln_30_pt.resize(0); tree.v_fjets_vcln_30_eta.resize(0);
-    tree.v_fjets_vcln_30_phi.resize(0); tree.v_fjets_vcln_30_mj.resize(0);
+    tree.v_fjets_vcln_30_pt.resize(fjets_sig_clean_30.size());
+    tree.v_fjets_vcln_30_eta.resize(fjets_sig_clean_30.size());
+    tree.v_fjets_vcln_30_phi.resize(fjets_sig_clean_30.size());
+    tree.v_fjets_vcln_30_mj.resize(fjets_sig_clean_30.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_sig_clean_30.begin();
         pj != fjets_sig_clean_30.end(); ++pj){
-      tree.v_fjets_vcln_30_pt.push_back(pj->pt());
-      tree.v_fjets_vcln_30_eta.push_back(pj->eta());
-      tree.v_fjets_vcln_30_phi.push_back(pj->phi_std());
-      tree.v_fjets_vcln_30_mj.push_back(pj->m());
+      tree.v_fjets_vcln_30_pt.at(ipj)=pj->pt();
+      tree.v_fjets_vcln_30_eta.at(ipj)=pj->eta();
+      tree.v_fjets_vcln_30_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_vcln_30_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_vcln_30 += pj->m();
         ++tree.nfjets_vcln_30;
@@ -310,14 +327,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_0 = 0;
     tree.mj_0 = 0;
-    tree.v_fjets_0_pt.resize(0); tree.v_fjets_0_eta.resize(0);
-    tree.v_fjets_0_phi.resize(0); tree.v_fjets_0_mj.resize(0);
+    tree.v_fjets_0_pt.resize(fjets_skinny_0.size());
+    tree.v_fjets_0_eta.resize(fjets_skinny_0.size());
+    tree.v_fjets_0_phi.resize(fjets_skinny_0.size());
+    tree.v_fjets_0_mj.resize(fjets_skinny_0.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_skinny_0.begin();
         pj != fjets_skinny_0.end(); ++pj){
-      tree.v_fjets_0_pt.push_back(pj->pt());
-      tree.v_fjets_0_eta.push_back(pj->eta());
-      tree.v_fjets_0_phi.push_back(pj->phi_std());
-      tree.v_fjets_0_mj.push_back(pj->m());
+      tree.v_fjets_0_pt.at(ipj)=pj->pt();
+      tree.v_fjets_0_eta.at(ipj)=pj->eta();
+      tree.v_fjets_0_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_0_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_0 += pj->m();
         ++tree.nfjets_0;
@@ -325,14 +346,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_vcln_0 = 0;
     tree.mj_vcln_0 = 0;
-    tree.v_fjets_vcln_0_pt.resize(0); tree.v_fjets_vcln_0_eta.resize(0);
-    tree.v_fjets_vcln_0_phi.resize(0); tree.v_fjets_vcln_0_mj.resize(0);
+    tree.v_fjets_vcln_0_pt.resize(fjets_veto_clean_0.size());
+    tree.v_fjets_vcln_0_eta.resize(fjets_veto_clean_0.size());
+    tree.v_fjets_vcln_0_phi.resize(fjets_veto_clean_0.size());
+    tree.v_fjets_vcln_0_mj.resize(fjets_veto_clean_0.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_veto_clean_0.begin();
         pj != fjets_veto_clean_0.end(); ++pj){
-      tree.v_fjets_vcln_0_pt.push_back(pj->pt());
-      tree.v_fjets_vcln_0_eta.push_back(pj->eta());
-      tree.v_fjets_vcln_0_phi.push_back(pj->phi_std());
-      tree.v_fjets_vcln_0_mj.push_back(pj->m());
+      tree.v_fjets_vcln_0_pt.at(ipj)=pj->pt();
+      tree.v_fjets_vcln_0_eta.at(ipj)=pj->eta();
+      tree.v_fjets_vcln_0_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_vcln_0_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_vcln_0 += pj->m();
         ++tree.nfjets_vcln_0;
@@ -340,14 +365,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_scln_0 = 0;
     tree.mj_scln_0 = 0;
-    tree.v_fjets_scln_0_pt.resize(0); tree.v_fjets_scln_0_eta.resize(0);
-    tree.v_fjets_scln_0_phi.resize(0); tree.v_fjets_scln_0_mj.resize(0);
+    tree.v_fjets_scln_0_pt.resize(fjets_sig_clean_0.size());
+    tree.v_fjets_scln_0_eta.resize(fjets_sig_clean_0.size());
+    tree.v_fjets_scln_0_phi.resize(fjets_sig_clean_0.size());
+    tree.v_fjets_scln_0_mj.resize(fjets_sig_clean_0.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_sig_clean_0.begin();
         pj != fjets_sig_clean_0.end(); ++pj){
-      tree.v_fjets_scln_0_pt.push_back(pj->pt());
-      tree.v_fjets_scln_0_eta.push_back(pj->eta());
-      tree.v_fjets_scln_0_phi.push_back(pj->phi_std());
-      tree.v_fjets_scln_0_mj.push_back(pj->m());
+      tree.v_fjets_scln_0_pt.at(ipj)=pj->pt();
+      tree.v_fjets_scln_0_eta.at(ipj)=pj->eta();
+      tree.v_fjets_scln_0_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_scln_0_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_scln_0 += pj->m();
         ++tree.nfjets_scln_0;
@@ -355,14 +384,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_cands = 0;
     tree.mj_cands = 0;
-    tree.v_fjets_cands_pt.resize(0); tree.v_fjets_cands_eta.resize(0);
-    tree.v_fjets_cands_phi.resize(0); tree.v_fjets_cands_mj.resize(0);
+    tree.v_fjets_cands_pt.resize(fjets_cands.size());
+    tree.v_fjets_cands_eta.resize(fjets_cands.size());
+    tree.v_fjets_cands_phi.resize(fjets_cands.size());
+    tree.v_fjets_cands_mj.resize(fjets_cands.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_cands.begin();
         pj != fjets_cands.end(); ++pj){
-      tree.v_fjets_cands_pt.push_back(pj->pt());
-      tree.v_fjets_cands_eta.push_back(pj->eta());
-      tree.v_fjets_cands_phi.push_back(pj->phi_std());
-      tree.v_fjets_cands_mj.push_back(pj->m());
+      tree.v_fjets_cands_pt.at(ipj)=pj->pt();
+      tree.v_fjets_cands_eta.at(ipj)=pj->eta();
+      tree.v_fjets_cands_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_cands_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_cands += pj->m();
         ++tree.nfjets_cands;
@@ -370,14 +403,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
     tree.nfjets_cands_trim = 0;
     tree.mj_cands_trim = 0;
-    tree.v_fjets_cands_trim_pt.resize(0); tree.v_fjets_cands_trim_eta.resize(0);
-    tree.v_fjets_cands_trim_phi.resize(0); tree.v_fjets_cands_trim_mj.resize(0);
+    tree.v_fjets_cands_trim_pt.resize(fjets_cands_trim.size());
+    tree.v_fjets_cands_trim_eta.resize(fjets_cands_trim.size());
+    tree.v_fjets_cands_trim_phi.resize(fjets_cands_trim.size());
+    tree.v_fjets_cands_trim_mj.resize(fjets_cands_trim.size());
+    ipj = 0;
     for(vector<PseudoJet>::const_iterator pj = fjets_cands_trim.begin();
         pj != fjets_cands_trim.end(); ++pj){
-      tree.v_fjets_cands_trim_pt.push_back(pj->pt());
-      tree.v_fjets_cands_trim_eta.push_back(pj->eta());
-      tree.v_fjets_cands_trim_phi.push_back(pj->phi_std());
-      tree.v_fjets_cands_trim_mj.push_back(pj->m());
+      tree.v_fjets_cands_trim_pt.at(ipj)=pj->pt();
+      tree.v_fjets_cands_trim_eta.at(ipj)=pj->eta();
+      tree.v_fjets_cands_trim_phi.at(ipj)=pj->phi_std();
+      tree.v_fjets_cands_trim_mj.at(ipj)=pj->m();
+      ++ipj;
       if(pj->pt()>50.0){
         tree.mj_cands_trim += pj->m();
         ++tree.nfjets_cands_trim;
@@ -536,6 +573,19 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_phi);
       if(tree.dphi_wlep > PI) tree.dphi_wlep = 2*PI-tree.dphi_wlep;
       tree.mt = sqrt(2*lepmax_pt* tree.met*(1-cos(tree.met_phi-lepmax_phi)));
+    }
+
+    tree.mt_bmet_min = bad_val;
+    for(size_t i = 0; i < good_jets.size(); ++i){
+      const int ijet = good_jets.at(i);
+      if(jets_btag_secVertexCombined()->at(ijet) < CSVCuts[1]) continue;
+      const float mb = GetMass(jets_energy()->at(ijet),
+			       jets_px()->at(ijet),
+			       jets_py()->at(ijet),
+			       jets_pz()->at(ijet));
+      const float this_mt = GetMT(0.0, mets_ex()->at(0), mets_ey()->at(0),
+				  mb, jets_px()->at(ijet), jets_py()->at(ijet));
+      if(tree.mt_bmet_min<0.0 || this_mt<tree.mt_bmet_min) tree.mt_bmet_min=this_mt;
     }
 
     // mT2 with respect to highest pT lepton

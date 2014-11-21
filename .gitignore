@@ -28,5 +28,6 @@ bin/*
 *.pdf
 *.eps
 *.tex
+gmon.out
 out
 archive

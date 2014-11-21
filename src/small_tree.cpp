@@ -172,7 +172,6 @@ small_tree::small_tree():
   tree.Branch("wl1", &wl1);
   tree.Branch("npv", &npv);
   tree.Branch("ht", &ht);
-  tree.Branch("mt", &mt);
   tree.Branch("met", &met);
   tree.Branch("met_phi", &met_phi);
   tree.Branch("dphi_wlep", &dphi_wlep);
@@ -181,6 +180,7 @@ small_tree::small_tree():
   tree.Branch("spher", &spher);
   tree.Branch("spher_jets", &spher_jets);
   tree.Branch("spher_nolin", &spher_nolin);
+  tree.Branch("mt", &mt);
   tree.Branch("mt2_max", &mt2_max);
   tree.Branch("mt2_min", &mt2_min);
   tree.Branch("mt2_ref_max", &mt2_ref_max);
@@ -203,6 +203,7 @@ small_tree::small_tree():
   tree.Branch("mblnu_min", &mblnu_min);
   tree.Branch("mblnu_high_pt", &mblnu_high_pt);
   tree.Branch("mblnu_high_csv", &mblnu_high_csv);
+  tree.Branch("mt_bmet_min", &mt_bmet_min);
   isReadOnly = false;
 }
 
@@ -308,7 +309,6 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("wl1", &wl1);
   chain.SetBranchAddress("npv", &npv);
   chain.SetBranchAddress("ht", &ht);
-  chain.SetBranchAddress("mt", &mt);
   chain.SetBranchAddress("met", &met);
   chain.SetBranchAddress("met_phi", &met_phi);
   chain.SetBranchAddress("dphi_wlep", &dphi_wlep);
@@ -317,6 +317,7 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("spher", &spher);
   chain.SetBranchAddress("spher_jets", &spher_jets);
   chain.SetBranchAddress("spher_nolin", &spher_nolin);
+  chain.SetBranchAddress("mt", &mt);
   chain.SetBranchAddress("mt2_max", &mt2_max);
   chain.SetBranchAddress("mt2_min", &mt2_min);
   chain.SetBranchAddress("mt2_ref_max", &mt2_ref_max);
@@ -339,6 +340,7 @@ small_tree::small_tree(TString filename):
   chain.SetBranchAddress("mblnu_min", &mblnu_min);
   chain.SetBranchAddress("mblnu_high_pt", &mblnu_high_pt);
   chain.SetBranchAddress("mblnu_high_csv", &mblnu_high_csv);
+  chain.SetBranchAddress("mt_bmet_min", &mt_bmet_min);
   isReadOnly = true;
 }
 

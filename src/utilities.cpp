@@ -169,6 +169,15 @@ long double GetMass(long double e, long double px, long double py, long double p
   return fabs(e)*sqrt(1.0L-px*px-py*py-pz*pz);
 }
 
+long double GetMT(const long double m1, const long double px1, const long double py1,
+		  const long double m2, const long double px2, const long double py2){
+  const long double pt1 = AddInQuadrature(px1, py1);
+  const long double et1 = AddInQuadrature(m1, pt1);
+  const long double pt2 = AddInQuadrature(px2, py2);
+  const long double et2 = AddInQuadrature(m2, pt2);
+  return sqrt(m1*m1+m2*m2+2.0L*(et1*et2-px1*px2-py1*py2));
+}
+
 bool Contains(const std::string& text, const std::string& pattern){
   return text.find(pattern) != std::string::npos;
 }

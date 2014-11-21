@@ -126,7 +126,6 @@ int main(){
   variables.push_back("float wl1");
   variables.push_back("int npv");
   variables.push_back("float ht");
-  variables.push_back("float mt");
   variables.push_back("float met");
   variables.push_back("float met_phi");
   variables.push_back("float dphi_wlep");
@@ -135,28 +134,37 @@ int main(){
   variables.push_back("float spher");
   variables.push_back("float spher_jets");
   variables.push_back("float spher_nolin");
+
+  //Transverse mass variables
+  variables.push_back("float mt");
+
   variables.push_back("float mt2_max");
   variables.push_back("float mt2_min");
   variables.push_back("float mt2_ref_max");
   variables.push_back("float mt2_ref_min");
   variables.push_back("float mt2_high_pt");
   variables.push_back("float mt2_high_csv");
+
   variables.push_back("float mt2w_max");
   variables.push_back("float mt2w_min");
   variables.push_back("float mt2w_ref_max");
   variables.push_back("float mt2w_ref_min");
   variables.push_back("float mt2w_high_pt");
   variables.push_back("float mt2w_high_csv");
+
   variables.push_back("float mbl_max");
   variables.push_back("float mbl_subleading");
   variables.push_back("float mbl_min");
   variables.push_back("float mbl_high_pt");
   variables.push_back("float mbl_high_csv");
+
   variables.push_back("float mblnu_max");
   variables.push_back("float mblnu_subleading");
   variables.push_back("float mblnu_min");
   variables.push_back("float mblnu_high_pt");
   variables.push_back("float mblnu_high_csv");
+
+  variables.push_back("float mt_bmet_min");
 
   std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
   
