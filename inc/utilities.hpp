@@ -37,4 +37,7 @@ void get_count_and_uncertainty(TTree& tree,
                                double& count,
                                double& uncertainty);
 
+template<class T>
+bool is_nan(const T &x){return x!=x;}
+
 #endif

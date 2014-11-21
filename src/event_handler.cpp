@@ -176,6 +176,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
     vector<PseudoJet> cands(pfcand_pt()->size());
     for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
+      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
+	 || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
+
       const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
                               jets_pz()->at(jet), jets_energy()->at(jet));
       const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
@@ -214,10 +217,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     }
 
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-      if(pfcand_px()->at(cand)==pfcand_px()->at(cand)
-         && pfcand_py()->at(cand)==pfcand_py()->at(cand)
-         && pfcand_pz()->at(cand) == pfcand_pz()->at(cand)
-         && pfcand_energy()->at(cand)==pfcand_energy()->at(cand)){//check for nan
+      if(!is_nan(pfcand_px()->at(cand))
+         && !is_nan(pfcand_py()->at(cand))
+         && !is_nan(pfcand_pz()->at(cand))
+         && !is_nan(pfcand_energy()->at(cand))){
         cands.at(cand)=PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
 				 pfcand_pz()->at(cand), pfcand_energy()->at(cand));
       }else{
