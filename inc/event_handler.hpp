@@ -15,7 +15,7 @@ class event_handler : public ra4_objects{
 public:
   explicit event_handler(const std::string &fileName);
 
-  void ReduceTree(int Nentries, TString outFilename, int Ntotentries);
+  void ReduceTree(int Nentries, TString outFilename, int Ntotentries, bool skip_slow=false);
   unsigned TypeCode() const;
 };
 

@@ -20,7 +20,8 @@ int main(int argc, char *argv[]){
   std::string inFilename("");
   std::string masspoint("");
   int c(0), Nentries(-1), nfiles(-1), nbatch(-1);
-  while((c=getopt(argc, argv, "n:i:m:f:b:"))!=-1){
+  bool quick_mode = false;
+  while((c=getopt(argc, argv, "n:i:m:f:b:q"))!=-1){
     switch(c){
     case 'n':
       Nentries=atoi(optarg);
@@ -37,6 +38,8 @@ int main(int argc, char *argv[]){
     case 'm':
       masspoint=optarg;
       break;
+    case 'q':
+      quick_mode=true;
     default:
       break;
     }
@@ -44,6 +47,7 @@ int main(int argc, char *argv[]){
 
   TString outFilename(inFilename), folder(inFilename);
   TString all_sample_files(inFilename), outfolder("out/");
+  TString prefix = (quick_mode?"small_quick_":"small_");
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
@@ -60,7 +64,7 @@ int main(int argc, char *argv[]){
 	return 1;
       }
       inFilename = folder + "/" + files[ini];
-      outFilename = outfolder+"small_"+outFilename+"_files"; outFilename += nfiles;
+      outFilename = outfolder+prefix+outFilename+"_files"; outFilename += nfiles;
       outFilename += "_batch"; outFilename += nbatch; outFilename += ".root";
 
       if(end > ntotfiles) end = ntotfiles;
@@ -72,10 +76,10 @@ int main(int argc, char *argv[]){
       Ntotentries = totsample.GetEntries();
     }else{
       inFilename = inFilename + "/*.root";
-      outFilename = outfolder+"small_"+outFilename+".root";
+      outFilename = outfolder+prefix+outFilename+".root";
     }
   } else {
-    outFilename = outfolder+"small_"+outFilename;
+    outFilename = outfolder+prefix+outFilename;
   }
 
   // Checking if output file exists
@@ -101,7 +105,7 @@ int main(int argc, char *argv[]){
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
       <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()
       <<". "<<Ntotentries<<" entries in the full sample."<<endl;
-  tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
+  tHandler.ReduceTree(Nentries, outFilename, Ntotentries, quick_mode);
 
   time(&curTime);
   cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl;

@@ -39,7 +39,8 @@ event_handler::event_handler(const string &fileName):
   ra4_objects(fileName){
 }
 
-void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentries){
+void event_handler::ReduceTree(int Nentries, TString outFilename,
+                               int Ntotentries, bool skip_slow){
   // for(int entry(0); entry < Nentries; entry++){
   //   GetEntry(entry);
 
@@ -122,9 +123,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_jets_phi.resize(0);
     tree.v_jets_csv.resize(0);
     csv_sorted.resize(0);
-    spher[0][0] = 0; spher[0][1] = 0; spher[1][0] = 0; spher[1][1] = 0; 
-    spher_nolin[0][0] = 0; spher_nolin[0][1] = 0; spher_nolin[1][0] = 0; spher_nolin[1][1] = 0; 
-    spher_jets[0][0] = 0; spher_jets[0][1] = 0; spher_jets[1][0] = 0; spher_jets[1][1] = 0; 
+    spher[0][0] = 0; spher[0][1] = 0; spher[1][0] = 0; spher[1][1] = 0;
+    spher_nolin[0][0] = 0; spher_nolin[0][1] = 0; spher_nolin[1][0] = 0; spher_nolin[1][1] = 0;
+    spher_jets[0][0] = 0; spher_jets[0][1] = 0; spher_jets[1][0] = 0; spher_jets[1][1] = 0;
     tree.njets = 0;
     tree.nbl = 0; tree.nbm = 0; tree.nbt = 0;
 
@@ -143,14 +144,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       tree.v_jets_csv.push_back(csv);
       csv_sorted.push_back(make_pair(tree.v_jets_csv.size()-1, csv));
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py; 
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py; 
+      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
+      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
       // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt; 
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt; 
+      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
+      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
       // Linearized transverse sphericity matrix with only jets
-      spher_jets[0][0] += px*px/pt; spher_jets[0][1] += px*py/pt; 
-      spher_jets[1][0] += px*py/pt; spher_jets[1][1] += py*py/pt; 
+      spher_jets[0][0] += px*px/pt; spher_jets[0][1] += px*py/pt;
+      spher_jets[1][0] += px*py/pt; spher_jets[1][1] += py*py/pt;
 
       //       cout<<ijet<<": csv "<<csv<<", eta "<<jets_eta()->at(ijet)<<", phi "<<jets_phi()->at(ijet)<<endl;
       if(jets_pt()->at(ijet) >= jet_ptThresh) {
@@ -164,109 +165,120 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
     if(eigen2x2(spher_jets, eig1, eig2)) tree.spher_jets = 2*eig2/(eig1+eig2);
     else tree.spher_jets = bad_val;
-    
+
     if(tree.v_jets_csv.size() >= 2){
       sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
-      tree.dr_bb = dR(tree.v_jets_eta[csv_sorted[0].first], tree.v_jets_eta[csv_sorted[1].first], 
+      tree.dr_bb = dR(tree.v_jets_eta[csv_sorted[0].first], tree.v_jets_eta[csv_sorted[1].first],
                       tree.v_jets_phi[csv_sorted[0].first], tree.v_jets_phi[csv_sorted[1].first]);
     } else tree.dr_bb = bad_val;
-    
-    ////////////////   Fat Jets   ////////////////
-    vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30, veto_clean_jets_pt30;
-    vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
-    vector<PseudoJet> cands(pfcand_pt()->size());
-    for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
-      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
-	 || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
 
-      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
-                              jets_pz()->at(jet), jets_energy()->at(jet));
-      const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
-                                   jets_pz()->at(jet), jets_energy()->at(jet));
-      
-      bool veto_add = true, sig_add = true;
-      for(size_t ele = 0; ele<veto_electrons.size() && sig_add; ++ele){
-        //Make sure skinny jet is not matched to veto electron
-        const size_t iel = veto_electrons.at(ele);
-        if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
-        const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
-                                  els_pz()->at(iel), els_energy()->at(iel));
-        if(p4el.DeltaR(this_lv)<0.3){
-          veto_add=false;
-          if(IsSignalIdElectron(iel)) sig_add=false;
+    vector<PseudoJet> fjets_skinny_30(0);
+    vector<PseudoJet> fjets_sig_clean_30(0);
+    vector<PseudoJet> fjets_veto_clean_30(0);
+    vector<PseudoJet> fjets_skinny_0(0);
+    vector<PseudoJet> fjets_sig_clean_0(0);
+    vector<PseudoJet> fjets_veto_clean_0(0);
+    vector<PseudoJet> fjets_cands(0);
+    vector<PseudoJet> fjets_cands_trim(0);
+
+    if(!skip_slow){
+      ////////////////   Fat Jets   ////////////////
+      vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30, veto_clean_jets_pt30;
+      vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
+      vector<PseudoJet> cands(pfcand_pt()->size());
+      for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
+        if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
+           || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
+
+        const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
+                                jets_pz()->at(jet), jets_energy()->at(jet));
+        const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
+                                     jets_pz()->at(jet), jets_energy()->at(jet));
+
+        bool veto_add = true, sig_add = true;
+        for(size_t ele = 0; ele<veto_electrons.size() && sig_add; ++ele){
+          //Make sure skinny jet is not matched to veto electron
+          const size_t iel = veto_electrons.at(ele);
+          if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
+          const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
+                                    els_pz()->at(iel), els_energy()->at(iel));
+          if(p4el.DeltaR(this_lv)<0.3){
+            veto_add=false;
+            if(IsSignalIdElectron(iel)) sig_add=false;
+          }
+        }
+        for(size_t mu = 0; mu<veto_muons.size() && sig_add; ++mu){
+          //Make sure skinny jet is not matched to veto muon
+          const size_t imu = veto_muons.at(mu);
+          if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
+          const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
+                                    mus_pz()->at(imu), mus_energy()->at(imu));
+          if(p4mu.DeltaR(this_lv)<0.3){
+            veto_add=false;
+            if(IsSignalIdMuon(imu)) sig_add=false;
+          }
+        }
+
+        skinny_jets_pt0.push_back(this_pj);
+        if(sig_add) sig_clean_jets_pt0.push_back(this_pj);
+        if(veto_add) veto_clean_jets_pt0.push_back(this_pj);
+        if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
+        if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
+        if(veto_add && this_pj.pt()>30.0) veto_clean_jets_pt30.push_back(this_pj);
+      }
+
+      for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+        if(!is_nan(pfcand_px()->at(cand))
+           && !is_nan(pfcand_py()->at(cand))
+           && !is_nan(pfcand_pz()->at(cand))
+           && !is_nan(pfcand_energy()->at(cand))){
+          cands.at(cand)=PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
+                                   pfcand_pz()->at(cand), pfcand_energy()->at(cand));
+        }else{
+          //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
+          cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
         }
       }
-      for(size_t mu = 0; mu<veto_muons.size() && sig_add; ++mu){
-        //Make sure skinny jet is not matched to veto muon
-        const size_t imu = veto_muons.at(mu);
-        if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
-        const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
-                                  mus_pz()->at(imu), mus_energy()->at(imu));
-        if(p4mu.DeltaR(this_lv)<0.3){
-          veto_add=false;
-          if(IsSignalIdMuon(imu)) sig_add=false;
+
+      JetDefinition jet_def_12(antikt_algorithm, 1.2);
+      ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
+      ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
+      ClusterSequence cs_veto_clean_30(veto_clean_jets_pt30, jet_def_12);
+      ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
+      ClusterSequence cs_sig_clean_0(sig_clean_jets_pt0, jet_def_12);
+      ClusterSequence cs_veto_clean_0(veto_clean_jets_pt0, jet_def_12);
+      ClusterSequence cs_cands(cands, jet_def_12);
+
+      fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
+      fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
+      fjets_veto_clean_30 = sorted_by_pt(cs_veto_clean_30.inclusive_jets());
+      fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
+      fjets_sig_clean_0 = sorted_by_pt(cs_sig_clean_0.inclusive_jets());
+      fjets_veto_clean_0 = sorted_by_pt(cs_veto_clean_0.inclusive_jets());
+      fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
+
+      vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
+      fjets_cands_trim.resize(fjets_cands.size());
+      for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
+        vector<PseudoJet> pjs;
+        for(size_t sj = 0; sj < cands.size(); ++sj){
+          if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
         }
-      }
+        ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
+        pjs = cs.inclusive_jets();
 
-      skinny_jets_pt0.push_back(this_pj);
-      if(sig_add) sig_clean_jets_pt0.push_back(this_pj);
-      if(veto_add) veto_clean_jets_pt0.push_back(this_pj);
-      if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
-      if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
-      if(veto_add && this_pj.pt()>30.0) veto_clean_jets_pt30.push_back(this_pj);
-    }
-
-    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-      if(!is_nan(pfcand_px()->at(cand))
-         && !is_nan(pfcand_py()->at(cand))
-         && !is_nan(pfcand_pz()->at(cand))
-         && !is_nan(pfcand_energy()->at(cand))){
-        cands.at(cand)=PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
-				 pfcand_pz()->at(cand), pfcand_energy()->at(cand));
-      }else{
-	//Bad. We read nan for one of the momentum components. Filling with null 4-vector.
-	cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
-      }
-    }
-
-    JetDefinition jet_def_12(antikt_algorithm, 1.2);
-    ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
-    ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
-    ClusterSequence cs_veto_clean_30(veto_clean_jets_pt30, jet_def_12);
-    ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
-    ClusterSequence cs_sig_clean_0(sig_clean_jets_pt0, jet_def_12);
-    ClusterSequence cs_veto_clean_0(veto_clean_jets_pt0, jet_def_12);
-    ClusterSequence cs_cands(cands, jet_def_12);
-
-    const vector<PseudoJet> fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
-    const vector<PseudoJet> fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
-    const vector<PseudoJet> fjets_veto_clean_30 = sorted_by_pt(cs_veto_clean_30.inclusive_jets());
-    const vector<PseudoJet> fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
-    const vector<PseudoJet> fjets_sig_clean_0 = sorted_by_pt(cs_sig_clean_0.inclusive_jets());
-    const vector<PseudoJet> fjets_veto_clean_0 = sorted_by_pt(cs_veto_clean_0.inclusive_jets());
-    const vector<PseudoJet> fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
-
-    vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
-    vector<PseudoJet> fjets_cands_trim(fjets_cands.size());
-    for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
-      vector<PseudoJet> pjs;
-      for(size_t sj = 0; sj < cands.size(); ++sj){
-        if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
-      }
-      ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
-      pjs = cs.inclusive_jets();
-
-      //Sum the fat jet components in place
-      fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
-      for(size_t pj = 0; pj < pjs.size(); ++pj){
-        fjets_cands_trim.at(fj) += pjs.at(pj);
-      }
-      const double sumpt = fjets_cands_trim.at(fj).pt();
-      fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
-      //Trim the low momentum-fraction components
-      for(size_t pj = 0; pj < pjs.size(); ++pj){
-        if(pjs.at(pj).pt()>0.03*sumpt){
+        //Sum the fat jet components in place
+        fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+        for(size_t pj = 0; pj < pjs.size(); ++pj){
           fjets_cands_trim.at(fj) += pjs.at(pj);
+        }
+        const double sumpt = fjets_cands_trim.at(fj).pt();
+        fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
+        //Trim the low momentum-fraction components
+        for(size_t pj = 0; pj < pjs.size(); ++pj){
+          if(pjs.at(pj).pt()>0.03*sumpt){
+            fjets_cands_trim.at(fj) += pjs.at(pj);
+          }
         }
       }
     }
@@ -277,15 +289,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_30_eta.resize(fjets_skinny_30.size());
     tree.v_fjets_30_phi.resize(fjets_skinny_30.size());
     tree.v_fjets_30_mj.resize(fjets_skinny_30.size());
-    for(size_t ipj = 0; ipj < fjets_skinny_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_skinny_30.at(ipj);
-      tree.v_fjets_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_30 += pj.m();
-        ++tree.nfjets_30;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_skinny_30.size(); ++ipj){
+        const PseudoJet &pj = fjets_skinny_30.at(ipj);
+        tree.v_fjets_30_pt.at(ipj)=pj.pt();
+        tree.v_fjets_30_eta.at(ipj)=pj.eta();
+        tree.v_fjets_30_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_30_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_30 += pj.m();
+          ++tree.nfjets_30;
+        }
       }
     }
     tree.nfjets_scln_30 = 0;
@@ -294,15 +308,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_scln_30_eta.resize(fjets_sig_clean_30.size());
     tree.v_fjets_scln_30_phi.resize(fjets_sig_clean_30.size());
     tree.v_fjets_scln_30_mj.resize(fjets_sig_clean_30.size());
-    for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
-      tree.v_fjets_scln_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_scln_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_scln_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_scln_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_scln_30 += pj.m();
-        ++tree.nfjets_scln_30;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
+        const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
+        tree.v_fjets_scln_30_pt.at(ipj)=pj.pt();
+        tree.v_fjets_scln_30_eta.at(ipj)=pj.eta();
+        tree.v_fjets_scln_30_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_scln_30_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_scln_30 += pj.m();
+          ++tree.nfjets_scln_30;
+        }
       }
     }
     tree.nfjets_vcln_30 = 0;
@@ -311,15 +327,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_vcln_30_eta.resize(fjets_veto_clean_30.size());
     tree.v_fjets_vcln_30_phi.resize(fjets_veto_clean_30.size());
     tree.v_fjets_vcln_30_mj.resize(fjets_veto_clean_30.size());
-    for(size_t ipj = 0; ipj < fjets_veto_clean_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_veto_clean_30.at(ipj);
-      tree.v_fjets_vcln_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_vcln_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_vcln_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_vcln_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_vcln_30 += pj.m();
-        ++tree.nfjets_vcln_30;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_veto_clean_30.size(); ++ipj){
+        const PseudoJet &pj = fjets_veto_clean_30.at(ipj);
+        tree.v_fjets_vcln_30_pt.at(ipj)=pj.pt();
+        tree.v_fjets_vcln_30_eta.at(ipj)=pj.eta();
+        tree.v_fjets_vcln_30_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_vcln_30_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_vcln_30 += pj.m();
+          ++tree.nfjets_vcln_30;
+        }
       }
     }
     tree.nfjets_0 = 0;
@@ -328,15 +346,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_0_eta.resize(fjets_skinny_0.size());
     tree.v_fjets_0_phi.resize(fjets_skinny_0.size());
     tree.v_fjets_0_mj.resize(fjets_skinny_0.size());
-    for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_skinny_0.at(ipj);
-      tree.v_fjets_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_0 += pj.m();
-        ++tree.nfjets_0;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
+        const PseudoJet &pj = fjets_skinny_0.at(ipj);
+        tree.v_fjets_0_pt.at(ipj)=pj.pt();
+        tree.v_fjets_0_eta.at(ipj)=pj.eta();
+        tree.v_fjets_0_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_0_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_0 += pj.m();
+          ++tree.nfjets_0;
+        }
       }
     }
     tree.nfjets_scln_0 = 0;
@@ -345,15 +365,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_scln_0_eta.resize(fjets_sig_clean_0.size());
     tree.v_fjets_scln_0_phi.resize(fjets_sig_clean_0.size());
     tree.v_fjets_scln_0_mj.resize(fjets_sig_clean_0.size());
-    for(size_t ipj = 0; ipj < fjets_sig_clean_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_sig_clean_0.at(ipj);
-      tree.v_fjets_scln_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_scln_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_scln_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_scln_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_scln_0 += pj.m();
-        ++tree.nfjets_scln_0;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_sig_clean_0.size(); ++ipj){
+        const PseudoJet &pj = fjets_sig_clean_0.at(ipj);
+        tree.v_fjets_scln_0_pt.at(ipj)=pj.pt();
+        tree.v_fjets_scln_0_eta.at(ipj)=pj.eta();
+        tree.v_fjets_scln_0_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_scln_0_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_scln_0 += pj.m();
+          ++tree.nfjets_scln_0;
+        }
       }
     }
     tree.nfjets_vcln_0 = 0;
@@ -362,15 +384,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_vcln_0_eta.resize(fjets_veto_clean_0.size());
     tree.v_fjets_vcln_0_phi.resize(fjets_veto_clean_0.size());
     tree.v_fjets_vcln_0_mj.resize(fjets_veto_clean_0.size());
-    for(size_t ipj = 0; ipj < fjets_veto_clean_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_veto_clean_0.at(ipj);
-      tree.v_fjets_vcln_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_vcln_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_vcln_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_vcln_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_vcln_0 += pj.m();
-        ++tree.nfjets_vcln_0;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_veto_clean_0.size(); ++ipj){
+        const PseudoJet &pj = fjets_veto_clean_0.at(ipj);
+        tree.v_fjets_vcln_0_pt.at(ipj)=pj.pt();
+        tree.v_fjets_vcln_0_eta.at(ipj)=pj.eta();
+        tree.v_fjets_vcln_0_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_vcln_0_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_vcln_0 += pj.m();
+          ++tree.nfjets_vcln_0;
+        }
       }
     }
     tree.nfjets_cands = 0;
@@ -379,15 +403,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_cands_eta.resize(fjets_cands.size());
     tree.v_fjets_cands_phi.resize(fjets_cands.size());
     tree.v_fjets_cands_mj.resize(fjets_cands.size());
-    for(size_t ipj = 0; ipj < fjets_cands.size(); ++ipj){
-      const PseudoJet &pj = fjets_cands.at(ipj);
-      tree.v_fjets_cands_pt.at(ipj)=pj.pt();
-      tree.v_fjets_cands_eta.at(ipj)=pj.eta();
-      tree.v_fjets_cands_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_cands_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_cands += pj.m();
-        ++tree.nfjets_cands;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_cands.size(); ++ipj){
+        const PseudoJet &pj = fjets_cands.at(ipj);
+        tree.v_fjets_cands_pt.at(ipj)=pj.pt();
+        tree.v_fjets_cands_eta.at(ipj)=pj.eta();
+        tree.v_fjets_cands_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_cands_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_cands += pj.m();
+          ++tree.nfjets_cands;
+        }
       }
     }
     tree.nfjets_cands_trim = 0;
@@ -396,18 +422,20 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.v_fjets_cands_trim_eta.resize(fjets_cands_trim.size());
     tree.v_fjets_cands_trim_phi.resize(fjets_cands_trim.size());
     tree.v_fjets_cands_trim_mj.resize(fjets_cands_trim.size());
-    for(size_t ipj = 0; ipj < fjets_cands_trim.size(); ++ipj){
-      const PseudoJet &pj = fjets_cands_trim.at(ipj);
-      tree.v_fjets_cands_trim_pt.at(ipj)=pj.pt();
-      tree.v_fjets_cands_trim_eta.at(ipj)=pj.eta();
-      tree.v_fjets_cands_trim_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_cands_trim_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_cands_trim += pj.m();
-        ++tree.nfjets_cands_trim;
+    if(!skip_slow){
+      for(size_t ipj = 0; ipj < fjets_cands_trim.size(); ++ipj){
+        const PseudoJet &pj = fjets_cands_trim.at(ipj);
+        tree.v_fjets_cands_trim_pt.at(ipj)=pj.pt();
+        tree.v_fjets_cands_trim_eta.at(ipj)=pj.eta();
+        tree.v_fjets_cands_trim_phi.at(ipj)=pj.phi_std();
+        tree.v_fjets_cands_trim_mj.at(ipj)=pj.m();
+        if(pj.pt()>50.0){
+          tree.mj_cands_trim += pj.m();
+          ++tree.nfjets_cands_trim;
+        }
       }
     }
-    
+
     ////////////////   Leptons   ////////////////
     lepmax_energy=0; lepmax_pt=0; lepmax_px=0; lepmax_py=0; lepmax_pz=0;
     tree.v_els_pt.resize(0);
@@ -442,8 +470,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
       if(els_pt()->at(index) > lepmax_pt){
         lepmax_energy=els_energy()->at(index);
-        lepmax_pt=els_pt()->at(index); 
-        lepmax_px=els_px()->at(index); 
+        lepmax_pt=els_pt()->at(index);
+        lepmax_px=els_px()->at(index);
         lepmax_py=els_py()->at(index);
         lepmax_pz=els_pz()->at(index);
         lepmax_p4 = TLorentzVector(els_px()->at(index),
@@ -452,11 +480,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                    els_energy()->at(index));
       }
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py; 
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py; 
+      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
+      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
       // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt; 
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt; 
+      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
+      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
       //       cout<<"Rec el eta "<<tree.v_els_eta[tree.v_els_pt.size()-1]<<", phi "<<tree.v_els_phi[tree.v_els_pt.size()-1]
       //          <<", tru id "<<tree.v_els_tru_id[tree.v_els_pt.size()-1]<<", tru momid "<<tree.v_els_tru_momid[tree.v_els_pt.size()-1]
       //          <<", dR "<<deltaR<<endl;
@@ -490,8 +518,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
       if(mus_pt()->at(index) > lepmax_pt){
         lepmax_energy=mus_energy()->at(index);
-        lepmax_pt=mus_pt()->at(index); 
-        lepmax_px=mus_px()->at(index); 
+        lepmax_pt=mus_pt()->at(index);
+        lepmax_px=mus_px()->at(index);
         lepmax_py=mus_py()->at(index);
         lepmax_pz=mus_pz()->at(index);
         lepmax_p4 = TLorentzVector(mus_px()->at(index),
@@ -500,11 +528,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                    mus_energy()->at(index));
       }
       // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py; 
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py; 
+      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
+      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
       // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt; 
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt; 
+      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
+      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
     }
     if(eigen2x2(spher, eig1, eig2)) tree.spher = 2*eig2/(eig1+eig2);
     else tree.spher = bad_val;
@@ -531,9 +559,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       if(mc_jets_pt()->at(imc)>40 && mc_jets_eta()->at(imc)<3) tree.genht += mc_jets_pt()->at(imc);
 
     // True particles
-    tree.mc_pt->resize(0);  tree.mc_id->resize(0);  
-    tree.mc_eta->resize(0); tree.mc_momid->resize(0);  
-    tree.mc_phi->resize(0); 
+    tree.mc_pt->resize(0);  tree.mc_id->resize(0);
+    tree.mc_eta->resize(0); tree.mc_momid->resize(0);
+    tree.mc_phi->resize(0);
     for(size_t imc = 0; imc < mc_doc_id()->size(); imc++){
       int id = static_cast<int>(mc_doc_id()->at(imc));
       int momid = GetMom(mc_doc_id()->at(imc), mc_doc_mother_id()->at(imc),
@@ -550,7 +578,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
         tree.mc_momid->push_back(momid);
       }
     }
-   
+
     // Finding mT and deltaPhi with respect to highest pT lepton
     tree.mt = bad_val; tree.dphi_wlep = bad_val;
     if(lepmax_pt > 0){
@@ -567,11 +595,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       const int ijet = good_jets.at(i);
       if(jets_btag_secVertexCombined()->at(ijet) < CSVCuts[1]) continue;
       const float mb = GetMass(jets_energy()->at(ijet),
-			       jets_px()->at(ijet),
-			       jets_py()->at(ijet),
-			       jets_pz()->at(ijet));
+                               jets_px()->at(ijet),
+                               jets_py()->at(ijet),
+                               jets_pz()->at(ijet));
       const float this_mt = GetMT(0.0, mets_ex()->at(0), mets_ey()->at(0),
-				  mb, jets_px()->at(ijet), jets_py()->at(ijet));
+                                  mb, jets_px()->at(ijet), jets_py()->at(ijet));
       if(tree.mt_bmet_min<0.0 || this_mt<tree.mt_bmet_min) tree.mt_bmet_min=this_mt;
     }
 
@@ -666,8 +694,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
              && jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
             mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
             mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-            v_mt2.push_back(mt2_calc.get_mt2());
-            v_mt2w.push_back(mt2w_calc.get_mt2w());
+            if(!skip_slow){
+              v_mt2.push_back(mt2_calc.get_mt2());
+              v_mt2w.push_back(mt2w_calc.get_mt2w());
+            }
           }
         }
       }
@@ -676,7 +706,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
       sort(v_mbl.begin(), v_mbl.end(), greater<float>());
       sort(v_mblnu.begin(), v_mblnu.end(), greater<float>());
       sort(jet_sorter.begin(), jet_sorter.begin(), greater<pair<float, unsigned> >());
-      
+
       if(num_tags==2){
         double momentum_csvi1_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
         double momentum_csvi1_4[4] = {jets_energy()->at(csvi1),
@@ -690,10 +720,12 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                       jets_pz()->at(csvi2)};
         mt2_calc.set_momenta(momentum_csvi1_3, momentum_csvi2_3, momentum_W);
         mt2w_calc.set_momenta(momentum_lep_4, momentum_csvi1_4, momentum_csvi2_4, momentum_met);
-        tree.mt2_ref_min = mt2_calc.get_mt2();
-        tree.mt2_ref_max = mt2_calc.get_mt2();
-        tree.mt2w_ref_min = mt2w_calc.get_mt2w();
-        tree.mt2w_ref_max = mt2w_calc.get_mt2w();
+        if(!skip_slow){
+          tree.mt2_ref_min = mt2_calc.get_mt2();
+          tree.mt2_ref_max = mt2_calc.get_mt2();
+          tree.mt2w_ref_min = mt2w_calc.get_mt2w();
+          tree.mt2w_ref_max = mt2w_calc.get_mt2w();
+        }
       }else if(num_tags==1){
         double momentum_csv_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
         double momentum_csv_4[4] = {jets_energy()->at(csvi1),
@@ -716,8 +748,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                   jets_pz()->at(jet)};
           mt2_calc.set_momenta(momentum_csv_3, momentum_3, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_csv_4, momentum_4, momentum_met);
-          v_mt2_temp.push_back(mt2_calc.get_mt2());
-          v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
+          if(!skip_slow){
+            v_mt2_temp.push_back(mt2_calc.get_mt2());
+            v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
+          }
         }
         sort(v_mt2_temp.begin(), v_mt2_temp.end(), greater<float>());
         sort(v_mt2w_temp.begin(), v_mt2w_temp.end(), greater<float>());
@@ -748,8 +782,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
 
             mt2_calc.set_momenta(momentum_1_3, momentum_2_3, momentum_W);
             mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-            v_mt2_temp.push_back(mt2_calc.get_mt2());
-            v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
+            if(!skip_slow){
+              v_mt2_temp.push_back(mt2_calc.get_mt2());
+              v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
+            }
           }
         }
         sort(v_mt2_temp.begin(), v_mt2_temp.end(), greater<float>());
@@ -807,11 +843,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                     jets_pz()->at(pti2)};
           mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-          tree.mt2_high_pt = mt2_calc.get_mt2();
-          tree.mt2w_high_pt = mt2w_calc.get_mt2w();
+          if(!skip_slow){
+            tree.mt2_high_pt = mt2_calc.get_mt2();
+            tree.mt2w_high_pt = mt2w_calc.get_mt2w();
+          }
         }
       }
-      
+
       if(csvi1>=0){
         TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(csvi1),
                                                jets_py()->at(csvi1),
@@ -832,8 +870,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
                                     jets_pz()->at(csvi2)};
           mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
           mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-          tree.mt2_high_csv = mt2_calc.get_mt2();
-          tree.mt2w_high_csv = mt2w_calc.get_mt2w();
+          if(!skip_slow){
+            tree.mt2_high_csv = mt2_calc.get_mt2();
+            tree.mt2w_high_csv = mt2w_calc.get_mt2w();
+          }
         }
       }
     }
@@ -851,7 +891,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename, int Ntotentrie
     tree.wl1 = (0.5*TMath::Erf((1.35121e-02)*(tree.genht-(3.02695e+02)))+0.5);
     tree.wlumi = xsec*luminosity / static_cast<double>(Ntotentries);
     tree.weight = tree.wlumi;
-    
+
     tree.mc_type = TypeCode();
 
     tree.Fill();
@@ -913,7 +953,7 @@ unsigned event_handler::TypeCode() const{
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
     const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
     const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
-    
+
     if(mom != 15) counting=false;
 
     if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
