@@ -94,6 +94,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     timer.Iterate();
     GetEntry(entry);
 
+    ////////////////   Provenance   /////////////
+    tree.event = event();
+    tree.lumiblock = lumiblock();
+    tree.run = run();
+
     ////////////////   Leptons   ////////////////
     vector<int> signal_electrons = GetElectrons();
     vector<int> veto_electrons = GetElectrons(false);
@@ -488,11 +493,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       //Compute isolation alternatives
       const TLorentzVector el(els_px()->at(index), els_py()->at(index),
 			      els_pz()->at(index), els_energy()->at(index));
-      for(size_t i = 0; i < good_jets.size(); ++i){
-	const size_t ijet = good_jets.at(i);
+      for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
+	if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
 	const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
 				 jets_pz()->at(ijet), jets_energy()->at(ijet));
-	if(jet.Pt()<30.0) continue;
 	const double delta_r = jet.DeltaR(el);
 	const double ptrel = el.Pt(jet.Vect());
 	if(delta_r<tree.v_els_mindr.back()){

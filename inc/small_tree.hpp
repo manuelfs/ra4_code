@@ -16,6 +16,9 @@ public:
   bool isReadOnly;
   TChain chain;
   TTree tree;
+  unsigned run;
+  unsigned lumiblock;
+  unsigned event;
   int nleps;
   int nmus;
   int nvmus;

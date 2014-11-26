@@ -9,6 +9,11 @@ int main(){
   TString name, copy;
   vector<TString> variables;
 
+  ////////////////   Provenance   /////////////
+  variables.push_back("unsigned run");  
+  variables.push_back("unsigned lumiblock");  
+  variables.push_back("unsigned event");  
+
   ////////////////   Leptons   ////////////////
   variables.push_back("int nleps");
   variables.push_back("int nmus");

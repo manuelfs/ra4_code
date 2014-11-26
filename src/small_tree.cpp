@@ -10,6 +10,9 @@ using std::endl;
 
 small_tree::small_tree():
   tree("tree", "tree"){
+  tree.Branch("run", &run);
+  tree.Branch("lumiblock", &lumiblock);
+  tree.Branch("event", &event);
   tree.Branch("nleps", &nleps);
   tree.Branch("nmus", &nmus);
   tree.Branch("nvmus", &nvmus);
@@ -244,6 +247,9 @@ small_tree::small_tree():
 small_tree::small_tree(TString filename):
   chain("tree"){
   chain.Add(filename);
+  chain.SetBranchAddress("run", &run);
+  chain.SetBranchAddress("lumiblock", &lumiblock);
+  chain.SetBranchAddress("event", &event);
   chain.SetBranchAddress("nleps", &nleps);
   chain.SetBranchAddress("nmus", &nmus);
   chain.SetBranchAddress("nvmus", &nvmus);
