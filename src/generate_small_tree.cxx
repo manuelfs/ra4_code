@@ -24,6 +24,14 @@ int main(){
   variables.push_back("std::vector<int>* mus_tru_id");
   variables.push_back("std::vector<int>* mus_tru_momid");
   variables.push_back("std::vector<bool>* mus_tru_tm");
+  variables.push_back("std::vector<double>* mus_mindr");
+  variables.push_back("std::vector<double>* mus_mindr_csvl");
+  variables.push_back("std::vector<double>* mus_mindr_csvm");
+  variables.push_back("std::vector<double>* mus_mindr_csvt");
+  variables.push_back("std::vector<double>* mus_ptrel");
+  variables.push_back("std::vector<double>* mus_ptrel_csvl");
+  variables.push_back("std::vector<double>* mus_ptrel_csvm");
+  variables.push_back("std::vector<double>* mus_ptrel_csvt");
   variables.push_back("int nels");
   variables.push_back("int nvels");
   variables.push_back("std::vector<double>* els_pt");
@@ -37,6 +45,14 @@ int main(){
   variables.push_back("std::vector<int>* els_tru_id");
   variables.push_back("std::vector<int>* els_tru_momid");
   variables.push_back("std::vector<bool>* els_tru_tm");
+  variables.push_back("std::vector<double>* els_mindr");
+  variables.push_back("std::vector<double>* els_mindr_csvl");
+  variables.push_back("std::vector<double>* els_mindr_csvm");
+  variables.push_back("std::vector<double>* els_mindr_csvt");
+  variables.push_back("std::vector<double>* els_ptrel");
+  variables.push_back("std::vector<double>* els_ptrel_csvl");
+  variables.push_back("std::vector<double>* els_ptrel_csvm");
+  variables.push_back("std::vector<double>* els_ptrel_csvt");
 
   /////////////////   Tracks   ////////////////
   variables.push_back("int nisotrks");
@@ -116,6 +132,7 @@ int main(){
   variables.push_back("std::vector<int>* mc_id");
   variables.push_back("std::vector<int>* mc_momid");
   variables.push_back("float genmet");
+  variables.push_back("float genmetphi");
   variables.push_back("float genht");
   variables.push_back("float ntrupv_mean"); 
   variables.push_back("int ntrupv");
@@ -137,6 +154,7 @@ int main(){
 
   //Transverse mass variables
   variables.push_back("float mt");
+  variables.push_back("float mt_genmet");
 
   variables.push_back("float mt2_max");
   variables.push_back("float mt2_min");
