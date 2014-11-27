@@ -588,11 +588,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       //Compute isolation alternatives
       const TLorentzVector mu(mus_px()->at(index), mus_py()->at(index),
 			      mus_pz()->at(index), mus_energy()->at(index));
-      for(size_t i = 0; i < good_jets.size(); ++i){
-	const size_t ijet = good_jets.at(i);
+      for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
+	if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
 	const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
 				 jets_pz()->at(ijet), jets_energy()->at(ijet));
-	if(jet.Pt()<30.0) continue;
 	const double delta_r = jet.DeltaR(mu);
 	const double ptrel = mu.Pt(jet.Vect());
 	if(delta_r<tree.v_mus_mindr.back()){
