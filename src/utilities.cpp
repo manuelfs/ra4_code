@@ -18,6 +18,7 @@
 #include "TCollection.h"
 #include "TH1D.h"
 #include "TTree.h"
+#include "TGraph.h"
 
 using namespace std;
 
@@ -204,4 +205,8 @@ void get_count_and_uncertainty(TTree& tree,
   TH1D temp(hist_name.c_str(), "", 1, -1.0, 1.0);
   tree.Project(hist_name.c_str(), "0.0", cut.c_str());
   count=temp.IntegralAndError(0,2,uncertainty);
+}
+
+void AddPoint(TGraph& graph, const double x, const double y){
+  graph.SetPoint(graph.GetN(), x, y);
 }

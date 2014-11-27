@@ -10,6 +10,7 @@
 
 #include "TString.h"
 #include "TTree.h"
+#include "TGraph.h"
 
 typedef std::pair<int,double> int_double;
 typedef std::pair<double,double> double_double;
@@ -36,6 +37,7 @@ void get_count_and_uncertainty(TTree& tree,
                                const std::string& cut,
                                double& count,
                                double& uncertainty);
+void AddPoint(TGraph& graph, const double x, const double y);
 
 template<class T>
 bool is_nan(const T &x){return x!=x;}
