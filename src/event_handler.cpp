@@ -455,13 +455,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_els_tru_tm.clear();
     tree.v_els_tru_dr.clear();
     tree.v_els_mindr.clear();
-    tree.v_els_mindr_csvl.clear();
-    tree.v_els_mindr_csvm.clear();
-    tree.v_els_mindr_csvt.clear();
     tree.v_els_ptrel.clear();
-    tree.v_els_ptrel_csvl.clear();
-    tree.v_els_ptrel_csvm.clear();
-    tree.v_els_ptrel_csvt.clear();
+    tree.v_els_mindr_sub.clear();
+    tree.v_els_ptrel_sub.clear();
     for(uint index=0; index<els_pt()->size(); ++index){
       if(!IsVetoIdElectron(index) || els_pt()->at(index)<10.0) continue;
 
@@ -469,7 +465,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       px = els_px()->at(index);
       py = els_py()->at(index);
       mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
-      tree.v_els_pt.push_back(pt);
+      tree.v_els_pt.push_back(els_pt()->at(index));
       tree.v_els_gen_pt.push_back(els_gen_pt()->at(index));
       tree.v_els_eta.push_back(els_eta()->at(index));
       tree.v_els_phi.push_back(els_phi()->at(index));
@@ -482,14 +478,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_els_tru_dr.push_back(deltaR);
 
       tree.v_els_mindr.push_back(std::numeric_limits<float>::max());
-      tree.v_els_mindr_csvl.push_back(std::numeric_limits<float>::max());
-      tree.v_els_mindr_csvm.push_back(std::numeric_limits<float>::max());
-      tree.v_els_mindr_csvt.push_back(std::numeric_limits<float>::max());
       tree.v_els_ptrel.push_back(bad_val);
-      tree.v_els_ptrel_csvl.push_back(bad_val);
-      tree.v_els_ptrel_csvm.push_back(bad_val);
-      tree.v_els_ptrel_csvt.push_back(bad_val);
-
+      tree.v_els_mindr_sub.push_back(std::numeric_limits<float>::max());
+      tree.v_els_ptrel_sub.push_back(bad_val);
+      
       //Compute isolation alternatives
       const TLorentzVector el(els_px()->at(index), els_py()->at(index),
 			      els_pz()->at(index), els_energy()->at(index));
@@ -497,26 +489,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
 	const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
 				 jets_pz()->at(ijet), jets_energy()->at(ijet));
+	const TLorentzVector jet_sub = jet-el;
 	const double delta_r = jet.DeltaR(el);
-	const double ptrel = el.Pt(jet.Vect());
+	const double delta_r_sub = jet_sub.DeltaR(el);
 	if(delta_r<tree.v_els_mindr.back()){
 	  tree.v_els_mindr.back()=delta_r;
-	  tree.v_els_ptrel.back()=ptrel;
-	}
-	if(delta_r<tree.v_els_mindr_csvl.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[0]){
-	  tree.v_els_mindr_csvl.back()=delta_r;
-	  tree.v_els_ptrel_csvl.back()=ptrel;
-	}
-	if(delta_r<tree.v_els_mindr_csvm.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[1]){
-	  tree.v_els_mindr_csvm.back()=delta_r;
-	  tree.v_els_ptrel_csvm.back()=ptrel;
-	}
-	if(delta_r<tree.v_els_mindr_csvt.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[2]){
-	  tree.v_els_mindr_csvt.back()=delta_r;
-	  tree.v_els_ptrel_csvt.back()=ptrel;
+	  tree.v_els_ptrel.back()=el.Pt(jet.Vect());
+	  tree.v_els_mindr_sub.back()=delta_r_sub;
+	  tree.v_els_ptrel_sub.back()=el.Pt(jet_sub.Vect());
 	}
       }
 
@@ -553,16 +533,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_mus_tru_tm.clear();
     tree.v_mus_tru_dr.clear();
     tree.v_mus_mindr.clear();
-    tree.v_mus_mindr_csvl.clear();
-    tree.v_mus_mindr_csvm.clear();
-    tree.v_mus_mindr_csvt.clear();
     tree.v_mus_ptrel.clear();
-    tree.v_mus_ptrel_csvl.clear();
-    tree.v_mus_ptrel_csvm.clear();
-    tree.v_mus_ptrel_csvt.clear();
+    tree.v_mus_mindr_sub.clear();
+    tree.v_mus_ptrel_sub.clear();
     for(uint index=0; index<mus_pt()->size(); ++index){
       if(!IsVetoIdMuon(index) || mus_pt()->at(index)<10.0) continue;
 
+      pt = mus_pt()->at(index);
+      px = mus_px()->at(index);
+      py = mus_py()->at(index);
       mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
       tree.v_mus_pt.push_back(mus_pt()->at(index));
       tree.v_mus_gen_pt.push_back(mus_gen_pt()->at(index));
@@ -577,13 +556,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_mus_tru_dr.push_back(deltaR);
 
       tree.v_mus_mindr.push_back(std::numeric_limits<float>::max());
-      tree.v_mus_mindr_csvl.push_back(std::numeric_limits<float>::max());
-      tree.v_mus_mindr_csvm.push_back(std::numeric_limits<float>::max());
-      tree.v_mus_mindr_csvt.push_back(std::numeric_limits<float>::max());
       tree.v_mus_ptrel.push_back(bad_val);
-      tree.v_mus_ptrel_csvl.push_back(bad_val);
-      tree.v_mus_ptrel_csvm.push_back(bad_val);
-      tree.v_mus_ptrel_csvt.push_back(bad_val);
+      tree.v_mus_mindr_sub.push_back(std::numeric_limits<float>::max());
+      tree.v_mus_ptrel_sub.push_back(bad_val);
 
       //Compute isolation alternatives
       const TLorentzVector mu(mus_px()->at(index), mus_py()->at(index),
@@ -592,26 +567,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
 	const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
 				 jets_pz()->at(ijet), jets_energy()->at(ijet));
+	const TLorentzVector jet_sub = jet-mu;
 	const double delta_r = jet.DeltaR(mu);
-	const double ptrel = mu.Pt(jet.Vect());
+	const double delta_r_sub = jet_sub.DeltaR(mu);
 	if(delta_r<tree.v_mus_mindr.back()){
 	  tree.v_mus_mindr.back()=delta_r;
-	  tree.v_mus_ptrel.back()=ptrel;
-	}
-	if(delta_r<tree.v_mus_mindr_csvl.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[0]){
-	  tree.v_mus_mindr_csvl.back()=delta_r;
-	  tree.v_mus_ptrel_csvl.back()=ptrel;
-	}
-	if(delta_r<tree.v_mus_mindr_csvm.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[1]){
-	  tree.v_mus_mindr_csvm.back()=delta_r;
-	  tree.v_mus_ptrel_csvm.back()=ptrel;
-	}
-	if(delta_r<tree.v_mus_mindr_csvt.back()
-	   && jets_btag_secVertexCombined()->at(ijet)>CSVCuts[2]){
-	  tree.v_mus_mindr_csvt.back()=delta_r;
-	  tree.v_mus_ptrel_csvt.back()=ptrel;
+	  tree.v_mus_ptrel.back()=mu.Pt(jet.Vect());
+	  tree.v_mus_mindr_sub.back()=delta_r_sub;
+	  tree.v_mus_ptrel_sub.back()=mu.Pt(jet_sub.Vect());
 	}
       }
 

@@ -132,7 +132,7 @@ double deltaphi(double phi1, double phi2){
 }
 
 float dR(float eta1, float eta2, float phi1, float phi2) {
-  return sqrt(pow(eta1-eta2, 2) + pow(deltaphi(phi1,phi2), 2)) ;
+  return AddInQuadrature(eta1-eta2, deltaphi(phi1,phi2));
 }
 
 TString RoundNumber(double num, int decimals, double denom){
