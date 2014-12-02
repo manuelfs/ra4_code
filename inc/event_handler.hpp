@@ -8,10 +8,10 @@
 #include <utility>
 #include <limits>
 #include <stdint.h>
-#include "ra4_objects.hpp"
+#include "phys_objects.hpp"
 #include "utilities.hpp"
 
-class event_handler : public ra4_objects{
+class event_handler : public phys_objects{
 public:
   explicit event_handler(const std::string &fileName);
 

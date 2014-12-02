@@ -1,7 +1,7 @@
-// ra4_objects: Class with the standard RA4 physics objects that inherits from the cfa class.
+// phys_objects: Class with the standard physics objects that inherits from the cfa class.
 //              Reduced tree makers should inherit from this class
 
-#include "ra4_objects.hpp"
+#include "phys_objects.hpp"
 
 #include <cfloat>
 #include <cmath>
@@ -30,14 +30,14 @@ namespace{
 
 using namespace std;
 
-ra4_objects::ra4_objects(const std::string &fileName, const bool is_8TeV):
+phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
 cfa(fileName, is_8TeV){
 }
 
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////  MUONS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> ra4_objects::GetMuons(bool doSignal) const {
+vector<int> phys_objects::GetMuons(bool doSignal) const {
   vector<int> muons;
   for(unsigned index=0; index<mus_pt()->size(); index++)
     if(doSignal){
@@ -48,17 +48,17 @@ vector<int> ra4_objects::GetMuons(bool doSignal) const {
   return muons;
 }
 
-bool ra4_objects::IsSignalMuon(unsigned imu) const {
+bool phys_objects::IsSignalMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
   return IsSignalIdMuon(imu) && GetMuonIsolation(imu)<0.12 && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
-bool ra4_objects::IsVetoMuon(unsigned imu) const{
+bool phys_objects::IsVetoMuon(unsigned imu) const{
   if(imu >= mus_pt()->size()) return false;
   return IsVetoIdMuon(imu) && GetMuonIsolation(imu)<0.2 && mus_pt()->at(imu)>MinVetoLeptonPt;
 }
 
-bool ra4_objects::IsVetoIdMuon(unsigned imu) const {
+bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
 
   bool isPF(false);
@@ -77,7 +77,7 @@ bool ra4_objects::IsVetoIdMuon(unsigned imu) const {
           && fabs(mus_eta()->at(imu)) <= 2.5);
 }
 
-bool ra4_objects::IsSignalIdMuon(unsigned imu) const {
+bool phys_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
   float d0PV = mus_tk_d0dum()->at(imu)-pv_x()->at(0)*sin(mus_tk_phi()->at(imu))+pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
 
@@ -102,7 +102,7 @@ bool ra4_objects::IsSignalIdMuon(unsigned imu) const {
           && fabs(mus_eta()->at(imu)) <= 2.4);
 }
 
-float ra4_objects::GetMuonIsolation(unsigned imu) const {
+float phys_objects::GetMuonIsolation(unsigned imu) const {
   if(imu >= mus_pt()->size()) return -999;
   double sumEt = mus_pfIsolationR03_sumNeutralHadronEt()->at(imu) + mus_pfIsolationR03_sumPhotonEt()->at(imu)
     - 0.5*mus_pfIsolationR03_sumPUPt()->at(imu);
@@ -113,7 +113,7 @@ float ra4_objects::GetMuonIsolation(unsigned imu) const {
 /////////////////////////////////////////////////////////////////////////
 //////////////////////////////  ELECTRONS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> ra4_objects::GetElectrons(bool doSignal) const {
+vector<int> phys_objects::GetElectrons(bool doSignal) const {
   vector<int> electrons;
   for(unsigned index=0; index<els_pt()->size(); index++)
     if(doSignal){
@@ -124,7 +124,7 @@ vector<int> ra4_objects::GetElectrons(bool doSignal) const {
   return electrons;
 }
 
-bool ra4_objects::IsSignalElectron(unsigned iel) const {
+bool phys_objects::IsSignalElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
 
   return IsSignalIdElectron(iel)
@@ -132,14 +132,14 @@ bool ra4_objects::IsSignalElectron(unsigned iel) const {
     && GetElectronIsolation(iel)<0.15;
 }
 
-bool ra4_objects::IsVetoElectron(unsigned iel) const {
+bool phys_objects::IsVetoElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
   return IsVetoIdElectron(iel)
     && els_pt()->at(iel)>=MinVetoLeptonPt
     && GetElectronIsolation(iel)<0.15;
 }
 
-bool ra4_objects::IsVetoIdElectron(unsigned iel) const {
+bool phys_objects::IsVetoIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
 
   float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
@@ -160,7 +160,7 @@ bool ra4_objects::IsVetoIdElectron(unsigned iel) const {
           );
 }
 
-bool ra4_objects::IsSignalIdElectron(unsigned iel) const {
+bool phys_objects::IsSignalIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
 
   float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
@@ -197,7 +197,7 @@ bool ra4_objects::IsSignalIdElectron(unsigned iel) const {
 }
 
 
-float ra4_objects::GetElectronIsolation(unsigned iel) const {
+float phys_objects::GetElectronIsolation(unsigned iel) const {
   if(Type()==typeid(cfa_8)){
     double sumEt = els_PFphotonIsoR03()->at(iel) + els_PFneutralHadronIsoR03()->at(iel)
       - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), IsMC());
@@ -207,12 +207,12 @@ float ra4_objects::GetElectronIsolation(unsigned iel) const {
     float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel) + std::max(0.0 , els_pfIsolationR03_sumNeutralHadronEt()->at(iel) + els_pfIsolationR03_sumPhotonEt()->at(iel) - 0.5 * els_pfIsolationR03_sumPUPt()->at(iel) );
     return absiso/els_pt()->at(iel);
   }else{
-    throw std::logic_error("Unknown type "+std::string(Type().name())+" in ra4_objects::GetElectronIsolation");
+    throw std::logic_error("Unknown type "+std::string(Type().name())+" in phys_objects::GetElectronIsolation");
     return 0.0;
   }
 }
 
-float ra4_objects::GetEffectiveArea(float SCEta, bool isMC) const {
+float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
   float EffectiveArea;
   if(isMC) {
     if (fabs(SCEta) >= 0.0 && fabs(SCEta) < 1.0 ) EffectiveArea = 0.110;
@@ -240,7 +240,7 @@ float ra4_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  LEPTONS  /////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-int ra4_objects::GetMom(const float id, const float mom, const float gmom,
+int phys_objects::GetMom(const float id, const float mom, const float gmom,
 			       const float ggmom, bool &fromW){
   const int iid = TMath::Nint(id);
   const int imom = TMath::Nint(mom);
@@ -264,7 +264,7 @@ int ra4_objects::GetMom(const float id, const float mom, const float gmom,
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  TRACKS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-bool ra4_objects::IsGoodIsoTrack(unsigned itrk) const{
+bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
   if(itrk>=isotk_pt()->size()) return false;
   return isotk_pt()->at(itrk)>=MinTrackPt
     && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
@@ -275,7 +275,7 @@ bool ra4_objects::IsGoodIsoTrack(unsigned itrk) const{
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  JETS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> ra4_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
+vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
 				 const vector<int> &VetoEl, const vector<int> &VetoMu,
                                  const double pt_thresh, const double eta_thresh) const {
   vector<int> jets;
@@ -329,14 +329,14 @@ vector<int> ra4_objects::GetJets(const vector<int> &SigEl, const vector<int> &Si
   return jets;
 }
 
-bool ra4_objects::IsGoodJet(const unsigned ijet, const double ptThresh, const double etaThresh) const{
+bool phys_objects::IsGoodJet(const unsigned ijet, const double ptThresh, const double etaThresh) const{
   if(jets_pt()->size()<=ijet) return false;
   if(!IsBasicJet(ijet)) return false;
   if(jets_pt()->at(ijet)<ptThresh || fabs(jets_eta()->at(ijet))>etaThresh) return false;
   return true;
 }
 
-bool ra4_objects::IsBasicJet(const unsigned ijet) const{
+bool phys_objects::IsBasicJet(const unsigned ijet) const{
   double rawRatio =(jets_rawPt()->at(ijet)/jets_pt()->at(ijet)); // Same as jets_corrFactorRaw
   const double jetenergy = jets_energy()->at(ijet) * rawRatio;
   double NEF = -999., CEF = -999., NHF=-999., CHF=-999.;
@@ -357,7 +357,7 @@ bool ra4_objects::IsBasicJet(const unsigned ijet) const{
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////  TRUTH-MATCHING  ///////////////////////////
 /////////////////////////////////////////////////////////////////////////
-int ra4_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closest_dR) const {
+int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closest_dR) const {
   if(index < 0 || index >= static_cast<int>(mus_eta()->size())) return -1;
 
   int closest_imc = -1, idLepton = 0;
@@ -395,7 +395,7 @@ int ra4_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closest
   return idLepton;
 }
 
-int ra4_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const {
+int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const {
   if(index < 0 || index >= static_cast<int>(els_eta()->size())) return -1;
 
   int closest_imc = -1, idLepton = 0;
@@ -433,7 +433,7 @@ int ra4_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &clo
   return idLepton;
 }
 
-int ra4_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_dR) const {
+int phys_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_dR) const {
   int closest_imc = -1;
   double dR = 9999.; closest_dR = 9999.;
   double MCEta, MCPhi;
@@ -452,14 +452,14 @@ int ra4_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_d
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////  EVENT CLEANING  ///////////////////////////
 /////////////////////////////////////////////////////////////////////////
-bool ra4_objects::PassesPVCut() const{
+bool phys_objects::PassesPVCut() const{
   if(beamSpot_x()->size()<1 || pv_x()->size()<1) return false;
   const double pv_rho(sqrt(pv_x()->at(0)*pv_x()->at(0) + pv_y()->at(0)*pv_y()->at(0)));
   if(pv_ndof()->at(0)>4 && fabs(pv_z()->at(0))<24. && pv_rho<2.0 && pv_isFake()->at(0)==0) return true;
   return false;
 }
 
-bool ra4_objects::PassesMETCleaningCut() const{
+bool phys_objects::PassesMETCleaningCut() const{
   bool hbhe(false), ecalTP(false), scrapingVeto(false);
   if(Type()==typeid(cfa_8)){
     hbhe = hbhefilter_decision();
@@ -481,7 +481,7 @@ bool ra4_objects::PassesMETCleaningCut() const{
     && scrapingVeto;
 }
 
-double ra4_objects::getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const {
+double phys_objects::getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const {
   return vz - pv_z()->at(firstGoodVertex)
     -((vx-pv_x()->at(firstGoodVertex))*px+(vy-pv_y()->at(firstGoodVertex))*py)*pz/(px*px+py*py);
 }
@@ -490,11 +490,11 @@ double ra4_objects::getDZ(double vx, double vy, double vz, double px, double py,
 ////////////////////////////////  EVENT VARS/////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-bool ra4_objects::IsMC() const {
+bool phys_objects::IsMC() const {
   return (SampleName().find("Run201") == string::npos);
 }
 
-double ra4_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
+double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
   double deltaT = getDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
   double dp = fabs(deltaphi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
   double dpN = 0.0;
@@ -510,7 +510,7 @@ double ra4_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othe
   return dpN;
 }
 
-double ra4_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
+double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -525,7 +525,7 @@ double ra4_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, flo
   return deltaT;
 }
 
-double ra4_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+double phys_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                                        float otherpt, float othereta, bool useArcsin) const {
   double mdpN=std::numeric_limits<double>::max();
   unsigned nGoodJets(0);
@@ -542,7 +542,7 @@ double ra4_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float mai
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////  Utilities//////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-bool ra4_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const {
+bool phys_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const {
   double deltaRVal = 999.;
   double deltaPT = 999.;
   double leptonEta = 0, leptonPhi = 0, leptonPt = 0;

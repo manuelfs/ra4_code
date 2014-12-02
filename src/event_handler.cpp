@@ -36,7 +36,7 @@ using namespace fastjet;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
 
 event_handler::event_handler(const string &fileName):
-  ra4_objects(fileName){
+  phys_objects(fileName){
 }
 
 void event_handler::ReduceTree(int Nentries, TString outFilename,

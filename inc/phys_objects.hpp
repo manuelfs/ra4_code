@@ -1,8 +1,8 @@
-// ra4_objects: Class with the standard RA4 physics objects that inherits from the cfa class. 
+// phys_objects: Class with the standard physics objects that inherits from the cfa class. 
 //              Reduced tree makers should inherit from this class
 
-#ifndef H_RA4_OBJECTS
-#define H_RA4_OBJECTS
+#ifndef H_PHYS_OBJECTS
+#define H_PHYS_OBJECTS
 
 #include <iostream>
 #include <vector>
@@ -22,9 +22,9 @@ namespace particleId {
   };
 }
 
-class ra4_objects : public cfa{
+class phys_objects : public cfa{
 public:
-  explicit ra4_objects(const std::string &filename, const bool is_8TeV=false);
+  explicit phys_objects(const std::string &filename, const bool is_8TeV=false);
 
   // Muons
   std::vector<int> GetMuons(bool doSignal = true) const;
