@@ -1645,6 +1645,14 @@ public:
   Float_t const & trk_ratioAllTOBTEC() const;
   Float_t const & trk_ratioJetTOBTEC() const;
   Float_t const & weight() const;
+  std::vector<float>* const & fjets_energy() const;
+  std::vector<float>* const & fjets_eta() const;
+  std::vector<std::vector<int> >* const & fjets_index() const;
+  std::vector<int>* const & fjets_nconstituents() const;
+  std::vector<float>* const & fjets_phi() const;
+  std::vector<float>* const & fjets_px() const;
+  std::vector<float>* const & fjets_py() const;
+  std::vector<float>* const & fjets_pz() const;
   std::vector<float>* const & jets_area() const;
   std::vector<float>* const & jets_btag_TC_highEff() const;
   std::vector<float>* const & jets_btag_TC_highPur() const;
