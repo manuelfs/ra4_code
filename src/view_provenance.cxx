@@ -4,6 +4,8 @@
 #include "TTree.h"
 #include "TString.h"
 
+#include "utilities.hpp"
+
 using namespace std;
 
 int main(int argc, char *argv[]){
@@ -55,9 +57,9 @@ int main(int argc, char *argv[]){
     }
 
     cout << "            File: " << argv[arg] << endl;
-    cout << "           Model: " << *model << endl;
+    cout << "           Model: " << RemoveTrailingNewlines(model->Data()) << endl;
     cout << "Original Entries: " << noriginal << endl;
-    cout << "      Git Commit: " << *commit << '\n' << endl;
+    cout << "      Git Commit: " << RemoveTrailingNewlines(commit->Data()) << '\n' << endl;
 
     file.Close();
   }

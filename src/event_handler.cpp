@@ -1002,12 +1002,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
   // Global tree
   GetEntry(0);
-  TString model = model_params()->c_str(), commit;
-  int sys_stat = system("git rev-parse HEAD > hash.txt");
-  ifstream hashfile("hash.txt");
-  hashfile >> commit;
-  sys_stat = system("rm hash.txt");
-  if(sys_stat!=0){/*something went wrong...*/}
+  TString model = model_params()->c_str();
+  TString commit = RemoveTrailingNewlines(execute("git rev-parse HEAD"));
 
   TTree treeglobal("treeglobal", "treeglobal");
   treeglobal.Branch("noriginal", &Nentries);

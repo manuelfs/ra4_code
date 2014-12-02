@@ -5,6 +5,8 @@
 #ifndef H_UTILITIES
 #define H_UTILITIES
 
+#include <cstdio>
+
 #include <string>
 #include <vector>
 
@@ -41,5 +43,8 @@ void AddPoint(TGraph& graph, const double x, const double y);
 
 template<class T>
 bool is_nan(const T &x){return x!=x;}
+
+std::string execute(const std::string &cmd);
+std::string RemoveTrailingNewlines(std::string str);
 
 #endif

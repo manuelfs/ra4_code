@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 #include "TMath.h"
 #include "TString.h"
@@ -209,4 +210,25 @@ void get_count_and_uncertainty(TTree& tree,
 
 void AddPoint(TGraph& graph, const double x, const double y){
   graph.SetPoint(graph.GetN(), x, y);
+}
+
+std::string execute(const std::string &cmd){
+  FILE *pipe = popen(cmd.c_str(), "r");
+  if(!pipe) throw std::runtime_error("Could not open pipe.");
+  const size_t buffer_size = 128;
+  char buffer[buffer_size];
+  std::string result = "";
+  while(!feof(pipe)){
+    if(fgets(buffer, buffer_size, pipe) != NULL) result += buffer;
+  }
+
+  pclose(pipe);
+  return result;
+}
+
+std::string RemoveTrailingNewlines(std::string str){
+  while(!str.empty() && str.at(str.length()-1) == '\n'){
+    str.erase(str.length()-1);
+  }
+  return str;
 }
