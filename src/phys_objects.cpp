@@ -31,7 +31,7 @@ namespace{
 using namespace std;
 
 phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
-cfa(fileName, is_8TeV){
+  cfa(fileName, is_8TeV){
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   return ((mus_isGlobalMuon()->at(imu) >0 || mus_isTrackerMuon()->at(imu) >0)
           && isPF
           && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-			mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
+                        mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
           && fabs(mus_eta()->at(imu)) <= 2.5);
 }
 
@@ -98,7 +98,7 @@ bool phys_objects::IsSignalIdMuon(unsigned imu) const {
           && mus_numberOfMatchedStations()->at(imu) > 1
           && fabs(d0PV) < 0.02
           && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-			mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
+                        mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
           && fabs(mus_eta()->at(imu)) <= 2.4);
 }
 
@@ -176,11 +176,11 @@ bool phys_objects::IsSignalIdElectron(unsigned iel) const {
 
   return (fabs(els_scEta()->at(iel)) < 2.5
           && no_conversion
-          && els_n_inner_layer()->at(iel) <= 1
+          && (!els_n_inner_layer() || els_n_inner_layer()->at(iel) <= 1)//Temporary (and ugly) fix for phys14 samples where els_n_inner_layer doesn't exist
           && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
-			cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+                        cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
                         sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-			els_tk_pz()->at(iel), 0)) < 0.1
+                        els_tk_pz()->at(iel), 0)) < 0.1
           && fabs(1./els_caloEnergy()->at(iel) - els_eOverPIn()->at(iel)/els_caloEnergy()->at(iel)) < 0.05
           && fabs(d0PV) < 0.02
           && ((els_isEB()->at(iel) // Endcap selection
@@ -241,7 +241,7 @@ float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 /////////////////////////////////  LEPTONS  /////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 int phys_objects::GetMom(const float id, const float mom, const float gmom,
-			       const float ggmom, bool &fromW){
+                         const float ggmom, bool &fromW){
   const int iid = TMath::Nint(id);
   const int imom = TMath::Nint(mom);
   const int igmom = TMath::Nint(gmom);
@@ -276,8 +276,8 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
 /////////////////////////////////  JETS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
-				 const vector<int> &VetoEl, const vector<int> &VetoMu,
-                                 const double pt_thresh, const double eta_thresh) const {
+                                  const vector<int> &VetoEl, const vector<int> &VetoMu,
+                                  const double pt_thresh, const double eta_thresh) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_pt()->size(), false);
 
@@ -310,7 +310,7 @@ vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &S
     // bool useJet = true;
     // Tau cleaning: jet rejected if withing deltaR = 0.4 of tau, and momentum at least 60% from tau
     // for(unsigned index = 0; index < taus_pt()->size(); index++) {
-    //   tmpdR = dR(jets_eta()->at(ijet), taus_eta()->at(index), jets_phi()->at(ijet), taus_phi()->at(index));  
+    //   tmpdR = dR(jets_eta()->at(ijet), taus_eta()->at(index), jets_phi()->at(ijet), taus_phi()->at(index));
     //   partp = sqrt(pow(taus_px()->at(index),2)+pow(taus_py()->at(index),2)+pow(taus_pz()->at(index),2));
     //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
     // }
@@ -318,7 +318,7 @@ vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &S
 
     // // Photon cleaning: jet rejected if withing deltaR = 0.4 of photon, and momentum at least 60% from photon
     // for(unsigned index = 0; index < photons_pt()->size(); index++) {
-    //   tmpdR = dR(jets_eta()->at(ijet), photons_eta()->at(index), jets_phi()->at(ijet), photons_phi()->at(index));    
+    //   tmpdR = dR(jets_eta()->at(ijet), photons_eta()->at(index), jets_phi()->at(ijet), photons_phi()->at(index));
     //   partp = sqrt(pow(photons_px()->at(index),2)+pow(photons_py()->at(index),2)+pow(photons_pz()->at(index),2));
     //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
     // }
@@ -351,7 +351,7 @@ bool phys_objects::IsBasicJet(const unsigned ijet) const{
   }
 
   return (NEF < 0.99 && CEF < 0.99 && NHF < 0.99 && CHF > 0 &&
-                              chgMult > 0 && numConst > 1);
+          chgMult > 0 && numConst > 1);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -375,17 +375,17 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_mus_id()->at(closest_imc));
     momID = GetMom(mc_mus_id()->at(closest_imc), mc_mus_mother_id()->at(closest_imc),
-		   mc_mus_grandmother_id()->at(closest_imc),
-		   mc_mus_ggrandmother_id()->at(closest_imc),
-		   fromW);
+                   mc_mus_grandmother_id()->at(closest_imc),
+                   mc_mus_ggrandmother_id()->at(closest_imc),
+                   fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
     if(closest_imc >= 0){
       idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
       momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
-		     mc_doc_grandmother_id()->at(closest_imc),
-		     mc_doc_ggrandmother_id()->at(closest_imc),
-		     fromW);
+                     mc_doc_grandmother_id()->at(closest_imc),
+                     mc_doc_ggrandmother_id()->at(closest_imc),
+                     fromW);
     } else {
       momID = 0;
       idLepton = 0;
@@ -413,16 +413,16 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_electrons_id()->at(closest_imc));
     momID = GetMom(mc_electrons_id()->at(closest_imc), mc_electrons_mother_id()->at(closest_imc),
-		   mc_electrons_grandmother_id()->at(closest_imc),
-		   mc_electrons_ggrandmother_id()->at(closest_imc),
-		   fromW);
+                   mc_electrons_grandmother_id()->at(closest_imc),
+                   mc_electrons_ggrandmother_id()->at(closest_imc),
+                   fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
     if(closest_imc >= 0){
       momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
-		     mc_doc_grandmother_id()->at(closest_imc),
-		     mc_doc_ggrandmother_id()->at(closest_imc),
-		     fromW);
+                     mc_doc_grandmother_id()->at(closest_imc),
+                     mc_doc_ggrandmother_id()->at(closest_imc),
+                     fromW);
       idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     } else {
       momID = 0;
@@ -526,7 +526,7 @@ double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, fl
 }
 
 double phys_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
-                                       float otherpt, float othereta, bool useArcsin) const {
+                                        float otherpt, float othereta, bool useArcsin) const {
   double mdpN=std::numeric_limits<double>::max();
   unsigned nGoodJets(0);
   for (unsigned i=0; i<jets_pt()->size(); i++) {
