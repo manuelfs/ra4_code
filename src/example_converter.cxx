@@ -59,9 +59,20 @@ int main(int argc, char *argv[]){
     return EXIT_FAILURE;
   }
 
-  out_dir->cd();
-  event_a_out->Write();
-  event_b_out->Write();
+  if(!out_dir->cd()){
+    cerr << "Could not cd into " << cfa << '.' << endl;
+    return EXIT_FAILURE;
+  }
+
+  if(!event_a_out->Write()){
+    cerr << "Could not write eventA." << endl;
+    return EXIT_FAILURE;
+  }
+  
+  if(!event_b_out->Write()){
+    cerr << "Could not write eventB." << endl;
+    return EXIT_FAILURE;
+  }
 
   out_file.Close();
   in_file.Close();
