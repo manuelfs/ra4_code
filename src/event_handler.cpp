@@ -35,6 +35,10 @@ using namespace std;
 using namespace fastjet;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
 
+namespace{
+  const float floatmax = numeric_limits<float>::max();
+}
+
 event_handler::event_handler(const string &fileName):
   phys_objects(fileName){
 }
@@ -476,16 +480,16 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_els_tru_tm.push_back(abs(mcID)==11 && fromW);
       tree.v_els_tru_dr.push_back(deltaR);
 
-      tree.v_els_mindr.push_back(std::numeric_limits<float>::max());
+      tree.v_els_mindr.push_back(floatmax);
       tree.v_els_ptrel.push_back(bad_val);
-      tree.v_els_mindr_sub.push_back(std::numeric_limits<float>::max());
+      tree.v_els_mindr_sub.push_back(floatmax);
       tree.v_els_ptrel_sub.push_back(bad_val);
 
       //Compute isolation alternatives
       const TLorentzVector el(els_px()->at(index), els_py()->at(index),
                               els_pz()->at(index), els_energy()->at(index));
       for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
-        if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
+        if(!IsGoodJet(ijet, 25.0, floatmax)) continue;
         const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
                                  jets_pz()->at(ijet), jets_energy()->at(ijet));
         const TLorentzVector jet_sub = jet-el;
@@ -554,16 +558,16 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_mus_tru_tm.push_back(abs(mcID)==13 && fromW);
       tree.v_mus_tru_dr.push_back(deltaR);
 
-      tree.v_mus_mindr.push_back(std::numeric_limits<float>::max());
+      tree.v_mus_mindr.push_back(floatmax);
       tree.v_mus_ptrel.push_back(bad_val);
-      tree.v_mus_mindr_sub.push_back(std::numeric_limits<float>::max());
+      tree.v_mus_mindr_sub.push_back(floatmax);
       tree.v_mus_ptrel_sub.push_back(bad_val);
 
       //Compute isolation alternatives
       const TLorentzVector mu(mus_px()->at(index), mus_py()->at(index),
                               mus_pz()->at(index), mus_energy()->at(index));
       for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
-        if(!IsGoodJet(ijet, 10.0, 5.0)) continue;
+        if(!IsGoodJet(ijet, 25.0, floatmax)) continue;
         const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
                                  jets_pz()->at(ijet), jets_energy()->at(ijet));
         const TLorentzVector jet_sub = jet-mu;
