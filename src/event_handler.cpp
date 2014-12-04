@@ -34,6 +34,7 @@
 using namespace std;
 using namespace fastjet;
 const double CSVCuts[] = {0.244, 0.679, 0.898};
+//const double CSVCuts[] = {0.423, 0.814, 0.941};
 
 namespace{
   const float floatmax = numeric_limits<float>::max();

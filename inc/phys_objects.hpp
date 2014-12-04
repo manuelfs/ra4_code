@@ -24,27 +24,37 @@ namespace particleId {
 
 class phys_objects : public cfa{
 public:
-  explicit phys_objects(const std::string &filename, const bool is_8TeV=false);
+  explicit phys_objects(const std::string &filename, bool is_8TeV=false);
+
+  enum CutLevel{kVeto, kLoose, kMedium, kTight};
 
   // Muons
   std::vector<int> GetMuons(bool doSignal = true) const;
+
   bool IsSignalMuon(unsigned imu) const;
   bool IsVetoMuon(unsigned imu) const;
   bool IsSignalIdMuon(unsigned iel) const;
   bool IsVetoIdMuon(unsigned iel) const;
+
+  bool IsIdMuon(unsigned imu, CutLevel threshold) const;
+
   float GetMuonIsolation(unsigned imu) const;
 
   // Electrons
   std::vector<int> GetElectrons(bool doSignal = true) const;
+
   bool IsSignalElectron(unsigned iel) const;
   bool IsVetoElectron(unsigned iel) const;
   bool IsSignalIdElectron(unsigned iel) const;
   bool IsVetoIdElectron(unsigned iel) const;
+
+  bool IsIdElectron(unsigned iel, CutLevel threshold) const;
+
   float GetElectronIsolation(unsigned iel) const;
   float GetEffectiveArea(float SCEta, bool isMC) const;
 
   // Leptons
-  static int GetMom(const float id, const float mom, const float gmom, const float ggmom,
+  static int GetMom(float id, float mom, float gmom, float ggmom,
 		    bool &fromW);
 
   // Tracks
@@ -53,9 +63,9 @@ public:
   // Jets
   std::vector<int> GetJets(const std::vector<int> &SigEl, const std::vector<int> &SigMu, 
                            const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
-			   const double pt_thresh, const double eta_thresh) const;
-  bool IsGoodJet(const unsigned ijet, const double ptThresh, const double etaThresh) const;
-  bool IsBasicJet(const unsigned ijet) const;
+			   double pt_thresh, double eta_thresh) const;
+  bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;
+  bool IsBasicJet(unsigned ijet) const;
 
   // Truth matching
   int GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const;

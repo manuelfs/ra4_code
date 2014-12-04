@@ -26,6 +26,7 @@ namespace{
   const float MinSignalLeptonPt = 20.;
   const float MinVetoLeptonPt = 15.;
   const float MinTrackPt = MinVetoLeptonPt;
+  const float floatmax = std::numeric_limits<float>::max();
 }
 
 using namespace std;
@@ -50,64 +51,97 @@ vector<int> phys_objects::GetMuons(bool doSignal) const {
 
 bool phys_objects::IsSignalMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  return IsSignalIdMuon(imu) && GetMuonIsolation(imu)<0.12 && mus_pt()->at(imu)>MinSignalLeptonPt;
+  return IsSignalIdMuon(imu)
+    && 0.12>GetMuonIsolation(imu)
+    && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
 bool phys_objects::IsVetoMuon(unsigned imu) const{
   if(imu >= mus_pt()->size()) return false;
-  return IsVetoIdMuon(imu) && GetMuonIsolation(imu)<0.2 && mus_pt()->at(imu)>MinVetoLeptonPt;
-}
-
-bool phys_objects::IsVetoIdMuon(unsigned imu) const {
-  if(imu >= mus_pt()->size()) return false;
-
-  bool isPF(false);
-  if(Type()==typeid(cfa_8)){
-    isPF = mus_isPFMuon()->at(imu);
-  }else if(Type()==typeid(cfa_13)){
-    isPF = mus_isPF()->at(imu);
-  }else{
-    return false;
-  }
-
-  return ((mus_isGlobalMuon()->at(imu) >0 || mus_isTrackerMuon()->at(imu) >0)
-          && isPF
-          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-                        mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
-          && fabs(mus_eta()->at(imu)) <= 2.5);
+  return IsVetoIdMuon(imu)
+    && 0.2>GetMuonIsolation(imu)
+    && mus_pt()->at(imu)>MinVetoLeptonPt;
 }
 
 bool phys_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  float d0PV = mus_tk_d0dum()->at(imu)-pv_x()->at(0)*sin(mus_tk_phi()->at(imu))+pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
+  return IsIdMuon(imu, kTight);
+}
 
-  bool isPF(false);
+bool phys_objects::IsVetoIdMuon(unsigned imu) const {
+  if(imu >= mus_pt()->size()) return false;
+  return IsIdMuon(imu, kTight);//Intentionally vetoing on "tight" muons!
+}
+
+bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
+  if(imu>=mus_pt()->size()) return false;
+  if(fabs(mus_eta()->at(imu) > 2.4)) return false;//Where does this come from?
+
+  bool pf_cut, global_cut, global_or_tracker_cut, globalprompttight_cut;
+  double chisq_cut, hits_cut, stations_cut, dxy_cut, dz_cut, pixel_cut, layers_cut;
+  //See https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Tight_Muon
+  switch(threshold){
+  default:
+  case kVeto:
+  case kLoose:
+    pf_cut                = true;
+    global_or_tracker_cut = true;
+    global_cut            = false;
+    globalprompttight_cut = false;
+    chisq_cut             = floatmax;
+    hits_cut              = -floatmax;
+    stations_cut          = -floatmax;
+    dxy_cut               = floatmax;
+    dz_cut                = floatmax;
+    pixel_cut             = -floatmax;
+    layers_cut            = -floatmax;
+  case kMedium:
+  case kTight:
+    pf_cut                = true;
+    global_or_tracker_cut = false;
+    global_cut            = true;
+    globalprompttight_cut = true;
+    chisq_cut             = 10.0;
+    hits_cut              = 0.0;
+    stations_cut          = 1.0;
+    dxy_cut               = 0.2;
+    dz_cut                = 0.5;
+    pixel_cut             = 0;
+    layers_cut            = 5;
+  }
+
+  bool isPF = true;
   if(Type()==typeid(cfa_8)){
     isPF = mus_isPFMuon()->at(imu);
   }else if(Type()==typeid(cfa_13)){
     isPF = mus_isPF()->at(imu);
-  }else{
-    return false;
   }
+  const double d0 = mus_tk_d0dum()->at(imu)
+    -pv_x()->at(0)*sin(mus_tk_phi()->at(imu))
+    +pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
+  const double dz = getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
+			  mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0);
 
-  return (mus_isGlobalMuon()->at(imu) > 0
-          && isPF
-          && mus_id_GlobalMuonPromptTight()->at(imu)> 0
-          && mus_tk_LayersWithMeasurement()->at(imu) > 5
-          && mus_tk_numvalPixelhits()->at(imu) > 0
-          && mus_numberOfMatchedStations()->at(imu) > 1
-          && fabs(d0PV) < 0.02
-          && fabs(getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-                        mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0)) < 0.5
-          && fabs(mus_eta()->at(imu)) <= 2.4);
+  return (!pf_cut || isPF)
+    && (!global_or_tracker_cut || mus_isGlobalMuon()->at(imu)>0 || mus_isTrackerMuon()->at(imu)>0)
+    && (!global_cut || mus_isGlobalMuon()->at(imu)>0)
+    && (!globalprompttight_cut || mus_id_GlobalMuonPromptTight()->at(imu)>0)
+    && (true || chisq_cut)//Not available in cfa. Included in isGlobalMuonPromptTight for 2011 at least.
+    && (true || hits_cut)//Not available in cfa?
+    && mus_numberOfMatchedStations()->at(imu) > stations_cut
+    && dxy_cut > fabs(d0)
+    && dz_cut > dz
+    && mus_tk_numvalPixelhits()->at(imu) > pixel_cut
+    && mus_tk_LayersWithMeasurement()->at(imu) > layers_cut;
 }
 
 float phys_objects::GetMuonIsolation(unsigned imu) const {
   if(imu >= mus_pt()->size()) return -999;
-  double sumEt = mus_pfIsolationR03_sumNeutralHadronEt()->at(imu) + mus_pfIsolationR03_sumPhotonEt()->at(imu)
-    - 0.5*mus_pfIsolationR03_sumPUPt()->at(imu);
+  double sumEt = mus_pfIsolationR04_sumNeutralHadronEt()->at(imu)
+    + mus_pfIsolationR04_sumPhotonEt()->at(imu)
+    - 0.5*mus_pfIsolationR04_sumPUPt()->at(imu);
   if(sumEt<0.0) sumEt=0.0;
-  return (mus_pfIsolationR03_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
+  return (mus_pfIsolationR04_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -126,7 +160,6 @@ vector<int> phys_objects::GetElectrons(bool doSignal) const {
 
 bool phys_objects::IsSignalElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-
   return IsSignalIdElectron(iel)
     && els_pt()->at(iel)>=MinSignalLeptonPt
     && GetElectronIsolation(iel)<0.15;
@@ -139,102 +172,201 @@ bool phys_objects::IsVetoElectron(unsigned iel) const {
     && GetElectronIsolation(iel)<0.15;
 }
 
-bool phys_objects::IsVetoIdElectron(unsigned iel) const {
-  if(iel >= els_pt()->size()) return false;
-
-  float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
-
-  return (fabs(els_scEta()->at(iel)) < 2.5
-          && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel), cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                        sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel), els_tk_pz()->at(iel), 0)) < 0.2
-          && fabs(d0PV) < 0.04
-          && ((els_isEB()->at(iel) // Endcap selection
-               && fabs(els_dEtaIn()->at(iel)) < 0.007
-               && fabs(els_dPhiIn()->at(iel)) < 0.8
-               && els_sigmaIEtaIEta()->at(iel) < 0.01
-               && els_hadOverEm()->at(iel) < 0.15) ||
-              (els_isEE()->at(iel)  // Barrel selection
-               && fabs(els_dEtaIn()->at(iel)) < 0.01
-               && fabs(els_dPhiIn()->at(iel)) < 0.7
-               && els_sigmaIEtaIEta()->at(iel) < 0.03))
-          );
-}
-
 bool phys_objects::IsSignalIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-
-  float d0PV = els_d0dum()->at(iel)-pv_x()->at(0)*sin(els_tk_phi()->at(iel))+pv_y()->at(0)*cos(els_tk_phi()->at(iel));
-
-  bool no_conversion(false);
-  if(Type()==typeid(cfa_8)){
-    no_conversion = !els_hasMatchedConversion()->at(iel);
-  }else if(Type()==typeid(cfa_13)){
-    no_conversion=true;
-  }else{
-    return false;
-  }
-
-  return (fabs(els_scEta()->at(iel)) < 2.5
-          && no_conversion
-          && (!els_n_inner_layer() || els_n_inner_layer()->at(iel) <= 1)//Temporary (and ugly) fix for phys14 samples where els_n_inner_layer doesn't exist
-          && fabs(getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
-                        cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                        sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                        els_tk_pz()->at(iel), 0)) < 0.1
-          && fabs(1./els_caloEnergy()->at(iel) - els_eOverPIn()->at(iel)/els_caloEnergy()->at(iel)) < 0.05
-          && fabs(d0PV) < 0.02
-          && ((els_isEB()->at(iel) // Endcap selection
-               && fabs(els_dEtaIn()->at(iel)) < 0.004
-               && fabs(els_dPhiIn()->at(iel)) < 0.06
-               && els_sigmaIEtaIEta()->at(iel) < 0.01
-               && els_hadOverEm()->at(iel) < 0.12 ) ||
-              (els_isEE()->at(iel)  // Barrel selection
-               && fabs(els_dEtaIn()->at(iel)) < 0.007
-               && fabs(els_dPhiIn()->at(iel)) < 0.03
-               && els_sigmaIEtaIEta()->at(iel) < 0.03
-               && els_hadOverEm()->at(iel) < 0.10 ))
-          );
+  return IsIdElectron(iel, kTight);
 }
 
+bool phys_objects::IsVetoIdElectron(unsigned iel) const {
+  if(iel >= els_pt()->size()) return false;
+  return IsIdElectron(iel, kVeto);
+}
+
+bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
+  if(iel>=els_pt()->size()) return false;
+  if(fabs(els_eta()->at(iel)) > 2.5) return false;
+
+  if(els_isEB()->at(iel) && els_isEE()->at(iel)){
+    throw std::logic_error("Electron is in both barrel and endcap.");
+  }else if(!els_isEB()->at(iel) && !els_isEE()->at(iel)){
+    throw std::logic_error("Electron is in neither barrel nor endcap.");
+  }
+  const bool barrel = els_isEB()->at(iel);
+
+  double deta_cut, dphi_cut, ieta_cut, hovere_cut, d0_cut, dz_cut,
+    ooeminusoop_cut, reliso_cut, vprob_cut, misshits_cut;
+
+  if(Type()==typeid(cfa_8)){
+    //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaCutBasedIdentification#Barrel_Cuts_eta_supercluster_1_4
+    const bool high_pt = els_pt()->at(iel)>20.0;
+    switch(threshold){
+    default:
+    case kVeto:
+      deta_cut        = barrel ? 0.007   : 0.01;
+      dphi_cut        = barrel ? 0.8     : 0.7;
+      ieta_cut        = barrel ? 0.01    : 0.03;
+      hovere_cut      = barrel ? 0.15    : floatmax;
+      d0_cut          = barrel ? 0.04    : 0.04;
+      dz_cut          = barrel ? 0.2     : 0.2;
+      ooeminusoop_cut = barrel ? floatmax    : floatmax;
+      reliso_cut      = barrel ? 0.15    : 0.15;
+      vprob_cut       = barrel ? floatmax    : floatmax;
+      misshits_cut    = barrel ? floatmax    : floatmax;
+      break;
+    case kLoose:
+      deta_cut        = barrel ? 0.007   : 0.009;
+      dphi_cut        = barrel ? 0.15    : 0.10;
+      ieta_cut        = barrel ? 0.01    : 0.03;
+      hovere_cut      = barrel ? 0.12    : 0.10;
+      d0_cut          = barrel ? 0.02    : 0.02;
+      dz_cut          = barrel ? 0.2     : 0.2;
+      ooeminusoop_cut = barrel ? 0.05    : 0.05;
+      reliso_cut      = barrel ? 0.15    : (high_pt ? 0.15 : 0.10);
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 1;
+      break;
+    case kMedium:
+      deta_cut        = barrel ? 0.004   : 0.007;
+      dphi_cut        = barrel ? 0.06    : 0.03;
+      ieta_cut        = barrel ? 0.01    : 0.03;
+      hovere_cut      = barrel ? 0.12    : 0.1;
+      d0_cut          = barrel ? 0.02    : 0.02;
+      dz_cut          = barrel ? 0.1     : 0.1;
+      ooeminusoop_cut = barrel ? 0.05    : 0.05;
+      reliso_cut      = barrel ? 0.15    : (high_pt ? 0.15 : 0.10);
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 1;
+      break;
+    case kTight:
+      deta_cut        = barrel ? 0.004   : 0.005;
+      dphi_cut        = barrel ? 0.03    : 0.02;
+      ieta_cut        = barrel ? 0.01    : 0.03;
+      hovere_cut      = barrel ? 0.12    : 0.10;
+      d0_cut          = barrel ? 0.02    : 0.02;
+      dz_cut          = barrel ? 0.1     : 0.1;
+      ooeminusoop_cut = barrel ? 0.05    : 0.05;
+      reliso_cut      = barrel ? 0.10    : (high_pt ? 0.10 : 0.07);
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 0;
+      break;
+    }      
+  }else{
+    //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#CSA14_selection_conditions_25ns
+    switch(threshold){
+    default:
+    case kVeto:
+      deta_cut        = barrel ? 0.02    : 0.0141;
+      dphi_cut        = barrel ? 0.2579  : 0.2591;
+      ieta_cut        = barrel ? 0.0125  : 0.0371;
+      hovere_cut      = barrel ? 0.2564  : 0.1335;
+      d0_cut          = barrel ? 0.025   : 0.2232;
+      dz_cut          = barrel ? 0.5863  : 0.9513;
+      ooeminusoop_cut = barrel ? 0.1508  : 0.1542;
+      reliso_cut      = barrel ? 0.3313  : 0.3816;
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 2       : 3;
+      break;
+    case kLoose:
+      deta_cut        = barrel ? 0.0181  : 0.0124;
+      dphi_cut        = barrel ? 0.0936  : 0.0624;
+      ieta_cut        = barrel ? 0.0123  : 0.035;
+      hovere_cut      = barrel ? 0.141   : 0.1115;
+      d0_cut          = barrel ? 0.0166  : 0.098;
+      dz_cut          = barrel ? 0.54342 : 0.9187;
+      ooeminusoop_cut = barrel ? 0.1353  : 0.1443;
+      reliso_cut      = barrel ? 0.24    : 0.3529;
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 1;
+      break;
+    case kMedium:
+      deta_cut        = barrel ? 0.0106  : 0.0108;
+      dphi_cut        = barrel ? 0.0323  : 0.0455;
+      ieta_cut        = barrel ? 0.0107  : 0.0318;
+      hovere_cut      = barrel ? 0.067   : 0.097;
+      d0_cut          = barrel ? 0.0131  : 0.0845;
+      dz_cut          = barrel ? 0.22310 : 0.7523;
+      ooeminusoop_cut = barrel ? 0.1043  : 0.1201;
+      reliso_cut      = barrel ? 0.2179  : 0.254;
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 1;
+      break;
+    case kTight:
+      deta_cut        = barrel ? 0.0091  : 0.0106;
+      dphi_cut        = barrel ? 0.031   : 0.0359;
+      ieta_cut        = barrel ? 0.0106  : 0.0305;
+      hovere_cut      = barrel ? 0.0532  : 0.0835;
+      d0_cut          = barrel ? 0.0126  : 0.0163;
+      dz_cut          = barrel ? 0.0116  : 0.5999;
+      ooeminusoop_cut = barrel ? 0.0609  : 0.1126;
+      reliso_cut      = barrel ? 0.1649  : 0.2075;
+      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
+      misshits_cut    = barrel ? 1       : 1;
+      break;
+    }
+  }
+
+  const double d0 = els_d0dum()->at(iel)
+    -pv_x()->at(0)*sin(els_tk_phi()->at(iel))
+    +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
+  const double dz = getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
+			  cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+			  sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+			  els_tk_pz()->at(iel), 0);
+
+  return deta_cut > fabs(els_dEtaIn()->at(iel)) > deta_cut
+    && dphi_cut > fabs(els_dPhiIn()->at(iel))
+    && ieta_cut > els_sigmaIEtaIEta()->at(iel)
+    && hovere_cut > els_hadOverEm()->at(iel)
+    && d0_cut > fabs(d0)
+    && dz_cut > fabs(dz)
+    && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
+    && (true || reliso_cut)//Want to handle isolation separately
+    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)))//Skip cut in cfa_13; use alternative in cfa_8
+    && (!els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
+}
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
   if(Type()==typeid(cfa_8)){
-    double sumEt = els_PFphotonIsoR03()->at(iel) + els_PFneutralHadronIsoR03()->at(iel)
+    double sumEt = els_PFphotonIsoR03()->at(iel)
+      + els_PFneutralHadronIsoR03()->at(iel)
       - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), IsMC());
     if(sumEt<0.0) sumEt=0;
     return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
   }else if(Type()==typeid(cfa_13)){
-    float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel) + std::max(0.0 , els_pfIsolationR03_sumNeutralHadronEt()->at(iel) + els_pfIsolationR03_sumPhotonEt()->at(iel) - 0.5 * els_pfIsolationR03_sumPUPt()->at(iel) );
+    float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
+      + std::max(0.0,
+		 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
+		 +els_pfIsolationR03_sumPhotonEt()->at(iel)
+		 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
     return absiso/els_pt()->at(iel);
   }else{
-    throw std::logic_error("Unknown type "+std::string(Type().name())+" in phys_objects::GetElectronIsolation");
+    throw std::logic_error("Unknown type "
+			   +std::string(Type().name())
+			   +" in phys_objects::GetElectronIsolation");
     return 0.0;
   }
 }
 
 float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
-  float EffectiveArea;
-  if(isMC) {
-    if (fabs(SCEta) >= 0.0 && fabs(SCEta) < 1.0 ) EffectiveArea = 0.110;
-    if (fabs(SCEta) >= 1.0 && fabs(SCEta) < 1.479 ) EffectiveArea = 0.130;
-    if (fabs(SCEta) >= 1.479 && fabs(SCEta) < 2.0 ) EffectiveArea = 0.089;
-    if (fabs(SCEta) >= 2.0 && fabs(SCEta) < 2.2 ) EffectiveArea = 0.130;
-    if (fabs(SCEta) >= 2.2 && fabs(SCEta) < 2.3 ) EffectiveArea = 0.150;
-    if (fabs(SCEta) >= 2.3 && fabs(SCEta) < 2.4 ) EffectiveArea = 0.160;
-    if (fabs(SCEta) >= 2.4) EffectiveArea = 0.190;
-  }
-  else {
+  SCEta = fabs(SCEta);
+  if(isMC){
+    if(     SCEta < 1.0  ) return 0.110;
+    else if(SCEta < 1.479) return 0.130;
+    else if(SCEta < 2.0  ) return 0.089;
+    else if(SCEta < 2.2  ) return 0.130;
+    else if(SCEta < 2.3  ) return 0.150;
+    else if(SCEta < 2.4  ) return 0.160;
+    else                   return 0.190;
+  }else{
     //kEleGammaAndNeutralHadronIso03 from 2011 data
     //obtained from http://cmssw.cvs.cern.ch/cgi-bin/cmssw.cgi/UserCode/EGamma/EGammaAnalysisTools/interface/ElectronEffectiveArea.h?revision=1.3&view=markup
-    if (fabs(SCEta) >= 0.0 && fabs(SCEta) < 1.0 ) EffectiveArea = 0.100;
-    if (fabs(SCEta) >= 1.0 && fabs(SCEta) < 1.479 ) EffectiveArea = 0.120;
-    if (fabs(SCEta) >= 1.479 && fabs(SCEta) < 2.0 ) EffectiveArea = 0.085;
-    if (fabs(SCEta) >= 2.0 && fabs(SCEta) < 2.2 ) EffectiveArea = 0.110;
-    if (fabs(SCEta) >= 2.2 && fabs(SCEta) < 2.3 ) EffectiveArea = 0.120;
-    if (fabs(SCEta) >= 2.3 && fabs(SCEta) < 2.4 ) EffectiveArea = 0.120;
-    if (fabs(SCEta) >= 2.4) EffectiveArea = 0.130;
+    if(     SCEta < 1.0  ) return 0.100;
+    else if(SCEta < 1.479) return 0.120;
+    else if(SCEta < 2.0  ) return 0.085;
+    else if(SCEta < 2.2  ) return 0.110;
+    else if(SCEta < 2.4  ) return 0.120;
+    else                   return 0.130;
   }
-  return EffectiveArea;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -277,7 +409,7 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
 /////////////////////////////////////////////////////////////////////////
 vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
                                   const vector<int> &VetoEl, const vector<int> &VetoMu,
-                                  const double pt_thresh, const double eta_thresh) const {
+                                  double pt_thresh, double eta_thresh) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_pt()->size(), false);
 
@@ -329,14 +461,14 @@ vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &S
   return jets;
 }
 
-bool phys_objects::IsGoodJet(const unsigned ijet, const double ptThresh, const double etaThresh) const{
+bool phys_objects::IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const{
   if(jets_pt()->size()<=ijet) return false;
   if(!IsBasicJet(ijet)) return false;
   if(jets_pt()->at(ijet)<ptThresh || fabs(jets_eta()->at(ijet))>etaThresh) return false;
   return true;
 }
 
-bool phys_objects::IsBasicJet(const unsigned ijet) const{
+bool phys_objects::IsBasicJet(unsigned ijet) const{
   double rawRatio =(jets_rawPt()->at(ijet)/jets_pt()->at(ijet)); // Same as jets_corrFactorRaw
   const double jetenergy = jets_energy()->at(ijet) * rawRatio;
   double NEF = -999., CEF = -999., NHF=-999., CHF=-999.;
