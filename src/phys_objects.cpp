@@ -172,14 +172,12 @@ bool phys_objects::IsVetoElectron(unsigned iel) const {
 
 bool phys_objects::IsSignalIdElectron(unsigned iel, bool do_iso) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kMedium, do_iso)
-    && fabs(els_eta()->at(iel))<2.5;
+  return IsIdElectron(iel, kMedium, do_iso);
 }
 
 bool phys_objects::IsVetoIdElectron(unsigned iel, bool do_iso) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kVeto, do_iso)
-    && fabs(els_eta()->at(iel))<2.5;
+  return IsIdElectron(iel, kVeto, do_iso);
 }
 
 bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) const{
@@ -187,7 +185,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
   bool barrel;
   if(fabs(els_scEta()->at(iel))<=1.479){
     barrel = true;
-  }else if(fabs(els_scEta()->at(iel)<2.5)){
+  }else if(fabs(els_scEta()->at(iel))<2.5){
     barrel = false;
   }else{
     return false;
@@ -308,14 +306,15 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
   const double d0 = els_d0dum()->at(iel)
     -pv_x()->at(0)*sin(els_tk_phi()->at(iel))
     +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
-  const double dz = getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
+  /*const double dz = getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
                           cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
                           sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                          els_tk_pz()->at(iel), 0);
+                          els_tk_pz()->at(iel), 0);*/
+  const double dz = fabs(els_vz()->at(iel)-pv_z()->at(0));
 
   return deta_cut > fabs(els_dEtaIn()->at(iel))
     && dphi_cut > fabs(els_dPhiIn()->at(iel))
-    && ieta_cut > els_sigmaIEtaIEta()->at(iel)
+    && ieta_cut > els_full5x5_sigmaIetaIeta()->at(iel)
     && hovere_cut > els_hadOverEm()->at(iel)
     && d0_cut > fabs(d0)
     && dz_cut > fabs(dz)
