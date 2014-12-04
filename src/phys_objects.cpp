@@ -26,7 +26,7 @@ namespace{
   const float MinSignalLeptonPt = 20.;
   const float MinVetoLeptonPt = 15.;
   const float MinTrackPt = MinVetoLeptonPt;
-  const float floatmax = std::numeric_limits<float>::max();
+  const float fltmax = std::numeric_limits<float>::max();
 }
 
 using namespace std;
@@ -65,17 +65,18 @@ bool phys_objects::IsVetoMuon(unsigned imu) const{
 
 bool phys_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  return IsIdMuon(imu, kTight);
+  return IsIdMuon(imu, kTight)
+    && fabs(mus_eta()->at(imu))<2.4;
 }
 
 bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  return IsIdMuon(imu, kTight);//Intentionally vetoing on "tight" muons!
+  return IsIdMuon(imu, kTight)//Intentionally vetoing on "tight" muons!
+    && fabs(mus_eta()->at(imu))<2.5;
 }
 
 bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
   if(imu>=mus_pt()->size()) return false;
-  if(fabs(mus_eta()->at(imu) > 2.4)) return false;//Where does this come from?
 
   bool pf_cut, global_cut, global_or_tracker_cut, globalprompttight_cut;
   double chisq_cut, hits_cut, stations_cut, dxy_cut, dz_cut, pixel_cut, layers_cut;
@@ -88,13 +89,13 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     global_or_tracker_cut = true;
     global_cut            = false;
     globalprompttight_cut = false;
-    chisq_cut             = floatmax;
-    hits_cut              = -floatmax;
-    stations_cut          = -floatmax;
-    dxy_cut               = floatmax;
-    dz_cut                = floatmax;
-    pixel_cut             = -floatmax;
-    layers_cut            = -floatmax;
+    chisq_cut             = fltmax;
+    hits_cut              = -fltmax;
+    stations_cut          = -fltmax;
+    dxy_cut               = fltmax;
+    dz_cut                = fltmax;
+    pixel_cut             = -fltmax;
+    layers_cut            = -fltmax;
   case kMedium:
   case kTight:
     pf_cut                = true;
@@ -120,7 +121,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     -pv_x()->at(0)*sin(mus_tk_phi()->at(imu))
     +pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
   const double dz = getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-			  mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0);
+                          mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0);
 
   return (!pf_cut || isPF)
     && (!global_or_tracker_cut || mus_isGlobalMuon()->at(imu)>0 || mus_isTrackerMuon()->at(imu)>0)
@@ -205,13 +206,13 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
       deta_cut        = barrel ? 0.007   : 0.01;
       dphi_cut        = barrel ? 0.8     : 0.7;
       ieta_cut        = barrel ? 0.01    : 0.03;
-      hovere_cut      = barrel ? 0.15    : floatmax;
+      hovere_cut      = barrel ? 0.15    : fltmax;
       d0_cut          = barrel ? 0.04    : 0.04;
       dz_cut          = barrel ? 0.2     : 0.2;
-      ooeminusoop_cut = barrel ? floatmax    : floatmax;
+      ooeminusoop_cut = barrel ? fltmax  : fltmax;
       reliso_cut      = barrel ? 0.15    : 0.15;
-      vprob_cut       = barrel ? floatmax    : floatmax;
-      misshits_cut    = barrel ? floatmax    : floatmax;
+      vprob_cut       = barrel ? fltmax  : fltmax;
+      misshits_cut    = barrel ? fltmax  : fltmax;
       break;
     case kLoose:
       deta_cut        = barrel ? 0.007   : 0.009;
@@ -249,7 +250,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
       vprob_cut       = barrel ? 1.e-6   : 1.e-6;
       misshits_cut    = barrel ? 1       : 0;
       break;
-    }      
+    }
   }else{
     //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#CSA14_selection_conditions_25ns
     switch(threshold){
@@ -309,9 +310,9 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
     -pv_x()->at(0)*sin(els_tk_phi()->at(iel))
     +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
   const double dz = getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
-			  cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-			  sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-			  els_tk_pz()->at(iel), 0);
+                          cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+                          sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
+                          els_tk_pz()->at(iel), 0);
 
   return deta_cut > fabs(els_dEtaIn()->at(iel)) > deta_cut
     && dphi_cut > fabs(els_dPhiIn()->at(iel))
@@ -335,14 +336,14 @@ float phys_objects::GetElectronIsolation(unsigned iel) const {
   }else if(Type()==typeid(cfa_13)){
     float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
       + std::max(0.0,
-		 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
-		 +els_pfIsolationR03_sumPhotonEt()->at(iel)
-		 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
+                 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
+                 +els_pfIsolationR03_sumPhotonEt()->at(iel)
+                 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
     return absiso/els_pt()->at(iel);
   }else{
     throw std::logic_error("Unknown type "
-			   +std::string(Type().name())
-			   +" in phys_objects::GetElectronIsolation");
+                           +std::string(Type().name())
+                           +" in phys_objects::GetElectronIsolation");
     return 0.0;
   }
 }
