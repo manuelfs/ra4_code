@@ -120,8 +120,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
   const double d0 = mus_tk_d0dum()->at(imu)
     -pv_x()->at(0)*sin(mus_tk_phi()->at(imu))
     +pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
-  const double dz = getDZ(mus_tk_vx()->at(imu), mus_tk_vy()->at(imu), mus_tk_vz()->at(imu),
-                          mus_tk_px()->at(imu), mus_tk_py()->at(imu), mus_tk_pz()->at(imu), 0);
+  const double dz = mus_tk_vz()->at(imu)-pv_z()->at(0);
 
   return (!pf_cut || isPF)
     && (!global_or_tracker_cut || mus_isGlobalMuon()->at(imu)>0 || mus_isTrackerMuon()->at(imu)>0)
@@ -131,7 +130,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     && (true || hits_cut)//Not available in cfa?
     && mus_numberOfMatchedStations()->at(imu) > stations_cut
     && dxy_cut > fabs(d0)
-    && dz_cut > dz
+    && dz_cut > fabs(dz)
     && mus_tk_numvalPixelhits()->at(imu) > pixel_cut
     && mus_tk_LayersWithMeasurement()->at(imu) > layers_cut;
 }
@@ -175,24 +174,26 @@ bool phys_objects::IsVetoElectron(unsigned iel) const {
 
 bool phys_objects::IsSignalIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kTight);
+  return IsIdElectron(iel, kMedium)
+    && fabs(els_eta()->at(iel))<2.5;
 }
 
 bool phys_objects::IsVetoIdElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kVeto);
+  return IsIdElectron(iel, kVeto)
+    && fabs(els_eta()->at(iel))<2.5;
 }
 
 bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
   if(iel>=els_pt()->size()) return false;
-  if(fabs(els_eta()->at(iel)) > 2.5) return false;
-
-  if(els_isEB()->at(iel) && els_isEE()->at(iel)){
-    throw std::logic_error("Electron is in both barrel and endcap.");
-  }else if(!els_isEB()->at(iel) && !els_isEE()->at(iel)){
-    throw std::logic_error("Electron is in neither barrel nor endcap.");
+  bool barrel;
+  if(fabs(els_scEta()->at(iel))<=1.479){
+    barrel = true;
+  }else if(fabs(els_scEta()->at(iel)<2.5)){
+    barrel = false;
+  }else{
+    return false;
   }
-  const bool barrel = els_isEB()->at(iel);
 
   double deta_cut, dphi_cut, ieta_cut, hovere_cut, d0_cut, dz_cut,
     ooeminusoop_cut, reliso_cut, vprob_cut, misshits_cut;
@@ -314,7 +315,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
                           sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
                           els_tk_pz()->at(iel), 0);
 
-  return deta_cut > fabs(els_dEtaIn()->at(iel)) > deta_cut
+  return deta_cut > fabs(els_dEtaIn()->at(iel))
     && dphi_cut > fabs(els_dPhiIn()->at(iel))
     && ieta_cut > els_sigmaIEtaIEta()->at(iel)
     && hovere_cut > els_hadOverEm()->at(iel)
@@ -580,7 +581,6 @@ int phys_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_
   }
   return closest_imc;
 }
-
 
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////  EVENT CLEANING  ///////////////////////////
