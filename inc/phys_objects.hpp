@@ -45,10 +45,10 @@ public:
 
   bool IsSignalElectron(unsigned iel) const;
   bool IsVetoElectron(unsigned iel) const;
-  bool IsSignalIdElectron(unsigned iel) const;
-  bool IsVetoIdElectron(unsigned iel) const;
+  bool IsSignalIdElectron(unsigned iel, bool do_iso=false) const;
+  bool IsVetoIdElectron(unsigned iel, bool do_iso=false) const;
 
-  bool IsIdElectron(unsigned iel, CutLevel threshold) const;
+  bool IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso=false) const;
 
   float GetElectronIsolation(unsigned iel) const;
   float GetEffectiveArea(float SCEta, bool isMC) const;

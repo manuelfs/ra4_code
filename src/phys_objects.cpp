@@ -160,31 +160,29 @@ vector<int> phys_objects::GetElectrons(bool doSignal) const {
 
 bool phys_objects::IsSignalElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsSignalIdElectron(iel)
-    && els_pt()->at(iel)>=MinSignalLeptonPt
-    && GetElectronIsolation(iel)<0.15;
+  return IsSignalIdElectron(iel, true)
+    && els_pt()->at(iel)>=MinSignalLeptonPt;
 }
 
 bool phys_objects::IsVetoElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsVetoIdElectron(iel)
-    && els_pt()->at(iel)>=MinVetoLeptonPt
-    && GetElectronIsolation(iel)<0.15;
+  return IsVetoIdElectron(iel, true)
+    && els_pt()->at(iel)>=MinVetoLeptonPt;
 }
 
-bool phys_objects::IsSignalIdElectron(unsigned iel) const {
+bool phys_objects::IsSignalIdElectron(unsigned iel, bool do_iso) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kMedium)
+  return IsIdElectron(iel, kMedium, do_iso)
     && fabs(els_eta()->at(iel))<2.5;
 }
 
-bool phys_objects::IsVetoIdElectron(unsigned iel) const {
+bool phys_objects::IsVetoIdElectron(unsigned iel, bool do_iso) const {
   if(iel >= els_pt()->size()) return false;
-  return IsIdElectron(iel, kVeto)
+  return IsIdElectron(iel, kVeto, do_iso)
     && fabs(els_eta()->at(iel))<2.5;
 }
 
-bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
+bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) const{
   if(iel>=els_pt()->size()) return false;
   bool barrel;
   if(fabs(els_scEta()->at(iel))<=1.479){
@@ -322,7 +320,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold) const{
     && d0_cut > fabs(d0)
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
-    && (true || reliso_cut)//Want to handle isolation separately
+    && (!do_iso || reliso_cut>GetElectronIsolation(iel))
     && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)))//Skip cut in cfa_13; use alternative in cfa_8
     && (!els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
 }
