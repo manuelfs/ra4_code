@@ -72,7 +72,7 @@ bool phys_objects::IsSignalIdMuon(unsigned imu) const {
 bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
   return IsIdMuon(imu, kTight)//Intentionally vetoing on "tight" muons!
-    && fabs(mus_eta()->at(imu))<2.5;
+    && fabs(mus_eta()->at(imu))<2.4;
 }
 
 bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
@@ -306,10 +306,6 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
   const double d0 = els_d0dum()->at(iel)
     -pv_x()->at(0)*sin(els_tk_phi()->at(iel))
     +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
-  /*const double dz = getDZ(els_vx()->at(iel), els_vy()->at(iel), els_vz()->at(iel),
-                          cos(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                          sin(els_tk_phi()->at(iel))*els_tk_pt()->at(iel),
-                          els_tk_pz()->at(iel), 0);*/
   const double dz = fabs(els_vz()->at(iel)-pv_z()->at(0));
 
   return deta_cut > fabs(els_dEtaIn()->at(iel))
