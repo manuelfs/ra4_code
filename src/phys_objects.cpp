@@ -307,10 +307,13 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     -pv_x()->at(0)*sin(els_tk_phi()->at(iel))
     +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
   const double dz = fabs(els_vz()->at(iel)-pv_z()->at(0));
+  const double sigietaieta = (Type()==typeid(cfa_13)
+			      ? els_full5x5_sigmaIetaIeta()->at(iel)
+			      : els_sigmaIEtaIEta()->at(iel));
 
   return deta_cut > fabs(els_dEtaIn()->at(iel))
     && dphi_cut > fabs(els_dPhiIn()->at(iel))
-    && ieta_cut > els_full5x5_sigmaIetaIeta()->at(iel)
+    && ieta_cut > sigietaieta
     && hovere_cut > els_hadOverEm()->at(iel)
     && d0_cut > fabs(d0)
     && dz_cut > fabs(dz)
