@@ -81,8 +81,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   TLorentzVector lepmax_p4;
   int mcID, mcmomID;
   bool fromW;
-  float spher[2][2], spher_jets[2][2], spher_nolin[2][2];
-  float pt(bad_val), px(bad_val), py(bad_val), eig1(bad_val), eig2(bad_val);
+  float pt(bad_val), px(bad_val), py(bad_val);
 
   const float W_mass(80.385);
 
@@ -133,54 +132,27 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_jets_phi.clear();
     tree.v_jets_csv.clear();
     csv_sorted.clear();
-    spher[0][0] = 0; spher[0][1] = 0; spher[1][0] = 0; spher[1][1] = 0;
-    spher_nolin[0][0] = 0; spher_nolin[0][1] = 0; spher_nolin[1][0] = 0; spher_nolin[1][1] = 0;
-    spher_jets[0][0] = 0; spher_jets[0][1] = 0; spher_jets[1][0] = 0; spher_jets[1][1] = 0;
-    tree.njets = 0;
-    tree.nbl = 0; tree.nbm = 0; tree.nbt = 0;
 
-    tree.ht=0.0;
-    tree.mindphin_metjet = getMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
+    tree.njets = GetNumJets(good_jets, jet_ptThresh);
+    tree.nbl = GetNumJets(good_jets, jet_ptThresh, CSVCuts[0]);
+    tree.nbm = GetNumJets(good_jets, jet_ptThresh, CSVCuts[1]);
+    tree.nbt = GetNumJets(good_jets, jet_ptThresh, CSVCuts[2]);
+
+    tree.dr_bb = GetDRHighestCSV(good_jets);
+
+    tree.ht = GetHT(good_jets, jet_ptThresh);
+    tree.mindphin_metjet = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
     for(size_t i = 0; i<good_jets.size(); ++i){
       const size_t ijet = good_jets.at(i);
-      if(ijet>=jets_pt()->size()) continue;
-      pt = jets_pt()->at(ijet);
-      px = jets_px()->at(ijet);
-      py = jets_py()->at(ijet);
-      tree.v_jets_pt.push_back(pt);
+      tree.v_jets_pt.push_back(jets_pt()->at(ijet));
       tree.v_jets_eta.push_back(jets_eta()->at(ijet));
       tree.v_jets_phi.push_back(jets_phi()->at(ijet));
-      double csv = jets_btag_secVertexCombined()->at(ijet);
-      tree.v_jets_csv.push_back(csv);
-      csv_sorted.push_back(make_pair(tree.v_jets_csv.size()-1, csv));
-      // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
-      // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
-      // Linearized transverse sphericity matrix with only jets
-      spher_jets[0][0] += px*px/pt; spher_jets[0][1] += px*py/pt;
-      spher_jets[1][0] += px*py/pt; spher_jets[1][1] += py*py/pt;
+      tree.v_jets_csv.push_back(jets_btag_secVertexCombined()->at(ijet));
+    }
 
-      //       cout<<ijet<<": csv "<<csv<<", eta "<<jets_eta()->at(ijet)<<", phi "<<jets_phi()->at(ijet)<<endl;
-      if(jets_pt()->at(ijet) >= jet_ptThresh) {
-        tree.njets++;
-        tree.ht+=jets_pt()->at(ijet);
-        if(csv >= CSVCuts[0]) tree.nbl++;
-        if(csv >= CSVCuts[1]) tree.nbm++;
-        if(csv >= CSVCuts[2]) tree.nbt++;
-      }
-    } // Loop over all jets
-
-    if(eigen2x2(spher_jets, eig1, eig2)) tree.spher_jets = 2*eig2/(eig1+eig2);
-    else tree.spher_jets = bad_val;
-
-    if(tree.v_jets_csv.size() >= 2){
-      sort(csv_sorted.begin(), csv_sorted.end(), id_big2small);
-      tree.dr_bb = dR(tree.v_jets_eta[csv_sorted[0].first], tree.v_jets_eta[csv_sorted[1].first],
-                      tree.v_jets_phi[csv_sorted[0].first], tree.v_jets_phi[csv_sorted[1].first]);
-    } else tree.dr_bb = bad_val;
+    tree.spher_jets = GetSphericity(good_jets, true);
+    tree.spher = GetSphericity(good_jets, veto_muons, veto_electrons, true);
+    tree.spher_nolin = GetSphericity(good_jets, veto_muons, veto_electrons, false);
 
     ////////////////   Fat Jets   ////////////////
     vector<PseudoJet> fjets_skinny_30(0);
@@ -515,15 +487,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
                                    els_pz()->at(index),
                                    els_energy()->at(index));
       }
-      // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
-      // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
-      //       cout<<"Rec el eta "<<tree.v_els_eta[tree.v_els_pt.size()-1]<<", phi "<<tree.v_els_phi[tree.v_els_pt.size()-1]
-      //          <<", tru id "<<tree.v_els_tru_id[tree.v_els_pt.size()-1]<<", tru momid "<<tree.v_els_tru_momid[tree.v_els_pt.size()-1]
-      //          <<", dR "<<deltaR<<endl;
     }
     tree.v_mus_pt.clear();
     tree.v_mus_gen_pt.clear();
@@ -593,17 +556,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
                                    mus_pz()->at(index),
                                    mus_energy()->at(index));
       }
-      // Transverse sphericity matrix (not including 1/sum(pt), which cancels in the ratio of eig)
-      spher_nolin[0][0] += px*px; spher_nolin[0][1] += px*py;
-      spher_nolin[1][0] += px*py; spher_nolin[1][1] += py*py;
-      // Linearized transverse sphericity matrix
-      spher[0][0] += px*px/pt; spher[0][1] += px*py/pt;
-      spher[1][0] += px*py/pt; spher[1][1] += py*py/pt;
     }
-    if(eigen2x2(spher, eig1, eig2)) tree.spher = 2*eig2/(eig1+eig2);
-    else tree.spher = bad_val;
-    if(eigen2x2(spher_nolin, eig1, eig2)) tree.spher_nolin = 2*eig2/(eig1+eig2);
-    else tree.spher_nolin = bad_val;
 
     ////////////////   METS   ////////////////
     tree.met = mets_et()->at(0);

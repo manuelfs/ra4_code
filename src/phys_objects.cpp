@@ -22,16 +22,17 @@
 #include "pdtlund.hpp"
 #include "utilities.hpp"
 
+using namespace std;
+
 namespace{
   const float MinSignalLeptonPt = 20.;
   const float MinVetoLeptonPt = 15.;
   const float MinTrackPt = MinVetoLeptonPt;
-  const float fltmax = std::numeric_limits<float>::max();
+  const float fltmax = numeric_limits<float>::max();
+  const float bad_val = -999.;
 }
 
-using namespace std;
-
-phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
+phys_objects::phys_objects(const string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV){
 }
 
@@ -332,15 +333,15 @@ float phys_objects::GetElectronIsolation(unsigned iel) const {
     return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
   }else if(Type()==typeid(cfa_13)){
     float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
-      + std::max(0.0,
-                 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
-                 +els_pfIsolationR03_sumPhotonEt()->at(iel)
-                 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
+      + max(0.0,
+	    els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
+	    +els_pfIsolationR03_sumPhotonEt()->at(iel)
+	    -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
     return absiso/els_pt()->at(iel);
   }else{
-    throw std::logic_error("Unknown type "
-                           +std::string(Type().name())
-                           +" in phys_objects::GetElectronIsolation");
+    throw logic_error("Unknown type "
+		      + string(Type().name())
+		      + " in phys_objects::GetElectronIsolation");
     return 0.0;
   }
 }
@@ -610,7 +611,9 @@ bool phys_objects::PassesMETCleaningCut() const{
     && scrapingVeto;
 }
 
-double phys_objects::getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const {
+double phys_objects::GetDZ(double vx, double vy, double vz,
+			   double px, double py, double pz,
+			   int firstGoodVertex) const {
   return vz - pv_z()->at(firstGoodVertex)
     -((vx-pv_x()->at(firstGoodVertex))*px+(vy-pv_y()->at(firstGoodVertex))*py)*pz/(px*px+py*py);
 }
@@ -623,8 +626,8 @@ bool phys_objects::IsMC() const {
   return (SampleName().find("Run201") == string::npos);
 }
 
-double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
-  double deltaT = getDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
+double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
+  double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
   double dp = fabs(deltaphi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
   double dpN = 0.0;
   if(useArcsin) {
@@ -639,7 +642,7 @@ double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
   return dpN;
 }
 
-double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
+double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -654,18 +657,115 @@ double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, fl
   return deltaT;
 }
 
-double phys_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                                         float otherpt, float othereta, bool useArcsin) const {
-  double mdpN=std::numeric_limits<double>::max();
+  double mdpN=numeric_limits<double>::max();
   unsigned nGoodJets(0);
   for (unsigned i=0; i<jets_pt()->size(); i++) {
     if (!IsGoodJet(i, mainpt, maineta)) continue;
     nGoodJets++;
-    double dpN = getDeltaPhiMETN(i, otherpt, othereta, useArcsin);
+    double dpN = GetDeltaPhiMETN(i, otherpt, othereta, useArcsin);
     if (dpN>=0&&dpN<mdpN) mdpN=dpN;
     if (nGoodJets>=maxjets) break;
   }
   return mdpN;
+}
+
+double phys_objects::GetHT(const vector<int> &good_jets, double pt_cut) const{
+  double ht = 0.0;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    const double pt = jets_pt()->at(good_jets.at(i));
+    if(pt>pt_cut) ht += pt;
+  }
+  return ht;
+}
+
+size_t phys_objects::GetNumJets(const vector<int> &good_jets,
+				double pt_cut,
+				double csv_cut) const{
+  size_t num_jets = 0;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    if(jets_pt()->at(good_jets.at(i)) > pt_cut
+       && jets_btag_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
+      ++num_jets;
+    }
+  }
+  return num_jets;
+}
+
+float phys_objects::GetSphericity(const vector<int> &good_jets,
+				  const vector<int> &good_mus,
+				  const vector<int> &good_els,
+				  bool linearize){
+  float smat[2][2];
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    const size_t ijet = good_jets.at(i);
+    const double px = jets_px()->at(ijet);
+    const double py = jets_py()->at(ijet);
+    const double ptinv = linearize ? (1.0/jets_pt()->at(ijet)) : 1.0;
+
+    smat[0][0] += px*px*ptinv;
+    smat[0][1] += px*py*ptinv;
+    smat[1][1] += py*py*ptinv;
+  }
+
+  for(size_t i = 0; i < good_mus.size(); ++i){
+    const size_t imu = good_mus.at(i);
+    const double px = mus_px()->at(imu);
+    const double py = mus_py()->at(imu);
+    const double ptinv = linearize ? (1.0/mus_pt()->at(imu)) : 1.0;
+
+    smat[0][0] += px*px*ptinv;
+    smat[0][1] += px*py*ptinv;
+    smat[1][1] += py*py*ptinv;
+  }
+
+  for(size_t i = 0; i < good_els.size(); ++i){
+    const size_t iel = good_els.at(i);
+    const double px = els_px()->at(iel);
+    const double py = els_py()->at(iel);
+    const double ptinv = linearize ? (1.0/els_pt()->at(iel)) : 1.0;
+
+    smat[0][0] += px*px*ptinv;
+    smat[0][1] += px*py*ptinv;
+    smat[1][1] += py*py*ptinv;
+  }
+
+  smat[1][0] = smat[0][1];
+  float eig1, eig2;
+  if(eigen2x2(smat, eig1, eig2)) return 2.*eig2/(eig1+eig2);
+  else return bad_val;
+}
+
+float phys_objects::GetSphericity(const vector<int> &good_jets,
+				  bool linearize){
+  vector<int> empty_vec(0);
+  return GetSphericity(good_jets, empty_vec, empty_vec, linearize);
+}
+
+float phys_objects::GetDRHighestCSV(const vector<int> &good_jets){
+  float csv1=-fltmax, csv2=-fltmax;
+  size_t i1=0, i2=0;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    const size_t ijet = good_jets.at(i);
+    const float csv = jets_btag_secVertexCombined()->at(ijet);
+    if(csv>csv1){
+      csv2 = csv1;
+      csv1 = csv;
+      i2 = i1;
+      i1 = ijet;
+    }else if(csv>csv2){
+      csv2 = csv;
+      i2 = ijet;
+    }
+  }
+
+  if(csv2!=-fltmax){
+    return dR(jets_eta()->at(i1), jets_eta()->at(i2),
+	      jets_phi()->at(i1), jets_phi()->at(i2));
+  }else{
+    return bad_val;
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////
