@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
     return EXIT_FAILURE;
   }
 
-  const string cfa = "configurableAnalysis";
+  const string cfa = "cfA";
   TTree *event_a = static_cast<TTree*>(in_file.Get((cfa+"/eventA").c_str()));
   if(!event_a){
     cerr << "Could not find " << cfa << "/eventA in " << argv[1] << '.' << endl;

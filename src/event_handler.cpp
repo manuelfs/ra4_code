@@ -17,14 +17,13 @@
 #include <limits>
 
 #include "TMath.h"
+#include "TROOT.h"
 #include "TFile.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
 
 #include "fastjet/ClusterSequence.hh"
-#include "fastjet/PseudoJet.hh"
 
-#include "small_tree.hpp"
 #include "utilities.hpp"
 #include "timer.hpp"
 #include "mt2_bisect.hpp"
@@ -34,12 +33,12 @@
 
 using namespace std;
 using namespace fastjet;
-const double CSVCuts[] = {0.244, 0.679, 0.898};
-//const double CSVCuts[] = {0.423, 0.814, 0.941};
+// const double CSVCuts[] = {0.244, 0.679, 0.898}; // Run1 CSV
+const double CSVCuts[] = {0.423, 0.814, 0.941};    // Run2 CSV+IVF
 
-namespace{
-  const float floatmax = numeric_limits<float>::max();
-}
+// namespace{
+//   const float floatmax = numeric_limits<float>::max();
+// }
 
 event_handler::event_handler(const string &fileName):
   phys_objects(fileName){
@@ -47,826 +46,31 @@ event_handler::event_handler(const string &fileName):
 
 void event_handler::ReduceTree(int Nentries, TString outFilename,
                                int Ntotentries, bool skip_slow){
-  // for(int entry(0); entry < Nentries; entry++){
-  //   GetEntry(entry);
 
-  //   cout<<"========== Event "<<entry+1<<" ============"<<endl;
-  //   for(size_t imc = 0; imc < mc_doc_id()->size(); imc++){
-  //     if(abs(mc_doc_id()->at(imc))==15){// && mc_doc_status()->at(imc)==23){
-  //     cout<<imc<<": ID "<<mc_doc_id()->at(imc)<<",   \tMom ID "<<mc_doc_mother_id()->at(imc)
-  //      <<", \tGMom ID "<<mc_doc_grandmother_id()->at(imc)
-  //      <<", \tGGMom ID "<<mc_doc_ggrandmother_id()->at(imc)
-  //      <<", \tN daughters "<<mc_doc_numOfDaughters()->at(imc)
-  //      <<",   \tN moms "<<mc_doc_numOfMothers()->at(imc)
-  //      <<",   \tstatus "<<mc_doc_status()->at(imc)
-  //      <<",   \tpT "<<mc_doc_pt()->at(imc)
-  //      <<",   \teta "<<mc_doc_eta()->at(imc)
-  //      <<",   \tphi "<<mc_doc_phi()->at(imc)<<endl;
-  //     }
-  //   }
-  //   cout<<endl<<endl;
-  // }
+  gROOT->ProcessLine("#include <vector>"); 
+  // const float bad_val = -999.;
 
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
-  // Reduced tree
+  // // Reduced tree
   small_tree tree;
   float xsec(cross_section(outFilename));
   const float luminosity = 1000; // 1 fb^-1
-  const float jet_ptThresh = 40;
 
-  double deltaR, lepmax_pt, lepmax_energy, lepmax_px, lepmax_py, lepmax_pz;
-  TLorentzVector lepmax_p4;
-  int mcID, mcmomID;
-  bool fromW;
-  float pt(bad_val), px(bad_val), py(bad_val);
-
-  const float W_mass(80.385);
-
-  mt2_bisect::mt2 mt2_calc;
-  mt2_calc.set_mn(W_mass);
-  mt2w_bisect::mt2w mt2w_calc(1.0e5, -1.0);
-  vector<int_double> csv_sorted;
-  size_t entry_check=1;
   Timer timer(Nentries);
   timer.Start();
-  for(int entry(0); entry < Nentries; entry++){
-    if(!(entry&(entry_check-1)) && entry!=0){
+  for(int entry(0); entry < Nentries; entry++) {
+    if(entry%1000==0 && entry!=0){
       timer.PrintRemainingTime();
-      if(entry_check<1024) entry_check<<=1;
     }
     timer.Iterate();
     GetEntry(entry);
 
-    ////////////////   Provenance   /////////////
     tree.event = event();
     tree.lumiblock = lumiblock();
     tree.run = run();
 
-    ////////////////   Leptons   ////////////////
-    vector<int> signal_electrons = GetElectrons();
-    vector<int> veto_electrons = GetElectrons(false);
-    vector<int> signal_muons = GetMuons();
-    vector<int> veto_muons = GetMuons(false);
-    vector<int> good_jets = GetJets(signal_electrons, signal_muons, veto_electrons, veto_muons, 20.0, 2.4);
-    tree.nels  = signal_electrons.size();
-    tree.nvels = veto_electrons.size();
-    tree.nmus  = signal_muons.size();
-    tree.nvmus = veto_muons.size();
-
-    vector<float> mus_ptrel(0), els_ptrel(0);
-    vector<float> mus_mindr(0), els_mindr(0);
-    if(!skip_slow){
-      GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr);
-    }else{
-      els_ptrel = vector<float>(els_pt()->size(), bad_val);
-      els_mindr = vector<float>(els_pt()->size(), bad_val);
-      mus_ptrel = vector<float>(mus_pt()->size(), bad_val);
-      mus_mindr = vector<float>(mus_pt()->size(), bad_val);
-    }
-    if(tree.nels+tree.nmus == tree.nvels+tree.nvmus) tree.nleps = tree.nels+tree.nmus;
-    else tree.nleps = static_cast<int>(bad_val);
-
-    ////////////////  Tracks  ////////////////
-    if(Type()==typeid(cfa_8)){ //This should be changed when isotk becomes available in cfa_13!
-      tree.nisotrks = 0;
-      for(size_t i = 0; i < isotk_pt()->size(); ++i){
-        if(IsGoodIsoTrack(i)) ++tree.nisotrks;
-      }
-    }else{
-      tree.nisotrks = -1;
-    }
-
-    ////////////////   Jets   ////////////////
-    tree.v_jets_pt.clear();
-    tree.v_jets_eta.clear();
-    tree.v_jets_phi.clear();
-    tree.v_jets_csv.clear();
-    csv_sorted.clear();
-
-    tree.njets = GetNumJets(good_jets, jet_ptThresh);
-    tree.nbl = GetNumJets(good_jets, jet_ptThresh, CSVCuts[0]);
-    tree.nbm = GetNumJets(good_jets, jet_ptThresh, CSVCuts[1]);
-    tree.nbt = GetNumJets(good_jets, jet_ptThresh, CSVCuts[2]);
-
-    tree.dr_bb = GetDRHighestCSV(good_jets);
-
-    tree.ht = GetHT(good_jets, jet_ptThresh);
-    tree.mindphin_metjet = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
-    for(size_t i = 0; i<good_jets.size(); ++i){
-      const size_t ijet = good_jets.at(i);
-      tree.v_jets_pt.push_back(jets_pt()->at(ijet));
-      tree.v_jets_eta.push_back(jets_eta()->at(ijet));
-      tree.v_jets_phi.push_back(jets_phi()->at(ijet));
-      tree.v_jets_csv.push_back(jets_btag_secVertexCombined()->at(ijet));
-    }
-
-    tree.spher_jets = GetSphericity(good_jets, true);
-    tree.spher = GetSphericity(good_jets, veto_muons, veto_electrons, true);
-    tree.spher_nolin = GetSphericity(good_jets, veto_muons, veto_electrons, false);
-
-    ////////////////   Fat Jets   ////////////////
-    vector<PseudoJet> fjets_skinny_30(0);
-    vector<PseudoJet> fjets_sig_clean_30(0);
-    vector<PseudoJet> fjets_veto_clean_30(0);
-    vector<PseudoJet> fjets_skinny_0(0);
-    vector<PseudoJet> fjets_sig_clean_0(0);
-    vector<PseudoJet> fjets_veto_clean_0(0);
-    vector<PseudoJet> fjets_cands(0);
-    vector<PseudoJet> fjets_cands_trim(0);
-
-    vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30, veto_clean_jets_pt30;
-    vector<PseudoJet> skinny_jets_pt0, sig_clean_jets_pt0, veto_clean_jets_pt0;
-    for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
-      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
-         || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
-
-      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
-                              jets_pz()->at(jet), jets_energy()->at(jet));
-      const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
-                                   jets_pz()->at(jet), jets_energy()->at(jet));
-
-      bool veto_add = true, sig_add = true;
-      for(size_t ele = 0; ele<veto_electrons.size() && sig_add; ++ele){
-        //Make sure skinny jet is not matched to veto electron
-        const size_t iel = veto_electrons.at(ele);
-        if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
-        const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
-                                  els_pz()->at(iel), els_energy()->at(iel));
-        if(p4el.DeltaR(this_lv)<0.3){
-          veto_add=false;
-          if(IsSignalIdElectron(iel)) sig_add=false;
-        }
-      }
-      for(size_t mu = 0; mu<veto_muons.size() && sig_add; ++mu){
-        //Make sure skinny jet is not matched to veto muon
-        const size_t imu = veto_muons.at(mu);
-        if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
-        const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
-                                  mus_pz()->at(imu), mus_energy()->at(imu));
-        if(p4mu.DeltaR(this_lv)<0.3){
-          veto_add=false;
-          if(IsSignalIdMuon(imu)) sig_add=false;
-        }
-      }
-
-      skinny_jets_pt0.push_back(this_pj);
-      if(sig_add) sig_clean_jets_pt0.push_back(this_pj);
-      if(veto_add) veto_clean_jets_pt0.push_back(this_pj);
-      if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
-      if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
-      if(veto_add && this_pj.pt()>30.0) veto_clean_jets_pt30.push_back(this_pj);
-    }
-
-    JetDefinition jet_def_12(antikt_algorithm, 1.2);
-    ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
-    ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
-    ClusterSequence cs_veto_clean_30(veto_clean_jets_pt30, jet_def_12);
-    ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
-    ClusterSequence cs_sig_clean_0(sig_clean_jets_pt0, jet_def_12);
-    ClusterSequence cs_veto_clean_0(veto_clean_jets_pt0, jet_def_12);
-
-    fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
-    fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
-    fjets_veto_clean_30 = sorted_by_pt(cs_veto_clean_30.inclusive_jets());
-    fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
-    fjets_sig_clean_0 = sorted_by_pt(cs_sig_clean_0.inclusive_jets());
-    fjets_veto_clean_0 = sorted_by_pt(cs_veto_clean_0.inclusive_jets());
-
-    tree.nfjets_30 = 0;
-    tree.mj_30 = 0;
-    tree.v_fjets_30_pt.resize(fjets_skinny_30.size());
-    tree.v_fjets_30_eta.resize(fjets_skinny_30.size());
-    tree.v_fjets_30_phi.resize(fjets_skinny_30.size());
-    tree.v_fjets_30_mj.resize(fjets_skinny_30.size());
-    for(size_t ipj = 0; ipj < fjets_skinny_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_skinny_30.at(ipj);
-      tree.v_fjets_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_30 += pj.m();
-        ++tree.nfjets_30;
-      }
-    }
-    tree.nfjets_scln_30 = 0;
-    tree.mj_scln_30 = 0;
-    tree.v_fjets_scln_30_pt.resize(fjets_sig_clean_30.size());
-    tree.v_fjets_scln_30_eta.resize(fjets_sig_clean_30.size());
-    tree.v_fjets_scln_30_phi.resize(fjets_sig_clean_30.size());
-    tree.v_fjets_scln_30_mj.resize(fjets_sig_clean_30.size());
-    for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
-      tree.v_fjets_scln_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_scln_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_scln_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_scln_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_scln_30 += pj.m();
-        ++tree.nfjets_scln_30;
-      }
-    }
-    tree.nfjets_vcln_30 = 0;
-    tree.mj_vcln_30 = 0;
-    tree.v_fjets_vcln_30_pt.resize(fjets_veto_clean_30.size());
-    tree.v_fjets_vcln_30_eta.resize(fjets_veto_clean_30.size());
-    tree.v_fjets_vcln_30_phi.resize(fjets_veto_clean_30.size());
-    tree.v_fjets_vcln_30_mj.resize(fjets_veto_clean_30.size());
-    for(size_t ipj = 0; ipj < fjets_veto_clean_30.size(); ++ipj){
-      const PseudoJet &pj = fjets_veto_clean_30.at(ipj);
-      tree.v_fjets_vcln_30_pt.at(ipj)=pj.pt();
-      tree.v_fjets_vcln_30_eta.at(ipj)=pj.eta();
-      tree.v_fjets_vcln_30_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_vcln_30_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_vcln_30 += pj.m();
-        ++tree.nfjets_vcln_30;
-      }
-    }
-    tree.nfjets_0 = 0;
-    tree.mj_0 = 0;
-    tree.v_fjets_0_pt.resize(fjets_skinny_0.size());
-    tree.v_fjets_0_eta.resize(fjets_skinny_0.size());
-    tree.v_fjets_0_phi.resize(fjets_skinny_0.size());
-    tree.v_fjets_0_mj.resize(fjets_skinny_0.size());
-    for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_skinny_0.at(ipj);
-      tree.v_fjets_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_0 += pj.m();
-        ++tree.nfjets_0;
-      }
-    }
-    tree.nfjets_scln_0 = 0;
-    tree.mj_scln_0 = 0;
-    tree.v_fjets_scln_0_pt.resize(fjets_sig_clean_0.size());
-    tree.v_fjets_scln_0_eta.resize(fjets_sig_clean_0.size());
-    tree.v_fjets_scln_0_phi.resize(fjets_sig_clean_0.size());
-    tree.v_fjets_scln_0_mj.resize(fjets_sig_clean_0.size());
-    for(size_t ipj = 0; ipj < fjets_sig_clean_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_sig_clean_0.at(ipj);
-      tree.v_fjets_scln_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_scln_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_scln_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_scln_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_scln_0 += pj.m();
-        ++tree.nfjets_scln_0;
-      }
-    }
-    tree.nfjets_vcln_0 = 0;
-    tree.mj_vcln_0 = 0;
-    tree.v_fjets_vcln_0_pt.resize(fjets_veto_clean_0.size());
-    tree.v_fjets_vcln_0_eta.resize(fjets_veto_clean_0.size());
-    tree.v_fjets_vcln_0_phi.resize(fjets_veto_clean_0.size());
-    tree.v_fjets_vcln_0_mj.resize(fjets_veto_clean_0.size());
-    for(size_t ipj = 0; ipj < fjets_veto_clean_0.size(); ++ipj){
-      const PseudoJet &pj = fjets_veto_clean_0.at(ipj);
-      tree.v_fjets_vcln_0_pt.at(ipj)=pj.pt();
-      tree.v_fjets_vcln_0_eta.at(ipj)=pj.eta();
-      tree.v_fjets_vcln_0_phi.at(ipj)=pj.phi_std();
-      tree.v_fjets_vcln_0_mj.at(ipj)=pj.m();
-      if(pj.pt()>50.0){
-        tree.mj_vcln_0 += pj.m();
-        ++tree.nfjets_vcln_0;
-      }
-    }
-
-    tree.nfjets_cands = static_cast<int>(bad_val);
-    tree.mj_cands = static_cast<int>(bad_val);
-    tree.v_fjets_cands_pt.clear();
-    tree.v_fjets_cands_eta.clear();
-    tree.v_fjets_cands_phi.clear();
-    tree.v_fjets_cands_mj.clear();
-
-    tree.nfjets_cands_trim = static_cast<int>(bad_val);
-    tree.mj_cands_trim = static_cast<int>(bad_val);
-    tree.v_fjets_cands_trim_pt.clear();
-    tree.v_fjets_cands_trim_eta.clear();
-    tree.v_fjets_cands_trim_phi.clear();
-    tree.v_fjets_cands_trim_mj.clear();
-    if(!skip_slow){
-      vector<PseudoJet> cands(pfcand_pt()->size());
-      for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-	if(!is_nan(pfcand_pt()->at(cand))
-	   && !is_nan(pfcand_eta()->at(cand))
-           && !is_nan(pfcand_phi()->at(cand))
-           && !is_nan(pfcand_energy()->at(cand))){
-	  TLorentzVector p4cand;
-	  p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
-			      pfcand_phi()->at(cand), pfcand_energy()->at(cand));
-          cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
-        }else{
-          //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
-          cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
-        }
-      }
-
-      ClusterSequence cs_cands(cands, jet_def_12);
-      fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
-
-      vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
-      fjets_cands_trim.resize(fjets_cands.size());
-      for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
-        vector<PseudoJet> pjs;
-        for(size_t sj = 0; sj < cands.size(); ++sj){
-          if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
-        }
-        ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
-        pjs = cs.inclusive_jets();
-
-        //Sum the fat jet components in place
-        fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
-        for(size_t pj = 0; pj < pjs.size(); ++pj){
-          fjets_cands_trim.at(fj) += pjs.at(pj);
-        }
-        const double sumpt = fjets_cands_trim.at(fj).pt();
-        fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
-        //Trim the low momentum-fraction components
-        for(size_t pj = 0; pj < pjs.size(); ++pj){
-          if(pjs.at(pj).pt()>0.03*sumpt){
-            fjets_cands_trim.at(fj) += pjs.at(pj);
-          }
-        }
-      }
-      tree.nfjets_cands = 0;
-      tree.mj_cands = 0;
-      tree.v_fjets_cands_pt.resize(fjets_cands.size());
-      tree.v_fjets_cands_eta.resize(fjets_cands.size());
-      tree.v_fjets_cands_phi.resize(fjets_cands.size());
-      tree.v_fjets_cands_mj.resize(fjets_cands.size());
-      for(size_t ipj = 0; ipj < fjets_cands.size(); ++ipj){
-        const PseudoJet &pj = fjets_cands.at(ipj);
-        tree.v_fjets_cands_pt.at(ipj)=pj.pt();
-        tree.v_fjets_cands_eta.at(ipj)=pj.eta();
-        tree.v_fjets_cands_phi.at(ipj)=pj.phi_std();
-        tree.v_fjets_cands_mj.at(ipj)=pj.m();
-        if(pj.pt()>50.0){
-          tree.mj_cands += pj.m();
-          ++tree.nfjets_cands;
-        }
-      }
-      tree.nfjets_cands_trim = 0;
-      tree.mj_cands_trim = 0;
-      tree.v_fjets_cands_trim_pt.resize(fjets_cands_trim.size());
-      tree.v_fjets_cands_trim_eta.resize(fjets_cands_trim.size());
-      tree.v_fjets_cands_trim_phi.resize(fjets_cands_trim.size());
-      tree.v_fjets_cands_trim_mj.resize(fjets_cands_trim.size());
-      for(size_t ipj = 0; ipj < fjets_cands_trim.size(); ++ipj){
-        const PseudoJet &pj = fjets_cands_trim.at(ipj);
-        tree.v_fjets_cands_trim_pt.at(ipj)=pj.pt();
-        tree.v_fjets_cands_trim_eta.at(ipj)=pj.eta();
-        tree.v_fjets_cands_trim_phi.at(ipj)=pj.phi_std();
-        tree.v_fjets_cands_trim_mj.at(ipj)=pj.m();
-        if(pj.pt()>50.0){
-          tree.mj_cands_trim += pj.m();
-          ++tree.nfjets_cands_trim;
-        }
-      }
-    }
-
-    ////////////////   Leptons   ////////////////
-    lepmax_energy=0; lepmax_pt=0; lepmax_px=0; lepmax_py=0; lepmax_pz=0;
-    tree.v_els_pt.clear();
-    tree.v_els_gen_pt.clear();
-    tree.v_els_eta.clear();
-    tree.v_els_phi.clear();
-    tree.v_els_charge.clear();
-    tree.v_els_reliso.clear();
-    tree.v_els_ptrel.clear();
-    tree.v_els_mindr.clear();
-    tree.v_els_sigid.clear();
-    tree.v_els_tru_id.clear();
-    tree.v_els_tru_momid.clear();
-    tree.v_els_tru_tm.clear();
-    tree.v_els_tru_dr.clear();
-    for(uint index=0; index<els_pt()->size(); ++index){
-      if(!IsVetoIdElectron(index) || els_pt()->at(index)<10.0) continue;
-
-      pt = els_pt()->at(index);
-      px = els_px()->at(index);
-      py = els_py()->at(index);
-      mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
-      tree.v_els_pt.push_back(els_pt()->at(index));
-      tree.v_els_gen_pt.push_back(els_gen_pt()->at(index));
-      tree.v_els_eta.push_back(els_eta()->at(index));
-      tree.v_els_phi.push_back(els_phi()->at(index));
-      tree.v_els_charge.push_back(els_charge()->at(index));
-      tree.v_els_reliso.push_back(GetElectronIsolation(index));
-      tree.v_els_ptrel.push_back(els_ptrel.at(index));
-      tree.v_els_mindr.push_back(els_mindr.at(index));
-      tree.v_els_sigid.push_back(IsSignalIdElectron(index));
-      tree.v_els_tru_id.push_back(mcID);
-      tree.v_els_tru_momid.push_back(mcmomID);
-      tree.v_els_tru_tm.push_back(abs(mcID)==11 && fromW);
-      tree.v_els_tru_dr.push_back(deltaR);
-
-      if(els_pt()->at(index) > lepmax_pt){
-        lepmax_energy=els_energy()->at(index);
-        lepmax_pt=els_pt()->at(index);
-        lepmax_px=els_px()->at(index);
-        lepmax_py=els_py()->at(index);
-        lepmax_pz=els_pz()->at(index);
-        lepmax_p4 = TLorentzVector(els_px()->at(index),
-                                   els_py()->at(index),
-                                   els_pz()->at(index),
-                                   els_energy()->at(index));
-      }
-    }
-    tree.v_mus_pt.clear();
-    tree.v_mus_gen_pt.clear();
-    tree.v_mus_eta.clear();
-    tree.v_mus_phi.clear();
-    tree.v_mus_charge.clear();
-    tree.v_mus_reliso.clear();
-    tree.v_mus_ptrel.clear();
-    tree.v_mus_mindr.clear();
-    tree.v_mus_sigid.clear();
-    tree.v_mus_tru_id.clear();
-    tree.v_mus_tru_momid.clear();
-    tree.v_mus_tru_tm.clear();
-    tree.v_mus_tru_dr.clear();
-    for(uint index=0; index<mus_pt()->size(); ++index){
-      if(!IsVetoIdMuon(index) || mus_pt()->at(index)<10.0) continue;
-
-      pt = mus_pt()->at(index);
-      px = mus_px()->at(index);
-      py = mus_py()->at(index);
-      mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
-      tree.v_mus_pt.push_back(mus_pt()->at(index));
-      tree.v_mus_gen_pt.push_back(mus_gen_pt()->at(index));
-      tree.v_mus_eta.push_back(mus_eta()->at(index));
-      tree.v_mus_phi.push_back(mus_phi()->at(index));
-      tree.v_mus_charge.push_back(mus_charge()->at(index));
-      tree.v_mus_reliso.push_back(GetMuonIsolation(index));
-      tree.v_mus_ptrel.push_back(mus_ptrel.at(index));
-      tree.v_mus_mindr.push_back(mus_mindr.at(index));
-      tree.v_mus_sigid.push_back(IsSignalIdMuon(index));
-      tree.v_mus_tru_id.push_back(mcID);
-      tree.v_mus_tru_momid.push_back(mcmomID);
-      tree.v_mus_tru_tm.push_back(abs(mcID)==13 && fromW);
-      tree.v_mus_tru_dr.push_back(deltaR);
-
-      if(mus_pt()->at(index) > lepmax_pt){
-        lepmax_energy=mus_energy()->at(index);
-        lepmax_pt=mus_pt()->at(index);
-        lepmax_px=mus_px()->at(index);
-        lepmax_py=mus_py()->at(index);
-        lepmax_pz=mus_pz()->at(index);
-        lepmax_p4 = TLorentzVector(mus_px()->at(index),
-                                   mus_py()->at(index),
-                                   mus_pz()->at(index),
-                                   mus_energy()->at(index));
-      }
-    }
-
-    ////////////////   METS   ////////////////
-    tree.met = mets_et()->at(0);
-    tree.met_phi = mets_phi()->at(0);
-
-    ////////////////   TRUTH   ////////////////
-    // True MET and HT
-    float metx(0), mety(0);
-    for(size_t imc = 0; imc < mc_final_id()->size(); imc++){
-      int id = static_cast<int>(abs(mc_final_id()->at(imc)));
-      if(id==12 || id==14 || id==16 || id==39 || (id>1e6 && mc_final_charge()->at(imc)==0)) {
-        metx += mc_final_px()->at(imc);
-        mety += mc_final_py()->at(imc);
-      }
-    }
-    tree.genmet = AddInQuadrature(metx,mety);
-    tree.genmetphi = atan2(mety, metx);
-    tree.genht = 0;
-    for(size_t imc = 0; imc < mc_jets_pt()->size(); imc++)
-      if(mc_jets_pt()->at(imc)>40 && mc_jets_eta()->at(imc)<3) tree.genht += mc_jets_pt()->at(imc);
-
-    // True particles
-    tree.mc_pt->resize(0);  tree.mc_id->resize(0);
-    tree.mc_eta->resize(0); tree.mc_momid->resize(0);
-    tree.mc_phi->resize(0);
-    for(size_t imc = 0; imc < mc_doc_id()->size(); imc++){
-      int id = static_cast<int>(mc_doc_id()->at(imc));
-      int momid = GetMom(mc_doc_id()->at(imc), mc_doc_mother_id()->at(imc),
-                         mc_doc_grandmother_id()->at(imc), mc_doc_ggrandmother_id()->at(imc),
-                         fromW);
-      pt = mc_doc_pt()->at(imc);
-      if((abs(momid) == 24 || (abs(momid) == 15 && abs(id) != 15))
-         && abs(id) != 12 && abs(id) != 14 && abs(id) != 16
-         && abs(id) != 22  && abs(id) != 24){
-        tree.mc_pt->push_back(pt);
-        tree.mc_eta->push_back(mc_doc_eta()->at(imc));
-        tree.mc_phi->push_back(mc_doc_phi()->at(imc));
-        tree.mc_id->push_back(id);
-        tree.mc_momid->push_back(momid);
-      }
-    }
-
-    // Finding mT and deltaPhi with respect to highest pT lepton
-    tree.mt = bad_val; tree.dphi_wlep = bad_val;
-    if(lepmax_pt > 0){
-      double lepmax_phi = atan2(lepmax_py, lepmax_px);
-      double Wx = mets_ex()->at(0) + lepmax_px;
-      double Wy = mets_ey()->at(0) + lepmax_py;
-      tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_phi);
-      if(tree.dphi_wlep > PI) tree.dphi_wlep = 2*PI-tree.dphi_wlep;
-      tree.mt = sqrt(2*lepmax_pt* tree.met*(1-cos(tree.met_phi-lepmax_phi)));
-      tree.mt_genmet = sqrt(2*lepmax_pt* tree.genmet*(1-cos(tree.genmetphi-lepmax_phi)));
-    }
-
-    tree.mt_bmet_min = bad_val;
-    for(size_t i = 0; i < good_jets.size(); ++i){
-      const int ijet = good_jets.at(i);
-      if(jets_btag_secVertexCombined()->at(ijet) < CSVCuts[1]) continue;
-      const float mb = GetMass(jets_energy()->at(ijet),
-                               jets_px()->at(ijet),
-                               jets_py()->at(ijet),
-                               jets_pz()->at(ijet));
-      const float this_mt = GetMT(0.0, mets_ex()->at(0), mets_ey()->at(0),
-                                  mb, jets_px()->at(ijet), jets_py()->at(ijet));
-      if(tree.mt_bmet_min<0.0 || this_mt<tree.mt_bmet_min) tree.mt_bmet_min=this_mt;
-    }
-
-    // mT2 with respect to highest pT lepton
-    tree.mt2w_max = bad_val;
-    tree.mt2w_min = bad_val;
-    tree.mt2w_ref_max = bad_val;
-    tree.mt2w_ref_min = bad_val;
-    tree.mt2w_high_pt = bad_val;
-    tree.mt2w_high_csv = bad_val;
-    tree.mt2_max = bad_val;
-    tree.mt2_min = bad_val;
-    tree.mt2_ref_max = bad_val;
-    tree.mt2_ref_min = bad_val;
-    tree.mt2_high_pt = bad_val;
-    tree.mt2_high_csv = bad_val;
-    tree.mbl_max = bad_val;
-    tree.mbl_subleading = bad_val;
-    tree.mbl_min = bad_val;
-    tree.mbl_high_pt = bad_val;
-    tree.mbl_high_csv = bad_val;
-    tree.mblnu_max = bad_val;
-    tree.mblnu_subleading = bad_val;
-    tree.mblnu_min = bad_val;
-    tree.mblnu_high_pt = bad_val;
-    tree.mblnu_high_csv = bad_val;
-    double momentum_W[3] = {W_mass, mets_ex()->at(0)+lepmax_px, mets_ey()->at(0)+lepmax_py};
-    double momentum_met[3] = {W_mass, mets_ex()->at(0), mets_ey()->at(0)};
-    double momentum_lep_4[4] = {lepmax_energy, lepmax_px, lepmax_py, lepmax_pz};
-
-    TLorentzVector met_p4(mets_ex()->at(0), mets_ey()->at(0), 0.0, mets_et()->at(0));
-    if(lepmax_pt > 0.0){
-      vector<pair<float, unsigned> > jet_sorter(0);
-      unsigned num_tags = 0;
-      vector<float> v_mt2(0), v_mt2w(0), v_mbl(0), v_mblnu(0);
-      float pt1=bad_val, pt2=bad_val, csv1=bad_val, csv2=bad_val;
-      int pti1=-1, pti2=-1, csvi1=-1, csvi2=-1;
-      for(size_t jet1 = 0; jet1 < jets_pt()->size(); ++jet1) {
-        if(!IsBasicJet(jet1)) continue;
-
-        jet_sorter.push_back(make_pair(-jets_pt()->at(jet1), jet1));
-        const float this_pt = jets_pt()->at(jet1);
-        const float this_csv = jets_btag_secVertexCombined()->at(jet1);
-
-        if(this_pt>pt1){
-          pt2=pt1;
-          pt1=this_pt;
-          pti2=pti1;
-          pti1=jet1;
-        }else if(this_pt>pt2){
-          pt2=this_pt;
-          pti2=jet1;
-        }
-        if(this_csv>csv1){
-          csv2=csv1;
-          csv1=this_csv;
-          csvi2=csvi1;
-          csvi1=jet1;
-        }else if(this_csv>csv2){
-          csv2=this_csv;
-          csvi2=jet1;
-        }
-
-        if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
-          ++num_tags;
-        }
-
-        double momentum_1[3] = {0.0, jets_px()->at(jet1), jets_py()->at(jet1)};
-        double momentum_1_4[4] = {jets_energy()->at(jet1),
-                                  jets_px()->at(jet1),
-                                  jets_py()->at(jet1),
-                                  jets_pz()->at(jet1)};
-
-        if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
-          TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(jet1),
-                                                 jets_py()->at(jet1),
-                                                 jets_pz()->at(jet1),
-                                                 jets_energy()->at(jet1));
-          v_mbl.push_back((lepmax_p4 + jet_p4).M());
-          v_mblnu.push_back((lepmax_p4 + jet_p4 + met_p4).M());
-        }
-
-        for(size_t jet2 = jet1+1; jet2 < jets_pt()->size(); ++jet2){
-          if(!IsBasicJet(jet2)) continue;
-          double momentum_2[3] = {0.0, jets_px()->at(jet2), jets_py()->at(jet2)};
-          double momentum_2_4[4] = {jets_energy()->at(jet2),
-                                    jets_px()->at(jet2),
-                                    jets_py()->at(jet2),
-                                    jets_pz()->at(jet2)};
-
-          if(jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]
-             && jets_btag_secVertexCombined()->at(jet1) > CSVCuts[1]){
-            mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
-            v_mt2.push_back(mt2_calc.get_mt2());
-            if(!skip_slow){
-              mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-              v_mt2w.push_back(mt2w_calc.get_mt2w());
-            }
-          }
-        }
-      }
-      sort(v_mt2.begin(), v_mt2.end(), greater<float>());
-      sort(v_mt2w.begin(), v_mt2w.end(), greater<float>());
-      sort(v_mbl.begin(), v_mbl.end(), greater<float>());
-      sort(v_mblnu.begin(), v_mblnu.end(), greater<float>());
-      sort(jet_sorter.begin(), jet_sorter.begin(), greater<pair<float, unsigned> >());
-
-      if(num_tags==2){
-        double momentum_csvi1_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
-        double momentum_csvi1_4[4] = {jets_energy()->at(csvi1),
-                                      jets_px()->at(csvi1),
-                                      jets_py()->at(csvi1),
-                                      jets_pz()->at(csvi1)};
-        double momentum_csvi2_3[3] = {0.0, jets_px()->at(csvi2), jets_py()->at(csvi2)};
-        double momentum_csvi2_4[4] = {jets_energy()->at(csvi2),
-                                      jets_px()->at(csvi2),
-                                      jets_py()->at(csvi2),
-                                      jets_pz()->at(csvi2)};
-        mt2_calc.set_momenta(momentum_csvi1_3, momentum_csvi2_3, momentum_W);
-        tree.mt2_ref_min = mt2_calc.get_mt2();
-        tree.mt2_ref_max = mt2_calc.get_mt2();
-        if(!skip_slow){
-          mt2w_calc.set_momenta(momentum_lep_4, momentum_csvi1_4, momentum_csvi2_4, momentum_met);
-          tree.mt2w_ref_min = mt2w_calc.get_mt2w();
-          tree.mt2w_ref_max = mt2w_calc.get_mt2w();
-        }
-      }else if(num_tags==1){
-        double momentum_csv_3[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
-        double momentum_csv_4[4] = {jets_energy()->at(csvi1),
-                                    jets_px()->at(csvi1),
-                                    jets_py()->at(csvi1),
-                                    jets_pz()->at(csvi1)};
-
-        vector<double> v_mt2_temp(0), v_mt2w_temp(0);
-        bool found_tag = false;
-        for(size_t i = 0; i < jet_sorter.size() && (i < 2 || (found_tag && i < 3)); ++i){
-          const size_t jet = jet_sorter.at(i).second;
-          if(num_tags == 1 && jets_btag_secVertexCombined()->at(jet) > CSVCuts[1]){
-            found_tag = true;
-            continue;
-          }
-          double momentum_3[3] = {0.0, jets_px()->at(jet), jets_py()->at(jet)};
-          double momentum_4[4] = {jets_energy()->at(jet),
-                                  jets_px()->at(jet),
-                                  jets_py()->at(jet),
-                                  jets_pz()->at(jet)};
-          mt2_calc.set_momenta(momentum_csv_3, momentum_3, momentum_W);
-          v_mt2_temp.push_back(mt2_calc.get_mt2());
-          if(!skip_slow){
-            mt2w_calc.set_momenta(momentum_lep_4, momentum_csv_4, momentum_4, momentum_met);
-            v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
-          }
-        }
-        sort(v_mt2_temp.begin(), v_mt2_temp.end(), greater<float>());
-        sort(v_mt2w_temp.begin(), v_mt2w_temp.end(), greater<float>());
-        if(v_mt2_temp.size() > 0){
-          tree.mt2_ref_max = v_mt2_temp.at(0);
-          tree.mt2_ref_min = v_mt2_temp.at(v_mt2_temp.size()-1);
-        }
-        if(v_mt2w_temp.size() > 0){
-          tree.mt2w_ref_max = v_mt2w_temp.at(0);
-          tree.mt2w_ref_min = v_mt2w_temp.at(v_mt2w_temp.size()-1);
-        }
-      }else{
-        vector<double> v_mt2_temp(0), v_mt2w_temp(0);
-        for(size_t i = 0; i < 3 && i < jet_sorter.size(); ++i){
-          const size_t jeta = jet_sorter.at(i).second;
-          double momentum_1_3[3] = {0.0, jets_px()->at(jeta), jets_py()->at(jeta)};
-          double momentum_1_4[4] = {jets_energy()->at(jeta),
-                                    jets_px()->at(jeta),
-                                    jets_py()->at(jeta),
-                                    jets_pz()->at(jeta)};
-          for(size_t j = i + 1; j < 3 && j < jet_sorter.size(); ++j){
-            const size_t jetb = jet_sorter.at(j).second;
-            double momentum_2_3[3] = {0.0, jets_px()->at(jetb), jets_py()->at(jetb)};
-            double momentum_2_4[4] = {jets_energy()->at(jetb),
-                                      jets_px()->at(jetb),
-                                      jets_py()->at(jetb),
-                                      jets_pz()->at(jetb)};
-
-            mt2_calc.set_momenta(momentum_1_3, momentum_2_3, momentum_W);
-            v_mt2_temp.push_back(mt2_calc.get_mt2());
-            if(!skip_slow){
-              mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-              v_mt2w_temp.push_back(mt2w_calc.get_mt2w());
-            }
-          }
-        }
-        sort(v_mt2_temp.begin(), v_mt2_temp.end(), greater<float>());
-        sort(v_mt2w_temp.begin(), v_mt2w_temp.end(), greater<float>());
-        if(v_mt2_temp.size() > 0){
-          tree.mt2_ref_max = v_mt2_temp.at(0);
-          tree.mt2_ref_min = v_mt2_temp.at(v_mt2_temp.size()-1);
-        }
-        if(v_mt2w_temp.size() > 0){
-          tree.mt2w_ref_max = v_mt2w_temp.at(0);
-          tree.mt2w_ref_min = v_mt2w_temp.at(v_mt2w_temp.size()-1);
-        }
-      }
-
-      if(v_mt2.size()>0){
-        tree.mt2_max = v_mt2.at(0);
-        tree.mt2_min = v_mt2.at(v_mt2.size()-1);
-      }
-      if(v_mt2w.size()>0){
-        tree.mt2w_max = v_mt2w.at(0);
-        tree.mt2w_min = v_mt2w.at(v_mt2w.size()-1);
-      }
-      if(v_mbl.size()>0){
-        tree.mbl_max = v_mbl.at(0);
-        tree.mbl_min = v_mbl.at(v_mbl.size()-1);
-        if(v_mbl.size()>1){
-          tree.mbl_subleading = v_mbl.at(1);
-        }
-      }
-      if(v_mblnu.size()>0){
-        tree.mblnu_max = v_mblnu.at(0);
-        tree.mblnu_min = v_mblnu.at(v_mblnu.size()-1);
-        if(v_mblnu.size()>1){
-          tree.mblnu_subleading = v_mblnu.at(1);
-        }
-      }
-
-      if(pti1>=0){
-        TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(pti1),
-                                               jets_py()->at(pti1),
-                                               jets_pz()->at(pti1),
-                                               jets_energy()->at(pti1));
-        tree.mbl_high_pt = (lepmax_p4+jet_p4).M();
-        tree.mblnu_high_pt = (lepmax_p4+jet_p4+met_p4).M();
-        if(pti2>=0){
-          double momentum_1[3] = {0.0, jets_px()->at(pti1), jets_py()->at(pti1)};
-          double momentum_1_4[4] = {jets_energy()->at(pti1),
-                                    jets_px()->at(pti1),
-                                    jets_py()->at(pti1),
-                                    jets_pz()->at(pti1)};
-          double momentum_2[3] = {0.0, jets_px()->at(pti2), jets_py()->at(pti2)};
-          double momentum_2_4[4] = {jets_energy()->at(pti2),
-                                    jets_px()->at(pti2),
-                                    jets_py()->at(pti2),
-                                    jets_pz()->at(pti2)};
-          mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
-          tree.mt2_high_pt = mt2_calc.get_mt2();
-          if(!skip_slow){
-            mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-            tree.mt2w_high_pt = mt2w_calc.get_mt2w();
-          }
-        }
-      }
-
-      if(csvi1>=0){
-        TLorentzVector jet_p4 = TLorentzVector(jets_px()->at(csvi1),
-                                               jets_py()->at(csvi1),
-                                               jets_pz()->at(csvi1),
-                                               jets_energy()->at(csvi1));
-        tree.mbl_high_csv = (lepmax_p4+jet_p4).M();
-        tree.mblnu_high_csv = (lepmax_p4+jet_p4+met_p4).M();
-        if(csvi2>=0){
-          double momentum_1[3] = {0.0, jets_px()->at(csvi1), jets_py()->at(csvi1)};
-          double momentum_1_4[4] = {jets_energy()->at(csvi1),
-                                    jets_px()->at(csvi1),
-                                    jets_py()->at(csvi1),
-                                    jets_pz()->at(csvi1)};
-          double momentum_2[3] = {0.0, jets_px()->at(csvi2), jets_py()->at(csvi2)};
-          double momentum_2_4[4] = {jets_energy()->at(csvi2),
-                                    jets_px()->at(csvi2),
-                                    jets_py()->at(csvi2),
-                                    jets_pz()->at(csvi2)};
-          mt2_calc.set_momenta(momentum_1, momentum_2, momentum_W);
-          tree.mt2_high_csv = mt2_calc.get_mt2();
-          if(!skip_slow){
-            mt2w_calc.set_momenta(momentum_lep_4, momentum_1_4, momentum_2_4, momentum_met);
-            tree.mt2w_high_csv = mt2w_calc.get_mt2w();
-          }
-        }
-      }
-    }
-
-    ////////////////   Pile-up   ////////////////
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
       if(PU_bunchCrossing()->at(bc)==0){
         tree.ntrupv = PU_NumInteractions()->at(bc);
@@ -875,16 +79,92 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       }
     }
     tree.npv = Npv();
-    ////////////////   Weights   ////////////////
-    tree.wl1 = (0.5*TMath::Erf((1.35121e-02)*(tree.genht-(3.02695e+02)))+0.5);
-    tree.wlumi = xsec*luminosity / static_cast<double>(Ntotentries);
-    tree.weight = tree.wlumi;
+    tree.weight = xsec*luminosity / static_cast<double>(Ntotentries);
 
-    tree.mc_type = TypeCode();
+    tree.met = mets_et()->at(0);
+    tree.met_phi = mets_phi()->at(0);
+
+
+    tree.els_pt.clear();
+    tree.els_eta.clear();
+    tree.els_phi.clear();
+    tree.els_reliso.clear();
+    tree.els_miniso.clear();
+    tree.els_miniso_ch.clear();
+    tree.els_miniso_chx.clear();
+    for(size_t index(0); index<els_pt()->size(); index++) {
+      if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
+        tree.els_sigid.push_back(IsSignalIdElectron(index));
+        tree.els_pt.push_back(els_pt()->at(index));
+        tree.els_eta.push_back(els_eta()->at(index));
+        tree.els_phi.push_back(els_phi()->at(index));
+        tree.els_reliso.push_back(GetElectronIsolation(index));
+        SetMiniIso(tree, index, /*isElectron*/ true);
+      }
+    }
+
+    tree.mus_pt.clear();
+    tree.mus_eta.clear();
+    tree.mus_phi.clear();
+    tree.mus_reliso.clear();
+    tree.mus_miniso.clear();
+    tree.mus_miniso_ch.clear();
+    tree.mus_miniso_chx.clear();
+    for(size_t index(0); index<mus_pt()->size(); index++) {
+      if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
+        tree.mus_sigid.push_back(IsSignalIdMuon(index));
+        tree.mus_pt.push_back(mus_pt()->at(index));
+        tree.mus_eta.push_back(mus_eta()->at(index));
+        tree.mus_phi.push_back(mus_phi()->at(index));
+        tree.mus_reliso.push_back(GetMuonIsolation(index));
+        SetMiniIso(tree, index, /*isElectron*/ false);
+      }
+    }
+
+
+    tree.mc_pt.clear();
+    tree.mc_phi.clear();
+    tree.mc_eta.clear();
+    tree.mc_id.clear();
+    tree.mc_momid.clear();
+    tree.mc_gmomid.clear();
+    for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
+      tree.mc_pt.push_back(mc_doc_pt()->at(igen));  
+      tree.mc_phi.push_back(mc_doc_phi()->at(igen));  
+      tree.mc_eta.push_back(mc_doc_eta()->at(igen));  
+      tree.mc_id.push_back(mc_doc_id()->at(igen));  
+      tree.mc_momid.push_back(mc_doc_mother_id()->at(igen));  
+      tree.mc_gmomid.push_back(mc_doc_grandmother_id()->at(igen));  
+    }
+
+    tree.jets_pt.clear();
+    tree.jets_eta.clear();
+    tree.jets_phi.clear();
+    tree.jets_csv.clear();
+    tree.njets = 0;
+    tree.ncsvm = 0;
+    tree.ht = 0.;
+    vector<int> veto_electrons = GetElectrons(false);
+    vector<int> veto_muons = GetMuons(false);
+    vector<int> good_jets = GetJets(veto_electrons, veto_muons, 40.0, 2.4);
+    for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
+      int ijet = good_jets.at(igoodjet); 
+      tree.jets_pt.push_back(jets_AK4_pt()->at(ijet)); 
+      tree.jets_eta.push_back(jets_AK4_eta()->at(ijet)); 
+      tree.jets_phi.push_back(jets_AK4_phi()->at(ijet)); 
+      tree.jets_csv.push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+
+      tree.njets++;
+      tree.ht += jets_AK4_pt()->at(ijet);
+      if (jets_AK4_btag_inc_secVertexCombined()->at(ijet) >= CSVCuts[1]) tree.ncsvm++;
+    }
+
+    WriteFatJets(tree);
+
 
     tree.Fill();
   }
-  cout<<"xsec is "<<xsec<<" and wlumi "<<tree.wlumi<<" for a total of "<<Ntotentries<<" entries"<<endl;
+  cout<<"xsec is "<<xsec<<" for a total of "<<Ntotentries<<" entries"<<endl;
   tree.Write();
 
   // Global tree
@@ -900,69 +180,278 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   treeglobal.Fill();
   treeglobal.Write();
 
+
   outFile.Close();
-  cout<<"Reduced tree in "<<outFilename<<endl;
+  if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
 }
 
-unsigned event_handler::TypeCode() const{
-  const string sample_name = SampleName();
-  unsigned sample_code = 0xF;
-  if(Contains(sample_name, "SMS")){
-    sample_code = 0x0;
-  }else if(Contains(sample_name, "TTJets")
-           || Contains(sample_name, "TT_CT10")){
-    sample_code = 0x1;
-  }else if(Contains(sample_name, "WJets")){
-    sample_code = 0x2;
-  }else if(Contains(sample_name, "T_s-channel")
-           || Contains(sample_name, "T_tW-channel")
-           || Contains(sample_name, "T_t-channel")
-           || Contains(sample_name, "Tbar_s-channel")
-           || Contains(sample_name, "Tbar_tW-channel")
-           || Contains(sample_name, "Tbar_t-channel")){
-    sample_code = 0x3;
-  }else if(Contains(sample_name, "QCD")){
-    sample_code = 0x4;
-  }else if(Contains(sample_name, "DY")){
-    sample_code = 0x5;
-  }else{
-    sample_code = 0xF;
+void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
+
+  if (isElectron && ilep==0) tree.els_miniso.push_back(0);
+
+  return;
+}
+
+
+void event_handler::WriteFatJets(small_tree &tree){
+
+  ////////////////   Fat Jets   ////////////////
+  vector<PseudoJet> fjets_skinny_30(0);
+  vector<PseudoJet> fjets_skinny_eta25(0);
+  vector<PseudoJet> fjets_skinny_r10(0);
+  vector<PseudoJet> fjets_skinny_r15(0);
+  vector<PseudoJet> fjets_sig_clean_30(0);
+  vector<PseudoJet> fjets_skinny_0(0);
+  vector<PseudoJet> fjets_cands(0);
+  vector<PseudoJet> fjets_cands_trim(0);
+
+  vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30;
+  vector<PseudoJet> skinny_jets_pt0, skinny_jets_eta25;
+  for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
+    if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
+       || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
+
+    const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
+			    jets_pz()->at(jet), jets_energy()->at(jet));
+    const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
+				 jets_pz()->at(jet), jets_energy()->at(jet));
+
+    bool sig_add = true;
+    for(size_t iel = 0; iel<els_pt()->size() && sig_add; ++iel){
+      //Make sure skinny jet is not matched to veto electron
+      if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
+      if(!IsSignalElectron(iel)) continue;
+      const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
+				els_pz()->at(iel), els_energy()->at(iel));
+      if(p4el.DeltaR(this_lv)<0.3){
+	sig_add=false;
+      }
+    }
+    for(size_t imu = 0; imu<mus_pt()->size() && sig_add; ++imu){
+      //Make sure skinny jet is not matched to veto muon
+      if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
+      if(!IsSignalMuon(imu)) continue;
+      const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
+				mus_pz()->at(imu), mus_energy()->at(imu));
+      if(p4mu.DeltaR(this_lv)<0.3){
+	sig_add=false;
+      }
+    }
+
+    skinny_jets_pt0.push_back(this_pj);
+    if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
+    if(this_pj.pt()>30.0 && this_pj.eta()<2.5) skinny_jets_eta25.push_back(this_pj);
+    if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
   }
 
-  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0, num_conversions = 0;
-  bool counting = false;
+  JetDefinition jet_def_10(antikt_algorithm, 1.0);
+  JetDefinition jet_def_12(antikt_algorithm, 1.2);
+  JetDefinition jet_def_15(antikt_algorithm, 1.5);
+  ClusterSequence cs_skinny_r10(skinny_jets_pt30, jet_def_10);
+  ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
+  ClusterSequence cs_skinny_r15(skinny_jets_pt30, jet_def_15);
+  ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
+  ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
+  ClusterSequence cs_skinny_eta25(skinny_jets_eta25, jet_def_12);
 
-  for(size_t i = 0; i < mc_doc_id()->size(); ++i){
-    const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
-    const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
-    const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
-    const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+  fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
+  fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
+  fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
+  fjets_skinny_eta25 = sorted_by_pt(cs_skinny_eta25.inclusive_jets());
+  fjets_skinny_r10 = sorted_by_pt(cs_skinny_r10.inclusive_jets());
+  fjets_skinny_r15 = sorted_by_pt(cs_skinny_r15.inclusive_jets());
 
-    if(mom != 15) counting=false;
-
-    if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
-      ++num_leps;
-      if(mom == 15){
-        ++num_tau_to_lep;
-        if(counting){
-          ++num_conversions;
-          counting = false;
-        }else{
-          counting = true;
-        }
-      }
-    }else if(id == 15 && mom == 24){
-      ++num_taus;
+  tree.nfjets_30 = 0;
+  tree.mj_30 = 0;
+  tree.fjets_30_pt.resize(fjets_skinny_30.size());
+  tree.fjets_30_eta.resize(fjets_skinny_30.size());
+  tree.fjets_30_phi.resize(fjets_skinny_30.size());
+  tree.fjets_30_m.resize(fjets_skinny_30.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_30.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_30.at(ipj);
+    tree.fjets_30_pt.at(ipj)=pj.pt();
+    tree.fjets_30_eta.at(ipj)=pj.eta();
+    tree.fjets_30_phi.at(ipj)=pj.phi_std();
+    tree.fjets_30_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_30 += pj.m();
+      ++tree.nfjets_30;
+    }
+  }
+  tree.nfjets_scln_30 = 0;
+  tree.mj_scln_30 = 0;
+  tree.fjets_scln_30_pt.resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_eta.resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_phi.resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_m.resize(fjets_sig_clean_30.size());
+  for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
+    const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
+    tree.fjets_scln_30_pt.at(ipj)=pj.pt();
+    tree.fjets_scln_30_eta.at(ipj)=pj.eta();
+    tree.fjets_scln_30_phi.at(ipj)=pj.phi_std();
+    tree.fjets_scln_30_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_scln_30 += pj.m();
+      ++tree.nfjets_scln_30;
+    }
+  }
+  tree.nfjets_0 = 0;
+  tree.mj_0 = 0;
+  tree.fjets_0_pt.resize(fjets_skinny_0.size());
+  tree.fjets_0_eta.resize(fjets_skinny_0.size());
+  tree.fjets_0_phi.resize(fjets_skinny_0.size());
+  tree.fjets_0_m.resize(fjets_skinny_0.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_0.at(ipj);
+    tree.fjets_0_pt.at(ipj)=pj.pt();
+    tree.fjets_0_eta.at(ipj)=pj.eta();
+    tree.fjets_0_phi.at(ipj)=pj.phi_std();
+    tree.fjets_0_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_0 += pj.m();
+      ++tree.nfjets_0;
+    }
+  }
+  tree.nfjets_eta25 = 0;
+  tree.mj_eta25 = 0;
+  tree.fjets_eta25_pt.resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_eta.resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_phi.resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_m.resize(fjets_skinny_eta25.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_eta25.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_eta25.at(ipj);
+    tree.fjets_eta25_pt.at(ipj)=pj.pt();
+    tree.fjets_eta25_eta.at(ipj)=pj.eta();
+    tree.fjets_eta25_phi.at(ipj)=pj.phi_std();
+    tree.fjets_eta25_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_eta25 += pj.m();
+      ++tree.nfjets_eta25;
+    }
+  }
+  tree.nfjets_r10 = 0;
+  tree.mj_r10 = 0;
+  tree.fjets_r10_pt.resize(fjets_skinny_r10.size());
+  tree.fjets_r10_eta.resize(fjets_skinny_r10.size());
+  tree.fjets_r10_phi.resize(fjets_skinny_r10.size());
+  tree.fjets_r10_m.resize(fjets_skinny_r10.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_r10.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_r10.at(ipj);
+    tree.fjets_r10_pt.at(ipj)=pj.pt();
+    tree.fjets_r10_eta.at(ipj)=pj.eta();
+    tree.fjets_r10_phi.at(ipj)=pj.phi_std();
+    tree.fjets_r10_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_r10 += pj.m();
+      ++tree.nfjets_r10;
+    }
+  }
+  tree.nfjets_r15 = 0;
+  tree.mj_r15 = 0;
+  tree.fjets_r15_pt.resize(fjets_skinny_r15.size());
+  tree.fjets_r15_eta.resize(fjets_skinny_r15.size());
+  tree.fjets_r15_phi.resize(fjets_skinny_r15.size());
+  tree.fjets_r15_m.resize(fjets_skinny_r15.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_r15.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_r15.at(ipj);
+    tree.fjets_r15_pt.at(ipj)=pj.pt();
+    tree.fjets_r15_eta.at(ipj)=pj.eta();
+    tree.fjets_r15_phi.at(ipj)=pj.phi_std();
+    tree.fjets_r15_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_r15 += pj.m();
+      ++tree.nfjets_r15;
     }
   }
 
-  num_leps -= 2*num_conversions;
-  num_tau_to_lep -= 2*num_conversions;
+  tree.nfjets_cands = static_cast<int>(bad_val);
+  tree.mj_cands = static_cast<int>(bad_val);
+  tree.fjets_cands_pt.clear();
+  tree.fjets_cands_eta.clear();
+  tree.fjets_cands_phi.clear();
+  tree.fjets_cands_m.clear();
 
-  if(sample_code > 0xF) sample_code = 0xF;
-  if(num_leps > 0xF) num_leps = 0xF;
-  if(num_tau_to_lep > 0xF) num_tau_to_lep = 0xF;
-  if(num_taus > 0xF) num_taus = 0xF;
+  tree.nfjets_cands_trim = static_cast<int>(bad_val);
+  tree.mj_cands_trim = static_cast<int>(bad_val);
+  tree.fjets_cands_trim_pt.clear();
+  tree.fjets_cands_trim_eta.clear();
+  tree.fjets_cands_trim_phi.clear();
+  tree.fjets_cands_trim_m.clear();
+  vector<PseudoJet> cands(pfcand_pt()->size());
+  TLorentzVector p4cand;
+  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+    if(!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
+       && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
+      p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
+			  pfcand_phi()->at(cand), pfcand_energy()->at(cand));
+      cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
+    }else{
+      //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
+      cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+    }
+  }
 
-  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_taus;
+  ClusterSequence cs_cands(cands, jet_def_12);
+  fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
+
+  vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
+  fjets_cands_trim.resize(fjets_cands.size());
+  for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
+    vector<PseudoJet> pjs;
+    for(size_t sj = 0; sj < cands.size(); ++sj){
+      if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
+    }
+    ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
+    pjs = cs.inclusive_jets();
+
+    //Sum the fat jet components in place
+    fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+    for(size_t pj = 0; pj < pjs.size(); ++pj){
+      fjets_cands_trim.at(fj) += pjs.at(pj);
+    }
+    const double sumpt = fjets_cands_trim.at(fj).pt();
+    fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
+    //Trim the low momentum-fraction components
+    for(size_t pj = 0; pj < pjs.size(); ++pj){
+      if(pjs.at(pj).pt()>0.03*sumpt){
+	fjets_cands_trim.at(fj) += pjs.at(pj);
+      }
+    }
+  } // Loop over fat jets from pfcands
+  tree.nfjets_cands = 0;
+  tree.mj_cands = 0;
+  tree.fjets_cands_pt.resize(fjets_cands.size());
+  tree.fjets_cands_eta.resize(fjets_cands.size());
+  tree.fjets_cands_phi.resize(fjets_cands.size());
+  tree.fjets_cands_m.resize(fjets_cands.size());
+  for(size_t ipj = 0; ipj < fjets_cands.size(); ++ipj){
+    const PseudoJet &pj = fjets_cands.at(ipj);
+    tree.fjets_cands_pt.at(ipj)=pj.pt();
+    tree.fjets_cands_eta.at(ipj)=pj.eta();
+    tree.fjets_cands_phi.at(ipj)=pj.phi_std();
+    tree.fjets_cands_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_cands += pj.m();
+      ++tree.nfjets_cands;
+    }
+  }
+  tree.nfjets_cands_trim = 0;
+  tree.mj_cands_trim = 0;
+  tree.fjets_cands_trim_pt.resize(fjets_cands_trim.size());
+  tree.fjets_cands_trim_eta.resize(fjets_cands_trim.size());
+  tree.fjets_cands_trim_phi.resize(fjets_cands_trim.size());
+  tree.fjets_cands_trim_m.resize(fjets_cands_trim.size());
+  for(size_t ipj = 0; ipj < fjets_cands_trim.size(); ++ipj){
+    const PseudoJet &pj = fjets_cands_trim.at(ipj);
+    tree.fjets_cands_trim_pt.at(ipj)=pj.pt();
+    tree.fjets_cands_trim_eta.at(ipj)=pj.eta();
+    tree.fjets_cands_trim_phi.at(ipj)=pj.phi_std();
+    tree.fjets_cands_trim_m.at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_cands_trim += pj.m();
+      ++tree.nfjets_cands_trim;
+    }
+  } // Loop over trimmed fat jets
+
+
 }

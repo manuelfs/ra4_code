@@ -7,7 +7,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <limits>
 
 #include "cfa.hpp"
 #include "pdtlund.hpp"
@@ -57,18 +56,12 @@ public:
   // Leptons
   static int GetMom(float id, float mom, float gmom, float ggmom,
 		    bool &fromW);
-  void GetPtRels(std::vector<float> &els_ptrel,
-		 std::vector<float> &els_mindr,
-		 std::vector<float> &mus_ptrel,
-		 std::vector<float> &mus_mindr,
-		 float dr_match_thresh = -1.0);
 
   // Tracks
   bool IsGoodIsoTrack(unsigned itrk) const;
 
   // Jets
-  std::vector<int> GetJets(const std::vector<int> &SigEl, const std::vector<int> &SigMu, 
-                           const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
+  std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
 			   double pt_thresh, double eta_thresh) const;
   bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;
   bool IsBasicJet(unsigned ijet) const;
@@ -81,25 +74,13 @@ public:
   // Event cleaning
   bool PassesMETCleaningCut() const;
   bool PassesPVCut() const;
-  double GetDZ(double vx, double vy, double vz,
-	       double px, double py, double pz,
-	       int firstGoodVertex) const;
+  double getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const;
 
   // Event variables
-  double GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const;
-  double GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
-  double GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+  double getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const;
+  double getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
+  double getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                             float otherpt, float othereta, bool useArcsin) const;
-  double GetHT(const std::vector<int> &good_jets, double pt_cut=0.0) const;
-  size_t GetNumJets(const std::vector<int> &good_jets,
-		    double pt_cut=0.0,
-		    double csv_cut=-std::numeric_limits<float>::max()) const;
-  float GetSphericity(const std::vector<int> &good_jets,
-		      const std::vector<int> &good_mus,
-		      const std::vector<int> &good_els,
-		      bool linearize);
-  float GetSphericity(const std::vector<int> &good_jets, bool linearize);
-  float GetDRHighestCSV(const std::vector<int> &good_jets);
 
   // Utilities
   bool IsMC() const;

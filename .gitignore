@@ -1,3 +1,7 @@
+# Automatically generated files
+*/cfa*.*
+*/small_tree*.*
+
 # Compiled Object files
 *.slo
 *.lo

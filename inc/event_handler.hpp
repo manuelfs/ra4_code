@@ -10,13 +10,16 @@
 #include <stdint.h>
 #include "phys_objects.hpp"
 #include "utilities.hpp"
+#include "small_tree.hpp"
+
 
 class event_handler : public phys_objects{
 public:
   explicit event_handler(const std::string &fileName);
 
   void ReduceTree(int Nentries, TString outFilename, int Ntotentries, bool skip_slow=false);
-  unsigned TypeCode() const;
+  void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
+  void WriteFatJets(small_tree &tree);
 };
 
 #endif

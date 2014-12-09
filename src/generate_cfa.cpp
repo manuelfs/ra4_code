@@ -371,8 +371,11 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
 
   cpp_file << "void cfa_base::AddFiles(const std::string &file_name){\n";
   cpp_file << "  cached_total_entries_=false;\n";
-  cpp_file << "  chainA_.Add((file_name+\"/configurableAnalysis/eventA\").c_str());\n";
-  cpp_file << "  chainB_.Add((file_name+\"/configurableAnalysis/eventB\").c_str());\n";
+  cpp_file << "  std::string dir_name = \"/cfA\";\n";
+  // cpp_file << "  if(file_name.find(\"cfa_file_8\")!=std::string::npos || file_name.find(\"cfa_file_13\")!=std::string::npos) dir_name = \"/configurableAnalysis\";\n";
+  cpp_file << "  if(file_name.find(\"cfa_file_8\")!=std::string::npos) dir_name = \"/configurableAnalysis\";\n";
+  cpp_file << "  chainA_.Add((file_name+dir_name+\"/eventA\").c_str());\n";
+  cpp_file << "  chainB_.Add((file_name+dir_name+\"/eventB\").c_str());\n";
   cpp_file << "}\n\n";
   
   cpp_file << "void cfa_base::PrepareNewChains(){\n";

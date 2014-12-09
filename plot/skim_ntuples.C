@@ -44,7 +44,7 @@ void skim_ntuples(){
 
 void skim_one(TString file){
   TFile fin(file);
-  fin.cd("configurableAnalysis");
+  fin.cd("cfA");
   TTree *eventA = (TTree*)gDirectory->Get("eventA");
   TTree *eventB = (TTree*)gDirectory->Get("eventB");
   TTree *eA(eventA->CloneTree(0));
@@ -52,8 +52,8 @@ void skim_one(TString file){
 
   TString outname="cfa_one.root";
   TFile fout(outname, "RECREATE");
-  fout.mkdir("configurableAnalysis");
-  fout.cd("configurableAnalysis");
+  fout.mkdir("cfA");
+  fout.cd("cfA");
   eA->Write();
   eB->Write();
   fout.Close();

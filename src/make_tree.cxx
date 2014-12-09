@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
-  outFilename.ReplaceAll("/configurableAnalysis","");
+  outFilename.ReplaceAll("/cfA","");
   int len(outFilename.Length());
   if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
   outFilename.Remove(0,outFilename.Last('/')+1);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
       // Finding total number of entries in sample
       all_sample_files += "/*.root";
             
-      TChain totsample("configurableAnalysis/eventA");
+      TChain totsample("cfA/eventA");
       totsample.Add(all_sample_files);
       Ntotentries = totsample.GetEntries();
     }else{
@@ -86,10 +86,10 @@ int main(int argc, char *argv[]){
   TString outname(outFilename);
   outname.ReplaceAll(outfolder, "");
   vector<TString> outfiles = dirlist(outfolder, outname);
-  if(outfiles.size()>0) {
-    cout<<"File "<<outFilename<<" exists. Exiting"<<endl;
-    return 0;
-  }
+  // if(outfiles.size()>0) {
+  //   cout<<"File "<<outFilename<<" exists. Exiting"<<endl;
+  //   return 0;
+  // }
 
   cout<<"Opening "<<inFilename<<endl;
   event_handler tHandler(inFilename); 

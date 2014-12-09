@@ -14,13 +14,8 @@
 #include <limits>
 #include <typeinfo>
 #include <stdexcept>
-#include <set>
 
 #include "TMath.h"
-#include "TLorentzVector.h"
-
-#include "fastjet/ClusterSequence.hh"
-#include "fastjet/PseudoJet.hh"
 
 #include "cfa_8.hpp"
 #include "cfa_13.hpp"
@@ -38,7 +33,8 @@ float phys_objects::MinVetoLeptonPt = 15.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
 float phys_objects::bad_val = -999.;
 
-phys_objects::phys_objects(const string &fileName, const bool is_8TeV):
+
+phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV){
 }
 
@@ -326,8 +322,8 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
-    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)))//Skip cut in cfa_13; use alternative in cfa_8
-    && (Type()==typeid(cfa_13) || !els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
+    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)));//Skip cut in cfa_13; use alternative in cfa_8
+    // && (!els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
 }
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
@@ -339,15 +335,15 @@ float phys_objects::GetElectronIsolation(unsigned iel) const {
     return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
   }else if(Type()==typeid(cfa_13)){
     float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
-      + max(0.0,
-	    els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
-	    +els_pfIsolationR03_sumPhotonEt()->at(iel)
-	    -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
+      + std::max(0.0,
+                 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
+                 +els_pfIsolationR03_sumPhotonEt()->at(iel)
+                 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
     return absiso/els_pt()->at(iel);
   }else{
-    throw logic_error("Unknown type "
-		      + string(Type().name())
-		      + " in phys_objects::GetElectronIsolation");
+    throw std::logic_error("Unknown type "
+                           +std::string(Type().name())
+                           +" in phys_objects::GetElectronIsolation");
     return 0.0;
   }
 }
@@ -398,156 +394,6 @@ int phys_objects::GetMom(const float id, const float mom, const float gmom,
   return ret_mom;
 }
 
-void phys_objects::GetPtRels(std::vector<float> &els_ptrel,
-			     std::vector<float> &els_mindr,
-			     std::vector<float> &mus_ptrel,
-			     std::vector<float> &mus_mindr,
-			     float dr_match_thresh){
-  using namespace fastjet;
-  els_ptrel.resize(els_pt()->size());
-  els_mindr.resize(els_pt()->size());
-  mus_ptrel.resize(mus_pt()->size());
-  mus_mindr.resize(mus_pt()->size());
-
-  vector<int> els_cand_idx(els_pt()->size());
-  vector<int> mus_cand_idx(mus_pt()->size());
-  vector<bool> els_removed(els_pt()->size());
-  vector<bool> mus_removed(mus_pt()->size());
-  set<size_t> to_remove;
-
-  //Find isolated electrons in list of pfcands
-  for(size_t el = 0; el < els_pt()->size(); ++el){
-    
-    float mindr = numeric_limits<float>::max();
-    size_t imatch = 0;
-
-    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-      const float dr = dR(els_eta()->at(el), pfcand_eta()->at(cand),
-			  els_phi()->at(el), pfcand_phi()->at(cand));
-      if(dr < mindr){
-	mindr = dr;
-	imatch = cand;
-      }
-    }
-    if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
-      els_cand_idx.at(el) = imatch;
-      if(IsSignalElectron(el)){
-	els_removed.at(el) = true;
-	to_remove.insert(imatch);
-      }else{
-	els_removed.at(el) = false;
-      }
-    }else{
-      els_cand_idx.at(el) = -1;
-      els_removed.at(el) = false;
-    }
-  }
-
-  //Find isolated muons in list of pfcands
-  for(size_t mu = 0; mu < mus_pt()->size(); ++mu){
-    float mindr = numeric_limits<float>::max();
-    size_t imatch = 0;
-
-    const TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
-			      mus_pz()->at(mu), mus_energy()->at(mu));
-
-    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-      const float dr = dR(mus_eta()->at(mu), pfcand_eta()->at(cand),
-			  mus_phi()->at(mu), pfcand_phi()->at(cand));
-      if(dr < mindr){
-	mindr = dr;
-	imatch = cand;
-      }
-    }
-    if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
-      mus_cand_idx.at(mu) = imatch;
-      if(IsSignalMuon(mu)){
-	mus_removed.at(mu) = true;
-	to_remove.insert(imatch);
-      }else{
-	mus_removed.at(mu) = false;
-      }
-    }else{
-      mus_cand_idx.at(mu) = -1;
-      mus_removed.at(mu) = false;
-    }
-  }
-
-  //Remove candidates corresponding to isolated leptons
-  vector<PseudoJet> pjs(pfcand_pt()->size());
-  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-    if(to_remove.find(cand) == to_remove.end()
-       && !is_nan(pfcand_pt()->at(cand))
-       && !is_nan(pfcand_eta()->at(cand))
-       && !is_nan(pfcand_phi()->at(cand))
-       && !is_nan(pfcand_energy()->at(cand))){
-      TLorentzVector p4cand;
-      p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand),
-			  pfcand_eta()->at(cand),
-			  pfcand_phi()->at(cand),
-			  pfcand_energy()->at(cand));
-      pjs.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
-    }else{
-      pjs.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
-    }
-  }
-
-  JetDefinition jet_def(antikt_algorithm, 0.4);
-  ClusterSequence cs(pjs, jet_def);
-  
-  vector<PseudoJet> reclustered_jets = cs.inclusive_jets();
-  vector<int> indices = cs.particle_jet_indices(reclustered_jets);
-
-  //Compute ptrel for electrons
-  for(size_t el = 0; el < els_pt()->size(); ++el){
-    if(els_removed.at(el)){
-      //Electron was not included in clustering procedure
-      els_ptrel.at(el) = -1.;
-      els_mindr.at(el) = -1.;
-    }else if(indices.at(els_cand_idx.at(el)) < 0){
-      //Electron was not clustered
-      els_ptrel.at(el) = -2.;
-      els_mindr.at(el) = -2.;
-    }else{
-      //Electron was clustered into a jet. Compute ptrel w.r.t. this jet
-      size_t jet_idx = indices.at(els_cand_idx.at(el));
-      TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-els_px()->at(el),
-			   reclustered_jets.at(jet_idx).py()-els_py()->at(el),
-			   reclustered_jets.at(jet_idx).pz()-els_pz()->at(el),
-			   reclustered_jets.at(jet_idx).e()-els_energy()->at(el));
-      TLorentzVector p4el(els_px()->at(el), els_py()->at(el),
-			  els_pz()->at(el), els_energy()->at(el));
-			  
-      els_ptrel.at(el) = p4el.Pt(p4jet.Vect());
-      els_mindr.at(el) = p4el.DeltaR(p4jet);
-    }
-  }
-  //Compute ptrel for muons
-  for(size_t mu = 0; mu < mus_pt()->size(); ++mu){
-    if(mus_removed.at(mu)){
-      //Muon was not included in clustering procedure
-      mus_ptrel.at(mu) = -1.;
-      mus_mindr.at(mu) = -1.;
-    }else if(indices.at(mus_cand_idx.at(mu)) < 0){
-      //Muon was not clustered
-      mus_ptrel.at(mu) = -2.;
-      mus_mindr.at(mu) = -2.;
-    }else{
-      //Muon was clustered into a jet. Compute ptrel w.r.t. this jet
-      size_t jet_idx = indices.at(mus_cand_idx.at(mu));
-      TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-mus_px()->at(mu),
-			   reclustered_jets.at(jet_idx).py()-mus_py()->at(mu),
-			   reclustered_jets.at(jet_idx).pz()-mus_pz()->at(mu),
-			   reclustered_jets.at(jet_idx).e()-mus_energy()->at(mu));
-      TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
-			  mus_pz()->at(mu), mus_energy()->at(mu));
-
-      mus_ptrel.at(mu) = p4mu.Pt(p4jet.Vect());
-      mus_mindr.at(mu) = p4mu.DeltaR(p4jet);
-    }
-  }
-}
-
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  TRACKS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
@@ -562,28 +408,17 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  JETS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> phys_objects::GetJets(const vector<int> &SigEl, const vector<int> &SigMu,
-                                  const vector<int> &VetoEl, const vector<int> &VetoMu,
+vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &VetoMu,
                                   double pt_thresh, double eta_thresh) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_pt()->size(), false);
 
   // Finding jets that contain good leptons
-  for(unsigned index = 0; index < SigEl.size(); index++) {
-    int ijet = els_jet_ind()->at(SigEl[index]);
-    if(ijet >= 0) {jet_is_lepton[ijet] = true;
-    }
-  }
   for(unsigned index = 0; index < VetoEl.size(); index++) {
     int ijet = els_jet_ind()->at(VetoEl[index]);
     if(ijet >= 0) jet_is_lepton[ijet] = true;
   }
 
-  for(unsigned index = 0; index < SigMu.size(); index++) {
-    int ijet = mus_jet_ind()->at(SigMu[index]);
-    if(ijet >= 0) {jet_is_lepton[ijet] = true;
-    }
-  }
   for(unsigned index = 0; index < VetoMu.size(); index++) {
     int ijet = mus_jet_ind()->at(VetoMu[index]);
     if(ijet >= 0) jet_is_lepton[ijet] = true;
@@ -767,9 +602,7 @@ bool phys_objects::PassesMETCleaningCut() const{
     && scrapingVeto;
 }
 
-double phys_objects::GetDZ(double vx, double vy, double vz,
-			   double px, double py, double pz,
-			   int firstGoodVertex) const {
+double phys_objects::getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const {
   return vz - pv_z()->at(firstGoodVertex)
     -((vx-pv_x()->at(firstGoodVertex))*px+(vy-pv_y()->at(firstGoodVertex))*py)*pz/(px*px+py*py);
 }
@@ -782,8 +615,8 @@ bool phys_objects::IsMC() const {
   return (SampleName().find("Run201") == string::npos);
 }
 
-double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
-  double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
+double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
+  double deltaT = getDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
   double dp = fabs(deltaphi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
   double dpN = 0.0;
   if(useArcsin) {
@@ -798,7 +631,7 @@ double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
   return dpN;
 }
 
-double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
+double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -813,115 +646,18 @@ double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, fl
   return deltaT;
 }
 
-double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+double phys_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                                         float otherpt, float othereta, bool useArcsin) const {
-  double mdpN=numeric_limits<double>::max();
+  double mdpN=std::numeric_limits<double>::max();
   unsigned nGoodJets(0);
   for (unsigned i=0; i<jets_pt()->size(); i++) {
     if (!IsGoodJet(i, mainpt, maineta)) continue;
     nGoodJets++;
-    double dpN = GetDeltaPhiMETN(i, otherpt, othereta, useArcsin);
+    double dpN = getDeltaPhiMETN(i, otherpt, othereta, useArcsin);
     if (dpN>=0&&dpN<mdpN) mdpN=dpN;
     if (nGoodJets>=maxjets) break;
   }
   return mdpN;
-}
-
-double phys_objects::GetHT(const vector<int> &good_jets, double pt_cut) const{
-  double ht = 0.0;
-  for(size_t i = 0; i < good_jets.size(); ++i){
-    const double pt = jets_pt()->at(good_jets.at(i));
-    if(pt>pt_cut) ht += pt;
-  }
-  return ht;
-}
-
-size_t phys_objects::GetNumJets(const vector<int> &good_jets,
-				double pt_cut,
-				double csv_cut) const{
-  size_t num_jets = 0;
-  for(size_t i = 0; i < good_jets.size(); ++i){
-    if(jets_pt()->at(good_jets.at(i)) > pt_cut
-       && jets_btag_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
-      ++num_jets;
-    }
-  }
-  return num_jets;
-}
-
-float phys_objects::GetSphericity(const vector<int> &good_jets,
-				  const vector<int> &good_mus,
-				  const vector<int> &good_els,
-				  bool linearize){
-  float smat[2][2];
-  for(size_t i = 0; i < good_jets.size(); ++i){
-    const size_t ijet = good_jets.at(i);
-    const double px = jets_px()->at(ijet);
-    const double py = jets_py()->at(ijet);
-    const double ptinv = linearize ? (1.0/jets_pt()->at(ijet)) : 1.0;
-
-    smat[0][0] += px*px*ptinv;
-    smat[0][1] += px*py*ptinv;
-    smat[1][1] += py*py*ptinv;
-  }
-
-  for(size_t i = 0; i < good_mus.size(); ++i){
-    const size_t imu = good_mus.at(i);
-    const double px = mus_px()->at(imu);
-    const double py = mus_py()->at(imu);
-    const double ptinv = linearize ? (1.0/mus_pt()->at(imu)) : 1.0;
-
-    smat[0][0] += px*px*ptinv;
-    smat[0][1] += px*py*ptinv;
-    smat[1][1] += py*py*ptinv;
-  }
-
-  for(size_t i = 0; i < good_els.size(); ++i){
-    const size_t iel = good_els.at(i);
-    const double px = els_px()->at(iel);
-    const double py = els_py()->at(iel);
-    const double ptinv = linearize ? (1.0/els_pt()->at(iel)) : 1.0;
-
-    smat[0][0] += px*px*ptinv;
-    smat[0][1] += px*py*ptinv;
-    smat[1][1] += py*py*ptinv;
-  }
-
-  smat[1][0] = smat[0][1];
-  float eig1, eig2;
-  if(eigen2x2(smat, eig1, eig2)) return 2.*eig2/(eig1+eig2);
-  else return bad_val;
-}
-
-float phys_objects::GetSphericity(const vector<int> &good_jets,
-				  bool linearize){
-  vector<int> empty_vec(0);
-  return GetSphericity(good_jets, empty_vec, empty_vec, linearize);
-}
-
-float phys_objects::GetDRHighestCSV(const vector<int> &good_jets){
-  float csv1=-fltmax, csv2=-fltmax;
-  size_t i1=0, i2=0;
-  for(size_t i = 0; i < good_jets.size(); ++i){
-    const size_t ijet = good_jets.at(i);
-    const float csv = jets_btag_secVertexCombined()->at(ijet);
-    if(csv>csv1){
-      csv2 = csv1;
-      csv1 = csv;
-      i2 = i1;
-      i1 = ijet;
-    }else if(csv>csv2){
-      csv2 = csv;
-      i2 = ijet;
-    }
-  }
-
-  if(csv2!=-fltmax){
-    return dR(jets_eta()->at(i1), jets_eta()->at(i2),
-	      jets_phi()->at(i1), jets_phi()->at(i2));
-  }else{
-    return bad_val;
-  }
 }
 
 /////////////////////////////////////////////////////////////////////////

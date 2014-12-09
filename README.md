@@ -20,10 +20,8 @@ If the structure of the cfA ntuple changes, just copy an example
 file onto `example_cfa_file_XX.root` and compile again. You can make a 0 event copy with
 
 ```
-TChain c("tree")
-c.Add("...")
-TTree *t = (TTree*)c.CopyTree("","",0)
-t->SaveAs("example_cfa_file_XX.root")
+.L plot/skim_ntuples.C+
+skim_one("<new_cfa_file.root>")
 ```
 
 
