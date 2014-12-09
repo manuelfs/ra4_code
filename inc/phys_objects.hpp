@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 
 #include "cfa.hpp"
 #include "pdtlund.hpp"
@@ -77,9 +78,9 @@ public:
   double getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const;
 
   // Event variables
-  double getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const;
-  double getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
-  double getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+  double GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const;
+  double GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
+  double GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                             float otherpt, float othereta, bool useArcsin) const;
 
   // Utilities

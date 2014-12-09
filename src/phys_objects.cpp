@@ -615,8 +615,8 @@ bool phys_objects::IsMC() const {
   return (SampleName().find("Run201") == string::npos);
 }
 
-double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
-  double deltaT = getDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
+double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
+  double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
   double dp = fabs(deltaphi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
   double dpN = 0.0;
   if(useArcsin) {
@@ -631,7 +631,7 @@ double phys_objects::getDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
   return dpN;
 }
 
-double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
+double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -646,14 +646,14 @@ double phys_objects::getDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, fl
   return deltaT;
 }
 
-double phys_objects::getMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
+double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                                         float otherpt, float othereta, bool useArcsin) const {
   double mdpN=std::numeric_limits<double>::max();
   unsigned nGoodJets(0);
   for (unsigned i=0; i<jets_pt()->size(); i++) {
     if (!IsGoodJet(i, mainpt, maineta)) continue;
     nGoodJets++;
-    double dpN = getDeltaPhiMETN(i, otherpt, othereta, useArcsin);
+    double dpN = GetDeltaPhiMETN(i, otherpt, othereta, useArcsin);
     if (dpN>=0&&dpN<mdpN) mdpN=dpN;
     if (nGoodJets>=maxjets) break;
   }

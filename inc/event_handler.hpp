@@ -15,11 +15,18 @@
 
 class event_handler : public phys_objects{
 public:
-  explicit event_handler(const std::string &fileName);
+  explicit event_handler(const std::string &fileName, bool quick_mode=false);
 
-  void ReduceTree(int Nentries, TString outFilename, int Ntotentries, bool skip_slow=false);
+  void ReduceTree(int Nentries, TString outFilename, int Ntotentries);
   void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
   void WriteFatJets(small_tree &tree);
+  void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
+		 std::vector<float> &mus_ptrel,
+		 std::vector<float> &mus_mindr,
+		 float dr_match_thresh = -1.0);
+
+  bool skip_slow;
+
 };
 
 #endif

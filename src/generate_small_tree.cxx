@@ -32,7 +32,10 @@ int main(){
   variables.push_back("std::vector<float> els_miniso");
   variables.push_back("std::vector<float> els_miniso_ch");
   variables.push_back("std::vector<float> els_miniso_chx");
-  variables.push_back("std::vector<float> els_ptrel");
+  variables.push_back("std::vector<double>* els_ptrel");
+  variables.push_back("std::vector<double>* els_mindr");
+
+
   variables.push_back("std::vector<float> mus_pt");
   variables.push_back("std::vector<float> mus_eta");
   variables.push_back("std::vector<float> mus_phi");
@@ -41,7 +44,8 @@ int main(){
   variables.push_back("std::vector<float> mus_miniso");
   variables.push_back("std::vector<float> mus_miniso_ch");
   variables.push_back("std::vector<float> mus_miniso_chx");
-  variables.push_back("std::vector<float> mus_ptrel");    
+  variables.push_back("std::vector<double>* mus_ptrel");
+  variables.push_back("std::vector<double>* mus_mindr");
 
   ///////////////////   Jets   //////////////////
   variables.push_back("int njets");

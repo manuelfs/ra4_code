@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
   // }
 
   cout<<"Opening "<<inFilename<<endl;
-  event_handler tHandler(inFilename); 
+  event_handler tHandler(inFilename, quick_mode); 
   if(nfiles>0){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]){
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
       <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()
       <<". "<<Ntotentries<<" entries in the full sample."<<endl;
-  tHandler.ReduceTree(Nentries, outFilename, Ntotentries, quick_mode);
+  tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
 
   time(&curTime);
   cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl;
