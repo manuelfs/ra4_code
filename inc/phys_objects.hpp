@@ -57,6 +57,11 @@ public:
   // Leptons
   static int GetMom(float id, float mom, float gmom, float ggmom,
 		    bool &fromW);
+  void GetPtRels(std::vector<float> &els_ptrel,
+		 std::vector<float> &els_mindr,
+		 std::vector<float> &mus_ptrel,
+		 std::vector<float> &mus_mindr,
+		 float dr_match_thresh = -1.0);
 
   // Tracks
   bool IsGoodIsoTrack(unsigned itrk) const;
@@ -99,6 +104,9 @@ public:
   // Utilities
   bool IsMC() const;
   bool hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const;
+
+  static float MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
+  static float bad_val;
 };
 
 #endif

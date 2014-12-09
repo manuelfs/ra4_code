@@ -22,6 +22,7 @@
 #include "TLorentzVector.h"
 
 #include "fastjet/ClusterSequence.hh"
+#include "fastjet/PseudoJet.hh"
 
 #include "small_tree.hpp"
 #include "utilities.hpp"
@@ -66,8 +67,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   //   cout<<endl<<endl;
   // }
 
-  const float bad_val = -999.;
-
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
@@ -89,11 +88,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   mt2_calc.set_mn(W_mass);
   mt2w_bisect::mt2w mt2w_calc(1.0e5, -1.0);
   vector<int_double> csv_sorted;
+  size_t entry_check=1;
   Timer timer(Nentries);
   timer.Start();
   for(int entry(0); entry < Nentries; entry++){
-    if(entry%1000==0 && entry!=0){
+    if(!(entry&(entry_check-1)) && entry!=0){
       timer.PrintRemainingTime();
+      if(entry_check<1024) entry_check<<=1;
     }
     timer.Iterate();
     GetEntry(entry);
@@ -113,6 +114,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.nvels = veto_electrons.size();
     tree.nmus  = signal_muons.size();
     tree.nvmus = veto_muons.size();
+
+    vector<float> mus_ptrel(0), els_ptrel(0);
+    vector<float> mus_mindr(0), els_mindr(0);
+    if(!skip_slow){
+      GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr);
+    }else{
+      els_ptrel = vector<float>(els_pt()->size(), bad_val);
+      els_mindr = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr = vector<float>(mus_pt()->size(), bad_val);
+    }
     if(tree.nels+tree.nmus == tree.nvels+tree.nvmus) tree.nleps = tree.nels+tree.nmus;
     else tree.nleps = static_cast<int>(bad_val);
 
@@ -338,16 +350,17 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_fjets_cands_trim_eta.clear();
     tree.v_fjets_cands_trim_phi.clear();
     tree.v_fjets_cands_trim_mj.clear();
-    if(pfcand_px() && pfcand_py()//Temporary (and ugly) fix for phys14 samples where these don't exist
-       && !skip_slow){
+    if(!skip_slow){
       vector<PseudoJet> cands(pfcand_pt()->size());
       for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-        if(!is_nan(pfcand_px()->at(cand))
-           && !is_nan(pfcand_py()->at(cand))
-           && !is_nan(pfcand_pz()->at(cand))
+	if(!is_nan(pfcand_pt()->at(cand))
+	   && !is_nan(pfcand_eta()->at(cand))
+           && !is_nan(pfcand_phi()->at(cand))
            && !is_nan(pfcand_energy()->at(cand))){
-          cands.at(cand)=PseudoJet(pfcand_px()->at(cand), pfcand_py()->at(cand),
-                                   pfcand_pz()->at(cand), pfcand_energy()->at(cand));
+	  TLorentzVector p4cand;
+	  p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
+			      pfcand_phi()->at(cand), pfcand_energy()->at(cand));
+          cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
         }else{
           //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
           cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
@@ -425,15 +438,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_els_phi.clear();
     tree.v_els_charge.clear();
     tree.v_els_reliso.clear();
+    tree.v_els_ptrel.clear();
+    tree.v_els_mindr.clear();
     tree.v_els_sigid.clear();
     tree.v_els_tru_id.clear();
     tree.v_els_tru_momid.clear();
     tree.v_els_tru_tm.clear();
     tree.v_els_tru_dr.clear();
-    tree.v_els_mindr.clear();
-    tree.v_els_ptrel.clear();
-    tree.v_els_mindr_sub.clear();
-    tree.v_els_ptrel_sub.clear();
     for(uint index=0; index<els_pt()->size(); ++index){
       if(!IsVetoIdElectron(index) || els_pt()->at(index)<10.0) continue;
 
@@ -447,34 +458,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_els_phi.push_back(els_phi()->at(index));
       tree.v_els_charge.push_back(els_charge()->at(index));
       tree.v_els_reliso.push_back(GetElectronIsolation(index));
+      tree.v_els_ptrel.push_back(els_ptrel.at(index));
+      tree.v_els_mindr.push_back(els_mindr.at(index));
       tree.v_els_sigid.push_back(IsSignalIdElectron(index));
       tree.v_els_tru_id.push_back(mcID);
       tree.v_els_tru_momid.push_back(mcmomID);
       tree.v_els_tru_tm.push_back(abs(mcID)==11 && fromW);
       tree.v_els_tru_dr.push_back(deltaR);
-
-      tree.v_els_mindr.push_back(floatmax);
-      tree.v_els_ptrel.push_back(bad_val);
-      tree.v_els_mindr_sub.push_back(floatmax);
-      tree.v_els_ptrel_sub.push_back(bad_val);
-
-      //Compute isolation alternatives
-      const TLorentzVector el(els_px()->at(index), els_py()->at(index),
-                              els_pz()->at(index), els_energy()->at(index));
-      for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
-        if(!IsGoodJet(ijet, 25.0, floatmax)) continue;
-        const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
-                                 jets_pz()->at(ijet), jets_energy()->at(ijet));
-        const TLorentzVector jet_sub = jet-el;
-        const double delta_r = jet.DeltaR(el);
-        const double delta_r_sub = jet_sub.DeltaR(el);
-        if(delta_r<tree.v_els_mindr.back()){
-          tree.v_els_mindr.back()=delta_r;
-          tree.v_els_ptrel.back()=el.Pt(jet.Vect());
-          tree.v_els_mindr_sub.back()=delta_r_sub;
-          tree.v_els_ptrel_sub.back()=el.Pt(jet_sub.Vect());
-        }
-      }
 
       if(els_pt()->at(index) > lepmax_pt){
         lepmax_energy=els_energy()->at(index);
@@ -494,15 +484,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.v_mus_phi.clear();
     tree.v_mus_charge.clear();
     tree.v_mus_reliso.clear();
+    tree.v_mus_ptrel.clear();
+    tree.v_mus_mindr.clear();
     tree.v_mus_sigid.clear();
     tree.v_mus_tru_id.clear();
     tree.v_mus_tru_momid.clear();
     tree.v_mus_tru_tm.clear();
     tree.v_mus_tru_dr.clear();
-    tree.v_mus_mindr.clear();
-    tree.v_mus_ptrel.clear();
-    tree.v_mus_mindr_sub.clear();
-    tree.v_mus_ptrel_sub.clear();
     for(uint index=0; index<mus_pt()->size(); ++index){
       if(!IsVetoIdMuon(index) || mus_pt()->at(index)<10.0) continue;
 
@@ -516,34 +504,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.v_mus_phi.push_back(mus_phi()->at(index));
       tree.v_mus_charge.push_back(mus_charge()->at(index));
       tree.v_mus_reliso.push_back(GetMuonIsolation(index));
+      tree.v_mus_ptrel.push_back(mus_ptrel.at(index));
+      tree.v_mus_mindr.push_back(mus_mindr.at(index));
       tree.v_mus_sigid.push_back(IsSignalIdMuon(index));
       tree.v_mus_tru_id.push_back(mcID);
       tree.v_mus_tru_momid.push_back(mcmomID);
       tree.v_mus_tru_tm.push_back(abs(mcID)==13 && fromW);
       tree.v_mus_tru_dr.push_back(deltaR);
-
-      tree.v_mus_mindr.push_back(floatmax);
-      tree.v_mus_ptrel.push_back(bad_val);
-      tree.v_mus_mindr_sub.push_back(floatmax);
-      tree.v_mus_ptrel_sub.push_back(bad_val);
-
-      //Compute isolation alternatives
-      const TLorentzVector mu(mus_px()->at(index), mus_py()->at(index),
-                              mus_pz()->at(index), mus_energy()->at(index));
-      for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
-        if(!IsGoodJet(ijet, 25.0, floatmax)) continue;
-        const TLorentzVector jet(jets_px()->at(ijet), jets_py()->at(ijet),
-                                 jets_pz()->at(ijet), jets_energy()->at(ijet));
-        const TLorentzVector jet_sub = jet-mu;
-        const double delta_r = jet.DeltaR(mu);
-        const double delta_r_sub = jet_sub.DeltaR(mu);
-        if(delta_r<tree.v_mus_mindr.back()){
-          tree.v_mus_mindr.back()=delta_r;
-          tree.v_mus_ptrel.back()=mu.Pt(jet.Vect());
-          tree.v_mus_mindr_sub.back()=delta_r_sub;
-          tree.v_mus_ptrel_sub.back()=mu.Pt(jet_sub.Vect());
-        }
-      }
 
       if(mus_pt()->at(index) > lepmax_pt){
         lepmax_energy=mus_energy()->at(index);

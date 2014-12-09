@@ -14,8 +14,13 @@
 #include <limits>
 #include <typeinfo>
 #include <stdexcept>
+#include <set>
 
 #include "TMath.h"
+#include "TLorentzVector.h"
+
+#include "fastjet/ClusterSequence.hh"
+#include "fastjet/PseudoJet.hh"
 
 #include "cfa_8.hpp"
 #include "cfa_13.hpp"
@@ -25,12 +30,13 @@
 using namespace std;
 
 namespace{
-  const float MinSignalLeptonPt = 20.;
-  const float MinVetoLeptonPt = 15.;
-  const float MinTrackPt = MinVetoLeptonPt;
   const float fltmax = numeric_limits<float>::max();
-  const float bad_val = -999.;
 }
+
+float phys_objects::MinSignalLeptonPt = 20.0;
+float phys_objects::MinVetoLeptonPt = 15.0;
+float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
+float phys_objects::bad_val = -999.;
 
 phys_objects::phys_objects(const string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV){
@@ -321,7 +327,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
     && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)))//Skip cut in cfa_13; use alternative in cfa_8
-    && (!els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
+    && (Type()==typeid(cfa_13) || !els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
 }
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
@@ -390,6 +396,156 @@ int phys_objects::GetMom(const float id, const float mom, const float gmom,
   fromW = (abs(imom)==24 || abs(igmom)==24 || abs(iggmom)==24);
 
   return ret_mom;
+}
+
+void phys_objects::GetPtRels(std::vector<float> &els_ptrel,
+			     std::vector<float> &els_mindr,
+			     std::vector<float> &mus_ptrel,
+			     std::vector<float> &mus_mindr,
+			     float dr_match_thresh){
+  using namespace fastjet;
+  els_ptrel.resize(els_pt()->size());
+  els_mindr.resize(els_pt()->size());
+  mus_ptrel.resize(mus_pt()->size());
+  mus_mindr.resize(mus_pt()->size());
+
+  vector<int> els_cand_idx(els_pt()->size());
+  vector<int> mus_cand_idx(mus_pt()->size());
+  vector<bool> els_removed(els_pt()->size());
+  vector<bool> mus_removed(mus_pt()->size());
+  set<size_t> to_remove;
+
+  //Find isolated electrons in list of pfcands
+  for(size_t el = 0; el < els_pt()->size(); ++el){
+    
+    float mindr = numeric_limits<float>::max();
+    size_t imatch = 0;
+
+    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      const float dr = dR(els_eta()->at(el), pfcand_eta()->at(cand),
+			  els_phi()->at(el), pfcand_phi()->at(cand));
+      if(dr < mindr){
+	mindr = dr;
+	imatch = cand;
+      }
+    }
+    if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
+      els_cand_idx.at(el) = imatch;
+      if(IsSignalElectron(el)){
+	els_removed.at(el) = true;
+	to_remove.insert(imatch);
+      }else{
+	els_removed.at(el) = false;
+      }
+    }else{
+      els_cand_idx.at(el) = -1;
+      els_removed.at(el) = false;
+    }
+  }
+
+  //Find isolated muons in list of pfcands
+  for(size_t mu = 0; mu < mus_pt()->size(); ++mu){
+    float mindr = numeric_limits<float>::max();
+    size_t imatch = 0;
+
+    const TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
+			      mus_pz()->at(mu), mus_energy()->at(mu));
+
+    for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      const float dr = dR(mus_eta()->at(mu), pfcand_eta()->at(cand),
+			  mus_phi()->at(mu), pfcand_phi()->at(cand));
+      if(dr < mindr){
+	mindr = dr;
+	imatch = cand;
+      }
+    }
+    if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
+      mus_cand_idx.at(mu) = imatch;
+      if(IsSignalMuon(mu)){
+	mus_removed.at(mu) = true;
+	to_remove.insert(imatch);
+      }else{
+	mus_removed.at(mu) = false;
+      }
+    }else{
+      mus_cand_idx.at(mu) = -1;
+      mus_removed.at(mu) = false;
+    }
+  }
+
+  //Remove candidates corresponding to isolated leptons
+  vector<PseudoJet> pjs(pfcand_pt()->size());
+  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+    if(to_remove.find(cand) == to_remove.end()
+       && !is_nan(pfcand_pt()->at(cand))
+       && !is_nan(pfcand_eta()->at(cand))
+       && !is_nan(pfcand_phi()->at(cand))
+       && !is_nan(pfcand_energy()->at(cand))){
+      TLorentzVector p4cand;
+      p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand),
+			  pfcand_eta()->at(cand),
+			  pfcand_phi()->at(cand),
+			  pfcand_energy()->at(cand));
+      pjs.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
+    }else{
+      pjs.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+    }
+  }
+
+  JetDefinition jet_def(antikt_algorithm, 0.4);
+  ClusterSequence cs(pjs, jet_def);
+  
+  vector<PseudoJet> reclustered_jets = cs.inclusive_jets();
+  vector<int> indices = cs.particle_jet_indices(reclustered_jets);
+
+  //Compute ptrel for electrons
+  for(size_t el = 0; el < els_pt()->size(); ++el){
+    if(els_removed.at(el)){
+      //Electron was not included in clustering procedure
+      els_ptrel.at(el) = -1.;
+      els_mindr.at(el) = -1.;
+    }else if(indices.at(els_cand_idx.at(el)) < 0){
+      //Electron was not clustered
+      els_ptrel.at(el) = -2.;
+      els_mindr.at(el) = -2.;
+    }else{
+      //Electron was clustered into a jet. Compute ptrel w.r.t. this jet
+      size_t jet_idx = indices.at(els_cand_idx.at(el));
+      TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-els_px()->at(el),
+			   reclustered_jets.at(jet_idx).py()-els_py()->at(el),
+			   reclustered_jets.at(jet_idx).pz()-els_pz()->at(el),
+			   reclustered_jets.at(jet_idx).e()-els_energy()->at(el));
+      TLorentzVector p4el(els_px()->at(el), els_py()->at(el),
+			  els_pz()->at(el), els_energy()->at(el));
+			  
+      els_ptrel.at(el) = p4el.Pt(p4jet.Vect());
+      els_mindr.at(el) = p4el.DeltaR(p4jet);
+    }
+  }
+  //Compute ptrel for muons
+  for(size_t mu = 0; mu < mus_pt()->size(); ++mu){
+    if(mus_removed.at(mu)){
+      //Muon was not included in clustering procedure
+      mus_ptrel.at(mu) = -1.;
+      mus_mindr.at(mu) = -1.;
+    }else if(indices.at(mus_cand_idx.at(mu)) < 0){
+      //Muon was not clustered
+      mus_ptrel.at(mu) = -2.;
+      mus_mindr.at(mu) = -2.;
+    }else{
+      //Muon was clustered into a jet. Compute ptrel w.r.t. this jet
+      size_t jet_idx = indices.at(mus_cand_idx.at(mu));
+      TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-mus_px()->at(mu),
+			   reclustered_jets.at(jet_idx).py()-mus_py()->at(mu),
+			   reclustered_jets.at(jet_idx).pz()-mus_pz()->at(mu),
+			   reclustered_jets.at(jet_idx).e()-mus_energy()->at(mu));
+      TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
+			  mus_pz()->at(mu), mus_energy()->at(mu));
+
+      mus_ptrel.at(mu) = p4mu.Pt(p4jet.Vect());
+      mus_mindr.at(mu) = p4mu.DeltaR(p4jet);
+    }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////

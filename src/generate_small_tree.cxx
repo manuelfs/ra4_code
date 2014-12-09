@@ -24,15 +24,13 @@ int main(){
   variables.push_back("std::vector<double>* mus_phi");
   variables.push_back("std::vector<double>* mus_charge");
   variables.push_back("std::vector<double>* mus_reliso");
-  variables.push_back("std::vector<double>* mus_sigid");
+  variables.push_back("std::vector<double>* mus_ptrel");
+  variables.push_back("std::vector<double>* mus_mindr");
+  variables.push_back("std::vector<bool>* mus_sigid");
   variables.push_back("std::vector<double>* mus_tru_dr");
   variables.push_back("std::vector<int>* mus_tru_id");
   variables.push_back("std::vector<int>* mus_tru_momid");
   variables.push_back("std::vector<bool>* mus_tru_tm");
-  variables.push_back("std::vector<double>* mus_mindr");
-  variables.push_back("std::vector<double>* mus_ptrel");
-  variables.push_back("std::vector<double>* mus_mindr_sub");
-  variables.push_back("std::vector<double>* mus_ptrel_sub");
   variables.push_back("int nels");
   variables.push_back("int nvels");
   variables.push_back("std::vector<double>* els_pt");
@@ -41,15 +39,14 @@ int main(){
   variables.push_back("std::vector<double>* els_phi");
   variables.push_back("std::vector<double>* els_charge");
   variables.push_back("std::vector<double>* els_reliso");
-  variables.push_back("std::vector<double>* els_sigid");
+  variables.push_back("std::vector<double>* els_ptrel");
+  variables.push_back("std::vector<double>* els_mindr");
+  variables.push_back("std::vector<bool>* els_sigid");
   variables.push_back("std::vector<double>* els_tru_dr");
   variables.push_back("std::vector<int>* els_tru_id");
   variables.push_back("std::vector<int>* els_tru_momid");
   variables.push_back("std::vector<bool>* els_tru_tm");
-  variables.push_back("std::vector<double>* els_mindr");
-  variables.push_back("std::vector<double>* els_ptrel");
-  variables.push_back("std::vector<double>* els_mindr_sub");
-  variables.push_back("std::vector<double>* els_ptrel_sub");
+
 
   /////////////////   Tracks   ////////////////
   variables.push_back("int nisotrks");
