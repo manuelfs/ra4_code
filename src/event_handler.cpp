@@ -155,7 +155,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 				     els_pz()->at(index), els_energy()->at(index));
 	
 	// Number of leptons
-	tree.nvels10++;
+	if(IsVetoIdElectron(index, true)) tree.nvels10++;
 	if(IsVetoElectron(index)) tree.nvels++;
 	if(IsSignalElectron(index)) tree.nels++;
       }
@@ -173,7 +173,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.mus_reliso.clear();
     tree.mus_miniso.clear();
     tree.mus_miniso_ch.clear();
-    tree.mus_miniso_chx.clear();
+    //tree.mus_miniso_chx.clear();
     tree.mus_ptrel.clear();
     tree.mus_mindr.clear();
     tree.mus_ptrel_25.clear();
@@ -206,7 +206,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 				     mus_pz()->at(index), mus_energy()->at(index));
 	
 	// Number of leptons
-	tree.nvmus10++;
+	if(GetMuonIsolation(index) < 0.2) tree.nvmus10++;
 	if(IsVetoMuon(index)) tree.nvmus++;
 	if(IsSignalMuon(index)) tree.nmus++;
       }
@@ -217,9 +217,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     // Finding mT and deltaPhi with respect to highest pT lepton
     tree.mt = bad_val; tree.dphi_wlep = bad_val;
     if(lepmax_p4.Pt() > 0){
+      double lepmax_phi = atan2(lepmax_p4.Py(), lepmax_p4.Px());
       double Wx = mets_ex()->at(0) + lepmax_p4.Px();
       double Wy = mets_ey()->at(0) + lepmax_p4.Py();
-      tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_p4.Phi());
+      //tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_p4.Phi());
+      tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_phi);
       if(tree.dphi_wlep > PI) tree.dphi_wlep = 2*PI-tree.dphi_wlep;
       tree.mt = sqrt(2*lepmax_p4.Pt()* tree.met*(1-cos(tree.met_phi-lepmax_p4.Phi())));
     }
@@ -297,14 +299,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   outFile.Close();
   if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
 }
-
-void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
-
-  if (isElectron && ilep==0) tree.els_miniso.push_back(0);
-
-  return;
-}
-
 
 void event_handler::WriteFatJets(small_tree &tree){
 
@@ -757,4 +751,89 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
       mus_mindr.at(mu) = p4mu.DeltaR(p4jet);
     }
   }
+}
+
+
+void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
+
+  if (isElectron){
+    if(!els_isPF()->at(ilep)) {
+      tree.els_miniso.push_back(fltmax);
+      tree.els_miniso_ch.push_back(fltmax);
+      return;
+    }
+  } else {
+    if (!mus_isPFMuon()->at(ilep)) {
+      tree.mus_miniso.push_back(fltmax);
+      tree.mus_miniso_ch.push_back(fltmax);
+      return;
+    }
+  }
+
+  double lep_pt(0.), lep_eta(0.), lep_phi(0.);
+  if (isElectron) {
+    lep_pt = els_pt()->at(ilep);
+    lep_eta = els_eta()->at(ilep);
+    lep_phi = els_phi()->at(ilep);
+  } else {
+    lep_pt = mus_pt()->at(ilep);
+    lep_eta = mus_eta()->at(ilep);
+    lep_phi = mus_phi()->at(ilep);
+  }
+  double ktScale = 15.;
+  double riso = ktScale/lep_pt;
+  //double riso = 0.4;
+  //if (isElectron) riso = 0.3;
+
+  double drmin = fltmax;
+  uint match_index = 9999999;
+  for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
+    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
+    if (dr < drmin){
+      drmin = dr;
+      match_index = icand;
+    }
+  }
+  if (match_index==9999999 || drmin>0.1) printf("Lepton not found!\n");
+ 
+  // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons, 
+  // 1 and 2 for hadronic and em particles in HF
+  double iso_nh(0.), iso_ch(0.), iso_ph(0.), iso_pu(0.), ptThresh(0.5);
+  if(isElectron) ptThresh = 0;
+  for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
+    if (icand==match_index) continue;
+    if (abs(pfcand_pdgId()->at(icand))<7) continue;
+    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
+    if (dr > riso) continue;
+
+    if (pfcand_charge()->at(icand)==0){
+      if(dr < 0.01) continue;
+      if (pfcand_pt()->at(icand)>ptThresh) {
+        if (abs(pfcand_pdgId()->at(icand))==22) {
+          iso_ph += pfcand_pt()->at(icand);      
+        } else if (abs(pfcand_pdgId()->at(icand))==130) {
+          iso_nh += pfcand_pt()->at(icand);
+        }
+      }
+    } else if (pfcand_fromPV()->at(icand)>1){
+      if(dr < 0.0001) continue;
+      if (abs(pfcand_pdgId()->at(icand))==211) iso_ch += pfcand_pt()->at(icand);
+    } else {
+      if (pfcand_pt()->at(icand)>0.5) iso_pu += pfcand_pt()->at(icand);
+    } 
+  }
+
+  double miniiso = iso_ph + iso_nh - 0.5*iso_pu;
+  if (miniiso>0) miniiso += iso_ch;
+  else miniiso = iso_ch;
+
+  if (isElectron){
+    tree.els_miniso.push_back(miniiso);
+    tree.els_miniso_ch.push_back(iso_ch);
+  } else {
+    tree.mus_miniso.push_back(miniiso);
+    tree.mus_miniso_ch.push_back(iso_ch);
+  }
+  
+  return;
 }

@@ -34,6 +34,10 @@ float cross_section(TString file){
   if(file.Contains("T1tttt") && file.Contains("1200_"))  xsec = 0.0856418;
   if(file.Contains("T1tttt") && file.Contains("1500_"))  xsec = 0.0141903;
 
+  if(file.Contains("T2tt") && file.Contains("650_"))  xsec = 0.107045;
+  if(file.Contains("T2tt") && file.Contains("850_"))  xsec = 0.0189612;
+
+
   // https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get/TOP-Fall13-00005
   // says that it is 424.5 pb
   if(file.Contains("TTJet") || file.Contains("TT_"))  xsec = 806.1;

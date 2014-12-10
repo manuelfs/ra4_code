@@ -107,6 +107,7 @@ int main(int argc, char *argv[]){
       <<". "<<Ntotentries<<" entries in the full sample."<<endl;
   tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
 
+  cout<<"Wrote "<<outFilename<<endl;
   time(&curTime);
   cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl;
 
