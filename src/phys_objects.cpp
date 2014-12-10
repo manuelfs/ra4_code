@@ -322,8 +322,9 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
-    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_PATpassConversionVeto()->at(iel)))
-    && (misshits_cut <= els_expectedMissingInnerHits()->at(iel));
+    && (true || vprob_cut) 
+    && (els_PATpassConversionVeto()->at(iel))
+    && (misshits_cut >= els_expectedMissingInnerHits()->at(iel));
 }
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
