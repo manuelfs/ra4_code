@@ -209,8 +209,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.mt = sqrt(2*lepmax_p4.Pt()* tree.met*(1-cos(tree.met_phi-lepmax_p4.Phi())));
     }
 
-
-
+    ////////////////   TRUTH   ////////////////
     tree.mc_pt.clear();
     tree.mc_phi.clear();
     tree.mc_eta.clear();
@@ -226,28 +225,37 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.mc_gmomid.push_back(mc_doc_grandmother_id()->at(igen));  
     }
 
+    ////////////////   Jets   ////////////////
+    vector<int> veto_electrons = GetElectrons(false);
+    vector<int> veto_muons = GetMuons(false);
+    vector<int> good_jets = GetJets(veto_electrons, veto_muons, 20.0, 2.4);
     tree.jets_pt.clear();
     tree.jets_eta.clear();
     tree.jets_phi.clear();
     tree.jets_csv.clear();
-    tree.njets = 0;
-    tree.ncsvm = 0;
-    tree.ht = 0.;
-    vector<int> veto_electrons = GetElectrons(false);
-    vector<int> veto_muons = GetMuons(false);
-    vector<int> good_jets = GetJets(veto_electrons, veto_muons, 40.0, 2.4);
+
+    tree.njets = GetNumJets(good_jets, MinJetPt);
+    tree.nbl = GetNumJets(good_jets, MinJetPt, CSVCuts[0]);
+    tree.nbm = GetNumJets(good_jets, MinJetPt, CSVCuts[1]);
+    tree.nbt = GetNumJets(good_jets, MinJetPt, CSVCuts[2]);
+    tree.ht = GetHT(good_jets, MinJetPt);
+
+    tree.njets30 = GetNumJets(good_jets, 30.0);
+    tree.nbl30 = GetNumJets(good_jets, 30.0, CSVCuts[0]);
+    tree.nbm30 = GetNumJets(good_jets, 30.0, CSVCuts[1]);
+    tree.nbt30 = GetNumJets(good_jets, 30.0, CSVCuts[2]);
+    tree.ht30 = GetHT(good_jets, 30.0);
+    tree.mht30 = GetMHT(good_jets, 30.0);
+
     for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
       int ijet = good_jets.at(igoodjet); 
       tree.jets_pt.push_back(jets_AK4_pt()->at(ijet)); 
       tree.jets_eta.push_back(jets_AK4_eta()->at(ijet)); 
       tree.jets_phi.push_back(jets_AK4_phi()->at(ijet)); 
       tree.jets_csv.push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
-
-      tree.njets++;
-      tree.ht += jets_AK4_pt()->at(ijet);
-      if (jets_AK4_btag_inc_secVertexCombined()->at(ijet) >= CSVCuts[1]) tree.ncsvm++;
     }
 
+    ////////////////   Fat Jets   ////////////////
     WriteFatJets(tree);
 
 

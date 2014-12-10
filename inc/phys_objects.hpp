@@ -82,12 +82,17 @@ public:
   double GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
   double GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,
                             float otherpt, float othereta, bool useArcsin) const;
+  double GetHT(const std::vector<int> &good_jets, double pt_cut=0.0) const;
+  double GetMHT(const std::vector<int> &good_jets, double pt_cut) const;
+  size_t GetNumJets(const std::vector<int> &good_jets,
+		    double pt_cut=0.0,
+		    double csv_cut=-std::numeric_limits<float>::max()) const;
 
   // Utilities
   bool IsMC() const;
   bool hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const;
 
-  static float MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
+  static float MinJetPt,MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
   static float bad_val;
 };
 

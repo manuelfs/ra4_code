@@ -22,6 +22,8 @@ int main(){
   variables.push_back("float met");
   variables.push_back("float met_phi");
   variables.push_back("float ht");
+  variables.push_back("float ht30");
+  variables.push_back("float mht30");
   variables.push_back("float mt");
   variables.push_back("float dphi_wlep");
 
@@ -65,7 +67,14 @@ int main(){
 
   ///////////////////   Jets   //////////////////
   variables.push_back("int njets");
-  variables.push_back("int ncsvm");
+  variables.push_back("int nbl");
+  variables.push_back("int nbm");
+  variables.push_back("int nbt");
+  variables.push_back("int njets30");
+  variables.push_back("int nbl30");
+  variables.push_back("int nbm30");
+  variables.push_back("int nbt30");
+
   variables.push_back("std::vector<float> jets_pt");
   variables.push_back("std::vector<float> jets_eta");
   variables.push_back("std::vector<float> jets_phi");

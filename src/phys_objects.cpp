@@ -28,6 +28,7 @@ namespace{
   const float fltmax = numeric_limits<float>::max();
 }
 
+float phys_objects::MinJetPt = 40.0;
 float phys_objects::MinSignalLeptonPt = 20.0;
 float phys_objects::MinVetoLeptonPt = 15.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
@@ -661,6 +662,40 @@ double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float ma
     if (nGoodJets>=maxjets) break;
   }
   return mdpN;
+}
+
+double phys_objects::GetHT(const vector<int> &good_jets, double pt_cut) const{
+  double ht = 0.0;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    const double pt = jets_pt()->at(good_jets.at(i));
+    if(pt>pt_cut) ht += pt;
+  }
+  return ht;
+}
+
+double phys_objects::GetMHT(const vector<int> &good_jets, double pt_cut) const {
+  double px(0.), py(0.);
+  for(size_t ijet = 0; ijet < good_jets.size(); ++ijet){
+    const double pt = jets_pt()->at(good_jets.at(ijet));
+    if(pt>pt_cut){
+      px += jets_px()->at(good_jets.at(ijet));
+      py += jets_py()->at(good_jets.at(ijet));
+    }
+  }
+  return TMath::Sqrt(px*px+py*py);
+}
+
+size_t phys_objects::GetNumJets(const vector<int> &good_jets,
+				double pt_cut,
+				double csv_cut) const{
+  size_t num_jets = 0;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    if(jets_pt()->at(good_jets.at(i)) > pt_cut
+       && jets_btag_inc_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
+      ++num_jets;
+    }
+  }
+  return num_jets;
 }
 
 /////////////////////////////////////////////////////////////////////////
