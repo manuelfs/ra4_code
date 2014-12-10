@@ -1,6 +1,8 @@
 EXEDIR := run
+MACEXEDIR := plot
 OBJDIR := bin
 SRCDIR := src
+MACSRCDIR := macros
 INCDIR := inc
 MAKEDIR := bin
 LIBFILE := $(OBJDIR)/libStatObj.a
@@ -14,12 +16,15 @@ LD := $(shell root-config --ld)
 LDFLAGS := $(shell fastjet/bin/fastjet-config --libs --plugins) $(shell root-config --ldflags) -g -pg
 LDLIBS := $(shell root-config --libs) -lMinuit
 
-EXECUTABLES := $(addprefix $(EXEDIR)/, $(addsuffix .exe, $(notdir $(basename $(wildcard $(SRCDIR)/*.cxx)))))
+EXECUTABLES := $(addprefix $(EXEDIR)/, $(addsuffix .exe, $(notdir $(basename $(wildcard $(SRCDIR)/*.cxx))))) $(addprefix $(MACEXEDIR)/, $(addsuffix .exe, $(notdir $(basename $(wildcard $(MACSRCDIR)/*.cxx)))))
 OBJECTS := $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(wildcard $(SRCDIR)/*.cpp))))) $(OBJDIR)/small_tree.o $(OBJDIR)/cfa_base.o $(OBJDIR)/cfa_8.o $(OBJDIR)/cfa_13.o $(OBJDIR)/cfa.o
+MACOBJ := $(addprefix $(OBJDIR)/, $(addsuffix .mac.o, $(notdir $(basename $(wildcard $(MACSRCDIR)/*.cxx)))))
 
 FIND_DEPS = $(CXX) $(CXXFLAGS) -MM -MG -MF $@ $<
 EXPAND_DEPS = perl -pi -e 's|$*.o|$(OBJDIR)/$*.o $(MAKEDIR)/$*.d|g' $@
+MAC_EXPAND_DEPS = perl -pi -e 's|$*.o|$(OBJDIR)/$*.mac.o $(MAKEDIR)/$*.d|g' $@
 GET_DEPS = $(FIND_DEPS) && $(EXPAND_DEPS)
+MAC_GET_DEPS = $(FIND_DEPS) && $(MAC_EXPAND_DEPS)
 COMPILE = $(CXX) $(CXXFLAGS) -o $@ -c $<
 LINK = $(LD) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
@@ -34,6 +39,7 @@ all: $(EXECUTABLES)
 
 -include $(addsuffix .d,$(addprefix $(MAKEDIR)/,$(notdir $(basename $(wildcard $(SRCDIR)/*.cpp)))))
 -include $(addsuffix .d,$(addprefix $(MAKEDIR)/,$(notdir $(basename $(wildcard $(SRCDIR)/*.cxx)))))
+-include $(addsuffix .d,$(addprefix $(MAKEDIR)/,$(notdir $(basename $(wildcard $(MACSRCDIR)/*.cxx)))))
 -include $(MAKEDIR)/small_tree.d $(MAKEDIR)/cfa_base.d $(MAKEDIR)/cfa_8.d $(MAKEDIR)/cfa_13.d $(MAKEDIR)/cfa.d
 
 $(LIBFILE): $(OBJECTS)
@@ -44,7 +50,13 @@ $(MAKEDIR)/%.d: $(SRCDIR)/%.cpp
 $(MAKEDIR)/%.d: $(SRCDIR)/%.cxx
 	$(GET_DEPS)
 
+$(MAKEDIR)/%.d: $(MACSRCDIR)/%.cxx
+	$(MAC_GET_DEPS)
+
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(COMPILE)
+
+$(OBJDIR)/%.mac.o: $(MACSRCDIR)/%.cxx
 	$(COMPILE)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cxx
@@ -57,6 +69,9 @@ $(EXEDIR)/generate_small_tree.exe: $(OBJDIR)/generate_small_tree.o
 	$(LINK)
 
 $(EXEDIR)/generate_cfa_class.exe: $(OBJDIR)/generate_cfa_class.o $(OBJDIR)/generate_cfa.o
+	$(LINK)
+
+$(MACEXEDIR)/%.exe: $(OBJDIR)/%.mac.o $(LIBFILE)
 	$(LINK)
 
 $(EXEDIR)/%.exe: $(OBJDIR)/%.o $(LIBFILE)
