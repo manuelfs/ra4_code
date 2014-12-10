@@ -36,9 +36,9 @@ using namespace fastjet;
 // const double CSVCuts[] = {0.244, 0.679, 0.898}; // Run1 CSV
 const double CSVCuts[] = {0.423, 0.814, 0.941};    // Run2 CSV+IVF
 
-// namespace{
-//   const float floatmax = numeric_limits<float>::max();
-// }
+ namespace{
+   const float fltmax = numeric_limits<float>::max();
+ }
 
 event_handler::event_handler(const string &fileName, bool quick_mode):
   phys_objects(fileName),
@@ -94,13 +94,20 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     double deltaR;
     vector<float> mus_ptrel(0), els_ptrel(0);
     vector<float> mus_mindr(0), els_mindr(0);
+    vector<float> mus_ptrel_25(0), els_ptrel_25(0);
+    vector<float> mus_mindr_25(0), els_mindr_25(0);
     if(!skip_slow){
       GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr);
+      GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0);
     }else{
       els_ptrel = vector<float>(els_pt()->size(), bad_val);
       els_mindr = vector<float>(els_pt()->size(), bad_val);
       mus_ptrel = vector<float>(mus_pt()->size(), bad_val);
       mus_mindr = vector<float>(mus_pt()->size(), bad_val);
+      els_ptrel_25 = vector<float>(els_pt()->size(), bad_val);
+      els_mindr_25 = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel_25 = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr_25 = vector<float>(mus_pt()->size(), bad_val);
     }
 
     tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
@@ -118,6 +125,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.els_miniso_chx.clear();
     tree.els_ptrel.clear();
     tree.els_mindr.clear();
+    tree.els_ptrel_25.clear();
+    tree.els_mindr_25.clear();
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
         tree.els_sigid.push_back(IsSignalIdElectron(index));
@@ -137,6 +146,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         SetMiniIso(tree, index, /*isElectron*/ true);
 	tree.els_ptrel.push_back(els_ptrel.at(index));
 	tree.els_mindr.push_back(els_mindr.at(index));
+	tree.els_ptrel_25.push_back(els_ptrel_25.at(index));
+	tree.els_mindr_25.push_back(els_mindr_25.at(index));
 
 	// Max pT lepton
 	if(els_pt()->at(index) > lepmax_p4.Pt())
@@ -165,6 +176,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.mus_miniso_chx.clear();
     tree.mus_ptrel.clear();
     tree.mus_mindr.clear();
+    tree.mus_ptrel_25.clear();
+    tree.mus_mindr_25.clear();
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
         tree.mus_sigid.push_back(IsSignalIdMuon(index));
@@ -184,6 +197,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         SetMiniIso(tree, index, /*isElectron*/ false);
 	tree.mus_ptrel.push_back(mus_ptrel.at(index));
 	tree.mus_mindr.push_back(mus_mindr.at(index));
+	tree.mus_ptrel_25.push_back(mus_ptrel_25.at(index));
+	tree.mus_mindr_25.push_back(mus_mindr_25.at(index));
 
 	// Max pT lepton
 	if(mus_pt()->at(index) > lepmax_p4.Pt())
@@ -560,6 +575,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 			      std::vector<float> &els_mindr,
 			      std::vector<float> &mus_ptrel,
 			      std::vector<float> &mus_mindr,
+			      float pt_cut,
 			      float dr_match_thresh){
   using namespace fastjet;
   els_ptrel.resize(els_pt()->size());
@@ -676,10 +692,29 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
       TLorentzVector p4el(els_px()->at(el), els_py()->at(el),
 			  els_pz()->at(el), els_energy()->at(el));
 			  
+      if(p4jet.Pt()<pt_cut){
+	//Jet was below pt threshold; find nearest jet above threshold
+	float min_dr=fltmax;
+	for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
+	  TLorentzVector this_jet(reclustered_jets.at(jet).px(),
+				  reclustered_jets.at(jet).py(),
+				  reclustered_jets.at(jet).pz(),
+				  reclustered_jets.at(jet).e());
+	  if(jet == jet_idx) this_jet-=p4el;
+	  if(this_jet.Pt() < pt_cut) continue;
+	  float this_dr = p4el.DeltaR(this_jet);
+	  if(this_dr < min_dr){
+	    min_dr = this_dr;
+	    p4jet = this_jet;
+	  }
+	}
+      }
+
       els_ptrel.at(el) = p4el.Pt(p4jet.Vect());
       els_mindr.at(el) = p4el.DeltaR(p4jet);
     }
   }
+
   //Compute ptrel for muons
   for(size_t mu = 0; mu < mus_pt()->size(); ++mu){
     if(mus_removed.at(mu)){
@@ -699,6 +734,24 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 			   reclustered_jets.at(jet_idx).e()-mus_energy()->at(mu));
       TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
 			  mus_pz()->at(mu), mus_energy()->at(mu));
+
+      if(p4jet.Pt()<pt_cut){
+	//Jet was below pt threshold; find nearest jet above threshold
+	float min_dr=fltmax;
+	for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
+	  TLorentzVector this_jet(reclustered_jets.at(jet).px(),
+				  reclustered_jets.at(jet).py(),
+				  reclustered_jets.at(jet).pz(),
+				  reclustered_jets.at(jet).e());
+	  if(jet == jet_idx) this_jet-=p4mu;
+	  if(this_jet.Pt() < pt_cut) continue;
+	  float this_dr = p4mu.DeltaR(this_jet);
+	  if(this_dr < min_dr){
+	    min_dr = this_dr;
+	    p4jet = this_jet;
+	  }
+	}
+      }
 
       mus_ptrel.at(mu) = p4mu.Pt(p4jet.Vect());
       mus_mindr.at(mu) = p4mu.DeltaR(p4jet);

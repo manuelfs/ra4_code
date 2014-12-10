@@ -42,6 +42,8 @@ int main(){
   variables.push_back("std::vector<float> mus_miniso_chx");
   variables.push_back("std::vector<float> mus_ptrel");
   variables.push_back("std::vector<float> mus_mindr");
+  variables.push_back("std::vector<float> mus_ptrel_25");
+  variables.push_back("std::vector<float> mus_mindr_25");
   variables.push_back("std::vector<float> mus_tru_dr");
   variables.push_back("std::vector<int> mus_tru_id");
   variables.push_back("std::vector<int> mus_tru_momid");
@@ -60,6 +62,8 @@ int main(){
   variables.push_back("std::vector<float> els_miniso_chx");
   variables.push_back("std::vector<float> els_ptrel");
   variables.push_back("std::vector<float> els_mindr");
+  variables.push_back("std::vector<float> els_ptrel_25");
+  variables.push_back("std::vector<float> els_mindr_25");
   variables.push_back("std::vector<float> els_tru_dr");
   variables.push_back("std::vector<int> els_tru_id");
   variables.push_back("std::vector<int> els_tru_momid");

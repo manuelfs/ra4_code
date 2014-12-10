@@ -23,6 +23,7 @@ public:
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
 		 std::vector<float> &mus_ptrel,
 		 std::vector<float> &mus_mindr,
+		 float pt_cut = 0.0,
 		 float dr_match_thresh = -1.0);
 
   bool skip_slow;

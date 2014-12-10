@@ -491,7 +491,7 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
   for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
     if(abs(mc_doc_id()->at(imc)) != pdtlund::mu_minus) continue;
     MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = sqrt(pow(RecEta-MCEta,2) + pow(RecPhi-MCPhi,2));
+    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
     if(dR < closest_dR) {
       closest_dR = dR;
       closest_imc = imc;
@@ -530,7 +530,7 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
   for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
     if(abs(mc_doc_id()->at(imc)) != pdtlund::e_minus) continue;
     MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = sqrt(pow(RecEta-MCEta,2) + pow(RecPhi-MCPhi,2));
+    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
     if(dR < closest_dR) {
       closest_dR = dR;
       closest_imc = imc;
@@ -565,7 +565,7 @@ int phys_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_
   double MCEta, MCPhi;
   for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
     MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = sqrt(pow(RecEta-MCEta,2) + pow(RecPhi-MCPhi,2));
+    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
     if(dR < closest_dR) {
       closest_dR = dR;
       closest_imc = imc;
@@ -579,7 +579,7 @@ int phys_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_
 /////////////////////////////////////////////////////////////////////////
 bool phys_objects::PassesPVCut() const{
   if(beamSpot_x()->size()<1 || pv_x()->size()<1) return false;
-  const double pv_rho(sqrt(pv_x()->at(0)*pv_x()->at(0) + pv_y()->at(0)*pv_y()->at(0)));
+  const double pv_rho(AddInQuadrature(pv_x()->at(0), pv_y()->at(0)));
   if(pv_ndof()->at(0)>4 && fabs(pv_z()->at(0))<24. && pv_rho<2.0 && pv_isFake()->at(0)==0) return true;
   return false;
 }
@@ -635,7 +635,9 @@ double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
   return dpN;
 }
 
-double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const {
+double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI,
+					    float otherpt, float
+					    othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -682,7 +684,7 @@ double phys_objects::GetMHT(const vector<int> &good_jets, double pt_cut) const {
       py += jets_py()->at(good_jets.at(ijet));
     }
   }
-  return TMath::Sqrt(px*px+py*py);
+  return AddInQuadrature(px, py);
 }
 
 size_t phys_objects::GetNumJets(const vector<int> &good_jets,
