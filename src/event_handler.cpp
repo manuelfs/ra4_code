@@ -58,6 +58,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   small_tree tree;
   float xsec(cross_section(outFilename));
   const float luminosity = 1000; // 1 fb^-1
+  TLorentzVector lepmax_p4;
 
   Timer timer(Nentries);
   timer.Start();
@@ -88,6 +89,9 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
 
     ////////////////   Leptons   ////////////////
+    bool fromW(false);
+    int mcID, mcmomID;
+    double deltaR;
     vector<float> mus_ptrel(0), els_ptrel(0);
     vector<float> mus_mindr(0), els_mindr(0);
     if(!skip_slow){
@@ -103,6 +107,12 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.els_eta.clear();
     tree.els_phi.clear();
     tree.els_sigid.clear();
+
+    tree.v_els_tru_id.clear();
+    tree.v_els_tru_momid.clear();
+    tree.v_els_tru_tm.clear();
+    tree.v_els_tru_dr.clear();
+
     tree.els_reliso.clear();
     tree.els_miniso.clear();
     tree.els_miniso_ch.clear();
@@ -115,17 +125,38 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         tree.els_pt.push_back(els_pt()->at(index));
         tree.els_eta.push_back(els_eta()->at(index));
         tree.els_phi.push_back(els_phi()->at(index));
+
+	// MC truth
+	mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
+	tree.v_els_tru_id.push_back(mcID);
+	tree.v_els_tru_momid.push_back(mcmomID);
+	tree.v_els_tru_tm.push_back(abs(mcID)==pdtlund::e_minus && fromW);
+	tree.v_els_tru_dr.push_back(deltaR);
+
+	// Isolation
         tree.els_reliso.push_back(GetElectronIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ true);
 	tree.v_els_ptrel.push_back(els_ptrel.at(index));
 	tree.v_els_mindr.push_back(els_mindr.at(index));
+
+	// Max pT lepton
+	if(els_pt()->at(index) > lepmax_p4.Pt()){
+	  lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
+				     els_pz()->at(index), els_energy()->at(index));
+	}
       }
-    }
+    } // Loop over els
 
     tree.mus_pt.clear();
     tree.mus_eta.clear();
     tree.mus_phi.clear();
     tree.mus_sigid.clear();
+
+    tree.v_mus_tru_id.clear();
+    tree.v_mus_tru_momid.clear();
+    tree.v_mus_tru_tm.clear();
+    tree.v_mus_tru_dr.clear();
+
     tree.mus_reliso.clear();
     tree.mus_miniso.clear();
     tree.mus_miniso_ch.clear();
@@ -138,12 +169,38 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         tree.mus_pt.push_back(mus_pt()->at(index));
         tree.mus_eta.push_back(mus_eta()->at(index));
         tree.mus_phi.push_back(mus_phi()->at(index));
-        tree.mus_reliso.push_back(GetMuonIsolation(index));
+
+ 	// MC truth
+	mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
+	tree.v_mus_tru_id.push_back(mcID);
+	tree.v_mus_tru_momid.push_back(mcmomID);
+	tree.v_mus_tru_tm.push_back(abs(mcID)==pdtlund::mu_minus && fromW);
+	tree.v_mus_tru_dr.push_back(deltaR);
+
+ 	// Isolation
+	tree.mus_reliso.push_back(GetMuonIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ false);
 	tree.v_mus_ptrel.push_back(mus_ptrel.at(index));
 	tree.v_mus_mindr.push_back(mus_mindr.at(index));
+
+	// Max pT lepton
+	if(mus_pt()->at(index) > lepmax_p4.Pt()){
+	  lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
+				     mus_pz()->at(index), mus_energy()->at(index));
+	}
       }
     }
+
+    // Finding mT and deltaPhi with respect to highest pT lepton
+    tree.mt = bad_val; tree.dphi_wlep = bad_val;
+    if(lepmax_p4.Pt() > 0){
+      double Wx = mets_ex()->at(0) + lepmax_p4.Px();
+      double Wy = mets_ey()->at(0) + lepmax_p4.Py();
+      tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_p4.Phi());
+      if(tree.dphi_wlep > PI) tree.dphi_wlep = 2*PI-tree.dphi_wlep;
+      tree.mt = sqrt(2*lepmax_p4.Pt()* tree.met*(1-cos(tree.met_phi-lepmax_p4.Phi())));
+    }
+
 
 
     tree.mc_pt.clear();

@@ -322,8 +322,8 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
-    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_hasMatchedConversion()->at(iel)));//Skip cut in cfa_13; use alternative in cfa_8
-    // && (!els_n_inner_layer() || misshits_cut >= els_n_inner_layer()->at(iel));//Missing in phys14
+    && ((true || vprob_cut) && (Type()!=typeid(cfa_8) || !els_PATpassConversionVeto()->at(iel)))
+    && (misshits_cut <= els_expectedMissingInnerHits()->at(iel));
 }
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
@@ -486,8 +486,9 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
   double dR = 9999.; closest_dR = 9999.;
   double MCEta, MCPhi;
   double RecEta = mus_eta()->at(index), RecPhi = mus_phi()->at(index);
-  for(unsigned imc=0; imc < mc_mus_id()->size(); imc++){
-    MCEta = mc_mus_eta()->at(imc); MCPhi = mc_mus_phi()->at(imc);
+  for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
+    if(abs(mc_doc_id()->at(imc)) != pdtlund::mu_minus) continue;
+    MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
     dR = sqrt(pow(RecEta-MCEta,2) + pow(RecPhi-MCPhi,2));
     if(dR < closest_dR) {
       closest_dR = dR;
@@ -495,10 +496,10 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
     }
   }
   if(closest_imc >= 0){
-    idLepton = static_cast<int>(mc_mus_id()->at(closest_imc));
-    momID = GetMom(mc_mus_id()->at(closest_imc), mc_mus_mother_id()->at(closest_imc),
-                   mc_mus_grandmother_id()->at(closest_imc),
-                   mc_mus_ggrandmother_id()->at(closest_imc),
+    idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
+    momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
+                   mc_doc_grandmother_id()->at(closest_imc),
+                   mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
@@ -524,8 +525,9 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
   double dR = 9999.; closest_dR = 9999.;
   double MCEta, MCPhi;
   double RecEta = els_eta()->at(index), RecPhi = els_phi()->at(index);
-  for(unsigned imc=0; imc < mc_electrons_id()->size(); imc++){
-    MCEta = mc_electrons_eta()->at(imc); MCPhi = mc_electrons_phi()->at(imc);
+  for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
+    if(abs(mc_doc_id()->at(imc)) != pdtlund::e_minus) continue;
+    MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
     dR = sqrt(pow(RecEta-MCEta,2) + pow(RecPhi-MCPhi,2));
     if(dR < closest_dR) {
       closest_dR = dR;
@@ -533,10 +535,10 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
     }
   }
   if(closest_imc >= 0){
-    idLepton = static_cast<int>(mc_electrons_id()->at(closest_imc));
-    momID = GetMom(mc_electrons_id()->at(closest_imc), mc_electrons_mother_id()->at(closest_imc),
-                   mc_electrons_grandmother_id()->at(closest_imc),
-                   mc_electrons_ggrandmother_id()->at(closest_imc),
+    idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
+    momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
+                   mc_doc_grandmother_id()->at(closest_imc),
+                   mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
   } else {
     closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);

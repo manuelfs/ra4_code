@@ -22,6 +22,8 @@ int main(){
   variables.push_back("float met");
   variables.push_back("float met_phi");
   variables.push_back("float ht");
+  variables.push_back("float mt");
+  variables.push_back("float dphi_wlep");
 
   //////////////////   Leptons   ////////////////
   variables.push_back("std::vector<float> els_pt");
@@ -34,7 +36,10 @@ int main(){
   variables.push_back("std::vector<float> els_miniso_chx");
   variables.push_back("std::vector<double>* els_ptrel");
   variables.push_back("std::vector<double>* els_mindr");
-
+  variables.push_back("std::vector<double>* els_tru_dr");
+  variables.push_back("std::vector<int>* els_tru_id");
+  variables.push_back("std::vector<int>* els_tru_momid");
+  variables.push_back("std::vector<bool>* els_tru_tm");
 
   variables.push_back("std::vector<float> mus_pt");
   variables.push_back("std::vector<float> mus_eta");
@@ -46,6 +51,10 @@ int main(){
   variables.push_back("std::vector<float> mus_miniso_chx");
   variables.push_back("std::vector<double>* mus_ptrel");
   variables.push_back("std::vector<double>* mus_mindr");
+  variables.push_back("std::vector<double>* mus_tru_dr");
+  variables.push_back("std::vector<int>* mus_tru_id");
+  variables.push_back("std::vector<int>* mus_tru_momid");
+  variables.push_back("std::vector<bool>* mus_tru_tm");
 
   ///////////////////   Jets   //////////////////
   variables.push_back("int njets");
