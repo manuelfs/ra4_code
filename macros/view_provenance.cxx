@@ -25,10 +25,12 @@ int main(int argc, char *argv[]){
 
     TString *model = NULL;
     TString *commit = NULL;
-    int noriginal = -1;
+    int nev_file = -1;
+    int nev_sample = -1;
 
     tree->SetBranchAddress("model", &model);
-    tree->SetBranchAddress("noriginal", &noriginal);
+    tree->SetBranchAddress("nev_file", &nev_file);
+    tree->SetBranchAddress("nev_sample", &nev_sample);
     tree->SetBranchAddress("commit", &commit);
 
     const int num_entries = tree->GetEntries();
@@ -56,10 +58,11 @@ int main(int argc, char *argv[]){
       continue;
     }
 
-    cout << "            File: " << argv[arg] << endl;
-    cout << "           Model: " << RemoveTrailingNewlines(model->Data()) << endl;
-    cout << "Original Entries: " << noriginal << endl;
-    cout << "      Git Commit: " << RemoveTrailingNewlines(commit->Data()) << '\n' << endl;
+    cout << "          File: " << argv[arg] << endl;
+    cout << "         Model: " << RemoveTrailingNewlines(model->Data()) << endl;
+    cout << "  File Entries: " << nev_file << endl;
+    cout << "Sample Entries: " << nev_sample << endl;
+    cout << "    Git Commit: " << RemoveTrailingNewlines(commit->Data()) << '\n' << endl;
 
     file.Close();
   }
