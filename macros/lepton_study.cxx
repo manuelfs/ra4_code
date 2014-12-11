@@ -22,7 +22,7 @@ int main(){
   style.setDefaultStyle();
 
   TChain ttbar("tree");
-  ttbar.Add("archive/ra4skim/small_TT_*batch1.root");
+  ttbar.Add("archive/ra4skim/small_TT_*.root");
   TChain t1tttt("tree");
   t1tttt.Add("archive/ra4skim/small*SMS*T1tttt*.root");
 
@@ -46,8 +46,8 @@ int main(){
 void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   const unsigned nbins = 1000;
   const double reliso_low = 0.0, reliso_high = 5.0;
-  const double ptrel_low = 0.0, ptrel_high = 25.0;
-  const double ptrel_25_low = 0.0, ptrel_25_high = 100.0;
+  const double ptrel_low = 0.0, ptrel_high = 500.0;
+  const double ptrel_25_low = 0.0, ptrel_25_high = 1000.0;
 
   TH1D reliso_good("reliso_good","", nbins, reliso_low, reliso_high);
   TH1D reliso_bad("reliso_bad","", nbins, reliso_low, reliso_high);

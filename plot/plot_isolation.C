@@ -49,7 +49,7 @@ public:
   int color, style;
 };
 
-void plot_isolation(TString luminosity="5") { 
+void plot_isolation(bool use_mus=true, TString luminosity="5"){
   styles style("Standard"); style.setDefaultStyle(); gStyle->SetPadTickY(1); 
   vector<hfeats> vars;
   TCanvas can;
@@ -57,15 +57,24 @@ void plot_isolation(TString luminosity="5") {
   // Reading ntuples
   vector<TChain *> chain;
   vector<sfeats> Samples; 
-  Samples.push_back(sfeats("ntuples/*T1tttt*1500_*", "T1tttt(1500,100), #mu from W", 2, 1, "mus_tru_tm"));
-  Samples.push_back(sfeats("ntuples/*T1tttt*1500_*", "T1tttt(1500,100), #mu not from W", 4, 1, 
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), #mu from W", 2, 1, "mus_tru_tm"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), #mu not from W", 4, 1, 
 			   "!mus_tru_tm&&abs(mus_tru_id)==13"));
-  Samples.push_back(sfeats("ntuples/*T1tttt*1500_*", "T1tttt(1500,100), fake #mu", 28, 1, "abs(mus_tru_id)!=13"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), fake #mu", 28, 1, "abs(mus_tru_id)!=13"));
 
-  Samples.push_back(sfeats("ntuples/*TT*", "tt, #mu from W", 2, 1, "mus_tru_tm"));
-  Samples.push_back(sfeats("ntuples/*TT*", "tt, #mu not from W", 4, 1, 
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, #mu from W", 2, 1, "mus_tru_tm"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, #mu not from W", 4, 1, 
 			   "!mus_tru_tm&&abs(mus_tru_id)==13"));
-  Samples.push_back(sfeats("ntuples/*TT*", "tt, fake #mu", 28, 1, "abs(mus_tru_id)!=13"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, fake #mu", 28, 1, "abs(mus_tru_id)!=13"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), el from W", 2, 1, "els_tru_tm"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), el not from W", 4, 1, 
+			   "!els_tru_tm&&abs(els_tru_id)==13"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*", "T1tttt(1500,100), fake el", 28, 1, "abs(els_tru_id)!=13"));
+
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, el from W", 2, 1, "els_tru_tm"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, el not from W", 4, 1, 
+			   "!els_tru_tm&&abs(els_tru_id)==13"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt, fake el", 28, 1, "abs(els_tru_id)!=13"));
 
   for(unsigned sam(0); sam < Samples.size(); sam++){
     chain.push_back(new TChain("tree"));
@@ -73,16 +82,49 @@ void plot_isolation(TString luminosity="5") {
   }
 
   vector<int> allsamples;
-  allsamples.push_back(0); //(1500,100) TM mus from W
-  allsamples.push_back(2); //(1500,100) TM mus not from W
-  allsamples.push_back(1); //(1500,100) non-TM mus
+  if(use_mus){
+    allsamples.push_back(0); //(1500,100) TM mus from W
+    allsamples.push_back(2); //(1500,100) TM mus not from W
+    allsamples.push_back(1); //(1500,100) non-TM mus
+  }else{
+    allsamples.push_back(6); //(1500,100) TM els from W
+    allsamples.push_back(8); //(1500,100) TM els not from W
+    allsamples.push_back(7); //(1500,100) non-TM els
+  }
 
-  vars.push_back(hfeats("mus_reliso",50,0,1,allsamples,"Muon relative isolation","mus_pt>20&&mus_pt<40",0.12));
-  vars.push_back(hfeats("mus_miniso/mus_pt",50,0,1,allsamples,"Muon mini isolation","mus_pt>20&&mus_pt<40",0.12));
+  if(use_mus){
+    vars.push_back(hfeats("mus_reliso",50,0,1,allsamples,"Muon relative isolation","mus_pt>20&&mus_pt<50",0.12));
+    vars.push_back(hfeats("mus_ptrel",50,0,50,allsamples,"Muon p_{T}^{rel}","mus_pt>20&&mus_pt<50",15.));
+    vars.push_back(hfeats("mus_ptrel_25",50,0,50,allsamples,"Muon p_{T}^{rel}(25 GeV jets)","mus_pt>20&&mus_pt<50",25.));
+    vars.push_back(hfeats("mus_mindr",50,0,1,allsamples,"Muon Min #Delta R","mus_pt>20&&mus_pt<50",0.4));
+    vars.push_back(hfeats("mus_mindr_25",50,0,1,allsamples,"Muon Min #Delta R(25 GeV jets)","mus_pt>20&&mus_pt<50",0.4));
+    vars.push_back(hfeats("mus_miniso/mus_pt",50,0,1,allsamples,"Muon mini isolation","mus_pt>20&&mus_pt<50",0.12));
+    vars.push_back(hfeats("mus_miniso_ch/mus_pt",50,0,1,allsamples,"Muon mini isolation (charged only)","mus_pt>20&&mus_pt<50",0.12));
 
-  vars.push_back(hfeats("mus_reliso",50,0,1,allsamples,"Muon relative isolation","mus_pt>100",0.12));
-  vars.push_back(hfeats("mus_miniso/mus_pt",50,0,1,allsamples,"Muon mini isolation","mus_pt>100",0.12));
+    vars.push_back(hfeats("mus_reliso",50,0,1,allsamples,"Muon relative isolation","mus_pt>100",0.12));
+    vars.push_back(hfeats("mus_ptrel",50,0,50,allsamples,"Muon p_{T}^{rel}","mus_pt>100",15.));
+    vars.push_back(hfeats("mus_ptrel_25",50,0,50,allsamples,"Muon p_{T}^{rel}(25 GeV jets)","mus_pt>100",25.));
+    vars.push_back(hfeats("mus_mindr",50,0,1,allsamples,"Muon Min #Delta R","mus_pt>100",0.4));
+    vars.push_back(hfeats("mus_mindr_25",50,0,1,allsamples,"Muon Min #Delta R(25 GeV jets)","mus_pt>100",0.4));
+    vars.push_back(hfeats("mus_miniso/mus_pt",50,0,1,allsamples,"Muon mini isolation","mus_pt>100",0.12));
+    vars.push_back(hfeats("mus_miniso_ch/mus_pt",50,0,1,allsamples,"Muon mini isolation (charged only)","mus_pt>100",0.12));
+  }else{
+    vars.push_back(hfeats("els_reliso",50,0,1,allsamples,"Electron relative isolation","els_pt>20&&els_pt<50",0.2179));
+    vars.push_back(hfeats("els_ptrel",50,0,50,allsamples,"Electron p_{T}^{rel}","els_pt>20&&els_pt<50",15.));
+    vars.push_back(hfeats("els_ptrel_25",50,0,50,allsamples,"Electron p_{T}^{rel}(25 GeV jets)","els_pt>20&&els_pt<50",25.));
+    vars.push_back(hfeats("els_mindr",50,0,1,allsamples,"Electron Min #Delta R","els_pt>20&&els_pt<50",0.4));
+    vars.push_back(hfeats("els_mindr_25",50,0,1,allsamples,"Electron Min #Delta R(25 GeV jets)","els_pt>20&&els_pt<50",0.4));
+    vars.push_back(hfeats("els_miniso/els_pt",50,0,1,allsamples,"Electron mini isolation","els_pt>20&&els_pt<50",0.12));
+    vars.push_back(hfeats("els_miniso_ch/els_pt",50,0,1,allsamples,"Electron mini isolation (charged only)","els_pt>20&&els_pt<50",0.2179));
 
+    vars.push_back(hfeats("els_reliso",50,0,1,allsamples,"Electron relative isolation","els_pt>100",0.2179));
+    vars.push_back(hfeats("els_ptrel",50,0,50,allsamples,"Electron p_{T}^{rel}","els_pt>100",15.));
+    vars.push_back(hfeats("els_ptrel_25",50,0,50,allsamples,"Electron p_{T}^{rel}(25 GeV jets)","els_pt>100",25.));
+    vars.push_back(hfeats("els_mindr",50,0,1,allsamples,"Electron Min #Delta R","els_pt>100",0.4));
+    vars.push_back(hfeats("els_mindr_25",50,0,1,allsamples,"Electron Min #Delta R(25 GeV jets)","els_pt>100",0.4));
+    vars.push_back(hfeats("els_miniso/els_pt",50,0,1,allsamples,"Electron mini isolation","els_pt>100",0.2179));
+    vars.push_back(hfeats("els_miniso_ch/els_pt",50,0,1,allsamples,"Electron mini isolation (charged only)","els_pt>100",0.2179));
+  }
 
   float minLog = 0.04, maxLog = 10;
   double legX = 0.35, legY = 0.91, legSingle = 0.055;
@@ -128,8 +170,8 @@ void plot_isolation(TString luminosity="5") {
       totCut = luminosity+"*weight*("+vars[var].cuts+"&&"+Samples[isam].cut+")"; 
       chain[isam]->Project(histo[0][var][sam]->GetName(), variable, totCut);
       histo[0][var][sam]->SetBinContent(vars[var].nbins,
-					  histo[0][var][sam]->GetBinContent(vars[var].nbins)+
-					  histo[0][var][sam]->GetBinContent(vars[var].nbins+1));
+					histo[0][var][sam]->GetBinContent(vars[var].nbins)+
+					histo[0][var][sam]->GetBinContent(vars[var].nbins+1));
       nentries.push_back(histo[0][var][sam]->Integral(1,vars[var].nbins));
       histo[0][var][sam]->SetXTitle(vars[var].title);
       ytitle = "Entries for "+luminosity+" fb^{-1}";
