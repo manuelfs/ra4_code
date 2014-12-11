@@ -96,9 +96,12 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     vector<float> mus_mindr(0), els_mindr(0);
     vector<float> mus_ptrel_25(0), els_ptrel_25(0);
     vector<float> mus_mindr_25(0), els_mindr_25(0);
+    vector<float> mus_ptrel_norem(0), els_ptrel_norem(0);
+    vector<float> mus_mindr_norem(0), els_mindr_norem(0);
     if(!skip_slow){
-      GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr);
-      GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0);
+      GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr, 0.0, true);
+      GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, true);
+      GetPtRels(els_ptrel_norem, els_mindr_norem, mus_ptrel_norem, mus_mindr_norem, 25.0, false);
     }else{
       els_ptrel = vector<float>(els_pt()->size(), bad_val);
       els_mindr = vector<float>(els_pt()->size(), bad_val);
@@ -108,6 +111,10 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       els_mindr_25 = vector<float>(els_pt()->size(), bad_val);
       mus_ptrel_25 = vector<float>(mus_pt()->size(), bad_val);
       mus_mindr_25 = vector<float>(mus_pt()->size(), bad_val);
+      els_ptrel_norem = vector<float>(els_pt()->size(), bad_val);
+      els_mindr_norem = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel_norem = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr_norem = vector<float>(mus_pt()->size(), bad_val);
     }
 
     tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
@@ -127,6 +134,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.els_mindr.clear();
     tree.els_ptrel_25.clear();
     tree.els_mindr_25.clear();
+    tree.els_ptrel_norem.clear();
+    tree.els_mindr_norem.clear();
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
         tree.els_sigid.push_back(IsSignalIdElectron(index));
@@ -148,6 +157,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	tree.els_mindr.push_back(els_mindr.at(index));
 	tree.els_ptrel_25.push_back(els_ptrel_25.at(index));
 	tree.els_mindr_25.push_back(els_mindr_25.at(index));
+	tree.els_ptrel_norem.push_back(els_ptrel_norem.at(index));
+	tree.els_mindr_norem.push_back(els_mindr_norem.at(index));
 
 	// Max pT lepton
 	if(els_pt()->at(index) > lepmax_p4.Pt())
@@ -178,6 +189,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.mus_mindr.clear();
     tree.mus_ptrel_25.clear();
     tree.mus_mindr_25.clear();
+    tree.mus_ptrel_norem.clear();
+    tree.mus_mindr_norem.clear();
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
         tree.mus_sigid.push_back(IsSignalIdMuon(index));
@@ -199,6 +212,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	tree.mus_mindr.push_back(mus_mindr.at(index));
 	tree.mus_ptrel_25.push_back(mus_ptrel_25.at(index));
 	tree.mus_mindr_25.push_back(mus_mindr_25.at(index));
+	tree.mus_ptrel_norem.push_back(mus_ptrel_norem.at(index));
+	tree.mus_mindr_norem.push_back(mus_mindr_norem.at(index));
 
 	// Max pT lepton
 	if(mus_pt()->at(index) > lepmax_p4.Pt())
@@ -570,6 +585,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 			      std::vector<float> &mus_ptrel,
 			      std::vector<float> &mus_mindr,
 			      float pt_cut,
+			      bool remove_isolated,
 			      float dr_match_thresh){
   using namespace fastjet;
   els_ptrel.resize(els_pt()->size());
@@ -599,7 +615,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
     }
     if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
       els_cand_idx.at(el) = imatch;
-      if(IsSignalElectron(el)){
+      if(remove_isolated && IsSignalElectron(el)){
 	els_removed.at(el) = true;
 	to_remove.insert(imatch);
       }else{
@@ -629,7 +645,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
     }
     if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
       mus_cand_idx.at(mu) = imatch;
-      if(IsSignalMuon(mu)){
+      if(remove_isolated && IsSignalMuon(mu)){
 	mus_removed.at(mu) = true;
 	to_remove.insert(imatch);
       }else{

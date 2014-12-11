@@ -24,6 +24,7 @@ public:
 		 std::vector<float> &mus_ptrel,
 		 std::vector<float> &mus_mindr,
 		 float pt_cut = 0.0,
+		 bool remove_isolated = true,
 		 float dr_match_thresh = -1.0);
 
   bool skip_slow;
