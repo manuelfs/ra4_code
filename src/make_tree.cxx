@@ -80,16 +80,8 @@ int main(int argc, char *argv[]){
     }
   } else {
     outFilename = outfolder+prefix+outFilename;
+    nfiles = -1;
   }
-
-  // Checking if output file exists
-  TString outname(outFilename);
-  outname.ReplaceAll(outfolder, "");
-  vector<TString> outfiles = dirlist(outfolder, outname);
-  // if(outfiles.size()>0) {
-  //   cout<<"File "<<outFilename<<" exists. Exiting"<<endl;
-  //   return 0;
-  // }
 
   cout<<"Opening "<<inFilename<<endl;
   event_handler tHandler(inFilename, quick_mode); 
@@ -99,7 +91,7 @@ int main(int argc, char *argv[]){
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
   }
   if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
-  if(nfiles<=0 || inFilename.find(".root")!=std::string::npos) Ntotentries = Nentries;
+  if(nfiles<=0) Ntotentries = Nentries;
 
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
@@ -107,9 +99,9 @@ int main(int argc, char *argv[]){
       <<". "<<Ntotentries<<" entries in the full sample."<<endl;
   tHandler.ReduceTree(Nentries, outFilename, Ntotentries);
 
-  cout<<"Wrote "<<outFilename<<endl;
+  cout<<"Wrote "<<outFilename<<endl<<endl;
   time(&curTime);
-  cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl;
+  cout<<Nentries<<" events took "<<difftime(curTime,startTime)<<" seconds"<<endl<<endl;
 
   return 0;
 }
