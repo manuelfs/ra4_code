@@ -7,8 +7,9 @@
 #include "TGraph.h"
 #include "TChain.h"
 
-void DrawROC(TChain &ttbar, TChain &susy, const std::string &lep);
-TGraph MakeROC(TH1D &good, TH1D &bad, const bool less_is_better);
+void DrawROC(TChain &ttbar, TChain &t1tttt, const std::string &lep, int pt_bin = 0);
+TGraph MakeROC(TH1D &good, TH1D &bad, const bool less_is_better,
+	       double good_count = 0.0, double bad_count = 0.0);
 void DrawScat(TChain &chain, const std::string &sample,
 	      const std::string &lep, const bool truth_match);
 
