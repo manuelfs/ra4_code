@@ -258,6 +258,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.mc_momid.push_back(mc_doc_mother_id()->at(igen));  
       tree.mc_gmomid.push_back(mc_doc_grandmother_id()->at(igen));  
     }
+    tree.mc_type = TypeCode();
 
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
@@ -890,4 +891,66 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   }
   
   return;
+}
+unsigned event_handler::TypeCode() const{
+  const string sample_name = SampleName();
+  unsigned sample_code = 0xF;
+  if(Contains(sample_name, "SMS")){
+    sample_code = 0x0;
+  }else if(Contains(sample_name, "TTJets")
+           || Contains(sample_name, "TT_")){
+    sample_code = 0x1;
+  }else if(Contains(sample_name, "WJets")){
+    sample_code = 0x2;
+  }else if(Contains(sample_name, "T_s-channel")
+           || Contains(sample_name, "T_tW-channel")
+           || Contains(sample_name, "T_t-channel")
+           || Contains(sample_name, "Tbar_s-channel")
+           || Contains(sample_name, "Tbar_tW-channel")
+           || Contains(sample_name, "Tbar_t-channel")){
+    sample_code = 0x3;
+  }else if(Contains(sample_name, "QCD")){
+    sample_code = 0x4;
+  }else if(Contains(sample_name, "DY")){
+    sample_code = 0x5;
+  }else{
+    sample_code = 0xF;
+  }
+
+  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0, num_conversions = 0;
+  bool counting = false;
+
+  for(size_t i = 0; i < mc_doc_id()->size(); ++i){
+    const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
+    const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
+    const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
+    const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+
+    if(mom != 15) counting=false;
+
+    if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
+      ++num_leps;
+      if(mom == 15){
+        ++num_tau_to_lep;
+        if(counting){
+          ++num_conversions;
+          counting = false;
+        }else{
+          counting = true;
+        }
+      }
+    }else if(id == 15 && mom == 24){
+      ++num_taus;
+    }
+  }
+
+  num_leps -= 2*num_conversions;
+  num_tau_to_lep -= 2*num_conversions;
+
+  if(sample_code > 0xF) sample_code = 0xF;
+  if(num_leps > 0xF) num_leps = 0xF;
+  if(num_tau_to_lep > 0xF) num_tau_to_lep = 0xF;
+  if(num_taus > 0xF) num_taus = 0xF;
+
+  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_taus;
 }

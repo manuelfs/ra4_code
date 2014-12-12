@@ -100,6 +100,7 @@ int main(){
   variables.push_back("std::vector<float> jets_csv");
 
   ////////////////////   MC   ///////////////////
+  variables.push_back("unsigned mc_type");
   variables.push_back("std::vector<float> mc_pt");
   variables.push_back("std::vector<float> mc_eta");
   variables.push_back("std::vector<float> mc_phi");

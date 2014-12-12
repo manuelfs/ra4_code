@@ -26,6 +26,7 @@ public:
 		 float pt_cut = 0.0,
 		 bool remove_isolated = true,
 		 float dr_match_thresh = -1.0);
+  unsigned TypeCode() const;
 
   bool skip_slow;
 

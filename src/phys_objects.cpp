@@ -520,7 +520,7 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &clo
 
 int phys_objects::GetTrueParticle(float RecPt, float RecEta, float RecPhi, 
 				  float &closest_deltaR, int ID) const {
-  const float pT_Threshold(0.3), dR_Threshold(0.03);
+  const float pT_Threshold(0.3), dR_Threshold(0.1);
   int closest_imc = -1;
   float deltaR = 9999.; closest_deltaR = 9999.;
   float MCEta, MCPhi;
