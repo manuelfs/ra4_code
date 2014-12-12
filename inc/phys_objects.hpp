@@ -68,9 +68,9 @@ public:
   bool IsBasicJet(unsigned ijet) const;
 
   // Truth matching
-  int GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const;
-  int GetTrueMuon(int index, int &momID, bool &fromW, double &closest_dR) const;
-  int GetTrueParticle(double RecEta, double RecPhi, double &closest_dR) const;
+  int GetTrueElectron(int index, int &momID, bool &fromW, float &closest_dR) const;
+  int GetTrueMuon(int index, int &momID, bool &fromW, float &closest_dR) const;
+  int GetTrueParticle(float RecPt, float RecEta, float RecPhi, float &closest_dR, int ID) const;
 
   // Event cleaning
   bool PassesMETCleaningCut() const;

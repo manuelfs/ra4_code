@@ -34,7 +34,6 @@ float phys_objects::MinVetoLeptonPt = 15.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
 float phys_objects::bad_val = -999.;
 
-
 phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV){
 }
@@ -373,30 +372,6 @@ float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 }
 
 /////////////////////////////////////////////////////////////////////////
-/////////////////////////////////  LEPTONS  /////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-int phys_objects::GetMom(const float id, const float mom, const float gmom,
-                         const float ggmom, bool &fromW){
-  const int iid = TMath::Nint(id);
-  const int imom = TMath::Nint(mom);
-  const int igmom = TMath::Nint(gmom);
-  const int iggmom = TMath::Nint(ggmom);
-
-  int ret_mom = 0;
-  if(imom != iid){
-    ret_mom = imom;
-  }else if(igmom != iid){
-    ret_mom = igmom;
-  }else{
-    ret_mom = iggmom;
-  }
-
-  fromW = (abs(imom)==24 || abs(igmom)==24 || abs(iggmom)==24);
-
-  return ret_mom;
-}
-
-/////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  TRACKS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
@@ -481,22 +456,14 @@ bool phys_objects::IsBasicJet(unsigned ijet) const{
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////  TRUTH-MATCHING  ///////////////////////////
 /////////////////////////////////////////////////////////////////////////
-int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closest_dR) const {
+int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, float &closest_deltaR) const {
   if(index < 0 || index >= static_cast<int>(mus_eta()->size())) return -1;
 
+  closest_deltaR = 9999.;
   int closest_imc = -1, idLepton = 0;
-  double dR = 9999.; closest_dR = 9999.;
-  double MCEta, MCPhi;
-  double RecEta = mus_eta()->at(index), RecPhi = mus_phi()->at(index);
-  for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
-    if(abs(mc_doc_id()->at(imc)) != pdtlund::mu_minus) continue;
-    MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
-    if(dR < closest_dR) {
-      closest_dR = dR;
-      closest_imc = imc;
-    }
-  }
+  float RecPt = mus_pt()->at(index), RecEta = mus_eta()->at(index), RecPhi = mus_phi()->at(index);
+  closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::mu_minus);
+  
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
@@ -504,7 +471,7 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
                    mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
   } else {
-    closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
+    closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){
       idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
       momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
@@ -520,22 +487,14 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, double &closes
   return idLepton;
 }
 
-int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &closest_dR) const {
+int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &closest_deltaR) const {
   if(index < 0 || index >= static_cast<int>(els_eta()->size())) return -1;
 
+  closest_deltaR = 9999.;
   int closest_imc = -1, idLepton = 0;
-  double dR = 9999.; closest_dR = 9999.;
-  double MCEta, MCPhi;
-  double RecEta = els_eta()->at(index), RecPhi = els_phi()->at(index);
-  for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
-    if(abs(mc_doc_id()->at(imc)) != pdtlund::e_minus) continue;
-    MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
-    if(dR < closest_dR) {
-      closest_dR = dR;
-      closest_imc = imc;
-    }
-  }
+  float RecPt = els_pt()->at(index), RecEta = els_eta()->at(index), RecPhi = els_phi()->at(index);
+  closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::e_minus);
+  
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
@@ -543,7 +502,7 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
                    mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
   } else {
-    closest_imc = GetTrueParticle(RecEta, RecPhi, closest_dR);
+    closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){
       momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
                      mc_doc_grandmother_id()->at(closest_imc),
@@ -559,19 +518,41 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, double &cl
   return idLepton;
 }
 
-int phys_objects::GetTrueParticle(double RecEta, double RecPhi, double &closest_dR) const {
+int phys_objects::GetTrueParticle(float RecPt, float RecEta, float RecPhi, 
+				  float &closest_deltaR, int ID) const {
+  const float pT_Threshold(0.3), dR_Threshold(0.03);
   int closest_imc = -1;
-  double dR = 9999.; closest_dR = 9999.;
-  double MCEta, MCPhi;
+  float deltaR = 9999.; closest_deltaR = 9999.;
+  float MCEta, MCPhi;
   for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
+    if(ID!=0 && abs(mc_doc_id()->at(imc)) != ID) continue;
     MCEta = mc_doc_eta()->at(imc); MCPhi = mc_doc_phi()->at(imc);
-    dR = AddInQuadrature(RecEta-MCEta, RecPhi-MCPhi);
-    if(dR < closest_dR) {
-      closest_dR = dR;
+    deltaR = dR(RecEta,MCEta, RecPhi,MCPhi);
+    if(deltaR > dR_Threshold || abs(mc_doc_pt()->at(imc)-RecPt)/RecPt > pT_Threshold) continue;
+    if(deltaR < closest_deltaR && deltaR < dR_Threshold) {
+      closest_deltaR = deltaR;
       closest_imc = imc;
     }
   }
   return closest_imc;
+}
+
+int phys_objects::GetMom(const float id, const float mom, const float gmom,
+                         const float ggmom, bool &fromW){
+  const int iid = TMath::Nint(id);
+  const int imom = TMath::Nint(mom);
+  const int igmom = TMath::Nint(gmom);
+  const int iggmom = TMath::Nint(ggmom);
+
+  int ret_mom = 0;
+  if(imom != iid)       ret_mom = imom;
+  else if(igmom != iid) ret_mom = igmom;
+  else                  ret_mom = iggmom;
+
+  // There's various leptons that seem to come from W->udsc->l. We won't call them prompt
+  fromW = abs(ret_mom)==24 || (abs(ret_mom)==15 && (abs(igmom)==24 || abs(iggmom)==24));
+
+  return ret_mom;
 }
 
 /////////////////////////////////////////////////////////////////////////

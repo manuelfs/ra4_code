@@ -91,7 +91,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     ////////////////   Leptons   ////////////////
     bool fromW(false);
     int mcID, mcmomID;
-    double deltaR;
+    float deltaR;
     vector<float> mus_ptrel(0), els_ptrel(0);
     vector<float> mus_mindr(0), els_mindr(0);
     vector<float> mus_ptrel_25(0), els_ptrel_25(0);
