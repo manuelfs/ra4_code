@@ -26,6 +26,7 @@ int main(){
   variables.push_back("float mht30");
   variables.push_back("float mt");
   variables.push_back("float dphi_wlep");
+  variables.push_back("float mindphin_metjet");
 
   //////////////////   Leptons   ////////////////
   variables.push_back("int nleps");
@@ -50,6 +51,7 @@ int main(){
   variables.push_back("std::vector<int> mus_tru_id");
   variables.push_back("std::vector<int> mus_tru_momid");
   variables.push_back("std::vector<bool> mus_tru_tm");
+  variables.push_back("std::vector<int> mus_charge");
 
   variables.push_back("int nels");
   variables.push_back("int nvels");
@@ -72,6 +74,7 @@ int main(){
   variables.push_back("std::vector<int> els_tru_id");
   variables.push_back("std::vector<int> els_tru_momid");
   variables.push_back("std::vector<bool> els_tru_tm");
+  variables.push_back("std::vector<int> els_charge");
 
   ///////////////////   Jets   //////////////////
   variables.push_back("int njets");

@@ -86,6 +86,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
     tree.met = mets_et()->at(0);
     tree.met_phi = mets_phi()->at(0);
+    tree.mindphin_metjet = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
 
 
     ////////////////   Leptons   ////////////////
@@ -98,6 +99,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     vector<float> mus_mindr_25(0), els_mindr_25(0);
     vector<float> mus_ptrel_norem(0), els_ptrel_norem(0);
     vector<float> mus_mindr_norem(0), els_mindr_norem(0);
+    lepmax_p4.SetPtEtaPhiE(0,0,0,0);
     if(!skip_slow){
       GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr, 0.0, true);
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, true);
@@ -120,6 +122,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
     tree.els_pt.clear(); tree.els_eta.clear(); tree.els_phi.clear();
     tree.els_sigid.clear();
+    tree.els_charge.clear();
 
     tree.els_tru_id.clear();
     tree.els_tru_momid.clear();
@@ -142,6 +145,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         tree.els_pt.push_back(els_pt()->at(index));
         tree.els_eta.push_back(els_eta()->at(index));
         tree.els_phi.push_back(els_phi()->at(index));
+	tree.els_charge.push_back(TMath::Nint(els_charge()->at(index)));
 
 	// MC truth
 	mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -161,7 +165,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	tree.els_mindr_norem.push_back(els_mindr_norem.at(index));
 
 	// Max pT lepton
-	if(els_pt()->at(index) > lepmax_p4.Pt())
+	if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
 	  lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
 				     els_pz()->at(index), els_energy()->at(index));
 	
@@ -175,6 +179,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.nmus = 0; tree.nvmus = 0; tree.nvmus10 = 0; 
     tree.mus_pt.clear(); tree.mus_eta.clear(); tree.mus_phi.clear();
     tree.mus_sigid.clear();
+    tree.mus_charge.clear();
 
     tree.mus_tru_id.clear();
     tree.mus_tru_momid.clear();
@@ -197,6 +202,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         tree.mus_pt.push_back(mus_pt()->at(index));
         tree.mus_eta.push_back(mus_eta()->at(index));
         tree.mus_phi.push_back(mus_phi()->at(index));
+	tree.mus_charge.push_back(TMath::Nint(mus_charge()->at(index)));
 
  	// MC truth
 	mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -216,7 +222,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	tree.mus_mindr_norem.push_back(mus_mindr_norem.at(index));
 
 	// Max pT lepton
-	if(mus_pt()->at(index) > lepmax_p4.Pt())
+	if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
 	  lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
 				     mus_pz()->at(index), mus_energy()->at(index));
 	
