@@ -51,6 +51,10 @@ float cross_section(TString file){
   if(file.Contains("WToENu"))   xsec = 16000.0;
   if(file.Contains("WToMuNu"))  xsec = 16100.0;
 
+  if(file.Contains("QCD_HT_250To500_13TeV-madgraph"))  xsec = 670500.0;
+  if(file.Contains("QCD_HT-500To1000_13TeV-madgraph")) xsec = 26740.0;
+  if(file.Contains("QCD_HT_1000ToInf_13TeV-madgraph")) xsec = 769.7;
+
   if(file.Contains("QCD_Pt-5to10"))      xsec = 80710000000;
   if(file.Contains("QCD_Pt-10to15"))     xsec = 7528000000;
   if(file.Contains("QCD_Pt-15to30"))     xsec = 2237000000;

@@ -24,18 +24,21 @@ int main(){
   TChain ttbar("tree");
   ttbar.Add("archive/ra4skim/small_TT_*batch1.root");
   TChain t1tttt("tree");
-  t1tttt.Add("archive/ra4skim/small*SMS*T1tttt*.root");
+  t1tttt.Add("archive/ra4skim/small*SMS*T1tttt*PU20*.root");
 
   DrawROC(ttbar, t1tttt, "el");
-  DrawROC(ttbar, t1tttt, "el",1);
-  DrawROC(ttbar, t1tttt, "el",2);
-  DrawROC(ttbar, t1tttt, "el",3);
-  DrawROC(ttbar, t1tttt, "el",4);
   DrawROC(ttbar, t1tttt, "mu");
-  DrawROC(ttbar, t1tttt, "mu",1);
-  DrawROC(ttbar, t1tttt, "mu",2);
-  DrawROC(ttbar, t1tttt, "mu",3);
-  DrawROC(ttbar, t1tttt, "mu",4);
+
+  // DrawROC(ttbar, t1tttt, "el");
+  // DrawROC(ttbar, t1tttt, "el",1);
+  // DrawROC(ttbar, t1tttt, "el",2);
+  // DrawROC(ttbar, t1tttt, "el",3);
+  // DrawROC(ttbar, t1tttt, "el",4);
+  // DrawROC(ttbar, t1tttt, "mu");
+  // DrawROC(ttbar, t1tttt, "mu",1);
+  // DrawROC(ttbar, t1tttt, "mu",2);
+  // DrawROC(ttbar, t1tttt, "mu",3);
+  // DrawROC(ttbar, t1tttt, "mu",4);
 
   //DrawScat(chain, "ttbar", "el", true);
   //DrawScat(chain, "ttbar", "el", false);
@@ -46,7 +49,7 @@ int main(){
 void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   const unsigned nbins = 1000;
   const double reliso_low = 0.0, reliso_high = 5.0;
-  const double ptrel_low = 0.0, ptrel_high = 25.0;
+  const double ptrel_low = 0.0, ptrel_high = 100.0;
   const double ptrel_25_low = 0.0, ptrel_25_high = 100.0;
 
   TH1D reliso_good("reliso_good","", nbins, reliso_low, reliso_high);
@@ -118,16 +121,16 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
 		(lep+"s_ptrel_25+("+lep+"s_ptrel_25<0||"+lep+"s_mindr_25>0.4)*9999.").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("miniso_good",
-		(lep+"s_miniso/"+lep+"s_pt").c_str(),
+		(lep+"s_miniso_tr15").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("miniso_bad",
-		(lep+"s_miniso/"+lep+"s_pt").c_str(),
+		(lep+"s_miniso_tr15").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("miniso_ch_good",
-		(lep+"s_miniso_ch/"+lep+"s_pt").c_str(),
+		(lep+"s_miniso_tr15_ch").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("miniso_ch_bad",
-		(lep+"s_miniso_ch/"+lep+"s_pt").c_str(),
+		(lep+"s_miniso_tr15_ch").c_str(),
 		bad_denom_cut.c_str());
 		
   double good_count, bad_count ,junk;
@@ -189,8 +192,8 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   leg.SetBorderSize(0);
   leg.SetTextSize(0.05);
   leg.AddEntry(&reliso, "Rel. Iso.", "l");
-  leg.AddEntry(&miniso, "Mini Iso.", "l");
-  leg.AddEntry(&miniso_ch, "Mini Iso. (charged only)", "l");
+  leg.AddEntry(&miniso, "Mini Iso. Tr., kt = 15 GeV", "l");
+  leg.AddEntry(&miniso_ch, "Mini Iso. Tr., kt = 15 GeV (ch. only)", "l");
   leg.AddEntry(&ptrel, "p_{T}^{rel} || #Delta R>0.4 || Isolated", "l");
   leg.AddEntry(&ptrel_25, "p_{T}^{rel}(25 GeV jets) || #Delta R>0.4 || Isolated", "l");
   leg.Draw("same");

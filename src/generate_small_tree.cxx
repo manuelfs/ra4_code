@@ -235,7 +235,14 @@ int main(){
 
   cppFile << "void small_tree::Fill(){\n";
   cppFile << "  if(isReadOnly) cout<<\"Tree is read only\"<<endl;\n";
-  cppFile << "  else tree.Fill();\n";
+  cppFile << "  else tree.Fill();\n\n  // Clearing vectors\n";
+  for(unsigned int var(0); var<variables.size(); var++){
+    name = variables[var]; copy = name;
+    if(copy.Contains("vector")){
+      name.Remove(0, name.Last(' ')+1);
+      cppFile << "  "<<name<<(copy.Contains("*")?"->":".")<<"clear();\n";
+    }
+  }
   cppFile << "}\n\n";
   cppFile << "void small_tree::Write(){\n";
   cppFile << "  if(isReadOnly) chain.Write();\n";

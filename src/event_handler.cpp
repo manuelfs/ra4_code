@@ -120,23 +120,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
 
     tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
-    tree.els_pt.clear(); tree.els_eta.clear(); tree.els_phi.clear();
-    tree.els_sigid.clear();
-    tree.els_charge.clear();
-    tree.els_ispf.clear();
-
-    tree.els_tru_id.clear();
-    tree.els_tru_momid.clear();
-    tree.els_tru_tm.clear();
-    tree.els_tru_dr.clear();
-
-    tree.els_reliso.clear();
-    tree.els_ptrel.clear();
-    tree.els_mindr.clear();
-    tree.els_ptrel_25.clear();
-    tree.els_mindr_25.clear();
-    tree.els_ptrel_norem.clear();
-    tree.els_mindr_norem.clear();
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
         tree.els_sigid.push_back(IsSignalIdElectron(index));
@@ -176,22 +159,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     } // Loop over els
 
     tree.nmus = 0; tree.nvmus = 0; tree.nvmus10 = 0; 
-    tree.mus_pt.clear(); tree.mus_eta.clear(); tree.mus_phi.clear();
-    tree.mus_sigid.clear();
-    tree.mus_charge.clear();
-
-    tree.mus_tru_id.clear();
-    tree.mus_tru_momid.clear();
-    tree.mus_tru_tm.clear();
-    tree.mus_tru_dr.clear();
-
-    tree.mus_reliso.clear();
-    tree.mus_ptrel.clear();
-    tree.mus_mindr.clear();
-    tree.mus_ptrel_25.clear();
-    tree.mus_mindr_25.clear();
-    tree.mus_ptrel_norem.clear();
-    tree.mus_mindr_norem.clear();
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
         tree.mus_sigid.push_back(IsSignalIdMuon(index));
@@ -244,12 +211,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
 
     ////////////////   TRUTH   ////////////////
-    tree.mc_pt.clear();
-    tree.mc_phi.clear();
-    tree.mc_eta.clear();
-    tree.mc_id.clear();
-    tree.mc_momid.clear();
-    tree.mc_gmomid.clear();
     for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
       tree.mc_pt.push_back(mc_doc_pt()->at(igen));  
       tree.mc_phi.push_back(mc_doc_phi()->at(igen));  
@@ -264,10 +225,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> veto_muons = GetMuons(false);
     vector<int> good_jets = GetJets(veto_electrons, veto_muons, 20.0, 2.4);
-    tree.jets_pt.clear();
-    tree.jets_eta.clear();
-    tree.jets_phi.clear();
-    tree.jets_csv.clear();
 
     tree.njets = GetNumJets(good_jets, MinJetPt);
     tree.nbl = GetNumJets(good_jets, MinJetPt, CSVCuts[0]);
@@ -294,7 +251,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     WriteFatJets(tree);
 
 
-    tree.Fill();
+    tree.Fill(); // This method automatically clears all small_tree::vectors
   }
   cout<<"xsec is "<<xsec<<" for a total of "<<Ntotentries<<" entries"<<endl;
   tree.Write();
@@ -491,17 +448,9 @@ void event_handler::WriteFatJets(small_tree &tree){
 
   tree.nfjets_cands = static_cast<int>(bad_val);
   tree.mj_cands = static_cast<int>(bad_val);
-  tree.fjets_cands_pt.clear();
-  tree.fjets_cands_eta.clear();
-  tree.fjets_cands_phi.clear();
-  tree.fjets_cands_m.clear();
 
   tree.nfjets_cands_trim = static_cast<int>(bad_val);
   tree.mj_cands_trim = static_cast<int>(bad_val);
-  tree.fjets_cands_trim_pt.clear();
-  tree.fjets_cands_trim_eta.clear();
-  tree.fjets_cands_trim_phi.clear();
-  tree.fjets_cands_trim_m.clear();
   if(!skip_slow){
     vector<PseudoJet> cands(pfcand_pt()->size());
     TLorentzVector p4cand;
@@ -774,25 +723,6 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 
 
 void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
-
-  if (ilep==0){
-    if (isElectron){
-      tree.els_reliso_r03.clear();
-      tree.els_reliso_r02.clear();
-      tree.els_miniso_10.clear();
-      tree.els_miniso_tr10.clear();
-      tree.els_miniso_tr15.clear();
-      tree.els_miniso_tr15_ch.clear();
-    } else {
-      tree.mus_reliso_r04.clear();
-      tree.mus_reliso_r03.clear();
-      tree.mus_reliso_r02.clear();
-      tree.mus_miniso_10.clear();
-      tree.mus_miniso_tr10.clear();
-      tree.mus_miniso_tr15.clear();
-      tree.mus_miniso_tr15_ch.clear();
-    }
-  }
 
   double lep_pt(0.), lep_eta(0.), lep_phi(0.), deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);;
   if (isElectron) {
