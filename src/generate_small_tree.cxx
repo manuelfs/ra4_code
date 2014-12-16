@@ -45,12 +45,14 @@ int main(){
   variables.push_back("std::vector<float> mus_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
   variables.push_back("std::vector<float> mus_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
   variables.push_back("std::vector<float> mus_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only
-  variables.push_back("std::vector<float> mus_ptrel");
-  variables.push_back("std::vector<float> mus_mindr");
+  variables.push_back("std::vector<float> mus_ptrel_0");
+  variables.push_back("std::vector<float> mus_mindr_0");
   variables.push_back("std::vector<float> mus_ptrel_25");
   variables.push_back("std::vector<float> mus_mindr_25");
-  variables.push_back("std::vector<float> mus_ptrel_norem");
-  variables.push_back("std::vector<float> mus_mindr_norem");
+  variables.push_back("std::vector<float> mus_ptrel_rem_0");
+  variables.push_back("std::vector<float> mus_mindr_rem_0");
+  variables.push_back("std::vector<float> mus_ptrel_rem_25");
+  variables.push_back("std::vector<float> mus_mindr_rem_25");
   variables.push_back("std::vector<float> mus_tru_dr");
   variables.push_back("std::vector<int> mus_tru_id");
   variables.push_back("std::vector<int> mus_tru_momid");
@@ -72,12 +74,14 @@ int main(){
   variables.push_back("std::vector<float> els_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
   variables.push_back("std::vector<float> els_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
   variables.push_back("std::vector<float> els_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only
-  variables.push_back("std::vector<float> els_ptrel");
-  variables.push_back("std::vector<float> els_mindr");
+  variables.push_back("std::vector<float> els_ptrel_0");
+  variables.push_back("std::vector<float> els_mindr_0");
   variables.push_back("std::vector<float> els_ptrel_25");
   variables.push_back("std::vector<float> els_mindr_25");
-  variables.push_back("std::vector<float> els_ptrel_norem");
-  variables.push_back("std::vector<float> els_mindr_norem");
+  variables.push_back("std::vector<float> els_ptrel_rem_0");
+  variables.push_back("std::vector<float> els_mindr_rem_0");
+  variables.push_back("std::vector<float> els_ptrel_rem_25");
+  variables.push_back("std::vector<float> els_mindr_rem_25");
   variables.push_back("std::vector<float> els_tru_dr");
   variables.push_back("std::vector<int> els_tru_id");
   variables.push_back("std::vector<int> els_tru_momid");

@@ -93,30 +93,38 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     bool fromW(false);
     int mcID, mcmomID;
     float deltaR;
-    vector<float> mus_ptrel(0), els_ptrel(0);
-    vector<float> mus_mindr(0), els_mindr(0);
+    vector<float> mus_ptrel_0(0), els_ptrel_0(0);
+    vector<float> mus_mindr_0(0), els_mindr_0(0);
     vector<float> mus_ptrel_25(0), els_ptrel_25(0);
     vector<float> mus_mindr_25(0), els_mindr_25(0);
-    vector<float> mus_ptrel_norem(0), els_ptrel_norem(0);
-    vector<float> mus_mindr_norem(0), els_mindr_norem(0);
+    vector<float> mus_ptrel_rem_0(0), els_ptrel_rem_0(0);
+    vector<float> mus_mindr_rem_0(0), els_mindr_rem_0(0);
+    vector<float> mus_ptrel_rem_25(0), els_ptrel_rem_25(0);
+    vector<float> mus_mindr_rem_25(0), els_mindr_rem_25(0);
     lepmax_p4.SetPtEtaPhiE(0,0,0,0);
     if(!skip_slow){
-      GetPtRels(els_ptrel, els_mindr, mus_ptrel, mus_mindr, 0.0, true);
+      GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, true);
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, true);
-      GetPtRels(els_ptrel_norem, els_mindr_norem, mus_ptrel_norem, mus_mindr_norem, 25.0, false);
+      GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, false);
+      GetPtRels(els_ptrel_rem_25, els_mindr_rem_25, mus_ptrel_rem_25, mus_mindr_rem_25,
+		25.0, false);
     }else{
-      els_ptrel = vector<float>(els_pt()->size(), bad_val);
-      els_mindr = vector<float>(els_pt()->size(), bad_val);
-      mus_ptrel = vector<float>(mus_pt()->size(), bad_val);
-      mus_mindr = vector<float>(mus_pt()->size(), bad_val);
+      els_ptrel_0 = vector<float>(els_pt()->size(), bad_val);
+      els_mindr_0 = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel_0 = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr_0 = vector<float>(mus_pt()->size(), bad_val);
       els_ptrel_25 = vector<float>(els_pt()->size(), bad_val);
       els_mindr_25 = vector<float>(els_pt()->size(), bad_val);
       mus_ptrel_25 = vector<float>(mus_pt()->size(), bad_val);
       mus_mindr_25 = vector<float>(mus_pt()->size(), bad_val);
-      els_ptrel_norem = vector<float>(els_pt()->size(), bad_val);
-      els_mindr_norem = vector<float>(els_pt()->size(), bad_val);
-      mus_ptrel_norem = vector<float>(mus_pt()->size(), bad_val);
-      mus_mindr_norem = vector<float>(mus_pt()->size(), bad_val);
+      els_ptrel_rem_0 = vector<float>(els_pt()->size(), bad_val);
+      els_mindr_rem_0 = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel_rem_0 = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr_rem_0 = vector<float>(mus_pt()->size(), bad_val);
+      els_ptrel_rem_25 = vector<float>(els_pt()->size(), bad_val);
+      els_mindr_rem_25 = vector<float>(els_pt()->size(), bad_val);
+      mus_ptrel_rem_25 = vector<float>(mus_pt()->size(), bad_val);
+      mus_mindr_rem_25 = vector<float>(mus_pt()->size(), bad_val);
     }
 
     tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
@@ -139,12 +147,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 	// Isolation
         tree.els_reliso.push_back(GetElectronIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ true);
-	tree.els_ptrel.push_back(els_ptrel.at(index));
-	tree.els_mindr.push_back(els_mindr.at(index));
+	tree.els_ptrel_0.push_back(els_ptrel_0.at(index));
+	tree.els_mindr_0.push_back(els_mindr_0.at(index));
 	tree.els_ptrel_25.push_back(els_ptrel_25.at(index));
 	tree.els_mindr_25.push_back(els_mindr_25.at(index));
-	tree.els_ptrel_norem.push_back(els_ptrel_norem.at(index));
-	tree.els_mindr_norem.push_back(els_mindr_norem.at(index));
+	tree.els_ptrel_rem_0.push_back(els_ptrel_rem_0.at(index));
+	tree.els_mindr_rem_0.push_back(els_mindr_rem_0.at(index));
+	tree.els_ptrel_rem_25.push_back(els_ptrel_rem_25.at(index));
+	tree.els_mindr_rem_25.push_back(els_mindr_rem_25.at(index));
 
 	// Max pT lepton
 	if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
@@ -177,12 +187,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
  	// Isolation
 	tree.mus_reliso.push_back(GetMuonIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ false);
-	tree.mus_ptrel.push_back(mus_ptrel.at(index));
-	tree.mus_mindr.push_back(mus_mindr.at(index));
+	tree.mus_ptrel_0.push_back(mus_ptrel_0.at(index));
+	tree.mus_mindr_0.push_back(mus_mindr_0.at(index));
 	tree.mus_ptrel_25.push_back(mus_ptrel_25.at(index));
 	tree.mus_mindr_25.push_back(mus_mindr_25.at(index));
-	tree.mus_ptrel_norem.push_back(mus_ptrel_norem.at(index));
-	tree.mus_mindr_norem.push_back(mus_mindr_norem.at(index));
+	tree.mus_ptrel_rem_0.push_back(mus_ptrel_rem_0.at(index));
+	tree.mus_mindr_rem_0.push_back(mus_mindr_rem_0.at(index));
+	tree.mus_ptrel_rem_25.push_back(mus_ptrel_rem_25.at(index));
+	tree.mus_mindr_rem_25.push_back(mus_mindr_rem_25.at(index));
 
 	// Max pT lepton
 	if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
