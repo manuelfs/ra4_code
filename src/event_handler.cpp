@@ -757,6 +757,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   riso.push_back(10./lep_pt);
   riso.push_back(max(0.05,min(0.3,10./lep_pt)));
   riso.push_back(max(0.05,min(0.3,15./lep_pt)));
+  riso.push_back(15./lep_pt);
   size_t nriso = riso.size();
   double riso_max = max(0.4,10./lep_pt);
 
@@ -818,18 +819,20 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   if (isElectron){
     tree.els_reliso_r02.push_back(iso[0]);
     tree.els_reliso_r03.push_back(iso[1]);
-    tree.els_miniso_10.push_back(iso[3]);
+    tree.els_miniso_10_ch.push_back(iso_ch[3]/lep_pt);
     tree.els_miniso_tr10.push_back(iso[4]);
     tree.els_miniso_tr15.push_back(iso[5]);
     tree.els_miniso_tr15_ch.push_back(iso_ch[5]/lep_pt);
+    tree.els_miniso_15.push_back(iso[6]);
   } else {
     tree.mus_reliso_r02.push_back(iso[0]);
     tree.mus_reliso_r03.push_back(iso[1]);
     tree.mus_reliso_r04.push_back(iso[2]);
-    tree.mus_miniso_10.push_back(iso[3]);
+    tree.mus_miniso_10_ch.push_back(iso_ch[3]/lep_pt);
     tree.mus_miniso_tr10.push_back(iso[4]);
     tree.mus_miniso_tr15.push_back(iso[5]);
     tree.mus_miniso_tr15_ch.push_back(iso_ch[5]/lep_pt);
+    tree.mus_miniso_15.push_back(iso[6]);
   }
   
   return;

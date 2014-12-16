@@ -41,7 +41,8 @@ int main(){
   variables.push_back("std::vector<float> mus_reliso_r04"); // recomputed default
   variables.push_back("std::vector<float> mus_reliso_r03"); // R_iso = 0.3 
   variables.push_back("std::vector<float> mus_reliso_r02"); // R_iso = 0.2
-  variables.push_back("std::vector<float> mus_miniso_10"); // R_iso = 10./pT
+  variables.push_back("std::vector<float> mus_miniso_10_ch"); // R_iso = 10./pT, charged PF only
+  variables.push_back("std::vector<float> mus_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> mus_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
   variables.push_back("std::vector<float> mus_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
   variables.push_back("std::vector<float> mus_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only
@@ -70,7 +71,8 @@ int main(){
   variables.push_back("std::vector<float> els_reliso");
   variables.push_back("std::vector<float> els_reliso_r03"); // recomputed default
   variables.push_back("std::vector<float> els_reliso_r02"); // R_iso = 0.2
-  variables.push_back("std::vector<float> els_miniso_10"); // R_iso = 10./pT
+  variables.push_back("std::vector<float> els_miniso_10_ch"); // R_iso = 10./pT, charged PF only
+  variables.push_back("std::vector<float> els_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> els_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
   variables.push_back("std::vector<float> els_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
   variables.push_back("std::vector<float> els_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only

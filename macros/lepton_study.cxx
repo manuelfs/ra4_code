@@ -22,23 +22,22 @@ int main(){
   style.setDefaultStyle();
 
   TChain ttbar("tree");
-  ttbar.Add("archive/ra4skim/small_TT_*batch1.root");
+  ttbar.Add("archive/ra4skim/small_TT_*.root");
   TChain t1tttt("tree");
   t1tttt.Add("archive/ra4skim/small*SMS*T1tttt*PU20*.root");
 
-  DrawROC(ttbar, t1tttt, "el");
-  DrawROC(ttbar, t1tttt, "mu");
 
-  // DrawROC(ttbar, t1tttt, "el");
-  // DrawROC(ttbar, t1tttt, "el",1);
-  // DrawROC(ttbar, t1tttt, "el",2);
-  // DrawROC(ttbar, t1tttt, "el",3);
-  // DrawROC(ttbar, t1tttt, "el",4);
-  // DrawROC(ttbar, t1tttt, "mu");
-  // DrawROC(ttbar, t1tttt, "mu",1);
-  // DrawROC(ttbar, t1tttt, "mu",2);
-  // DrawROC(ttbar, t1tttt, "mu",3);
-  // DrawROC(ttbar, t1tttt, "mu",4);
+  DrawROC(ttbar, t1tttt, "el");
+  DrawROC(ttbar, t1tttt, "el",1);
+  DrawROC(ttbar, t1tttt, "el",2);
+  DrawROC(ttbar, t1tttt, "el",3);
+  DrawROC(ttbar, t1tttt, "el",4);
+
+  DrawROC(ttbar, t1tttt, "mu");
+  DrawROC(ttbar, t1tttt, "mu",1);
+  DrawROC(ttbar, t1tttt, "mu",2);
+  DrawROC(ttbar, t1tttt, "mu",3);
+  DrawROC(ttbar, t1tttt, "mu",4);
 
   //DrawScat(chain, "ttbar", "el", true);
   //DrawScat(chain, "ttbar", "el", false);
@@ -48,7 +47,7 @@ int main(){
 
 void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   const unsigned nbins = 1000;
-  const double reliso_low = 0.0, reliso_high = 5.0;
+  const double reliso_low = 0.0, reliso_high = 1.0;
   const double ptrel_low = 0.0, ptrel_high = 100.0;
   const double ptrel_25_low = 0.0, ptrel_25_high = 100.0;
 
@@ -101,6 +100,7 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   }
 
   string good_denom_cut = lep+"s_tru_tm&&"+lep+"s_sigid&&"+pt_cut;
+  if(lep=="el") good_denom_cut += "&&els_ispf";
   string bad_denom_cut = "!"+good_denom_cut;
   t1tttt.Project("reliso_good",
 		(lep+"s_reliso").c_str(),
@@ -109,16 +109,16 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
 		(lep+"s_reliso").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("ptrel_good",
-		(lep+"s_ptrel+("+lep+"s_ptrel<0||"+lep+"s_mindr>0.4)*9999.").c_str(),
+		(lep+"s_ptrel_0").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("ptrel_bad",
-		(lep+"s_ptrel+("+lep+"s_ptrel<0||"+lep+"s_mindr>0.4)*9999.").c_str(),
+		(lep+"s_ptrel_0").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("ptrel_25_good",
-		(lep+"s_ptrel_25+("+lep+"s_ptrel_25<0||"+lep+"s_mindr_25>0.4)*9999.").c_str(),
+		(lep+"s_ptrel_rem_0+("+lep+"s_ptrel_rem_0<0)*9999.").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("ptrel_25_bad",
-		(lep+"s_ptrel_25+("+lep+"s_ptrel_25<0||"+lep+"s_mindr_25>0.4)*9999.").c_str(),
+		(lep+"s_ptrel_rem_0+("+lep+"s_ptrel_rem_0<0)*9999.").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("miniso_good",
 		(lep+"s_miniso_tr15").c_str(),
@@ -140,10 +140,10 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   double good_num, bad_num;
   if(lep=="el"){
     get_count_and_uncertainty(t1tttt,
-			      (good_denom_cut+"&&((els_eta<=1.479&&els_reliso<0.2179)||els_reliso<0.254)"),
+			      (good_denom_cut+"&&((fabs(els_eta)<=1.479&&els_reliso<0.2179)||fabs(els_eta)>1.479&&els_reliso<0.254)"),
 			      good_num, junk);
     get_count_and_uncertainty(ttbar,
-			      (bad_denom_cut+"&&!((els_eta<=1.479&&els_reliso<0.2179)||els_reliso<0.254)"),
+			      (bad_denom_cut+"&&!((fabs(els_eta)<=1.479&&els_reliso<0.2179)||fabs(els_eta)>1.479&&els_reliso<0.254)"),
 			      bad_num, junk);
   }else{
     get_count_and_uncertainty(t1tttt,
@@ -194,8 +194,8 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   leg.AddEntry(&reliso, "Rel. Iso.", "l");
   leg.AddEntry(&miniso, "Mini Iso. Tr., kt = 15 GeV", "l");
   leg.AddEntry(&miniso_ch, "Mini Iso. Tr., kt = 15 GeV (ch. only)", "l");
-  leg.AddEntry(&ptrel, "p_{T}^{rel} || #Delta R>0.4 || Isolated", "l");
-  leg.AddEntry(&ptrel_25, "p_{T}^{rel}(25 GeV jets) || #Delta R>0.4 || Isolated", "l");
+  leg.AddEntry(&ptrel, "p_{T}^{rel}", "l");
+  leg.AddEntry(&ptrel_25, "p_{T}^{rel} || Isolated", "l");
   leg.Draw("same");
   canvas.Print(("eps/roc_"+lep+"_"+pt_file+".eps").c_str());
 }
