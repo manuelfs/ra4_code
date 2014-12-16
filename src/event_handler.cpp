@@ -103,11 +103,11 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     vector<float> mus_mindr_rem_25(0), els_mindr_rem_25(0);
     lepmax_p4.SetPtEtaPhiE(0,0,0,0);
     if(!skip_slow){
-      GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, true);
-      GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, true);
-      GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, false);
+      GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, false);
+      GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, false);
+      GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, true);
       GetPtRels(els_ptrel_rem_25, els_mindr_rem_25, mus_ptrel_rem_25, mus_mindr_rem_25,
-		25.0, false);
+		25.0, true);
     }else{
       els_ptrel_0 = vector<float>(els_pt()->size(), bad_val);
       els_mindr_0 = vector<float>(els_pt()->size(), bad_val);
