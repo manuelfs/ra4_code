@@ -140,10 +140,10 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
   double good_num, bad_num;
   if(lep=="el"){
     get_count_and_uncertainty(t1tttt,
-			      (good_denom_cut+"&&((fabs(els_eta)<=1.479&&els_reliso<0.2179)||fabs(els_eta)>1.479&&els_reliso<0.254)"),
+			      (good_denom_cut+"&&((abs(els_eta)<=1.479&&els_reliso<0.2179)||abs(els_eta)>1.479&&els_reliso<0.254)"),
 			      good_num, junk);
     get_count_and_uncertainty(ttbar,
-			      (bad_denom_cut+"&&!((fabs(els_eta)<=1.479&&els_reliso<0.2179)||fabs(els_eta)>1.479&&els_reliso<0.254)"),
+			      (bad_denom_cut+"&&!((abs(els_eta)<=1.479&&els_reliso<0.2179)||abs(els_eta)>1.479&&els_reliso<0.254)"),
 			      bad_num, junk);
   }else{
     get_count_and_uncertainty(t1tttt,
