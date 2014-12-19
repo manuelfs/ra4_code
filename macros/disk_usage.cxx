@@ -15,7 +15,9 @@ struct Variable{
   long zip_size, tot_size;
 
   bool operator<(const Variable &var) const{
-    return zip_size<var.zip_size || (var.zip_size==zip_size && tot_size<var.tot_size);
+    return (zip_size<var.zip_size)
+      || (zip_size==var.zip_size && tot_size<var.tot_size)
+      || (zip_size==var.zip_size && tot_size==var.tot_size && name<var.name);
   }
 };
 
@@ -54,15 +56,24 @@ int main(int argc, char *argv[]){
       tot_sum += v.tot_size;
       if(v.name.size() > max_length) max_length = v.name.size();
     }
-    cout << "CCC" << endl;
     cout << argv[arg] << endl;
-    cout << setw(max_length) << "Total" << " "
-	 << setw(16) << zip_sum << " "
-	 << setw(16) << tot_sum << endl;
+    cout << setw(max_length) << "Name" << ' '
+	 << setw(16) << "Bytes" << ' '
+	 << setw(16) << "Fraction (%)" << ' '
+	 << setw(16) << "Cumulative" << endl;
+    cout << setw(max_length) << "Total" << ' '
+	 << setw(16) << zip_sum << ' '
+	 << setw(16) << "100.0" << ' '
+	 << setw(16) << "-" << endl;
+    long running_total(0);
     for(set<Variable>::const_reverse_iterator var = vars.rbegin(); var != vars.rend(); ++var){
+      running_total += var->zip_size;
+      double this_frac = (100.0*var->zip_size)/zip_sum;
+      double tot_frac = (100.0*running_total)/zip_sum;
       cout << setw(max_length) << var->name << " "
 	   << setw(16) << var->zip_size << " "
-	   << setw(16) << var->tot_size << endl;
+	   << setw(16) << this_frac << " "
+	   << setw(16) << tot_frac << endl;
     }
   }
 }
