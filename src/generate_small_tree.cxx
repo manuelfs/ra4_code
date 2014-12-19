@@ -1,14 +1,17 @@
+#include "generate_small_tree.hpp"
+
+#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "TString.h"
- 
+#include <string>
+
 using namespace std;
 
 int main(){
-  TString name, copy;
-  vector<TString> variables;
+  std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
 
+  vector<string> variables;
   //////////////////   Provenance   /////////////
   variables.push_back("int run");
   variables.push_back("int lumiblock");
@@ -143,28 +146,28 @@ int main(){
   variables.push_back("std::vector<double> fjets_cands_eta");
   variables.push_back("std::vector<double> fjets_cands_phi");
   variables.push_back("std::vector<double> fjets_cands_m");
-  
+
   variables.push_back("int nfjets_cands_trim");  // for fjets_pt>50, all pfcands
   variables.push_back("float mj_cands_trim");    // for fjets_pt>50, all pfcands
   variables.push_back("std::vector<double> fjets_cands_trim_pt");
   variables.push_back("std::vector<double> fjets_cands_trim_eta");
   variables.push_back("std::vector<double> fjets_cands_trim_phi");
   variables.push_back("std::vector<double> fjets_cands_trim_m");
-  
+
   variables.push_back("int nfjets_r10");  // for fjets_pt>50, radius 1.0
   variables.push_back("float mj_r10");    // for fjets_pt>50, radius 1.0
   variables.push_back("std::vector<double> fjets_r10_pt");
   variables.push_back("std::vector<double> fjets_r10_eta");
   variables.push_back("std::vector<double> fjets_r10_phi");
   variables.push_back("std::vector<double> fjets_r10_m");
-  
+
   variables.push_back("int nfjets_r15");  // for fjets_pt>50, radius 1.5
   variables.push_back("float mj_r15");    // for fjets_pt>50, radius 1.5
   variables.push_back("std::vector<double> fjets_r15_pt");
   variables.push_back("std::vector<double> fjets_r15_eta");
   variables.push_back("std::vector<double> fjets_r15_phi");
   variables.push_back("std::vector<double> fjets_r15_m");
-  
+
   variables.push_back("int nfjets_eta25");  // for fjets_pt>50, radius 1.5
   variables.push_back("float mj_eta25");    // for fjets_pt>50, radius 1.5
   variables.push_back("std::vector<double> fjets_eta25_pt");
@@ -172,37 +175,50 @@ int main(){
   variables.push_back("std::vector<double> fjets_eta25_phi");
   variables.push_back("std::vector<double> fjets_eta25_m");
 
+  vector<Variable> vars = ParseVariables(variables);
 
-  std::ofstream cppFile("src/small_tree.cpp"), hppFile("inc/small_tree.hpp");
-  
   //////////  hpp file  ///////////////////
   hppFile << "// small_tree: class that contains reduced cfA ntuples\n";
   hppFile << "// File generated with generate_small_tree.exe\n\n";
   hppFile << "#ifndef H_SMALL_TREE\n";
   hppFile << "#define H_SMALL_TREE\n\n";
+
   hppFile << "#include <vector>\n";
-  hppFile << "#include \"TChain.h\"\n";
-  hppFile << "#include \"TTree.h\"\n\n";
+  hppFile << "#include <string>\n\n";
+
+  hppFile << "#include \"TTree.h\"\n";
+  hppFile << "#include \"TChain.h\"\n\n";
 
   hppFile << "class small_tree{\n";
   hppFile << "public:\n";
   hppFile << "  small_tree(); // Constructor to create tree\n";
-  hppFile << "  small_tree(TString filename); // Constructor to read tree\n\n";
-  hppFile << "  bool isReadOnly;\n";
-  hppFile << "  TChain chain;\n";
-  hppFile << "  TTree tree;\n";
-  for(unsigned int var(0); var<variables.size(); var++){
-    hppFile << "  "<<variables[var]<<";\n";
-    if(variables[var].Contains("*")){
-      copy = variables[var]; 
-      copy.ReplaceAll("* "," v_"); 
-      hppFile << "  "<<copy<<";\n";
-    }
-  }
+  hppFile << "  small_tree(const std::string &filename); // Constructor to read tree\n\n";
 
-  hppFile << "\n  void Fill();\n";
-  hppFile << "  void Write();\n";
-  hppFile << "  int GetEntries();\n";
+  hppFile << "  long GetEntries() const;\n";
+  hppFile << "  void GetEntry(const long entry);\n\n";
+
+  hppFile << "  void Fill();\n";
+  hppFile << "  void Write();\n\n";
+
+  hppFile << "  static const double bad_val_;\n\n";
+
+  hppFile << "  ~small_tree();\n\n";
+
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    hppFile << "  " << var->type << " const & " << var->name << "() const;\n";
+    hppFile << "  " << var->type << " & " << var->name << "();\n";
+  }
+  
+  hppFile << "private:\n";
+  hppFile << "  TChain chain_;\n";
+  hppFile << "  TTree tree_;\n";
+  hppFile << "  long entry_;\n";
+  hppFile << "  const bool read_only_;\n\n";
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    hppFile << "  " << var->type << ' ' << var->name << "_;\n";
+    hppFile << "  TBranch *b_" << var->name << "_;\n";
+    hppFile << "  mutable bool c_" << var->name << "_;\n";
+  }
 
   hppFile << "};\n\n";
   hppFile << "#endif" << endl;
@@ -210,58 +226,151 @@ int main(){
   //////////  cpp file  ///////////////////
   cppFile << "// small_tree: class that contains reduced cfA ntuples\n";
   cppFile << "// File generated with generate_small_tree.exe\n\n";
-  cppFile << "#include \"small_tree.hpp\"\n";
-  cppFile << "#include <iostream>\n\n";
-  cppFile << "using namespace std;\n";
-  cppFile << "using std::cout;\n";
-  cppFile << "using std::endl;\n\n";
+  cppFile << "#include \"small_tree.hpp\"\n\n";
+
+  cppFile << "#include <iostream>\n";
+  cppFile << "#include <stdexcept>\n";
+  cppFile << "#include <string>\n";
+  cppFile << "#include <vector>\n\n";
+
+  cppFile << "#include \"TTree.h\"\n";
+  cppFile << "#include \"TBranch.h\"\n";
+  cppFile << "#include \"TChain.h\"\n\n";
+
+  cppFile << "using namespace std;\n\n";
+
+  cppFile << "const double small_tree::bad_val_ = -999.;\n\n";
 
   cppFile << "small_tree::small_tree():\n";
-  cppFile << "  tree(\"tree\", \"tree\"){\n";
-  for(unsigned int var(0); var<variables.size(); var++){
-    name = variables[var];
-    name.Remove(0, name.Last(' ')+1);
-    cppFile << "  tree.Branch(\""<<name<<"\", &"<<name<<");\n";
-    copy = "v_"; copy += name;
-    if(variables[var].Contains("*")) cppFile << "  " << name <<" = &"<< copy << ";\n";
+  cppFile << "  chain_(\"junk\", \"junk\"),\n";
+  cppFile << "  tree_(\"tree\", \"tree\"),\n";
+  cppFile << "  entry_(0),\n";
+  cppFile << "  read_only_(false),\n";
+  for(size_t i = 0; i < vars.size()-1; ++i){
+    cppFile << "  " << vars.at(i).name << "_(0),\n";
+    cppFile << "  b_" << vars.at(i).name << "_(tree_.Branch(\"" <<vars.at(i).name << "\", &" << vars.at(i).name << "_)),\n";
+    cppFile << "  c_" << vars.at(i).name << "_(false),\n";
   }
-  cppFile << "  isReadOnly = false;\n";
+  cppFile << "  " << vars.back().name << "_(0),\n";
+  cppFile << "  b_" << vars.back().name << "_(tree_.Branch(\"" <<vars.back().name << "\", &" << vars.back().name << "_)),\n";
+  cppFile << "  c_" << vars.back().name << "_(false){\n";
   cppFile << "}\n\n";
 
-  cppFile << "small_tree::small_tree(TString filename):\n";
-  cppFile << "  chain(\"tree\"){\n";
-  cppFile << "  chain.Add(filename);\n";
-  for(unsigned int var(0); var<variables.size(); var++){
-    name = variables[var];
-    name.Remove(0, name.Last(' ')+1);
-    cppFile << "  chain.SetBranchAddress(\""<<name<<"\", &"<<name<<");\n";
+  cppFile << "small_tree::small_tree(const string &filename):\n";
+  cppFile << "  chain_(\"tree\",\"tree\"),\n";
+  cppFile << "  tree_(\"junk\",\"junk\"),\n";
+  cppFile << "  entry_(0),\n";
+  cppFile << "  read_only_(true),\n";
+  for(size_t i = 0; i < vars.size()-1; ++i){
+    cppFile << "  " << vars.at(i).name << "_(0),\n";
+    cppFile << "  b_" << vars.at(i).name << "_(NULL),\n";
+    cppFile << "  c_" << vars.at(i).name << "_(false),\n";
   }
-  cppFile << "  isReadOnly = true;\n";
+  cppFile << "  " << vars.back().name << "_(0),\n";
+  cppFile << "  b_" << vars.back().name << "_(NULL),\n";
+  cppFile << "  c_" << vars.back().name << "_(false){\n";
+  cppFile << "  chain_.Add(filename.c_str());\n";
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    cppFile << "  chain_.SetBranchAddress(\"" << var->name << "\", &" << var->name << "_, &b_" << var->name << "_);\n";
+  }
   cppFile << "}\n\n";
 
   cppFile << "void small_tree::Fill(){\n";
-  cppFile << "  if(isReadOnly) cout<<\"Tree is read only\"<<endl;\n";
-  cppFile << "  else tree.Fill();\n\n  // Clearing vectors\n";
-  for(unsigned int var(0); var<variables.size(); var++){
-    name = variables[var]; copy = name;
-    if(copy.Contains("vector")){
-      name.Remove(0, name.Last(' ')+1);
-      cppFile << "  "<<name<<(copy.Contains("*")?"->":".")<<"clear();\n";
+  cppFile << "  if(read_only_){\n";
+  cppFile << "    throw std::logic_error(\"Trying to write to read-only tree\");\n";
+  cppFile << "  }else{\n";
+  cppFile << "    tree_.Fill();\n";
+  cppFile << "  }\n";
+
+  cppFile << "  //Resetting variables\n";
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    if(Contains(var->type, "vector")){
+      cppFile << "  " << var->name << "_.clear();\n";
+    }else if(Contains(var->type, "tring")){
+      cppFile << "  " << var->name << "_ = \"\";\n";
+    }else{
+      cppFile << "  " << var->name << "_ = static_cast<" << var->type << ">(bad_val_);\n";
     }
   }
   cppFile << "}\n\n";
+
   cppFile << "void small_tree::Write(){\n";
-  cppFile << "  if(isReadOnly) chain.Write();\n";
-  cppFile << "  else tree.Write();\n";
+  cppFile << "  if(read_only_){\n";
+  cppFile << "    chain_.Write();\n";
+  cppFile << "  }else{\n";
+  cppFile << "    tree_.Write();\n";
+  cppFile << "  }\n";
   cppFile << "}\n\n";
-  cppFile << "int small_tree::GetEntries(){\n";
-  cppFile << "  if(isReadOnly) return chain.GetEntries();\n";
-  cppFile << "  else return tree.GetEntries();\n";
+
+  cppFile << "small_tree::~small_tree(){\n";
   cppFile << "}\n\n";
+
+  cppFile << "long small_tree::GetEntries() const{\n";
+  cppFile << "  if(read_only_){\n";
+  cppFile << "    return chain_.GetEntries();\n";
+  cppFile << "  }else{\n";
+  cppFile << "    return tree_.GetEntries();\n";
+  cppFile << "  }\n";
+  cppFile << "}\n\n";
+
+  cppFile << "void small_tree::GetEntry(const long entry){\n";
+  cppFile << "  if(!read_only_){\n";
+  cppFile << "    throw std::logic_error(\"Trying to read from write-only tree.\");\n";
+  cppFile << "  }\n\n";
+  
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    cppFile << "  c_" << var->name << "_ = false;\n";
+  }
+  cppFile << "  entry_ = chain_.LoadTree(entry);\n";
+  cppFile << "}\n";
+
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    cppFile << var->type << " const & small_tree::" << var->name << "() const{\n";
+    cppFile << "  if(read_only_){\n";
+    cppFile << "    throw std::runtime_error(\"Trying to write to const tree.\");\n";
+    cppFile << "  }\n";
+    cppFile << "  if(!c_" << var->name << "_ && b_" << var->name <<"_){\n";
+    cppFile << "    b_" << var->name << "_->GetEntry(entry_);\n";
+    cppFile << "    c_" << var->name << "_ = true;\n";
+    cppFile << "  }\n";
+    cppFile << "  return " << var->name << "_;\n";
+    cppFile << "}\n\n";
+  }
+
+  for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    cppFile << var->type << " & small_tree::" << var->name << "(){\n";
+    cppFile << "  if(read_only_ && !c_" << var->name << "_ && b_" << var->name <<"_){\n";
+    cppFile << "    b_" << var->name << "_->GetEntry(entry_);\n";
+    cppFile << "    c_" << var->name << "_ = true;\n";
+    cppFile << "  }\n";
+    cppFile << "  return " << var->name << "_;\n";
+    cppFile << "}\n\n";
+  }
 
   cout<<"Written src/small_tree.cpp and inc/small_tree.hpp"<<endl;
   
   cppFile.close();
   hppFile.close();
   return 0;
+}
+
+vector<Variable> ParseVariables(const vector<string> &variables){
+  vector<Variable> out(variables.size());
+  for(size_t i = 0; i < variables.size(); ++i){
+    string::size_type pos = variables.at(i).rfind(' ');
+    if(pos != string::npos){
+      out.at(i).type = variables.at(i).substr(0,pos);
+      out.at(i).name = variables.at(i).substr(pos+1);
+    }else{
+      out.at(i).type = "";
+      out.at(i).name = "";
+      throw runtime_error("Bad variable: "+variables.at(i));
+    }
+  }
+  return out;
+}
+
+
+bool Contains(const string &text, const string &pattern){
+  return text.find(pattern) != string::npos;
 }

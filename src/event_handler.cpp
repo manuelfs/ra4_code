@@ -36,14 +36,14 @@ using namespace fastjet;
 // const double CSVCuts[] = {0.244, 0.679, 0.898}; // Run1 CSV
 const double CSVCuts[] = {0.423, 0.814, 0.941};    // Run2 CSV+IVF
 
- namespace{
-   const float fltmax = numeric_limits<float>::max();
- }
+namespace{
+  const float fltmax = numeric_limits<float>::max();
+}
 
 event_handler::event_handler(const string &fileName, bool quick_mode):
   phys_objects(fileName),
   skip_slow(quick_mode){
-}
+  }
 
 void event_handler::ReduceTree(int Nentries, TString outFilename,
                                int Ntotentries){
@@ -70,24 +70,23 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     GetEntry(entry);
 
     ////////////////   Provenance   /////////////
-    tree.event = event();
-    tree.lumiblock = lumiblock();
-    tree.run = run();
+    tree.event() = event();
+    tree.lumiblock() = lumiblock();
+    tree.run() = run();
 
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
       if(PU_bunchCrossing()->at(bc)==0){
-        tree.ntrupv = PU_NumInteractions()->at(bc);
-        tree.ntrupv_mean = PU_TrueNumInteractions()->at(bc);
+        tree.ntrupv() = PU_NumInteractions()->at(bc);
+        tree.ntrupv_mean() = PU_TrueNumInteractions()->at(bc);
         break;
       }
     }
-    tree.npv = Npv();
-    tree.weight = xsec*luminosity / static_cast<double>(Ntotentries);
+    tree.npv() = Npv();
+    tree.weight() = xsec*luminosity / static_cast<double>(Ntotentries);
 
-    tree.met = mets_et()->at(0);
-    tree.met_phi = mets_phi()->at(0);
-    tree.mindphin_metjet = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
-
+    tree.met() = mets_et()->at(0);
+    tree.met_phi() = mets_phi()->at(0);
+    tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
 
     ////////////////   Leptons   ////////////////
     bool fromW(false);
@@ -107,7 +106,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, false);
       GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, true);
       GetPtRels(els_ptrel_rem_25, els_mindr_rem_25, mus_ptrel_rem_25, mus_mindr_rem_25,
-		25.0, true);
+                25.0, true);
     }else{
       els_ptrel_0 = vector<float>(els_pt()->size(), bad_val);
       els_mindr_0 = vector<float>(els_pt()->size(), bad_val);
@@ -127,141 +126,143 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       mus_mindr_rem_25 = vector<float>(mus_pt()->size(), bad_val);
     }
 
-    tree.nels = 0; tree.nvels = 0; tree.nvels10 = 0; 
+    tree.nels() = 0; tree.nvels() = 0; tree.nvels10() = 0; 
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
-        tree.els_sigid.push_back(IsSignalIdElectron(index));
-        tree.els_ispf.push_back(els_isPF()->at(index));
-        tree.els_pt.push_back(els_pt()->at(index));
-        tree.els_eta.push_back(els_eta()->at(index));
-        tree.els_phi.push_back(els_phi()->at(index));
-	tree.els_charge.push_back(TMath::Nint(els_charge()->at(index)));
+        tree.els_sigid().push_back(IsSignalIdElectron(index));
+        tree.els_ispf().push_back(els_isPF()->at(index));
+        tree.els_pt().push_back(els_pt()->at(index));
+        tree.els_eta().push_back(els_eta()->at(index));
+        tree.els_phi().push_back(els_phi()->at(index));
+        tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
 
-	// MC truth
-	mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
-	tree.els_tru_id.push_back(mcID);
-	tree.els_tru_momid.push_back(mcmomID);
-	tree.els_tru_tm.push_back(abs(mcID)==pdtlund::e_minus && fromW);
-	tree.els_tru_dr.push_back(deltaR);
+        // MC truth
+        mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
+        tree.els_tru_id().push_back(mcID);
+        tree.els_tru_momid().push_back(mcmomID);
+        tree.els_tru_tm().push_back(abs(mcID)==pdtlund::e_minus && fromW);
+        tree.els_tru_dr().push_back(deltaR);
 
-	// Isolation
-        tree.els_reliso.push_back(GetElectronIsolation(index));
+        // Isolation
+        tree.els_reliso().push_back(GetElectronIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ true);
-	tree.els_ptrel_0.push_back(els_ptrel_0.at(index));
-	tree.els_mindr_0.push_back(els_mindr_0.at(index));
-	tree.els_ptrel_25.push_back(els_ptrel_25.at(index));
-	tree.els_mindr_25.push_back(els_mindr_25.at(index));
-	tree.els_ptrel_rem_0.push_back(els_ptrel_rem_0.at(index));
-	tree.els_mindr_rem_0.push_back(els_mindr_rem_0.at(index));
-	tree.els_ptrel_rem_25.push_back(els_ptrel_rem_25.at(index));
-	tree.els_mindr_rem_25.push_back(els_mindr_rem_25.at(index));
+        tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
+        tree.els_mindr_0().push_back(els_mindr_0.at(index));
+        tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
+        tree.els_mindr_25().push_back(els_mindr_25.at(index));
+        tree.els_ptrel_rem_0().push_back(els_ptrel_rem_0.at(index));
+        tree.els_mindr_rem_0().push_back(els_mindr_rem_0.at(index));
+        tree.els_ptrel_rem_25().push_back(els_ptrel_rem_25.at(index));
+        tree.els_mindr_rem_25().push_back(els_mindr_rem_25.at(index));
 
-	// Max pT lepton
-	if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
-	  lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
-				     els_pz()->at(index), els_energy()->at(index));
-	
-	// Number of leptons
-	if(IsVetoIdElectron(index, true)) tree.nvels10++;
-	if(IsVetoElectron(index)) tree.nvels++;
-	if(IsSignalElectron(index)) tree.nels++;
+        // Max pT lepton
+        if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
+          lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
+                                     els_pz()->at(index), els_energy()->at(index));
+        
+        // Number of leptons
+        if(IsVetoIdElectron(index, true)) ++(tree.nvels10());
+        if(IsVetoElectron(index)) ++(tree.nvels());
+        if(IsSignalElectron(index)) ++(tree.nels());
       }
     } // Loop over els
 
-    tree.nmus = 0; tree.nvmus = 0; tree.nvmus10 = 0; 
+    tree.nmus() = 0; tree.nvmus() = 0; tree.nvmus10() = 0; 
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
-        tree.mus_sigid.push_back(IsSignalIdMuon(index));
-        tree.mus_pt.push_back(mus_pt()->at(index));
-        tree.mus_eta.push_back(mus_eta()->at(index));
-        tree.mus_phi.push_back(mus_phi()->at(index));
-	tree.mus_charge.push_back(TMath::Nint(mus_charge()->at(index)));
+        tree.mus_sigid().push_back(IsSignalIdMuon(index));
+        tree.mus_pt().push_back(mus_pt()->at(index));
+        tree.mus_eta().push_back(mus_eta()->at(index));
+        tree.mus_phi().push_back(mus_phi()->at(index));
+        tree.mus_charge().push_back(TMath::Nint(mus_charge()->at(index)));
 
- 	// MC truth
-	mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
-	tree.mus_tru_id.push_back(mcID);
-	tree.mus_tru_momid.push_back(mcmomID);
-	tree.mus_tru_tm.push_back(abs(mcID)==pdtlund::mu_minus && fromW);
-	tree.mus_tru_dr.push_back(deltaR);
+        // MC truth
+        mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
+        tree.mus_tru_id().push_back(mcID);
+        tree.mus_tru_momid().push_back(mcmomID);
+        tree.mus_tru_tm().push_back(abs(mcID)==pdtlund::mu_minus && fromW);
+        tree.mus_tru_dr().push_back(deltaR);
 
- 	// Isolation
-	tree.mus_reliso.push_back(GetMuonIsolation(index));
+        // Isolation
+        tree.mus_reliso().push_back(GetMuonIsolation(index));
         SetMiniIso(tree, index, /*isElectron*/ false);
-	tree.mus_ptrel_0.push_back(mus_ptrel_0.at(index));
-	tree.mus_mindr_0.push_back(mus_mindr_0.at(index));
-	tree.mus_ptrel_25.push_back(mus_ptrel_25.at(index));
-	tree.mus_mindr_25.push_back(mus_mindr_25.at(index));
-	tree.mus_ptrel_rem_0.push_back(mus_ptrel_rem_0.at(index));
-	tree.mus_mindr_rem_0.push_back(mus_mindr_rem_0.at(index));
-	tree.mus_ptrel_rem_25.push_back(mus_ptrel_rem_25.at(index));
-	tree.mus_mindr_rem_25.push_back(mus_mindr_rem_25.at(index));
+        tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
+        tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
+        tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
+        tree.mus_mindr_25().push_back(mus_mindr_25.at(index));
+        tree.mus_ptrel_rem_0().push_back(mus_ptrel_rem_0.at(index));
+        tree.mus_mindr_rem_0().push_back(mus_mindr_rem_0.at(index));
+        tree.mus_ptrel_rem_25().push_back(mus_ptrel_rem_25.at(index));
+        tree.mus_mindr_rem_25().push_back(mus_mindr_rem_25.at(index));
 
-	// Max pT lepton
-	if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
-	  lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
-				     mus_pz()->at(index), mus_energy()->at(index));
-	
-	// Number of leptons
-	if(GetMuonIsolation(index) < 0.2) tree.nvmus10++;
-	if(IsVetoMuon(index)) tree.nvmus++;
-	if(IsSignalMuon(index)) tree.nmus++;
+        // Max pT lepton
+        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
+          lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
+                                     mus_pz()->at(index), mus_energy()->at(index));
+        
+        // Number of leptons
+        if(GetMuonIsolation(index) < 0.2) ++(tree.nvmus10());
+        if(IsVetoMuon(index)) ++(tree.nvmus());
+        if(IsSignalMuon(index)) ++(tree.nmus());
       }
     }
-    if(tree.nels+tree.nmus == tree.nvels+tree.nvmus) tree.nleps = tree.nels+tree.nmus;
-    else tree.nleps = static_cast<int>(bad_val);
+    if(tree.nels()+tree.nmus() == tree.nvels()+tree.nvmus()){
+      tree.nleps() = tree.nels()+tree.nmus();
+    }else{
+      tree.nleps() = static_cast<int>(bad_val);
+    }
 
     // Finding mT and deltaPhi with respect to highest pT lepton
-    tree.mt = bad_val; tree.dphi_wlep = bad_val;
+    tree.mt() = bad_val; tree.dphi_wlep() = bad_val;
     if(lepmax_p4.Pt() > 0){
       double lepmax_phi = atan2(lepmax_p4.Py(), lepmax_p4.Px());
       double Wx = mets_ex()->at(0) + lepmax_p4.Px();
       double Wy = mets_ey()->at(0) + lepmax_p4.Py();
-      //tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_p4.Phi());
-      tree.dphi_wlep = abs(atan2(Wy,Wx)-lepmax_phi);
-      if(tree.dphi_wlep > PI) tree.dphi_wlep = 2*PI-tree.dphi_wlep;
-      tree.mt = sqrt(2*lepmax_p4.Pt()* tree.met*(1-cos(tree.met_phi-lepmax_p4.Phi())));
+      //tree.dphi_wlep() = abs(atan2(Wy,Wx)-lepmax_p4.Phi());
+      tree.dphi_wlep() = abs(atan2(Wy,Wx)-lepmax_phi);
+      if(tree.dphi_wlep() > PI) tree.dphi_wlep() = 2*PI-tree.dphi_wlep();
+      tree.mt() = sqrt(2*lepmax_p4.Pt()* tree.met()*(1-cos(tree.met_phi()-lepmax_p4.Phi())));
     }
 
     ////////////////   TRUTH   ////////////////
     for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
-      tree.mc_pt.push_back(mc_doc_pt()->at(igen));  
-      tree.mc_phi.push_back(mc_doc_phi()->at(igen));  
-      tree.mc_eta.push_back(mc_doc_eta()->at(igen));  
-      tree.mc_id.push_back(mc_doc_id()->at(igen));  
-      tree.mc_momid.push_back(mc_doc_mother_id()->at(igen));  
-      tree.mc_gmomid.push_back(mc_doc_grandmother_id()->at(igen));  
+      tree.mc_pt().push_back(mc_doc_pt()->at(igen));  
+      tree.mc_phi().push_back(mc_doc_phi()->at(igen));  
+      tree.mc_eta().push_back(mc_doc_eta()->at(igen));  
+      tree.mc_id().push_back(mc_doc_id()->at(igen));  
+      tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));  
+      tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));  
     }
-    tree.mc_type = TypeCode();
+    tree.mc_type() = TypeCode();
 
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> veto_muons = GetMuons(false);
     vector<int> good_jets = GetJets(veto_electrons, veto_muons, 20.0, 2.4);
 
-    tree.njets = GetNumJets(good_jets, MinJetPt);
-    tree.nbl = GetNumJets(good_jets, MinJetPt, CSVCuts[0]);
-    tree.nbm = GetNumJets(good_jets, MinJetPt, CSVCuts[1]);
-    tree.nbt = GetNumJets(good_jets, MinJetPt, CSVCuts[2]);
-    tree.ht = GetHT(good_jets, MinJetPt);
+    tree.njets() = GetNumJets(good_jets, MinJetPt);
+    tree.nbl() = GetNumJets(good_jets, MinJetPt, CSVCuts[0]);
+    tree.nbm() = GetNumJets(good_jets, MinJetPt, CSVCuts[1]);
+    tree.nbt() = GetNumJets(good_jets, MinJetPt, CSVCuts[2]);
+    tree.ht() = GetHT(good_jets, MinJetPt);
 
-    tree.njets30 = GetNumJets(good_jets, 30.0);
-    tree.nbl30 = GetNumJets(good_jets, 30.0, CSVCuts[0]);
-    tree.nbm30 = GetNumJets(good_jets, 30.0, CSVCuts[1]);
-    tree.nbt30 = GetNumJets(good_jets, 30.0, CSVCuts[2]);
-    tree.ht30 = GetHT(good_jets, 30.0);
-    tree.mht30 = GetMHT(good_jets, 30.0);
+    tree.njets30() = GetNumJets(good_jets, 30.0);
+    tree.nbl30() = GetNumJets(good_jets, 30.0, CSVCuts[0]);
+    tree.nbm30() = GetNumJets(good_jets, 30.0, CSVCuts[1]);
+    tree.nbt30() = GetNumJets(good_jets, 30.0, CSVCuts[2]);
+    tree.ht30() = GetHT(good_jets, 30.0);
+    tree.mht30() = GetMHT(good_jets, 30.0);
 
     for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
       int ijet = good_jets.at(igoodjet); 
-      tree.jets_pt.push_back(jets_AK4_pt()->at(ijet)); 
-      tree.jets_eta.push_back(jets_AK4_eta()->at(ijet)); 
-      tree.jets_phi.push_back(jets_AK4_phi()->at(ijet)); 
-      tree.jets_csv.push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+      tree.jets_pt().push_back(jets_AK4_pt()->at(ijet)); 
+      tree.jets_eta().push_back(jets_AK4_eta()->at(ijet)); 
+      tree.jets_phi().push_back(jets_AK4_phi()->at(ijet)); 
+      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
     }
 
     ////////////////   Fat Jets   ////////////////
     WriteFatJets(tree);
-
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
   }
@@ -281,7 +282,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
   treeglobal.Fill();
   treeglobal.Write();
-
 
   outFile.Close();
   if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
@@ -306,9 +306,9 @@ void event_handler::WriteFatJets(small_tree &tree){
        || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
 
     const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
-			    jets_pz()->at(jet), jets_energy()->at(jet));
+                            jets_pz()->at(jet), jets_energy()->at(jet));
     const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
-				 jets_pz()->at(jet), jets_energy()->at(jet));
+                                 jets_pz()->at(jet), jets_energy()->at(jet));
 
     bool sig_add = true;
     for(size_t iel = 0; iel<els_pt()->size() && sig_add; ++iel){
@@ -316,9 +316,9 @@ void event_handler::WriteFatJets(small_tree &tree){
       if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
       if(!IsSignalElectron(iel)) continue;
       const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
-				els_pz()->at(iel), els_energy()->at(iel));
+                                els_pz()->at(iel), els_energy()->at(iel));
       if(p4el.DeltaR(this_lv)<0.3){
-	sig_add=false;
+        sig_add=false;
       }
     }
     for(size_t imu = 0; imu<mus_pt()->size() && sig_add; ++imu){
@@ -326,9 +326,9 @@ void event_handler::WriteFatJets(small_tree &tree){
       if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
       if(!IsSignalMuon(imu)) continue;
       const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
-				mus_pz()->at(imu), mus_energy()->at(imu));
+                                mus_pz()->at(imu), mus_energy()->at(imu));
       if(p4mu.DeltaR(this_lv)<0.3){
-	sig_add=false;
+        sig_add=false;
       }
     }
 
@@ -355,126 +355,126 @@ void event_handler::WriteFatJets(small_tree &tree){
   fjets_skinny_r10 = sorted_by_pt(cs_skinny_r10.inclusive_jets());
   fjets_skinny_r15 = sorted_by_pt(cs_skinny_r15.inclusive_jets());
 
-  tree.nfjets_30 = 0;
-  tree.mj_30 = 0;
-  tree.fjets_30_pt.resize(fjets_skinny_30.size());
-  tree.fjets_30_eta.resize(fjets_skinny_30.size());
-  tree.fjets_30_phi.resize(fjets_skinny_30.size());
-  tree.fjets_30_m.resize(fjets_skinny_30.size());
+  tree.nfjets_30() = 0;
+  tree.mj_30() = 0;
+  tree.fjets_30_pt().resize(fjets_skinny_30.size());
+  tree.fjets_30_eta().resize(fjets_skinny_30.size());
+  tree.fjets_30_phi().resize(fjets_skinny_30.size());
+  tree.fjets_30_m().resize(fjets_skinny_30.size());
   for(size_t ipj = 0; ipj < fjets_skinny_30.size(); ++ipj){
     const PseudoJet &pj = fjets_skinny_30.at(ipj);
-    tree.fjets_30_pt.at(ipj)=pj.pt();
-    tree.fjets_30_eta.at(ipj)=pj.eta();
-    tree.fjets_30_phi.at(ipj)=pj.phi_std();
-    tree.fjets_30_m.at(ipj)=pj.m();
+    tree.fjets_30_pt().at(ipj)=pj.pt();
+    tree.fjets_30_eta().at(ipj)=pj.eta();
+    tree.fjets_30_phi().at(ipj)=pj.phi_std();
+    tree.fjets_30_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_30 += pj.m();
-      ++tree.nfjets_30;
+      tree.mj_30() += pj.m();
+      ++(tree.nfjets_30());
     }
   }
-  tree.nfjets_scln_30 = 0;
-  tree.mj_scln_30 = 0;
-  tree.fjets_scln_30_pt.resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_eta.resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_phi.resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_m.resize(fjets_sig_clean_30.size());
+  tree.nfjets_scln_30() = 0;
+  tree.mj_scln_30() = 0;
+  tree.fjets_scln_30_pt().resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_eta().resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_phi().resize(fjets_sig_clean_30.size());
+  tree.fjets_scln_30_m().resize(fjets_sig_clean_30.size());
   for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
     const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
-    tree.fjets_scln_30_pt.at(ipj)=pj.pt();
-    tree.fjets_scln_30_eta.at(ipj)=pj.eta();
-    tree.fjets_scln_30_phi.at(ipj)=pj.phi_std();
-    tree.fjets_scln_30_m.at(ipj)=pj.m();
+    tree.fjets_scln_30_pt().at(ipj)=pj.pt();
+    tree.fjets_scln_30_eta().at(ipj)=pj.eta();
+    tree.fjets_scln_30_phi().at(ipj)=pj.phi_std();
+    tree.fjets_scln_30_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_scln_30 += pj.m();
-      ++tree.nfjets_scln_30;
+      tree.mj_scln_30() += pj.m();
+      ++(tree.nfjets_scln_30());
     }
   }
-  tree.nfjets_0 = 0;
-  tree.mj_0 = 0;
-  tree.fjets_0_pt.resize(fjets_skinny_0.size());
-  tree.fjets_0_eta.resize(fjets_skinny_0.size());
-  tree.fjets_0_phi.resize(fjets_skinny_0.size());
-  tree.fjets_0_m.resize(fjets_skinny_0.size());
+  tree.nfjets_0() = 0;
+  tree.mj_0() = 0;
+  tree.fjets_0_pt().resize(fjets_skinny_0.size());
+  tree.fjets_0_eta().resize(fjets_skinny_0.size());
+  tree.fjets_0_phi().resize(fjets_skinny_0.size());
+  tree.fjets_0_m().resize(fjets_skinny_0.size());
   for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
     const PseudoJet &pj = fjets_skinny_0.at(ipj);
-    tree.fjets_0_pt.at(ipj)=pj.pt();
-    tree.fjets_0_eta.at(ipj)=pj.eta();
-    tree.fjets_0_phi.at(ipj)=pj.phi_std();
-    tree.fjets_0_m.at(ipj)=pj.m();
+    tree.fjets_0_pt().at(ipj)=pj.pt();
+    tree.fjets_0_eta().at(ipj)=pj.eta();
+    tree.fjets_0_phi().at(ipj)=pj.phi_std();
+    tree.fjets_0_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_0 += pj.m();
-      ++tree.nfjets_0;
+      tree.mj_0() += pj.m();
+      ++(tree.nfjets_0());
     }
   }
-  tree.nfjets_eta25 = 0;
-  tree.mj_eta25 = 0;
-  tree.fjets_eta25_pt.resize(fjets_skinny_eta25.size());
-  tree.fjets_eta25_eta.resize(fjets_skinny_eta25.size());
-  tree.fjets_eta25_phi.resize(fjets_skinny_eta25.size());
-  tree.fjets_eta25_m.resize(fjets_skinny_eta25.size());
+  tree.nfjets_eta25() = 0;
+  tree.mj_eta25() = 0;
+  tree.fjets_eta25_pt().resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_eta().resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_phi().resize(fjets_skinny_eta25.size());
+  tree.fjets_eta25_m().resize(fjets_skinny_eta25.size());
   for(size_t ipj = 0; ipj < fjets_skinny_eta25.size(); ++ipj){
     const PseudoJet &pj = fjets_skinny_eta25.at(ipj);
-    tree.fjets_eta25_pt.at(ipj)=pj.pt();
-    tree.fjets_eta25_eta.at(ipj)=pj.eta();
-    tree.fjets_eta25_phi.at(ipj)=pj.phi_std();
-    tree.fjets_eta25_m.at(ipj)=pj.m();
+    tree.fjets_eta25_pt().at(ipj)=pj.pt();
+    tree.fjets_eta25_eta().at(ipj)=pj.eta();
+    tree.fjets_eta25_phi().at(ipj)=pj.phi_std();
+    tree.fjets_eta25_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_eta25 += pj.m();
-      ++tree.nfjets_eta25;
+      tree.mj_eta25() += pj.m();
+      ++(tree.nfjets_eta25());
     }
   }
-  tree.nfjets_r10 = 0;
-  tree.mj_r10 = 0;
-  tree.fjets_r10_pt.resize(fjets_skinny_r10.size());
-  tree.fjets_r10_eta.resize(fjets_skinny_r10.size());
-  tree.fjets_r10_phi.resize(fjets_skinny_r10.size());
-  tree.fjets_r10_m.resize(fjets_skinny_r10.size());
+  tree.nfjets_r10() = 0;
+  tree.mj_r10() = 0;
+  tree.fjets_r10_pt().resize(fjets_skinny_r10.size());
+  tree.fjets_r10_eta().resize(fjets_skinny_r10.size());
+  tree.fjets_r10_phi().resize(fjets_skinny_r10.size());
+  tree.fjets_r10_m().resize(fjets_skinny_r10.size());
   for(size_t ipj = 0; ipj < fjets_skinny_r10.size(); ++ipj){
     const PseudoJet &pj = fjets_skinny_r10.at(ipj);
-    tree.fjets_r10_pt.at(ipj)=pj.pt();
-    tree.fjets_r10_eta.at(ipj)=pj.eta();
-    tree.fjets_r10_phi.at(ipj)=pj.phi_std();
-    tree.fjets_r10_m.at(ipj)=pj.m();
+    tree.fjets_r10_pt().at(ipj)=pj.pt();
+    tree.fjets_r10_eta().at(ipj)=pj.eta();
+    tree.fjets_r10_phi().at(ipj)=pj.phi_std();
+    tree.fjets_r10_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_r10 += pj.m();
-      ++tree.nfjets_r10;
+      tree.mj_r10() += pj.m();
+      ++(tree.nfjets_r10());
     }
   }
-  tree.nfjets_r15 = 0;
-  tree.mj_r15 = 0;
-  tree.fjets_r15_pt.resize(fjets_skinny_r15.size());
-  tree.fjets_r15_eta.resize(fjets_skinny_r15.size());
-  tree.fjets_r15_phi.resize(fjets_skinny_r15.size());
-  tree.fjets_r15_m.resize(fjets_skinny_r15.size());
+  tree.nfjets_r15() = 0;
+  tree.mj_r15() = 0;
+  tree.fjets_r15_pt().resize(fjets_skinny_r15.size());
+  tree.fjets_r15_eta().resize(fjets_skinny_r15.size());
+  tree.fjets_r15_phi().resize(fjets_skinny_r15.size());
+  tree.fjets_r15_m().resize(fjets_skinny_r15.size());
   for(size_t ipj = 0; ipj < fjets_skinny_r15.size(); ++ipj){
     const PseudoJet &pj = fjets_skinny_r15.at(ipj);
-    tree.fjets_r15_pt.at(ipj)=pj.pt();
-    tree.fjets_r15_eta.at(ipj)=pj.eta();
-    tree.fjets_r15_phi.at(ipj)=pj.phi_std();
-    tree.fjets_r15_m.at(ipj)=pj.m();
+    tree.fjets_r15_pt().at(ipj)=pj.pt();
+    tree.fjets_r15_eta().at(ipj)=pj.eta();
+    tree.fjets_r15_phi().at(ipj)=pj.phi_std();
+    tree.fjets_r15_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_r15 += pj.m();
-      ++tree.nfjets_r15;
+      tree.mj_r15() += pj.m();
+      ++(tree.nfjets_r15());
     }
   }
 
-  tree.nfjets_cands = static_cast<int>(bad_val);
-  tree.mj_cands = static_cast<int>(bad_val);
+  tree.nfjets_cands() = static_cast<int>(bad_val);
+  tree.mj_cands() = static_cast<int>(bad_val);
 
-  tree.nfjets_cands_trim = static_cast<int>(bad_val);
-  tree.mj_cands_trim = static_cast<int>(bad_val);
+  tree.nfjets_cands_trim() = static_cast<int>(bad_val);
+  tree.mj_cands_trim() = static_cast<int>(bad_val);
   if(!skip_slow){
     vector<PseudoJet> cands(pfcand_pt()->size());
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
       if(!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
-	 && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
-	p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
-			    pfcand_phi()->at(cand), pfcand_energy()->at(cand));
-	cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
+         && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
+        p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
+                            pfcand_phi()->at(cand), pfcand_energy()->at(cand));
+        cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
       }else{
-	//Bad. We read nan for one of the momentum components. Filling with null 4-vector.
-	cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+        //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
+        cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
       }
     }
 
@@ -486,7 +486,7 @@ void event_handler::WriteFatJets(small_tree &tree){
     for(size_t fj = 0; fj < fjets_cands.size(); ++fj){
       vector<PseudoJet> pjs;
       for(size_t sj = 0; sj < cands.size(); ++sj){
-	if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
+        if(static_cast<size_t>(fj_owner.at(sj)) == fj) pjs.push_back(cands.at(sj));
       }
       ClusterSequence cs(pjs, JetDefinition(kt_algorithm, 0.2));
       pjs = cs.inclusive_jets();
@@ -494,49 +494,49 @@ void event_handler::WriteFatJets(small_tree &tree){
       //Sum the fat jet components in place
       fjets_cands_trim.at(fj)=PseudoJet(0.0, 0.0, 0.0, 0.0);
       for(size_t pj = 0; pj < pjs.size(); ++pj){
-	fjets_cands_trim.at(fj) += pjs.at(pj);
+        fjets_cands_trim.at(fj) += pjs.at(pj);
       }
       const double sumpt = fjets_cands_trim.at(fj).pt();
       fjets_cands_trim.at(fj)=PseudoJet(0.0,0.0,0.0,0.0);
       //Trim the low momentum-fraction components
       for(size_t pj = 0; pj < pjs.size(); ++pj){
-	if(pjs.at(pj).pt()>0.03*sumpt){
-	  fjets_cands_trim.at(fj) += pjs.at(pj);
-	}
+        if(pjs.at(pj).pt()>0.03*sumpt){
+          fjets_cands_trim.at(fj) += pjs.at(pj);
+        }
       }
     } // Loop over fat jets from pfcands
-    tree.nfjets_cands = 0;
-    tree.mj_cands = 0;
-    tree.fjets_cands_pt.resize(fjets_cands.size());
-    tree.fjets_cands_eta.resize(fjets_cands.size());
-    tree.fjets_cands_phi.resize(fjets_cands.size());
-    tree.fjets_cands_m.resize(fjets_cands.size());
+    tree.nfjets_cands() = 0;
+    tree.mj_cands() = 0;
+    tree.fjets_cands_pt().resize(fjets_cands.size());
+    tree.fjets_cands_eta().resize(fjets_cands.size());
+    tree.fjets_cands_phi().resize(fjets_cands.size());
+    tree.fjets_cands_m().resize(fjets_cands.size());
     for(size_t ipj = 0; ipj < fjets_cands.size(); ++ipj){
       const PseudoJet &pj = fjets_cands.at(ipj);
-      tree.fjets_cands_pt.at(ipj)=pj.pt();
-      tree.fjets_cands_eta.at(ipj)=pj.eta();
-      tree.fjets_cands_phi.at(ipj)=pj.phi_std();
-      tree.fjets_cands_m.at(ipj)=pj.m();
+      tree.fjets_cands_pt().at(ipj)=pj.pt();
+      tree.fjets_cands_eta().at(ipj)=pj.eta();
+      tree.fjets_cands_phi().at(ipj)=pj.phi_std();
+      tree.fjets_cands_m().at(ipj)=pj.m();
       if(pj.pt()>50.0){
-	tree.mj_cands += pj.m();
-	++tree.nfjets_cands;
+        tree.mj_cands() += pj.m();
+        ++(tree.nfjets_cands());
       }
     }
-    tree.nfjets_cands_trim = 0;
-    tree.mj_cands_trim = 0;
-    tree.fjets_cands_trim_pt.resize(fjets_cands_trim.size());
-    tree.fjets_cands_trim_eta.resize(fjets_cands_trim.size());
-    tree.fjets_cands_trim_phi.resize(fjets_cands_trim.size());
-    tree.fjets_cands_trim_m.resize(fjets_cands_trim.size());
+    tree.nfjets_cands_trim() = 0;
+    tree.mj_cands_trim() = 0;
+    tree.fjets_cands_trim_pt().resize(fjets_cands_trim.size());
+    tree.fjets_cands_trim_eta().resize(fjets_cands_trim.size());
+    tree.fjets_cands_trim_phi().resize(fjets_cands_trim.size());
+    tree.fjets_cands_trim_m().resize(fjets_cands_trim.size());
     for(size_t ipj = 0; ipj < fjets_cands_trim.size(); ++ipj){
       const PseudoJet &pj = fjets_cands_trim.at(ipj);
-      tree.fjets_cands_trim_pt.at(ipj)=pj.pt();
-      tree.fjets_cands_trim_eta.at(ipj)=pj.eta();
-      tree.fjets_cands_trim_phi.at(ipj)=pj.phi_std();
-      tree.fjets_cands_trim_m.at(ipj)=pj.m();
+      tree.fjets_cands_trim_pt().at(ipj)=pj.pt();
+      tree.fjets_cands_trim_eta().at(ipj)=pj.eta();
+      tree.fjets_cands_trim_phi().at(ipj)=pj.phi_std();
+      tree.fjets_cands_trim_m().at(ipj)=pj.m();
       if(pj.pt()>50.0){
-	tree.mj_cands_trim += pj.m();
-	++tree.nfjets_cands_trim;
+        tree.mj_cands_trim() += pj.m();
+        ++(tree.nfjets_cands_trim());
       }
     } // Loop over trimmed fat jets
   } // If (skip_slow)
@@ -545,12 +545,12 @@ void event_handler::WriteFatJets(small_tree &tree){
 
 
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
-			      std::vector<float> &els_mindr,
-			      std::vector<float> &mus_ptrel,
-			      std::vector<float> &mus_mindr,
-			      float pt_cut,
-			      bool remove_isolated,
-			      float dr_match_thresh){
+                              std::vector<float> &els_mindr,
+                              std::vector<float> &mus_ptrel,
+                              std::vector<float> &mus_mindr,
+                              float pt_cut,
+                              bool remove_isolated,
+                              float dr_match_thresh){
   using namespace fastjet;
   els_ptrel.resize(els_pt()->size());
   els_mindr.resize(els_pt()->size());
@@ -571,19 +571,19 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
       const float dr = dR(els_eta()->at(el), pfcand_eta()->at(cand),
-			  els_phi()->at(el), pfcand_phi()->at(cand));
+                          els_phi()->at(el), pfcand_phi()->at(cand));
       if(dr < mindr){
-	mindr = dr;
-	imatch = cand;
+        mindr = dr;
+        imatch = cand;
       }
     }
     if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
       els_cand_idx.at(el) = imatch;
       if(remove_isolated && IsSignalElectron(el)){
-	els_removed.at(el) = true;
-	to_remove.insert(imatch);
+        els_removed.at(el) = true;
+        to_remove.insert(imatch);
       }else{
-	els_removed.at(el) = false;
+        els_removed.at(el) = false;
       }
     }else{
       els_cand_idx.at(el) = -1;
@@ -597,23 +597,23 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
     size_t imatch = 0;
 
     const TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
-			      mus_pz()->at(mu), mus_energy()->at(mu));
+                              mus_pz()->at(mu), mus_energy()->at(mu));
 
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
       const float dr = dR(mus_eta()->at(mu), pfcand_eta()->at(cand),
-			  mus_phi()->at(mu), pfcand_phi()->at(cand));
+                          mus_phi()->at(mu), pfcand_phi()->at(cand));
       if(dr < mindr){
-	mindr = dr;
-	imatch = cand;
+        mindr = dr;
+        imatch = cand;
       }
     }
     if(mindr <= dr_match_thresh || dr_match_thresh < 0.){
       mus_cand_idx.at(mu) = imatch;
       if(remove_isolated && IsSignalMuon(mu)){
-	mus_removed.at(mu) = true;
-	to_remove.insert(imatch);
+        mus_removed.at(mu) = true;
+        to_remove.insert(imatch);
       }else{
-	mus_removed.at(mu) = false;
+        mus_removed.at(mu) = false;
       }
     }else{
       mus_cand_idx.at(mu) = -1;
@@ -631,9 +631,9 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
        && !is_nan(pfcand_energy()->at(cand))){
       TLorentzVector p4cand;
       p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand),
-			  pfcand_eta()->at(cand),
-			  pfcand_phi()->at(cand),
-			  pfcand_energy()->at(cand));
+                          pfcand_eta()->at(cand),
+                          pfcand_phi()->at(cand),
+                          pfcand_energy()->at(cand));
       pjs.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
     }else{
       pjs.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
@@ -660,28 +660,28 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
       //Electron was clustered into a jet. Compute ptrel w.r.t. this jet
       size_t jet_idx = indices.at(els_cand_idx.at(el));
       TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-els_px()->at(el),
-			   reclustered_jets.at(jet_idx).py()-els_py()->at(el),
-			   reclustered_jets.at(jet_idx).pz()-els_pz()->at(el),
-			   reclustered_jets.at(jet_idx).e()-els_energy()->at(el));
+                           reclustered_jets.at(jet_idx).py()-els_py()->at(el),
+                           reclustered_jets.at(jet_idx).pz()-els_pz()->at(el),
+                           reclustered_jets.at(jet_idx).e()-els_energy()->at(el));
       TLorentzVector p4el(els_px()->at(el), els_py()->at(el),
-			  els_pz()->at(el), els_energy()->at(el));
-			  
+                          els_pz()->at(el), els_energy()->at(el));
+                          
       if(p4jet.Pt()<pt_cut){
-	//Jet was below pt threshold; find nearest jet above threshold
-	float min_dr=fltmax;
-	for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
-	  TLorentzVector this_jet(reclustered_jets.at(jet).px(),
-				  reclustered_jets.at(jet).py(),
-				  reclustered_jets.at(jet).pz(),
-				  reclustered_jets.at(jet).e());
-	  if(jet == jet_idx) this_jet-=p4el;
-	  if(this_jet.Pt() < pt_cut) continue;
-	  float this_dr = p4el.DeltaR(this_jet);
-	  if(this_dr < min_dr){
-	    min_dr = this_dr;
-	    p4jet = this_jet;
-	  }
-	}
+        //Jet was below pt threshold; find nearest jet above threshold
+        float min_dr=fltmax;
+        for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
+          TLorentzVector this_jet(reclustered_jets.at(jet).px(),
+                                  reclustered_jets.at(jet).py(),
+                                  reclustered_jets.at(jet).pz(),
+                                  reclustered_jets.at(jet).e());
+          if(jet == jet_idx) this_jet-=p4el;
+          if(this_jet.Pt() < pt_cut) continue;
+          float this_dr = p4el.DeltaR(this_jet);
+          if(this_dr < min_dr){
+            min_dr = this_dr;
+            p4jet = this_jet;
+          }
+        }
       }
 
       els_ptrel.at(el) = p4el.Pt(p4jet.Vect());
@@ -703,28 +703,28 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
       //Muon was clustered into a jet. Compute ptrel w.r.t. this jet
       size_t jet_idx = indices.at(mus_cand_idx.at(mu));
       TLorentzVector p4jet(reclustered_jets.at(jet_idx).px()-mus_px()->at(mu),
-			   reclustered_jets.at(jet_idx).py()-mus_py()->at(mu),
-			   reclustered_jets.at(jet_idx).pz()-mus_pz()->at(mu),
-			   reclustered_jets.at(jet_idx).e()-mus_energy()->at(mu));
+                           reclustered_jets.at(jet_idx).py()-mus_py()->at(mu),
+                           reclustered_jets.at(jet_idx).pz()-mus_pz()->at(mu),
+                           reclustered_jets.at(jet_idx).e()-mus_energy()->at(mu));
       TLorentzVector p4mu(mus_px()->at(mu), mus_py()->at(mu),
-			  mus_pz()->at(mu), mus_energy()->at(mu));
+                          mus_pz()->at(mu), mus_energy()->at(mu));
 
       if(p4jet.Pt()<pt_cut){
-	//Jet was below pt threshold; find nearest jet above threshold
-	float min_dr=fltmax;
-	for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
-	  TLorentzVector this_jet(reclustered_jets.at(jet).px(),
-				  reclustered_jets.at(jet).py(),
-				  reclustered_jets.at(jet).pz(),
-				  reclustered_jets.at(jet).e());
-	  if(jet == jet_idx) this_jet-=p4mu;
-	  if(this_jet.Pt() < pt_cut) continue;
-	  float this_dr = p4mu.DeltaR(this_jet);
-	  if(this_dr < min_dr){
-	    min_dr = this_dr;
-	    p4jet = this_jet;
-	  }
-	}
+        //Jet was below pt threshold; find nearest jet above threshold
+        float min_dr=fltmax;
+        for(size_t jet = 0; jet < reclustered_jets.size(); ++jet){
+          TLorentzVector this_jet(reclustered_jets.at(jet).px(),
+                                  reclustered_jets.at(jet).py(),
+                                  reclustered_jets.at(jet).pz(),
+                                  reclustered_jets.at(jet).e());
+          if(jet == jet_idx) this_jet-=p4mu;
+          if(this_jet.Pt() < pt_cut) continue;
+          float this_dr = p4mu.DeltaR(this_jet);
+          if(this_dr < min_dr){
+            min_dr = this_dr;
+            p4jet = this_jet;
+          }
+        }
       }
 
       mus_ptrel.at(mu) = p4mu.Pt(p4jet.Vect());
@@ -817,22 +817,22 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   }
 
   if (isElectron){
-    tree.els_reliso_r02.push_back(iso[0]);
-    tree.els_reliso_r03.push_back(iso[1]);
-    tree.els_miniso_10_ch.push_back(iso_ch[3]/lep_pt);
-    tree.els_miniso_tr10.push_back(iso[4]);
-    tree.els_miniso_tr15.push_back(iso[5]);
-    tree.els_miniso_tr15_ch.push_back(iso_ch[5]/lep_pt);
-    tree.els_miniso_15.push_back(iso[6]);
+    tree.els_reliso_r02().push_back(iso[0]);
+    tree.els_reliso_r03().push_back(iso[1]);
+    tree.els_miniso_10_ch().push_back(iso_ch[3]/lep_pt);
+    tree.els_miniso_tr10().push_back(iso[4]);
+    tree.els_miniso_tr15().push_back(iso[5]);
+    tree.els_miniso_tr15_ch().push_back(iso_ch[5]/lep_pt);
+    tree.els_miniso_15().push_back(iso[6]);
   } else {
-    tree.mus_reliso_r02.push_back(iso[0]);
-    tree.mus_reliso_r03.push_back(iso[1]);
-    tree.mus_reliso_r04.push_back(iso[2]);
-    tree.mus_miniso_10_ch.push_back(iso_ch[3]/lep_pt);
-    tree.mus_miniso_tr10.push_back(iso[4]);
-    tree.mus_miniso_tr15.push_back(iso[5]);
-    tree.mus_miniso_tr15_ch.push_back(iso_ch[5]/lep_pt);
-    tree.mus_miniso_15.push_back(iso[6]);
+    tree.mus_reliso_r02().push_back(iso[0]);
+    tree.mus_reliso_r03().push_back(iso[1]);
+    tree.mus_reliso_r04().push_back(iso[2]);
+    tree.mus_miniso_10_ch().push_back(iso_ch[3]/lep_pt);
+    tree.mus_miniso_tr10().push_back(iso[4]);
+    tree.mus_miniso_tr15().push_back(iso[5]);
+    tree.mus_miniso_tr15_ch().push_back(iso_ch[5]/lep_pt);
+    tree.mus_miniso_15().push_back(iso[6]);
   }
   
   return;
