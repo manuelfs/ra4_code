@@ -1,3 +1,4 @@
+#include <locale>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -18,7 +19,19 @@ struct Variable{
   }
 };
 
+class comma_numpunct : public numpunct<char>{
+protected:
+  virtual char do_thousands_sep() const{
+    return ',';
+  }
+
+  virtual string do_grouping() const{
+    return "\03";
+  }
+};
+
 int main(int argc, char *argv[]){
+  cout.imbue(locale(locale(), new comma_numpunct));
   for(int arg = 1; arg < argc; ++arg){
     TChain chain;
     if(!chain.Add(argv[arg])) continue;
