@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
-  outFilename.ReplaceAll("/cfA","");
+  //outFilename.ReplaceAll("/cfA","");
   int len(outFilename.Length());
   if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
   outFilename.Remove(0,outFilename.Last('/')+1);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
       // Finding total number of entries in sample
       all_sample_files += "/*.root";
             
-      TChain totsample("cfA/eventA");
+      TChain totsample("configurableAnalysis/eventA");
       totsample.Add(all_sample_files);
       Ntotentries = totsample.GetEntries();
     }else{

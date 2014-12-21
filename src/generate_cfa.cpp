@@ -274,9 +274,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "#include <sstream>\n";
   cpp_file << "#include <stdexcept>\n\n";
 
-  cpp_file << "#include \"TChain.h\"\n";
-  cpp_file << "#include \"TFile.h\"\n";
-  cpp_file << "#include \"TCollection.h\"\n\n";
+  cpp_file << "#include \"TChain.h\"\n\n";
 
   cpp_file << "cfa_base::cfa_base(const std::string &file):\n";
   cpp_file << "  chainA_(\"chainA\"),\n";
@@ -373,10 +371,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
 
   cpp_file << "void cfa_base::AddFiles(const std::string &file_name){\n";
   cpp_file << "  cached_total_entries_=false;\n";
-  cpp_file << "  TFile rootfile(file_name.c_str());\n";
-  cpp_file << "  TIter iterator(rootfile.GetListOfKeys());\n";
-  cpp_file << "  std::string dir_name = iterator()->GetName();\n";
-  cpp_file << "  rootfile.Close();\n";
+  cpp_file << "  std::string dir_name = \"configurableAnalysis\";\n";
   cpp_file << "  chainA_.Add((file_name+\"/\"+dir_name+\"/eventA\").c_str());\n";
   cpp_file << "  chainB_.Add((file_name+\"/\"+dir_name+\"/eventB\").c_str());\n";
   cpp_file << "}\n\n";

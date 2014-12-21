@@ -34,6 +34,14 @@ float cross_section(TString file){
   if(file.Contains("T1tttt") && file.Contains("1200_"))  xsec = 0.0856418;
   if(file.Contains("T1tttt") && file.Contains("1500_"))  xsec = 0.0141903;
 
+  if(file.Contains("T1bbbb") && file.Contains("1500_"))  xsec = 0.0141903;
+  if(file.Contains("T1bbbb") && file.Contains("1000_"))  xsec = 0.325388;
+
+  if(file.Contains("T1qqqq") && file.Contains("1400_"))  xsec = 0.0252977;
+  if(file.Contains("T1qqqq") && file.Contains("1000_"))  xsec = 0.325388;  
+
+  if(file.Contains("T2tt") && file.Contains("425_"))  xsec = 1.31169;
+  if(file.Contains("T2tt") && file.Contains("500_"))  xsec = 0.51848;
   if(file.Contains("T2tt") && file.Contains("650_"))  xsec = 0.107045;
   if(file.Contains("T2tt") && file.Contains("850_"))  xsec = 0.0189612;
 
@@ -84,6 +92,12 @@ float cross_section(TString file){
   if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24;
   if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.546;
   if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))    xsec = 2.179;
+
+  if(file.Contains("ZJetsToNuNu_HT-100to200"))    xsec = 372.6;
+  if(file.Contains("ZJetsToNuNu_HT-200to400"))    xsec = 100.8;
+  if(file.Contains("ZJetsToNuNu_HT-400to600"))    xsec = 11.99;
+  if(file.Contains("ZJetsToNuNu_HT-600toInf"))    xsec = 4.113;
+
 
   if(xsec<=0) cout<<"Cross section not found for "<<file<<endl;
 

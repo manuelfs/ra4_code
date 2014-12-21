@@ -110,12 +110,12 @@ int main(){
 
   ////////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");
-  variables.push_back("std::vector<float> mc_pt");
-  variables.push_back("std::vector<float> mc_eta");
-  variables.push_back("std::vector<float> mc_phi");
-  variables.push_back("std::vector<float> mc_id");
-  variables.push_back("std::vector<float> mc_momid");
-  variables.push_back("std::vector<float> mc_gmomid");
+  // variables.push_back("std::vector<float> mc_pt");
+  // variables.push_back("std::vector<float> mc_eta");
+  // variables.push_back("std::vector<float> mc_phi");
+  // variables.push_back("std::vector<float> mc_id");
+  // variables.push_back("std::vector<float> mc_momid");
+  // variables.push_back("std::vector<float> mc_gmomid");
 
 
   ///////////////////   Fat Jets   //////////////

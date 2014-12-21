@@ -324,7 +324,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
     && (true || vprob_cut) 
     && (els_PATpassConversionVeto()->at(iel))
-    && (misshits_cut >= els_expectedMissingInnerHits()->at(iel));
+    && true;//(misshits_cut >= els_expectedMissingInnerHits()->at(iel));
 }
 
 float phys_objects::GetElectronIsolation(unsigned iel) const {
@@ -674,7 +674,8 @@ size_t phys_objects::GetNumJets(const vector<int> &good_jets,
   size_t num_jets = 0;
   for(size_t i = 0; i < good_jets.size(); ++i){
     if(jets_pt()->at(good_jets.at(i)) > pt_cut
-       && jets_btag_inc_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
+       //&& jets_btag_inc_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
+       && jets_btag_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
       ++num_jets;
     }
   }

@@ -33,8 +33,8 @@
 
 using namespace std;
 using namespace fastjet;
-// const double CSVCuts[] = {0.244, 0.679, 0.898}; // Run1 CSV
-const double CSVCuts[] = {0.423, 0.814, 0.941};    // Run2 CSV+IVF
+const double CSVCuts[] = {0.244, 0.679, 0.898}; // Run1 CSV
+//const double CSVCuts[] = {0.423, 0.814, 0.941};    // Run2 CSV+IVF
 
 namespace{
   const float fltmax = numeric_limits<float>::max();
@@ -145,7 +145,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
         // Isolation
         tree.els_reliso().push_back(GetElectronIsolation(index));
-        SetMiniIso(tree, index, /*isElectron*/ true);
+        //SetMiniIso(tree, index, /*isElectron*/ true);
         tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
         tree.els_mindr_0().push_back(els_mindr_0.at(index));
         tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
@@ -185,7 +185,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
         // Isolation
         tree.mus_reliso().push_back(GetMuonIsolation(index));
-        SetMiniIso(tree, index, /*isElectron*/ false);
+        //SetMiniIso(tree, index, /*isElectron*/ false);
         tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
         tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
         tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
@@ -225,14 +225,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
 
     ////////////////   TRUTH   ////////////////
-    for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
-      tree.mc_pt().push_back(mc_doc_pt()->at(igen));  
-      tree.mc_phi().push_back(mc_doc_phi()->at(igen));  
-      tree.mc_eta().push_back(mc_doc_eta()->at(igen));  
-      tree.mc_id().push_back(mc_doc_id()->at(igen));  
-      tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));  
-      tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));  
-    }
+    // for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
+    //   tree.mc_pt().push_back(mc_doc_pt()->at(igen));  
+    //   tree.mc_phi().push_back(mc_doc_phi()->at(igen));  
+    //   tree.mc_eta().push_back(mc_doc_eta()->at(igen));  
+    //   tree.mc_id().push_back(mc_doc_id()->at(igen));  
+    //   tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));  
+    //   tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));  
+    // }
     tree.mc_type() = TypeCode();
 
     ////////////////   Jets   ////////////////
@@ -258,7 +258,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.jets_pt().push_back(jets_AK4_pt()->at(ijet)); 
       tree.jets_eta().push_back(jets_AK4_eta()->at(ijet)); 
       tree.jets_phi().push_back(jets_AK4_phi()->at(ijet)); 
-      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+      //      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+      tree.jets_csv().push_back(jets_AK4_btag_secVertexCombined()->at(ijet)); 
     }
 
     ////////////////   Fat Jets   ////////////////
@@ -795,7 +796,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
           for (uint ir=0; ir<nriso; ir++) {if (dr<riso[ir]) iso_nh[ir] += pfcand_pt()->at(icand);}
         }
       }
-    } else if (pfcand_fromPV()->at(icand)>1){
+    } else if (true){//pfcand_fromPV()->at(icand)>1){
       if (abs(pfcand_pdgId()->at(icand))==211) {
         if(dr < deadcone_ch) continue;
         for (uint ir=0; ir<nriso; ir++) {if (dr<riso[ir]) iso_ch[ir] += pfcand_pt()->at(icand);}
