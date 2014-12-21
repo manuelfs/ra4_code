@@ -18,28 +18,41 @@ using namespace std;
 int main(){
   styles style("1Dtitle"); style.setDefaultStyle();
 
-  vector<TString> v_t1;
-  v_t1.push_back("archive/ra4skim/*T1tttt*1500_*PU20*");
+  vector<TString> v_t1pu20;
+  v_t1pu20.push_back("archive/ra4skim/*T1tttt*1500_*PU20*");
   vector<TString> v_tt;
-  v_tt.push_back("archive/ra4skim/*TT*batch2*");
+  v_tt.push_back("archive/ra4skim/*TT*");
+  vector<TString> v_qcd;
+  v_qcd.push_back("archive/ra4skim/*QCD*");
 
   // Muon isolation ROC
-  vector<sample_class> mus_tt_t1; 
-  mus_tt_t1.push_back(sample_class("T1tttt(1500,100) truth-matched prompt #mu", v_t1, "mus_tru_tm&&mus_sigid"));
-  mus_tt_t1.push_back(sample_class("tt non-truth-matched #mu", v_tt, "!mus_tru_tm&&mus_sigid"));
+  vector<sample_class> samples; 
+  samples.push_back(sample_class("T1tttt(1500,100)", v_t1pu20));
+  samples.push_back(sample_class("tt", v_tt));
+
+  vector<sample_class> qcd; 
+  qcd.push_back(sample_class("T1tttt(1500,100)", v_t1pu20));
+  qcd.push_back(sample_class("QCD", v_qcd));
 
   vector<var_class> vars;
-  vars.push_back(var_class("mus_reliso",0,10,"Rel. Iso.",1,1));
-  vars.push_back(var_class("mus_reliso_r02",0,10,"Rel. Iso. #DeltaR=0.2",1,2));
-  vars.push_back(var_class("mus_miniso_tr15",0,10,"Mini Iso. Tr., kt = 15 GeV",4));
-  vars.push_back(var_class("mus_miniso_tr15_ch",0,10,"Mini Iso. Tr., kt = 15 GeV (ch. only)",4,2));
-  vars.push_back(var_class("mus_ptrel_0+(mus_reliso_r02<0.2)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.2",2));
-  vars.push_back(var_class("mus_ptrel_0+(mus_reliso_r02<0.1)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.1",3));
+  vars.push_back(var_class("ht30",4000,0,"H_{T}",2,1));
+  vars.push_back(var_class("mj_30",2500,0,"M_{J}^{30}",4,1));
+  vars.push_back(var_class("mj_0",2500,0,"M_{J}^{10}",3,1));
+  vars.push_back(var_class("mj_scln_30",2500,0,"M_{J}^{30} no lepton",5,1));
+  vars.push_back(var_class("mj_r10",2500,0,"M_{J}^{30} #DeltaR = 1.0",6,1));
+  vars.push_back(var_class("mj_r15",2500,0,"M_{J}^{30} #DeltaR = 1.5",8,1));
+  vars.push_back(var_class("mj_cands",2500,0,"M_{J}^{pfcand}",7,2));
+  vars.push_back(var_class("mj_cands_trim",2500,0,"M_{J}^{pfcand} trimmed",7,1));
+  vars.push_back(var_class("mj_eta25",2500,0,"M_{J}^{30} |#eta|<2.5",28,1));
+  //vars.push_back(var_class("mindphin_metjet",20,0,"min#Delta#phi_{N}",9,1));
 
-  DrawROC(mus_tt_t1, vars, "mus_pt>20", "mus_iso");
-  DrawROC(mus_tt_t1, vars, "mus_pt>20&&ht>750&&met>250", "mus_iso");
+  //DrawROC(samples, vars, "nleps==1", "mj");
+  //DrawROC(samples, vars, "nleps==1&&nbl>=2&&met>250&&njets>=6", "mj_qcd");
+  //DrawROC(samples, vars, "nvmus10==0&&nvels10==0&&met>500", "mj_tt");
+  //DrawROC(qcd, vars, "nvmus10==0&&nvels10==0&&met>500", "mj_qcd");
+  //DrawROC(samples, vars, "nleps==1&&met>500&&npv<15", "mj_tt");
+  //DrawROC(samples, vars, "nleps==1&&met>500&&npv>20", "mj_tt");
+  DrawROC(samples, vars, "nleps==1&&met>500", "mj_tt");
 
 }
 
@@ -74,13 +87,17 @@ void DrawROC(vector<sample_class> samples, vector<var_class> vars, TString cuts,
 
   TString title(cuts);
   if(title=="1") title = "";
+  title.ReplaceAll("nvmus10==0&&nvels10==0", "0 leptons");  
   title.ReplaceAll("els_pt","p^{e}_{T}");title.ReplaceAll("mus_pt","p^{#mu}_{T}");
-  title.ReplaceAll("njets","n_{jets}"); title.ReplaceAll(">=", " #geq "); 
-  title.ReplaceAll(">", " > "); title.ReplaceAll("&&", ", "); 
+  title.ReplaceAll(">=", " #geq "); 
+  title.ReplaceAll(">", " > "); title.ReplaceAll("<", " < "); title.ReplaceAll("&&", ", "); 
   title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}");  title.ReplaceAll("mt", "m_{T}"); 
-  title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("nbm","n_{b}");
+  title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("npv","n_{PV}");
+  title.ReplaceAll("njets30","n_{jets}^{30}"); title.ReplaceAll("nbm30","n_{b}^{30}");
+  title.ReplaceAll("njets","n_{jets}"); title.ReplaceAll("nbm","n_{b}");
+  title.ReplaceAll("mindphin_metje","min#Delta#phi_{N}");
   title.ReplaceAll("nbl","n_{b,l}");
-  TH1D base_histo("base",title,1,0.5,1.0);
+  TH1D base_histo("base",title,1,0,1.0);
   base_histo.SetXTitle(samples[0].label+" efficiency");
   base_histo.SetYTitle(samples[1].label+" rejection rate");
   base_histo.SetMinimum(0.0);
