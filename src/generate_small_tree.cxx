@@ -216,6 +216,7 @@ int main(){
   hppFile << "  const bool read_only_;\n\n";
   for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
     hppFile << "  " << var->type << ' ' << var->name << "_;\n";
+    if (var->type.find("vector<")!=string::npos) hppFile << "  " << var->type << " *p_" << var->name << "_;\n";
     hppFile << "  TBranch *b_" << var->name << "_;\n";
     hppFile << "  mutable bool c_" << var->name << "_;\n";
   }
@@ -263,15 +264,18 @@ int main(){
   cppFile << "  read_only_(true),\n";
   for(size_t i = 0; i < vars.size()-1; ++i){
     cppFile << "  " << vars.at(i).name << "_(0),\n";
+    if (vars.at(i).type.find("vector<")!=string::npos) cppFile << "  p_" << vars.at(i).name << "_(&" << vars.at(i).name << "_),\n";
     cppFile << "  b_" << vars.at(i).name << "_(NULL),\n";
     cppFile << "  c_" << vars.at(i).name << "_(false),\n";
   }
   cppFile << "  " << vars.back().name << "_(0),\n";
+  if (vars.back().type.find("vector<")!=string::npos) cppFile << "  p_" << vars.back().name << "_(&" << vars.back().name << "_),\n";
   cppFile << "  b_" << vars.back().name << "_(NULL),\n";
   cppFile << "  c_" << vars.back().name << "_(false){\n";
   cppFile << "  chain_.Add(filename.c_str());\n";
   for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
-    cppFile << "  chain_.SetBranchAddress(\"" << var->name << "\", &" << var->name << "_, &b_" << var->name << "_);\n";
+    if (var->type.find("vector<")!=string::npos) cppFile << "  chain_.SetBranchAddress(\"" << var->name << "\", &p_" << var->name << "_, &b_" << var->name << "_);\n";
+    else cppFile << "  chain_.SetBranchAddress(\"" << var->name << "\", &" << var->name << "_, &b_" << var->name << "_);\n";
   }
   cppFile << "}\n\n";
 
