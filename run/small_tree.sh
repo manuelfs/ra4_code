@@ -1,6 +1,6 @@
 #! /bin/bash
 
-maxfiles=20
+maxfiles=10
 if (( "$#" >= 1 ))
 then
     maxfiles=$1
@@ -62,9 +62,9 @@ fi
 ./run/send_small_tree.sh /cms2r0/cfA/DYJetsToLL_M-50_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2207_v75   $maxfiles
 
 # Z -> nunu
-./run/send_small_tree.sh ZJetsToNuNu_HT-100to200_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2187_v75  $maxfiles
-./run/send_small_tree.sh ZJetsToNuNu_HT-200to400_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2186_v75  $maxfiles
-./run/send_small_tree.sh ZJetsToNuNu_HT-400to600_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2185_v75  $maxfiles
-./run/send_small_tree.sh ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v2_MINIAODSIM_UCSB2184_v75  $maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/ZJetsToNuNu_HT-100to200_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2187_v75  $maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/ZJetsToNuNu_HT-200to400_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2186_v75  $maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/ZJetsToNuNu_HT-400to600_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v1_MINIAODSIM_UCSB2185_v75  $maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Spring14miniaod-PU20bx25_POSTLS170_V5-v2_MINIAODSIM_UCSB2184_v75  $maxfiles
 
 exit 0;

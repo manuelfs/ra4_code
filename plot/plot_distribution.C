@@ -57,33 +57,35 @@ void plot_distribution(TString luminosity="5") {
   // Reading ntuples
   vector<TChain *> chain;
   vector<sfeats> Samples; 
-  Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "els_tru_tm&&els_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "mus_tru_tm&&mus_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100)", 4, 1, "els_tru_tm&&els_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100)", 4, 1, "mus_tru_tm&&mus_sigid"));
+  Samples.push_back(sfeats("archive/14-12-21/*TTJet*", "PHYS14 tt", 2));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "PHYS14 T1tttt(1500,100)", 4));
 
-  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1200_*", "T1tttt(1200,800)", 28));
-  // Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD", 4));
-  // Samples.push_back(sfeats("archive/ra4skim/*TTJet*", "t#bar{t}, 1 l", 2,1,"(mc_type&0x0F00)<=0x100"));
-  // Samples.push_back(sfeats("archive/ra4skim/*WJets*", "W + jets", kYellow));
-  // Samples.push_back(sfeats("archive/ra4skim/*_T*channel*", "Single top", 8));
-  // Samples.push_back(sfeats("archive/ra4skim/*_DY*", "Drell-Yan", kCyan+2));
-  // Samples.push_back(sfeats("archive/ra4skim/*TTJet*", "t#bar{t}, 2 l", kBlue-3,1,"(mc_type&0x0F00)>=0x200"));
+  Samples.push_back(sfeats("out/*TTJet*", "CSA14 tt", 2,2));
+  Samples.push_back(sfeats("out/*T1tttt*1500_*PU20*", "CSA14 T1tttt(1500,100)", 4,2));
+
+  Samples.push_back(sfeats("archive/ra4skim/*TT_*", "PHYS14 pythia8 tt", 6));
+  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100)", 4));
+
+
+
   for(unsigned sam(0); sam < Samples.size(); sam++){
     chain.push_back(new TChain("tree"));
     chain[sam]->Add(Samples[sam].file);
   }
 
   vector<int> t1tttt;
-  t1tttt.push_back(0);
   t1tttt.push_back(2);
+  t1tttt.push_back(0);
+  t1tttt.push_back(4);
+  t1tttt.push_back(3);
+  t1tttt.push_back(1);
 
   vector<int> sigmus;
   sigmus.push_back(1);
   sigmus.push_back(3);
 
-  vars.push_back(hfeats("Max$(els_pt*(els_tru_tm&&els_sigid&&els_pt>20))",40,0,400, t1tttt, "Electron p_{T} (GeV)","ht>750&&met>250"));
-  vars.push_back(hfeats("Max$(mus_pt*(mus_tru_tm&&mus_sigid&&mus_pt>20))",40,0,400, sigmus, "Muon p_{T} (GeV)","ht>750&&met>250"));
+  vars.push_back(hfeats("ht",35,0,3000, t1tttt, "H_{T} (GeV)","nleps==1&&met>250&&njets>=6"));
+  vars.push_back(hfeats("mj_30",35,0,1500, t1tttt, "M_{J} (GeV)","nleps==1&&met>250&&njets>=6"));
 
   // vector<int> allsamples;
   // allsamples.push_back(1); //(1500,100)
@@ -143,7 +145,7 @@ void plot_distribution(TString luminosity="5") {
   //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl==0&&njets>=4"));
 
   float minLog = 0.04, maxLog = 10;
-  double legX = 0.5, legY = 0.92, legSingle = 0.055;
+  double legX = 0.5, legY = 0.9, legSingle = 0.055;
   double legW = 0.12, legH = legSingle*vars[0].samples.size();
   TLegend leg(legX, legY-legH, legX+legW, legY);
   leg.SetTextSize(0.048); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
@@ -274,7 +276,9 @@ void plot_distribution(TString luminosity="5") {
 	histo[1][var][sam]->Draw();
       } else histo[1][var][sam]->Draw("same");
       leghisto = Samples[isam].label+" [#mu = ";
-      int digits(1);
+      int digits(0);
+      float binwidth((vars[var].maxx-vars[var].minx)/static_cast<float>(vars[var].nbins));
+      if(binwidth<1) digits = 1;
       leghisto += RoundNumber(histo[1][var][sam]->GetMean(),digits) + "]";
       leg.AddEntry(histo[1][var][sam], leghisto);
     } // Loop over samples
