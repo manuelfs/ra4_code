@@ -330,7 +330,7 @@ int main(){
 
   for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
     cppFile << var->type << " const & small_tree::" << var->name << "() const{\n";
-    cppFile << "  if(read_only_){\n";
+    cppFile << "  if(!read_only_){\n";
     cppFile << "    throw std::runtime_error(\"Trying to write to const tree.\");\n";
     cppFile << "  }\n";
     cppFile << "  if(!c_" << var->name << "_ && b_" << var->name <<"_){\n";

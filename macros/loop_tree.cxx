@@ -26,6 +26,7 @@ int main(int argc, char* argv[]){
     }
   }
 
+  //Isolation variables to cut on (does not need to match name in tree)
   vector<string> isos;
   isos.push_back("reliso");
   isos.push_back("reliso_r02");
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]){
   cout<<"Writing output to "<<outfile<<endl;
   TFile fout(outfile,"RECREATE");
                    
-	const long nent = tree.GetEntries();
+  const long nent = tree.GetEntries();
   cout<<"Number of events to run over: "<<nent<<endl;
 
   TH1D h_cflow[2][4];
@@ -190,4 +191,3 @@ double GetIsolationCut(bool isElectron, string isotype, bool isveto, const doubl
   }
   return 0;
 }
-

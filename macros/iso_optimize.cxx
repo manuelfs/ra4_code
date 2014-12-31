@@ -1,101 +1,133 @@
+//Utility for finding optimal value of various isolation cuts (maximizing Z_{Bi})
+//Isolation cut definitions should look like StandardCut below
+//To add new definitions, add a new case in LookUpCuts and add one to cut_types
+//For now, m_T cuts are included inside the isolation cut definitions
+
+#include <cstddef>
 #include <cmath>
 
 #include <iostream>
-#include <sstream>
-#include <string>
+#include <iomanip>
 #include <vector>
 
-#include "TFile.h"
-#include "TChain.h"
-#include "TCanvas.h"
-#include "TH1D.h"
-
-#include "utilities.hpp"
-#include "styles.hpp"
+#include "small_tree.hpp"
+#include "iso_optimize.hpp"
 
 using namespace std;
 
-class Sample {
-public:
-  Sample(const TString &ifile, const TString &ilabel, const TString icut="1",
-	 int icolor=1, int istyle=1):
-    file(ifile),
-    label(ilabel),
-    cut(icut),
-    color(icolor),
-    style(istyle){
-  }
-  
-  TString file, label, cut;
-  int color, style;
-};
-
-string ToString(double x){
-  ostringstream oss("");
-  oss << x;
-  return oss.str();
-}
-
-vector<double> MakeSOverSqrtB(TChain &background, TChain &signal, const string &baseline,
-			       const string &els_iso, const string &mus_iso,
-			       int bins, double low, double high){
-  string lep_sig = "(Sum$(els_ispf&&els_sigid&&("+els_iso+"))+Sum$(mus_sigid&&("+mus_iso+")))==1";
-  string lep_veto = "(Sum$(els_ispf&&("+els_iso+"))+Sum$("+mus_iso+"))==1";
-  string full_cut = "("+baseline+")&&("+lep_sig+")&&("+lep_veto+")";
-
-  vector<double> out(bins);
-  
-  double increment = (bins==1)?low:(high-low)/(bins-1);
-  for(int bin = 0 ; bin < bins; ++bin){
-    double cut_val = low + bin*increment;
-    string cut_rep = ToString(cut_val);
-    TString this_cut = "5*weight*("+full_cut+")";
-    this_cut.ReplaceAll("CUT",cut_rep.c_str());
-    
-    double background_count, background_uncert;
-    double signal_count, signal_uncert;
-    get_count_and_uncertainty(background, this_cut.Data(),
-			      background_count, background_uncert);
-    get_count_and_uncertainty(signal, this_cut.Data(),
-			      signal_count, signal_uncert);
-    out.at(bin) = signal_count/sqrt(background_count);
-    cout << this_cut << ": " << signal_count << "/sqrt(" << background_count << ")=" << out.at(bin) << endl;
-  }
-  return out;
-}
-
 int main(){
-  vector<Sample> samples;
-  samples.push_back(Sample("archive/ra4skim/*TT_*","t#bar{t}"));
-  samples.push_back(Sample("archive/ra4skim/*QCD*","QCD"));
-  samples.push_back(Sample("archive/ra4skim/*T1tttt*1500*100*PU20*", "T1tttt(1500,100)"));
-  samples.push_back(Sample("archive/ra4skim/*T1tttt*1500*100*PU40*", "T1tttt(1500,100), PU40"));
-  samples.push_back(Sample("archive/ra4skim/*T2tt*850*100", "T2tt(850,100)"));
-  samples.push_back(Sample("archive/ra4skim/*T2tt*650*325", "T2tt(650,325)"));
+  const size_t cut_types = 1;
+  const double lumi = 5.0;
 
-  vector<size_t> background_idx(0), signal_idx(0);
-  background_idx.push_back(0);
-  background_idx.push_back(1);
-  signal_idx.push_back(2);
+  vector<small_tree*> signals, backgrounds;
+  signals.push_back(new small_tree("archive/manuel/small_SMS-T1tttt_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola__Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1__MINIAODSIM_v77.root"));
+  backgrounds.push_back(new small_tree("archive/manuel/small_TT_Tune4C_13TeV-pythia8-tauola__Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1__MINIAODSIM_v77_files5_batch*.root"));
 
-  string onesig = "1";//"(Sum$(els_ispf&&els_sigid)+Sum$(mus_sigid))>=1";
-  string baseline = "("+onesig+")&&(ht>750&&met>250&&nbl>=2&&njets>=6)";
+  vector<vector<double> > sig_counts(cut_types), back_counts(cut_types);
 
-  TChain background("tree"), signal("tree");
-  for(size_t i = 0; i < background_idx.size(); ++i){
-    cout << background.Add(samples.at(background_idx.at(i)).file) << endl;
+  GetCounts(backgrounds, lumi, cut_types, back_counts);
+  GetCounts(signals, lumi, cut_types, sig_counts);
+
+  Delete(signals);
+  Delete(backgrounds);
+
+  for(size_t itype = 0; itype < sig_counts.size(); ++itype){
+    for(size_t ival = 0; ival < sig_counts.at(itype).size(); ++ival){
+      const double S = sig_counts.at(itype).at(ival);
+      const double B = back_counts.at(itype).at(ival);
+      cout << setw(16) << itype
+	   << " " << setw(16) << ival
+	   << " " << setw(16) << S
+	   << " " << setw(16) << B
+	   << " " << setw(16) << S/sqrt(B)
+	   << endl;
+    }
   }
-  for(size_t i = 0; i < signal_idx.size(); ++i){
-    cout << signal.Add(samples.at(signal_idx.at(i)).file) << endl;
+}
+
+bool StandardCut(small_tree &tree, double /*cut_val*/){
+  size_t num_sig(0), num_veto(0);
+  for(size_t imu = 0; imu < tree.mus_reliso().size(); ++imu){
+    if(tree.mus_reliso().at(imu)<0.2){
+      ++num_veto;
+      if(tree.mus_sigid().at(imu) && tree.mus_reliso().at(imu)<0.12){
+        ++num_sig;
+      }
+    }
   }
+  
+  for(size_t iel = 0; iel < tree.els_reliso().size(); ++iel){
+    if((tree.els_eta().at(iel)<=1.479 && tree.els_reliso().at(iel)<0.3313)
+       || (tree.els_eta().at(iel)>1.479 && tree.els_reliso().at(iel)<0.3816)){
+      ++num_veto;
+      if(tree.els_sigid().at(iel) &&
+	 ((tree.els_eta().at(iel)<=1.479 && tree.els_reliso().at(iel)<0.2179)
+	  || (tree.els_eta().at(iel)>1.479 && tree.els_reliso().at(iel)<0.254))){
+	++num_sig;
+      }
+    }
+  }
+  return num_sig==1 && num_veto==1;
+}
 
-  MakeSOverSqrtB(background, signal, baseline, "1", "1", 1, 0, 1);
+bool PassBaseline(const small_tree &tree){
+  return tree.nbl()>=2
+    && tree.njets()>=6
+    && tree.ht()>750.0
+    && tree.met()>250.0;
+}
 
-  MakeSOverSqrtB(background, signal, baseline, "els_miniso_tr15<CUT", "mus_miniso_tr15<CUT", 8, 0.0, 0.35);
-  MakeSOverSqrtB(background, signal, baseline, "els_miniso_tr15<CUT", "mus_miniso_tr15<0.12", 8, 0.0, 0.35);
-  MakeSOverSqrtB(background, signal, baseline, "els_miniso_tr15<0.2", "mus_miniso_tr15<CUT", 8, 0.0, 0.35);
+void LookUpCuts(size_t iso_type,
+		Cut &iso_cut,
+		vector<double> &cut_vals){
+  switch(iso_type){
+  default:
+  case 0:
+    iso_cut = StandardCut;
+    cut_vals = vector<double>(1, 0.0);
+    break;
+  }
+}
 
-  MakeSOverSqrtB(background, signal, baseline, "els_reliso<0.2||els_ptrel_0>CUT", "mus_reliso<0.12||mus_ptrel_0>CUT", 10, 5.0, 50.0);
-  MakeSOverSqrtB(background, signal, baseline, "els_reliso<0.2||els_ptrel_0>25.0", "mus_reliso<0.12||mus_ptrel_0>CUT", 10, 5.0, 50.0);
-  MakeSOverSqrtB(background, signal, baseline, "els_reliso<0.2||els_ptrel_0>CUT", "mus_reliso<0.12||mus_ptrel_0>25.0", 10, 5.0, 50.0);
+void GetCounts(vector<small_tree*> &samples,
+	       double lumi,
+	       size_t cut_types,
+	       vector<vector<double> > &counts){
+  for(size_t iso_type = 0; iso_type < cut_types; ++iso_type){
+    Cut iso_cut = NULL;
+    vector<double> cut_vals;
+    LookUpCuts(iso_type, iso_cut, cut_vals);
+    counts.at(iso_type) = vector<double>(cut_vals.size(), 0.0);
+  }
+  
+  for(size_t isample = 0; isample < samples.size(); ++isample){
+    small_tree &tree = *(samples.at(isample));
+    for(long entry = 0; entry < tree.GetEntries(); ++entry){
+      tree.GetEntry(entry);
+      if(!PassBaseline(tree)) continue;
+      for(size_t iso_type = 0; iso_type < cut_types; ++iso_type){
+	Cut iso_cut = NULL;
+	vector<double> cut_vals;
+	LookUpCuts(iso_type, iso_cut, cut_vals);
+	
+	for(size_t icut = 0; icut < cut_vals.size(); ++icut){
+	  if(iso_cut(tree, cut_vals.at(icut))){
+	    counts.at(iso_type).at(icut)+=lumi*tree.weight();
+	  }
+	}
+      }
+    }
+  }
+}
+
+void Delete(vector<small_tree*> &trees){
+  for(vector<small_tree*>::iterator it = trees.begin();
+      it != trees.end();
+      ++it){
+    if(*it){
+      delete *it;
+      *it = NULL;
+    }
+  }
+  trees.clear();
 }
