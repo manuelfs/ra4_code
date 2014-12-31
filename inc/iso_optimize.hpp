@@ -11,6 +11,8 @@
 bool StandardCut(small_tree &tree, double /*cut_val*/);
 
 typedef bool (*Cut)(small_tree&, double);
+double GetMT(const small_tree &tree,
+	     long mu, long el);
 bool PassBaseline(const small_tree &tree);
 void LookUpCuts(size_t iso_type,
 		Cut &iso_cut,
