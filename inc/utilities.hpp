@@ -5,7 +5,9 @@
 #ifndef H_UTILITIES
 #define H_UTILITIES
 
+#include <cstddef>
 #include <cstdio>
+#include <cmath>
 
 #include <string>
 #include <vector>
@@ -16,7 +18,7 @@
 
 typedef std::pair<int,double> int_double;
 typedef std::pair<double,double> double_double;
-const double PI = 3.14159265;
+const double PI = acos(-1.);
 
 float cross_section(TString file);
 std::vector<TString> dirlist(TString folder, TString inname="dir", TString tag="");
@@ -30,7 +32,7 @@ TString RoundNumber(double num, int decimals, double denom=1.);
 long double AddInQuadrature(long double x, long double y);
 long double GetMass(long double e, long double px, long double py, long double pz);
 long double GetMT(const long double m1, const long double px1, const long double py1,
-		  const long double m2, const long double px2, const long double py2);
+                  const long double m2, const long double px2, const long double py2);
 bool Contains(const std::string& text, const std::string& pattern);
 
 std::vector<std::string> Tokenize(const std::string& input,
@@ -46,5 +48,7 @@ bool is_nan(const T &x){return x!=x;}
 
 std::string execute(const std::string &cmd);
 std::string RemoveTrailingNewlines(std::string str);
+
+std::vector<double> LinearSpacing(size_t npts, double low, double high);
 
 #endif

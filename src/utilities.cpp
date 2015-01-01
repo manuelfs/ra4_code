@@ -180,7 +180,7 @@ long double GetMass(long double e, long double px, long double py, long double p
 }
 
 long double GetMT(const long double m1, const long double px1, const long double py1,
-		  const long double m2, const long double px2, const long double py2){
+                  const long double m2, const long double px2, const long double py2){
   const long double pt1 = AddInQuadrature(px1, py1);
   const long double et1 = AddInQuadrature(m1, pt1);
   const long double pt2 = AddInQuadrature(px2, py2);
@@ -188,17 +188,17 @@ long double GetMT(const long double m1, const long double px1, const long double
   return sqrt(m1*m1+m2*m2+2.0L*(et1*et2-px1*px2-py1*py2));
 }
 
-bool Contains(const std::string& text, const std::string& pattern){
-  return text.find(pattern) != std::string::npos;
+bool Contains(const string& text, const string& pattern){
+  return text.find(pattern) != string::npos;
 }
 
-std::vector<std::string> Tokenize(const std::string& input,
-                                  const std::string& tokens){
+vector<string> Tokenize(const string& input,
+                        const string& tokens){
   char* ipt(new char[input.size()+1]);
   memcpy(ipt, input.data(), input.size());
   ipt[input.size()]=static_cast<char>(0);
   char* ptr(strtok(ipt, tokens.c_str()));
-  std::vector<std::string> output(0);
+  vector<string> output(0);
   while(ptr!=NULL){
     output.push_back(ptr);
     ptr=strtok(NULL, tokens.c_str());
@@ -207,10 +207,10 @@ std::vector<std::string> Tokenize(const std::string& input,
 }
 
 void get_count_and_uncertainty(TTree& tree,
-                               const std::string& cut,
+                               const string& cut,
                                double& count,
                                double& uncertainty){
-  const std::string hist_name("temp");
+  const string hist_name("temp");
   TH1D temp(hist_name.c_str(), "", 1, -1.0, 1.0);
   tree.Project(hist_name.c_str(), "0.0", cut.c_str());
   count=temp.IntegralAndError(0,2,uncertainty);
@@ -220,12 +220,12 @@ void AddPoint(TGraph& graph, const double x, const double y){
   graph.SetPoint(graph.GetN(), x, y);
 }
 
-std::string execute(const std::string &cmd){
+string execute(const string &cmd){
   FILE *pipe = popen(cmd.c_str(), "r");
-  if(!pipe) throw std::runtime_error("Could not open pipe.");
+  if(!pipe) throw runtime_error("Could not open pipe.");
   const size_t buffer_size = 128;
   char buffer[buffer_size];
-  std::string result = "";
+  string result = "";
   while(!feof(pipe)){
     if(fgets(buffer, buffer_size, pipe) != NULL) result += buffer;
   }
@@ -234,9 +234,20 @@ std::string execute(const std::string &cmd){
   return result;
 }
 
-std::string RemoveTrailingNewlines(std::string str){
+string RemoveTrailingNewlines(string str){
   while(!str.empty() && str.at(str.length()-1) == '\n'){
     str.erase(str.length()-1);
   }
   return str;
+}
+
+vector<double> LinearSpacing(size_t npts, double low, double high){
+  vector<double> pts(npts,low+0.5*(high-low));
+  if(npts>1){
+    double gap = (high-low)/(npts-1.0);
+    for(size_t pt = 0; pt < npts; ++pt){
+      pts.at(pt) = low+pt*gap;
+    }
+  }
+  return pts;
 }
