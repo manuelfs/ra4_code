@@ -23,6 +23,11 @@ bool MuonR0301Ptrel(const small_tree &tre, double cut_val);
 bool ElectronR0301Ptrel(const small_tree &tre, double cut_val);
 
 typedef bool (*Cut)(const small_tree&, double);
+std::vector<size_t> GetBestCuts(const std::vector<std::vector<double> > &sig_counts,
+				const std::vector<std::vector<double> > &back_counts);
+void PrintHeader();
+void PrintLine(size_t itype, double cut_val, double S, double B, bool best = false);
+void PrintDivider();
 double GetMT(const small_tree &tree,
              long mu, long el);
 bool PassBaseline(const small_tree &tree);
