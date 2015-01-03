@@ -20,11 +20,15 @@ int main(){
 
 
   vector<TString> v_t1;
-  v_t1.push_back("/cms5r0/ald77/archive/20141216/*T1tttt*1500_*PU20*");
+  v_t1.push_back("archive/ra4skim/*T1tttt*1500_*PU20*");
+  vector<TString> v_t1c;
+  v_t1c.push_back("archive/ra4skim/*T1tttt*1200_*PU20*");
+  vector<TString> v_t2;
+  v_t2.push_back("archive/ra4skim/*T2tt*850_*PU20*");
   vector<TString> v_t1pu40;
-  v_t1pu40.push_back("/cms5r0/ald77/archive/20141216/*T1tttt*1500_*PU40*");
+  v_t1pu40.push_back("archive/ra4skim/*T1tttt*1500_*PU40*");
   vector<TString> v_tt;
-  v_tt.push_back("/cms5r0/ald77/archive/20141216/*TT*");
+  v_tt.push_back("archive/ra4skim/*TT*batch5*");
 
   // Muon isolation ROC
   vector<sample_class> mus_tt_t1; 
@@ -32,8 +36,16 @@ int main(){
   mus_tt_t1.push_back(sample_class("tt non-truth-matched #mu", v_tt, "!mus_tru_tm&&mus_sigid"));
 
   vector<sample_class> mus_t1pu20; 
-  mus_t1pu20.push_back(sample_class("T1tttt(1500,100) PU20 truth-matched prompt #mu", v_t1, "mus_tru_tm&&mus_sigid"));
-  mus_t1pu20.push_back(sample_class("T1tttt(1500,100) PU20 non-TM #mu", v_t1, "!mus_tru_tm&&mus_sigid"));
+  mus_t1pu20.push_back(sample_class("T1tttt(1500,100) truth-matched prompt #mu", v_t1, "mus_tru_tm&&mus_sigid"));
+  mus_t1pu20.push_back(sample_class("T1tttt(1500,100) non-TM #mu", v_t1, "!mus_tru_tm&&mus_sigid"));
+
+  vector<sample_class> mus_t1cpu20; 
+  mus_t1cpu20.push_back(sample_class("T1tttt(1200,800) truth-matched prompt #mu", v_t1c, "mus_tru_tm&&mus_sigid"));
+  mus_t1cpu20.push_back(sample_class("T1tttt(1200,800) non-TM #mu", v_t1c, "!mus_tru_tm&&mus_sigid"));
+
+  vector<sample_class> mus_t2pu20; 
+  mus_t2pu20.push_back(sample_class("T2tt(850,100) truth-matched prompt #mu", v_t2, "mus_tru_tm&&mus_sigid"));
+  mus_t2pu20.push_back(sample_class("T2tt(850,100) non-TM #mu", v_t2, "!mus_tru_tm&&mus_sigid"));
 
   vector<sample_class> mus_t1pu40; 
   mus_t1pu40.push_back(sample_class("T1tttt(1500,100) PU40 truth-matched prompt #mu", v_t1pu40, "mus_tru_tm&&mus_sigid"));
@@ -41,17 +53,24 @@ int main(){
 
   vector<var_class> vars;
   vars.push_back(var_class("mus_reliso",0,10,"Rel. Iso.",1,1));
+  vars.push_back(var_class("mus_miniso_10_ch",0,10,"Mini Iso. ATLAS",28));
   vars.push_back(var_class("mus_reliso_r02",0,10,"Rel. Iso. #DeltaR=0.2",1,2));
-  vars.push_back(var_class("mus_miniso_tr15",0,10,"Mini Iso. Tr., kt = 15 GeV",4));
-  vars.push_back(var_class("mus_miniso_tr15_ch",0,10,"Mini Iso. Tr., kt = 15 GeV (ch. only)",4,2));
-  vars.push_back(var_class("mus_ptrel_0+(mus_reliso_r02<0.2)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.2",2));
+  vars.push_back(var_class("min(mus_reliso_r02,mus_miniso_tr15)",0,10,"Mini Iso. (0.05<#DeltaR<0.2)",4));
+  //vars.push_back(var_class("mus_miniso_tr15_ch",0,10,"Mini Iso. Tr., kt = 15 GeV (ch. only)",4,2));
   vars.push_back(var_class("mus_ptrel_0+(mus_reliso_r02<0.1)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.1",3));
+			   "p_{T}^{rel} || Rel. Iso. < 0.1",2));
+  vars.push_back(var_class("mus_ptrel_0+(mus_reliso_r02<0.4)*9999.",100,0,
+			   "p_{T}^{rel} || Rel. Iso. < 0.4",2,2));
+  vars.push_back(var_class("mus_ptrel_0+(min(mus_reliso_r02,mus_miniso_tr15)<0.1)*9999.",100,0,
+			   "p_{T}^{rel} || Mini Iso. < 0.1",3));
+  vars.push_back(var_class("mus_ptrel_0+(min(mus_reliso_r02,mus_miniso_tr15)<0.4)*9999.",100,0,
+			   "p_{T}^{rel} || Mini Iso. < 0.4",3,2));
 
-  DrawROC(mus_tt_t1, vars, "mus_pt>20&&ht>750&&met>250&&npv<20", "mus_isott");
-  DrawROC(mus_t1pu20, vars, "mus_pt>20&&ht>750&&met>250&&npv<20", "mus_isopu20");
-  DrawROC(mus_t1pu40, vars, "mus_pt>20&&ht>750&&met>250&&npv>30", "mus_isopu40");
+  //DrawROC(mus_tt_t1, vars, "mus_pt>20&&ht>750&&met>250", "mus_isott");
+  //DrawROC(mus_t1cpu20, vars, "mus_pt>20&&ht>750&&met>400", "mus_isot1c");
+  DrawROC(mus_t1pu20, vars, "mus_pt>20&&ht>750&&met>400&&njets>=6&&nbl>=2&&mj_30>600", "mus_isot1");
+  //DrawROC(mus_t2pu20, vars, "mus_pt>20&&ht>750&&met>250", "mus_isot2");
+  //DrawROC(mus_t1pu40, vars, "mus_pt>20&&ht>750&&met>250&&npv>30", "mus_isopu40");
 
   // ELECTRONS
   vector<sample_class> els_tt_t1; 
@@ -59,8 +78,12 @@ int main(){
   els_tt_t1.push_back(sample_class("tt non-truth-matched #mu", v_tt, "!els_tru_tm&&els_sigid&&els_ispf"));
 
   vector<sample_class> els_t1pu20; 
-  els_t1pu20.push_back(sample_class("T1tttt(1500,100) PU20 truth-matched prompt e", v_t1, "els_tru_tm&&els_sigid&&els_ispf"));
-  els_t1pu20.push_back(sample_class("T1tttt(1500,100) PU20 non-TM e", v_t1, "!els_tru_tm&&els_sigid&&els_ispf"));
+  els_t1pu20.push_back(sample_class("T1tttt(1500,100) truth-matched prompt e", v_t1, "els_tru_tm&&els_sigid&&els_ispf"));
+  els_t1pu20.push_back(sample_class("T1tttt(1500,100) non-TM e", v_t1, "!els_tru_tm&&els_sigid&&els_ispf"));
+
+  vector<sample_class> els_t2pu20; 
+  els_t2pu20.push_back(sample_class("T2tt(850,100) truth-matched prompt e", v_t2, "els_tru_tm&&els_sigid&&els_ispf"));
+  els_t2pu20.push_back(sample_class("T2tt(850,100) non-TM e", v_t2, "!els_tru_tm&&els_sigid&&els_ispf"));
 
   vector<sample_class> els_t1pu40; 
   els_t1pu40.push_back(sample_class("T1tttt(1500,100) PU40 truth-matched prompt e", v_t1pu40, "els_tru_tm&&els_sigid&&els_ispf"));
@@ -69,16 +92,21 @@ int main(){
   vector<var_class> els_vars;
   els_vars.push_back(var_class("els_reliso",0,10,"Rel. Iso.",1,1));
   els_vars.push_back(var_class("els_reliso_r02",0,10,"Rel. Iso. #DeltaR=0.2",1,2));
-  els_vars.push_back(var_class("els_miniso_tr15",0,10,"Mini Iso. Tr., kt = 15 GeV",4));
-  els_vars.push_back(var_class("els_miniso_tr15_ch",0,10,"Mini Iso. Tr., kt = 15 GeV (ch. only)",4,2));
-  els_vars.push_back(var_class("els_ptrel_0+(els_reliso_r02<0.2)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.2",2));
+  els_vars.push_back(var_class("min(els_reliso_r02,els_miniso_tr15)",0,10,"Mini Iso. (0.05<#DeltaR<0.2)",4));
+  //els_vars.push_back(var_class("els_miniso_tr15_ch",0,10,"Mini Iso. Tr., kt = 15 GeV (ch. only)",4,2));
   els_vars.push_back(var_class("els_ptrel_0+(els_reliso_r02<0.1)*9999.",100,0,
-			   "p_{T}^{rel} || Rel Iso #DeltaR=0.2 < 0.1",3));
+			   "p_{T}^{rel} || Rel. Iso. < 0.1",2));
+  els_vars.push_back(var_class("els_ptrel_0+(els_reliso_r02<0.4)*9999.",100,0,
+			   "p_{T}^{rel} || Rel. Iso. < 0.4",2,2));
+  els_vars.push_back(var_class("els_ptrel_0+(min(els_reliso_r02,els_miniso_tr15)<0.1)*9999.",100,0,
+			   "p_{T}^{rel} || Mini Iso. < 0.1",3));
+  els_vars.push_back(var_class("els_ptrel_0+(min(els_reliso_r02,els_miniso_tr15)<0.4)*9999.",100,0,
+			   "p_{T}^{rel} || Mini Iso. < 0.4",3,2));
 
-  DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250&&npv<20", "els_isott");
-  DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>250&&npv<20", "els_isopu20");
-  DrawROC(els_t1pu40, els_vars, "els_pt>20&&ht>750&&met>250&&npv>30", "els_isopu40");
+  //DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott");
+   DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>400&&njets>=6&&nbl>=2&&mj_30>600", "els_isot1");
+  // DrawROC(els_t2pu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isot2");
+  //DrawROC(els_t1pu40, els_vars, "els_pt>20&&ht>750&&met>250&&npv>30", "els_isopu40");
 
 }
 
@@ -123,7 +151,7 @@ void DrawROC(vector<sample_class> samples, vector<var_class> vars, TString cuts,
   title.ReplaceAll("njets","n_{jets}"); title.ReplaceAll("nbm","n_{b}");
   title.ReplaceAll("mindphin_metje","min#Delta#phi_{N}");
   title.ReplaceAll("nbl","n_{b,l}");
-  TH1D base_histo("base",title,1,0,1.0);
+  TH1D base_histo("base",title,1,0.5,1.0);
   base_histo.SetXTitle(samples[0].label+" efficiency");
   base_histo.SetYTitle(samples[1].label+" rejection rate");
   base_histo.SetMinimum(0.0);
