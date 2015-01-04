@@ -21,14 +21,15 @@ int main(){
   const double met_cut = 250.; //greater than
   const int njets_cut = 6; //geq
   const int nbl_cut = 2; //geq
-  const double mt_cut = 100.; //geq
+  const double mt_cut = 150.; //greater than
+  const double mj_cut = 600.; //greater than
 
-  TString cuts = TString::Format("ht%f_met%f_nj%i_nbl%i_mt%f",ht_cut,met_cut,njets_cut,nbl_cut,mt_cut);
+  TString cuts = TString::Format("ht%.0f_met%.0f_nj%i_nbl%i_mt%.0f_mj%.0f",ht_cut,met_cut,njets_cut,nbl_cut,mt_cut,mj_cut);
   TString texname = "txt/miniso_rmax02_e005_mu03_"+cuts+".tex";
   string isostr = "miniso"; 
   const double iso_cut[2] = {0.05, 0.3}; //el, mu
 
-  // string texname = "txt/stdiso_"+cuts+".tex";
+  // TString texname = "txt/stdiso_"+cuts+".tex";
   // string isostr = "reliso"; 
   // const double iso_cut[2] = {0., 0.}; //el, mu <--- irrelevant since standard cuts are hard-coded
 
@@ -43,8 +44,8 @@ int main(){
   samplestr.push_back("$t\\bar{t}$ (2l)"); samples.push_back("*_TTJets_*"); nbkgd++; //just to keep count, will not loop separately
   samplestr.push_back("T1tttt (1200,800)"); samples.push_back("*-T1tttt_2J_mGl-1200_mLSP-800_*PU20*"); nsig++;
   samplestr.push_back("T1tttt (1500,100)"); samples.push_back("*-T1tttt_2J_mGl-1500_mLSP-100_*PU20*"); nsig++;
-  samplestr.push_back("T2tt (650,325)"); samples.push_back("*-T2tt_2J_mStop-650_mLSP-325_*"); nsig++;
-  samplestr.push_back("T2tt (850,100)"); samples.push_back("*-T2tt_2J_mStop-850_mLSP-100_*"); nsig++;
+  // samplestr.push_back("T2tt (650,325)"); samples.push_back("*-T2tt_2J_mStop-650_mLSP-325_*"); nsig++;
+  // samplestr.push_back("T2tt (850,100)"); samples.push_back("*-T2tt_2J_mStop-850_mLSP-100_*"); nsig++;
 
   const size_t nsamples = samples.size();
 
@@ -54,8 +55,8 @@ int main(){
   // TString tempstr;
   for (unsigned i=0; i<nsamples; i++){
     TString istr; istr.Form("%i",i);
-    h_cflow[0].push_back(TH1D("h_"+istr+"_el", istr + " e channel", 6, 0.5, 6.5));
-    h_cflow[1].push_back(TH1D("h_"+istr+"_mu", istr + " #mu channel", 6, 0.5, 6.5));
+    h_cflow[0].push_back(TH1D("h_"+istr+"_el", istr + " e channel", 7, 0.5, 7.5));
+    h_cflow[1].push_back(TH1D("h_"+istr+"_mu", istr + " #mu channel", 7, 0.5, 7.5));
   }
 
   for (uint isample=0; isample<nsamples; isample++) {
@@ -134,48 +135,79 @@ int main(){
       else mt = sqrt(2*tree.mus_pt()[sigmus_index[0]]*tree.met()*(1-cos(tree.met_phi()-tree.mus_phi()[sigmus_index[0]])));
       if (mt <= mt_cut) continue;
       h_cflow[channel][hindex].Fill(6,weight); 
-    
+
+      if (tree.mj_30() <= mj_cut) continue;
+      h_cflow[channel][hindex].Fill(7,weight);    
     }
   }
+
 
   ofstream file(texname);
-  vector<TString> cutstr;
-  cutstr.push_back("1 lepton");
-  cutstr.push_back("$H_{T} > "+TString::Format("%.0f",ht_cut)+"$");
-  cutstr.push_back("MET$ > "+TString::Format("%.0f",met_cut)+"$");
-  cutstr.push_back("$n_{\\mbox{jets}}\\geq$"+TString::Format("%i",njets_cut));
-  cutstr.push_back("$n_{\\mbox{CSVL}}\\geq$"+TString::Format("%i",nbl_cut));
-  cutstr.push_back("$m_{T} > "+TString::Format("%.0f",mt_cut)+"$");
-  
-  file << "\\begin{tabular}{ l ";
-  for(unsigned col(0); col < nbkgd; col++) file << "|r ";
-  for(unsigned col(nbkgd); col < nsamples; col++) file << "|rr ";
-  file<<"}\\hline\n";
+  file<< "\\documentclass[]{article}\n";
+  file<< "\\usepackage[landscape]{geometry}\n";
+  file<< "\\begin{document}\n";
 
-  file << " Cut";
-  for(unsigned col(0); col < nbkgd; col++) file << " & \\multicolumn{1}{|c}{\\bf{"<<samplestr[col]<<"}}";
-  for(unsigned col(nbkgd); col < nsamples; col++) file << " & \\multicolumn{2}{|c}{\\bf{"<<samplestr[col]<<"}}";
-  file << "\\\\ \n"<<endl;
+  enum {EL, MU};
+  for (unsigned ichan=0; ichan < 3; ichan++) {
 
-  for(unsigned col(0); col < nbkgd; col++) file << " &  ";
-  for(unsigned col(nbkgd); col < nsamples; col++) file << " & \\multicolumn{1}{|r}{\\bf{S}}  & \\multicolumn{1}{r}{$\\mathbf{Z_{Bi}}$}";
-  file << "\\\\ \\hline \n"<<endl;
+    vector<TString> cutstr;
+    if (ichan==EL) cutstr.push_back("1 electron");
+    else if (ichan==MU) cutstr.push_back("1 muon");
+    else cutstr.push_back("1 lepton");
+    cutstr.push_back("$H_{T} > "+TString::Format("%.0f",ht_cut)+"$");
+    cutstr.push_back("MET$ > "+TString::Format("%.0f",met_cut)+"$");
+    cutstr.push_back("$n_{\\mbox{jets}}\\geq$"+TString::Format("%i",njets_cut));
+    cutstr.push_back("$n_{\\mbox{CSVL}}\\geq$"+TString::Format("%i",nbl_cut));
+    cutstr.push_back("$m_{T} > "+TString::Format("%.0f",mt_cut)+"$");
+    cutstr.push_back("$MJ > "+TString::Format("%.0f",mj_cut)+"$");
+    
+    file << "\\begin{table}\n";
+    file << "\\begin{tabular}{ l ";
+    for(unsigned col(0); col < nbkgd; col++) file << "|r ";
+    for(unsigned col(nbkgd); col < nsamples; col++) file << "|rrr ";
+    file<<"}\\hline\n";
 
-  for (unsigned icut(0); icut<cutstr.size(); icut++){
-    file << cutstr[icut];
-    double B = 0;
-    for(unsigned col(0); col < nbkgd; col++) {
-      B += h_cflow[0][col].GetBinContent(icut+1)+h_cflow[1][col].GetBinContent(icut+1);
-      file << " & " << TString::Format("%.1f", h_cflow[0][col].GetBinContent(icut+1)+h_cflow[1][col].GetBinContent(icut+1)); 
+    file << " Cut";
+    for(unsigned col(0); col < nbkgd; col++) file << " & \\multicolumn{1}{|c}{\\bf{"<<samplestr[col]<<"}}";
+    for(unsigned col(nbkgd); col < nsamples; col++) file << " & \\multicolumn{3}{|c}{\\bf{"<<samplestr[col]<<"}}";
+    file << "\\\\ \n";
+
+    for(unsigned col(0); col < nbkgd; col++) file << " &  ";
+    for(unsigned col(nbkgd); col < nsamples; col++) file << " & \\multicolumn{1}{|r}{\\bf{S}}  & \\multicolumn{1}{r}{$\\mathbf{Z_{Bi}(\\tau=1)}$}  & \\multicolumn{1}{r}{$\\mathbf{Z_{Bi}(\\tau=1000)}$}";
+    file << "\\\\ \\hline \n";
+
+    for (unsigned icut(0); icut<cutstr.size(); icut++){
+      file << cutstr[icut];
+      double B = 0;
+      for(unsigned col(0); col < nbkgd; col++) {
+        double bcount(0.);
+        if (ichan != MU) bcount += h_cflow[0][col].GetBinContent(icut+1);
+        if (ichan != EL) bcount += h_cflow[1][col].GetBinContent(icut+1);
+        B += bcount;
+        file << " & " << TString::Format("%.1f", bcount); 
+      }
+      for(unsigned col(nbkgd); col < nbkgd+nsig; col++) {
+        double S(0.);
+        if (ichan != MU)  S += h_cflow[0][col].GetBinContent(icut+1);
+        if (ichan != EL)  S += h_cflow[1][col].GetBinContent(icut+1);
+        file << " & " << TString::Format("%.1f", S); 
+        file << " & " << TString::Format("%.1f", RooStats::NumberCountingUtils::BinomialWithTauExpZ(S, B, 1.0)); 
+        file << " & " << TString::Format("%.1f", RooStats::NumberCountingUtils::BinomialWithTauExpZ(S, B, 1000.0)); 
+      }
+      file << "\\\\ \n";
     }
-    for(unsigned col(nbkgd); col < nbkgd+nsig; col++) {
-      double S = h_cflow[0][col].GetBinContent(icut+1)+h_cflow[1][col].GetBinContent(icut+1);
-      file << " & " << TString::Format("%.1f", S); 
-      file << " & " << TString::Format("%.1f", RooStats::NumberCountingUtils::BinomialWithTauExpZ(S, B, 1.0)); 
-    }
-    file << "\\\\ \n"<<endl;
+    file<< "\\hline\n\\end{tabular}\n";
+    TString caption; 
+    if (isostr == "reliso") caption = "Standard isolation, ";
+    else if (isostr == "miniso") caption = "Optimized mini-isolation, ";
+    if (ichan == EL) caption += "$e$+jets channel.";
+    else if (ichan == MU) caption += "$\\mu$+jets channel.";
+    else caption += "$\\ell$+jets channel.";
+    
+    file << "\\caption{"+caption+"}\n";
+    file << "\\end{table}\n";
   }
-  file<< "\\hline\n\\end{tabular}"<<endl<<endl;
+  file<< "\\end{document}\n";
   file.close();
   cout<<"Written "<<texname<<endl;
 
