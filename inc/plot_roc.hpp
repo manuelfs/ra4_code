@@ -6,13 +6,20 @@
 #include "TH1D.h"
 #include "TString.h"
 
+class marker_class {
+public:
+  marker_class(float icut, float isize, int icolor, int istyle);
+  float cut, size;
+  int color, style;
+};
+
 class var_class {
 public:
   var_class(TString ivarname, float iminx, float imaxx, TString ititle, int icolor, 
-	    int istyle=1, std::vector<int> icuts=std::vector<int>());
+	    int istyle=1, std::vector<marker_class> icuts=std::vector<marker_class>());
   TString title, varname;
   float minx, maxx;
-  std::vector<int> cuts;
+  std::vector<marker_class> cuts;
   int color, style;
 };
 
@@ -23,7 +30,7 @@ public:
   std::vector<TString> files;
 };
 
-TGraph MakeROC(TH1D &good, TH1D &bad, const bool less_is_better);
+TGraph MakeROC(TH1D &good, TH1D &bad, const bool less_is_better, std::vector<marker_class> cuts);
 void DrawROC(std::vector<sample_class> samples, std::vector<var_class> vars, TString cuts, TString tag);
 
 
