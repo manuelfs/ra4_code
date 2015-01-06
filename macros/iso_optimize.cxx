@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 
 #include "RooStats/NumberCountingUtils.h"
 #include "TString.h"
@@ -595,7 +596,7 @@ double GetMT(const small_tree &tree,
 }
 
 bool PassBaseline(const small_tree &tree){
-  return (false || (tree.mc_type()&0XF000!=0x0000 || tree.mc_type()&0xF00==0x100))
+  return (false || ((tree.mc_type()&0XF000)!=0x0000 || (tree.mc_type()&0xF00)==0x100))
     && tree.nbl()>=2
     && tree.njets()>=6
     && tree.ht()>750.0
