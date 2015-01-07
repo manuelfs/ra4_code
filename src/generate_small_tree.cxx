@@ -42,7 +42,7 @@ int main(){
   variables.push_back("std::vector<bool> mus_sigid");
   variables.push_back("std::vector<float> mus_reliso");
   variables.push_back("std::vector<float> mus_reliso_r04"); // recomputed default
-  variables.push_back("std::vector<float> mus_reliso_r03"); // R_iso = 0.3 
+  variables.push_back("std::vector<float> mus_reliso_r03"); // R_iso = 0.3
   variables.push_back("std::vector<float> mus_reliso_r02"); // R_iso = 0.2
   variables.push_back("std::vector<float> mus_miniso_10_ch"); // R_iso = 10./pT, charged PF only
   variables.push_back("std::vector<float> mus_miniso_15");   // R_iso = 15./pT
@@ -107,6 +107,7 @@ int main(){
   variables.push_back("std::vector<float> jets_eta");
   variables.push_back("std::vector<float> jets_phi");
   variables.push_back("std::vector<float> jets_csv");
+  variables.push_back("std::vector<float> jets_id");
   variables.push_back("std::vector<float> jets_dphi_lep");
   variables.push_back("std::vector<float> jets_dphi_met");
 
@@ -118,7 +119,6 @@ int main(){
   variables.push_back("std::vector<float> mc_id");
   variables.push_back("std::vector<float> mc_momid");
   variables.push_back("std::vector<float> mc_gmomid");
-
 
   ///////////////////   Fat Jets   //////////////
   variables.push_back("int nfjets_30");  // for fjets_pt>50, all with skinny jets pt>30
@@ -210,7 +210,7 @@ int main(){
     hppFile << "  " << var->type << " const & " << var->name << "() const;\n";
     hppFile << "  " << var->type << " & " << var->name << "();\n";
   }
-  
+
   hppFile << "private:\n";
   hppFile << "  TChain chain_;\n";
   hppFile << "  TTree tree_;\n";
@@ -323,7 +323,7 @@ int main(){
   cppFile << "  if(!read_only_){\n";
   cppFile << "    throw std::logic_error(\"Trying to read from write-only tree.\");\n";
   cppFile << "  }\n\n";
-  
+
   for(vector<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
     cppFile << "  c_" << var->name << "_ = false;\n";
   }
@@ -354,7 +354,7 @@ int main(){
   }
 
   cout<<"Written src/small_tree.cpp and inc/small_tree.hpp"<<endl;
-  
+
   cppFile.close();
   hppFile.close();
   return 0;
@@ -375,7 +375,6 @@ vector<Variable> ParseVariables(const vector<string> &variables){
   }
   return out;
 }
-
 
 bool Contains(const string &text, const string &pattern){
   return text.find(pattern) != string::npos;

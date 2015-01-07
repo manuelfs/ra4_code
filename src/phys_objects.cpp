@@ -311,8 +311,8 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     +pv_y()->at(0)*cos(els_tk_phi()->at(iel));
   const double dz = fabs(els_vz()->at(iel)-pv_z()->at(0));
   const double sigietaieta = (Type()==typeid(cfa_13)
-			      ? els_full5x5_sigmaIetaIeta()->at(iel)
-			      : els_sigmaIEtaIEta()->at(iel));
+                              ? els_full5x5_sigmaIetaIeta()->at(iel)
+                              : els_sigmaIEtaIEta()->at(iel));
 
   return deta_cut > fabs(els_dEtaIn()->at(iel))
     && dphi_cut > fabs(els_dPhiIn()->at(iel))
@@ -322,7 +322,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
-    && (true || vprob_cut) 
+    && (true || vprob_cut)
     && (els_PATpassConversionVeto()->at(iel))
     && (misshits_cut >= els_expectedMissingInnerHits()->at(iel));
 }
@@ -463,7 +463,7 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, float &closest
   int closest_imc = -1, idLepton = 0;
   float RecPt = mus_pt()->at(index), RecEta = mus_eta()->at(index), RecPhi = mus_phi()->at(index);
   closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::mu_minus);
-  
+
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
@@ -494,7 +494,7 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &clo
   int closest_imc = -1, idLepton = 0;
   float RecPt = els_pt()->at(index), RecEta = els_eta()->at(index), RecPhi = els_phi()->at(index);
   closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::e_minus);
-  
+
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
@@ -518,8 +518,8 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &clo
   return idLepton;
 }
 
-int phys_objects::GetTrueParticle(float RecPt, float RecEta, float RecPhi, 
-				  float &closest_deltaR, int ID) const {
+int phys_objects::GetTrueParticle(float RecPt, float RecEta, float RecPhi,
+                                  float &closest_deltaR, int ID) const {
   const float pT_Threshold(0.3), dR_Threshold(0.1);
   int closest_imc = -1;
   float deltaR = 9999.; closest_deltaR = 9999.;
@@ -553,6 +553,63 @@ int phys_objects::GetMom(const float id, const float mom, const float gmom,
   fromW = abs(ret_mom)==24 || (abs(ret_mom)==15 && (abs(igmom)==24 || abs(iggmom)==24));
 
   return ret_mom;
+}
+
+void phys_objects::GetBestLepton(bool &is_muon, size_t &index){
+  //Returns index of highest pt signal lepton, if there is one. Falls back to veto leptons if there are no signal leptons and then all leptons if there are no veto leptons.
+  is_muon = false;
+  index = -1;
+  double max_pt = -1.0;
+  for(size_t imu = 0; imu < mus_pt()->size(); ++imu){
+    if(!IsSignalMuon(imu)) continue;
+    if(mus_pt()->at(imu)>max_pt){
+      max_pt = mus_pt()->at(imu);
+      is_muon = true;
+      index = imu;
+    }
+  }
+  for(size_t iel = 0; iel < els_pt()->size(); ++iel){
+    if(!IsSignalElectron(iel)) continue;
+    if(els_pt()->at(iel)>max_pt){
+      max_pt = els_pt()->at(iel);
+      is_muon = false;
+      index = iel;
+    }
+  }
+  if(max_pt<0.){
+    for(size_t imu = 0; imu < mus_pt()->size(); ++imu){
+      if(!IsVetoMuon(imu)) continue;
+      if(mus_pt()->at(imu)>max_pt){
+        max_pt = mus_pt()->at(imu);
+        is_muon = true;
+        index = imu;
+      }
+    }
+    for(size_t iel = 0; iel < els_pt()->size(); ++iel){
+      if(!IsVetoElectron(iel)) continue;
+      if(els_pt()->at(iel)>max_pt){
+        max_pt = els_pt()->at(iel);
+        is_muon = false;
+        index = iel;
+      }
+    }
+  }
+  if(max_pt<0.){
+    for(size_t imu = 0; imu < mus_pt()->size(); ++imu){
+      if(mus_pt()->at(imu)>max_pt){
+        max_pt = mus_pt()->at(imu);
+        is_muon = true;
+        index = imu;
+      }
+    }
+    for(size_t iel = 0; iel < els_pt()->size(); ++iel){
+      if(els_pt()->at(iel)>max_pt){
+        max_pt = els_pt()->at(iel);
+        is_muon = false;
+        index = iel;
+      }
+    }
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -617,8 +674,8 @@ double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
 }
 
 double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI,
-					    float otherpt, float
-					    othereta) const {
+                                            float otherpt, float
+                                            othereta) const {
   if(goodJetI>=jets_pt()->size()) return -99.;
 
   double sum = 0;
@@ -669,8 +726,8 @@ double phys_objects::GetMHT(const vector<int> &good_jets, double pt_cut) const {
 }
 
 size_t phys_objects::GetNumJets(const vector<int> &good_jets,
-				double pt_cut,
-				double csv_cut) const{
+                                double pt_cut,
+                                double csv_cut) const{
   size_t num_jets = 0;
   for(size_t i = 0; i < good_jets.size(); ++i){
     if(jets_pt()->at(good_jets.at(i)) > pt_cut

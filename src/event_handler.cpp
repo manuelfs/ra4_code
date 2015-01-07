@@ -48,7 +48,7 @@ event_handler::event_handler(const string &fileName, bool quick_mode):
 void event_handler::ReduceTree(int Nentries, TString outFilename,
                                int Ntotentries){
 
-  gROOT->ProcessLine("#include <vector>"); 
+  gROOT->ProcessLine("#include <vector>");
   // const float bad_val = -999.;
 
   TFile outFile(outFilename, "recreate");
@@ -126,7 +126,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       mus_mindr_rem_25 = vector<float>(mus_pt()->size(), bad_val);
     }
 
-    tree.nels() = 0; tree.nvels() = 0; tree.nvels10() = 0; 
+    tree.nels() = 0; tree.nvels() = 0; tree.nvels10() = 0;
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
         tree.els_sigid().push_back(IsSignalIdElectron(index));
@@ -159,7 +159,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
           lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                      els_pz()->at(index), els_energy()->at(index));
-        
+
         // Number of leptons
         if(IsVetoIdElectron(index, true)) ++(tree.nvels10());
         if(IsVetoElectron(index)) ++(tree.nvels());
@@ -167,7 +167,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       }
     } // Loop over els
 
-    tree.nmus() = 0; tree.nvmus() = 0; tree.nvmus10() = 0; 
+    tree.nmus() = 0; tree.nvmus() = 0; tree.nvmus10() = 0;
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
         tree.mus_sigid().push_back(IsSignalIdMuon(index));
@@ -199,7 +199,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
           lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                      mus_pz()->at(index), mus_energy()->at(index));
-        
+
         // Number of leptons
         if(GetMuonIsolation(index) < 0.2) ++(tree.nvmus10());
         if(IsVetoMuon(index)) ++(tree.nvmus());
@@ -225,13 +225,13 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
 
     ////////////////   TRUTH   ////////////////
-    for(size_t igen(0); igen<mc_doc_id()->size(); igen++) { 
-      tree.mc_pt().push_back(mc_doc_pt()->at(igen));  
-      tree.mc_phi().push_back(mc_doc_phi()->at(igen));  
-      tree.mc_eta().push_back(mc_doc_eta()->at(igen));  
-      tree.mc_id().push_back(mc_doc_id()->at(igen));  
-      tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));  
-      tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));  
+    for(size_t igen(0); igen<mc_doc_id()->size(); igen++) {
+      tree.mc_pt().push_back(mc_doc_pt()->at(igen));
+      tree.mc_phi().push_back(mc_doc_phi()->at(igen));
+      tree.mc_eta().push_back(mc_doc_eta()->at(igen));
+      tree.mc_id().push_back(mc_doc_id()->at(igen));
+      tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));
+      tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));
     }
     tree.mc_type() = TypeCode();
 
@@ -253,39 +253,29 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.ht30() = GetHT(good_jets, 30.0);
     tree.mht30() = GetMHT(good_jets, 30.0);
 
-    int el_index = -1, mu_index = -1;
-    double max_pt = -1.0;
-    for(size_t iel = 0; iel < els_pt()->size(); ++iel){
-      if(!IsSignalElectron(iel)) continue;
-      if(els_pt()->at(iel)>max_pt){
-	el_index = iel;
-	mu_index = -1;
-	max_pt = els_pt()->at(iel);
-      }
-    }
-    for(size_t imu = 0; imu < mus_pt()->size(); ++imu){
-      if(!IsSignalMuon(imu)) continue;
-      if(mus_pt()->at(imu)>max_pt){
-	mu_index = imu;
-	el_index = -1;
-	max_pt = mus_pt()->at(imu);
-      }
-    }
+    size_t lep_index;
+    bool is_muon;
+    GetBestLepton(is_muon, lep_index);
 
     for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
-      int ijet = good_jets.at(igoodjet); 
-      tree.jets_pt().push_back(jets_AK4_pt()->at(ijet)); 
-      tree.jets_eta().push_back(jets_AK4_eta()->at(ijet)); 
-      tree.jets_phi().push_back(jets_AK4_phi()->at(ijet)); 
-      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+      int ijet = good_jets.at(igoodjet);
+      tree.jets_pt().push_back(jets_AK4_pt()->at(ijet));
+      tree.jets_eta().push_back(jets_AK4_eta()->at(ijet));
+      tree.jets_phi().push_back(jets_AK4_phi()->at(ijet));
+      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet));
       tree.jets_dphi_met().push_back(deltaphi(mets_phi()->at(0), jets_AK4_phi()->at(ijet)));
-      if(el_index!=-1){
-	tree.jets_dphi_lep().push_back(deltaphi(els_phi()->at(el_index),jets_AK4_phi()->at(ijet)));
-      }else if(mu_index!=-1){
-	tree.jets_dphi_lep().push_back(deltaphi(mus_phi()->at(mu_index),jets_AK4_phi()->at(ijet)));
+      if(lep_index != static_cast<size_t>(-1)){
+        if(is_muon){
+          tree.jets_dphi_lep().push_back(deltaphi(mus_phi()->at(lep_index),
+                                                  jets_AK4_phi()->at(ijet)));
+        }else{
+          tree.jets_dphi_lep().push_back(deltaphi(els_phi()->at(lep_index),
+                                                  jets_AK4_phi()->at(ijet)));
+        }
       }else{
-	tree.jets_dphi_lep().push_back(bad_val);
+        tree.jets_dphi_lep().push_back(bad_val);
       }
+      tree.jets_id().push_back(jets_AK4_parton_Id()->at(ijet));
     }
 
     ////////////////   Fat Jets   ////////////////
@@ -570,7 +560,6 @@ void event_handler::WriteFatJets(small_tree &tree){
 
 }
 
-
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                               std::vector<float> &els_mindr,
                               std::vector<float> &mus_ptrel,
@@ -592,7 +581,6 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 
   //Find isolated electrons in list of pfcands
   for(size_t el = 0; el < els_pt()->size(); ++el){
-    
     float mindr = numeric_limits<float>::max();
     size_t imatch = 0;
 
@@ -669,7 +657,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 
   JetDefinition jet_def(antikt_algorithm, 0.4);
   ClusterSequence cs(pjs, jet_def);
-  
+
   vector<PseudoJet> reclustered_jets = cs.inclusive_jets();
   vector<int> indices = cs.particle_jet_indices(reclustered_jets);
 
@@ -692,7 +680,7 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                            reclustered_jets.at(jet_idx).e()-els_energy()->at(el));
       TLorentzVector p4el(els_px()->at(el), els_py()->at(el),
                           els_pz()->at(el), els_energy()->at(el));
-                          
+
       if(p4jet.Pt()<pt_cut){
         //Jet was below pt threshold; find nearest jet above threshold
         float min_dr=fltmax;
@@ -760,7 +748,6 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
   }
 }
 
-
 void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
 
   double lep_pt(0.), lep_eta(0.), lep_phi(0.), deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);;
@@ -768,14 +755,13 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     lep_pt = els_pt()->at(ilep);
     lep_eta = els_eta()->at(ilep);
     lep_phi = els_phi()->at(ilep);
-    if (lep_eta>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;} 
+    if (lep_eta>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
   } else {
     lep_pt = mus_pt()->at(ilep);
     lep_eta = mus_eta()->at(ilep);
     lep_phi = mus_phi()->at(ilep);
     deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01;
   }
-
 
   std::vector<double> riso;
   riso.push_back(0.2);
@@ -788,7 +774,6 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   size_t nriso = riso.size();
   double riso_max = max(0.4,10./lep_pt);
 
-
   // find the PF cands that matches the lepton
   double drmin = fltmax;
   uint match_index = 9999999;
@@ -800,8 +785,8 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     }
   }
   // if (match_index==9999999 || drmin>0.1) printf("Lepton not found!\n");
- 
-  // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons, 
+
+  // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons,
   // 1 and 2 for hadronic and em particles in HF
   std::vector<double> iso_nh(nriso,0.); std::vector<double> iso_ch(nriso,0.); std::vector<double> iso_ph(nriso,0.); std::vector<double> iso_pu(nriso,0.);
   double ptThresh(0.5);
@@ -832,7 +817,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
         if(dr < deadcone_pu) continue;
         for (uint ir=0; ir<nriso; ir++) {if (dr<riso[ir]) iso_pu[ir] += pfcand_pt()->at(icand);}
       }
-    } 
+    }
   }
 
   std::vector<double> iso(nriso,0.);
@@ -861,7 +846,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     tree.mus_miniso_tr15_ch().push_back(iso_ch[5]/lep_pt);
     tree.mus_miniso_15().push_back(iso[6]);
   }
-  
+
   return;
 }
 unsigned event_handler::TypeCode() const{

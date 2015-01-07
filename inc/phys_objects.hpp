@@ -1,4 +1,4 @@
-// phys_objects: Class with the standard physics objects that inherits from the cfa class. 
+// phys_objects: Class with the standard physics objects that inherits from the cfa class.
 //              Reduced tree makers should inherit from this class
 
 #ifndef H_PHYS_OBJECTS
@@ -11,7 +11,6 @@
 
 #include "cfa.hpp"
 #include "pdtlund.hpp"
-
 
 namespace particleId {
   enum leptonType {
@@ -56,14 +55,15 @@ public:
 
   // Leptons
   static int GetMom(float id, float mom, float gmom, float ggmom,
-		    bool &fromW);
+                    bool &fromW);
+  void GetBestLepton(bool &is_muon, size_t &index);
 
   // Tracks
   bool IsGoodIsoTrack(unsigned itrk) const;
 
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
-			   double pt_thresh, double eta_thresh) const;
+                           double pt_thresh, double eta_thresh) const;
   bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;
   bool IsBasicJet(unsigned ijet) const;
 
@@ -85,8 +85,8 @@ public:
   double GetHT(const std::vector<int> &good_jets, double pt_cut=0.0) const;
   double GetMHT(const std::vector<int> &good_jets, double pt_cut) const;
   size_t GetNumJets(const std::vector<int> &good_jets,
-		    double pt_cut=0.0,
-		    double csv_cut=-std::numeric_limits<float>::max()) const;
+                    double pt_cut=0.0,
+                    double csv_cut=-std::numeric_limits<float>::max()) const;
 
   // Utilities
   bool IsMC() const;
