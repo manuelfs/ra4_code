@@ -110,6 +110,9 @@ int main(){
   variables.push_back("std::vector<float> jets_id");
   variables.push_back("std::vector<float> jets_dphi_lep");
   variables.push_back("std::vector<float> jets_dphi_met");
+  variables.push_back("std::vector<float> jets_dphi_sum");
+  variables.push_back("std::vector<bool> jets_bhad");
+  variables.push_back("std::vector<bool> jets_blep");
 
   ////////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");

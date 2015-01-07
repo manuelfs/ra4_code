@@ -37,7 +37,6 @@ float cross_section(TString file){
   if(file.Contains("T2tt") && file.Contains("650_"))  xsec = 0.107045;
   if(file.Contains("T2tt") && file.Contains("850_"))  xsec = 0.0189612;
 
-
   // https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get/TOP-Fall13-00005
   // says that it is 424.5 pb
   if(file.Contains("TTJet") || file.Contains("TT_"))  xsec = 806.1;
@@ -132,14 +131,24 @@ bool dd_big2small(const double_double& left, const double_double& right){
   return left.first > right.first;
 }
 
-double deltaphi(double phi1, double phi2){
-  double pi = acos(-1.);
-  double dphi = fmod(fabs(phi1-phi2), 2.*pi);
-  return dphi>pi ? 2.*pi-dphi : dphi;
+long double DeltaPhi(long double phi1, long double phi2){
+  long double dphi = fmod(fabs(phi2-phi1), 2.L*PI);
+  return dphi>PI ? 2.L*PI-dphi : dphi;
+}
+
+long double SignedDeltaPhi(long double phi1, long double phi2){
+  long double dphi = fmod(phi2-phi1, 2.L*PI);
+  if(dphi>PI){
+    return dphi-2.L*PI;
+  }else if(dphi<-PI){
+    return dphi+2.L*PI;
+  }else{
+    return dphi;
+  }
 }
 
 float dR(float eta1, float eta2, float phi1, float phi2) {
-  return AddInQuadrature(eta1-eta2, deltaphi(phi1,phi2));
+  return AddInQuadrature(eta1-eta2, DeltaPhi(phi1,phi2));
 }
 
 TString RoundNumber(double num, int decimals, double denom){

@@ -657,13 +657,30 @@ bool phys_objects::IsMC() const {
   return (SampleName().find("Run201") == string::npos);
 }
 
+long double phys_objects::SumDeltaPhi(long double phi_x, long double phi_a, long double phi_b){
+  //N.B.: long doubles and checks are necessary! Want to get exact same value of SumDeltaPhi for all jets between the met and lepton or their negatives!
+  long double pxa = DeltaPhi(phi_x, phi_a);
+  long double pxb = DeltaPhi(phi_x, phi_b);
+  long double sdp = pxa + pxb;
+  if(Sign(SignedDeltaPhi(phi_x,phi_a))*Sign(SignedDeltaPhi(phi_x,phi_b))<=0){
+    long double pab = DeltaPhi(phi_a, phi_b);
+    if(sdp>PI){
+      return 2.L*PI-pab;
+    }else{
+      return pab;
+    }
+  }else{
+    return sdp;
+  }
+}
+
 double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
   double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
-  double dp = fabs(deltaphi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
+  double dp = fabs(DeltaPhi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
   double dpN = 0.0;
   if(useArcsin) {
     if( deltaT/mets_et()->at(0) >= 1.0){
-      dpN = dp / (TMath::Pi()/2.0);
+      dpN = dp / (PI/2.0);
     }else{
       dpN = dp / asin(deltaT/mets_et()->at(0));
     }

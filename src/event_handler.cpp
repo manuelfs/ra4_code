@@ -212,7 +212,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       tree.nleps() = static_cast<int>(bad_val);
     }
 
-    // Finding mT and deltaPhi with respect to highest pT lepton
+    // Finding mT and DeltaPhi with respect to highest pT lepton
     tree.mt() = bad_val; tree.dphi_wlep() = bad_val;
     if(lepmax_p4.Pt() > 0){
       double lepmax_phi = atan2(lepmax_p4.Py(), lepmax_p4.Px());
@@ -253,30 +253,15 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.ht30() = GetHT(good_jets, 30.0);
     tree.mht30() = GetMHT(good_jets, 30.0);
 
-    size_t lep_index;
-    bool is_muon;
-    GetBestLepton(is_muon, lep_index);
-
-    for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
+    for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++){
       int ijet = good_jets.at(igoodjet);
       tree.jets_pt().push_back(jets_AK4_pt()->at(ijet));
       tree.jets_eta().push_back(jets_AK4_eta()->at(ijet));
       tree.jets_phi().push_back(jets_AK4_phi()->at(ijet));
       tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet));
-      tree.jets_dphi_met().push_back(deltaphi(mets_phi()->at(0), jets_AK4_phi()->at(ijet)));
-      if(lep_index != static_cast<size_t>(-1)){
-        if(is_muon){
-          tree.jets_dphi_lep().push_back(deltaphi(mus_phi()->at(lep_index),
-                                                  jets_AK4_phi()->at(ijet)));
-        }else{
-          tree.jets_dphi_lep().push_back(deltaphi(els_phi()->at(lep_index),
-                                                  jets_AK4_phi()->at(ijet)));
-        }
-      }else{
-        tree.jets_dphi_lep().push_back(bad_val);
-      }
       tree.jets_id().push_back(jets_AK4_parton_Id()->at(ijet));
     }
+    SumDeltaPhiVars(tree, good_jets);
 
     ////////////////   Fat Jets   ////////////////
     WriteFatJets(tree);
@@ -849,6 +834,63 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
 
   return;
 }
+
+void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_jets){
+  size_t lep_index;
+  bool is_muon;
+  GetBestLepton(is_muon, lep_index);
+  bool no_lep = lep_index == static_cast<size_t>(-1);
+  int bhad = -1;
+  int blep = -1;
+
+  vector<long double> jets_sdp(0);
+  long double max_sdp = -1.0, max_dp = -1.0;
+  long double min_sdp = numeric_limits<long double>::max(), min_dp = min_sdp;
+  for(size_t igoodjet = 0; igoodjet < good_jets.size(); ++igoodjet){
+    int ijet = good_jets.at(igoodjet);
+    long double sdp, dphi_lep;
+    if(no_lep){
+      sdp = bad_val;
+      dphi_lep = bad_val;
+    }else if(is_muon){
+      sdp = SumDeltaPhi(jets_AK4_phi()->at(ijet),
+                        mus_phi()->at(lep_index),
+                        mets_phi()->at(0));
+      dphi_lep = DeltaPhi(jets_AK4_phi()->at(ijet),
+                          mus_phi()->at(lep_index));
+    }else{
+      sdp = SumDeltaPhi(jets_AK4_phi()->at(ijet),
+                        els_phi()->at(lep_index),
+                        mets_phi()->at(0));
+      dphi_lep = DeltaPhi(jets_AK4_phi()->at(ijet),
+                          els_phi()->at(lep_index));
+    }
+    tree.jets_dphi_met().push_back(DeltaPhi(jets_AK4_phi()->at(ijet),
+                                            mets_phi()->at(0)));
+    tree.jets_dphi_lep().push_back(dphi_lep);
+    tree.jets_dphi_sum().push_back(sdp);
+
+    if(jets_AK4_btag_inc_secVertexCombined()->at(ijet) > CSVCuts[1]){
+      if(sdp>4.5 && sdp > max_sdp || (sdp==max_sdp && dphi_lep>max_dp)){
+        max_sdp = sdp;
+        max_dp = dphi_lep;
+        bhad = igoodjet;
+      }
+    }
+    if(sdp < min_sdp || (sdp==min_sdp && dphi_lep<min_dp)){
+      min_sdp = sdp;
+      min_dp = dphi_lep;
+      blep = igoodjet;
+    }
+  }
+
+  tree.jets_bhad() = vector<bool>(tree.jets_dphi_met().size(), false);
+  tree.jets_blep() = vector<bool>(tree.jets_dphi_met().size(), false);
+
+  if(bhad != -1) tree.jets_bhad().at(bhad) = true;
+  if(blep != -1) tree.jets_blep().at(blep) = true;
+}
+
 unsigned event_handler::TypeCode() const{
   const string sample_name = SampleName();
   unsigned sample_code = 0xF;

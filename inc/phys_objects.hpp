@@ -78,6 +78,7 @@ public:
   double getDZ(double vx, double vy, double vz, double px, double py, double pz, int firstGoodVertex) const;
 
   // Event variables
+  long double SumDeltaPhi(long double phi_x, long double phi_a, long double phi_b);
   double GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const;
   double GetDeltaPhiMETN_deltaT(unsigned goodJetI, float otherpt, float othereta) const;
   double GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float maineta,

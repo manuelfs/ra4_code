@@ -12,7 +12,6 @@
 #include "utilities.hpp"
 #include "small_tree.hpp"
 
-
 class event_handler : public phys_objects{
 public:
   explicit event_handler(const std::string &fileName, bool quick_mode=false);
@@ -21,15 +20,16 @@ public:
   void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
   void WriteFatJets(small_tree &tree);
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
-		 std::vector<float> &mus_ptrel,
-		 std::vector<float> &mus_mindr,
-		 float pt_cut = 0.0,
-		 bool remove_isolated = true,
-		 float dr_match_thresh = -1.0);
+                 std::vector<float> &mus_ptrel,
+                 std::vector<float> &mus_mindr,
+                 float pt_cut = 0.0,
+                 bool remove_isolated = true,
+                 float dr_match_thresh = -1.0);
+  void SumDeltaPhiVars(small_tree &tree,
+                       const std::vector<int> &good_jets);
   unsigned TypeCode() const;
 
   bool skip_slow;
-
 };
 
 #endif
