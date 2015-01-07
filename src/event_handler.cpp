@@ -253,12 +253,39 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.ht30() = GetHT(good_jets, 30.0);
     tree.mht30() = GetMHT(good_jets, 30.0);
 
+    int el_index = -1, mu_index = -1;
+    double max_pt = -1.0;
+    for(size_t iel = 0; iel < els_pt()->size(); ++iel){
+      if(!IsSignalElectron(iel)) continue;
+      if(els_pt()->at(iel)>max_pt){
+	el_index = iel;
+	mu_index = -1;
+	max_pt = els_pt()->at(iel);
+      }
+    }
+    for(size_t imu = 0; imu < mus_pt()->size(); ++imu){
+      if(!IsSignalMuon(imu)) continue;
+      if(mus_pt()->at(imu)>max_pt){
+	mu_index = imu;
+	el_index = -1;
+	max_pt = mus_pt()->at(imu);
+      }
+    }
+
     for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++) {
       int ijet = good_jets.at(igoodjet); 
       tree.jets_pt().push_back(jets_AK4_pt()->at(ijet)); 
       tree.jets_eta().push_back(jets_AK4_eta()->at(ijet)); 
       tree.jets_phi().push_back(jets_AK4_phi()->at(ijet)); 
       tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet)); 
+      tree.jets_dphi_met().push_back(deltaphi(mets_phi()->at(0), jets_AK4_phi()->at(ijet)));
+      if(el_index!=-1){
+	tree.jets_dphi_lep().push_back(deltaphi(els_phi()->at(el_index),jets_AK4_phi()->at(ijet)));
+      }else if(mu_index!=-1){
+	tree.jets_dphi_lep().push_back(deltaphi(mus_phi()->at(mu_index),jets_AK4_phi()->at(ijet)));
+      }else{
+	tree.jets_dphi_lep().push_back(bad_val);
+      }
     }
 
     ////////////////   Fat Jets   ////////////////
