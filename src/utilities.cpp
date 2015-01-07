@@ -114,29 +114,28 @@ vector<TString> dirlist(TString folder, TString inname, TString tag){
 bool eigen2x2(float matrix[2][2], float &eig1, float &eig2){
   float root = pow(matrix[0][0],2) + pow(matrix[1][1],2)-2*matrix[0][0]*matrix[1][1]+4*matrix[0][1]*matrix[1][0];
   if(root<0) return false;
-  
+
   eig1 = (matrix[0][0]+matrix[1][1]+sqrt(root))/2.;
   eig2 = (matrix[0][0]+matrix[1][1]-sqrt(root))/2.;
   return true;
 }
 
-bool id_big2small(const int_double& left, const int_double& right){ 
-  return left.second > right.second; 
-}  
+bool id_big2small(const int_double& left, const int_double& right){
+  return left.second > right.second;
+}
 
-bool dd_small2big(const double_double& left, const double_double& right){ 
-  return left.first < right.first; 
-}  
+bool dd_small2big(const double_double& left, const double_double& right){
+  return left.first < right.first;
+}
 
-bool dd_big2small(const double_double& left, const double_double& right){ 
-  return left.first > right.first; 
-}  
+bool dd_big2small(const double_double& left, const double_double& right){
+  return left.first > right.first;
+}
 
 double deltaphi(double phi1, double phi2){
-  double result = fabs(phi1-phi2);
-  while (result>TMath::Pi()) result -= 2*TMath::Pi();
-  while (result<=-TMath::Pi()) result += 2*TMath::Pi();
-  return result;
+  double pi = acos(-1.);
+  double dphi = fmod(fabs(phi1-phi2), 2.*pi);
+  return dphi>pi ? 2.*pi-dphi : dphi;
 }
 
 float dR(float eta1, float eta2, float phi1, float phi2) {
@@ -150,13 +149,13 @@ TString RoundNumber(double num, int decimals, double denom){
   long num_int = static_cast<long>(num);
   long num_dec = static_cast<long>((1+num-num_int)*pow(10.,decimals));
   TString s_dec = ""; s_dec += num_dec; s_dec.Remove(0,1);
-  TString result=""; 
+  TString result="";
   if(neg<0) result+="-";
   result+= num_int;
   if(decimals>0) {
     result+="."; result+=s_dec;
   }
-  
+
   TString afterdot = result;
   afterdot.Remove(0,afterdot.First(".")+1);
   for(int i=0; i<decimals-afterdot.Length(); i++)
