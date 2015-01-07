@@ -871,7 +871,7 @@ void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_je
     tree.jets_dphi_sum().push_back(sdp);
 
     if(jets_AK4_btag_inc_secVertexCombined()->at(ijet) > CSVCuts[1]){
-      if(sdp>4.5 && sdp > max_sdp || (sdp==max_sdp && dphi_lep>max_dp)){
+      if(sdp>4.5 && (sdp > max_sdp || (sdp==max_sdp && dphi_lep>max_dp))){
         max_sdp = sdp;
         max_dp = dphi_lep;
         bhad = igoodjet;
