@@ -62,10 +62,7 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
 
   Timer timer(Nentries, 1.);
   timer.Start();
-  for(int entry(0); entry < Nentries; entry++) {
-    /*if(entry%1000==0 && entry!=0){
-      timer.PrintRemainingTime();
-      }*/
+  for(int entry = 0; entry < Nentries; ++entry){
     timer.Iterate();
     GetEntry(entry);
 
@@ -125,7 +122,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       mus_ptrel_rem_25 = vector<float>(mus_pt()->size(), bad_val);
       mus_mindr_rem_25 = vector<float>(mus_pt()->size(), bad_val);
     }
-
     tree.nels() = 0; tree.nvels() = 0; tree.nvels10() = 0;
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
@@ -166,7 +162,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
         if(IsSignalElectron(index)) ++(tree.nels());
       }
     } // Loop over els
-
     tree.nmus() = 0; tree.nvmus() = 0; tree.nvmus10() = 0;
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
@@ -211,7 +206,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }else{
       tree.nleps() = static_cast<int>(bad_val);
     }
-
     // Finding mT and DeltaPhi with respect to highest pT lepton
     tree.mt() = bad_val; tree.dphi_wlep() = bad_val;
     if(lepmax_p4.Pt() > 0){
@@ -223,7 +217,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
       if(tree.dphi_wlep() > PI) tree.dphi_wlep() = 2*PI-tree.dphi_wlep();
       tree.mt() = sqrt(2*lepmax_p4.Pt()* tree.met()*(1-cos(tree.met_phi()-lepmax_p4.Phi())));
     }
-
     ////////////////   TRUTH   ////////////////
     // for(size_t igen(0); igen<mc_doc_id()->size(); igen++) {
     //   tree.mc_pt().push_back(mc_doc_pt()->at(igen));
@@ -234,7 +227,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     //   tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));
     // }
     tree.mc_type() = TypeCode();
-
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> veto_muons = GetMuons(false);
@@ -309,7 +301,7 @@ void event_handler::WriteFatJets(small_tree &tree){
     if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
        || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
 
-    if(abs(jets_eta()->at(jet))>5) continue;
+    if(fabs(jets_eta()->at(jet))>5.) continue;
 
     const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
                             jets_pz()->at(jet), jets_energy()->at(jet));
@@ -558,20 +550,16 @@ void event_handler::WriteFatJets(small_tree &tree){
   tree.nfjets_cands_trim() = static_cast<int>(bad_val);
   tree.mj_cands_trim() = static_cast<int>(bad_val);
   if(!skip_slow){
-    vector<PseudoJet> cands(pfcand_pt()->size());
+    vector<PseudoJet> cands(0);
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-      if(pfcand_fromPV()->at(cand) == 0) continue; // This pfcand is associated with a PU vertex
-      if(abs(pfcand_eta()->at(cand)) > 3) continue;
-
-      if(!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
-         && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
+      if((!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
+         && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand)))
+	 && fabs(pfcand_eta()->at(cand))<3.
+	 && pfcand_fromPV()->at(cand)){
         p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
                             pfcand_phi()->at(cand), pfcand_energy()->at(cand));
-        cands.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
-      }else{
-        //Bad. We read nan for one of the momentum components. Filling with null 4-vector.
-        cands.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+        cands.push_back(PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E()));
       }
     }
 
@@ -715,7 +703,6 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
       mus_removed.at(mu) = false;
     }
   }
-
   //Remove candidates corresponding to isolated leptons
   vector<PseudoJet> pjs(pfcand_pt()->size());
   for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
@@ -729,9 +716,9 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                           pfcand_eta()->at(cand),
                           pfcand_phi()->at(cand),
                           pfcand_energy()->at(cand));
-      pjs.at(cand)=PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
+      pjs.at(cand) = PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E());
     }else{
-      pjs.at(cand)=PseudoJet(0.0, 0.0, 0.0, 0.0);
+      pjs.at(cand) = PseudoJet(0., 0., 0., 0.);
     }
   }
 
