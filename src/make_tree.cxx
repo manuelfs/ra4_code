@@ -51,7 +51,11 @@ int main(int argc, char *argv[]){
   
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
-  outFilename.ReplaceAll("/cfA","");
+
+  
+  //outFilename.ReplaceAll("/cfA",""); // line needed when running directly on the output of CfANtupler
+                                       // which produces files named cfA_XX.root
+
   int len(outFilename.Length());
   if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
   outFilename.Remove(0,outFilename.Last('/')+1);

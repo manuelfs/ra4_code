@@ -55,7 +55,7 @@ vector<int> phys_objects::GetMuons(bool doSignal) const {
 bool phys_objects::IsSignalMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
   return IsSignalIdMuon(imu)
-    && 0.12>GetMuonIsolation(imu)
+    && 0.2>GetMuonIsolation(imu)
     && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
@@ -140,11 +140,11 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
 
 float phys_objects::GetMuonIsolation(unsigned imu) const {
   if(imu >= mus_pt()->size()) return -999;
-  double sumEt = mus_pfIsolationR04_sumNeutralHadronEt()->at(imu)
-    + mus_pfIsolationR04_sumPhotonEt()->at(imu)
-    - 0.5*mus_pfIsolationR04_sumPUPt()->at(imu);
+  double sumEt = mus_pfIsolationR03_sumNeutralHadronEt()->at(imu)
+    + mus_pfIsolationR03_sumPhotonEt()->at(imu)
+    - 0.5*mus_pfIsolationR03_sumPUPt()->at(imu);
   if(sumEt<0.0) sumEt=0.0;
-  return (mus_pfIsolationR04_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
+  return (mus_pfIsolationR03_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
 }
 
 /////////////////////////////////////////////////////////////////////////

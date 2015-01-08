@@ -4,6 +4,10 @@ susy_cfa
 Analysis code for searches of Supersymmetry  based on cfA ntuples created in 
 CMSSW 7.X.X. 
 
+#### ROOT version
+This code requires RooStats, so we made a special ROOT installation that can be
+used issuing `source /cms5r0/ald77/root/bin/thisroot.sh`.
+
 #### Compiling the code
 Issue the following commands in one of the UCSB cmsx machines:
 

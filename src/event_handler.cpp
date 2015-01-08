@@ -225,14 +225,14 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
 
     ////////////////   TRUTH   ////////////////
-    for(size_t igen(0); igen<mc_doc_id()->size(); igen++) {
-      tree.mc_pt().push_back(mc_doc_pt()->at(igen));
-      tree.mc_phi().push_back(mc_doc_phi()->at(igen));
-      tree.mc_eta().push_back(mc_doc_eta()->at(igen));
-      tree.mc_id().push_back(mc_doc_id()->at(igen));
-      tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));
-      tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));
-    }
+    // for(size_t igen(0); igen<mc_doc_id()->size(); igen++) {
+    //   tree.mc_pt().push_back(mc_doc_pt()->at(igen));
+    //   tree.mc_phi().push_back(mc_doc_phi()->at(igen));
+    //   tree.mc_eta().push_back(mc_doc_eta()->at(igen));
+    //   tree.mc_id().push_back(mc_doc_id()->at(igen));
+    //   tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));
+    //   tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));
+    // }
     tree.mc_type() = TypeCode();
 
     ////////////////   Jets   ////////////////
@@ -289,73 +289,90 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
 }
 
-void event_handler::WriteFatJets(small_tree &tree){
 
-  ////////////////   Fat Jets   ////////////////
+void event_handler::WriteFatJets(small_tree &tree){
+  vector<PseudoJet> fjets_skinny_10(0);
+  vector<PseudoJet> fjets_skinny_20(0);
   vector<PseudoJet> fjets_skinny_30(0);
+  vector<PseudoJet> fjets_skinny_40(0);
   vector<PseudoJet> fjets_skinny_eta25(0);
+  vector<PseudoJet> fjets_skinny_r08(0);
   vector<PseudoJet> fjets_skinny_r10(0);
-  vector<PseudoJet> fjets_skinny_r15(0);
-  vector<PseudoJet> fjets_sig_clean_30(0);
-  vector<PseudoJet> fjets_skinny_0(0);
+  vector<PseudoJet> fjets_skinny_r14(0);
+  vector<PseudoJet> fjets_skinny_nolep_30(0);
+  vector<PseudoJet> fjets_skinny_siglep_30(0);
   vector<PseudoJet> fjets_cands(0);
   vector<PseudoJet> fjets_cands_trim(0);
 
-  vector<PseudoJet> skinny_jets_pt30, sig_clean_jets_pt30;
-  vector<PseudoJet> skinny_jets_pt0, skinny_jets_eta25;
+  vector<PseudoJet> skinny_jets_30, skinny_nolep_jets_pt30, skinny_siglep_jets_pt30, skinny_jets_eta25;
+  vector<PseudoJet> skinny_jets_10, skinny_jets_20, skinny_jets_40;
   for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
     if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
        || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
+
+    if(abs(jets_eta()->at(jet))>5) continue;
 
     const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
                             jets_pz()->at(jet), jets_energy()->at(jet));
     const TLorentzVector this_lv(jets_px()->at(jet), jets_py()->at(jet),
                                  jets_pz()->at(jet), jets_energy()->at(jet));
+    PseudoJet sig_lepton(0,0,0,0);
 
-    bool sig_add = true;
-    for(size_t iel = 0; iel<els_pt()->size() && sig_add; ++iel){
-      //Make sure skinny jet is not matched to veto electron
-      if(static_cast<size_t>(els_jet_ind()->at(iel)) != jet) continue;
-      if(!IsSignalElectron(iel)) continue;
-      const TLorentzVector p4el(els_px()->at(iel), els_py()->at(iel),
-                                els_pz()->at(iel), els_energy()->at(iel));
-      if(p4el.DeltaR(this_lv)<0.3){
-        sig_add=false;
+    // Finding signal leptons were used in the clustering of the jet
+    bool lep_in_jet = false;
+    for(size_t iel = 0; iel<els_pt()->size() && !lep_in_jet; ++iel){
+      if(static_cast<size_t>(els_jet_ind()->at(iel)) == jet && IsSignalElectron(iel)) {
+	lep_in_jet=true;
+	sig_lepton.reset(els_px()->at(iel), els_py()->at(iel),
+			 els_pz()->at(iel), els_energy()->at(iel));
       }
     }
-    for(size_t imu = 0; imu<mus_pt()->size() && sig_add; ++imu){
-      //Make sure skinny jet is not matched to veto muon
-      if(static_cast<size_t>(mus_jet_ind()->at(imu)) != jet) continue;
-      if(!IsSignalMuon(imu)) continue;
-      const TLorentzVector p4mu(mus_px()->at(imu), mus_py()->at(imu),
-                                mus_pz()->at(imu), mus_energy()->at(imu));
-      if(p4mu.DeltaR(this_lv)<0.3){
-        sig_add=false;
+    for(size_t imu = 0; imu<mus_pt()->size() && !lep_in_jet; ++imu){
+      if(static_cast<size_t>(mus_jet_ind()->at(imu)) == jet  && IsSignalMuon(imu)) {
+	lep_in_jet=true;
+	sig_lepton.reset(mus_px()->at(imu), mus_py()->at(imu),
+			 mus_pz()->at(imu), mus_energy()->at(imu));
       }
-    }
+    } // If both el and mu in jet, just add the mu. Come on, this shouldn't happen!
 
-    skinny_jets_pt0.push_back(this_pj);
-    if(this_pj.pt()>30.0) skinny_jets_pt30.push_back(this_pj);
-    if(this_pj.pt()>30.0 && this_pj.eta()<2.5) skinny_jets_eta25.push_back(this_pj);
-    if(sig_add && this_pj.pt()>30.0) sig_clean_jets_pt30.push_back(this_pj);
+    if(this_pj.pt()>10.0) skinny_jets_10.push_back(this_pj);
+    if(this_pj.pt()>20.0) skinny_jets_20.push_back(this_pj);
+    if(this_pj.pt()>30.0) skinny_jets_30.push_back(this_pj);
+    if(this_pj.pt()>40.0) skinny_jets_40.push_back(this_pj);
+    if(this_pj.pt()>30.0 && abs(this_pj.eta())<2.5) skinny_jets_eta25.push_back(this_pj);
+    if(!lep_in_jet) {
+      if(this_pj.pt()>30.0) {
+	skinny_nolep_jets_pt30.push_back(this_pj);
+	skinny_siglep_jets_pt30.push_back(this_pj);
+      } 
+    } else skinny_siglep_jets_pt30.push_back(sig_lepton);
   }
 
-  JetDefinition jet_def_10(antikt_algorithm, 1.0);
-  JetDefinition jet_def_12(antikt_algorithm, 1.2);
-  JetDefinition jet_def_15(antikt_algorithm, 1.5);
-  ClusterSequence cs_skinny_r10(skinny_jets_pt30, jet_def_10);
-  ClusterSequence cs_skinny_30(skinny_jets_pt30, jet_def_12);
-  ClusterSequence cs_skinny_r15(skinny_jets_pt30, jet_def_15);
-  ClusterSequence cs_sig_clean_30(sig_clean_jets_pt30, jet_def_12);
-  ClusterSequence cs_skinny_0(skinny_jets_pt0, jet_def_12);
-  ClusterSequence cs_skinny_eta25(skinny_jets_eta25, jet_def_12);
+  JetDefinition jet_def_r08(antikt_algorithm, 0.8);
+  JetDefinition jet_def_r10(antikt_algorithm, 1.0);
+  JetDefinition jet_def_r12(antikt_algorithm, 1.2);
+  JetDefinition jet_def_r14(antikt_algorithm, 1.4);
+  ClusterSequence cs_skinny_r08(skinny_jets_30, jet_def_r08);
+  ClusterSequence cs_skinny_r10(skinny_jets_30, jet_def_r10);
+  ClusterSequence cs_skinny_30(skinny_jets_30, jet_def_r12);
+  ClusterSequence cs_skinny_r14(skinny_jets_30, jet_def_r14);
+  ClusterSequence cs_skinny_nolep_30(skinny_nolep_jets_pt30, jet_def_r12);
+  ClusterSequence cs_skinny_siglep_30(skinny_siglep_jets_pt30, jet_def_r12);
+  ClusterSequence cs_skinny_10(skinny_jets_10, jet_def_r12);
+  ClusterSequence cs_skinny_20(skinny_jets_20, jet_def_r12);
+  ClusterSequence cs_skinny_40(skinny_jets_40, jet_def_r12);
+  ClusterSequence cs_skinny_eta25(skinny_jets_eta25, jet_def_r12);
 
   fjets_skinny_30 = sorted_by_pt(cs_skinny_30.inclusive_jets());
-  fjets_sig_clean_30 = sorted_by_pt(cs_sig_clean_30.inclusive_jets());
-  fjets_skinny_0 = sorted_by_pt(cs_skinny_0.inclusive_jets());
+  fjets_skinny_nolep_30 = sorted_by_pt(cs_skinny_nolep_30.inclusive_jets());
+  fjets_skinny_siglep_30 = sorted_by_pt(cs_skinny_siglep_30.inclusive_jets());
+  fjets_skinny_10 = sorted_by_pt(cs_skinny_10.inclusive_jets());
+  fjets_skinny_20 = sorted_by_pt(cs_skinny_20.inclusive_jets());
+  fjets_skinny_40 = sorted_by_pt(cs_skinny_40.inclusive_jets());
   fjets_skinny_eta25 = sorted_by_pt(cs_skinny_eta25.inclusive_jets());
+  fjets_skinny_r08 = sorted_by_pt(cs_skinny_r08.inclusive_jets());
   fjets_skinny_r10 = sorted_by_pt(cs_skinny_r10.inclusive_jets());
-  fjets_skinny_r15 = sorted_by_pt(cs_skinny_r15.inclusive_jets());
+  fjets_skinny_r14 = sorted_by_pt(cs_skinny_r14.inclusive_jets());
 
   tree.nfjets_30() = 0;
   tree.mj_30() = 0;
@@ -374,40 +391,97 @@ void event_handler::WriteFatJets(small_tree &tree){
       ++(tree.nfjets_30());
     }
   }
-  tree.nfjets_scln_30() = 0;
-  tree.mj_scln_30() = 0;
-  tree.fjets_scln_30_pt().resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_eta().resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_phi().resize(fjets_sig_clean_30.size());
-  tree.fjets_scln_30_m().resize(fjets_sig_clean_30.size());
-  for(size_t ipj = 0; ipj < fjets_sig_clean_30.size(); ++ipj){
-    const PseudoJet &pj = fjets_sig_clean_30.at(ipj);
-    tree.fjets_scln_30_pt().at(ipj)=pj.pt();
-    tree.fjets_scln_30_eta().at(ipj)=pj.eta();
-    tree.fjets_scln_30_phi().at(ipj)=pj.phi_std();
-    tree.fjets_scln_30_m().at(ipj)=pj.m();
+
+  tree.nfjets_nolep_30() = 0;
+  tree.mj_nolep_30() = 0;
+  tree.fjets_nolep_30_pt().resize(fjets_skinny_nolep_30.size());
+  tree.fjets_nolep_30_eta().resize(fjets_skinny_nolep_30.size());
+  tree.fjets_nolep_30_phi().resize(fjets_skinny_nolep_30.size());
+  tree.fjets_nolep_30_m().resize(fjets_skinny_nolep_30.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_nolep_30.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_nolep_30.at(ipj);
+    tree.fjets_nolep_30_pt().at(ipj)=pj.pt();
+    tree.fjets_nolep_30_eta().at(ipj)=pj.eta();
+    tree.fjets_nolep_30_phi().at(ipj)=pj.phi_std();
+    tree.fjets_nolep_30_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_scln_30() += pj.m();
-      ++(tree.nfjets_scln_30());
+      tree.mj_nolep_30() += pj.m();
+      ++(tree.nfjets_nolep_30());
     }
   }
-  tree.nfjets_0() = 0;
-  tree.mj_0() = 0;
-  tree.fjets_0_pt().resize(fjets_skinny_0.size());
-  tree.fjets_0_eta().resize(fjets_skinny_0.size());
-  tree.fjets_0_phi().resize(fjets_skinny_0.size());
-  tree.fjets_0_m().resize(fjets_skinny_0.size());
-  for(size_t ipj = 0; ipj < fjets_skinny_0.size(); ++ipj){
-    const PseudoJet &pj = fjets_skinny_0.at(ipj);
-    tree.fjets_0_pt().at(ipj)=pj.pt();
-    tree.fjets_0_eta().at(ipj)=pj.eta();
-    tree.fjets_0_phi().at(ipj)=pj.phi_std();
-    tree.fjets_0_m().at(ipj)=pj.m();
+
+  tree.nfjets_siglep_30() = 0;
+  tree.mj_siglep_30() = 0;
+  tree.fjets_siglep_30_pt().resize(fjets_skinny_siglep_30.size());
+  tree.fjets_siglep_30_eta().resize(fjets_skinny_siglep_30.size());
+  tree.fjets_siglep_30_phi().resize(fjets_skinny_siglep_30.size());
+  tree.fjets_siglep_30_m().resize(fjets_skinny_siglep_30.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_siglep_30.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_siglep_30.at(ipj);
+    tree.fjets_siglep_30_pt().at(ipj)=pj.pt();
+    tree.fjets_siglep_30_eta().at(ipj)=pj.eta();
+    tree.fjets_siglep_30_phi().at(ipj)=pj.phi_std();
+    tree.fjets_siglep_30_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_0() += pj.m();
-      ++(tree.nfjets_0());
+      tree.mj_siglep_30() += pj.m();
+      ++(tree.nfjets_siglep_30());
     }
   }
+
+  tree.nfjets_10() = 0;
+  tree.mj_10() = 0;
+  tree.fjets_10_pt().resize(fjets_skinny_10.size());
+  tree.fjets_10_eta().resize(fjets_skinny_10.size());
+  tree.fjets_10_phi().resize(fjets_skinny_10.size());
+  tree.fjets_10_m().resize(fjets_skinny_10.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_10.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_10.at(ipj);
+    tree.fjets_10_pt().at(ipj)=pj.pt();
+    tree.fjets_10_eta().at(ipj)=pj.eta();
+    tree.fjets_10_phi().at(ipj)=pj.phi_std();
+    tree.fjets_10_m().at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_10() += pj.m();
+      ++(tree.nfjets_10());
+    }
+  }
+
+  tree.nfjets_20() = 0;
+  tree.mj_20() = 0;
+  tree.fjets_20_pt().resize(fjets_skinny_20.size());
+  tree.fjets_20_eta().resize(fjets_skinny_20.size());
+  tree.fjets_20_phi().resize(fjets_skinny_20.size());
+  tree.fjets_20_m().resize(fjets_skinny_20.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_20.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_20.at(ipj);
+    tree.fjets_20_pt().at(ipj)=pj.pt();
+    tree.fjets_20_eta().at(ipj)=pj.eta();
+    tree.fjets_20_phi().at(ipj)=pj.phi_std();
+    tree.fjets_20_m().at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_20() += pj.m();
+      ++(tree.nfjets_20());
+    }
+  }
+
+  tree.nfjets_40() = 0;
+  tree.mj_40() = 0;
+  tree.fjets_40_pt().resize(fjets_skinny_40.size());
+  tree.fjets_40_eta().resize(fjets_skinny_40.size());
+  tree.fjets_40_phi().resize(fjets_skinny_40.size());
+  tree.fjets_40_m().resize(fjets_skinny_40.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_40.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_40.at(ipj);
+    tree.fjets_40_pt().at(ipj)=pj.pt();
+    tree.fjets_40_eta().at(ipj)=pj.eta();
+    tree.fjets_40_phi().at(ipj)=pj.phi_std();
+    tree.fjets_40_m().at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_40() += pj.m();
+      ++(tree.nfjets_40());
+    }
+  }
+
   tree.nfjets_eta25() = 0;
   tree.mj_eta25() = 0;
   tree.fjets_eta25_pt().resize(fjets_skinny_eta25.size());
@@ -425,6 +499,25 @@ void event_handler::WriteFatJets(small_tree &tree){
       ++(tree.nfjets_eta25());
     }
   }
+
+  tree.nfjets_r08() = 0;
+  tree.mj_r08() = 0;
+  tree.fjets_r08_pt().resize(fjets_skinny_r08.size());
+  tree.fjets_r08_eta().resize(fjets_skinny_r08.size());
+  tree.fjets_r08_phi().resize(fjets_skinny_r08.size());
+  tree.fjets_r08_m().resize(fjets_skinny_r08.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_r08.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_r08.at(ipj);
+    tree.fjets_r08_pt().at(ipj)=pj.pt();
+    tree.fjets_r08_eta().at(ipj)=pj.eta();
+    tree.fjets_r08_phi().at(ipj)=pj.phi_std();
+    tree.fjets_r08_m().at(ipj)=pj.m();
+    if(pj.pt()>50.0){
+      tree.mj_r08() += pj.m();
+      ++(tree.nfjets_r08());
+    }
+  }
+
   tree.nfjets_r10() = 0;
   tree.mj_r10() = 0;
   tree.fjets_r10_pt().resize(fjets_skinny_r10.size());
@@ -442,21 +535,21 @@ void event_handler::WriteFatJets(small_tree &tree){
       ++(tree.nfjets_r10());
     }
   }
-  tree.nfjets_r15() = 0;
-  tree.mj_r15() = 0;
-  tree.fjets_r15_pt().resize(fjets_skinny_r15.size());
-  tree.fjets_r15_eta().resize(fjets_skinny_r15.size());
-  tree.fjets_r15_phi().resize(fjets_skinny_r15.size());
-  tree.fjets_r15_m().resize(fjets_skinny_r15.size());
-  for(size_t ipj = 0; ipj < fjets_skinny_r15.size(); ++ipj){
-    const PseudoJet &pj = fjets_skinny_r15.at(ipj);
-    tree.fjets_r15_pt().at(ipj)=pj.pt();
-    tree.fjets_r15_eta().at(ipj)=pj.eta();
-    tree.fjets_r15_phi().at(ipj)=pj.phi_std();
-    tree.fjets_r15_m().at(ipj)=pj.m();
+  tree.nfjets_r14() = 0;
+  tree.mj_r14() = 0;
+  tree.fjets_r14_pt().resize(fjets_skinny_r14.size());
+  tree.fjets_r14_eta().resize(fjets_skinny_r14.size());
+  tree.fjets_r14_phi().resize(fjets_skinny_r14.size());
+  tree.fjets_r14_m().resize(fjets_skinny_r14.size());
+  for(size_t ipj = 0; ipj < fjets_skinny_r14.size(); ++ipj){
+    const PseudoJet &pj = fjets_skinny_r14.at(ipj);
+    tree.fjets_r14_pt().at(ipj)=pj.pt();
+    tree.fjets_r14_eta().at(ipj)=pj.eta();
+    tree.fjets_r14_phi().at(ipj)=pj.phi_std();
+    tree.fjets_r14_m().at(ipj)=pj.m();
     if(pj.pt()>50.0){
-      tree.mj_r15() += pj.m();
-      ++(tree.nfjets_r15());
+      tree.mj_r14() += pj.m();
+      ++(tree.nfjets_r14());
     }
   }
 
@@ -469,6 +562,9 @@ void event_handler::WriteFatJets(small_tree &tree){
     vector<PseudoJet> cands(pfcand_pt()->size());
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      if(pfcand_fromPV()->at(cand) == 0) continue; // This pfcand is associated with a PU vertex
+      if(abs(pfcand_eta()->at(cand)) > 3) continue; 
+
       if(!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
          && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
         p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
@@ -480,7 +576,7 @@ void event_handler::WriteFatJets(small_tree &tree){
       }
     }
 
-    ClusterSequence cs_cands(cands, jet_def_12);
+    ClusterSequence cs_cands(cands, jet_def_r12);
     fjets_cands = sorted_by_pt(cs_cands.inclusive_jets());
 
     vector<int> fj_owner = cs_cands.particle_jet_indices(fjets_cands);
@@ -544,6 +640,7 @@ void event_handler::WriteFatJets(small_tree &tree){
   } // If (skip_slow)
 
 }
+
 
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                               std::vector<float> &els_mindr,
