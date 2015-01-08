@@ -32,8 +32,10 @@ float dR(float eta1, float eta2, float phi1, float phi2);
 TString RoundNumber(double num, int decimals, double denom=1.);
 long double AddInQuadrature(long double x, long double y);
 long double GetMass(long double e, long double px, long double py, long double pz);
-long double GetMT(const long double m1, const long double px1, const long double py1,
-                  const long double m2, const long double px2, const long double py2);
+long double GetMT(long double m1, long double pt1, long double phi1,
+                  long double m2, long double pt2, long double phi2);
+long double GetMT(long double pt1, long double phi1,
+                  long double pt2, long double phi2);
 bool Contains(const std::string& text, const std::string& pattern);
 
 std::vector<std::string> Tokenize(const std::string& input,
@@ -57,5 +59,4 @@ std::string RemoveTrailingNewlines(std::string str);
 
 std::vector<double> LinearSpacing(size_t npts, double low, double high);
 
-double GetMTW(double lep_pt, double MET, double lep_phi, double MET_phi);
 #endif

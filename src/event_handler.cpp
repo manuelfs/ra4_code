@@ -1121,7 +1121,6 @@ float event_handler::GetMinMTWb(vector<int> good_jets, const double pt_cut, cons
     uint jet = good_jets[ijet];
     if (jets_pt()->at(jet)<pt_cut) continue;
     if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
-    float mT=GetMTWb(jets_pt()->at(jet), mets_et()->at(0), jets_phi()->at(jet), mets_phi()->at(0), use_W_mass);
     float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
                      0., jets_pt()->at(jet), jets_phi()->at(jet));
     if (mT<min_mT) min_mT=mT;

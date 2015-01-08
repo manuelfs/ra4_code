@@ -20,7 +20,7 @@ public:
   void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
   void WriteFatJets(small_tree &tree);
   void WriteTaus(small_tree &tree);
-  void WriteIsoTks(small_tree &tree);  
+  void WriteIsoTks(small_tree &tree);
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
                  std::vector<float> &mus_ptrel,
                  std::vector<float> &mus_mindr,
@@ -34,7 +34,6 @@ public:
   bool skip_slow;
 
   float GetMinMTWb(std::vector<int> good_jets, const double pt_cut, const double bTag_req, const bool use_W_mass) const;
-  float GetMTWb(const double b_pt, const double MET, const double b_phi, const double MET_phi, const bool use_W_mass) const;
 };
 
 #endif
