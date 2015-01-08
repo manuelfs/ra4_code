@@ -377,11 +377,12 @@ float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 bool phys_objects::PassPhys14TauID(const int itau, const bool againstEMu, const bool mt_cut) const {
   if (taus_pt()->at(itau) < 20.) return false;
   if (fabs(taus_eta()->at(itau)) > 2.3) //  cout << "pass eta" << endl;
-  if (!taus_byDecayModeFinding()->at(itau)) return false;
+    if (!taus_byDecayModeFinding()->at(itau)) return false;
   if (taus_chargedIsoPtSum()->at(itau) > 1.) return false;
   if (againstEMu && (!taus_againstMuonLoose3()->at(itau) || !taus_againstElectronLooseMVA5()->at(itau))) return false;
-  if (mt_cut && GetMTW(taus_pt()->at(itau), mets_et()->at(0), taus_phi()->at(itau), mets_phi()->at(0))>100) return false;
-  
+  if (mt_cut && GetMT(taus_pt()->at(itau), taus_phi()->at(itau),
+                      mets_et()->at(0), mets_phi()->at(0))>100) return false;
+
   return true;
 }
 
@@ -394,7 +395,8 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk, bool mt_cut) const{
     && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
     && (fabs(isotk_dzpv()->at(itrk))<0.05)
     && (fabs(isotk_eta()->at(itrk))<2.4)
-    && ( !mt_cut || GetMTW(isotk_pt()->at(itrk),mets_et()->at(0),isotk_phi()->at(itrk),mets_phi()->at(0))<100 ) ;
+    && ( !mt_cut || GetMT(isotk_pt()->at(itrk), isotk_phi()->at(itrk),
+                          mets_et()->at(0), mets_phi()->at(0))<100 ) ;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -489,12 +491,11 @@ int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, float &closest
     // Finding mindR with respect to partons from top or W or status 23
     for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
       if((abs(mc_doc_mother_id()->at(imc)) != 24 && abs(mc_doc_mother_id()->at(imc)) != 6 &&
-	 mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
+          mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
       float MCEta = mc_doc_eta()->at(imc); float MCPhi = mc_doc_phi()->at(imc);
       float deltaR = dR(RecEta,MCEta, RecPhi,MCPhi);
       if(deltaR < closest_deltaR) closest_deltaR = deltaR;
     }
-     
   } else {
     closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){
@@ -530,12 +531,11 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &clo
     // Finding mindR with respect to partons from top or W or status 23
     for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
       if((abs(mc_doc_mother_id()->at(imc)) != 24 && abs(mc_doc_mother_id()->at(imc)) != 6 &&
-	 mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
+          mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
       float MCEta = mc_doc_eta()->at(imc); float MCPhi = mc_doc_phi()->at(imc);
       float deltaR = dR(RecEta,MCEta, RecPhi,MCPhi);
       if(deltaR < closest_deltaR) closest_deltaR = deltaR;
     }
-     
   } else {
     closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){

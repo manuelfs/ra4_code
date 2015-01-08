@@ -6,11 +6,12 @@
 #include "utilities.hpp"
 #endif
 
+#include <cmath>
+
 #include <iostream>
 #include <string>
 #include <stdexcept>
 
-#include "TMath.h"
 #include "TString.h"
 #include "TSystemDirectory.h"
 #include "TSystemFile.h"
@@ -187,13 +188,15 @@ long double GetMass(long double e, long double px, long double py, long double p
   return fabs(e)*sqrt(1.0L-px*px-py*py-pz*pz);
 }
 
-long double GetMT(const long double m1, const long double px1, const long double py1,
-                  const long double m2, const long double px2, const long double py2){
-  const long double pt1 = AddInQuadrature(px1, py1);
-  const long double et1 = AddInQuadrature(m1, pt1);
-  const long double pt2 = AddInQuadrature(px2, py2);
-  const long double et2 = AddInQuadrature(m2, pt2);
-  return sqrt(m1*m1+m2*m2+2.0L*(et1*et2-px1*px2-py1*py2));
+long double GetMT(long double m1, long double pt1, long double phi1,
+                  long double m2, long double pt2, long double phi2){
+  return sqrt(m1*m1+m2*m2+2.L*(sqrt((m1*m1+pt1*pt1)*(m2*m2+pt2*pt2))-pt1*pt2*cos(phi2-phi1)));
+}
+
+long double GetMT(long double pt1, long double phi1,
+                  long double pt2, long double phi2){
+  //Faster calculation in massless case
+  return sqrt(2.L*pt1*pt2*(1.L-cos(phi2-phi1)));
 }
 
 bool Contains(const string& text, const string& pattern){
@@ -258,8 +261,4 @@ vector<double> LinearSpacing(size_t npts, double low, double high){
     }
   }
   return pts;
-}
-
-double GetMTW(double lep_pt, double MET, double lep_phi, double MET_phi) {
-  return sqrt(2*lep_pt*MET*(1-cos(DeltaPhi(lep_phi,MET_phi))));
 }

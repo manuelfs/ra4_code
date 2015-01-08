@@ -85,7 +85,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.met_phi() = mets_phi()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50.0, 2.4, 30.0, 2.4, true);
 
-
     ////////////////   Leptons   ////////////////
     bool fromW(false);
     int mcID, mcmomID;
@@ -262,10 +261,8 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     }
     SumDeltaPhiVars(tree, good_jets);
 
-    tree.min_mt_bmet() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], false); 
-    tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], true); 
-
-    
+    tree.min_mt_bmet() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], false);
+    tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], true);
 
     ////////////////   Fat Jets   ////////////////
     WriteFatJets(tree);
@@ -306,7 +303,7 @@ void event_handler::WriteTaus(small_tree &tree){
   for (uint itau(0); itau<taus_pt()->size(); itau++) {
     if (taus_pt()->at(itau)<20) continue;
     if (fabs(taus_eta()->at(itau))>2.3) continue;
-    if (!taus_byDecayModeFinding()->at(itau)) continue; 
+    if (!taus_byDecayModeFinding()->at(itau)) continue;
 
     bool againstEMu = taus_againstMuonLoose3()->at(itau)&&taus_againstElectronLooseMVA5()->at(itau);
     tree.taus_pt().push_back(taus_pt()->at(itau));
@@ -314,7 +311,8 @@ void event_handler::WriteTaus(small_tree &tree){
     tree.taus_eta().push_back(taus_eta()->at(itau));
     tree.taus_phi().push_back(taus_phi()->at(itau));
     tree.taus_chargedIsoPtSum().push_back(taus_chargedIsoPtSum()->at(itau));
-    float mt_tau = GetMTW(taus_pt()->at(itau), mets_et()->at(0), taus_phi()->at(itau), mets_phi()->at(0));
+    float mt_tau = GetMT(taus_pt()->at(itau), taus_phi()->at(itau),
+                         mets_et()->at(0), mets_phi()->at(0));
     tree.taus_mt().push_back(mt_tau);
     tree.taus_n_pfcands().push_back(taus_n_pfcands()->at(itau));
     tree.taus_decayMode().push_back(taus_decayMode()->at(itau));
@@ -326,7 +324,6 @@ void event_handler::WriteTaus(small_tree &tree){
       if (againstEMu && mt_tau<100) tree.ntaus_againstEMu_mt100()++;
     }
   }
-  
 }
 
 void event_handler::WriteIsoTks(small_tree &tree){
@@ -337,14 +334,15 @@ void event_handler::WriteIsoTks(small_tree &tree){
   for (uint itrk(0); itrk<isotk_pt()->size(); itrk++) {
     tree.isotk_pt().push_back(isotk_pt()->at(itrk));
     tree.isotk_iso().push_back(isotk_iso()->at(itrk));
-    float mt_itrk = GetMTW(isotk_pt()->at(itrk), mets_et()->at(0), isotk_phi()->at(itrk), mets_phi()->at(0));
+    float mt_itrk = GetMT(isotk_pt()->at(itrk), isotk_phi()->at(itrk),
+                          mets_et()->at(0), mets_phi()->at(0));
     tree.isotk_mt().push_back(mt_itrk);
     tree.isotk_eta().push_back(isotk_eta()->at(itrk));
     tree.isotk_dzpv().push_back(isotk_dzpv()->at(itrk));
     if (!(isotk_pt()->at(itrk)>=10.
-	  && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
-	  && (fabs(isotk_dzpv()->at(itrk))<0.05)
-	  && (fabs(isotk_eta()->at(itrk))<2.4))) continue;
+          && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
+          && (fabs(isotk_dzpv()->at(itrk))<0.05)
+          && (fabs(isotk_eta()->at(itrk))<2.4))) continue;
     tree.nisotk10()++;
     if (mt_itrk<100) tree.nisotk10_mt100()++;
     if (isotk_pt()->at(itrk)>15) {
@@ -627,9 +625,9 @@ void event_handler::WriteFatJets(small_tree &tree){
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
       if((!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
-         && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand)))
-	 && fabs(pfcand_eta()->at(cand))<3.
-	 && pfcand_fromPV()->at(cand)){
+          && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand)))
+         && fabs(pfcand_eta()->at(cand))<3.
+         && pfcand_fromPV()->at(cand)){
         p4cand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
                             pfcand_phi()->at(cand), pfcand_energy()->at(cand));
         cands.push_back(PseudoJet(p4cand.Px(), p4cand.Py(), p4cand.Pz(), p4cand.E()));
@@ -700,7 +698,6 @@ void event_handler::WriteFatJets(small_tree &tree){
   } // If (skip_slow)
 
 }
-
 
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                               std::vector<float> &els_mindr,
@@ -1125,14 +1122,10 @@ float event_handler::GetMinMTWb(vector<int> good_jets, const double pt_cut, cons
     if (jets_pt()->at(jet)<pt_cut) continue;
     if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
     float mT=GetMTWb(jets_pt()->at(jet), mets_et()->at(0), jets_phi()->at(jet), mets_phi()->at(0), use_W_mass);
+    float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
+                     0., jets_pt()->at(jet), jets_phi()->at(jet));
     if (mT<min_mT) min_mT=mT;
   }
   if (min_mT==fltmax) return bad_val;
   else return min_mT;
-}
-
-float event_handler::GetMTWb(const double b_pt, const double MET, const double b_phi, const double MET_phi, const bool use_W_mass) const{
-  double W_mass=80.385;
-  if (use_W_mass) return TMath::Sqrt(W_mass*W_mass+2*b_pt*MET*(TMath::Sqrt(1+(W_mass/MET)*(W_mass/MET))-cos(DeltaPhi(b_phi,MET_phi)))); 
-  else return TMath::Sqrt(2*b_pt*MET*(1-cos(DeltaPhi(b_phi,MET_phi))));
 }
