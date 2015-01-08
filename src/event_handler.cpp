@@ -307,7 +307,10 @@ void event_handler::WriteTaus(small_tree &tree){
     if (taus_pt()->at(itau)<20) continue;
     if (fabs(taus_eta()->at(itau))>2.3) continue;
     if (!taus_byDecayModeFinding()->at(itau)) continue; 
+
+    bool againstEMu = taus_againstMuonLoose3()->at(itau)&&taus_againstElectronLooseMVA5()->at(itau);
     tree.taus_pt().push_back(taus_pt()->at(itau));
+    tree.taus_againstEMu().push_back(againstEMu);
     tree.taus_eta().push_back(taus_eta()->at(itau));
     tree.taus_phi().push_back(taus_phi()->at(itau));
     tree.taus_chargedIsoPtSum().push_back(taus_chargedIsoPtSum()->at(itau));
@@ -319,8 +322,8 @@ void event_handler::WriteTaus(small_tree &tree){
     if (taus_chargedIsoPtSum()->at(itau) < 1.) {
       tree.ntaus()++;
       if (mt_tau<100) tree.ntaus_mt100()++;
-      if (taus_againstMuonLoose3()->at(itau)&&taus_againstElectronLooseMVA5()->at(itau)) tree.ntaus_againstEMu()++;
-      if (taus_againstMuonLoose3()->at(itau)&&taus_againstElectronLooseMVA5()->at(itau)&&mt_tau<100) tree.ntaus_againstEMu_mt100()++;
+      if (againstEMu) tree.ntaus_againstEMu()++;
+      if (againstEMu && mt_tau<100) tree.ntaus_againstEMu_mt100()++;
     }
   }
   
@@ -400,7 +403,7 @@ void event_handler::WriteFatJets(small_tree &tree){
     if(this_pj.pt()>20.0) skinny_jets_20.push_back(this_pj);
     if(this_pj.pt()>30.0) skinny_jets_30.push_back(this_pj);
     if(this_pj.pt()>40.0) skinny_jets_40.push_back(this_pj);
-    if(this_pj.pt()>30.0 && abs(this_pj.eta())<2.5) skinny_jets_eta25.push_back(this_pj);
+    if(this_pj.pt()>30.0 && fabs(this_pj.eta())<2.5) skinny_jets_eta25.push_back(this_pj);
     if(!lep_in_jet) {
       if(this_pj.pt()>30.0) {
         skinny_nolep_jets_pt30.push_back(this_pj);
@@ -907,9 +910,11 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   riso.push_back(0.3);
   riso.push_back(0.4);
   riso.push_back(10./lep_pt);
-  riso.push_back(max(0.05,min(0.3,10./lep_pt)));
-  riso.push_back(max(0.05,min(0.3,15./lep_pt)));
+  riso.push_back(max(0.05,min(0.2,10./lep_pt)));
+  riso.push_back(max(0.05,min(0.2,15./lep_pt)));
   riso.push_back(15./lep_pt);
+  riso.push_back(0.1);
+  riso.push_back(0.15);
   size_t nriso = riso.size();
   double riso_max = max(0.4,10./lep_pt);
 
@@ -970,11 +975,14 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   if (isElectron){
     tree.els_reliso_r02().push_back(iso[0]);
     tree.els_reliso_r03().push_back(iso[1]);
+    tree.els_reliso_r04().push_back(iso[2]);
     tree.els_miniso_10_ch().push_back(iso_ch[3]/lep_pt);
     tree.els_miniso_tr10().push_back(iso[4]);
     tree.els_miniso_tr15().push_back(iso[5]);
     tree.els_miniso_tr15_ch().push_back(iso_ch[5]/lep_pt);
     tree.els_miniso_15().push_back(iso[6]);
+    tree.els_reliso_r01().push_back(iso[7]);
+    tree.els_reliso_r015().push_back(iso[8]);
   } else {
     tree.mus_reliso_r02().push_back(iso[0]);
     tree.mus_reliso_r03().push_back(iso[1]);
@@ -984,6 +992,8 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     tree.mus_miniso_tr15().push_back(iso[5]);
     tree.mus_miniso_tr15_ch().push_back(iso_ch[5]/lep_pt);
     tree.mus_miniso_15().push_back(iso[6]);
+    tree.mus_reliso_r01().push_back(iso[7]);
+    tree.mus_reliso_r015().push_back(iso[8]);
   }
 
   return;

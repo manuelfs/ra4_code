@@ -474,17 +474,27 @@ bool phys_objects::IsBasicJet(unsigned ijet) const{
 int phys_objects::GetTrueMuon(int index, int &momID, bool &fromW, float &closest_deltaR) const {
   if(index < 0 || index >= static_cast<int>(mus_eta()->size())) return -1;
 
-  closest_deltaR = 9999.;
+  closest_deltaR = 9999.; // Old deltaR
   int closest_imc = -1, idLepton = 0;
   float RecPt = mus_pt()->at(index), RecEta = mus_eta()->at(index), RecPhi = mus_phi()->at(index);
   closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::mu_minus);
 
+  closest_deltaR = 9999.;
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
                    mc_doc_grandmother_id()->at(closest_imc),
                    mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
+    // Finding mindR with respect to partons from top or W or status 23
+    for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
+      if((abs(mc_doc_mother_id()->at(imc)) != 24 && abs(mc_doc_mother_id()->at(imc)) != 6 &&
+	 mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
+      float MCEta = mc_doc_eta()->at(imc); float MCPhi = mc_doc_phi()->at(imc);
+      float deltaR = dR(RecEta,MCEta, RecPhi,MCPhi);
+      if(deltaR < closest_deltaR) closest_deltaR = deltaR;
+    }
+     
   } else {
     closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){
@@ -510,12 +520,22 @@ int phys_objects::GetTrueElectron(int index, int &momID, bool &fromW, float &clo
   float RecPt = els_pt()->at(index), RecEta = els_eta()->at(index), RecPhi = els_phi()->at(index);
   closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, pdtlund::e_minus);
 
+  closest_deltaR = 9999.;
   if(closest_imc >= 0){
     idLepton = static_cast<int>(mc_doc_id()->at(closest_imc));
     momID = GetMom(mc_doc_id()->at(closest_imc), mc_doc_mother_id()->at(closest_imc),
                    mc_doc_grandmother_id()->at(closest_imc),
                    mc_doc_ggrandmother_id()->at(closest_imc),
                    fromW);
+    // Finding mindR with respect to partons from top or W or status 23
+    for(unsigned imc=0; imc < mc_doc_id()->size(); imc++){
+      if((abs(mc_doc_mother_id()->at(imc)) != 24 && abs(mc_doc_mother_id()->at(imc)) != 6 &&
+	 mc_doc_status()->at(imc) != 23) || abs(mc_doc_id()->at(imc)) > 5) continue;
+      float MCEta = mc_doc_eta()->at(imc); float MCPhi = mc_doc_phi()->at(imc);
+      float deltaR = dR(RecEta,MCEta, RecPhi,MCPhi);
+      if(deltaR < closest_deltaR) closest_deltaR = deltaR;
+    }
+     
   } else {
     closest_imc = GetTrueParticle(RecPt, RecEta, RecPhi, closest_deltaR, 0);
     if(closest_imc >= 0){

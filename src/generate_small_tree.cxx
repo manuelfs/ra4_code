@@ -46,6 +46,8 @@ int main(){
   variables.push_back("std::vector<float> mus_reliso_r04"); // recomputed default
   variables.push_back("std::vector<float> mus_reliso_r03"); // R_iso = 0.3
   variables.push_back("std::vector<float> mus_reliso_r02"); // R_iso = 0.2
+  variables.push_back("std::vector<float> mus_reliso_r01"); // R_iso = 0.1
+  variables.push_back("std::vector<float> mus_reliso_r015"); // R_iso = 0.15
   variables.push_back("std::vector<float> mus_miniso_10_ch"); // R_iso = 10./pT, charged PF only
   variables.push_back("std::vector<float> mus_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> mus_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
@@ -74,8 +76,11 @@ int main(){
   variables.push_back("std::vector<bool> els_sigid");
   variables.push_back("std::vector<bool> els_ispf");
   variables.push_back("std::vector<float> els_reliso");
+  variables.push_back("std::vector<float> els_reliso_r04"); // R_iso = 0.4
   variables.push_back("std::vector<float> els_reliso_r03"); // recomputed default
   variables.push_back("std::vector<float> els_reliso_r02"); // R_iso = 0.2
+  variables.push_back("std::vector<float> els_reliso_r01"); // R_iso = 0.1
+  variables.push_back("std::vector<float> els_reliso_r015"); // R_iso = 0.15
   variables.push_back("std::vector<float> els_miniso_10_ch"); // R_iso = 10./pT, charged PF only
   variables.push_back("std::vector<float> els_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> els_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
@@ -101,6 +106,7 @@ int main(){
   variables.push_back("int ntaus_againstEMu");
   variables.push_back("int ntaus_againstEMu_mt100");
   variables.push_back("std::vector<float> taus_pt");
+  variables.push_back("std::vector<bool> taus_againstEMu");
   variables.push_back("std::vector<float> taus_eta");
   variables.push_back("std::vector<float> taus_phi");
   variables.push_back("std::vector<float> taus_chargedIsoPtSum");
