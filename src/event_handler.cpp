@@ -60,12 +60,12 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   const float luminosity = 1000; // 1 fb^-1
   TLorentzVector lepmax_p4;
 
-  Timer timer(Nentries);
+  Timer timer(Nentries, 1.);
   timer.Start();
   for(int entry(0); entry < Nentries; entry++) {
-    if(entry%1000==0 && entry!=0){
+    /*if(entry%1000==0 && entry!=0){
       timer.PrintRemainingTime();
-    }
+      }*/
     timer.Iterate();
     GetEntry(entry);
 
@@ -289,7 +289,6 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
   if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
 }
 
-
 void event_handler::WriteFatJets(small_tree &tree){
   vector<PseudoJet> fjets_skinny_10(0);
   vector<PseudoJet> fjets_skinny_20(0);
@@ -322,16 +321,16 @@ void event_handler::WriteFatJets(small_tree &tree){
     bool lep_in_jet = false;
     for(size_t iel = 0; iel<els_pt()->size() && !lep_in_jet; ++iel){
       if(static_cast<size_t>(els_jet_ind()->at(iel)) == jet && IsSignalElectron(iel)) {
-	lep_in_jet=true;
-	sig_lepton.reset(els_px()->at(iel), els_py()->at(iel),
-			 els_pz()->at(iel), els_energy()->at(iel));
+        lep_in_jet=true;
+        sig_lepton.reset(els_px()->at(iel), els_py()->at(iel),
+                         els_pz()->at(iel), els_energy()->at(iel));
       }
     }
     for(size_t imu = 0; imu<mus_pt()->size() && !lep_in_jet; ++imu){
       if(static_cast<size_t>(mus_jet_ind()->at(imu)) == jet  && IsSignalMuon(imu)) {
-	lep_in_jet=true;
-	sig_lepton.reset(mus_px()->at(imu), mus_py()->at(imu),
-			 mus_pz()->at(imu), mus_energy()->at(imu));
+        lep_in_jet=true;
+        sig_lepton.reset(mus_px()->at(imu), mus_py()->at(imu),
+                         mus_pz()->at(imu), mus_energy()->at(imu));
       }
     } // If both el and mu in jet, just add the mu. Come on, this shouldn't happen!
 
@@ -342,9 +341,9 @@ void event_handler::WriteFatJets(small_tree &tree){
     if(this_pj.pt()>30.0 && abs(this_pj.eta())<2.5) skinny_jets_eta25.push_back(this_pj);
     if(!lep_in_jet) {
       if(this_pj.pt()>30.0) {
-	skinny_nolep_jets_pt30.push_back(this_pj);
-	skinny_siglep_jets_pt30.push_back(this_pj);
-      } 
+        skinny_nolep_jets_pt30.push_back(this_pj);
+        skinny_siglep_jets_pt30.push_back(this_pj);
+      }
     } else skinny_siglep_jets_pt30.push_back(sig_lepton);
   }
 
@@ -563,7 +562,7 @@ void event_handler::WriteFatJets(small_tree &tree){
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
       if(pfcand_fromPV()->at(cand) == 0) continue; // This pfcand is associated with a PU vertex
-      if(abs(pfcand_eta()->at(cand)) > 3) continue; 
+      if(abs(pfcand_eta()->at(cand)) > 3) continue;
 
       if(!is_nan(pfcand_pt()->at(cand)) && !is_nan(pfcand_eta()->at(cand))
          && !is_nan(pfcand_phi()->at(cand)) && !is_nan(pfcand_energy()->at(cand))){
@@ -640,7 +639,6 @@ void event_handler::WriteFatJets(small_tree &tree){
   } // If (skip_slow)
 
 }
-
 
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                               std::vector<float> &els_mindr,

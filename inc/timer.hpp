@@ -5,15 +5,22 @@
 
 class Timer{
 public:
-  Timer(const unsigned long=0);
+  explicit Timer(unsigned long num_its = 0, double auto_print = 0.);
+
+  void SetAutoPrint(double auto_print);
+  void SetNumIterations(unsigned long num_its);
+
   void Start();
-  void SetNumIterations(const unsigned long);
   void Iterate();
-  void PrintRemainingTime() const;
+
   double GetRemainingTime() const;
+  void PrintRemainingTime() const;
+
 private:
-  time_t startTime;
-  unsigned long numIts, curIts;
+  time_t start_time_;
+  mutable time_t last_print_;
+  unsigned long num_its_, cur_its_;
+  double auto_print_;
 };
 
 #endif
