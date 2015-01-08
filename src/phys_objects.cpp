@@ -372,14 +372,29 @@ float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
 }
 
 /////////////////////////////////////////////////////////////////////////
+/////////////////////////////////  TAUS  //////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+bool phys_objects::PassPhys14TauID(const int itau, const bool againstEMu, const bool mt_cut) const {
+  if (taus_pt()->at(itau) < 20.) return false;
+  if (fabs(taus_eta()->at(itau)) > 2.3) //  cout << "pass eta" << endl;
+  if (!taus_byDecayModeFinding()->at(itau)) return false;
+  if (taus_chargedIsoPtSum()->at(itau) > 1.) return false;
+  if (againstEMu && (!taus_againstMuonLoose3()->at(itau) || !taus_againstElectronLooseMVA5()->at(itau))) return false;
+  if (mt_cut && GetMTW(taus_pt()->at(itau), mets_et()->at(0), taus_phi()->at(itau), mets_phi()->at(0))>100) return false;
+  
+  return true;
+}
+
+/////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  TRACKS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-bool phys_objects::IsGoodIsoTrack(unsigned itrk) const{
+bool phys_objects::IsGoodIsoTrack(unsigned itrk, bool mt_cut) const{
   if(itrk>=isotk_pt()->size()) return false;
-  return isotk_pt()->at(itrk)>=MinTrackPt
+  return isotk_pt()->at(itrk)>=15.
     && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
-    && (fabs(isotk_dzpv()->at(itrk))<0.1)
-    && (fabs(isotk_eta()->at(itrk))<2.4);
+    && (fabs(isotk_dzpv()->at(itrk))<0.05)
+    && (fabs(isotk_eta()->at(itrk))<2.4)
+    && ( !mt_cut || GetMTW(isotk_pt()->at(itrk),mets_et()->at(0),isotk_phi()->at(itrk),mets_phi()->at(0))<100 ) ;
 }
 
 /////////////////////////////////////////////////////////////////////////

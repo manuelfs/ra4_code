@@ -259,3 +259,7 @@ vector<double> LinearSpacing(size_t npts, double low, double high){
   }
   return pts;
 }
+
+double GetMTW(double lep_pt, double MET, double lep_phi, double MET_phi) {
+  return sqrt(2*lep_pt*MET*(1-cos(DeltaPhi(lep_phi,MET_phi))));
+}

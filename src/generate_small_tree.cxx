@@ -30,6 +30,8 @@ int main(){
   variables.push_back("float mt");
   variables.push_back("float dphi_wlep");
   variables.push_back("float mindphin_metjet");
+  variables.push_back("float min_mt_bmet");
+  variables.push_back("float min_mt_bmet_with_w_mass");
 
   //////////////////   Leptons   ////////////////
   variables.push_back("int nleps");
@@ -92,6 +94,31 @@ int main(){
   variables.push_back("std::vector<int> els_tru_momid");
   variables.push_back("std::vector<bool> els_tru_tm");
   variables.push_back("std::vector<int> els_charge");
+
+    ///////////////////   Taus   //////////////////
+  variables.push_back("int ntaus");
+  variables.push_back("int ntaus_mt100");
+  variables.push_back("int ntaus_againstEMu");
+  variables.push_back("int ntaus_againstEMu_mt100");
+  variables.push_back("std::vector<float> taus_pt");
+  variables.push_back("std::vector<float> taus_eta");
+  variables.push_back("std::vector<float> taus_phi");
+  variables.push_back("std::vector<float> taus_chargedIsoPtSum");
+  variables.push_back("std::vector<float> taus_mt");
+  variables.push_back("std::vector<int> taus_n_pfcands");
+  variables.push_back("std::vector<int> taus_decayMode");
+  variables.push_back("std::vector<float> taus_CombinedIsolationDeltaBetaCorrRaw3Hits");
+
+  ///////////////////   Isolated tracks   //////////////////
+  variables.push_back("int nisotk10");
+  variables.push_back("int nisotk15");
+  variables.push_back("int nisotk10_mt100");
+  variables.push_back("int nisotk15_mt100");
+  variables.push_back("std::vector<float> isotk_pt");
+  variables.push_back("std::vector<float> isotk_iso");
+  variables.push_back("std::vector<float> isotk_mt");
+  variables.push_back("std::vector<float> isotk_eta");
+  variables.push_back("std::vector<float> isotk_dzpv");
 
   ///////////////////   Jets   //////////////////
   variables.push_back("int njets");

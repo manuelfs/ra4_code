@@ -58,8 +58,10 @@ public:
                     bool &fromW);
   void GetBestLepton(bool &is_muon, size_t &index);
 
+  // Taus
+  bool PassPhys14TauID(const int itau, const bool againstEMu, const bool mt_cut) const;
   // Tracks
-  bool IsGoodIsoTrack(unsigned itrk) const;
+  bool IsGoodIsoTrack(unsigned itrk, bool mt_cut) const;
 
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,

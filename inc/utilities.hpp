@@ -57,4 +57,5 @@ std::string RemoveTrailingNewlines(std::string str);
 
 std::vector<double> LinearSpacing(size_t npts, double low, double high);
 
+double GetMTW(double lep_pt, double MET, double lep_phi, double MET_phi);
 #endif
