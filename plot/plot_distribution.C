@@ -50,17 +50,26 @@ public:
 };
 
 void plot_distribution(TString luminosity="5") { 
-  styles style("Standard"); style.setDefaultStyle();
+  styles style("1Dtitle"); style.setDefaultStyle();
   vector<hfeats> vars;
   TCanvas can;
 
   // Reading ntuples
   vector<TChain *> chain;
   vector<sfeats> Samples; 
-  Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "els_tru_tm&&els_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "mus_tru_tm&&mus_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100)", 4, 1, "els_tru_tm&&els_sigid"));
-  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100)", 4, 1, "mus_tru_tm&&mus_sigid"));
+  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100) truth-matched", kBlue+2, 1, "mus_tru_tm&&mus_sigid"));
+  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100) non-truth-matched", kRed-3, 1, "!mus_tru_tm&&mus_sigid"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt truth-matched", 4, 1, "mus_tru_tm&&mus_sigid"));
+  Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt non-truth-matched", kRed, 1, "!mus_tru_tm&&mus_sigid"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt truth-matched", kGreen+2, 1, "mus_tru_tm&&mus_sigid"));
+  Samples.push_back(sfeats("archive/ra4skim/*TT*", "tt non-truth-matched", kRed, 1, "!mus_tru_tm&&mus_sigid"));
+
+
+  // Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "els_tru_tm&&els_sigid"));
+  // Samples.push_back(sfeats("archive/ra4skim/*T2tt*850_*PU20*", "T2tt(850,100)", 2, 1, "mus_tru_tm&&mus_sigid"));
+  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU20*", "T1tttt(1500,100) PU20", 8, 1, "1"));
+  // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1500_*PU40*", "T1tttt(1500,100) PU40", 4, 1, "1"));
+  // Samples.push_back(sfeats("archive/ra4skim/*TT_*", "t#bar{t}, 1 l", 2,1,"1"));
 
   // Samples.push_back(sfeats("archive/ra4skim/*T1tttt*1200_*", "T1tttt(1200,800)", 28));
   // Samples.push_back(sfeats("archive/ra4skim/*QCD*", "QCD", 4));
@@ -77,13 +86,19 @@ void plot_distribution(TString luminosity="5") {
   vector<int> t1tttt;
   t1tttt.push_back(0);
   t1tttt.push_back(2);
+  t1tttt.push_back(3);
+  // t1tttt.push_back(3);
 
   vector<int> sigmus;
   sigmus.push_back(1);
   sigmus.push_back(3);
 
-  vars.push_back(hfeats("Max$(els_pt*(els_tru_tm&&els_sigid&&els_pt>20))",40,0,400, t1tttt, "Electron p_{T} (GeV)","ht>750&&met>250"));
-  vars.push_back(hfeats("Max$(mus_pt*(mus_tru_tm&&mus_sigid&&mus_pt>20))",40,0,400, sigmus, "Muon p_{T} (GeV)","ht>750&&met>250"));
+  vars.push_back(hfeats("mus_ptrel_0",40,0,40, t1tttt, "Muon p^{rel}_{T} (GeV)","ht>750&&met>200"));
+  vars.push_back(hfeats("mus_ptrel_0",40,0,40, t1tttt, "Muon p^{rel}_{T} (GeV)","ht>750&&met>200&&mus_reliso>0.4"));
+  vars.push_back(hfeats("mus_ptrel_0",40,0,40, t1tttt, "Muon p^{rel}_{T} (GeV)","ht>750&&met>200&&mus_miniso_tr15>0.4"));
+  vars.push_back(hfeats("mus_pt",50,0,400, t1tttt, "Muon p_{T} (GeV)","ht>750&&met>200"));
+  vars.push_back(hfeats("mus_reliso",40,0,2, t1tttt, "Muon relative isolation (R=0.4)","ht>750&&met>200"));
+  vars.push_back(hfeats("min(mus_reliso_r02,mus_miniso_tr15)",40,0,2, t1tttt, "Muon mini isolation (0.05<R<0.2)","ht>750&&met>200"));
 
   // vector<int> allsamples;
   // allsamples.push_back(1); //(1500,100)
@@ -143,10 +158,10 @@ void plot_distribution(TString luminosity="5") {
   //vars.push_back(hfeats("mt",40,0,400, bkgsamples, "m_{T} (GeV)","nleps==1&&ht>750&&met>350&&nbl==0&&njets>=4"));
 
   float minLog = 0.04, maxLog = 10;
-  double legX = 0.5, legY = 0.92, legSingle = 0.055;
+  double legX = 0.35, legY = 0.87, legSingle = 0.075;
   double legW = 0.12, legH = legSingle*vars[0].samples.size();
   TLegend leg(legX, legY-legH, legX+legW, legY);
-  leg.SetTextSize(0.048); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
+  leg.SetTextSize(0.07); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
   leg.SetTextFont(132);
 
   TLine line; line.SetLineColor(28); line.SetLineWidth(4); line.SetLineStyle(2);
@@ -160,6 +175,8 @@ void plot_distribution(TString luminosity="5") {
     title = vars[var].cuts; if(title=="1") title = "";
     title.ReplaceAll("nvmus==1&&nmus==1&&nvels==0","1 #mu");
     title.ReplaceAll("els_pt","p^{e}_{T}");title.ReplaceAll("mus_pt","p^{#mu}_{T}");
+    title.ReplaceAll("mus_reliso","RelIso"); title.ReplaceAll("els_reliso","RelIso");
+    title.ReplaceAll("mus_miniso_tr15","MiniIso"); title.ReplaceAll("els_miniso_tr15","MiniIso");
     title.ReplaceAll("njets","n_{jets}");title.ReplaceAll("abs(lep_id)==13&&","");
     title.ReplaceAll(">=", " #geq "); title.ReplaceAll(">", " > "); title.ReplaceAll("&&", ", "); 
     title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}");  title.ReplaceAll("mt", "m_{T}"); 

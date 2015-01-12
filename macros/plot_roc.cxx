@@ -29,9 +29,13 @@ int main(){
   vector<TString> v_t1pu40;
   v_t1pu40.push_back("archive/ra4skim/*T1tttt*1500_*PU40*");
   vector<TString> v_tt;
-  v_tt.push_back("archive/ra4skim/*TT*batch5*");
+  v_tt.push_back("archive/ra4skim/*TT*");
 
   ////////////////////////// MUONS /////////////////////////
+  vector<sample_class> mus_tt; 
+  mus_tt.push_back(sample_class("tt truth-matched prompt #mu", v_tt, "mus_tru_tm&&mus_sigid"));
+  mus_tt.push_back(sample_class("tt non-truth-matched #mu", v_tt, "!mus_tru_tm&&mus_sigid"));
+
   vector<sample_class> mus_tt_t1; 
   mus_tt_t1.push_back(sample_class("T1tttt(1500,100) truth-matched prompt #mu", v_t1, "mus_tru_tm&&mus_sigid"));
   mus_tt_t1.push_back(sample_class("tt non-truth-matched #mu", v_tt, "!mus_tru_tm&&mus_sigid"));
@@ -53,6 +57,10 @@ int main(){
   mus_t1pu40.push_back(sample_class("T1tttt(1500,100) PU40 non-TM #mu", v_t1pu40, "!mus_tru_tm&&mus_sigid"));
 
   ////////////////////////// ELECTRONS /////////////////////////
+
+  vector<sample_class> els_tt; 
+  els_tt.push_back(sample_class("tt truth-matched prompt e", v_tt, "els_tru_tm&&els_sigid&&els_ispf"));
+  els_tt.push_back(sample_class("tt non-truth-matched e", v_tt, "!els_tru_tm&&els_sigid&&els_ispf"));
 
   vector<sample_class> els_tt_t1; 
   els_tt_t1.push_back(sample_class("T1tttt(1500,100) truth-matched prompt e", v_t1, "els_tru_tm&&els_sigid&&els_ispf"));
@@ -76,9 +84,10 @@ int main(){
 
   // Markers to be plot on curves: 29 is a star, 8 a circle
   int mini_style(8); float mini_size(2);
-  vector<marker_class> mus_std, els_std, cuts_miniso;
-  els_std.push_back(marker_class(0.22, 4, 1, 29));
+  vector<marker_class> mus_std, mus_new, els_std, cuts_miniso;
+  els_std.push_back(marker_class(0.22, 4, 28, 29));
   mus_std.push_back(marker_class(0.12, 4, 1, 29));
+  mus_new.push_back(marker_class(0.2, 4, 28, 29));
   cuts_miniso.push_back(marker_class(0.4,  mini_size, 4, mini_style));
   cuts_miniso.push_back(marker_class(0.2,  mini_size, 4, mini_style));
   cuts_miniso.push_back(marker_class(0.1,  mini_size, 4, mini_style));
@@ -86,55 +95,139 @@ int main(){
 
   ///////////////////// Isolation variables /////////////////////
   vector<var_class> mus_vars;
-  mus_vars.push_back(var_class("mus_reliso",0,10,"Rel. Iso. (R=0.4)",1,1,mus_std));
-  mus_vars.push_back(var_class("mus_reliso_r03",0,10,"Rel. Iso. (R=0.3)",3));
-  mus_vars.push_back(var_class("mus_reliso_r02",0,10,"Rel. Iso. (R=0.2)",2));
-  mus_vars.push_back(var_class("min(mus_reliso_r02,mus_miniso_tr15)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
-  mus_vars.push_back(var_class("mus_ptrel_0+(mus_reliso<0.4)*9999.",500,0,
-   			   "p_{T}^{rel} || Rel. Iso. (R=0.4) < 0.4",1,2));
-  mus_vars.push_back(var_class("mus_ptrel_0+(min(mus_reliso_r02,mus_miniso_tr15)<0.4)*9999.",500,0,
-			   "p_{T}^{rel} || Mini Iso. < 0.4",4,2));
+  mus_vars.push_back(var_class("mus_reliso_r04",0,10,"Rel. Iso. (R=0.4)",1,1,mus_std));
+  mus_vars.push_back(var_class("mus_reliso_r03",0,10,"Rel. Iso. (R=0.3)",28,1));
+  mus_vars.push_back(var_class("mus_reliso_r02",0,10,"Rel. Iso. (R=0.2)",kMagenta+2));
+  mus_vars.push_back(var_class("mus_reliso_r015",0,10,"Rel. Iso. (R=0.15)",3));
+  mus_vars.push_back(var_class("mus_reliso_r01",0,10,"Rel. Iso. (R=0.1)",2));
+  mus_vars.push_back(var_class("min(mus_reliso_r02,mus_miniso_tr10)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
 
   vector<var_class> els_vars;
-  els_vars.push_back(var_class("els_reliso",0,10,"Rel. Iso. (R=0.3)",1,1,els_std));
-  els_vars.push_back(var_class("els_reliso_r02",0,10,"Rel. Iso. (R=0.2)",2));
-  els_vars.push_back(var_class("min(els_reliso_r02,els_miniso_tr15)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
-  els_vars.push_back(var_class("els_ptrel_0+(els_reliso<0.1)*9999.",500,0,
-   			   "p_{T}^{rel} || Rel. Iso. (R=0.3) < 0.1",1,2));
-  els_vars.push_back(var_class("els_ptrel_0+(min(els_reliso_r02,els_miniso_tr15)<0.1)*9999.",500,0,
+  els_vars.push_back(var_class("els_reliso_r04",0,10,"Rel. Iso. (R=0.4)",1));
+  els_vars.push_back(var_class("els_reliso_r03",0,10,"Rel. Iso. (R=0.3)",28,1,els_std));
+  els_vars.push_back(var_class("els_reliso_r02",0,10,"Rel. Iso. (R=0.2)",kMagenta+2));
+  els_vars.push_back(var_class("els_reliso_r015",0,10,"Rel. Iso. (R=0.15)",3));
+  els_vars.push_back(var_class("els_reliso_r01",0,10,"Rel. Iso. (R=0.1)",2));
+  els_vars.push_back(var_class("min(els_reliso_r02,els_miniso_tr10)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
+
+  vector<var_class> mus_vars_ptrel;
+  mus_vars_ptrel.push_back(var_class("mus_reliso_r04",0,10,"Rel. Iso. (R=0.4)",1,1,mus_std));
+  mus_vars_ptrel.push_back(var_class("min(mus_reliso_r02,mus_miniso_tr10)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
+  mus_vars_ptrel.push_back(var_class("mus_ptrel_0+(mus_reliso_r04<0.3)*9999.",500,0,
+   			   "p_{T}^{rel} || Rel. Iso. (R=0.4) < 0.3",1,2));
+  mus_vars_ptrel.push_back(var_class("mus_ptrel_0+(min(mus_reliso_r02,mus_miniso_tr10)<0.3)*9999.",500,0,
+			   "p_{T}^{rel} || Mini Iso. < 0.3",4,2));
+
+  vector<var_class> els_vars_ptrel;
+  els_vars_ptrel.push_back(var_class("els_reliso_r03",0,10,"Rel. Iso. (R=0.3)",28,1,els_std));
+  els_vars_ptrel.push_back(var_class("min(els_reliso_r02,els_miniso_tr10)",0,10,"Mini Iso. (0.05<R<0.2)",4,1,cuts_miniso));
+  els_vars_ptrel.push_back(var_class("els_ptrel_0+(els_reliso_r03<0.1)*9999.",500,0,
+   			   "p_{T}^{rel} || Rel. Iso. (R=0.3) < 0.1",28,2));
+  els_vars_ptrel.push_back(var_class("els_ptrel_0+(min(els_reliso_r02,els_miniso_tr10)<0.1)*9999.",500,0,
 			   "p_{T}^{rel} || Mini Iso. < 0.1",4,2));
 
   ///////////////////// ROCs to be plotted /////////////////////
 
-  // // pT bins
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&mus_pt<50&&ht>750&&met>400", "mus_isot1");
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>50&&mus_pt<100&&ht>750&&met>400", "mus_isot1");
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>100&&mus_pt<200&&ht>750&&met>400", "mus_isot1");
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>200&&ht>750&&met>400", "mus_isot1");
+  TString mus_ptcuts[] = {"mus_pt>=20","mus_pt>=20&&mus_pt<50","mus_pt>=50&&mus_pt<100","mus_pt>=100&&mus_pt<200","mus_pt>=200"};
+  TString els_ptcuts[] = {"els_pt>=20","els_pt>=20&&els_pt<50","els_pt>=50&&els_pt<100","els_pt>=100&&els_pt<200","els_pt>=200"};
+  //TString htcuts[] = {"1","ht<250","ht>=250&&ht<500","ht>=500&&ht<750","ht>=750&&ht<1000"};
+  //TString metcuts[] = {"1","met<100","met>=100&&met<200","met>=200&&met<300","met>=300&&met<400"};
+  TString htcuts[] = {"1","ht>=750&&ht<1000","ht>=750&&ht<1500"};
+  TString metcuts[] = {"1","met>=200&&met<600"};
+  TString cuts;
+  for(int iht(0); iht<3; iht++){
+    for(int imet(0); imet<2; imet++){
+      for(int ipt(0); ipt<5; ipt++){ 
+  	cuts = mus_ptcuts[ipt]+"&&"+htcuts[iht]+"&&"+metcuts[imet];
+  	DrawROC(mus_tt, mus_vars, cuts, "mus_tt");
+  	DrawROC(mus_t1pu20, mus_vars, cuts, "mus_t1");
+  	DrawROC(mus_tt, mus_vars_ptrel, cuts, "mus_tt_ptrel");
+	DrawROC(mus_t1pu20, mus_vars_ptrel, cuts, "mus_t1_ptrel");
+  	cuts = els_ptcuts[ipt]+"&&"+htcuts[iht]+"&&"+metcuts[imet];
+  	DrawROC(els_tt, els_vars, cuts, "els_tt");
+  	DrawROC(els_t1pu20, els_vars, cuts, "els_t1");
+  	DrawROC(els_tt, els_vars_ptrel, cuts, "els_tt_ptrel");
+	DrawROC(els_t1pu20, els_vars_ptrel, cuts, "els_t1_ptrel");
+
+      }
+    }
+  }
+  // pT bins
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&mus_pt<50&&ht>750&&met>250", "mus_isott_t1");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>50&&mus_pt<100&&ht>750&&met>250", "mus_isott_t1");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>100&&mus_pt<200&&ht>750&&met>250", "mus_isott_t1");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>200&&ht>750&&met>250", "mus_isott_t1");
   // // Signal points, full pT range
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>750&&met>400", "mus_isot1");
-  // DrawROC(mus_t2pu20, mus_vars, "mus_pt>20&&ht>750&&met>400", "mus_isot2");
-  // DrawROC(mus_t1cpu20, mus_vars, "mus_pt>20&&ht>750&&met>400", "mus_isot1c");
-  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&ht>750&&met>400", "mus_isott");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isott_t1");
+  // DrawROC(mus_t2pu20, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isot2");
+  // DrawROC(mus_t1cpu20, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isott_t1c");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isott");
   // // PU comparison
-  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>750&&met>400&&npv<20", "mus_isopu20");
-  // DrawROC(mus_t1pu40, mus_vars, "mus_pt>20&&ht>750&&met>400&&npv>30", "mus_isopu40");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&ht>750&&met>250&&ntrupv<20", "mus_isopu20");
+  // DrawROC(mus_t1pu40, mus_vars, "mus_pt>20&&ht>750&&met>250&&ntrupv>30", "mus_isopu40");
 
   // // pT bins
-  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&els_pt<50&&ht>750&&met>400", "els_isot1");
-  // DrawROC(els_t1pu20, els_vars, "els_pt>50&&els_pt<100&&ht>750&&met>400", "els_isot1");
-  // DrawROC(els_t1pu20, els_vars, "els_pt>100&&els_pt<200&&ht>750&&met>400", "els_isot1");
-  // DrawROC(els_t1pu20, els_vars, "els_pt>200&&ht>750&&met>400", "els_isot1");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&els_pt<50&&ht>750&&met>250", "els_isott_t1");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>50&&els_pt<100&&ht>750&&met>250", "els_isott_t1");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>100&&els_pt<200&&ht>750&&met>250", "els_isott_t1");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>200&&ht>750&&met>250", "els_isott_t1");
   // // Signal points, full pT range
-  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>400", "els_isot1");
-  // DrawROC(els_t2pu20, els_vars, "els_pt>20&&ht>750&&met>400", "els_isot2");
-  // DrawROC(els_t1cpu20, els_vars, "els_pt>20&&ht>750&&met>400", "els_isot1c");
-  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>400", "els_isott");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott_t1");
+  // DrawROC(els_t2pu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isot2");
+  // DrawROC(els_t1cpu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott_t1c");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott");
   // // PU comparison
-  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>400&&npv<20", "els_isopu20");
-  // DrawROC(els_t1pu40, els_vars, "els_pt>20&&ht>750&&met>400&&npv>30", "els_isopu40");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>250&&ntrupv<20", "els_isopu20");
+  // DrawROC(els_t1pu40, els_vars, "els_pt>20&&ht>750&&met>250&&ntrupv>30", "els_isopu40");
 
-  DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>400", "els_isott");
+  //DrawROC(mus_tt, mus_vars, "mus_pt>20&&met<80", "mus_tt");
+  //DrawROC(mus_tt, mus_vars, "mus_pt>20&&met>120", "mus_tt");
+  //DrawROC(mus_tt, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_tt");
+  //DrawROC(mus_tt, mus_vars, "mus_pt>20&&els_pt<50", "mus_tt");
+  // DrawROC(mus_tt, mus_vars, "mus_pt>50&&els_pt<100", "mus_tt");
+  // DrawROC(mus_tt, mus_vars, "mus_pt>100&&els_pt<200", "mus_tt");
+  //DrawROC(els_tt, els_vars, "els_pt>20&&ht>750&&met>250", "els_tt");
+
+
+  // HT bins
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht<1000&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>=1000&&ht<2000&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>=2000&&ht<3000&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>=4000&&met>250", "mus_isot1");
+  // // HT bins
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht<1000&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>=1000&&ht<2000&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>=2000&&ht<3000&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>=4000&&met>250", "els_isot1");
+  // // pT bins
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&mus_pt<50&&ht>750&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>50&&mus_pt<100&&ht>750&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>100&&mus_pt<200&&ht>750&&met>250", "mus_isot1");
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>200&&ht>750&&met>250", "mus_isot1");
+  // // Signal points, full pT range
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isot1");
+  // DrawROC(mus_t2pu20, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isot2");
+  // DrawROC(mus_t1cpu20, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isot1c");
+  // DrawROC(mus_tt_t1, mus_vars, "mus_pt>20&&ht>750&&met>250", "mus_isott");
+  // // PU comparison
+  // DrawROC(mus_t1pu20, mus_vars, "mus_pt>20&&ht>750&&met>250&&ntrupv<20", "mus_isopu20");
+  // DrawROC(mus_t1pu40, mus_vars, "mus_pt>20&&ht>750&&met>250&&ntrupv>30", "mus_isopu40");
+
+  // // pT bins
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&els_pt<50&&ht>750&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>50&&els_pt<100&&ht>750&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>100&&els_pt<200&&ht>750&&met>250", "els_isot1");
+  // DrawROC(els_t1pu20, els_vars, "els_pt>200&&ht>750&&met>250", "els_isot1");
+  // // Signal points, full pT range
+  //  DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isot1");
+  // DrawROC(els_t2pu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isot2");
+  // DrawROC(els_t1cpu20, els_vars, "els_pt>20&&ht>750&&met>250", "els_isot1c");
+  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott");
+  // // PU comparison
+  // DrawROC(els_t1pu20, els_vars, "els_pt>20&&ht>750&&met>250&&ntrupv<20", "els_isopu20");
+  // DrawROC(els_t1pu40, els_vars, "els_pt>20&&ht>750&&met>250&&ntrupv>30", "els_isopu40");
+
+  // DrawROC(els_tt_t1, els_vars, "els_pt>20&&ht>750&&met>250", "els_isott");
 
 }
 
@@ -169,13 +262,13 @@ void DrawROC(vector<sample_class> samples, vector<var_class> vars, TString cuts,
 
   TString title(cuts);
   if(title=="1") title = "";
-  title.ReplaceAll("nvmus10==0&&nvels10==0", "0 leptons");  
+  title.ReplaceAll("&&1",""); title.ReplaceAll("nvmus10==0&&nvels10==0", "0 leptons");  
   title.ReplaceAll("els_pt","p^{e}_{T}");title.ReplaceAll("mus_pt","p^{#mu}_{T}");
   title.ReplaceAll("mj_30", "M_{J}");
   title.ReplaceAll(">=", " #geq "); 
   title.ReplaceAll(">", " > "); title.ReplaceAll("<", " < "); title.ReplaceAll("&&", ", "); 
   title.ReplaceAll("met", "MET"); title.ReplaceAll("ht", "H_{T}");  title.ReplaceAll("mt", "m_{T}"); 
-  title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("npv","n_{PV}");
+  title.ReplaceAll("nleps==1", "1 lepton");  title.ReplaceAll("ntrupv","n^{true}_{PV}");
   title.ReplaceAll("njets30","n_{jets}^{30}"); title.ReplaceAll("nbm30","n_{b}^{30}");
   title.ReplaceAll("njets","n_{jets}"); title.ReplaceAll("nbm","n_{b}");
   title.ReplaceAll("mindphin_metje","min#Delta#phi_{N}");
@@ -189,10 +282,10 @@ void DrawROC(vector<sample_class> samples, vector<var_class> vars, TString cuts,
   base_histo.Draw();
 
   // Legend
-  double legX = 0.13, legY = 0.15, legSingle = 0.059;
+  double legX = 0.13, legY = 0.15, legSingle = 0.064;
   double legW = 0.12, legH = legSingle*vars.size();
   TLegend leg(legX, legY, legX+legW, legY+legH);
-  leg.SetTextSize(0.048); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
+  leg.SetTextSize(0.055); leg.SetFillColor(0); leg.SetFillStyle(0); leg.SetBorderSize(0);
   leg.SetTextFont(132);
 
   // Making individual graphs
