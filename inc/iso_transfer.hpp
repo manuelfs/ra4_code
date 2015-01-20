@@ -51,6 +51,22 @@ int MiniEl(const small_tree &tree,
 int MiniMu(const small_tree &tree,
            int &best_mu);
 
+int VetoStandardIso(const small_tree &tree,
+                int &best_el,
+                int &best_mu);
+int VetoStandardEl(const small_tree &tree,
+               int &best_el);
+int VetoStandardMu(const small_tree &tree,
+               int &best_mu);
+
+int VetoMiniIso(const small_tree &tree,
+            int &best_el,
+            int &best_mu);
+int VetoMiniEl(const small_tree &tree,
+           int &best_el);
+int VetoMiniMu(const small_tree &tree,
+           int &best_mu);
+
 void PositiveColors(int pos_cols[]);
 void SymmetricColors(int sym_cols[]);
 void SetLineStyle(TLine &line);

@@ -38,6 +38,16 @@ float cross_section(TString file){
   if(file.Contains("T2tt") && file.Contains("650_"))  xsec = 0.107045;
   if(file.Contains("T2tt") && file.Contains("850_"))  xsec = 0.0189612;
 
+  if(file.Contains("SMS-T2tt_2J_mStop-425_mLSP-325"))  xsec = 1.31169;
+  if(file.Contains("SMS-T2tt_2J_mStop-500_mLSP-325"))  xsec = 0.51848;
+  if(file.Contains("SMS-T1bbbb_2J_mGl-1500_mLSP-100"))  xsec = 0.0141903;
+  if(file.Contains("SMS-T1bbbb_2J_mGl-1000_mLSP-900"))  xsec = 0.325388;
+  if(file.Contains("SMS-T1qqqq_2J_mGl-1400_mLSP-100"))  xsec = 0.0252977;
+  if(file.Contains("SMS-T1qqqq_2J_mGl-1000_mLSP-800"))  xsec = 0.325388;  
+  if(file.Contains("SMS-T2bb_2J_mStop-600_mLSP-580"))  xsec = 0.174599;
+  if(file.Contains("SMS-T2bb_2J_mStop-900_mLSP-100"))  xsec = 0.0128895;
+
+
   // https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get/TOP-Fall13-00005
   // says that it is 424.5 pb
   if(file.Contains("TTJet") || file.Contains("TT_"))  xsec = 806.1;
@@ -51,6 +61,7 @@ float cross_section(TString file){
   if(file.Contains("WToENu"))   xsec = 16000.0;
   if(file.Contains("WToMuNu"))  xsec = 16100.0;
 
+  if(file.Contains("QCD_HT-100To250_13TeV-madgraph"))  xsec = 28730000.;
   if(file.Contains("QCD_HT_250To500_13TeV-madgraph"))  xsec = 670500.0;
   if(file.Contains("QCD_HT-500To1000_13TeV-madgraph")) xsec = 26740.0;
   if(file.Contains("QCD_HT_1000ToInf_13TeV-madgraph")) xsec = 769.7;
@@ -84,6 +95,21 @@ float cross_section(TString file){
   if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24;
   if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.546;
   if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))    xsec = 2.179;
+
+  if(file.Contains("ZJetsToNuNu_HT-100to200_Tune4C_13TeV-madgraph-tauola"))  xsec =372.6;
+  if(file.Contains("ZJetsToNuNu_HT-200to400_Tune4C_13TeV-madgraph-tauola"))  xsec =100.8;
+  if(file.Contains("ZJetsToNuNu_HT-400to600_Tune4C_13TeV-madgraph-tauola"))  xsec =11.99;
+  if(file.Contains("ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola"))  xsec =4.113;
+
+  if(file.Contains("TTZJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 2.232;
+  if(file.Contains("TTWJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 1.152;
+  // Calculated at 13 TeV in
+  // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV
+  // Higgs branching ratios from
+  // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR
+  if(file.Contains("ZH_HToBB_ZToLL_M-125_13TeV_powheg-herwigpp"))    xsec = 0.569*0.033658*0.8696;
+  if(file.Contains("ZH_HToBB_ZToNuNu_M-125_13TeV_powheg-herwigpp"))    xsec = 0.569*0.2*0.8696;
+  if(file.Contains("WH_HToBB_WToLNu_M-125_13TeV_powheg-herwigpp"))    xsec = 0.569*0.1086*1.380;
 
   if(xsec<=0) cout<<"Cross section not found for "<<file<<endl;
 
