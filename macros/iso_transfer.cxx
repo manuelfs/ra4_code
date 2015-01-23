@@ -27,9 +27,8 @@ using namespace std;
 int main(){
   const double lumi = 4.0;
 
-  styles style("Standard"); style.LabelSize = 0.095; style.TitleSize = 0.06;
+  styles style("1Dtitle"); style.LabelSize = 0.095; style.TitleSize = 0.062;
   style.setDefaultStyle();
-  gStyle->SetPaintTextFormat(".1f");
 
   TH1::SetDefaultSumw2(true);
 
@@ -180,12 +179,17 @@ int main(){
 	+cut_string+"_"
 	+iso_cuts.at(ihist).second+".eps";
       TCanvas c;
+      TString htitle("Yields for ");
+      htitle += lumi; htitle += " fb^{-1}";
+      histos.at(ihist).SetTitle(htitle);
+      gStyle->SetPaintTextFormat(".1f");
       histos.at(ihist).Draw("col");
       //histos.at(ihist).Draw("boxsame");
       histos.at(ihist).Draw("textsame");
       hline.Draw("same");
       vline.Draw("same");
       c.Print(title);
+      gStyle->SetPaintTextFormat(".1f");
       for(size_t jhist = 0; jhist < histos.size(); ++jhist){
 	if(jhist==ihist) continue;
 	gStyle->SetPalette(999, sym_cols);
@@ -208,12 +212,15 @@ int main(){
 	  +iso_cuts.at(ihist).second
 	  +"_minus_"
 	  +iso_cuts.at(jhist).second+".eps";
+	htitle = "Yield difference for Miniso - Reliso";
+	delta.SetTitle(htitle);
 	delta.Draw("col");
 	delta.Draw("textsame");
 	hline.Draw("same");
 	vline.Draw("same");
 	if(!title.Contains("minus_miniso") && !title.Contains("minus_vetominiso")) c.Print(title);
       }
+      gStyle->SetPaintTextFormat(".0f");
       for(size_t jhist = 0; jhist < histos.size(); ++jhist){
 	if(jhist==ihist) continue;
 	gStyle->SetPalette(999, sym_cols);
@@ -224,6 +231,7 @@ int main(){
 	    float z(0);
 	    if(den>0.2) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
 	    //if(den) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
+	    if(fabs(z)<0.5) z = 0;
 	    delta.SetBinContent(x, y, z);
 	  }
 	}
@@ -238,6 +246,8 @@ int main(){
 	  +iso_cuts.at(ihist).second
 	  +"_over_"
 	  +iso_cuts.at(jhist).second+".eps";
+	htitle = "Yield difference for Miniso - Reliso (%)";
+	delta.SetTitle(htitle);
 	delta.Draw("col");
 	delta.Draw("textsame");
 	hline.Draw("same");
