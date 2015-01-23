@@ -16,6 +16,12 @@
 #include "timer.hpp"
 #include "cut.hpp"
 
+const float SigLepPt(20.);
+const float SigMiniMu(0.08);
+const float SigMiniEl(0.12);
+const float VetMiniMu(0.025);
+const float VetMiniEl(0.12);
+
 using namespace std;
 
 int main(){
@@ -32,183 +38,214 @@ int main(){
   SymmetricColors(sym_cols);
 
   TString sample;
-  small_tree tree("archive/ra4skim/*T1tttt_2J_mGl-1500_mLSP-100*"); sample = "t1tttt1500";
-  //small_tree tree("archive/ra4skim/*SMS-T1bbbb_2J_mGl-1500_mLSP-100*"); sample = "t1bbbb1500";
-  //small_tree tree("archive/15-01-14/small_TTJet_ht30_500_met200.root"); sample = "ttbar";
+  string basefolder("/cms5r0/ald77/archive/20150108/");
+  vector<string> treenames;
+  vector<TString> samplenames;
+  treenames.push_back(basefolder+"*T1tttt_2J_mGl-1500_mLSP-100*"); samplenames.push_back("t1tttt1500");
+  treenames.push_back(basefolder+"skim/small_TTJet_ht750_met200.root"); samplenames.push_back("ttbar"); 
 
-  //small_tree tree("archive/ra4skim/*SMS-T1tttt_2J_mGl-1200_mLSP-800_*"); sample = "t1tttt1200";
-  //small_tree tree("archive/ra4skim/*TTJet*.root"); sample = "ttbar";
-  //small_tree tree("archive/ra4skim/*QCD*.root"); sample = "qcd";
+  //treenames.push_back(basefolder+"*SMS-T1bbbb_2J_mGl-1500_mLSP-100*"); samplenames.push_back("t1bbbb1500");
+  //treenames.push_back(basefolder+"skim/small_TTJet_ht30_500_met200.root"); samplenames.push_back("ttbar");
+  //treenames.push_back(basefolder+"skim/small_QCD_ht750_met200.root"); samplenames.push_back("qcd");
 
-  vector<CutBase*> base_cuts;
-  TString cut_string = "UNKNOWN";
-  switch(1){//Pick a set of cuts here
-  default:
-    cut_string = "inclusive";
-    break;
-  case 0:
-    cut_string = "ra4";
-    base_cuts.push_back(NewCut(&tree, &small_tree::ht, 750.f, kGreater));
-    base_cuts.push_back(NewCut(&tree, &small_tree::met, 200.f, kGreater));
-    base_cuts.push_back(NewCut(&tree, &small_tree::njets, 6, kGreaterEqual));
-    base_cuts.push_back(NewCut(&tree, &small_tree::nbl, 2, kGreaterEqual));
-    break;
-  case 1: //RA2b
-    cut_string = "ra2b";
-    base_cuts.push_back(NewCut(&tree, &small_tree::ht30, 1200.f, kGreater));
-    base_cuts.push_back(NewCut(&tree, &small_tree::met, 800.f, kGreater));
-    base_cuts.push_back(NewCut(&tree, &small_tree::njets30, 4, kGreaterEqual));
-    //base_cuts.push_back(NewCut(&tree, &small_tree::nbm, 2, kGreaterEqual));
-    base_cuts.push_back(NewCut(&tree, &small_tree::mindphin_metjet, 4.f, kGreater));
-    break;
-  }
+  //treenames.push_back(basefolder+"*SMS-T1tttt_2J_mGl-1200_mLSP-800_*"); samplenames.push_back("t1tttt1200");
+  //treenames.push_back(basefolder+"*TTJet*.root"); samplenames.push_back("ttbar");
+  //treenames.push_back(basefolder+"*QCD*.root"); samplenames.push_back("qcd");
 
-  vector<pair<IsoCut,TString> > iso_cuts;
-  iso_cuts.push_back(pair<IsoCut, TString>(VetoStandardIso, "vetostandard"));
-  iso_cuts.push_back(pair<IsoCut, TString>(VetoMiniIso, "vetominiso"));
+  for(unsigned itree(0); itree<treenames.size(); itree++){
+    small_tree tree(treenames[itree]); sample = samplenames[itree];
+    vector<CutBase*> base_cuts;
+    TString cut_string = "UNKNOWN";
+    switch(0){//Pick a set of cuts here
+    default:
+      cut_string = "inclusive";
+      break;
+    case 0:
+      cut_string = "ra4";
+      base_cuts.push_back(NewCut(&tree, &small_tree::ht, 750.f, kGreater));
+      base_cuts.push_back(NewCut(&tree, &small_tree::met, 200.f, kGreater));
+      base_cuts.push_back(NewCut(&tree, &small_tree::njets, 6, kGreaterEqual));
+      base_cuts.push_back(NewCut(&tree, &small_tree::nbm, 2, kGreaterEqual));
+      break;
+    case 1: //RA2b
+      cut_string = "ra2b";
+      base_cuts.push_back(NewCut(&tree, &small_tree::ht30, 800.f, kGreater));
+      base_cuts.push_back(NewCut(&tree, &small_tree::met, 500.f, kGreater));
+      base_cuts.push_back(NewCut(&tree, &small_tree::njets30, 4, kGreaterEqual));
+      //base_cuts.push_back(NewCut(&tree, &small_tree::nbm, 2, kGreaterEqual));
+      base_cuts.push_back(NewCut(&tree, &small_tree::mindphin_metjet, 4.f, kGreater));
+      break;
+    }
 
-  //Put cuts only applied for specific number of reco leptons here
-  //Outer index is number of leptons
-  vector<vector<CutBase*> > lepton_num_cuts;
+    vector<pair<IsoCut,TString> > iso_cuts;
+    //TString isveto("veto ");
+    TString isveto("");
+    if(isveto=="veto "){
+      iso_cuts.push_back(pair<IsoCut, TString>(VetoStandardIso, "vetostandard"));
+      iso_cuts.push_back(pair<IsoCut, TString>(VetoMiniIso, "vetominiso"));
+    } else {
+      iso_cuts.push_back(pair<IsoCut, TString>(StandardIso, "standard"));
+      iso_cuts.push_back(pair<IsoCut, TString>(MiniIso, "miniso"));
+    }
 
-  vector<TH2D> histos(iso_cuts.size(),
-                      TH2D("", ";Num Reco veto e+#mu;Num Gen e+#mu", 6, -1.5, 4.5, 6, -1.5, 4.5));
-  TLine hline(-1.5, -0.5, 4.5, -0.5);
-  TLine vline(-0.5, -1.5, -0.5, 4.5);
-  SetLineStyle(hline);
-  SetLineStyle(vline);
+    // //Put cuts only applied for specific number of reco leptons here
+    // //Outer index is number of leptons
+    // vector<vector<CutBase*> > lepton_num_cuts;
 
-  long num_entries = tree.GetEntries();
-  Timer timer(num_entries, 1.0);
-  timer.Start();
-  for(long entry = 0; entry < num_entries; ++entry){
-    timer.Iterate();
-    tree.GetEntry(entry);
+    vector<TH2D> histos(iso_cuts.size(),
+			TH2D("", ";Num Reco "+isveto+"e+#mu;Num Gen e+#mu", 6, -1.5, 4.5, 6, -1.5, 4.5));
+    TLine hline(-1.5, -0.5, 4.5, -0.5);
+    TLine vline(-0.5, -1.5, -0.5, 4.5);
+    SetLineStyle(hline);
+    SetLineStyle(vline);
 
-    if(!PassesCuts(base_cuts)) continue;
+    long num_entries = tree.GetEntries();
+    Timer timer(num_entries, 1.0);
+    timer.Start();
+    for(long entry = 0; entry < num_entries; ++entry){
+      timer.Iterate();
+      tree.GetEntry(entry);
 
-    for(size_t icut = 0; icut < iso_cuts.size(); ++icut){
-      int best_el = -1, best_mu = -1;
-      int count = (iso_cuts.at(icut).first)(tree, best_el, best_mu);
+      if(!PassesCuts(base_cuts)) continue;
 
-      bool pass_lep_cuts;
-      if(!lepton_num_cuts.size()){
-        pass_lep_cuts = true;
-      }else if(static_cast<size_t>(count)>=lepton_num_cuts.size()){
-        pass_lep_cuts = PassesCuts(lepton_num_cuts.back());
-      }else{
-        pass_lep_cuts = PassesCuts(lepton_num_cuts.at(count));
+      for(size_t icut = 0; icut < iso_cuts.size(); ++icut){
+	int best_el = -1, best_mu = -1;
+	int count = (iso_cuts.at(icut).first)(tree, best_el, best_mu);
+
+	// bool pass_lep_cuts;
+	// if(!lepton_num_cuts.size()){
+	//   pass_lep_cuts = true;
+	// }else if(static_cast<size_t>(count)>=lepton_num_cuts.size()){
+	//   pass_lep_cuts = PassesCuts(lepton_num_cuts.back());
+	// }else{
+	//   pass_lep_cuts = PassesCuts(lepton_num_cuts.at(count));
+	// }
+	// if(!pass_lep_cuts) continue;
+
+	float mt(99999);
+	if(count==1){
+	  float lep_pt(0), lep_phi(0);
+	  if(best_el>=0){
+	    lep_pt = tree.els_pt()[best_el];
+	    lep_phi = tree.els_phi()[best_el];
+	  } else if(best_mu>=0) {
+	    lep_pt = tree.mus_pt()[best_mu];
+	    lep_phi = tree.mus_phi()[best_mu];
+	  } else {cout<<"Either mu or el have to be best"<<endl; return 1;}
+	  mt = sqrt(2*lep_pt* tree.met()*(1-cos(tree.met_phi()-lep_phi)));
+	}
+	//if(mt<150) continue;
+
+	histos.at(icut).Fill(count, (tree.mc_type() & 0xF00) >> 8, lumi*tree.weight());
       }
-      if(!pass_lep_cuts) continue;
-
-      histos.at(icut).Fill(count, (tree.mc_type() & 0xF00) >> 8, lumi*tree.weight());
-    }
-  }
-
-  Delete(base_cuts);
-
-  for(size_t ihist = 0; ihist < histos.size(); ++ihist){
-    TH2D &hist = histos.at(ihist);
-    hist.SetMarkerSize(3.4);
-    hist.SetMarkerStyle(20);
-
-    //Sum column
-    for(int xbin = 0; xbin <= hist.GetNbinsX()+1; ++xbin){
-      double error = 0.;
-      double integral = hist.IntegralAndError(xbin, xbin, 2, hist.GetNbinsY()+1, error);
-      hist.SetBinContent(xbin, 1, integral);
-      hist.SetBinError(xbin, 1, error);
     }
 
-    //Sum row
-    for(int ybin = 0; ybin <= hist.GetNbinsY()+1; ++ybin){
-      double error = 0.;
-      double integral = hist.IntegralAndError(2, hist.GetNbinsX()+1, ybin, ybin, error);
-      hist.SetBinContent(1, ybin, integral);
-      hist.SetBinError(1, ybin, error);
-    }
+    Delete(base_cuts);
 
-    hist.GetXaxis()->SetBinLabel(1, "Any");
-    for(int i = 2; i <= hist.GetNbinsX(); ++i){
-      hist.GetXaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
-    }
-    hist.GetYaxis()->SetBinLabel(1, "Any");
-    for(int i = 2; i <= hist.GetNbinsY(); ++i){
-      hist.GetYaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
-    }
-  }
+    for(size_t ihist = 0; ihist < histos.size(); ++ihist){
+      TH2D &hist = histos.at(ihist);
+      hist.SetMarkerSize(3.4);
+      hist.SetMarkerStyle(20);
 
-  for(size_t ihist = 0; ihist < histos.size(); ++ihist){
-    gStyle->SetPalette(999, pos_cols);
-    TString title = "eps/trans_single_"
-      +sample+"_"
-      +cut_string+"_"
-      +iso_cuts.at(ihist).second+".eps";
-    TCanvas c;
-    histos.at(ihist).Draw("col");
-    //histos.at(ihist).Draw("boxsame");
-    histos.at(ihist).Draw("textsame");
-    hline.Draw("same");
-    vline.Draw("same");
-    c.Print(title);
-    for(size_t jhist = 0; jhist < histos.size(); ++jhist){
-      if(jhist==ihist) continue;
-      gStyle->SetPalette(999, sym_cols);
-      TH2D delta = histos.at(ihist);
-      for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
-        for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
-          delta.SetBinContent(x, y,
-                              histos.at(ihist).GetBinContent(x, y)
-                              -histos.at(jhist).GetBinContent(x, y));
-        }
+      //Sum column
+      for(int xbin = 0; xbin <= hist.GetNbinsX()+1; ++xbin){
+	double error = 0.;
+	double integral = hist.IntegralAndError(xbin, xbin, 2, hist.GetNbinsY()+1, error);
+	hist.SetBinContent(xbin, 1, integral);
+	hist.SetBinError(xbin, 1, error);
       }
-      double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
-      double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
-      if(mini>maxi) maxi=mini;
-      delta.SetMinimum(-maxi);
-      delta.SetMaximum(maxi);
-      title = "eps/trans_delta_"
-        +sample+"_"
-        +cut_string+"_"
-        +iso_cuts.at(ihist).second
-        +"_minus_"
-        +iso_cuts.at(jhist).second+".eps";
-      delta.Draw("col");
-      delta.Draw("textsame");
+
+      //Sum row
+      for(int ybin = 0; ybin <= hist.GetNbinsY()+1; ++ybin){
+	double error = 0.;
+	double integral = hist.IntegralAndError(2, hist.GetNbinsX()+1, ybin, ybin, error);
+	hist.SetBinContent(1, ybin, integral);
+	hist.SetBinError(1, ybin, error);
+      }
+
+      hist.GetXaxis()->SetBinLabel(1, "Any");
+      for(int i = 2; i <= hist.GetNbinsX(); ++i){
+	hist.GetXaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
+      }
+      hist.GetYaxis()->SetBinLabel(1, "Any");
+      for(int i = 2; i <= hist.GetNbinsY(); ++i){
+	hist.GetYaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
+      }
+    }
+
+    for(size_t ihist = 0; ihist < histos.size(); ++ihist){
+      gStyle->SetPalette(999, pos_cols);
+      TString title = "eps/trans_single_"
+	+sample+"_"
+	+cut_string+"_"
+	+iso_cuts.at(ihist).second+".eps";
+      TCanvas c;
+      histos.at(ihist).Draw("col");
+      //histos.at(ihist).Draw("boxsame");
+      histos.at(ihist).Draw("textsame");
       hline.Draw("same");
       vline.Draw("same");
-      if(!title.Contains("minus_miniso") && !title.Contains("minus_vetominiso")) c.Print(title);
-    }
-    for(size_t jhist = 0; jhist < histos.size(); ++jhist){
-      if(jhist==ihist) continue;
-      gStyle->SetPalette(999, sym_cols);
-      TH2D delta = histos.at(ihist);
-      for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
-        for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
-	  float den(histos.at(jhist).GetBinContent(x, y));
-	  float z(0);
-	  if(den) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
-          delta.SetBinContent(x, y, z);
-        }
+      c.Print(title);
+      for(size_t jhist = 0; jhist < histos.size(); ++jhist){
+	if(jhist==ihist) continue;
+	gStyle->SetPalette(999, sym_cols);
+	TH2D delta = histos.at(ihist);
+	for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
+	  for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
+	    delta.SetBinContent(x, y,
+				histos.at(ihist).GetBinContent(x, y)
+				-histos.at(jhist).GetBinContent(x, y));
+	  }
+	}
+	double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
+	double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
+	if(mini>maxi) maxi=mini;
+	delta.SetMinimum(-maxi);
+	delta.SetMaximum(maxi);
+	title = "eps/trans_delta_"
+	  +sample+"_"
+	  +cut_string+"_"
+	  +iso_cuts.at(ihist).second
+	  +"_minus_"
+	  +iso_cuts.at(jhist).second+".eps";
+	delta.Draw("col");
+	delta.Draw("textsame");
+	hline.Draw("same");
+	vline.Draw("same");
+	if(!title.Contains("minus_miniso") && !title.Contains("minus_vetominiso")) c.Print(title);
       }
-      double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
-      double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
-      if(mini>maxi) maxi=mini;
-      delta.SetMinimum(-maxi);
-      delta.SetMaximum(maxi);
-      title = "eps/trans_ratio_"
-        +sample+"_"
-        +cut_string+"_"
-        +iso_cuts.at(ihist).second
-        +"_over_"
-        +iso_cuts.at(jhist).second+".eps";
-      delta.Draw("col");
-      delta.Draw("textsame");
-      hline.Draw("same");
-      vline.Draw("same");
-      if(!title.Contains("over_miniso") && !title.Contains("over_vetominiso")) c.Print(title);
-    }
+      for(size_t jhist = 0; jhist < histos.size(); ++jhist){
+	if(jhist==ihist) continue;
+	gStyle->SetPalette(999, sym_cols);
+	TH2D delta = histos.at(ihist);
+	for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
+	  for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
+	    float den(histos.at(jhist).GetBinContent(x, y));
+	    float z(0);
+	    if(den>0.2) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
+	    //if(den) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
+	    delta.SetBinContent(x, y, z);
+	  }
+	}
+	double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
+	double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
+	if(mini>maxi) maxi=mini;
+	delta.SetMinimum(-maxi);
+	delta.SetMaximum(maxi);
+	title = "eps/trans_ratio_"
+	  +sample+"_"
+	  +cut_string+"_"
+	  +iso_cuts.at(ihist).second
+	  +"_over_"
+	  +iso_cuts.at(jhist).second+".eps";
+	delta.Draw("col");
+	delta.Draw("textsame");
+	hline.Draw("same");
+	vline.Draw("same");
+	if(!title.Contains("over_miniso") && !title.Contains("over_vetominiso")) c.Print(title);
+      }
 
+    }
   }
 }
 
@@ -259,7 +296,7 @@ int StandardEl(const small_tree &tree,
     if((fabs(tree.els_eta().at(iel))<=1.479 && tree.els_reliso_r03().at(iel)<0.2179)
        || (fabs(tree.els_eta().at(iel))>1.479&& fabs(tree.els_eta().at(iel))<2.5
            && tree.els_reliso_r03().at(iel)<0.254)){
-      if(!(tree.els_sigid().at(iel) && tree.els_ispf().at(iel) && tree.els_pt().at(iel)>20.)) continue;
+      if(!(tree.els_sigid().at(iel) && tree.els_ispf().at(iel) && tree.els_pt().at(iel)>SigLepPt)) continue;
       ++num_els;
       if(tree.els_pt().at(iel) > max_pt){
         max_pt = tree.els_pt().at(iel);
@@ -277,8 +314,8 @@ int StandardMu(const small_tree &tree,
   double max_pt = -1.0;
   best_mu = -1;
   for(size_t imu = 0; imu < tree.mus_reliso_r04().size();  ++imu){
-    if(tree.mus_reliso_r04().at(imu) < 0.12){
-      if(!(tree.mus_sigid().at(imu) && tree.mus_pt().at(imu)>20.)) continue;
+    if(tree.mus_reliso_r04().at(imu) < 0.2){
+      if(!(tree.mus_sigid().at(imu) && tree.mus_pt().at(imu)>SigLepPt)) continue;
       ++num_mus;
       if(tree.mus_pt().at(imu) > max_pt){
         max_pt = tree.mus_pt().at(imu);
@@ -305,8 +342,8 @@ int MiniEl(const small_tree &tree,
   double max_pt = -1.0;
   best_el = -1;
   for(size_t iel = 0; iel < tree.els_miniso_tr10().size(); ++iel){
-    if(min(tree.els_reliso_r02().at(iel),tree.els_miniso_tr10().at(iel)) < 0.1){
-      if(!(tree.els_sigid().at(iel) && tree.els_ispf().at(iel) && tree.els_pt().at(iel)>20)) continue;
+    if(min(tree.els_reliso_r02().at(iel),tree.els_miniso_tr10().at(iel)) < SigMiniEl){
+      if(!(tree.els_sigid().at(iel) && tree.els_ispf().at(iel) && tree.els_pt().at(iel)>SigLepPt)) continue;
       ++num_els;
       if(tree.els_pt().at(iel) > max_pt){
         max_pt = tree.els_pt().at(iel);
@@ -323,8 +360,8 @@ int MiniMu(const small_tree &tree,
   double max_pt = -1.0;
   best_mu = -1;
   for(size_t imu = 0; imu < tree.mus_miniso_tr10().size(); ++imu){
-    if(min(tree.mus_reliso_r02().at(imu),tree.mus_miniso_tr10().at(imu)) < 0.4){
-      if(!(tree.mus_sigid().at(imu) && tree.mus_pt().at(imu)>20)) continue;
+    if(min(tree.mus_reliso_r02().at(imu),tree.mus_miniso_tr10().at(imu)) < SigMiniMu){
+      if(!(tree.mus_sigid().at(imu) && tree.mus_pt().at(imu)>SigLepPt)) continue;
       ++num_mus;
       if(tree.mus_pt().at(imu) > max_pt){
         max_pt = tree.mus_pt().at(imu);
@@ -336,8 +373,8 @@ int MiniMu(const small_tree &tree,
 }
 
 int VetoStandardIso(const small_tree &tree,
-                int &best_el,
-                int &best_mu){
+		    int &best_el,
+		    int &best_mu){
   int leps = VetoStandardEl(tree, best_el);
   leps += VetoStandardMu(tree, best_mu);
   Fix(tree, best_el, best_mu);
@@ -345,7 +382,7 @@ int VetoStandardIso(const small_tree &tree,
 }
 
 int VetoStandardEl(const small_tree &tree,
-               int &best_el){
+		   int &best_el){
   int num_els = 0;
   double max_pt = -1.0;
   best_el = -1;
@@ -366,7 +403,7 @@ int VetoStandardEl(const small_tree &tree,
 }
 
 int VetoStandardMu(const small_tree &tree,
-               int &best_mu){
+		   int &best_mu){
   int num_mus = 0;
   double max_pt = -1.0;
   best_mu = -1;
@@ -384,8 +421,8 @@ int VetoStandardMu(const small_tree &tree,
 }
 
 int VetoMiniIso(const small_tree &tree,
-            int &best_el,
-            int &best_mu){
+		int &best_el,
+		int &best_mu){
   int leps = VetoMiniEl(tree, best_el);
   leps += VetoMiniMu(tree, best_mu);
   Fix(tree, best_el, best_mu);
@@ -393,12 +430,12 @@ int VetoMiniIso(const small_tree &tree,
 }
 
 int VetoMiniEl(const small_tree &tree,
-           int &best_el){
+	       int &best_el){
   int num_els = 0;
   double max_pt = -1.0;
   best_el = -1;
   for(size_t iel = 0; iel < tree.els_miniso_tr10().size(); ++iel){
-    if(min(tree.els_reliso_r02().at(iel),tree.els_miniso_tr10().at(iel)) < 0.15){
+    if(min(tree.els_reliso_r02().at(iel),tree.els_miniso_tr10().at(iel)) < VetMiniEl){
       if(!(tree.els_ispf().at(iel))) continue;
       ++num_els;
       if(tree.els_pt().at(iel) > max_pt){
@@ -411,12 +448,12 @@ int VetoMiniEl(const small_tree &tree,
 }
 
 int VetoMiniMu(const small_tree &tree,
-           int &best_mu){
+	       int &best_mu){
   int num_mus = 0;
   double max_pt = -1.0;
   best_mu = -1;
   for(size_t imu = 0; imu < tree.mus_miniso_tr10().size(); ++imu){
-    if(min(tree.mus_reliso_r02().at(imu),tree.mus_miniso_tr10().at(imu)) < 0.4){
+    if(min(tree.mus_reliso_r02().at(imu),tree.mus_miniso_tr10().at(imu)) < VetMiniMu){
       ++num_mus;
       if(tree.mus_pt().at(imu) > max_pt){
         max_pt = tree.mus_pt().at(imu);
