@@ -16,7 +16,7 @@ class event_handler : public phys_objects{
 public:
   explicit event_handler(const std::string &fileName, bool quick_mode=false);
 
-  void ReduceTree(int Nentries, TString outFilename, int Ntotentries);
+  void ReduceTree(int Nentries, const TString &outFilename, int Ntotentries);
   void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
   void WriteFatJets(small_tree &tree);
   void WriteTaus(small_tree &tree);
@@ -33,7 +33,10 @@ public:
 
   bool skip_slow;
 
-  float GetMinMTWb(std::vector<int> good_jets, const double pt_cut, const double bTag_req, const bool use_W_mass) const;
+  float GetMinMTWb(const std::vector<int> &good_jets,
+                   const double pt_cut,
+                   const double bTag_req,
+                   const bool use_W_mass) const;
 };
 
 #endif

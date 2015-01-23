@@ -100,7 +100,7 @@ int main(){
   variables.push_back("std::vector<bool> els_tru_tm");
   variables.push_back("std::vector<int> els_charge");
 
-    ///////////////////   Taus   //////////////////
+  ///////////////////   Taus   //////////////////
   variables.push_back("int ntaus");
   variables.push_back("int ntaus_mt100");
   variables.push_back("int ntaus_againstEMu");
@@ -146,6 +146,8 @@ int main(){
   variables.push_back("std::vector<float> jets_dphi_sum");
   variables.push_back("std::vector<bool> jets_bhad");
   variables.push_back("std::vector<bool> jets_blep");
+  variables.push_back("std::vector<bool> jets_bhad_tru");
+  variables.push_back("std::vector<bool> jets_blep_tru");
 
   ////////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");
@@ -155,7 +157,6 @@ int main(){
   // variables.push_back("std::vector<float> mc_id");
   // variables.push_back("std::vector<float> mc_momid");
   // variables.push_back("std::vector<float> mc_gmomid");
-
 
   ///////////////////   Fat Jets   //////////////
   variables.push_back("int nfjets_10");  // for fjets_pt>50, all with skinny jets pt>10

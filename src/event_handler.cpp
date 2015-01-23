@@ -45,7 +45,7 @@ event_handler::event_handler(const string &fileName, bool quick_mode):
   skip_slow(quick_mode){
   }
 
-void event_handler::ReduceTree(int Nentries, TString outFilename,
+void event_handler::ReduceTree(int Nentries, const TString &outFilename,
                                int Ntotentries){
 
   gROOT->ProcessLine("#include <vector>");
@@ -251,13 +251,18 @@ void event_handler::ReduceTree(int Nentries, TString outFilename,
     tree.ht30() = GetHT(good_jets_ra2, 30.0);
     tree.mht30() = GetMHT(good_jets_ra2, 30.0);
 
+    tree.jets_pt().resize(good_jets.size());
+    tree.jets_eta().resize(good_jets.size());
+    tree.jets_phi().resize(good_jets.size());
+    tree.jets_csv().resize(good_jets.size());
+    tree.jets_id().resize(good_jets.size());
     for(size_t igoodjet(0); igoodjet<good_jets.size(); igoodjet++){
       int ijet = good_jets.at(igoodjet);
-      tree.jets_pt().push_back(jets_AK4_pt()->at(ijet));
-      tree.jets_eta().push_back(jets_AK4_eta()->at(ijet));
-      tree.jets_phi().push_back(jets_AK4_phi()->at(ijet));
-      tree.jets_csv().push_back(jets_AK4_btag_inc_secVertexCombined()->at(ijet));
-      tree.jets_id().push_back(jets_AK4_parton_Id()->at(ijet));
+      tree.jets_pt().at(igoodjet) = jets_AK4_pt()->at(ijet);
+      tree.jets_eta().at(igoodjet) = jets_AK4_eta()->at(ijet);
+      tree.jets_phi().at(igoodjet) = jets_AK4_phi()->at(ijet);
+      tree.jets_csv().at(igoodjet) = jets_AK4_btag_inc_secVertexCombined()->at(ijet);
+      tree.jets_id().at(igoodjet) = jets_AK4_parton_Id()->at(ijet);
     }
     SumDeltaPhiVars(tree, good_jets);
 
@@ -331,14 +336,19 @@ void event_handler::WriteIsoTks(small_tree &tree){
   tree.nisotk15()=0;
   tree.nisotk10_mt100()=0;
   tree.nisotk15_mt100()=0;
+  tree.isotk_pt().resize(isotk_pt()->size());
+  tree.isotk_iso().resize(isotk_pt()->size());
+  tree.isotk_mt().resize(isotk_pt()->size());
+  tree.isotk_eta().resize(isotk_pt()->size());
+  tree.isotk_dzpv().resize(isotk_pt()->size());
   for (uint itrk(0); itrk<isotk_pt()->size(); itrk++) {
-    tree.isotk_pt().push_back(isotk_pt()->at(itrk));
-    tree.isotk_iso().push_back(isotk_iso()->at(itrk));
+    tree.isotk_pt().at(itrk) = isotk_pt()->at(itrk);
+    tree.isotk_iso().at(itrk) = isotk_iso()->at(itrk);
     float mt_itrk = GetMT(isotk_pt()->at(itrk), isotk_phi()->at(itrk),
                           mets_et()->at(0), mets_phi()->at(0));
-    tree.isotk_mt().push_back(mt_itrk);
-    tree.isotk_eta().push_back(isotk_eta()->at(itrk));
-    tree.isotk_dzpv().push_back(isotk_dzpv()->at(itrk));
+    tree.isotk_mt().at(itrk) = mt_itrk;
+    tree.isotk_eta().at(itrk) = isotk_eta()->at(itrk);
+    tree.isotk_dzpv().at(itrk) = isotk_dzpv()->at(itrk);
     if (!(isotk_pt()->at(itrk)>=10.
           && (isotk_iso()->at(itrk)/isotk_pt()->at(itrk) < 0.1)
           && (fabs(isotk_dzpv()->at(itrk))<0.05)
@@ -997,12 +1007,32 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
 }
 
 void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_jets){
+  tree.jets_dphi_lep().resize(good_jets.size());
+  tree.jets_dphi_met().resize(good_jets.size());
+  tree.jets_dphi_sum().resize(good_jets.size());
+
   size_t lep_index;
   bool is_muon;
   GetBestLepton(is_muon, lep_index);
   bool no_lep = lep_index == static_cast<size_t>(-1);
   int bhad = -1;
   int blep = -1;
+  int bhad_tru = -1;
+  int blep_tru = -1;
+
+  if(!no_lep){
+    float lep_charge = is_muon ? mus_charge()->at(lep_index) : els_charge()->at(lep_index);
+    for(size_t igoodjet = 0; igoodjet < good_jets.size(); ++igoodjet){
+      int ijet = good_jets.at(igoodjet);
+      if(fabs(jets_partonFlavour()->at(ijet)) != 5.0) continue;
+      short sign_comp = Sign(lep_charge)*Sign(jets_partonFlavour()->at(ijet));
+      if(sign_comp > 0){
+        blep_tru = igoodjet;
+      }else if(sign_comp < 0){
+        bhad_tru = igoodjet;
+      }
+    }
+  }
 
   vector<long double> jets_sdp(0);
   long double max_sdp = -1.0, max_dp = -1.0;
@@ -1026,30 +1056,34 @@ void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_je
       dphi_lep = DeltaPhi(jets_AK4_phi()->at(ijet),
                           els_phi()->at(lep_index));
     }
-    tree.jets_dphi_met().push_back(DeltaPhi(jets_AK4_phi()->at(ijet),
-                                            mets_phi()->at(0)));
-    tree.jets_dphi_lep().push_back(dphi_lep);
-    tree.jets_dphi_sum().push_back(sdp);
+    tree.jets_dphi_met().at(igoodjet) = DeltaPhi(jets_AK4_phi()->at(ijet),
+                                                 mets_phi()->at(0));
+    tree.jets_dphi_lep().at(igoodjet) = dphi_lep;
+    tree.jets_dphi_sum().at(igoodjet) = sdp;
 
-    if(jets_AK4_btag_inc_secVertexCombined()->at(ijet) > CSVCuts[1]){
-      if(sdp>4.5 && (sdp > max_sdp || (sdp==max_sdp && dphi_lep>max_dp))){
+    if(jets_AK4_btag_inc_secVertexCombined()->at(ijet) > CSVCuts[0]){
+      if(sdp > max_sdp || (sdp==max_sdp && dphi_lep>max_dp)){
         max_sdp = sdp;
         max_dp = dphi_lep;
         bhad = igoodjet;
       }
-    }
-    if(sdp < min_sdp || (sdp==min_sdp && dphi_lep<min_dp)){
-      min_sdp = sdp;
-      min_dp = dphi_lep;
-      blep = igoodjet;
+      if(sdp < min_sdp || (sdp==min_sdp && dphi_lep<min_dp)){
+        min_sdp = sdp;
+        min_dp = dphi_lep;
+        blep = igoodjet;
+      }
     }
   }
 
   tree.jets_bhad() = vector<bool>(tree.jets_dphi_met().size(), false);
   tree.jets_blep() = vector<bool>(tree.jets_dphi_met().size(), false);
+  tree.jets_bhad_tru() = vector<bool>(tree.jets_dphi_met().size(), false);
+  tree.jets_blep_tru() = vector<bool>(tree.jets_dphi_met().size(), false);
 
   if(bhad != -1) tree.jets_bhad().at(bhad) = true;
   if(blep != -1) tree.jets_blep().at(blep) = true;
+  if(bhad_tru != -1) tree.jets_bhad_tru().at(bhad_tru) = true;
+  if(blep_tru != -1) tree.jets_blep_tru().at(blep_tru) = true;
 }
 
 unsigned event_handler::TypeCode() const{
@@ -1115,7 +1149,10 @@ unsigned event_handler::TypeCode() const{
   return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_taus;
 }
 
-float event_handler::GetMinMTWb(vector<int> good_jets, const double pt_cut, const double bTag_req, const bool use_W_mass) const{
+float event_handler::GetMinMTWb(const vector<int> &good_jets,
+                                const double pt_cut,
+                                const double bTag_req,
+                                const bool use_W_mass) const{
   float min_mT(fltmax);
   for (uint ijet(0); ijet<good_jets.size(); ijet++) {
     uint jet = good_jets[ijet];

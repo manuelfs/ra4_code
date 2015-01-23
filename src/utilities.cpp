@@ -25,7 +25,7 @@
 using namespace std;
 
 // Returns cross section of sample in pb
-float cross_section(TString file){
+float cross_section(const TString &file){
   float xsec(0.);
 
   // From https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVgluglu
@@ -43,10 +43,9 @@ float cross_section(TString file){
   if(file.Contains("SMS-T1bbbb_2J_mGl-1500_mLSP-100"))  xsec = 0.0141903;
   if(file.Contains("SMS-T1bbbb_2J_mGl-1000_mLSP-900"))  xsec = 0.325388;
   if(file.Contains("SMS-T1qqqq_2J_mGl-1400_mLSP-100"))  xsec = 0.0252977;
-  if(file.Contains("SMS-T1qqqq_2J_mGl-1000_mLSP-800"))  xsec = 0.325388;  
+  if(file.Contains("SMS-T1qqqq_2J_mGl-1000_mLSP-800"))  xsec = 0.325388; 
   if(file.Contains("SMS-T2bb_2J_mStop-600_mLSP-580"))  xsec = 0.174599;
   if(file.Contains("SMS-T2bb_2J_mStop-900_mLSP-100"))  xsec = 0.0128895;
-
 
   // https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get/TOP-Fall13-00005
   // says that it is 424.5 pb
@@ -117,7 +116,9 @@ float cross_section(TString file){
 }
 
 // Returns list of directorites or files in folder
-vector<TString> dirlist(TString folder, TString inname, TString tag){
+vector<TString> dirlist(const TString &folder,
+                        const TString &inname,
+                        const TString &tag){
   TString pwd(gSystem->pwd());
   vector<TString> v_dirs;
   TSystemDirectory dir(folder, folder);
