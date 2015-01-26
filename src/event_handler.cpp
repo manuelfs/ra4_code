@@ -49,7 +49,6 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
                                int Ntotentries){
 
   gROOT->ProcessLine("#include <vector>");
-  // const float bad_val = -999.;
 
   TFile outFile(outFilename, "recreate");
   outFile.cd();
@@ -1086,7 +1085,24 @@ void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_je
   if(blep_tru != -1) tree.jets_blep_tru().at(blep_tru) = true;
 }
 
-unsigned event_handler::TypeCode() const{
+float event_handler::GetMinMTWb(const vector<int> &good_jets,
+                                const double pt_cut,
+                                const double bTag_req,
+                                const bool use_W_mass) const{
+  float min_mT(fltmax);
+  for (uint ijet(0); ijet<good_jets.size(); ijet++) {
+    uint jet = good_jets[ijet];
+    if (jets_pt()->at(jet)<pt_cut) continue;
+    if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
+    float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
+                     0., jets_pt()->at(jet), jets_phi()->at(jet));
+    if (mT<min_mT) min_mT=mT;
+  }
+  if (min_mT==fltmax) return bad_val;
+  else return min_mT;
+}
+
+unsigned event_handler::TypeCode(){
   const string sample_name = SampleName();
   unsigned sample_code = 0xF;
   if(Contains(sample_name, "SMS")){
@@ -1111,57 +1127,90 @@ unsigned event_handler::TypeCode() const{
     sample_code = 0xF;
   }
 
-  unsigned num_leps = 0, num_tau_to_lep = 0, num_taus = 0, num_conversions = 0;
-  bool counting = false;
+  vector<int> tru_e, tru_mu, tru_had_tau, tru_lep_tau;
+  GetTrueLeptons(tru_e, tru_mu, tru_had_tau, tru_lep_tau);
+  unsigned nlep = tru_e.size()+tru_mu.size();
+  unsigned ntau = tru_had_tau.size()+tru_lep_tau.size();
+  unsigned ntaul = tru_lep_tau.size();
 
-  for(size_t i = 0; i < mc_doc_id()->size(); ++i){
+  return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
+}
+
+void event_handler::GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons, 
+				   std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus) {
+  true_electrons.clear();
+  true_muons.clear();
+  true_had_taus.clear();
+  true_lep_taus.clear();
+
+  bool tau_to_3tau(false);
+  vector<int> lep_from_tau;
+  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){ 
     const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
     const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
     const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
-
-    if(mom != 15) counting=false;
-
     if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
-      ++num_leps;
-      if(mom == 15){
-        ++num_tau_to_lep;
-        if(counting){
-          ++num_conversions;
-          counting = false;
-        }else{
-          counting = true;
-        }
-      }
-    }else if(id == 15 && mom == 24){
-      ++num_taus;
+      if (mom == 24) { // Lep from W
+	if (id==11) true_electrons.push_back(i);
+	else if (id==13) true_muons.push_back(i);
+      } else if(!tau_to_3tau) { // Lep from tau, check for Brem
+	uint nlep(1);
+	for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	  const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	  const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	  if(momb==15 && (idb==11 || idb==13)) nlep++;
+	  if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	    if(nlep==1){
+	      if (id==11) true_electrons.push_back(i);
+	      else if (id==13) true_muons.push_back(i);
+	      lep_from_tau.push_back(i);
+	    }
+	    i = j-1; // Moving index to first particle after tau daughters 
+	    break;
+	  }
+	} // Loop over tau daughters
+      } // if lepton comes from tau
     }
-  }
+    if(id == 15 && mom == 24){
+      true_had_taus.push_back(i);
+    }
 
-  num_leps -= 2*num_conversions;
-  num_tau_to_lep -= 2*num_conversions;
+    // Counting number of tau->tautautau
+    if((id == 15) && (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24)))){
+      uint nlep(1);
+      for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	if(momb==15 && idb==15) nlep++;
+	if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	  if(nlep>1) tau_to_3tau = true;
+	  i = j-1; // Moving index to first particle after tau daughters 
+	  break;
+	}
+      } // Loop over tau daughters
+    } // if tau comes from prompt tau
 
-  if(sample_code > 0xF) sample_code = 0xF;
-  if(num_leps > 0xF) num_leps = 0xF;
-  if(num_tau_to_lep > 0xF) num_tau_to_lep = 0xF;
-  if(num_taus > 0xF) num_taus = 0xF;
+  } // Loop over mc_doc
 
-  return (sample_code << 12) | (num_leps << 8) | (num_tau_to_lep << 4) | num_taus;
-}
+  // Removing leptonic taus from tau list by finding smallest DeltaR(lep,tau)
+  for(unsigned ind = 0; ind < lep_from_tau.size(); ++ind){ 
+    float minDr(9999.), lepEta(mc_doc_eta()->at(lep_from_tau[ind])), lepPhi(mc_doc_phi()->at(lep_from_tau[ind]));
+    int imintau(-1);
+    for(unsigned itau=0; itau < true_had_taus.size(); itau++){
+      float tauEta(mc_doc_eta()->at(true_had_taus[itau])), tauPhi(mc_doc_phi()->at(true_had_taus[itau]));
+      float tauDr(dR(tauEta,lepEta, tauPhi,lepPhi));
+      if(tauDr < minDr) {
+	minDr = tauDr;
+	imintau = itau;
+      }
+    }
+    if(imintau>=0) {
+      true_lep_taus.push_back(imintau);
+      true_had_taus.erase(true_had_taus.begin()+imintau);
+    } else cout<<"Not found a tau match for lepton "<<ind<<endl; // Should not happen
+  } // Loop over leptons from taus
 
-float event_handler::GetMinMTWb(const vector<int> &good_jets,
-                                const double pt_cut,
-                                const double bTag_req,
-                                const bool use_W_mass) const{
-  float min_mT(fltmax);
-  for (uint ijet(0); ijet<good_jets.size(); ijet++) {
-    uint jet = good_jets[ijet];
-    if (jets_pt()->at(jet)<pt_cut) continue;
-    if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
-    float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
-                     0., jets_pt()->at(jet), jets_phi()->at(jet));
-    if (mT<min_mT) min_mT=mT;
-  }
-  if (min_mT==fltmax) return bad_val;
-  else return min_mT;
+  return;
+  
 }
