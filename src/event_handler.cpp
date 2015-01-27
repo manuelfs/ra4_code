@@ -296,7 +296,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
   treeglobal.Write();
 
   outFile.Close();
-  if (skip_slow) cout<<"Reduced tree in "<<outFilename<<endl;
+  cout<<"Reduced tree in "<<outFilename<<endl;
 }
 
 void event_handler::WriteTaus(small_tree &tree){
@@ -916,11 +916,12 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   riso.push_back(0.3);
   riso.push_back(0.4);
   riso.push_back(10./lep_pt);
-  riso.push_back(max(0.05,min(0.2,10./lep_pt)));
-  riso.push_back(max(0.05,min(0.2,15./lep_pt)));
+  riso.push_back(max(0.05,min(0.2, 10./lep_pt)));
+  riso.push_back(max(0.05,min(0.2, 15./lep_pt)));
   riso.push_back(15./lep_pt);
   riso.push_back(0.1);
   riso.push_back(0.15);
+  riso.push_back(max(0.05,min(0.2, 10./lep_pt)));
   size_t nriso = riso.size();
   double riso_max = max(0.4,10./lep_pt);
 
@@ -949,12 +950,28 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
 
     if (pfcand_charge()->at(icand)==0){
       if (pfcand_pt()->at(icand)>ptThresh) {
+	double wpv(0.), wpu(0.), wpf(1.);
+	for (unsigned int jcand = 0; jcand < pfcand_pt()->size(); jcand++) {
+	  if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
+	  double jpt = pfcand_pt()->at(jcand);
+	  double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand), 
+			  pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
+	  if(jdr<=0) continue; // We can either not count it, or count it infinitely...
+	  if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
+	  else wpu += log(jpt/jdr);
+	}
         if (abs(pfcand_pdgId()->at(icand))==22) {
           if(dr < deadcone_ph) continue;
-          for (uint ir=0; ir<nriso; ir++) {if (dr<riso[ir]) iso_ph[ir] += pfcand_pt()->at(icand);}
+          for (uint ir=0; ir<nriso; ir++) {
+	    wpf = (ir==nriso-1)?(wpv/(wpv+wpu)):1.;
+	    if (dr<riso[ir]) iso_ph[ir] += wpf*pfcand_pt()->at(icand);
+	  }
         } else if (abs(pfcand_pdgId()->at(icand))==130) {
           if(dr < deadcone_nh) continue;
-          for (uint ir=0; ir<nriso; ir++) {if (dr<riso[ir]) iso_nh[ir] += pfcand_pt()->at(icand);}
+          for (uint ir=0; ir<nriso; ir++) {
+	    wpf = (ir==nriso-1)?(wpv/(wpv+wpu)):1.;
+	    if (dr<riso[ir]) iso_nh[ir] += wpf*pfcand_pt()->at(icand);
+	  }
         }
       }
     } else if (pfcand_fromPV()->at(icand)>1){
@@ -972,7 +989,8 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
 
   std::vector<double> iso(nriso,0.);
   for (uint ir=0; ir<nriso; ir++) {
-    iso[ir] = iso_ph[ir] + iso_nh[ir] - 0.5*iso_pu[ir];
+    iso[ir] = iso_ph[ir] + iso_nh[ir];
+    if(ir<nriso-1) iso[ir] -= 0.5*iso_pu[ir];
     if (iso[ir]>0) iso[ir] += iso_ch[ir];
     else iso[ir] = iso_ch[ir];
     iso[ir] = iso[ir]/lep_pt;
@@ -989,6 +1007,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     tree.els_miniso_15().push_back(iso[6]);
     tree.els_reliso_r01().push_back(iso[7]);
     tree.els_reliso_r015().push_back(iso[8]);
+    tree.els_miniso_tr10_pfpu().push_back(iso[9]);
   } else {
     tree.mus_reliso_r02().push_back(iso[0]);
     tree.mus_reliso_r03().push_back(iso[1]);
@@ -1000,6 +1019,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     tree.mus_miniso_15().push_back(iso[6]);
     tree.mus_reliso_r01().push_back(iso[7]);
     tree.mus_reliso_r015().push_back(iso[8]);
+    tree.mus_miniso_tr10_pfpu().push_back(iso[9]);
   }
 
   return;
@@ -1198,6 +1218,7 @@ void event_handler::GetTrueLeptons(std::vector<int> &true_electrons, std::vector
     float minDr(9999.), lepEta(mc_doc_eta()->at(lep_from_tau[ind])), lepPhi(mc_doc_phi()->at(lep_from_tau[ind]));
     int imintau(-1);
     for(unsigned itau=0; itau < true_had_taus.size(); itau++){
+      if(mc_doc_mother_id()->at(lep_from_tau[ind]) != mc_doc_id()->at(true_had_taus[itau])) continue;
       float tauEta(mc_doc_eta()->at(true_had_taus[itau])), tauPhi(mc_doc_phi()->at(true_had_taus[itau]));
       float tauDr(dR(tauEta,lepEta, tauPhi,lepPhi));
       if(tauDr < minDr) {

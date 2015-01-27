@@ -51,8 +51,9 @@ int main(){
   variables.push_back("std::vector<float> mus_miniso_10_ch"); // R_iso = 10./pT, charged PF only
   variables.push_back("std::vector<float> mus_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> mus_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
-  variables.push_back("std::vector<float> mus_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
-  variables.push_back("std::vector<float> mus_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only
+  variables.push_back("std::vector<float> mus_miniso_tr15"); // R_iso = max(0.05,min(0.3,7./pT))
+  variables.push_back("std::vector<float> mus_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,7./pT)), charged PF cands only
+  variables.push_back("std::vector<float> mus_miniso_tr10_pfpu"); // R_iso = max(0.05,min(0.3,10./pT)), PF PU
   variables.push_back("std::vector<float> mus_ptrel_0");
   variables.push_back("std::vector<float> mus_mindr_0");
   variables.push_back("std::vector<float> mus_ptrel_25");
@@ -84,8 +85,9 @@ int main(){
   variables.push_back("std::vector<float> els_miniso_10_ch"); // R_iso = 10./pT, charged PF only
   variables.push_back("std::vector<float> els_miniso_15");   // R_iso = 15./pT
   variables.push_back("std::vector<float> els_miniso_tr10"); // R_iso = max(0.05,min(0.3,10./pT))
-  variables.push_back("std::vector<float> els_miniso_tr15"); // R_iso = max(0.05,min(0.3,15./pT))
-  variables.push_back("std::vector<float> els_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,15./pT)), charged PF cands only
+  variables.push_back("std::vector<float> els_miniso_tr15"); // R_iso = max(0.05,min(0.3,7./pT))
+  variables.push_back("std::vector<float> els_miniso_tr15_ch"); // R_iso = max(0.05,min(0.3,7./pT)), charged PF cands only
+  variables.push_back("std::vector<float> els_miniso_tr10_pfpu"); // R_iso = max(0.05,min(0.3,10./pT)), PF PU
   variables.push_back("std::vector<float> els_ptrel_0");
   variables.push_back("std::vector<float> els_mindr_0");
   variables.push_back("std::vector<float> els_ptrel_25");
@@ -114,6 +116,14 @@ int main(){
   variables.push_back("std::vector<int> taus_n_pfcands");
   variables.push_back("std::vector<int> taus_decayMode");
   variables.push_back("std::vector<float> taus_CombinedIsolationDeltaBetaCorrRaw3Hits");
+
+  ///////////////////   Tracks   //////////////////
+  variables.push_back("std::vector<float> tks_pt");
+  variables.push_back("std::vector<float> tks_eta");
+  variables.push_back("std::vector<float> tks_phi");
+  variables.push_back("std::vector<float> tks_r03_ch");
+  variables.push_back("std::vector<float> tks_r02_ch");
+  variables.push_back("std::vector<float> tks_mini_ch");
 
   ///////////////////   Isolated tracks   //////////////////
   variables.push_back("int nisotk10");
