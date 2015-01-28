@@ -141,7 +141,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.els_reliso().push_back(GetElectronIsolation(index));
-        SetMiniIso(tree, index, /*isElectron*/ true);
+        SetMiniIso(tree, index, 11);
         tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
         tree.els_mindr_0().push_back(els_mindr_0.at(index));
         tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
@@ -181,7 +181,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.mus_reliso().push_back(GetMuonIsolation(index));
-        SetMiniIso(tree, index, /*isElectron*/ false);
+        SetMiniIso(tree, index, 13);
         tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
         tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
         tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
@@ -274,7 +274,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
     // Taus
     WriteTaus(tree);
-    // Isolated Tracks
+    // Tracks
+    WriteTks(tree);
     WriteIsoTks(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
@@ -330,6 +331,20 @@ void event_handler::WriteTaus(small_tree &tree){
     }
   }
 }
+
+void event_handler::WriteTks(small_tree &tree){
+  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+    if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
+	pfcand_pt()->at(cand)<10) continue;
+
+    tree.tks_pt().push_back(pfcand_pt()->at(cand));
+    tree.tks_eta().push_back(pfcand_eta()->at(cand));
+    tree.tks_phi().push_back(pfcand_phi()->at(cand));
+    tree.tks_id().push_back(static_cast<int>(floor(fabs(pfcand_pdgId()->at(cand)+0.5))));
+    SetMiniIso(tree,cand,0);
+  } // Loop over pfcands
+}
+
 
 void event_handler::WriteIsoTks(small_tree &tree){
   tree.nisotk10()=0;
@@ -897,15 +912,15 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
   }
 }
 
-void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
+void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
 
   vector<iso_class> isos;
   double lep_pt(0.), lep_eta(0.), lep_phi(0.), deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);;
-  if (isElectron) {
+  if(ParticleType==11) {
     lep_pt = els_pt()->at(ilep);
     lep_eta = els_eta()->at(ilep);
     lep_phi = els_phi()->at(ilep);
-    if (lep_eta>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
+    if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r02	     , 0.2));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r03	     , 0.3));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r04	     , 0.4));
@@ -918,7 +933,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r015     , 0.15));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
     
-  } else {
+  }else if(ParticleType==13){
     lep_pt = mus_pt()->at(ilep);
     lep_eta = mus_eta()->at(ilep);
     lep_phi = mus_phi()->at(ilep);
@@ -934,6 +949,17 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r01	     , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r015     , 0.15));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
+  } else{
+    lep_pt = pfcand_pt()->at(ilep);
+    lep_eta = pfcand_eta()->at(ilep);
+    lep_phi = pfcand_phi()->at(ilep);
+    deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01; // Using muon cones
+    isos.push_back(iso_class(&tree, &small_tree::tks_r03_ch, 0.3,false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree::tks_r03_ne, 0.3,true,true,false));
+    isos.push_back(iso_class(&tree, &small_tree::tks_r02_ch, 0.2,false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree::tks_r02_ne, 0.2,true,true,false));
+    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ch, max(0.05,min(0.2, 10./lep_pt)),false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ne, max(0.05,min(0.2, 10./lep_pt)),true,true,false));
   }
 
   size_t nriso = isos.size();
@@ -955,7 +981,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, bool isElectron){
   vector<double> iso_nh(nriso,0.); vector<double> iso_ch(nriso,0.); 
   vector<double> iso_ph(nriso,0.); vector<double> iso_pu(nriso,0.);
   double ptThresh(0.5);
-  if(isElectron) ptThresh = 0;
+  if(ParticleType==11) ptThresh = 0;
   for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
     if (icand==match_index) continue;
     if (abs(pfcand_pdgId()->at(icand))<7) continue;

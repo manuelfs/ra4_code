@@ -17,9 +17,10 @@ public:
   explicit event_handler(const std::string &fileName, bool quick_mode=false);
 
   void ReduceTree(int Nentries, const TString &outFilename, int Ntotentries);
-  void SetMiniIso(small_tree &tree, int ilep, bool isElectron);
+  void SetMiniIso(small_tree &tree, int ilep, int ParticleType);
   void WriteFatJets(small_tree &tree);
   void WriteTaus(small_tree &tree);
+  void WriteTks(small_tree &tree);
   void WriteIsoTks(small_tree &tree);
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
                  std::vector<float> &mus_ptrel,

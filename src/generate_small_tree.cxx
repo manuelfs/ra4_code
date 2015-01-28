@@ -118,12 +118,16 @@ int main(){
   variables.push_back("std::vector<float> taus_CombinedIsolationDeltaBetaCorrRaw3Hits");
 
   ///////////////////   Tracks   //////////////////
+  variables.push_back("std::vector<int> tks_id");
   variables.push_back("std::vector<float> tks_pt");
   variables.push_back("std::vector<float> tks_eta");
   variables.push_back("std::vector<float> tks_phi");
   variables.push_back("std::vector<float> tks_r03_ch");
   variables.push_back("std::vector<float> tks_r02_ch");
   variables.push_back("std::vector<float> tks_mini_ch");
+  variables.push_back("std::vector<float> tks_r03_ne");
+  variables.push_back("std::vector<float> tks_r02_ne");
+  variables.push_back("std::vector<float> tks_mini_ne");
 
   ///////////////////   Isolated tracks   //////////////////
   variables.push_back("int nisotk10");
