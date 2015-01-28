@@ -92,7 +92,7 @@ int main(){
     // vector<vector<CutBase*> > lepton_num_cuts;
 
     vector<TH2D> histos(iso_cuts.size(),
-			TH2D("", ";Num Reco "+isveto+"e+#mu;Num Gen e+#mu", 6, -1.5, 4.5, 6, -1.5, 4.5));
+                        TH2D("", ";Num Reco "+isveto+"e+#mu;Num Gen e+#mu", 6, -1.5, 4.5, 6, -1.5, 4.5));
     TLine hline(-1.5, -0.5, 4.5, -0.5);
     TLine vline(-0.5, -1.5, -0.5, 4.5);
     SetLineStyle(hline);
@@ -108,34 +108,34 @@ int main(){
       if(!PassesCuts(base_cuts)) continue;
 
       for(size_t icut = 0; icut < iso_cuts.size(); ++icut){
-	int best_el = -1, best_mu = -1;
-	int count = (iso_cuts.at(icut).first)(tree, best_el, best_mu);
+        int best_el = -1, best_mu = -1;
+        int count = (iso_cuts.at(icut).first)(tree, best_el, best_mu);
 
-	// bool pass_lep_cuts;
-	// if(!lepton_num_cuts.size()){
-	//   pass_lep_cuts = true;
-	// }else if(static_cast<size_t>(count)>=lepton_num_cuts.size()){
-	//   pass_lep_cuts = PassesCuts(lepton_num_cuts.back());
-	// }else{
-	//   pass_lep_cuts = PassesCuts(lepton_num_cuts.at(count));
-	// }
-	// if(!pass_lep_cuts) continue;
+        // bool pass_lep_cuts;
+        // if(!lepton_num_cuts.size()){
+        //   pass_lep_cuts = true;
+        // }else if(static_cast<size_t>(count)>=lepton_num_cuts.size()){
+        //   pass_lep_cuts = PassesCuts(lepton_num_cuts.back());
+        // }else{
+        //   pass_lep_cuts = PassesCuts(lepton_num_cuts.at(count));
+        // }
+        // if(!pass_lep_cuts) continue;
 
-	float mt(99999);
-	if(count==1){
-	  float lep_pt(0), lep_phi(0);
-	  if(best_el>=0){
-	    lep_pt = tree.els_pt()[best_el];
-	    lep_phi = tree.els_phi()[best_el];
-	  } else if(best_mu>=0) {
-	    lep_pt = tree.mus_pt()[best_mu];
-	    lep_phi = tree.mus_phi()[best_mu];
-	  } else {cout<<"Either mu or el have to be best"<<endl; return 1;}
-	  mt = sqrt(2*lep_pt* tree.met()*(1-cos(tree.met_phi()-lep_phi)));
-	}
-	//if(mt<150) continue;
+        float mt(99999);
+        if(count==1){
+          float lep_pt(0), lep_phi(0);
+          if(best_el>=0){
+            lep_pt = tree.els_pt()[best_el];
+            lep_phi = tree.els_phi()[best_el];
+          } else if(best_mu>=0) {
+            lep_pt = tree.mus_pt()[best_mu];
+            lep_phi = tree.mus_phi()[best_mu];
+          } else {cout<<"Either mu or el have to be best"<<endl; return 1;}
+          mt = sqrt(2*lep_pt* tree.met()*(1-cos(tree.met_phi()-lep_phi)));
+        }
+        if(false && mt<150) continue;
 
-	histos.at(icut).Fill(count, (tree.mc_type() & 0xF00) >> 8, lumi*tree.weight());
+        histos.at(icut).Fill(count, (tree.mc_type() & 0xF00) >> 8, lumi*tree.weight());
       }
     }
 
@@ -148,36 +148,36 @@ int main(){
 
       //Sum column
       for(int xbin = 0; xbin <= hist.GetNbinsX()+1; ++xbin){
-	double error = 0.;
-	double integral = hist.IntegralAndError(xbin, xbin, 2, hist.GetNbinsY()+1, error);
-	hist.SetBinContent(xbin, 1, integral);
-	hist.SetBinError(xbin, 1, error);
+        double error = 0.;
+        double integral = hist.IntegralAndError(xbin, xbin, 2, hist.GetNbinsY()+1, error);
+        hist.SetBinContent(xbin, 1, integral);
+        hist.SetBinError(xbin, 1, error);
       }
 
       //Sum row
       for(int ybin = 0; ybin <= hist.GetNbinsY()+1; ++ybin){
-	double error = 0.;
-	double integral = hist.IntegralAndError(2, hist.GetNbinsX()+1, ybin, ybin, error);
-	hist.SetBinContent(1, ybin, integral);
-	hist.SetBinError(1, ybin, error);
+        double error = 0.;
+        double integral = hist.IntegralAndError(2, hist.GetNbinsX()+1, ybin, ybin, error);
+        hist.SetBinContent(1, ybin, integral);
+        hist.SetBinError(1, ybin, error);
       }
 
       hist.GetXaxis()->SetBinLabel(1, "Any");
       for(int i = 2; i <= hist.GetNbinsX(); ++i){
-	hist.GetXaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
+        hist.GetXaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
       }
       hist.GetYaxis()->SetBinLabel(1, "Any");
       for(int i = 2; i <= hist.GetNbinsY(); ++i){
-	hist.GetYaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
+        hist.GetYaxis()->SetBinLabel(i, TString::Itoa(i-2,10));
       }
     }
 
     for(size_t ihist = 0; ihist < histos.size(); ++ihist){
       gStyle->SetPalette(999, pos_cols);
       TString title = "eps/trans_single_"
-	+sample+"_"
-	+cut_string+"_"
-	+iso_cuts.at(ihist).second+".eps";
+        +sample+"_"
+        +cut_string+"_"
+        +iso_cuts.at(ihist).second+".eps";
       TCanvas c;
       TString htitle("Yields for ");
       htitle += lumi; htitle += " fb^{-1}";
@@ -191,68 +191,68 @@ int main(){
       c.Print(title);
       gStyle->SetPaintTextFormat(".1f");
       for(size_t jhist = 0; jhist < histos.size(); ++jhist){
-	if(jhist==ihist) continue;
-	gStyle->SetPalette(999, sym_cols);
-	TH2D delta = histos.at(ihist);
-	for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
-	  for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
-	    delta.SetBinContent(x, y,
-				histos.at(ihist).GetBinContent(x, y)
-				-histos.at(jhist).GetBinContent(x, y));
-	  }
-	}
-	double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
-	double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
-	if(mini>maxi) maxi=mini;
-	delta.SetMinimum(-maxi);
-	delta.SetMaximum(maxi);
-	title = "eps/trans_delta_"
-	  +sample+"_"
-	  +cut_string+"_"
-	  +iso_cuts.at(ihist).second
-	  +"_minus_"
-	  +iso_cuts.at(jhist).second+".eps";
-	htitle = "Yield difference for Miniso - Reliso";
-	delta.SetTitle(htitle);
-	delta.Draw("col");
-	delta.Draw("textsame");
-	hline.Draw("same");
-	vline.Draw("same");
-	if(!title.Contains("minus_miniso") && !title.Contains("minus_vetominiso")) c.Print(title);
+        if(jhist==ihist) continue;
+        gStyle->SetPalette(999, sym_cols);
+        TH2D delta = histos.at(ihist);
+        for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
+          for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
+            delta.SetBinContent(x, y,
+                                histos.at(ihist).GetBinContent(x, y)
+                                -histos.at(jhist).GetBinContent(x, y));
+          }
+        }
+        double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
+        double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
+        if(mini>maxi) maxi=mini;
+        delta.SetMinimum(-maxi);
+        delta.SetMaximum(maxi);
+        title = "eps/trans_delta_"
+          +sample+"_"
+          +cut_string+"_"
+          +iso_cuts.at(ihist).second
+          +"_minus_"
+          +iso_cuts.at(jhist).second+".eps";
+        htitle = "Yield difference for Miniso - Reliso";
+        delta.SetTitle(htitle);
+        delta.Draw("col");
+        delta.Draw("textsame");
+        hline.Draw("same");
+        vline.Draw("same");
+        if(!title.Contains("minus_miniso") && !title.Contains("minus_vetominiso")) c.Print(title);
       }
       gStyle->SetPaintTextFormat(".0f");
       for(size_t jhist = 0; jhist < histos.size(); ++jhist){
-	if(jhist==ihist) continue;
-	gStyle->SetPalette(999, sym_cols);
-	TH2D delta = histos.at(ihist);
-	for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
-	  for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
-	    float den(histos.at(jhist).GetBinContent(x, y));
-	    float z(0);
-	    if(den>0.2) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
-	    //if(den) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
-	    if(fabs(z)<0.5) z = 0;
-	    delta.SetBinContent(x, y, z);
-	  }
-	}
-	double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
-	double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
-	if(mini>maxi) maxi=mini;
-	delta.SetMinimum(-maxi);
-	delta.SetMaximum(maxi);
-	title = "eps/trans_ratio_"
-	  +sample+"_"
-	  +cut_string+"_"
-	  +iso_cuts.at(ihist).second
-	  +"_over_"
-	  +iso_cuts.at(jhist).second+".eps";
-	htitle = "Yield difference for Miniso - Reliso (%)";
-	delta.SetTitle(htitle);
-	delta.Draw("col");
-	delta.Draw("textsame");
-	hline.Draw("same");
-	vline.Draw("same");
-	if(!title.Contains("over_miniso") && !title.Contains("over_vetominiso")) c.Print(title);
+        if(jhist==ihist) continue;
+        gStyle->SetPalette(999, sym_cols);
+        TH2D delta = histos.at(ihist);
+        for(int x = 0; x <= delta.GetNbinsX()+1; ++x){
+          for(int y = 0; y <= delta.GetNbinsY()+1; ++y){
+            float den(histos.at(jhist).GetBinContent(x, y));
+            float z(0);
+            if(den>0.2) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
+            //if(den) z = 100*(histos.at(ihist).GetBinContent(x, y)-den)/den;
+            if(fabs(z)<0.5) z = 0;
+            delta.SetBinContent(x, y, z);
+          }
+        }
+        double maxi = fabs(delta.GetBinContent(delta.GetMaximumBin()));
+        double mini = fabs(delta.GetBinContent(delta.GetMinimumBin()));
+        if(mini>maxi) maxi=mini;
+        delta.SetMinimum(-maxi);
+        delta.SetMaximum(maxi);
+        title = "eps/trans_ratio_"
+          +sample+"_"
+          +cut_string+"_"
+          +iso_cuts.at(ihist).second
+          +"_over_"
+          +iso_cuts.at(jhist).second+".eps";
+        htitle = "Yield difference for Miniso - Reliso (%)";
+        delta.SetTitle(htitle);
+        delta.Draw("col");
+        delta.Draw("textsame");
+        hline.Draw("same");
+        vline.Draw("same");
+        if(!title.Contains("over_miniso") && !title.Contains("over_vetominiso")) c.Print(title);
       }
 
     }
@@ -383,8 +383,8 @@ int MiniMu(const small_tree &tree,
 }
 
 int VetoStandardIso(const small_tree &tree,
-		    int &best_el,
-		    int &best_mu){
+                    int &best_el,
+                    int &best_mu){
   int leps = VetoStandardEl(tree, best_el);
   leps += VetoStandardMu(tree, best_mu);
   Fix(tree, best_el, best_mu);
@@ -392,7 +392,7 @@ int VetoStandardIso(const small_tree &tree,
 }
 
 int VetoStandardEl(const small_tree &tree,
-		   int &best_el){
+                   int &best_el){
   int num_els = 0;
   double max_pt = -1.0;
   best_el = -1;
@@ -413,7 +413,7 @@ int VetoStandardEl(const small_tree &tree,
 }
 
 int VetoStandardMu(const small_tree &tree,
-		   int &best_mu){
+                   int &best_mu){
   int num_mus = 0;
   double max_pt = -1.0;
   best_mu = -1;
@@ -431,8 +431,8 @@ int VetoStandardMu(const small_tree &tree,
 }
 
 int VetoMiniIso(const small_tree &tree,
-		int &best_el,
-		int &best_mu){
+                int &best_el,
+                int &best_mu){
   int leps = VetoMiniEl(tree, best_el);
   leps += VetoMiniMu(tree, best_mu);
   Fix(tree, best_el, best_mu);
@@ -440,7 +440,7 @@ int VetoMiniIso(const small_tree &tree,
 }
 
 int VetoMiniEl(const small_tree &tree,
-	       int &best_el){
+               int &best_el){
   int num_els = 0;
   double max_pt = -1.0;
   best_el = -1;
@@ -458,7 +458,7 @@ int VetoMiniEl(const small_tree &tree,
 }
 
 int VetoMiniMu(const small_tree &tree,
-	       int &best_mu){
+               int &best_mu){
   int num_mus = 0;
   double max_pt = -1.0;
   best_mu = -1;

@@ -16,6 +16,8 @@
 #include <stdexcept>
 
 #include "TMath.h"
+#include "TVector3.h"
+#include "TLorentzVector.h"
 
 #include "cfa_8.hpp"
 #include "cfa_13.hpp"
@@ -645,6 +647,232 @@ void phys_objects::GetBestLepton(bool &is_muon, size_t &index){
       }
     }
   }
+}
+
+vector<mc_particle> phys_objects::GetMCParticles() const{
+  vector<mc_particle> parts;
+  for(size_t idoc = 0; idoc < mc_doc_id()->size(); ++idoc){
+    TLorentzVector v(mc_doc_px()->at(idoc),
+                     mc_doc_py()->at(idoc),
+                     mc_doc_pz()->at(idoc),
+                     mc_doc_energy()->at(idoc));
+
+    parts.push_back(mc_particle(v,
+                                mc_doc_charge()->at(idoc),
+                                TMath::Nint(mc_doc_id()->at(idoc)),
+                                TMath::Nint(mc_doc_mother_id()->at(idoc)),
+                                TMath::Nint(mc_doc_grandmother_id()->at(idoc)),
+                                TMath::Nint(mc_doc_ggrandmother_id()->at(idoc)),
+                                TMath::Nint(mc_doc_status()->at(idoc))));
+  }
+  size_t to_search = parts.size();
+
+  for(size_t ifinal = 0; ifinal < mc_final_id()->size(); ++ifinal){
+    TLorentzVector v;
+    v.SetPtEtaPhiE(mc_final_pt()->at(ifinal),
+                   mc_final_eta()->at(ifinal),
+                   mc_final_phi()->at(ifinal),
+                   mc_final_energy()->at(ifinal));
+    float charge = mc_final_charge()->at(ifinal);
+    int id = TMath::Nint(mc_final_id()->at(ifinal));
+    int mom = TMath::Nint(mc_final_mother_id()->at(ifinal));
+    int gmom = TMath::Nint(mc_final_grandmother_id()->at(ifinal));
+    int ggmom = TMath::Nint(mc_final_ggrandmother_id()->at(ifinal));
+
+    //Comment out next line to avoid appending particles already in mc_doc
+    to_search = 0;
+    bool skip = false;
+    for(size_t i = 0; !skip && i < to_search; ++i){
+      mc_particle &part = parts.at(i);
+      if(charge == part.charge_
+         && id == part.id_
+         && mom == part.mom_
+         && gmom == part.gmom_
+         && ggmom == part.ggmom_
+         && (v-part.momentum_).Vect().Mag()<0.01) skip = true;
+    }
+    if(!skip){
+      parts.push_back(mc_particle(v, charge, id, mom, gmom, ggmom, 0));
+    }
+  }
+  return parts;
+}
+
+size_t phys_objects::MatchCandToStatus1(size_t icand,
+                                        const vector<mc_particle> &parts) const{
+  const size_t bad_index = static_cast<size_t>(-1);
+  if(icand >= pfcand_charge()->size()) return bad_index;
+  
+  TVector3 p3cand(pfcand_pt()->at(icand)*cos(pfcand_phi()->at(icand)),
+                  pfcand_pt()->at(icand)*sin(pfcand_phi()->at(icand)),
+                  pfcand_pt()->at(icand)*sinh(pfcand_eta()->at(icand)));
+  short charge_sign = Sign(pfcand_charge()->at(icand));
+  
+  float best_score = numeric_limits<float>::max();
+  size_t best_part = bad_index;
+  for(size_t imc = parts.size()-1; imc < parts.size(); --imc){
+    const mc_particle &part = parts.at(imc);
+    if(Sign(part.charge_) != charge_sign) continue;
+    float this_score = (part.momentum_.Vect()-p3cand).Mag2();
+    if(this_score < best_score){
+      best_score = this_score;
+      best_part = imc;
+    }
+  }
+
+  return best_part;
+}
+
+size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts) const{
+  const size_t bad_index = static_cast<size_t>(-1);
+  if(index > parts.size()) return bad_index;
+
+  const mc_particle &daughter = parts.at(index);
+
+  size_t low_cousin = index, high_cousin = index;
+  bool abort = false;
+  for(size_t imc = index - 1 ; !abort && imc < parts.size(); --imc){
+    const mc_particle &cousin = parts.at(imc);
+    
+    if(cousin.mom_ == daughter.mom_
+       && cousin.gmom_ == daughter.gmom_
+       && cousin.ggmom_ == daughter.ggmom_){
+      low_cousin = imc;
+    }else{
+      abort = true;
+    }
+  }
+
+  abort = false;
+  for(size_t imc = index + 1 ; !abort && imc < parts.size(); ++imc){
+    const mc_particle &cousin = parts.at(imc);
+
+    if(cousin.mom_ == daughter.mom_
+       && cousin.gmom_ == daughter.gmom_
+       && cousin.ggmom_ == daughter.ggmom_){
+      high_cousin = imc;
+    }else{
+      abort = true;
+    }
+  }
+
+  float best_score = numeric_limits<float>::max();
+  size_t best_parent = bad_index;
+  //Loop over possible parents
+  for(size_t imc = 0; imc < index; ++imc){
+    const mc_particle &mom = parts.at(imc);
+
+    if(!(mom.id_ == daughter.mom_
+         && mom.mom_ == daughter.gmom_
+         && mom.gmom_ == daughter.ggmom_)) continue;
+
+    //Find parent best momentum matched to sum of consecutive potential daughters
+    for(size_t low = low_cousin; low <= index; ++low){
+      TLorentzVector p4diff = mom.momentum_;
+      for(size_t high = low; high <= high_cousin; ++high){
+        const mc_particle &sister = parts.at(high);
+        p4diff -= sister.momentum_;
+        if(high < index) continue;
+        float this_score = p4diff.Vect().Mag2();
+        if(this_score < best_score){
+          best_score = this_score;
+          best_parent = imc;
+        }
+      }
+    }
+  }
+
+  return best_parent;
+}
+
+vector<size_t> phys_objects::GetMoms(const vector<mc_particle> &parts) const{
+  vector<size_t> moms(parts.size());
+  for(size_t imc = 0; imc < moms.size(); ++imc){
+    moms.at(imc) = GetMom(imc, parts);
+  }
+  return moms;
+}
+
+bool phys_objects::FromW(size_t index,
+                         const vector<mc_particle> &parts,
+                         const vector<size_t> &moms) const{
+  if(index > moms.size()) return false;
+  size_t i = moms.at(index);
+  vector<int> history;
+  while(i < moms.size()){
+    if(history.size()==0 || abs(parts.at(i).id_) != history.back()){
+      history.push_back(abs(parts.at(i).id_));
+    }
+    i = moms.at(i);
+  }
+
+  reverse(history.begin(), history.end());
+
+  for(size_t imc = 0; imc < history.size(); ++imc){
+    if(history.at(imc)==24){
+      if(imc < history.size()-1 && history.at(imc+1)<=6){//Avoid W->q->...->l
+        return false;
+      }else{
+        return true;
+      }
+    }
+  }
+  
+  return false;
+}
+
+bool phys_objects::FromTau(size_t index,
+                           const vector<mc_particle> &parts,
+                           const vector<size_t> &moms) const{
+  if(index > moms.size()) return false;
+  size_t i = moms.at(index);
+  while(i < moms.size()){
+    if(abs(parts.at(i).id_) == 15) return FromW(i, parts, moms);
+    i = moms.at(i);
+  }
+  return false;  
+}
+
+bool phys_objects::FromTauLep(size_t index,
+                              const vector<mc_particle> &parts,
+                              const vector<size_t> &moms) const{
+  if(index > moms.size()) return false;
+  const size_t bad_index = static_cast<size_t>(-1);
+  size_t i = moms.at(index);
+  size_t last_good_tau = bad_index;
+  while(i < moms.size()){
+    if(abs(parts.at(i).id_) == 15 && FromW(i, parts, moms)) last_good_tau = i;
+    i = moms.at(i);
+  }
+
+  for(size_t ilep = parts.size()-1; ilep < parts.size(); --ilep){
+    const mc_particle &part = parts.at(ilep);
+    if((abs(part.id_) == 11 || abs(part.id_) == 13)
+       && IsDescendantOf(ilep, last_good_tau, moms)
+       && NumChildren(ilep, moms)==0){
+      return true;
+    }
+  }
+  return false;
+}
+
+unsigned phys_objects::NumChildren(size_t index, const vector<size_t> &moms) const{
+  unsigned num_children = 0;
+  for(size_t istart = index + 1; istart < moms.size(); ++istart){
+    if(IsDescendantOf(istart, index, moms)) ++num_children;
+  }
+  return num_children;
+}
+
+bool phys_objects::IsDescendantOf(size_t descendant, size_t ancestor,
+                                  const vector<size_t> &moms) const{
+  if(descendant < ancestor || descendant >= moms.size()) return false;
+  size_t i = moms.at(descendant);
+  while(i < moms.size()){
+    if(i == ancestor) return true;
+    i = moms.at(i);
+  }
+  return false;
 }
 
 /////////////////////////////////////////////////////////////////////////

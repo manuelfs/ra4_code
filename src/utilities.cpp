@@ -43,7 +43,7 @@ float cross_section(const TString &file){
   if(file.Contains("SMS-T1bbbb_2J_mGl-1500_mLSP-100"))  xsec = 0.0141903;
   if(file.Contains("SMS-T1bbbb_2J_mGl-1000_mLSP-900"))  xsec = 0.325388;
   if(file.Contains("SMS-T1qqqq_2J_mGl-1400_mLSP-100"))  xsec = 0.0252977;
-  if(file.Contains("SMS-T1qqqq_2J_mGl-1000_mLSP-800"))  xsec = 0.325388; 
+  if(file.Contains("SMS-T1qqqq_2J_mGl-1000_mLSP-800"))  xsec = 0.325388;
   if(file.Contains("SMS-T2bb_2J_mStop-600_mLSP-580"))  xsec = 0.174599;
   if(file.Contains("SMS-T2bb_2J_mStop-900_mLSP-100"))  xsec = 0.0128895;
 
@@ -206,6 +206,7 @@ long double AddInQuadrature(long double x, long double y){
     y=x;
     x=temp;
   }
+  if(x==0.) return y;
   const long double rat=y/x;
   return fabs(x)*sqrt(1.0L+rat*rat);
 }

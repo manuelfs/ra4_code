@@ -333,18 +333,30 @@ void event_handler::WriteTaus(small_tree &tree){
 }
 
 void event_handler::WriteTks(small_tree &tree){
+  vector<mc_particle> parts = GetMCParticles();
+  vector<size_t> moms = GetMoms(parts);
   for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
-	pfcand_pt()->at(cand)<10) continue;
+        pfcand_pt()->at(cand)<10) continue;
 
     tree.tks_pt().push_back(pfcand_pt()->at(cand));
     tree.tks_eta().push_back(pfcand_eta()->at(cand));
     tree.tks_phi().push_back(pfcand_phi()->at(cand));
-    tree.tks_id().push_back(static_cast<int>(floor(fabs(pfcand_pdgId()->at(cand)+0.5))));
+    tree.tks_id().push_back(TMath::Nint(fabs(pfcand_pdgId()->at(cand))));
+
+    size_t ipart = MatchCandToStatus1(cand, parts);
+    //    cout << "ZZZ " << ipart << endl;
+    tree.tks_tru_id().push_back(parts.at(ipart).id_);
+    //    cout << "YYY" << endl;
+    tree.tks_from_w().push_back(FromW(ipart, parts, moms));
+    tree.tks_from_tau().push_back(FromTau(ipart, parts, moms));
+    tree.tks_from_taulep().push_back(FromTauLep(ipart, parts, moms));
+    tree.tks_from_tauhad().push_back(tree.tks_from_tau().back()
+                                     && !tree.tks_from_taulep().back());
+  
     SetMiniIso(tree,cand,0);
   } // Loop over pfcands
 }
-
 
 void event_handler::WriteIsoTks(small_tree &tree){
   tree.nisotk10()=0;
@@ -921,15 +933,15 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     lep_eta = els_eta()->at(ilep);
     lep_phi = els_phi()->at(ilep);
     if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
-    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r02	     , 0.2));
-    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r03	     , 0.3));
-    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r04	     , 0.4));
+    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r02      , 0.2));
+    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r03      , 0.3));
+    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r04      , 0.4));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_10_ch    , 10./lep_pt,false,false));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10     , max(0.05,min(0.2, 10./lep_pt))));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr15     , max(0.05,min(0.2, 15./lep_pt))));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr15_ch  , max(0.05,min(0.2, 15./lep_pt)),false,false));
-    isos.push_back(iso_class(&tree, &small_tree::els_miniso_15	     , 15./lep_pt));
-    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r01	     , 0.1));
+    isos.push_back(iso_class(&tree, &small_tree::els_miniso_15       , 15./lep_pt));
+    isos.push_back(iso_class(&tree, &small_tree::els_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r015     , 0.15));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
     
@@ -938,15 +950,15 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     lep_eta = mus_eta()->at(ilep);
     lep_phi = mus_phi()->at(ilep);
     deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01;
-    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r02	     , 0.2));
-    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r03	     , 0.3));
-    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r04	     , 0.4));
+    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r02      , 0.2));
+    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r03      , 0.3));
+    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r04      , 0.4));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_10_ch    , 10./lep_pt,false,false));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10     , max(0.05,min(0.2, 10./lep_pt))));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr15     , max(0.05,min(0.2, 15./lep_pt))));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr15_ch  , max(0.05,min(0.2, 15./lep_pt)),false,false));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_15	     , 15./lep_pt));
-    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r01	     , 0.1));
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_15       , 15./lep_pt));
+    isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r015     , 0.15));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
   } else{
@@ -991,39 +1003,39 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     //////////////////  NEUTRALS  /////////////////////////
     if (pfcand_charge()->at(icand)==0){
       if (pfcand_pt()->at(icand)>ptThresh) {
-	double wpv(0.), wpu(0.), wpf(1.);
-	for (unsigned int jcand = 0; jcand < pfcand_pt()->size(); jcand++) {
-	  if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
-	  double jpt = pfcand_pt()->at(jcand);
-	  double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand), 
-			  pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
-	  if(jdr<=0) continue; // We can either not count it, or count it infinitely...
-	  if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
-	  else wpu += log(jpt/jdr);
-	}
-	/////////// PHOTONS ////////////
+        double wpv(0.), wpu(0.), wpf(1.);
+        for (unsigned int jcand = 0; jcand < pfcand_pt()->size(); jcand++) {
+          if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
+          double jpt = pfcand_pt()->at(jcand);
+          double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand), 
+                          pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
+          if(jdr<=0) continue; // We can either not count it, or count it infinitely...
+          if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
+          else wpu += log(jpt/jdr);
+        }
+        /////////// PHOTONS ////////////
         if (abs(pfcand_pdgId()->at(icand))==22) {
           if(dr < deadcone_ph) continue;
           for (uint ir=0; ir<nriso; ir++) {
-	    wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
-	    if (dr<isos[ir].R) isos[ir].iso_ph += wpf*pfcand_pt()->at(icand);
-	  }
-	/////////// NEUTRAL HADRONS ////////////
+            wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
+            if (dr<isos[ir].R) isos[ir].iso_ph += wpf*pfcand_pt()->at(icand);
+          }
+          /////////// NEUTRAL HADRONS ////////////
         } else if (abs(pfcand_pdgId()->at(icand))==130) {
           if(dr < deadcone_nh) continue;
           for (uint ir=0; ir<nriso; ir++) {
-	    wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
-	    if (dr<isos[ir].R) isos[ir].iso_nh += wpf*pfcand_pt()->at(icand);
-	  }
+            wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
+            if (dr<isos[ir].R) isos[ir].iso_nh += wpf*pfcand_pt()->at(icand);
+          }
         }
       }
-    //////////////////  CHARGED from PV  /////////////////////////
+      //////////////////  CHARGED from PV  /////////////////////////
     } else if (pfcand_fromPV()->at(icand)>1){
       if (abs(pfcand_pdgId()->at(icand))==211) {
         if(dr < deadcone_ch) continue;
         for (uint ir=0; ir<nriso; ir++) {if (dr<isos[ir].R) isos[ir].iso_ch += pfcand_pt()->at(icand);}
       }
-    //////////////////  CHARGED from PU  /////////////////////////
+      //////////////////  CHARGED from PU  /////////////////////////
     } else {
       if (pfcand_pt()->at(icand)>ptThresh){
         if(dr < deadcone_pu) continue;
@@ -1169,7 +1181,7 @@ unsigned event_handler::TypeCode(){
 }
 
 void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &true_muons, 
-				   vector<int> &true_had_taus, vector<int> &true_lep_taus) {
+                                   vector<int> &true_had_taus, vector<int> &true_lep_taus) {
   true_electrons.clear();
   true_muons.clear();
   true_had_taus.clear();
@@ -1184,24 +1196,24 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
     const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
     if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
       if (mom == 24) { // Lep from W
-	if (id==11) true_electrons.push_back(i);
-	else if (id==13) true_muons.push_back(i);
+        if (id==11) true_electrons.push_back(i);
+        else if (id==13) true_muons.push_back(i);
       } else if(!tau_to_3tau) { // Lep from tau, check for Brem
-	uint nlep(1);
-	for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
-	  const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
-	  const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
-	  if(momb==15 && (idb==11 || idb==13)) nlep++;
-	  if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
-	    if(nlep==1){
-	      if (id==11) true_electrons.push_back(i);
-	      else if (id==13) true_muons.push_back(i);
-	      lep_from_tau.push_back(i);
-	    }
-	    i = j-1; // Moving index to first particle after tau daughters 
-	    break;
-	  }
-	} // Loop over tau daughters
+        uint nlep(1);
+        for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+          const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+          const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+          if(momb==15 && (idb==11 || idb==13)) nlep++;
+          if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+            if(nlep==1){
+              if (id==11) true_electrons.push_back(i);
+              else if (id==13) true_muons.push_back(i);
+              lep_from_tau.push_back(i);
+            }
+            i = j-1; // Moving index to first particle after tau daughters 
+            break;
+          }
+        } // Loop over tau daughters
       } // if lepton comes from tau
     }
     if(id == 15 && mom == 24){
@@ -1212,14 +1224,14 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
     if((id == 15) && (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24)))){
       uint nlep(1);
       for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
-	const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
-	const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
-	if(momb==15 && idb==15) nlep++;
-	if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
-	  if(nlep>1) tau_to_3tau = true;
-	  i = j-1; // Moving index to first particle after tau daughters 
-	  break;
-	}
+        const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+        const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+        if(momb==15 && idb==15) nlep++;
+        if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+          if(nlep>1) tau_to_3tau = true;
+          i = j-1; // Moving index to first particle after tau daughters 
+          break;
+        }
       } // Loop over tau daughters
     } // if tau comes from prompt tau
 
@@ -1234,8 +1246,8 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
       float tauEta(mc_doc_eta()->at(true_had_taus[itau])), tauPhi(mc_doc_phi()->at(true_had_taus[itau]));
       float tauDr(dR(tauEta,lepEta, tauPhi,lepPhi));
       if(tauDr < minDr) {
-	minDr = tauDr;
-	imintau = itau;
+        minDr = tauDr;
+        imintau = itau;
       }
     }
     if(imintau>=0) {
@@ -1250,7 +1262,7 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
 
 // Class to have in one place the parameters of each iso calculation
 iso_class::iso_class(small_tree *itree, st_branch ibranch, double iR, 
-		     bool iaddPH, bool iaddNH, bool iaddCH, bool iusePFweight):
+                     bool iaddPH, bool iaddNH, bool iaddCH, bool iusePFweight):
   tree(itree),
   branch(ibranch),
   R(iR),

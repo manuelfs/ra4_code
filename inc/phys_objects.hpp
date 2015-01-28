@@ -9,6 +9,8 @@
 #include <string>
 #include <limits>
 
+#include "TLorentzVector.h"
+
 #include "cfa.hpp"
 #include "pdtlund.hpp"
 
@@ -21,6 +23,26 @@ namespace particleId {
     muonVeto=5
   };
 }
+
+struct mc_particle{
+  mc_particle(const TLorentzVector &momentum,
+              float charge,
+              int id, int mom, int gmom, int ggmom,
+              int status):
+    momentum_(momentum),
+    charge_(charge),
+    id_(id),
+    mom_(mom),
+    gmom_(gmom),
+    ggmom_(ggmom),
+    status_(status){
+  }
+
+  TLorentzVector momentum_;
+  float charge_;
+  int id_, mom_, gmom_, ggmom_;
+  int status_;
+};
 
 class phys_objects : public cfa{
 public:
@@ -73,6 +95,24 @@ public:
   int GetTrueElectron(int index, int &momID, bool &fromW, float &closest_dR) const;
   int GetTrueMuon(int index, int &momID, bool &fromW, float &closest_dR) const;
   int GetTrueParticle(float RecPt, float RecEta, float RecPhi, float &closest_dR, int ID) const;
+  std::vector<mc_particle> GetMCParticles() const;
+  size_t MatchCandToStatus1(size_t icand,
+                            const std::vector<mc_particle> &parts) const;
+  size_t GetMom(size_t index, const std::vector<mc_particle> &parts) const;
+  std::vector<size_t> GetMoms(const std::vector<mc_particle> &parts) const;
+  bool FromW(size_t index,
+             const std::vector<mc_particle> &parts,
+             const std::vector<size_t> &moms) const;
+  bool FromTau(size_t index,
+               const std::vector<mc_particle> &parts,
+               const std::vector<size_t> &moms) const;
+  bool FromTauLep(size_t index,
+                  const std::vector<mc_particle> &parts,
+                  const std::vector<size_t> &moms) const;
+  unsigned NumChildren(size_t index,
+                       const std::vector<size_t> &moms) const;
+  bool IsDescendantOf(size_t descendant, size_t ancestor,
+                      const std::vector<size_t> &moms) const;
 
   // Event cleaning
   bool PassesMETCleaningCut() const;

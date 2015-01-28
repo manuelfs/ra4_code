@@ -128,6 +128,11 @@ int main(){
   variables.push_back("std::vector<float> tks_r03_ne");
   variables.push_back("std::vector<float> tks_r02_ne");
   variables.push_back("std::vector<float> tks_mini_ne");
+  variables.push_back("std::vector<int> tks_tru_id");
+  variables.push_back("std::vector<bool> tks_from_w");
+  variables.push_back("std::vector<bool> tks_from_tau");
+  variables.push_back("std::vector<bool> tks_from_taulep");
+  variables.push_back("std::vector<bool> tks_from_tauhad");
 
   ///////////////////   Isolated tracks   //////////////////
   variables.push_back("int nisotk10");
