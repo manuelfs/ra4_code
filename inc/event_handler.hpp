@@ -41,4 +41,18 @@ public:
                    const bool use_W_mass) const;
 };
 
+// Class to organize the parameters of each iso calculation
+typedef std::vector<float> & (small_tree::*st_branch)();
+class iso_class {
+public:
+  explicit iso_class(small_tree *itree, st_branch ibranch=NULL, double iR=0.3, 
+		    bool iaddPH=true, bool iaddNH=true, bool iaddCH=true, bool iusePFweight=false);
+  small_tree *tree;
+  st_branch branch;
+  double R;
+  bool addPH, addNH, addCH, usePFweight;
+  float iso_ch, iso_ph, iso_nh, iso_pu;
+  void SetIso(float lep_pt=1.);
+};
+
 #endif
