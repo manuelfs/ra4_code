@@ -249,7 +249,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     tree.nbm30() = GetNumJets(good_jets_ra2, 30.0, CSVCuts[1]);
     tree.nbt30() = GetNumJets(good_jets_ra2, 30.0, CSVCuts[2]);
     tree.ht30() = GetHT(good_jets_ra2, 30.0);
-    tree.mht30() = GetMHT(good_jets_ra2, 30.0);
+    vector<int> good_jets_ra2_mht = GetJets(vector<int>(), vector<int>(), 30.0, 5);
+    tree.mht30() = GetMHT(good_jets_ra2_mht, 30.0);
 
     tree.jets_pt().resize(good_jets.size());
     tree.jets_eta().resize(good_jets.size());
@@ -275,7 +276,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     // Taus
     WriteTaus(tree);
     // Tracks
-    WriteTks(tree);
+    if(!skip_slow) WriteTks(tree);
     WriteIsoTks(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
@@ -927,11 +928,13 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
 void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
 
   vector<iso_class> isos;
+  double ptThresh(0.5);
   double lep_pt(0.), lep_eta(0.), lep_phi(0.), deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);;
   if(ParticleType==11) {
     lep_pt = els_pt()->at(ilep);
     lep_eta = els_eta()->at(ilep);
     lep_phi = els_phi()->at(ilep);
+    ptThresh = 0;
     if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r02      , 0.2));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r03      , 0.3));
@@ -990,10 +993,6 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
 
   // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons,
   // 1 and 2 for hadronic and em particles in HF
-  vector<double> iso_nh(nriso,0.); vector<double> iso_ch(nriso,0.); 
-  vector<double> iso_ph(nriso,0.); vector<double> iso_pu(nriso,0.);
-  double ptThresh(0.5);
-  if(ParticleType==11) ptThresh = 0;
   for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
     if (icand==match_index) continue;
     if (abs(pfcand_pdgId()->at(icand))<7) continue;
