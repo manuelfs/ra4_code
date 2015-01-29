@@ -10,6 +10,7 @@
 #include <limits>
 
 #include "TLorentzVector.h"
+#include "TMath.h"
 
 #include "cfa.hpp"
 #include "pdtlund.hpp"
@@ -30,7 +31,7 @@ struct mc_particle{
               int id, int mom, int gmom, int ggmom,
               int status):
     momentum_(momentum),
-    charge_(charge),
+    charge_(TMath::Nint(3.*charge)),
     id_(id),
     mom_(mom),
     gmom_(gmom),
@@ -98,21 +99,30 @@ public:
   std::vector<mc_particle> GetMCParticles() const;
   size_t MatchCandToStatus1(size_t icand,
                             const std::vector<mc_particle> &parts) const;
-  size_t GetMom(size_t index, const std::vector<mc_particle> &parts) const;
-  std::vector<size_t> GetMoms(const std::vector<mc_particle> &parts) const;
-  bool FromW(size_t index,
-             const std::vector<mc_particle> &parts,
-             const std::vector<size_t> &moms) const;
-  bool FromTau(size_t index,
-               const std::vector<mc_particle> &parts,
-               const std::vector<size_t> &moms) const;
-  bool FromTauLep(size_t index,
-                  const std::vector<mc_particle> &parts,
-                  const std::vector<size_t> &moms) const;
-  unsigned NumChildren(size_t index,
-                       const std::vector<size_t> &moms) const;
-  bool IsDescendantOf(size_t descendant, size_t ancestor,
-                      const std::vector<size_t> &moms) const;
+  static size_t GetMom(size_t index, const std::vector<mc_particle> &parts);
+  static std::vector<size_t> GetMoms(const std::vector<mc_particle> &parts);
+  static bool FromW(size_t index,
+		    const std::vector<mc_particle> &parts,
+		    const std::vector<size_t> &moms);
+  static bool FromTau(size_t index,
+		      const std::vector<mc_particle> &parts,
+		      const std::vector<size_t> &moms);
+  static bool FromTauLep(size_t index,
+			 const std::vector<mc_particle> &parts,
+			 const std::vector<size_t> &moms);
+  static unsigned NumChildren(size_t index,
+			      const std::vector<mc_particle> &parts,
+			      const std::vector<size_t> &moms,
+			      bool req_chg=false);
+  static unsigned NumDescendants(size_t index,
+				 const std::vector<mc_particle> &parts,
+				 const std::vector<size_t> &moms,
+				 bool req_chg=false);
+  static bool IsDescendantOf(size_t descendant, size_t ancestor,
+			     const std::vector<size_t> &moms);
+  static unsigned ParentTauDescendants(size_t index,
+				       const std::vector<mc_particle> &parts,
+				       const std::vector<size_t> &moms);
 
   // Event cleaning
   bool PassesMETCleaningCut() const;

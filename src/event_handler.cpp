@@ -276,7 +276,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     // Taus
     WriteTaus(tree);
     // Tracks
-    if(!skip_slow) WriteTks(tree);
+    WriteTks(tree);
     WriteIsoTks(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
@@ -340,22 +340,27 @@ void event_handler::WriteTks(small_tree &tree){
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
         pfcand_pt()->at(cand)<10) continue;
 
+    TLorentzVector vcand;
+    vcand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
+                       pfcand_phi()->at(cand), pfcand_energy()->at(cand));
+
     tree.tks_pt().push_back(pfcand_pt()->at(cand));
     tree.tks_eta().push_back(pfcand_eta()->at(cand));
     tree.tks_phi().push_back(pfcand_phi()->at(cand));
-    tree.tks_id().push_back(TMath::Nint(fabs(pfcand_pdgId()->at(cand))));
+    tree.tks_id().push_back(TMath::Nint(pfcand_pdgId()->at(cand)));
 
     size_t ipart = MatchCandToStatus1(cand, parts);
-    //    cout << "ZZZ " << ipart << endl;
     tree.tks_tru_id().push_back(parts.at(ipart).id_);
-    //    cout << "YYY" << endl;
+    tree.tks_tru_dr().push_back(vcand.DeltaR(parts.at(ipart).momentum_));
+    tree.tks_tru_dp().push_back((vcand-parts.at(ipart).momentum_).Vect().Mag());
     tree.tks_from_w().push_back(FromW(ipart, parts, moms));
     tree.tks_from_tau().push_back(FromTau(ipart, parts, moms));
     tree.tks_from_taulep().push_back(FromTauLep(ipart, parts, moms));
     tree.tks_from_tauhad().push_back(tree.tks_from_tau().back()
                                      && !tree.tks_from_taulep().back());
-  
-    SetMiniIso(tree,cand,0);
+    tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
+
+    if(!skip_slow) SetMiniIso(tree,cand,0);
   } // Loop over pfcands
 }
 
@@ -946,8 +951,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_15       , 15./lep_pt));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r015     , 0.15));
-    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
-    
+    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));
   }else if(ParticleType==13){
     lep_pt = mus_pt()->at(ilep);
     lep_eta = mus_eta()->at(ilep);
@@ -963,7 +967,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_15       , 15./lep_pt));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r015     , 0.15));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));   
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));
   } else{
     lep_pt = pfcand_pt()->at(ilep);
     lep_eta = pfcand_eta()->at(ilep);
@@ -1006,7 +1010,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
         for (unsigned int jcand = 0; jcand < pfcand_pt()->size(); jcand++) {
           if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
           double jpt = pfcand_pt()->at(jcand);
-          double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand), 
+          double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand),
                           pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
           if(jdr<=0) continue; // We can either not count it, or count it infinitely...
           if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
@@ -1179,7 +1183,7 @@ unsigned event_handler::TypeCode(){
   return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
 }
 
-void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &true_muons, 
+void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &true_muons,
                                    vector<int> &true_had_taus, vector<int> &true_lep_taus) {
   true_electrons.clear();
   true_muons.clear();
@@ -1188,7 +1192,7 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
 
   bool tau_to_3tau(false);
   vector<int> lep_from_tau;
-  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){ 
+  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
     const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
     const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
@@ -1209,7 +1213,7 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
               else if (id==13) true_muons.push_back(i);
               lep_from_tau.push_back(i);
             }
-            i = j-1; // Moving index to first particle after tau daughters 
+            i = j-1; // Moving index to first particle after tau daughters
             break;
           }
         } // Loop over tau daughters
@@ -1228,7 +1232,7 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
         if(momb==15 && idb==15) nlep++;
         if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
           if(nlep>1) tau_to_3tau = true;
-          i = j-1; // Moving index to first particle after tau daughters 
+          i = j-1; // Moving index to first particle after tau daughters
           break;
         }
       } // Loop over tau daughters
@@ -1237,7 +1241,7 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
   } // Loop over mc_doc
 
   // Removing leptonic taus from tau list by finding smallest DeltaR(lep,tau)
-  for(unsigned ind = 0; ind < lep_from_tau.size(); ++ind){ 
+  for(unsigned ind = 0; ind < lep_from_tau.size(); ++ind){
     float minDr(9999.), lepEta(mc_doc_eta()->at(lep_from_tau[ind])), lepPhi(mc_doc_phi()->at(lep_from_tau[ind]));
     int imintau(-1);
     for(unsigned itau=0; itau < true_had_taus.size(); itau++){
@@ -1254,13 +1258,10 @@ void event_handler::GetTrueLeptons(vector<int> &true_electrons, vector<int> &tru
       true_had_taus.erase(true_had_taus.begin()+imintau);
     } else cout<<"Not found a tau match for lepton "<<ind<<endl; // Should not happen
   } // Loop over leptons from taus
-
-  return;
-  
 }
 
 // Class to have in one place the parameters of each iso calculation
-iso_class::iso_class(small_tree *itree, st_branch ibranch, double iR, 
+iso_class::iso_class(small_tree *itree, st_branch ibranch, double iR,
                      bool iaddPH, bool iaddNH, bool iaddCH, bool iusePFweight):
   tree(itree),
   branch(ibranch),

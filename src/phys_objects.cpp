@@ -469,7 +469,7 @@ bool phys_objects::IsBasicJet(unsigned ijet) const{
   }
 
   return (NEF < 0.99 && NHF < 0.99 && numConst > 1
-	  && (fabs(jets_eta()->at(ijet))>=2.4 || (CEF < 0.99 && CHF > 0 && chgMult > 0)) );
+          && (fabs(jets_eta()->at(ijet))>=2.4 || (CEF < 0.99 && CHF > 0 && chgMult > 0)) );
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -684,7 +684,7 @@ vector<mc_particle> phys_objects::GetMCParticles() const{
     bool skip = false;
     for(size_t i = 0; !skip && i < to_search; ++i){
       mc_particle &part = parts.at(i);
-      if(charge == part.charge_
+      if(TMath::Nint(3.*charge) == part.charge_
          && id == part.id_
          && mom == part.mom_
          && gmom == part.gmom_
@@ -702,17 +702,17 @@ size_t phys_objects::MatchCandToStatus1(size_t icand,
                                         const vector<mc_particle> &parts) const{
   const size_t bad_index = static_cast<size_t>(-1);
   if(icand >= pfcand_charge()->size()) return bad_index;
-  
+
   TVector3 p3cand(pfcand_pt()->at(icand)*cos(pfcand_phi()->at(icand)),
                   pfcand_pt()->at(icand)*sin(pfcand_phi()->at(icand)),
                   pfcand_pt()->at(icand)*sinh(pfcand_eta()->at(icand)));
-  short charge_sign = Sign(pfcand_charge()->at(icand));
-  
+
   float best_score = numeric_limits<float>::max();
   size_t best_part = bad_index;
   for(size_t imc = parts.size()-1; imc < parts.size(); --imc){
     const mc_particle &part = parts.at(imc);
-    if(Sign(part.charge_) != charge_sign) continue;
+    if(part.status_ != 0) continue;
+    if(fabs(3.*part.charge_)<0.5) continue;
     float this_score = (part.momentum_.Vect()-p3cand).Mag2();
     if(this_score < best_score){
       best_score = this_score;
@@ -723,7 +723,7 @@ size_t phys_objects::MatchCandToStatus1(size_t icand,
   return best_part;
 }
 
-size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts) const{
+size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts){
   const size_t bad_index = static_cast<size_t>(-1);
   if(index > parts.size()) return bad_index;
 
@@ -733,7 +733,7 @@ size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts) cons
   bool abort = false;
   for(size_t imc = index - 1 ; !abort && imc < parts.size(); --imc){
     const mc_particle &cousin = parts.at(imc);
-    
+
     if(cousin.mom_ == daughter.mom_
        && cousin.gmom_ == daughter.gmom_
        && cousin.ggmom_ == daughter.ggmom_){
@@ -785,7 +785,7 @@ size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts) cons
   return best_parent;
 }
 
-vector<size_t> phys_objects::GetMoms(const vector<mc_particle> &parts) const{
+vector<size_t> phys_objects::GetMoms(const vector<mc_particle> &parts){
   vector<size_t> moms(parts.size());
   for(size_t imc = 0; imc < moms.size(); ++imc){
     moms.at(imc) = GetMom(imc, parts);
@@ -795,7 +795,7 @@ vector<size_t> phys_objects::GetMoms(const vector<mc_particle> &parts) const{
 
 bool phys_objects::FromW(size_t index,
                          const vector<mc_particle> &parts,
-                         const vector<size_t> &moms) const{
+                         const vector<size_t> &moms){
   if(index > moms.size()) return false;
   size_t i = moms.at(index);
   vector<int> history;
@@ -810,32 +810,47 @@ bool phys_objects::FromW(size_t index,
 
   for(size_t imc = 0; imc < history.size(); ++imc){
     if(history.at(imc)==24){
-      if(imc < history.size()-1 && history.at(imc+1)<=6){//Avoid W->q->...->l
+      if(imc < history.size()-1 && !(history.at(imc+1)>=11 || history.at(imc+1)<=16)){//Only want leptonic W
         return false;
       }else{
         return true;
       }
     }
   }
-  
+
   return false;
 }
 
 bool phys_objects::FromTau(size_t index,
                            const vector<mc_particle> &parts,
-                           const vector<size_t> &moms) const{
+                           const vector<size_t> &moms){
   if(index > moms.size()) return false;
   size_t i = moms.at(index);
   while(i < moms.size()){
-    if(abs(parts.at(i).id_) == 15) return FromW(i, parts, moms);
+    if(abs(parts.at(i).id_) == 15 && FromW(i, parts, moms)) return true;
     i = moms.at(i);
   }
-  return false;  
+  return false;
+}
+
+unsigned phys_objects::ParentTauDescendants(size_t index,
+                                            const vector<mc_particle> &parts,
+                                            const vector<size_t> &moms){
+  if(index > moms.size()) return 0;
+  const size_t bad_index = static_cast<size_t>(-1);
+  size_t i = moms.at(index);
+  size_t last_good_tau = bad_index;
+  while(i < moms.size()){
+    if(abs(parts.at(i).id_) == 15 && FromW(i, parts, moms)) last_good_tau = i;
+    i = moms.at(i);
+  }
+
+  return NumDescendants(last_good_tau, parts, moms, true);
 }
 
 bool phys_objects::FromTauLep(size_t index,
                               const vector<mc_particle> &parts,
-                              const vector<size_t> &moms) const{
+                              const vector<size_t> &moms){
   if(index > moms.size()) return false;
   const size_t bad_index = static_cast<size_t>(-1);
   size_t i = moms.at(index);
@@ -849,23 +864,41 @@ bool phys_objects::FromTauLep(size_t index,
     const mc_particle &part = parts.at(ilep);
     if((abs(part.id_) == 11 || abs(part.id_) == 13)
        && IsDescendantOf(ilep, last_good_tau, moms)
-       && NumChildren(ilep, moms)==0){
+       && NumDescendants(ilep, parts, moms)==0){
       return true;
     }
   }
   return false;
 }
 
-unsigned phys_objects::NumChildren(size_t index, const vector<size_t> &moms) const{
+unsigned phys_objects::NumChildren(size_t index,
+                                   const vector<mc_particle> &parts,
+                                   const vector<size_t> &moms,
+                                   bool req_chg){
   unsigned num_children = 0;
   for(size_t istart = index + 1; istart < moms.size(); ++istart){
-    if(IsDescendantOf(istart, index, moms)) ++num_children;
+    if(parts.at(istart).status_ == 0
+       && (!req_chg || parts.at(istart).charge_!=0)
+       && moms.at(istart)==index) ++num_children;
   }
   return num_children;
 }
 
+unsigned phys_objects::NumDescendants(size_t index,
+                                      const vector<mc_particle> &parts,
+                                      const vector<size_t> &moms,
+                                      bool req_chg){
+  unsigned num_descendants = 0;
+  for(size_t istart = index + 1; istart < moms.size(); ++istart){
+    if(parts.at(istart).status_ == 0
+       && (!req_chg || parts.at(istart).charge_!=0)
+       && IsDescendantOf(istart, index, moms)) ++num_descendants;
+  }
+  return num_descendants;
+}
+
 bool phys_objects::IsDescendantOf(size_t descendant, size_t ancestor,
-                                  const vector<size_t> &moms) const{
+                                  const vector<size_t> &moms){
   if(descendant < ancestor || descendant >= moms.size()) return false;
   size_t i = moms.at(descendant);
   while(i < moms.size()){
