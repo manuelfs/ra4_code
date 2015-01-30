@@ -20,7 +20,9 @@ public:
   void SetMiniIso(small_tree &tree, int ilep, int ParticleType);
   void WriteFatJets(small_tree &tree);
   void WriteTaus(small_tree &tree);
-  void WriteTks(small_tree &tree);
+  void WriteTks(small_tree &tree,
+                const std::vector<mc_particle> &parts,
+                const std::vector<size_t> &moms);
   void WriteIsoTks(small_tree &tree);
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
                  std::vector<float> &mus_ptrel,
@@ -31,8 +33,8 @@ public:
   void SumDeltaPhiVars(small_tree &tree,
                        const std::vector<int> &good_jets);
   unsigned TypeCode();
-  void GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons, 
-		      std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
+  void GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons,
+                      std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
 
   bool skip_slow;
 
@@ -46,8 +48,8 @@ public:
 typedef std::vector<float> & (small_tree::*st_branch)();
 class iso_class {
 public:
-  explicit iso_class(small_tree *itree, st_branch ibranch=NULL, double iR=0.3, 
-		    bool iaddPH=true, bool iaddNH=true, bool iaddCH=true, bool iusePFweight=false);
+  explicit iso_class(small_tree *itree, st_branch ibranch=NULL, double iR=0.3,
+                     bool iaddPH=true, bool iaddNH=true, bool iaddCH=true, bool iusePFweight=false);
   small_tree *tree;
   st_branch branch;
   double R;

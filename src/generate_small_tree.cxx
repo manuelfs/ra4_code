@@ -173,12 +173,13 @@ int main(){
 
   ////////////////////   MC   ///////////////////
   variables.push_back("unsigned mc_type");
-  // variables.push_back("std::vector<float> mc_pt");
-  // variables.push_back("std::vector<float> mc_eta");
-  // variables.push_back("std::vector<float> mc_phi");
-  // variables.push_back("std::vector<float> mc_id");
-  // variables.push_back("std::vector<float> mc_momid");
-  // variables.push_back("std::vector<float> mc_gmomid");
+  variables.push_back("std::vector<float>  mc_pt");
+  variables.push_back("std::vector<float>  mc_eta");
+  variables.push_back("std::vector<float>  mc_phi");
+  variables.push_back("std::vector<int>    mc_id");
+  variables.push_back("std::vector<size_t> mc_mom");
+  //variables.push_back("std::vector<float> mc_momid");
+  //variables.push_back("std::vector<float> mc_gmomid");
 
   ///////////////////   Fat Jets   //////////////
   variables.push_back("int nfjets_10");  // for fjets_pt>50, all with skinny jets pt>10

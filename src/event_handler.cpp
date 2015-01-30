@@ -221,15 +221,44 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
       tree.mt() = sqrt(2*lepmax_p4.Pt()* tree.met()*(1-cos(tree.met_phi()-lepmax_p4.Phi())));
     }
 
+    vector<mc_particle> parts = GetMCParticles();
+    vector<size_t> moms = GetMoms(parts);
     ////////////////   TRUTH   ////////////////
-    // for(size_t igen(0); igen<mc_doc_id()->size(); igen++) {
-    //   tree.mc_pt().push_back(mc_doc_pt()->at(igen));
-    //   tree.mc_phi().push_back(mc_doc_phi()->at(igen));
-    //   tree.mc_eta().push_back(mc_doc_eta()->at(igen));
-    //   tree.mc_id().push_back(mc_doc_id()->at(igen));
-    //   tree.mc_momid().push_back(mc_doc_mother_id()->at(igen));
-    //   tree.mc_gmomid().push_back(mc_doc_grandmother_id()->at(igen));
-    // }
+    vector<size_t> indices;
+    for(size_t imc = 0; imc < parts.size(); ++imc){
+      mc_particle &part = parts.at(imc);
+      if(part.status_ != 22 && part.status_ != 23) continue;
+      tree.mc_pt().push_back(part.momentum_.Pt());
+      tree.mc_phi().push_back(part.momentum_.Phi());
+      tree.mc_eta().push_back(part.momentum_.Eta());
+      tree.mc_id().push_back(part.id_);
+      indices.push_back(imc);
+      size_t imom = imc;
+      bool found_mom = false;
+      while(imom < moms.size() && !found_mom){
+        imom = moms.at(imom);
+        if(imom < parts.size()
+           && (parts.at(imom).status_ == 22 || parts.at(imom).status_ == 23)){
+          found_mom = true;
+        }
+      }
+      bool found_mom2 = false;
+      for(size_t i = 0; i < indices.size() && !found_mom2; ++i){
+        if(indices.at(i) == imom){
+          imom = i;
+          found_mom2 = true;
+        }
+      }
+      if(found_mom2){
+        tree.mc_mom().push_back(imom);
+      }else{
+        if(found_mom && imom < parts.size()){
+          tree.mc_mom().push_back(abs(parts.at(imom).id_)+1000);
+        }else{
+          tree.mc_mom().push_back(abs(part.mom_)+1000);
+        }
+      }
+    }
     tree.mc_type() = TypeCode();
 
     ////////////////   Jets   ////////////////
@@ -276,7 +305,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     // Taus
     WriteTaus(tree);
     // Tracks
-    WriteTks(tree);
+    WriteTks(tree, parts, moms);
     WriteIsoTks(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
@@ -333,9 +362,9 @@ void event_handler::WriteTaus(small_tree &tree){
   }
 }
 
-void event_handler::WriteTks(small_tree &tree){
-  vector<mc_particle> parts = GetMCParticles();
-  vector<size_t> moms = GetMoms(parts);
+void event_handler::WriteTks(small_tree &tree,
+                             const vector<mc_particle> &parts,
+                             const vector<size_t> &moms){
   for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
         pfcand_pt()->at(cand)<10) continue;
