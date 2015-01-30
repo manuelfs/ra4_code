@@ -19,12 +19,15 @@ int main(int argc, char *argv[]){
 
   std::string inFilename("");
   std::string masspoint("");
-  int c(0), Nentries(-1), nfiles(-1), nbatch(-1);
+  int c(0), Nentries(-1), nfiles(-1), nbatch(-1), total_entries_override(-1);
   bool quick_mode = false;
-  while((c=getopt(argc, argv, "n:i:m:f:b:q"))!=-1){
+  while((c=getopt(argc, argv, "n:t:i:m:f:b:q"))!=-1){
     switch(c){
     case 'n':
       Nentries=atoi(optarg);
+      break;
+    case 't':
+      total_entries_override = atoi(optarg);
       break;
     case 'f':
       nfiles=atoi(optarg);
@@ -40,6 +43,7 @@ int main(int argc, char *argv[]){
       break;
     case 'q':
       quick_mode=true;
+      break;
     default:
       break;
     }
@@ -96,6 +100,7 @@ int main(int argc, char *argv[]){
   }
   if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
   if(nfiles<=0) Ntotentries = Nentries;
+  if(total_entries_override > 0) Ntotentries = total_entries_override;
 
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "

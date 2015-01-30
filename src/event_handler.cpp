@@ -981,6 +981,11 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::tks_mini_ne, max(0.05,min(0.2, 10./lep_pt)),true,true,false));
   }
 
+  bool need_pfweight = false;
+  for(size_t iso = 0; !need_pfweight && iso < isos.size(); ++iso){
+    if(isos.at(iso).usePFweight) need_pfweight = true;
+  }
+
   size_t nriso = isos.size();
   double riso_max = max(0.4,10./lep_pt);
 
@@ -1007,7 +1012,7 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     if (pfcand_charge()->at(icand)==0){
       if (pfcand_pt()->at(icand)>ptThresh) {
         double wpv(0.), wpu(0.), wpf(1.);
-        for (unsigned int jcand = 0; jcand < pfcand_pt()->size(); jcand++) {
+        for (unsigned int jcand = 0; need_pfweight && jcand < pfcand_pt()->size(); jcand++) {
           if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
           double jpt = pfcand_pt()->at(jcand);
           double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand),
@@ -1048,8 +1053,6 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
   }
 
   for (uint ir=0; ir<nriso; ir++) isos[ir].SetIso(lep_pt);
-
-  return;
 }
 
 void event_handler::SumDeltaPhiVars(small_tree &tree, const vector<int> &good_jets){

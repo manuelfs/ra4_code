@@ -7,6 +7,11 @@ fi
 
 dataset=$1
 maxfiles=$2
+totentries=-1
+if (( "$#" > 2 ))
+then
+    totentries=$3
+fi
 
 nfiles=`ls $dataset/*root | wc -l`
 samplename=`basename $dataset`
@@ -26,7 +31,7 @@ else
     do
 	outfile="out/small_${samplename}_files${maxfiles}_batch${file}.root"
 	if [ ! -f $outfile ]; then
-	    JobSubmit.csh ./run/make_tree.exe -i $dataset -n -1 -f $maxfiles -b $file
+	    JobSubmit.csh ./run/make_tree.exe -i $dataset -n -1 -f $maxfiles -b $file -t $totentries
 	else
 	    echo File $outfile exists. Not sending job
 	fi
