@@ -233,10 +233,10 @@ double passIsolationCut(const small_tree &tree, int ilep, bool isElectron, bool 
       return tree.mus_reliso_r02()[ilep] < iso_cut;
   } else if (isotype=="miniso") {
     if (isElectron) 
-      return ((tree.els_miniso_tr15()[ilep] < iso_cut) 
+      return ((tree.els_miniso_tr07()[ilep] < iso_cut) 
              || (tree.els_reliso_r02()[ilep] < iso_cut));
     else 
-      return ((tree.mus_miniso_tr15()[ilep] < iso_cut) 
+      return ((tree.mus_miniso_tr07()[ilep] < iso_cut) 
              || (tree.mus_reliso_r02()[ilep] < iso_cut));
   } else {
     throw logic_error("Isolation cut not defined for isolation type"+isotype);

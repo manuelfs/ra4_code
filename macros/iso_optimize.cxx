@@ -136,8 +136,8 @@ bool StandardPtrel(const small_tree &tree, double cut_val){
 bool MuonMini02(const small_tree &tree, double cut_val){
   size_t num_sig = 0, num_veto = 0;
   int the_mu = -1;
-  for(size_t imu = 0; imu < tree.mus_miniso_tr15().size(); ++imu){
-    if(tree.mus_miniso_tr15().at(imu)<=cut_val || tree.mus_reliso_r02().at(imu)<=cut_val){
+  for(size_t imu = 0; imu < tree.mus_miniso_tr07().size(); ++imu){
+    if(tree.mus_miniso_tr07().at(imu)<=cut_val || tree.mus_reliso_r02().at(imu)<=cut_val){
       ++num_veto;
       if(tree.mus_sigid().at(imu)){
         ++num_sig;
@@ -156,8 +156,8 @@ bool ElectronMini02(const small_tree &tree, double cut_val){
   int the_mu = GetStandardMuons(tree, num_sig, num_veto);
 
   int the_el = -1;
-  for(size_t iel = 0; iel < tree.els_miniso_tr15().size(); ++iel){
-    if(tree.els_miniso_tr15().at(iel)<=cut_val || tree.els_reliso_r02().at(iel)<=cut_val){
+  for(size_t iel = 0; iel < tree.els_miniso_tr07().size(); ++iel){
+    if(tree.els_miniso_tr07().at(iel)<=cut_val || tree.els_reliso_r02().at(iel)<=cut_val){
       ++num_veto;
       if(tree.els_sigid().at(iel)){
         ++num_sig;
@@ -172,8 +172,8 @@ bool ElectronMini02(const small_tree &tree, double cut_val){
 bool MuonMini0201Ptrel(const small_tree &tree, double cut_val){
   size_t num_sig = 0, num_veto = 0;
   int the_mu = -1;
-  for(size_t imu = 0; imu < tree.mus_miniso_tr15().size(); ++imu){
-    if(tree.mus_miniso_tr15().at(imu)<0.3
+  for(size_t imu = 0; imu < tree.mus_miniso_tr07().size(); ++imu){
+    if(tree.mus_miniso_tr07().at(imu)<0.3
        || tree.mus_reliso_r02().at(imu)<0.3
        || tree.mus_ptrel_0().at(imu)>=cut_val){
       ++num_veto;
@@ -194,8 +194,8 @@ bool ElectronMini0201Ptrel(const small_tree &tree, double cut_val){
   int the_mu = GetStandardMuons(tree, num_sig, num_veto);
 
   int the_el = -1;
-  for(size_t iel = 0; iel < tree.els_miniso_tr15().size(); ++iel){
-    if(tree.els_miniso_tr15().at(iel)<0.05
+  for(size_t iel = 0; iel < tree.els_miniso_tr07().size(); ++iel){
+    if(tree.els_miniso_tr07().at(iel)<0.05
        || tree.els_reliso_r02().at(iel)<0.05
        || tree.els_ptrel_0().at(iel)>=cut_val){
       ++num_veto;
@@ -360,8 +360,8 @@ bool ElectronR0301Ptrel(const small_tree &tree, double cut_val){
 bool Mini02(const small_tree &tree, double /*cut_val*/){
   size_t num_sig = 0, num_veto = 0;
   int the_mu = -1;
-  for(size_t imu = 0; imu < tree.mus_miniso_tr15().size(); ++imu){
-    if(tree.mus_miniso_tr15().at(imu)<=0.3 || tree.mus_reliso_r02().at(imu)<=0.3){
+  for(size_t imu = 0; imu < tree.mus_miniso_tr07().size(); ++imu){
+    if(tree.mus_miniso_tr07().at(imu)<=0.3 || tree.mus_reliso_r02().at(imu)<=0.3){
       ++num_veto;
       if(tree.mus_sigid().at(imu)){
         ++num_sig;
@@ -371,8 +371,8 @@ bool Mini02(const small_tree &tree, double /*cut_val*/){
   }
 
   int the_el = -1;
-  for(size_t iel = 0; iel < tree.els_miniso_tr15().size(); ++iel){
-    if(tree.els_miniso_tr15().at(iel)<=0.05 || tree.els_reliso_r02().at(iel)<=0.05){
+  for(size_t iel = 0; iel < tree.els_miniso_tr07().size(); ++iel){
+    if(tree.els_miniso_tr07().at(iel)<=0.05 || tree.els_reliso_r02().at(iel)<=0.05){
       ++num_veto;
       if(tree.els_sigid().at(iel)){
         ++num_sig;
@@ -387,8 +387,8 @@ bool Mini02(const small_tree &tree, double /*cut_val*/){
 bool Mini02Ptrel(const small_tree &tree, double /*cut_val*/){
   size_t num_sig = 0, num_veto = 0;
   int the_mu = -1;
-  for(size_t imu = 0; imu < tree.mus_miniso_tr15().size(); ++imu){
-    if(tree.mus_miniso_tr15().at(imu)<=0.3
+  for(size_t imu = 0; imu < tree.mus_miniso_tr07().size(); ++imu){
+    if(tree.mus_miniso_tr07().at(imu)<=0.3
        || tree.mus_reliso_r02().at(imu)<=0.3
        || tree.mus_ptrel_0().at(imu) >= 10.){
       ++num_veto;
@@ -400,8 +400,8 @@ bool Mini02Ptrel(const small_tree &tree, double /*cut_val*/){
   }
 
   int the_el = -1;
-  for(size_t iel = 0; iel < tree.els_miniso_tr15().size(); ++iel){
-    if(tree.els_miniso_tr15().at(iel)<=0.05
+  for(size_t iel = 0; iel < tree.els_miniso_tr07().size(); ++iel){
+    if(tree.els_miniso_tr07().at(iel)<=0.05
        || tree.els_reliso_r02().at(iel)<=0.05
        || tree.els_ptrel_0().at(iel)>=50.0){
       ++num_veto;

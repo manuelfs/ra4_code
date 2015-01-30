@@ -121,16 +121,16 @@ void DrawROC(TChain &ttbar, TChain &t1tttt, const string &lep, int pt_bin){
 		(lep+"s_ptrel_rem_0+("+lep+"s_ptrel_rem_0<0)*9999.").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("miniso_good",
-		(lep+"s_miniso_tr15").c_str(),
+		(lep+"s_miniso_tr07").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("miniso_bad",
-		(lep+"s_miniso_tr15").c_str(),
+		(lep+"s_miniso_tr07").c_str(),
 		bad_denom_cut.c_str());
   t1tttt.Project("miniso_ch_good",
-		(lep+"s_miniso_tr15_ch").c_str(),
+		(lep+"s_miniso_tr07_ch").c_str(),
 		good_denom_cut.c_str());
   ttbar.Project("miniso_ch_bad",
-		(lep+"s_miniso_tr15_ch").c_str(),
+		(lep+"s_miniso_tr07_ch").c_str(),
 		bad_denom_cut.c_str());
 		
   double good_count, bad_count ,junk;

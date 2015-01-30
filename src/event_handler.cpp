@@ -238,7 +238,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
       while(imom < moms.size() && !found_mom){
         imom = moms.at(imom);
         if(imom < parts.size()
-           && (parts.at(imom).status_ == 22 || parts.at(imom).status_ == 23)){
+           && (parts.at(imom).status_ == 22)){
           found_mom = true;
         }
       }
@@ -974,9 +974,9 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r03      , 0.3));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r04      , 0.4));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_10_ch    , 10./lep_pt,false,false));
-    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10     , max(0.05,min(0.2, 10./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr15     , max(0.05,min(0.2, 15./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr15_ch  , max(0.05,min(0.2, 15./lep_pt)),false,false));
+    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr10     , max(0.05,min(0.3, 10./lep_pt))));
+    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr07     , max(0.05,min(0.3, 7./lep_pt))));
+    isos.push_back(iso_class(&tree, &small_tree::els_miniso_tr07_ch  , max(0.05,min(0.3, 7./lep_pt)),false,false));
     isos.push_back(iso_class(&tree, &small_tree::els_miniso_15       , 15./lep_pt));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::els_reliso_r015     , 0.15));
@@ -990,13 +990,13 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r03      , 0.3));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r04      , 0.4));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_10_ch    , 10./lep_pt,false,false));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10     , max(0.05,min(0.2, 10./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr15     , max(0.05,min(0.2, 15./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr15_ch  , max(0.05,min(0.2, 15./lep_pt)),false,false));
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10     , max(0.05,min(0.3, 10./lep_pt))));
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr07     , max(0.05,min(0.3, 7./lep_pt))));
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr07_ch  , max(0.05,min(0.3, 7./lep_pt)),false,false));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_15       , 15./lep_pt));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r01      , 0.1));
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r015     , 0.15));
-    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.2, 10./lep_pt)),true,true,true,true));
+    isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.3, 10./lep_pt)),true,true,true,true));
   } else{
     lep_pt = pfcand_pt()->at(ilep);
     lep_eta = pfcand_eta()->at(ilep);
@@ -1006,8 +1006,8 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::tks_r03_ne, 0.3,true,true,false));
     isos.push_back(iso_class(&tree, &small_tree::tks_r02_ch, 0.2,false,false,true));
     isos.push_back(iso_class(&tree, &small_tree::tks_r02_ne, 0.2,true,true,false));
-    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ch, max(0.05,min(0.2, 10./lep_pt)),false,false,true));
-    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ne, max(0.05,min(0.2, 10./lep_pt)),true,true,false));
+    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ch, max(0.05,min(0.3, 10./lep_pt)),false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree::tks_mini_ne, max(0.05,min(0.3, 10./lep_pt)),true,true,false));
   }
 
   bool need_pfweight = false;
