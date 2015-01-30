@@ -725,7 +725,7 @@ size_t phys_objects::MatchCandToStatus1(size_t icand,
 
 size_t phys_objects::GetMom(size_t index, const vector<mc_particle> &parts){
   const size_t bad_index = static_cast<size_t>(-1);
-  if(index > parts.size()) return bad_index;
+  if(index >= parts.size()) return bad_index;
 
   const mc_particle &daughter = parts.at(index);
 
@@ -796,7 +796,7 @@ vector<size_t> phys_objects::GetMoms(const vector<mc_particle> &parts){
 bool phys_objects::FromW(size_t index,
                          const vector<mc_particle> &parts,
                          const vector<size_t> &moms){
-  if(index > moms.size()) return false;
+  if(index >= moms.size()) return false;
   size_t i = moms.at(index);
   vector<int> history;
   while(i < moms.size()){
@@ -824,7 +824,7 @@ bool phys_objects::FromW(size_t index,
 bool phys_objects::FromTau(size_t index,
                            const vector<mc_particle> &parts,
                            const vector<size_t> &moms){
-  if(index > moms.size()) return false;
+  if(index >= moms.size()) return false;
   size_t i = moms.at(index);
   while(i < moms.size()){
     if(abs(parts.at(i).id_) == 15 && FromW(i, parts, moms)) return true;
@@ -836,7 +836,7 @@ bool phys_objects::FromTau(size_t index,
 unsigned phys_objects::ParentTauDescendants(size_t index,
                                             const vector<mc_particle> &parts,
                                             const vector<size_t> &moms){
-  if(index > moms.size()) return 0;
+  if(index >= moms.size()) return 0;
   const size_t bad_index = static_cast<size_t>(-1);
   size_t i = moms.at(index);
   size_t last_good_tau = bad_index;
@@ -851,7 +851,7 @@ unsigned phys_objects::ParentTauDescendants(size_t index,
 bool phys_objects::FromTauLep(size_t index,
                               const vector<mc_particle> &parts,
                               const vector<size_t> &moms){
-  if(index > moms.size()) return false;
+  if(index >= moms.size()) return false;
   const size_t bad_index = static_cast<size_t>(-1);
   size_t i = moms.at(index);
   size_t last_good_tau = bad_index;
@@ -899,7 +899,7 @@ unsigned phys_objects::NumDescendants(size_t index,
 
 bool phys_objects::IsDescendantOf(size_t descendant, size_t ancestor,
                                   const vector<size_t> &moms){
-  if(descendant < ancestor || descendant >= moms.size()) return false;
+  if(descendant <= ancestor || descendant >= moms.size()) return false;
   size_t i = moms.at(descendant);
   while(i < moms.size()){
     if(i == ancestor) return true;
