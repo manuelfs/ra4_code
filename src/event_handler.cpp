@@ -61,7 +61,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
   Timer timer(Nentries, 1.);
   timer.Start();
-  for(int entry = 0; entry < Nentries; ++entry){
+  for(int entry = 45323; entry < Nentries; ++entry){
     timer.Iterate();
     GetEntry(entry);
 
@@ -366,6 +366,10 @@ void event_handler::WriteTks(small_tree &tree,
                              const vector<mc_particle> &parts,
                              const vector<size_t> &moms){
   for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+    if(is_nan(pfcand_pt()->at(cand))
+       || is_nan(pfcand_eta()->at(cand))
+       || is_nan(pfcand_phi()->at(cand))
+       || is_nan(pfcand_energy()->at(cand))) continue;
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
         pfcand_pt()->at(cand)<10) continue;
 
@@ -381,17 +385,18 @@ void event_handler::WriteTks(small_tree &tree,
     size_t ipart = MatchCandToStatus1(cand, parts);
     tree.tks_tru_id().push_back(ipart<parts.size()?parts.at(ipart).id_:0);
     tree.tks_tru_dr().push_back(ipart<parts.size()
-				?vcand.DeltaR(parts.at(ipart).momentum_)
-				:fltmax);
+                                ?vcand.DeltaR(parts.at(ipart).momentum_)
+                                :fltmax);
     tree.tks_tru_dp().push_back(ipart<parts.size()
-				?(vcand-parts.at(ipart).momentum_).Vect().Mag()
-				:fltmax);
+                                ?(vcand-parts.at(ipart).momentum_).Vect().Mag()
+                                :fltmax);
     tree.tks_from_w().push_back(FromW(ipart, parts, moms));
     tree.tks_from_tau().push_back(FromTau(ipart, parts, moms));
     tree.tks_from_taulep().push_back(FromTauLep(ipart, parts, moms));
     tree.tks_from_tauhad().push_back(tree.tks_from_tau().back()
                                      && !tree.tks_from_taulep().back());
     tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
+    if(ipart>=parts.size()) cout << parts.at(ipart).id_ << endl;
 
     if(!skip_slow) SetMiniIso(tree,cand,0);
   } // Loop over pfcands
@@ -800,6 +805,8 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
     size_t imatch = 0;
 
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      if(is_nan(pfcand_eta()->at(cand))
+         || is_nan(pfcand_phi()->at(cand))) continue;
       const float dr = dR(els_eta()->at(el), pfcand_eta()->at(cand),
                           els_phi()->at(el), pfcand_phi()->at(cand));
       if(dr < mindr){
@@ -830,6 +837,8 @@ void event_handler::GetPtRels(std::vector<float> &els_ptrel,
                               mus_pz()->at(mu), mus_energy()->at(mu));
 
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+      if(is_nan(pfcand_eta()->at(cand))
+         || is_nan(pfcand_phi()->at(cand))) continue;
       const float dr = dR(mus_eta()->at(mu), pfcand_eta()->at(cand),
                           mus_phi()->at(mu), pfcand_phi()->at(cand));
       if(dr < mindr){
@@ -1002,6 +1011,17 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
     isos.push_back(iso_class(&tree, &small_tree::mus_reliso_r015     , 0.15));
     isos.push_back(iso_class(&tree, &small_tree::mus_miniso_tr10_pfpu, max(0.05,min(0.3, 10./lep_pt)),true,true,true,true));
   } else{
+    if(is_nan(pfcand_pt()->at(ilep))
+       || is_nan(pfcand_eta()->at(ilep))
+       || is_nan(pfcand_phi()->at(ilep))){
+      for(size_t i = 0; i < isos.size(); ++i){
+        iso_class &iso = isos.at(i);
+        if(iso.branch){
+          ((iso.tree)->*(iso.branch))().push_back(numeric_limits<float>::quiet_NaN());
+        }
+      }
+      return;
+    }
     lep_pt = pfcand_pt()->at(ilep);
     lep_eta = pfcand_eta()->at(ilep);
     lep_phi = pfcand_phi()->at(ilep);
@@ -1026,6 +1046,8 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
   double drmin = fltmax;
   uint match_index = 9999999;
   for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
+    if(is_nan(pfcand_eta()->at(icand))
+       || is_nan(pfcand_phi()->at(icand))) continue;
     double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
     if (dr < drmin){
       drmin = dr;
@@ -1038,6 +1060,9 @@ void event_handler::SetMiniIso(small_tree &tree, int ilep, int ParticleType){
   for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
     if (icand==match_index) continue;
     if (abs(pfcand_pdgId()->at(icand))<7) continue;
+    if(is_nan(pfcand_pt()->at(icand))
+       || is_nan(pfcand_eta()->at(icand))
+       || is_nan(pfcand_phi()->at(icand))) continue;
     double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
     if (dr > riso_max) continue;
 

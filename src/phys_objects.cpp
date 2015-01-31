@@ -703,6 +703,10 @@ size_t phys_objects::MatchCandToStatus1(size_t icand,
   const size_t bad_index = static_cast<size_t>(-1);
   if(icand >= pfcand_charge()->size()) return bad_index;
 
+  if(is_nan(pfcand_pt()->at(icand))
+     || is_nan(pfcand_eta()->at(icand))
+     || is_nan(pfcand_phi()->at(icand))) return bad_index;
+
   TVector3 p3cand(pfcand_pt()->at(icand)*cos(pfcand_phi()->at(icand)),
                   pfcand_pt()->at(icand)*sin(pfcand_phi()->at(icand)),
                   pfcand_pt()->at(icand)*sinh(pfcand_eta()->at(icand)));
@@ -1068,6 +1072,9 @@ bool phys_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx
     leptonPt = els_pt()->at(index);
   }
   for(unsigned iCand=0; iCand<pfcand_pt()->size(); iCand++) {
+    if(is_nan(pfcand_pt()->at(iCand))
+       || is_nan(pfcand_eta()->at(iCand))
+       || is_nan(pfcand_phi()->at(iCand))) continue;
     if(pfcand_particleId()->at(iCand)==type) {
       double tempDeltaR = dR(leptonEta, pfcand_eta()->at(iCand), leptonPhi, pfcand_phi()->at(iCand));
       if(tempDeltaR < deltaRVal) {
