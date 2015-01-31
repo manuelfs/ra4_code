@@ -61,7 +61,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
   Timer timer(Nentries, 1.);
   timer.Start();
-  for(int entry = 45323; entry < Nentries; ++entry){
+  for(int entry = 0; entry < Nentries; ++entry){
     timer.Iterate();
     GetEntry(entry);
 
