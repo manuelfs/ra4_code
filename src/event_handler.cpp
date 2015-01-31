@@ -379,9 +379,13 @@ void event_handler::WriteTks(small_tree &tree,
     tree.tks_id().push_back(TMath::Nint(pfcand_pdgId()->at(cand)));
 
     size_t ipart = MatchCandToStatus1(cand, parts);
-    tree.tks_tru_id().push_back(parts.at(ipart).id_);
-    tree.tks_tru_dr().push_back(vcand.DeltaR(parts.at(ipart).momentum_));
-    tree.tks_tru_dp().push_back((vcand-parts.at(ipart).momentum_).Vect().Mag());
+    tree.tks_tru_id().push_back(ipart<parts.size()?parts.at(ipart).id_:0);
+    tree.tks_tru_dr().push_back(ipart<parts.size()
+				?vcand.DeltaR(parts.at(ipart).momentum_)
+				:fltmax);
+    tree.tks_tru_dp().push_back(ipart<parts.size()
+				?(vcand-parts.at(ipart).momentum_).Vect().Mag()
+				:fltmax);
     tree.tks_from_w().push_back(FromW(ipart, parts, moms));
     tree.tks_from_tau().push_back(FromTau(ipart, parts, moms));
     tree.tks_from_taulep().push_back(FromTauLep(ipart, parts, moms));
