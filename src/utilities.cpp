@@ -83,12 +83,12 @@ float cross_section(const TString &file){
   if(file.Contains("QCD_Pt-2400to3200")) xsec = 0.00644;
   if(file.Contains("QCD_Pt-3200"))       xsec = 0.000163;
 
-  if(file.Contains("T_tW-channel-DR"))            xsec = 35.0;
-  if(file.Contains("TToLeptons_t-channel"))       xsec = 45.0;
   if(file.Contains("TToLeptons_s-channel"))       xsec = 2.0;
-  if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.0;
-  if(file.Contains("TBarToLeptons_t-channel"))    xsec = 16.9;
+  if(file.Contains("TToLeptons_t-channel"))       xsec = 103.4;
+  if(file.Contains("T_tW-channel-DR"))            xsec = 35.0;
   if(file.Contains("TBarToLeptons_s-channel"))    xsec = 1.0;
+  if(file.Contains("TBarToLeptons_t-channel"))    xsec = 61.6;
+  if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.0;
 
   if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3;
   if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24;
@@ -130,7 +130,7 @@ vector<TString> dirlist(const TString &folder,
     while ((file=static_cast<TSystemFile*>(next()))) {
       fname = file->GetName();
       if (inname=="dir") {
-        if ((file->IsDirectory() && !fname.Contains(".") && fname.EndsWith(tag))) v_dirs.push_back(fname);
+        if ((file->IsDirectory() && !fname.Contains(".") && fname.Contains(tag))) v_dirs.push_back(fname);
       } else  if(fname.Contains(inname)) v_dirs.push_back(fname);
     }
   } // if(files)
