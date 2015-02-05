@@ -32,7 +32,8 @@ public:
                  float dr_match_thresh = -1.0);
   void SumDeltaPhiVars(small_tree &tree,
                        const std::vector<int> &good_jets);
-  unsigned TypeCode();
+  unsigned TypeCode(const std::vector<mc_particle> &parts,
+                    const std::vector<size_t> &moms);
   void GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons,
                       std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
 

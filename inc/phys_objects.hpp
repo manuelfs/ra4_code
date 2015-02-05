@@ -101,28 +101,42 @@ public:
                             const std::vector<mc_particle> &parts) const;
   static size_t GetMom(size_t index, const std::vector<mc_particle> &parts);
   static std::vector<size_t> GetMoms(const std::vector<mc_particle> &parts);
+  static bool IsBrem(size_t index,
+                     const std::vector<mc_particle> &parts,
+                     const std::vector<size_t> &moms);
   static bool FromW(size_t index,
-		    const std::vector<mc_particle> &parts,
-		    const std::vector<size_t> &moms);
+                    const std::vector<mc_particle> &parts,
+                    const std::vector<size_t> &moms);
   static bool FromTau(size_t index,
-		      const std::vector<mc_particle> &parts,
-		      const std::vector<size_t> &moms);
+                      const std::vector<mc_particle> &parts,
+                      const std::vector<size_t> &moms);
   static bool FromTauLep(size_t index,
-			 const std::vector<mc_particle> &parts,
-			 const std::vector<size_t> &moms);
+                         const std::vector<mc_particle> &parts,
+                         const std::vector<size_t> &moms);
   static unsigned NumChildren(size_t index,
-			      const std::vector<mc_particle> &parts,
-			      const std::vector<size_t> &moms,
-			      bool req_chg=false);
+                              const std::vector<mc_particle> &parts,
+                              const std::vector<size_t> &moms,
+                              bool req_chg=false);
   static unsigned NumDescendants(size_t index,
-				 const std::vector<mc_particle> &parts,
-				 const std::vector<size_t> &moms,
-				 bool req_chg=false);
+                                 const std::vector<mc_particle> &parts,
+                                 const std::vector<size_t> &moms,
+                                 bool req_chg=false);
   static bool IsDescendantOf(size_t descendant, size_t ancestor,
-			     const std::vector<size_t> &moms);
+                             const std::vector<size_t> &moms);
   static unsigned ParentTauDescendants(size_t index,
-				       const std::vector<mc_particle> &parts,
-				       const std::vector<size_t> &moms);
+                                       const std::vector<mc_particle> &parts,
+                                       const std::vector<size_t> &moms);
+  static size_t ParentW(size_t index,
+                        const std::vector<mc_particle> &parts,
+                        const std::vector<size_t> &moms);
+  static size_t ParentTau(size_t index,
+                          const std::vector<mc_particle> &parts,
+                          const std::vector<size_t> &moms);
+  static void CountLeptons(const std::vector<mc_particle> &parts,
+                           const std::vector<size_t> &moms,
+                           unsigned &nleps,
+                           unsigned &ntaus,
+                           unsigned &ntauleps);
 
   // Event cleaning
   bool PassesMETCleaningCut() const;

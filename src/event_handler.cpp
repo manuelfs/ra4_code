@@ -223,6 +223,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
     vector<mc_particle> parts = GetMCParticles();
     vector<size_t> moms = GetMoms(parts);
+
     ////////////////   TRUTH   ////////////////
     vector<size_t> indices;
     for(size_t imc = 0; imc < parts.size(); ++imc){
@@ -259,7 +260,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         }
       }
     }
-    tree.mc_type() = TypeCode();
+    tree.mc_type() = TypeCode(parts, moms);
 
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
@@ -396,7 +397,6 @@ void event_handler::WriteTks(small_tree &tree,
     tree.tks_from_tauhad().push_back(tree.tks_from_tau().back()
                                      && !tree.tks_from_taulep().back());
     tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
-    if(ipart>=parts.size()) cout << parts.at(ipart).id_ << endl;
 
     if(!skip_slow) SetMiniIso(tree,cand,0);
   } // Loop over pfcands
@@ -1210,7 +1210,8 @@ float event_handler::GetMinMTWb(const vector<int> &good_jets,
   else return min_mT;
 }
 
-unsigned event_handler::TypeCode(){
+unsigned event_handler::TypeCode(const vector<mc_particle> &parts,
+                                 const vector<size_t> &moms){
   const string sample_name = SampleName();
   unsigned sample_code = 0xF;
   if(Contains(sample_name, "SMS")){
@@ -1235,11 +1236,11 @@ unsigned event_handler::TypeCode(){
     sample_code = 0xF;
   }
 
-  vector<int> tru_e, tru_mu, tru_had_tau, tru_lep_tau;
-  GetTrueLeptons(tru_e, tru_mu, tru_had_tau, tru_lep_tau);
-  unsigned nlep = tru_e.size()+tru_mu.size();
-  unsigned ntau = tru_had_tau.size()+tru_lep_tau.size();
-  unsigned ntaul = tru_lep_tau.size();
+  unsigned nlep, ntau, ntaul;
+  CountLeptons(parts, moms, nlep, ntau, ntaul);
+  if(nlep > 0xF) nlep = 0xF;
+  if(ntau > 0xF) ntau = 0xF;
+  if(ntaul > 0xF) ntaul = 0xF;
 
   return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
 }
