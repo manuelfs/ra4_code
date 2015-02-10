@@ -1,17 +1,37 @@
 // make_tree: Generates the reduced trees
 
+#include <ctime>
+
 #include <vector>
 #include <iostream>
 #include <string>
 #include <unistd.h>
-#include <ctime>
+#include <typeinfo>
+
 #include "TString.h"
 #include "TChain.h"
+
 #include "utilities.hpp"
 #include "event_handler.hpp"
+#include "small_tree.hpp"
 
- 
 using namespace std;
+
+const type_info & GetType(int type_code){
+  switch(type_code){
+  case 1: return typeid(small_tree_full);
+  case 2: return typeid(small_tree_quick);
+  default: return typeid(small_tree);
+  }
+}
+
+TString GetName(int type_code){
+  switch(type_code){
+  case 1: return "full";
+  case 2: return "quick";
+  default: return "";
+  }
+}
 
 int main(int argc, char *argv[]){
   time_t startTime, curTime;
@@ -20,8 +40,8 @@ int main(int argc, char *argv[]){
   std::string inFilename("");
   std::string masspoint("");
   int c(0), Nentries(-1), nfiles(-1), nbatch(-1), total_entries_override(-1);
-  bool quick_mode = false;
-  while((c=getopt(argc, argv, "n:t:i:m:f:b:q"))!=-1){
+  int type_code = 0;
+  while((c=getopt(argc, argv, "n:t:i:m:f:b:s:"))!=-1){
     switch(c){
     case 'n':
       Nentries=atoi(optarg);
@@ -41,8 +61,8 @@ int main(int argc, char *argv[]){
     case 'm':
       masspoint=optarg;
       break;
-    case 'q':
-      quick_mode=true;
+    case 's':
+      type_code = atoi(optarg);
       break;
     default:
       break;
@@ -51,14 +71,13 @@ int main(int argc, char *argv[]){
 
   TString outFilename(inFilename), folder(inFilename);
   TString all_sample_files(inFilename), outfolder("out/");
-  TString prefix = (quick_mode?"small_quick_":"small_");
-  
+  TString prefix = "small_"+GetName(type_code)+"_";
+
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
 
-  
   //outFilename.ReplaceAll("/cfA",""); // line needed when running directly on the output of CfANtupler
-                                       // which produces files named cfA_XX.root
+  // which produces files named cfA_XX.root
 
   int len(outFilename.Length());
   if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
@@ -68,8 +87,8 @@ int main(int argc, char *argv[]){
       files = dirlist(inFilename, ".root");
       ntotfiles = static_cast<int>(files.size());
       if(ini > ntotfiles) {
-	cout<<"Trying to start at file "<<ini<<" but there are only "<<ntotfiles<<". Exiting."<<endl;
-	return 1;
+        cout<<"Trying to start at file "<<ini<<" but there are only "<<ntotfiles<<". Exiting."<<endl;
+        return 1;
       }
       inFilename = folder + "/" + files[ini];
       outFilename = outfolder+prefix+outFilename+"_files"; outFilename += nfiles;
@@ -78,7 +97,7 @@ int main(int argc, char *argv[]){
       if(end > ntotfiles) end = ntotfiles;
       // Finding total number of entries in sample
       all_sample_files += "/*.root";
-            
+
       TChain totsample("cfA/eventA");
       totsample.Add(all_sample_files);
       Ntotentries = totsample.GetEntries();
@@ -92,7 +111,8 @@ int main(int argc, char *argv[]){
   }
 
   cout<<"Opening "<<inFilename<<endl;
-  event_handler tHandler(inFilename, quick_mode); 
+
+  event_handler tHandler(inFilename, GetType(type_code));
   if(nfiles>0){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)

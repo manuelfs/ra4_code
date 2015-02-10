@@ -82,7 +82,7 @@ $(EXEDIR)/%.exe: $(OBJDIR)/%.o $(LIBFILE)
 .PRECIOUS: generate_small_tree.o generate_cfa_class.o
 
 $(SRCDIR)/small_tree.cpp $(INCDIR)/small_tree.hpp: dummy_small_tree.all
-dummy_small_tree.all: $(EXEDIR)/generate_small_tree.exe 
+dummy_small_tree.all: $(EXEDIR)/generate_small_tree.exe $(shell find txt/small_tree_cfg -type f)
 	./$< 
 
 $(SRCDIR)/cfa_base.cpp $(INCDIR)/cfa_base.hpp $(SRCDIR)/cfa_8.cpp $(INCDIR)/cfa_8.hpp $(SRCDIR)/cfa_13.cpp $(INCDIR)/cfa_13.hpp $(SRCDIR)/cfa.cpp $(INCDIR)/cfa.hpp $(MAKEDIR)/cfa_base.d $(MAKEDIR)/cfa_8.d $(MAKEDIR)/cfa_13.d $(MAKEDIR)/cfa.d: dummy_cfa.all

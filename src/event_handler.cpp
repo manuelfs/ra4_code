@@ -15,6 +15,7 @@
 #include <string>
 #include <iostream>
 #include <limits>
+#include <typeinfo>
 
 #include "TMath.h"
 #include "TROOT.h"
@@ -40,9 +41,9 @@ namespace{
   const float fltmax = numeric_limits<float>::max();
 }
 
-event_handler::event_handler(const string &fileName, bool quick_mode):
+event_handler::event_handler(const string &fileName, const type_info &type):
   phys_objects(fileName),
-  skip_slow(quick_mode){
+  type_(type){
   }
 
 void event_handler::ReduceTree(int Nentries, const TString &outFilename,
@@ -54,7 +55,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
   outFile.cd();
 
   // // Reduced tree
-  small_tree tree;
+  small_tree *p_tree = NewTree(type_);
+  small_tree &tree = *p_tree;
   float xsec(cross_section(outFilename));
   const float luminosity = 1000; // 1 fb^-1
   TLorentzVector lepmax_p4;
@@ -97,7 +99,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     vector<float> mus_ptrel_rem_25(0), els_ptrel_rem_25(0);
     vector<float> mus_mindr_rem_25(0), els_mindr_rem_25(0);
     lepmax_p4.SetPtEtaPhiE(0,0,0,0);
-    if(!skip_slow){
+    if(type_ != typeid(small_tree_quick)){
       GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, false);
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, false);
       GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, true);
@@ -141,15 +143,17 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.els_reliso().push_back(GetElectronIsolation(index));
-        SetMiniIso(tree, index, 11);
-        tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
-        tree.els_mindr_0().push_back(els_mindr_0.at(index));
-        tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
-        tree.els_mindr_25().push_back(els_mindr_25.at(index));
-        tree.els_ptrel_rem_0().push_back(els_ptrel_rem_0.at(index));
-        tree.els_mindr_rem_0().push_back(els_mindr_rem_0.at(index));
-        tree.els_ptrel_rem_25().push_back(els_ptrel_rem_25.at(index));
-        tree.els_mindr_rem_25().push_back(els_mindr_rem_25.at(index));
+        if(type_ != typeid(small_tree_quick)){
+          SetMiniIso(tree, index, 11);
+          tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
+          tree.els_mindr_0().push_back(els_mindr_0.at(index));
+          tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
+          tree.els_mindr_25().push_back(els_mindr_25.at(index));
+          tree.els_ptrel_rem_0().push_back(els_ptrel_rem_0.at(index));
+          tree.els_mindr_rem_0().push_back(els_mindr_rem_0.at(index));
+          tree.els_ptrel_rem_25().push_back(els_ptrel_rem_25.at(index));
+          tree.els_mindr_rem_25().push_back(els_mindr_rem_25.at(index));
+        }
 
         // Max pT lepton
         if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalElectron(index))
@@ -181,15 +185,17 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.mus_reliso().push_back(GetMuonIsolation(index));
-        SetMiniIso(tree, index, 13);
-        tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
-        tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
-        tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
-        tree.mus_mindr_25().push_back(mus_mindr_25.at(index));
-        tree.mus_ptrel_rem_0().push_back(mus_ptrel_rem_0.at(index));
-        tree.mus_mindr_rem_0().push_back(mus_mindr_rem_0.at(index));
-        tree.mus_ptrel_rem_25().push_back(mus_ptrel_rem_25.at(index));
-        tree.mus_mindr_rem_25().push_back(mus_mindr_rem_25.at(index));
+        if(type_ != typeid(small_tree_quick)){
+          SetMiniIso(tree, index, 13);
+          tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
+          tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
+          tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
+          tree.mus_mindr_25().push_back(mus_mindr_25.at(index));
+          tree.mus_ptrel_rem_0().push_back(mus_ptrel_rem_0.at(index));
+          tree.mus_mindr_rem_0().push_back(mus_mindr_rem_0.at(index));
+          tree.mus_ptrel_rem_25().push_back(mus_ptrel_rem_25.at(index));
+          tree.mus_mindr_rem_25().push_back(mus_mindr_rem_25.at(index));
+        }
 
         // Max pT lepton
         if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalMuon(index))
@@ -301,7 +307,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], true);
 
     ////////////////   Fat Jets   ////////////////
-    WriteFatJets(tree);
+    if(type_ != typeid(small_tree_quick)) WriteFatJets(tree);
 
     // Taus
     WriteTaus(tree);
@@ -318,18 +324,23 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
   GetEntry(0);
   TString model = model_params()->c_str();
   TString commit = RemoveTrailingNewlines(execute("git rev-parse HEAD"));
+  TString type = tree.Type();
 
   TTree treeglobal("treeglobal", "treeglobal");
   treeglobal.Branch("nev_file", &Nentries);
   treeglobal.Branch("nev_sample", &Ntotentries);
   treeglobal.Branch("commit", &commit);
   treeglobal.Branch("model", &model);
+  treeglobal.Branch("type", &type);
 
   treeglobal.Fill();
   treeglobal.Write();
 
   outFile.Close();
   cout<<"Reduced tree in "<<outFilename<<endl;
+
+  delete p_tree;
+  p_tree = NULL;
 }
 
 void event_handler::WriteTaus(small_tree &tree){
@@ -398,7 +409,7 @@ void event_handler::WriteTks(small_tree &tree,
                                      && !tree.tks_from_taulep().back());
     tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
 
-    if(!skip_slow) SetMiniIso(tree,cand,0);
+    if(type_ != typeid(small_tree_quick)) SetMiniIso(tree,cand,0);
   } // Loop over pfcands
 }
 
@@ -701,7 +712,7 @@ void event_handler::WriteFatJets(small_tree &tree){
 
   tree.nfjets_cands_trim() = static_cast<int>(bad_val);
   tree.mj_cands_trim() = static_cast<int>(bad_val);
-  if(!skip_slow){
+  if(type_ != typeid(small_tree_quick)){
     vector<PseudoJet> cands(0);
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
@@ -776,7 +787,7 @@ void event_handler::WriteFatJets(small_tree &tree){
         ++(tree.nfjets_cands_trim());
       }
     } // Loop over trimmed fat jets
-  } // If (skip_slow)
+  } // if(type_ != typeid(small_tree_quick))
 
 }
 
@@ -1349,4 +1360,3 @@ void iso_class::SetIso(float lep_pt){
   if(addCH) isolation += iso_ch;
   (tree->*branch)().push_back(isolation/lep_pt);
 }
-

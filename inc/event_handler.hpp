@@ -3,20 +3,26 @@
 #ifndef H_EVENT_HANDLER
 #define H_EVENT_HANDLER
 
+#include <stdint.h>
+
 #include <vector>
 #include <string>
 #include <utility>
 #include <limits>
-#include <stdint.h>
+#include <typeinfo>
+
 #include "phys_objects.hpp"
 #include "utilities.hpp"
 #include "small_tree.hpp"
 
 class event_handler : public phys_objects{
 public:
-  explicit event_handler(const std::string &fileName, bool quick_mode=false);
+  explicit event_handler(const std::string &fileName, const std::type_info &type);
 
   void ReduceTree(int Nentries, const TString &outFilename, int Ntotentries);
+
+  const std::type_info & Type() const;
+
   void SetMiniIso(small_tree &tree, int ilep, int ParticleType);
   void WriteFatJets(small_tree &tree);
   void WriteTaus(small_tree &tree);
@@ -36,13 +42,13 @@ public:
                     const std::vector<size_t> &moms);
   void GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons,
                       std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
-
-  bool skip_slow;
-
   float GetMinMTWb(const std::vector<int> &good_jets,
                    const double pt_cut,
                    const double bTag_req,
                    const bool use_W_mass) const;
+
+private:
+  const type_info &type_;
 };
 
 // Class to organize the parameters of each iso calculation
