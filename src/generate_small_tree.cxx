@@ -1,5 +1,7 @@
 #include "generate_small_tree.hpp"
 
+#include <cstring>
+
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
