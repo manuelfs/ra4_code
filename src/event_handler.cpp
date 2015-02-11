@@ -231,6 +231,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     vector<size_t> moms = GetMoms(parts);
 
     ////////////////   TRUTH   ////////////////
+    if(type_ != typeid(small_tree_lost_leptons_211)){
     vector<size_t> indices;
     for(size_t imc = 0; imc < parts.size(); ++imc){
       mc_particle &part = parts.at(imc);
@@ -267,7 +268,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
       }
     }
     tree.mc_type() = TypeCode(parts, moms);
-
+    }
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> veto_muons = GetMuons(false);
@@ -307,13 +308,15 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets_ra2, 30., CSVCuts[1], true);
 
     ////////////////   Fat Jets   ////////////////
-    if(type_ != typeid(small_tree_quick)) WriteFatJets(tree);
+    if(type_ == typeid(small_tree_full)) WriteFatJets(tree);
 
     // Taus
     WriteTaus(tree);
     // Tracks
     WriteTks(tree, parts, moms);
     WriteIsoTks(tree);
+
+    WriteTrueLeps(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
   }
@@ -442,6 +445,139 @@ void event_handler::WriteIsoTks(small_tree &tree){
       if (mt_itrk<100) tree.nisotk15_mt100()++;
     }
   }
+}
+
+void event_handler::WriteTrueLeps(small_tree &tree){
+  // gen lepton indices
+  std::vector<int> mc_mus;
+  std::vector<int> mc_els;
+  std::vector<int> mc_htaus;
+  std::vector<int> mc_ltaus;
+  GetTrueLeptons(mc_els, mc_mus, mc_htaus, mc_ltaus);
+  tree.nmc_mus() = mc_mus.size();
+  tree.nmc_els() = mc_els.size();
+  tree.nmc_htaus() = mc_htaus.size();
+  tree.nmc_ltaus() = mc_ltaus.size();
+  // match to reco leptons -- get reco indices
+  std::vector<int> matched_mus = MatchMuons(mc_mus);
+  std::vector<int> matched_els = MatchElectrons(mc_els);
+  // now fill vectors for tree
+  // muons
+  for (uint imu(0); imu<mc_mus.size(); imu++) {
+    tree.mc_mus_pt().push_back(mc_doc_pt()->at(mc_mus[imu]));
+    tree.mc_mus_eta().push_back(mc_doc_eta()->at(mc_mus[imu]));
+    tree.mc_mus_mpdr().push_back(GetDRToClosestParton(mc_mus[imu]));
+    if (matched_mus[imu]>=0) { // matched to reco muon, now check id
+      tree.mc_mus_reco().push_back(true);
+      tree.mc_mus_id().push_back(IsVetoIdMuon(matched_mus[imu]));
+    } else { // not reconstructed (matched), set ID to fail
+      tree.mc_mus_reco().push_back(false);
+      tree.mc_mus_id().push_back(false);
+    }
+  }
+  // electrons
+  for (uint iel(0); iel<mc_els.size(); iel++) {
+    tree.mc_els_pt().push_back(mc_doc_pt()->at(mc_els[iel]));
+    tree.mc_els_eta().push_back(mc_doc_eta()->at(mc_els[iel]));
+    tree.mc_els_mpdr().push_back(GetDRToClosestParton(mc_els[iel]));
+    if (matched_els[iel]>=0) { // matched to reco electron, now check id
+      tree.mc_els_reco().push_back(true);
+      tree.mc_els_id().push_back(IsVetoIdElectron(matched_els[iel]));
+    } else { // not reconstructed (matched), set ID to fail
+      tree.mc_els_reco().push_back(false);
+      tree.mc_els_id().push_back(false);
+    }
+  }
+  // hadronic taus
+  for (uint ihtau(0); ihtau<mc_htaus.size(); ihtau++) {
+    tree.mc_htaus_pt().push_back(mc_doc_pt()->at(mc_htaus[ihtau]));
+    tree.mc_htaus_eta().push_back(mc_doc_eta()->at(mc_htaus[ihtau]));
+    tree.mc_htaus_mpdr().push_back(GetDRToClosestParton(mc_htaus[ihtau]));
+  }
+  // leptonic taus
+  for (uint iltau(0); iltau<mc_ltaus.size(); iltau++) {
+    tree.mc_ltaus_pt().push_back(mc_doc_pt()->at(mc_ltaus[iltau]));
+    tree.mc_ltaus_eta().push_back(mc_doc_eta()->at(mc_ltaus[iltau]));
+    tree.mc_ltaus_mpdr().push_back(GetDRToClosestParton(mc_ltaus[iltau]));
+  }
+}
+
+std::vector<int> event_handler::MatchMuons(const std::vector<int> mc_muons) {
+  std::vector<int> reco_muons;
+  for (uint imu(0); imu<mc_muons.size(); imu++) {
+    reco_muons.push_back(GetClosestRecoMuon(mc_muons[imu]));
+  }
+  return reco_muons;
+}
+
+double event_handler::GetDRToClosestParton(const int imc) const {
+  double minDR(DBL_MAX);
+  double i_eta(mc_doc_eta()->at(imc)), i_phi(mc_doc_phi()->at(imc));
+  for(unsigned jmc = 0; jmc < mc_doc_id()->size(); ++jmc){
+    const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(jmc))+0.5));
+    const int status = static_cast<int>(floor(fabs(mc_doc_status()->at(jmc))+0.5));
+    if (!(id==21||(id>=1&&id<=5))) continue; //partons only
+    if (status<22||status>23) continue; // hard scatter only
+    double DR = dR(mc_doc_eta()->at(jmc), i_eta, i_phi, mc_doc_phi()->at(jmc));
+    if (DR<minDR) {
+      minDR=DR;
+    }
+  }
+  if (minDR>1000) return -999.;
+  return minDR;
+}
+
+int event_handler::GetClosestRecoMuon(const uint imc)  {
+  const int bad_index = -1;
+  if(imc >= mc_doc_id()->size()) return bad_index;
+  TVector3 mc3(mc_doc_pt()->at(imc)*cos(mc_doc_phi()->at(imc)),
+		  mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
+		  mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
+  float best_score = std::numeric_limits<float>::max();
+  int best_part = bad_index;
+  for(uint imu(0); imu < mus_pt()->size(); imu++) {
+    TVector3 mu3(mus_pt()->at(imu)*cos(mus_tk_phi()->at(imu)),
+		  mus_pt()->at(imu)*sin(mus_tk_phi()->at(imu)),
+		  mus_pt()->at(imu)*sinh(mus_eta()->at(imu)));
+    float this_score = (mu3-mc3).Mag2();
+  
+    if(this_score < best_score){
+      best_score = this_score;
+      best_part = imu;
+    }
+  }
+  if (best_score>50) return -1; // "closest" reco muon is obviously not related to this gen muon
+  return best_part;
+}
+
+std::vector<int> event_handler::MatchElectrons(const std::vector<int> mc_electrons) {
+  std::vector<int> reco_electrons;
+  for (uint iel(0); iel<mc_electrons.size(); iel++) {
+    reco_electrons.push_back(GetClosestRecoElectron(mc_electrons[iel]));
+  }
+  return reco_electrons;
+}
+
+int event_handler::GetClosestRecoElectron(const uint imc)  {
+  const int bad_index = -1;
+  if(imc >= mc_doc_id()->size()) return bad_index;
+  TVector3 mc3(mc_doc_pt()->at(imc)*cos(mc_doc_phi()->at(imc)),
+		  mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
+		  mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
+  float best_score = std::numeric_limits<float>::max();
+  int best_part = bad_index;
+  for(uint iel(0); iel < els_pt()->size(); iel++) {
+    TVector3 el3(els_pt()->at(iel)*cos(els_phi()->at(iel)),
+		  els_pt()->at(iel)*sin(els_phi()->at(iel)),
+		  els_pt()->at(iel)*sinh(els_scEta()->at(iel)));
+    float this_score = (el3-mc3).Mag2();
+    if(this_score < best_score){
+      best_score = this_score;
+      best_part = iel;
+    }
+  }
+  if (best_score>50) return -1; // "closest" reco electron is obviously not related to this gen electron
+  return best_part;
 }
 
 void event_handler::WriteFatJets(small_tree &tree){

@@ -21,6 +21,7 @@ const type_info & GetType(int type_code){
   switch(type_code){
   case 1: return typeid(small_tree_full);
   case 2: return typeid(small_tree_quick);
+  case 3: return typeid(small_tree_lost_leptons_211);
   default: return typeid(small_tree);
   }
 }
@@ -29,6 +30,7 @@ TString GetName(int type_code){
   switch(type_code){
   case 1: return "full";
   case 2: return "quick";
+  case 3: return "lost_leptons_211";
   default: return "";
   }
 }

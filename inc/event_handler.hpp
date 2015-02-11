@@ -30,6 +30,12 @@ public:
                 const std::vector<mc_particle> &parts,
                 const std::vector<size_t> &moms);
   void WriteIsoTks(small_tree &tree);
+  void WriteTrueLeps(small_tree &tree);
+  double GetDRToClosestParton(const int imc) const;
+  std::vector<int> MatchMuons(const std::vector<int> mc_muons);
+  int GetClosestRecoMuon(const uint imc);
+  std::vector<int> MatchElectrons(const std::vector<int> mc_electrons);
+  int GetClosestRecoElectron(const uint imc);
   void GetPtRels(std::vector<float> &els_ptrel, std::vector<float> &els_mindr,
                  std::vector<float> &mus_ptrel,
                  std::vector<float> &mus_mindr,
