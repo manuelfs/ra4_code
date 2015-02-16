@@ -27,6 +27,7 @@ int nvmus10
 std::vector<float> mus_pt
 std::vector<float> mus_eta
 std::vector<float> mus_phi
+std::vector<float> mus_mt
 std::vector<bool> mus_sigid
 std::vector<float> mus_reliso
 std::vector<float> mus_reliso_r04
@@ -60,6 +61,7 @@ int nvels10
 std::vector<float> els_pt
 std::vector<float> els_eta
 std::vector<float> els_phi
+std::vector<float> els_mt
 std::vector<bool> els_sigid
 std::vector<bool> els_ispf
 std::vector<float> els_reliso
@@ -108,6 +110,8 @@ std::vector<int> tks_id
 std::vector<float> tks_pt
 std::vector<float> tks_eta
 std::vector<float> tks_phi
+std::vector<float> tks_mt
+std::vector<int> tks_from_pv
 std::vector<float> tks_r03_ch
 std::vector<float> tks_r02_ch
 std::vector<float> tks_mini_ch

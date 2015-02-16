@@ -131,6 +131,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         tree.els_eta().push_back(els_eta()->at(index));
         tree.els_phi().push_back(els_phi()->at(index));
         tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
+	tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),
+				      mets_et()->at(0), mets_phi()->at(0)));
 
         // MC truth
         mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -174,6 +176,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         tree.mus_eta().push_back(mus_eta()->at(index));
         tree.mus_phi().push_back(mus_phi()->at(index));
         tree.mus_charge().push_back(TMath::Nint(mus_charge()->at(index)));
+	tree.mus_mt().push_back(GetMT(mus_pt()->at(index), mus_phi()->at(index),
+				      mets_et()->at(0), mets_phi()->at(0)));
 
         // MC truth
         mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -397,6 +401,10 @@ void event_handler::WriteTks(small_tree &tree,
     tree.tks_eta().push_back(pfcand_eta()->at(cand));
     tree.tks_phi().push_back(pfcand_phi()->at(cand));
     tree.tks_id().push_back(TMath::Nint(pfcand_pdgId()->at(cand)));
+
+    tree.tks_mt().push_back(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
+				  mets_et()->at(0), mets_phi()->at(0)));
+    tree.tks_from_pv().push_back(TMath::Nint(pfcand_fromPV()->at(cand)));
 
     size_t ipart = MatchCandToStatus1(cand, parts);
     tree.tks_tru_id().push_back(ipart<parts.size()?parts.at(ipart).id_:0);
