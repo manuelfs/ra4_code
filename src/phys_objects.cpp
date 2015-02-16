@@ -199,6 +199,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
 
   double deta_cut, dphi_cut, ieta_cut, hovere_cut, d0_cut, dz_cut,
     ooeminusoop_cut, reliso_cut, vprob_cut, misshits_cut;
+  bool req_conv_veto;
 
   if(Type()==typeid(cfa_8)){
     //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaCutBasedIdentification#Barrel_Cuts_eta_supercluster_1_4
@@ -206,105 +207,109 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     switch(threshold){
     default:
     case kVeto:
-      deta_cut        = barrel ? 0.007   : 0.01;
-      dphi_cut        = barrel ? 0.8     : 0.7;
-      ieta_cut        = barrel ? 0.01    : 0.03;
-      hovere_cut      = barrel ? 0.15    : fltmax;
-      d0_cut          = barrel ? 0.04    : 0.04;
-      dz_cut          = barrel ? 0.2     : 0.2;
-      ooeminusoop_cut = barrel ? fltmax  : fltmax;
-      reliso_cut      = barrel ? 0.15    : 0.15;
-      vprob_cut       = barrel ? fltmax  : fltmax;
-      misshits_cut    = barrel ? fltmax  : fltmax;
+      deta_cut        = barrel ? 0.007    : 0.01;
+      dphi_cut        = barrel ? 0.8      : 0.7;
+      ieta_cut        = barrel ? 0.01     : 0.03;
+      hovere_cut      = barrel ? 0.15     : fltmax;
+      d0_cut          = barrel ? 0.04     : 0.04;
+      dz_cut          = barrel ? 0.2      : 0.2;
+      ooeminusoop_cut = barrel ? fltmax   : fltmax;
+      reliso_cut      = barrel ? 0.15     : 0.15;
+      vprob_cut       = barrel ? fltmax   : fltmax;
+      misshits_cut    = barrel ? fltmax   : fltmax;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kLoose:
-      deta_cut        = barrel ? 0.007   : 0.009;
-      dphi_cut        = barrel ? 0.15    : 0.10;
-      ieta_cut        = barrel ? 0.01    : 0.03;
-      hovere_cut      = barrel ? 0.12    : 0.10;
-      d0_cut          = barrel ? 0.02    : 0.02;
-      dz_cut          = barrel ? 0.2     : 0.2;
-      ooeminusoop_cut = barrel ? 0.05    : 0.05;
-      reliso_cut      = barrel ? 0.15    : (high_pt ? 0.15 : 0.10);
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 1;
+      deta_cut        = barrel ? 0.007    : 0.009;
+      dphi_cut        = barrel ? 0.15     : 0.10;
+      ieta_cut        = barrel ? 0.01     : 0.03;
+      hovere_cut      = barrel ? 0.12     : 0.10;
+      d0_cut          = barrel ? 0.02     : 0.02;
+      dz_cut          = barrel ? 0.2      : 0.2;
+      ooeminusoop_cut = barrel ? 0.05     : 0.05;
+      reliso_cut      = barrel ? 0.15     : (high_pt ? 0.15 : 0.10);
+      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
+      misshits_cut    = barrel ? 1        : 1;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kMedium:
-      deta_cut        = barrel ? 0.004   : 0.007;
-      dphi_cut        = barrel ? 0.06    : 0.03;
-      ieta_cut        = barrel ? 0.01    : 0.03;
-      hovere_cut      = barrel ? 0.12    : 0.1;
-      d0_cut          = barrel ? 0.02    : 0.02;
-      dz_cut          = barrel ? 0.1     : 0.1;
-      ooeminusoop_cut = barrel ? 0.05    : 0.05;
-      reliso_cut      = barrel ? 0.15    : (high_pt ? 0.15 : 0.10);
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 1;
+      deta_cut        = barrel ? 0.004    : 0.007;
+      dphi_cut        = barrel ? 0.06     : 0.03;
+      ieta_cut        = barrel ? 0.01     : 0.03;
+      hovere_cut      = barrel ? 0.12     : 0.1;
+      d0_cut          = barrel ? 0.02     : 0.02;
+      dz_cut          = barrel ? 0.1      : 0.1;
+      ooeminusoop_cut = barrel ? 0.05     : 0.05;
+      reliso_cut      = barrel ? 0.15     : (high_pt ? 0.15 : 0.10);
+      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
+      misshits_cut    = barrel ? 1        : 1;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kTight:
-      deta_cut        = barrel ? 0.004   : 0.005;
-      dphi_cut        = barrel ? 0.03    : 0.02;
-      ieta_cut        = barrel ? 0.01    : 0.03;
-      hovere_cut      = barrel ? 0.12    : 0.10;
-      d0_cut          = barrel ? 0.02    : 0.02;
-      dz_cut          = barrel ? 0.1     : 0.1;
-      ooeminusoop_cut = barrel ? 0.05    : 0.05;
-      reliso_cut      = barrel ? 0.10    : (high_pt ? 0.10 : 0.07);
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 0;
+      deta_cut        = barrel ? 0.004    : 0.005;
+      dphi_cut        = barrel ? 0.03     : 0.02;
+      ieta_cut        = barrel ? 0.01     : 0.03;
+      hovere_cut      = barrel ? 0.12     : 0.10;
+      d0_cut          = barrel ? 0.02     : 0.02;
+      dz_cut          = barrel ? 0.1      : 0.1;
+      ooeminusoop_cut = barrel ? 0.05     : 0.05;
+      reliso_cut      = barrel ? 0.10     : (high_pt ? 0.10 : 0.07);
+      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
+      misshits_cut    = barrel ? 1        : 0;
+      req_conv_veto   = barrel ? true     : true;
       break;
     }
   }else{
-    //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#CSA14_selection_conditions_25ns
+    //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Working_points_for_PHYS14_sample
     switch(threshold){
     default:
     case kVeto:
-      deta_cut        = barrel ? 0.02    : 0.0141;
-      dphi_cut        = barrel ? 0.2579  : 0.2591;
-      ieta_cut        = barrel ? 0.0125  : 0.0371;
-      hovere_cut      = barrel ? 0.2564  : 0.1335;
-      d0_cut          = barrel ? 0.025   : 0.2232;
-      dz_cut          = barrel ? 0.5863  : 0.9513;
-      ooeminusoop_cut = barrel ? 0.1508  : 0.1542;
-      reliso_cut      = barrel ? 0.3313  : 0.3816;
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 2       : 3;
+      ieta_cut        = barrel ? 0.011100 : 0.033987;
+      deta_cut        = barrel ? 0.016315 : 0.010671;
+      dphi_cut        = barrel ? 0.252044 : 0.245263;
+      hovere_cut      = barrel ? 0.345843 : 0.134691;
+      reliso_cut      = barrel ? 0.164369 : 0.212604;
+      ooeminusoop_cut = barrel ? 0.248070 : 0.157160;
+      d0_cut          = barrel ? 0.060279 : 0.273097;
+      dz_cut          = barrel ? 0.800538 : 0.885860;
+      misshits_cut    = barrel ? 2        : 3;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kLoose:
-      deta_cut        = barrel ? 0.0181  : 0.0124;
-      dphi_cut        = barrel ? 0.0936  : 0.0624;
-      ieta_cut        = barrel ? 0.0123  : 0.035;
-      hovere_cut      = barrel ? 0.141   : 0.1115;
-      d0_cut          = barrel ? 0.0166  : 0.098;
-      dz_cut          = barrel ? 0.54342 : 0.9187;
-      ooeminusoop_cut = barrel ? 0.1353  : 0.1443;
-      reliso_cut      = barrel ? 0.24    : 0.3529;
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 1;
+      ieta_cut        = barrel ? 0.010557 : 0.032602;
+      deta_cut        = barrel ? 0.012442 : 0.010654;
+      dphi_cut        = barrel ? 0.072624 : 0.145129;
+      hovere_cut      = barrel ? 0.121476 : 0.131862;
+      reliso_cut      = barrel ? 0.120026 : 0.162914;
+      ooeminusoop_cut = barrel ? 0.221803 : 0.142283;
+      d0_cut          = barrel ? 0.022664 : 0.097358;
+      dz_cut          = barrel ? 0.173670 : 0.198444;
+      misshits_cut    = barrel ? 1        : 1;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kMedium:
-      deta_cut        = barrel ? 0.0106  : 0.0108;
-      dphi_cut        = barrel ? 0.0323  : 0.0455;
-      ieta_cut        = barrel ? 0.0107  : 0.0318;
-      hovere_cut      = barrel ? 0.067   : 0.097;
-      d0_cut          = barrel ? 0.0131  : 0.0845;
-      dz_cut          = barrel ? 0.22310 : 0.7523;
-      ooeminusoop_cut = barrel ? 0.1043  : 0.1201;
-      reliso_cut      = barrel ? 0.2179  : 0.254;
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 1;
+      ieta_cut        = barrel ? 0.010399 : 0.029524;
+      deta_cut        = barrel ? 0.007641 : 0.009285;
+      dphi_cut        = barrel ? 0.032643 : 0.042447;
+      hovere_cut      = barrel ? 0.060662 : 0.104263;
+      reliso_cut      = barrel ? 0.097213 : 0.116708;
+      ooeminusoop_cut = barrel ? 0.153897 : 0.137468;
+      d0_cut          = barrel ? 0.011811 : 0.051682;
+      dz_cut          = barrel ? 0.070775 : 0.180720;
+      misshits_cut    = barrel ? 1        : 1;
+      req_conv_veto   = barrel ? true     : true;
       break;
     case kTight:
-      deta_cut        = barrel ? 0.0091  : 0.0106;
-      dphi_cut        = barrel ? 0.031   : 0.0359;
-      ieta_cut        = barrel ? 0.0106  : 0.0305;
-      hovere_cut      = barrel ? 0.0532  : 0.0835;
-      d0_cut          = barrel ? 0.0126  : 0.0163;
-      dz_cut          = barrel ? 0.0116  : 0.5999;
-      ooeminusoop_cut = barrel ? 0.0609  : 0.1126;
-      reliso_cut      = barrel ? 0.1649  : 0.2075;
-      vprob_cut       = barrel ? 1.e-6   : 1.e-6;
-      misshits_cut    = barrel ? 1       : 1;
+      ieta_cut        = barrel ? 0.010181 : 0.028766;
+      deta_cut        = barrel ? 0.006574 : 0.005681;
+      dphi_cut        = barrel ? 0.022868 : 0.032046;
+      hovere_cut      = barrel ? 0.037553 : 0.081902;
+      reliso_cut      = barrel ? 0.074355 : 0.090185;
+      ooeminusoop_cut = barrel ? 0.131191 : 0.106055;
+      d0_cut          = barrel ? 0.009924 : 0.027261;
+      dz_cut          = barrel ? 0.015310 : 0.147154;
+      misshits_cut    = barrel ? 1        : 1;
+      req_conv_veto   = barrel ? true     : true;
       break;
     }
   }
@@ -325,8 +330,7 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && dz_cut > fabs(dz)
     && ooeminusoop_cut > fabs((1.0-els_eOverPIn()->at(iel))/els_caloEnergy()->at(iel))
     && (!do_iso || reliso_cut>GetElectronIsolation(iel))
-    && (true || vprob_cut)
-    && (els_PATpassConversionVeto()->at(iel))
+    && (!req_conv_veto || els_PATpassConversionVeto()->at(iel))
     && (misshits_cut >= els_expectedMissingInnerHits()->at(iel));
 }
 
