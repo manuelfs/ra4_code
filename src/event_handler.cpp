@@ -48,9 +48,6 @@ event_handler::event_handler(const string &fileName, const type_info &type):
 
 void event_handler::ReduceTree(int Nentries, const TString &outFilename,
                                int Ntotentries){
-
-  gROOT->ProcessLine("#include <vector>");
-
   TFile outFile(outFilename, "recreate");
   outFile.cd();
 
@@ -99,7 +96,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     vector<float> mus_ptrel_rem_25(0), els_ptrel_rem_25(0);
     vector<float> mus_mindr_rem_25(0), els_mindr_rem_25(0);
     lepmax_p4.SetPtEtaPhiE(0,0,0,0);
-    if(type_ != typeid(small_tree_quick)){
+    if(type_ == typeid(small_tree_full)
+       || type_ == typeid(small_tree_lost_leptons_211)){
       GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, false);
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, false);
       GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, true);
@@ -143,7 +141,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.els_reliso().push_back(GetElectronIsolation(index));
-        if(type_ != typeid(small_tree_quick)){
+        if(type_ == typeid(small_tree_full)
+           || type_ == typeid(small_tree_lost_leptons_211)){
           SetMiniIso(tree, index, 11);
           tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
           tree.els_mindr_0().push_back(els_mindr_0.at(index));
@@ -185,7 +184,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
 
         // Isolation
         tree.mus_reliso().push_back(GetMuonIsolation(index));
-        if(type_ != typeid(small_tree_quick)){
+        if(type_ == typeid(small_tree_full)
+           || type_ == typeid(small_tree_lost_leptons_211)){
           SetMiniIso(tree, index, 13);
           tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
           tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
@@ -231,43 +231,44 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     vector<size_t> moms = GetMoms(parts);
 
     ////////////////   TRUTH   ////////////////
-    if(type_ != typeid(small_tree_lost_leptons_211)){
-    vector<size_t> indices;
-    for(size_t imc = 0; imc < parts.size(); ++imc){
-      mc_particle &part = parts.at(imc);
-      if(part.status_ != 22 && part.status_ != 23) continue;
-      tree.mc_pt().push_back(part.momentum_.Pt());
-      tree.mc_phi().push_back(part.momentum_.Phi());
-      tree.mc_eta().push_back(part.momentum_.Eta());
-      tree.mc_id().push_back(part.id_);
-      indices.push_back(imc);
-      size_t imom = imc;
-      bool found_mom = false;
-      while(imom < moms.size() && !found_mom){
-        imom = moms.at(imom);
-        if(imom < parts.size()
-           && (parts.at(imom).status_ == 22)){
-          found_mom = true;
+    if(type_ == typeid(small_tree_full)
+       || type_ == typeid(small_tree_quick)){
+      vector<size_t> indices;
+      for(size_t imc = 0; imc < parts.size(); ++imc){
+        mc_particle &part = parts.at(imc);
+        if(part.status_ != 22 && part.status_ != 23) continue;
+        tree.mc_pt().push_back(part.momentum_.Pt());
+        tree.mc_phi().push_back(part.momentum_.Phi());
+        tree.mc_eta().push_back(part.momentum_.Eta());
+        tree.mc_id().push_back(part.id_);
+        indices.push_back(imc);
+        size_t imom = imc;
+        bool found_mom = false;
+        while(imom < moms.size() && !found_mom){
+          imom = moms.at(imom);
+          if(imom < parts.size()
+             && (parts.at(imom).status_ == 22)){
+            found_mom = true;
+          }
         }
-      }
-      bool found_mom2 = false;
-      for(size_t i = 0; i < indices.size() && !found_mom2; ++i){
-        if(indices.at(i) == imom){
-          imom = i;
-          found_mom2 = true;
+        bool found_mom2 = false;
+        for(size_t i = 0; i < indices.size() && !found_mom2; ++i){
+          if(indices.at(i) == imom){
+            imom = i;
+            found_mom2 = true;
+          }
         }
-      }
-      if(found_mom2){
-        tree.mc_mom().push_back(imom);
-      }else{
-        if(found_mom && imom < parts.size()){
-          tree.mc_mom().push_back(abs(parts.at(imom).id_)+1000);
+        if(found_mom2){
+          tree.mc_mom().push_back(imom);
         }else{
-          tree.mc_mom().push_back(abs(part.mom_)+1000);
+          if(found_mom && imom < parts.size()){
+            tree.mc_mom().push_back(abs(parts.at(imom).id_)+1000);
+          }else{
+            tree.mc_mom().push_back(abs(part.mom_)+1000);
+          }
         }
       }
-    }
-    tree.mc_type() = TypeCode(parts, moms);
+      tree.mc_type() = TypeCode(parts, moms);
     }
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
@@ -316,7 +317,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     WriteTks(tree, parts, moms);
     WriteIsoTks(tree);
 
-    WriteTrueLeps(tree);
+    if(type_ == typeid(small_tree_lost_leptons_211)) WriteTrueLeps(tree);
 
     tree.Fill(); // This method automatically clears all small_tree::vectors
   }
@@ -412,7 +413,8 @@ void event_handler::WriteTks(small_tree &tree,
                                      && !tree.tks_from_taulep().back());
     tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
 
-    if(type_ != typeid(small_tree_quick)) SetMiniIso(tree,cand,0);
+    if(type_ == typeid(small_tree_full)
+       || type_ == typeid(small_tree_lost_leptons_211)) SetMiniIso(tree,cand,0);
   } // Loop over pfcands
 }
 
@@ -531,16 +533,16 @@ int event_handler::GetClosestRecoMuon(const uint imc)  {
   const int bad_index = -1;
   if(imc >= mc_doc_id()->size()) return bad_index;
   TVector3 mc3(mc_doc_pt()->at(imc)*cos(mc_doc_phi()->at(imc)),
-		  mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
-		  mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
+               mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
+               mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
   float best_score = std::numeric_limits<float>::max();
   int best_part = bad_index;
   for(uint imu(0); imu < mus_pt()->size(); imu++) {
     TVector3 mu3(mus_pt()->at(imu)*cos(mus_tk_phi()->at(imu)),
-		  mus_pt()->at(imu)*sin(mus_tk_phi()->at(imu)),
-		  mus_pt()->at(imu)*sinh(mus_eta()->at(imu)));
+                 mus_pt()->at(imu)*sin(mus_tk_phi()->at(imu)),
+                 mus_pt()->at(imu)*sinh(mus_eta()->at(imu)));
     float this_score = (mu3-mc3).Mag2();
-  
+
     if(this_score < best_score){
       best_score = this_score;
       best_part = imu;
@@ -562,14 +564,14 @@ int event_handler::GetClosestRecoElectron(const uint imc)  {
   const int bad_index = -1;
   if(imc >= mc_doc_id()->size()) return bad_index;
   TVector3 mc3(mc_doc_pt()->at(imc)*cos(mc_doc_phi()->at(imc)),
-		  mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
-		  mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
+               mc_doc_pt()->at(imc)*sin(mc_doc_phi()->at(imc)),
+               mc_doc_pt()->at(imc)*sinh(mc_doc_eta()->at(imc)));
   float best_score = std::numeric_limits<float>::max();
   int best_part = bad_index;
   for(uint iel(0); iel < els_pt()->size(); iel++) {
     TVector3 el3(els_pt()->at(iel)*cos(els_phi()->at(iel)),
-		  els_pt()->at(iel)*sin(els_phi()->at(iel)),
-		  els_pt()->at(iel)*sinh(els_scEta()->at(iel)));
+                 els_pt()->at(iel)*sin(els_phi()->at(iel)),
+                 els_pt()->at(iel)*sinh(els_scEta()->at(iel)));
     float this_score = (el3-mc3).Mag2();
     if(this_score < best_score){
       best_score = this_score;
@@ -848,7 +850,8 @@ void event_handler::WriteFatJets(small_tree &tree){
 
   tree.nfjets_cands_trim() = static_cast<int>(bad_val);
   tree.mj_cands_trim() = static_cast<int>(bad_val);
-  if(type_ != typeid(small_tree_quick)){
+  if(type_ == typeid(small_tree_full)
+     || type_ == typeid(small_tree_lost_leptons_211)){
     vector<PseudoJet> cands(0);
     TLorentzVector p4cand;
     for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
@@ -923,8 +926,7 @@ void event_handler::WriteFatJets(small_tree &tree){
         ++(tree.nfjets_cands_trim());
       }
     } // Loop over trimmed fat jets
-  } // if(type_ != typeid(small_tree_quick))
-
+  }
 }
 
 void event_handler::GetPtRels(std::vector<float> &els_ptrel,
