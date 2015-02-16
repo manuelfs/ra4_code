@@ -243,202 +243,202 @@ void WriteBaseSource(const set<Variable> &all_vars,
   ofstream file("src/small_tree.cpp");
 
   file << "// small_tree: base class to handle reduce tree ntuples\n";
-    file << "//File generated with generate_small_tree.exe\n\n";
+  file << "//File generated with generate_small_tree.exe\n\n";
 
-    file << "#include \"small_tree.hpp\"\n\n";
+  file << "#include \"small_tree.hpp\"\n\n";
 
-    file << "#include <stdexcept>\n";
-    file << "#include <string>\n";
-    file << "#include <iostream>\n";
-    file << "#include <vector>\n\n";
+  file << "#include <stdexcept>\n";
+  file << "#include <string>\n";
+  file << "#include <iostream>\n";
+  file << "#include <vector>\n\n";
 
-    file << "#include \"TROOT.h\"\n";
-    file << "#include \"TTree.h\"\n";
-    file << "#include \"TBranch.h\"\n";
-    file << "#include \"TChain.h\"\n\n";
+  file << "#include \"TROOT.h\"\n";
+  file << "#include \"TTree.h\"\n";
+  file << "#include \"TBranch.h\"\n";
+  file << "#include \"TChain.h\"\n\n";
 
-    file << "using namespace std;\n\n";
+  file << "using namespace std;\n\n";
 
-    file << "bool small_tree::VectorLoader::loaded_ = false;\n\n";
+  file << "bool small_tree::VectorLoader::loaded_ = false;\n\n";
 
-    file << "small_tree::VectorLoader small_tree::vl_ = small_tree::VectorLoader();\n\n";
+  file << "small_tree::VectorLoader small_tree::vl_ = small_tree::VectorLoader();\n\n";
 
-    file << "small_tree::VectorLoader::VectorLoader(){\n";
-    file << "  if(!loaded_){\n";
-    file << "    gROOT->ProcessLine(\"#include <vector>\");\n";
-    file << "    loaded_ = true;\n";
-    file << "  }\n";
-    file << "}\n\n";
+  file << "small_tree::VectorLoader::VectorLoader(){\n";
+  file << "  if(!loaded_){\n";
+  file << "    gROOT->ProcessLine(\"#include <vector>\");\n";
+  file << "    loaded_ = true;\n";
+  file << "  }\n";
+  file << "}\n\n";
 
-    file << "const double small_tree::bad_val_ = -999.;\n\n";
+  file << "const double small_tree::bad_val_ = -999.;\n\n";
 
-    file << "small_tree::small_tree():\n";
-    file << "  chain_(\"junk\", \"junk\"),\n";
-    file << "  tree_(\"tree\", \"tree\"),\n";
-    file << "  entry_(0),\n";
-    if(com_vars.size()){
-      const set<Variable>::const_iterator com_end_2 = --com_vars.end();
-      file << "  read_only_(false),\n";
-      for(set<Variable>::const_iterator var = com_vars.begin();
-          var != com_end_2;
-          ++var){
-        file << "  " << var->name_ << "_(0),\n";
-        if(Contains(var->type_, "vector")){
-          file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
-          file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &p_" << var->name_ << "_)),\n";
-        }else{
-          file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
-        }
-        file << "  c_" << var->name_ << "_(false),\n";
-      }
-      file << "  " << com_end_2->name_ << "_(0),\n";
-      file << "  b_" << com_end_2->name_ << "_(tree_.Branch(\"" << com_end_2->name_ << "\", &" << com_end_2->name_ << "_)),\n";
-      file << "  c_" << com_end_2->name_ << "_(false){\n";
-    }else{
-      file << "  read_only_(false){\n";
-    }
-    file << "}\n\n";
-
-    file << "small_tree::small_tree(const string &filename):\n";
-    file << "  chain_(\"tree\",\"tree\"),\n";
-    file << "  tree_(\"junk\",\"junk\"),\n";
-    file << "  entry_(0),\n";
-    if(com_vars.size()){
-      const set<Variable>::const_iterator com_end_2 = --com_vars.end();
-      file << "  read_only_(true),\n";
-      for(set<Variable>::const_iterator var = com_vars.begin();
-          var != com_end_2;
-          ++var){
-        file << "  " << var->name_ << "_(0),\n";
-        if(Contains(var->type_, "vector<")){
-          file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
-        }
-        file << "  b_" << var->name_ << "_(NULL),\n";
-        file << "  c_" << var->name_ << "_(false),\n";
-      }
-      file << "  " << com_end_2->name_ << "_(0),\n";
-      if(Contains(com_end_2->type_, "vector<")){
-        file << "  p_" << com_end_2->name_ << "_(&" << com_end_2->name_ << "_),\n";
-      }
-      file << "  b_" << com_end_2->name_ << "_(NULL),\n";
-      file << "  c_" << com_end_2->name_ << "_(false){\n";
-    }else{
-      file << "  read_only_(true){\n";
-    }
-    file << "  chain_.Add(filename.c_str());\n";
-    for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
-      if(Contains(var->type_, "vector<")){
-        file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &p_" << var->name_ << "_, &b_" << var->name_ << "_);\n";
-      }else{
-        file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &" << var->name_ << "_, &b_" << var->name_ << "_);\n";
-      }
-    }
-    file << "}\n\n";
-
-    file << "void small_tree::Fill(){\n";
-    file << "  if(read_only_){\n";
-    file << "    throw std::logic_error(\"Trying to write to read-only tree\");\n";
-    file << "  }else{\n";
-    file << "    tree_.Fill();\n";
-    file << "  }\n\n";
-
-    file << "  //Resetting variables\n";
-    for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
+  file << "small_tree::small_tree():\n";
+  file << "  chain_(\"junk\", \"junk\"),\n";
+  file << "  tree_(\"tree\", \"tree\"),\n";
+  file << "  entry_(0),\n";
+  if(com_vars.size()){
+    const set<Variable>::const_iterator com_end_2 = --com_vars.end();
+    file << "  read_only_(false),\n";
+    for(set<Variable>::const_iterator var = com_vars.begin();
+        var != com_end_2;
+        ++var){
+      file << "  " << var->name_ << "_(0),\n";
       if(Contains(var->type_, "vector")){
-        file << "  " << var->name_ << "_.clear();\n";
-      }else if(Contains(var->type_, "tring")){
-        file << "  " << var->name_ << "_ = \"\";\n";
+        file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
+        file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &p_" << var->name_ << "_)),\n";
       }else{
-        file << "  " << var->name_ << "_ = static_cast<" << var->type_ << ">(bad_val_);\n";
+        file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
       }
+      file << "  c_" << var->name_ << "_(false),\n";
     }
-    file << "}\n\n";
+    file << "  " << com_end_2->name_ << "_(0),\n";
+    file << "  b_" << com_end_2->name_ << "_(tree_.Branch(\"" << com_end_2->name_ << "\", &" << com_end_2->name_ << "_)),\n";
+    file << "  c_" << com_end_2->name_ << "_(false){\n";
+  }else{
+    file << "  read_only_(false){\n";
+  }
+  file << "}\n\n";
 
-    file << "void small_tree::Write(){\n";
-    file << "  if(read_only_){\n";
-    file << "    throw std::logic_error(\"Trying to write to read-only tree.\");\n";
-    file << "  }else{\n";
-    file << "    tree_.Write();\n";
-    file << "  }\n";
-    file << "}\n\n";
+  file << "small_tree::small_tree(const string &filename):\n";
+  file << "  chain_(\"tree\",\"tree\"),\n";
+  file << "  tree_(\"junk\",\"junk\"),\n";
+  file << "  entry_(0),\n";
+  if(com_vars.size()){
+    const set<Variable>::const_iterator com_end_2 = --com_vars.end();
+    file << "  read_only_(true),\n";
+    for(set<Variable>::const_iterator var = com_vars.begin();
+        var != com_end_2;
+        ++var){
+      file << "  " << var->name_ << "_(0),\n";
+      if(Contains(var->type_, "vector<")){
+        file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
+      }
+      file << "  b_" << var->name_ << "_(NULL),\n";
+      file << "  c_" << var->name_ << "_(false),\n";
+    }
+    file << "  " << com_end_2->name_ << "_(0),\n";
+    if(Contains(com_end_2->type_, "vector<")){
+      file << "  p_" << com_end_2->name_ << "_(&" << com_end_2->name_ << "_),\n";
+    }
+    file << "  b_" << com_end_2->name_ << "_(NULL),\n";
+    file << "  c_" << com_end_2->name_ << "_(false){\n";
+  }else{
+    file << "  read_only_(true){\n";
+  }
+  file << "  chain_.Add(filename.c_str());\n";
+  for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
+    if(Contains(var->type_, "vector<")){
+      file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &p_" << var->name_ << "_, &b_" << var->name_ << "_);\n";
+    }else{
+      file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &" << var->name_ << "_, &b_" << var->name_ << "_);\n";
+    }
+  }
+  file << "}\n\n";
 
-    file << "string small_tree::Type() const{\n";
-    file << "  return \"\";\n";
-    file << "}\n\n";
+  file << "void small_tree::Fill(){\n";
+  file << "  if(read_only_){\n";
+  file << "    throw std::logic_error(\"Trying to write to read-only tree\");\n";
+  file << "  }else{\n";
+  file << "    tree_.Fill();\n";
+  file << "  }\n\n";
 
-    file << "small_tree::~small_tree(){\n";
-    file << "}\n\n";
+  file << "  //Resetting variables\n";
+  for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
+    if(Contains(var->type_, "vector")){
+      file << "  " << var->name_ << "_.clear();\n";
+    }else if(Contains(var->type_, "tring")){
+      file << "  " << var->name_ << "_ = \"\";\n";
+    }else{
+      file << "  " << var->name_ << "_ = static_cast<" << var->type_ << ">(bad_val_);\n";
+    }
+  }
+  file << "}\n\n";
 
-    file << "long small_tree::GetEntries() const{\n";
-    file << "  if(read_only_){\n";
-    file << "    return chain_.GetEntries();\n";
-    file << "  }else{\n";
-    file << "    return tree_.GetEntries();\n";
-    file << "  }\n";
-    file << "}\n\n";
+  file << "void small_tree::Write(){\n";
+  file << "  if(read_only_){\n";
+  file << "    throw std::logic_error(\"Trying to write to read-only tree.\");\n";
+  file << "  }else{\n";
+  file << "    tree_.Write();\n";
+  file << "  }\n";
+  file << "}\n\n";
 
-    file << "void small_tree::GetEntry(const long entry){\n";
+  file << "string small_tree::Type() const{\n";
+  file << "  return \"\";\n";
+  file << "}\n\n";
+
+  file << "small_tree::~small_tree(){\n";
+  file << "}\n\n";
+
+  file << "long small_tree::GetEntries() const{\n";
+  file << "  if(read_only_){\n";
+  file << "    return chain_.GetEntries();\n";
+  file << "  }else{\n";
+  file << "    return tree_.GetEntries();\n";
+  file << "  }\n";
+  file << "}\n\n";
+
+  file << "void small_tree::GetEntry(const long entry){\n";
+  file << "  if(!read_only_){\n";
+  file << "    throw std::logic_error(\"Trying to read from write-only tree.\");\n";
+  file << "  }\n\n";
+
+  for(set<Variable>::const_iterator var = com_vars.begin(); var!= com_vars.end(); ++var){
+    file << "  c_" << var->name_ << "_ = false;\n";
+  }
+  file << "  entry_ = chain_.LoadTree(entry);\n";
+  file << "}\n\n";
+
+  for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
+    file << var->type_ << " const & small_tree::" << var->name_ << "() const{\n";
     file << "  if(!read_only_){\n";
-    file << "    throw std::logic_error(\"Trying to read from write-only tree.\");\n";
-    file << "  }\n\n";
-
-    for(set<Variable>::const_iterator var = com_vars.begin(); var!= com_vars.end(); ++var){
-      file << "  c_" << var->name_ << "_ = false;\n";
-    }
-    file << "  entry_ = chain_.LoadTree(entry);\n";
+    file << "    throw std::logic_error(\"Trying to write to const tree.\");\n";
+    file << "  }\n";
+    file << "  if(!c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
+    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
+    file << "    c_" << var->name_ << "_ = true;\n";
+    file << "  }\n";
+    file << "  return " << var->name_ << "_;\n";
     file << "}\n\n";
+  }
 
-    for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
-      file << var->type_ << " const & small_tree::" << var->name_ << "() const{\n";
-      file << "  if(!read_only_){\n";
-      file << "    throw std::logic_error(\"Trying to write to const tree.\");\n";
-      file << "  }\n";
-      file << "  if(!c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
-      file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
-      file << "    c_" << var->name_ << "_ = true;\n";
-      file << "  }\n";
-      file << "  return " << var->name_ << "_;\n";
-      file << "}\n\n";
-    }
-
-    for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
-      file << var->type_ << " & small_tree::" << var->name_ << "(){\n";
-      file << "  if(read_only_ && !c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
-      file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
-      file << "    c_" << var->name_ << "_ = true;\n";
-      file << "  }\n";
-      file << "  return " << var->name_ << "_;\n";
-      file << "}\n\n";
-    }
-
-    for(set<Variable>::const_iterator var = all_vars.begin(); var != all_vars.end(); ++var){
-      if(com_vars.find(*var) != com_vars.end()) continue;
-      file << var->type_ << " const & small_tree::" << var->name_ << "() const{\n";
-      file << "  throw std::logic_error(\"" << var->name_
-           << " does not exist in this small_tree version.\");\n";
-      file << "}\n\n";
-    }
-
-    for(set<Variable>::const_iterator var = all_vars.begin(); var != all_vars.end(); ++var){
-      if(com_vars.find(*var) != com_vars.end()) continue;
-      file << var->type_ << " & small_tree::" << var->name_ << "(){\n";
-      file << "  throw std::logic_error(\"" << var->name_
-           << " does not exist in this small_tree version.\");\n";
-      file << "}\n\n";
-    }
-
-    for(size_t i = 0; i < names.size(); ++i){
-      file << "#include \"small_tree_" << names.at(i) << ".hpp\"\n";
-    }
-    file << "small_tree* NewTree(const std::type_info &type){\n\n";
-    file << "  if(type == typeid(small_tree)) return new small_tree;\n";
-    for(size_t i = 0; i < names.size(); ++i){
-      file << "  else if(type == typeid(small_tree_" << names.at(i) << ")) return static_cast<small_tree*>(new small_tree_" << names.at(i) << ");\n";
-    }
-    file << "  else return new small_tree;\n";
+  for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
+    file << var->type_ << " & small_tree::" << var->name_ << "(){\n";
+    file << "  if(read_only_ && !c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
+    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
+    file << "    c_" << var->name_ << "_ = true;\n";
+    file << "  }\n";
+    file << "  return " << var->name_ << "_;\n";
     file << "}\n\n";
+  }
 
-    file.close();
+  for(set<Variable>::const_iterator var = all_vars.begin(); var != all_vars.end(); ++var){
+    if(com_vars.find(*var) != com_vars.end()) continue;
+    file << var->type_ << " const & small_tree::" << var->name_ << "() const{\n";
+    file << "  throw std::logic_error(\"" << var->name_
+         << " does not exist in this small_tree version.\");\n";
+    file << "}\n\n";
+  }
+
+  for(set<Variable>::const_iterator var = all_vars.begin(); var != all_vars.end(); ++var){
+    if(com_vars.find(*var) != com_vars.end()) continue;
+    file << var->type_ << " & small_tree::" << var->name_ << "(){\n";
+    file << "  throw std::logic_error(\"" << var->name_
+         << " does not exist in this small_tree version.\");\n";
+    file << "}\n\n";
+  }
+
+  for(size_t i = 0; i < names.size(); ++i){
+    file << "#include \"small_tree_" << names.at(i) << ".hpp\"\n";
+  }
+  file << "small_tree* NewTree(const std::type_info &type){\n\n";
+  file << "  if(type == typeid(small_tree)) return new small_tree;\n";
+  for(size_t i = 0; i < names.size(); ++i){
+    file << "  else if(type == typeid(small_tree_" << names.at(i) << ")) return static_cast<small_tree*>(new small_tree_" << names.at(i) << ");\n";
+  }
+  file << "  else return new small_tree;\n";
+  file << "}\n\n";
+
+  file.close();
 }
 
 void WriteSepHeader(const pair<string, set<Variable> > &sep_vars){
@@ -578,54 +578,54 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
   file << "  small_tree::Fill();\n";
 
   file << "  //Resetting variables\n";
-                                  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
-                                    if(Contains(var->type_, "vector")){
-                                      file << "  " << var->name_ << "_.clear();\n";
-                                    }else if(Contains(var->type_, "tring")){
-                                      file << "  " << var->name_ << "_ = \"\";\n";
-                                    }else{
-                                      file << "  " << var->name_ << "_ = static_cast<" << var->type_ << ">(bad_val_);\n";
-                                    }
-                                  }
-                                  file << "}\n\n";
+  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    if(Contains(var->type_, "vector")){
+      file << "  " << var->name_ << "_.clear();\n";
+    }else if(Contains(var->type_, "tring")){
+      file << "  " << var->name_ << "_ = \"\";\n";
+    }else{
+      file << "  " << var->name_ << "_ = static_cast<" << var->type_ << ">(bad_val_);\n";
+    }
+  }
+  file << "}\n\n";
 
-                                  file << "string small_tree_" << name << "::Type() const{\n";
-                                  file << "  return \"" << name << "\";\n";
-                                  file << "}\n\n";
+  file << "string small_tree_" << name << "::Type() const{\n";
+  file << "  return \"" << name << "\";\n";
+  file << "}\n\n";
 
-                                  file << "small_tree_" << name << "::~small_tree_" << name << "(){\n";
-                                  file << "}\n\n";
+  file << "small_tree_" << name << "::~small_tree_" << name << "(){\n";
+  file << "}\n\n";
 
-                                  file << "void small_tree_" << name << "::GetEntry(const long entry){\n";
-                                  file << "  small_tree::GetEntry(entry);\n\n";
+  file << "void small_tree_" << name << "::GetEntry(const long entry){\n";
+  file << "  small_tree::GetEntry(entry);\n\n";
 
-                                  for(set<Variable>::const_iterator var = vars.begin(); var!= vars.end(); ++var){
-                                    file << "  c_" << var->name_ << "_ = false;\n";
-                                  }
-                                  file << "}\n\n";
+  for(set<Variable>::const_iterator var = vars.begin(); var!= vars.end(); ++var){
+    file << "  c_" << var->name_ << "_ = false;\n";
+  }
+  file << "}\n\n";
 
-                                  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
-                                    file << var->type_ << " const & small_tree_" << name << "::" << var->name_ << "() const{\n";
-                                    file << "  if(!read_only_){\n";
-                                    file << "    throw std::logic_error(\"Trying to write to const tree.\");\n";
-                                    file << "  }\n";
-                                    file << "  if(!c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
-                                    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
-                                    file << "    c_" << var->name_ << "_ = true;\n";
-                                    file << "  }\n";
-                                    file << "  return " << var->name_ << "_;\n";
-                                    file << "}\n\n";
-                                  }
+  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    file << var->type_ << " const & small_tree_" << name << "::" << var->name_ << "() const{\n";
+    file << "  if(!read_only_){\n";
+    file << "    throw std::logic_error(\"Trying to write to const tree.\");\n";
+    file << "  }\n";
+    file << "  if(!c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
+    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
+    file << "    c_" << var->name_ << "_ = true;\n";
+    file << "  }\n";
+    file << "  return " << var->name_ << "_;\n";
+    file << "}\n\n";
+  }
 
-                                  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
-                                    file << var->type_ << " & small_tree_" << name << "::" << var->name_ << "(){\n";
-                                    file << "  if(read_only_ && !c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
-                                    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
-                                    file << "    c_" << var->name_ << "_ = true;\n";
-                                    file << "  }\n";
-                                    file << "  return " << var->name_ << "_;\n";
-                                    file << "}\n\n";
-                                  }
+  for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
+    file << var->type_ << " & small_tree_" << name << "::" << var->name_ << "(){\n";
+    file << "  if(read_only_ && !c_" << var->name_ << "_ && b_" << var->name_ <<"_){\n";
+    file << "    b_" << var->name_ << "_->GetEntry(entry_);\n";
+    file << "    c_" << var->name_ << "_ = true;\n";
+    file << "  }\n";
+    file << "  return " << var->name_ << "_;\n";
+    file << "}\n\n";
+  }
 
-                                  file.close();
+  file.close();
 }
