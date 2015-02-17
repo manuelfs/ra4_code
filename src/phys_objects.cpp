@@ -198,11 +198,12 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
   }
 
   double deta_cut, dphi_cut, ieta_cut, hovere_cut, d0_cut, dz_cut,
-    ooeminusoop_cut, reliso_cut, vprob_cut, misshits_cut;
+    ooeminusoop_cut, reliso_cut, misshits_cut;
   bool req_conv_veto;
 
   if(Type()==typeid(cfa_8)){
     //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaCutBasedIdentification#Barrel_Cuts_eta_supercluster_1_4
+    //N.B.: vertex fit probability cut for conversion rejection not used (not available in cfA)
     const bool high_pt = els_pt()->at(iel)>20.0;
     switch(threshold){
     default:
@@ -215,7 +216,6 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
       dz_cut          = barrel ? 0.2      : 0.2;
       ooeminusoop_cut = barrel ? fltmax   : fltmax;
       reliso_cut      = barrel ? 0.15     : 0.15;
-      vprob_cut       = barrel ? fltmax   : fltmax;
       misshits_cut    = barrel ? fltmax   : fltmax;
       req_conv_veto   = barrel ? true     : true;
       break;
@@ -228,7 +228,6 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
       dz_cut          = barrel ? 0.2      : 0.2;
       ooeminusoop_cut = barrel ? 0.05     : 0.05;
       reliso_cut      = barrel ? 0.15     : (high_pt ? 0.15 : 0.10);
-      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
       misshits_cut    = barrel ? 1        : 1;
       req_conv_veto   = barrel ? true     : true;
       break;
@@ -241,7 +240,6 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
       dz_cut          = barrel ? 0.1      : 0.1;
       ooeminusoop_cut = barrel ? 0.05     : 0.05;
       reliso_cut      = barrel ? 0.15     : (high_pt ? 0.15 : 0.10);
-      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
       misshits_cut    = barrel ? 1        : 1;
       req_conv_veto   = barrel ? true     : true;
       break;
@@ -254,7 +252,6 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
       dz_cut          = barrel ? 0.1      : 0.1;
       ooeminusoop_cut = barrel ? 0.05     : 0.05;
       reliso_cut      = barrel ? 0.10     : (high_pt ? 0.10 : 0.07);
-      vprob_cut       = barrel ? 1.e-6    : 1.e-6;
       misshits_cut    = barrel ? 1        : 0;
       req_conv_veto   = barrel ? true     : true;
       break;
