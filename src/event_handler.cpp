@@ -96,8 +96,7 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
     vector<float> mus_ptrel_rem_25(0), els_ptrel_rem_25(0);
     vector<float> mus_mindr_rem_25(0), els_mindr_rem_25(0);
     lepmax_p4.SetPtEtaPhiE(0,0,0,0);
-    if(type_ == typeid(small_tree_full)
-       || type_ == typeid(small_tree_lost_leptons_211)){
+    if(type_ == typeid(small_tree_full)){
       GetPtRels(els_ptrel_0, els_mindr_0, mus_ptrel_0, mus_mindr_0, 0.0, false);
       GetPtRels(els_ptrel_25, els_mindr_25, mus_ptrel_25, mus_mindr_25, 25.0, false);
       GetPtRels(els_ptrel_rem_0, els_mindr_rem_0, mus_ptrel_rem_0, mus_mindr_rem_0, 0.0, true);
@@ -131,8 +130,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         tree.els_eta().push_back(els_eta()->at(index));
         tree.els_phi().push_back(els_phi()->at(index));
         tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
-	tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),
-				      mets_et()->at(0), mets_phi()->at(0)));
+        tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),
+                                      mets_et()->at(0), mets_phi()->at(0)));
 
         // MC truth
         mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -146,6 +145,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         if(type_ == typeid(small_tree_full)
            || type_ == typeid(small_tree_lost_leptons_211)){
           SetMiniIso(tree, index, 11);
+        }
+        if(type_ == typeid(small_tree_full)){
           tree.els_ptrel_0().push_back(els_ptrel_0.at(index));
           tree.els_mindr_0().push_back(els_mindr_0.at(index));
           tree.els_ptrel_25().push_back(els_ptrel_25.at(index));
@@ -176,8 +177,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         tree.mus_eta().push_back(mus_eta()->at(index));
         tree.mus_phi().push_back(mus_phi()->at(index));
         tree.mus_charge().push_back(TMath::Nint(mus_charge()->at(index)));
-	tree.mus_mt().push_back(GetMT(mus_pt()->at(index), mus_phi()->at(index),
-				      mets_et()->at(0), mets_phi()->at(0)));
+        tree.mus_mt().push_back(GetMT(mus_pt()->at(index), mus_phi()->at(index),
+                                      mets_et()->at(0), mets_phi()->at(0)));
 
         // MC truth
         mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
@@ -191,6 +192,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
         if(type_ == typeid(small_tree_full)
            || type_ == typeid(small_tree_lost_leptons_211)){
           SetMiniIso(tree, index, 13);
+        }
+        if(type_ == typeid(small_tree_full)){
           tree.mus_ptrel_0().push_back(mus_ptrel_0.at(index));
           tree.mus_mindr_0().push_back(mus_mindr_0.at(index));
           tree.mus_ptrel_25().push_back(mus_ptrel_25.at(index));
@@ -403,7 +406,7 @@ void event_handler::WriteTks(small_tree &tree,
     tree.tks_id().push_back(TMath::Nint(pfcand_pdgId()->at(cand)));
 
     tree.tks_mt().push_back(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
-				  mets_et()->at(0), mets_phi()->at(0)));
+                                  mets_et()->at(0), mets_phi()->at(0)));
     tree.tks_from_pv().push_back(TMath::Nint(pfcand_fromPV()->at(cand)));
 
     size_t ipart = MatchCandToStatus1(cand, parts);
