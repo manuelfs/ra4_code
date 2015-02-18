@@ -393,8 +393,10 @@ void event_handler::WriteTks(small_tree &tree,
        || is_nan(pfcand_eta()->at(cand))
        || is_nan(pfcand_phi()->at(cand))
        || is_nan(pfcand_energy()->at(cand))) continue;
+    int absid = abs(TMath::Nint(pfcand_pdgId()->at(cand)));
+    bool islep = ((absid == 11) || (absid == 13));
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
-        pfcand_pt()->at(cand)<10) continue;
+	(pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep))) continue;
 
     TLorentzVector vcand;
     vcand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),

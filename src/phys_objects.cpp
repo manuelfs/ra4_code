@@ -102,6 +102,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     dz_cut                = fltmax;
     pixel_cut             = -fltmax;
     layers_cut            = -fltmax;
+    break;
   case kMedium:
   case kTight:
     pf_cut                = true;
@@ -115,6 +116,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     dz_cut                = 0.5;
     pixel_cut             = 0;
     layers_cut            = 5;
+    break;
   }
 
   bool isPF = true;

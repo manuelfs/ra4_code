@@ -125,9 +125,13 @@ int main(){
       }
       if(found_in_all){
         com_vars.insert(*var);
-        for(size_t ifile = 0; ifile < sep_vars.size(); ++ifile){
-          sep_vars.at(ifile).second.erase(*var);
-        }
+      }
+    }
+    for(set<Variable>::const_iterator var = com_vars.begin();
+	var != com_vars.end();
+	++var){
+      for(size_t ifile = 0; ifile < sep_vars.size(); ++ifile){
+	sep_vars.at(ifile).second.erase(*var);
       }
     }
   }
@@ -170,7 +174,7 @@ void WriteBaseHeader(const set<Variable> &all_vars,
   file << "  long GetEntries() const;\n";
   file << "  virtual void GetEntry(const long entry);\n\n";
 
-  file << "  void Fill();\n";
+  file << "  virtual void Fill();\n";
   file << "  void Write();\n\n";
 
   file << "  virtual std::string Type() const;\n\n";
@@ -217,7 +221,7 @@ void WriteBaseHeader(const set<Variable> &all_vars,
       var != com_vars.end();
       ++var){
     file << "  " << var->type_ << ' ' << var->name_ << "_;\n";
-    if(Contains(var->type_, "vector<")){
+    if(Contains(var->type_, "vector")){
       file << "  " << var->type_ << " *p_" << var->name_ << "_;\n";
     }
     file << "  TBranch *b_" << var->name_ << "_;\n";
@@ -310,14 +314,14 @@ void WriteBaseSource(const set<Variable> &all_vars,
         var != com_end_2;
         ++var){
       file << "  " << var->name_ << "_(0),\n";
-      if(Contains(var->type_, "vector<")){
+      if(Contains(var->type_, "vector")){
         file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
       }
       file << "  b_" << var->name_ << "_(NULL),\n";
       file << "  c_" << var->name_ << "_(false),\n";
     }
     file << "  " << com_end_2->name_ << "_(0),\n";
-    if(Contains(com_end_2->type_, "vector<")){
+    if(Contains(com_end_2->type_, "vector")){
       file << "  p_" << com_end_2->name_ << "_(&" << com_end_2->name_ << "_),\n";
     }
     file << "  b_" << com_end_2->name_ << "_(NULL),\n";
@@ -327,7 +331,7 @@ void WriteBaseSource(const set<Variable> &all_vars,
   }
   file << "  chain_.Add(filename.c_str());\n";
   for(set<Variable>::const_iterator var = com_vars.begin(); var != com_vars.end(); ++var){
-    if(Contains(var->type_, "vector<")){
+    if(Contains(var->type_, "vector")){
       file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &p_" << var->name_ << "_, &b_" << var->name_ << "_);\n";
     }else{
       file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &" << var->name_ << "_, &b_" << var->name_ << "_);\n";
@@ -487,7 +491,7 @@ void WriteSepHeader(const pair<string, set<Variable> > &sep_vars){
       var != vars.end();
       ++var){
     file << "  " << var->type_ << ' ' << var->name_ << "_;\n";
-    if(Contains(var->type_, "vector<")){
+    if(Contains(var->type_, "vector")){
       file << "  " << var->type_ << " *p_" << var->name_ << "_;\n";
     }
     file << "  TBranch *b_" << var->name_ << "_;\n";
@@ -530,11 +534,21 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
         var != vars_end_2;
         ++var){
       file << "  " << var->name_ << "_(0),\n";
-      file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
+      if(Contains(var->type_, "vector")){
+	file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
+	file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &p_" << var->name_ << "_)),\n";
+      }else{
+	file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
+      }
       file << "  c_" << var->name_ << "_(false),\n";
     }
     file << "  " << vars_end_2->name_ << "_(0),\n";
-    file << "  b_" << vars_end_2->name_ << "_(tree_.Branch(\"" << vars_end_2->name_ << "\", &" << vars_end_2->name_ << "_)),\n";
+    if(Contains(vars_end_2->type_, "vector")){
+      file << "  p_" << vars_end_2->name_ << "_(&" << vars_end_2->name_ << "_),\n";
+      file << "  b_" << vars_end_2->name_ << "_(tree_.Branch(\"" << vars_end_2->name_ << "\", &p_" << vars_end_2->name_ << "_)),\n";
+    }else{
+      file << "  b_" << vars_end_2->name_ << "_(tree_.Branch(\"" << vars_end_2->name_ << "\", &" << vars_end_2->name_ << "_)),\n";
+    }
     file << "  c_" << vars_end_2->name_ << "_(false){\n";
   }else{
     file << "  small_tree(){\n";
@@ -566,7 +580,7 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
   }
   file << "  chain_.Add(filename.c_str());\n";
   for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
-    if(Contains(var->type_, "vector<")){
+    if(Contains(var->type_, "vector")){
       file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &p_" << var->name_ << "_, &b_" << var->name_ << "_);\n";
     }else{
       file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &" << var->name_ << "_, &b_" << var->name_ << "_);\n";
