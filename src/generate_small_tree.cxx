@@ -128,10 +128,10 @@ int main(){
       }
     }
     for(set<Variable>::const_iterator var = com_vars.begin();
-	var != com_vars.end();
-	++var){
+        var != com_vars.end();
+        ++var){
       for(size_t ifile = 0; ifile < sep_vars.size(); ++ifile){
-	sep_vars.at(ifile).second.erase(*var);
+        sep_vars.at(ifile).second.erase(*var);
       }
     }
   }
@@ -535,10 +535,10 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
         ++var){
       file << "  " << var->name_ << "_(0),\n";
       if(Contains(var->type_, "vector")){
-	file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
-	file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &p_" << var->name_ << "_)),\n";
+        file << "  p_" << var->name_ << "_(&" << var->name_ << "_),\n";
+        file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &p_" << var->name_ << "_)),\n";
       }else{
-	file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
+        file << "  b_" << var->name_ << "_(tree_.Branch(\"" << var->name_ << "\", &" << var->name_ << "_)),\n";
       }
       file << "  c_" << var->name_ << "_(false),\n";
     }
@@ -578,7 +578,6 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
   }else{
     file << "  small_tree(filename){\n";
   }
-  file << "  chain_.Add(filename.c_str());\n";
   for(set<Variable>::const_iterator var = vars.begin(); var != vars.end(); ++var){
     if(Contains(var->type_, "vector")){
       file << "  chain_.SetBranchAddress(\"" << var->name_ << "\", &p_" << var->name_ << "_, &b_" << var->name_ << "_);\n";
