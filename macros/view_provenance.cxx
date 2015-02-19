@@ -25,10 +25,12 @@ int main(int argc, char *argv[]){
 
     TString *model = NULL;
     TString *commit = NULL;
+    TString *type = NULL;
     int nev_file = -1;
     int nev_sample = -1;
 
     tree->SetBranchAddress("model", &model);
+    tree->SetBranchAddress("type", &type);
     tree->SetBranchAddress("nev_file", &nev_file);
     tree->SetBranchAddress("nev_sample", &nev_sample);
     tree->SetBranchAddress("commit", &commit);
@@ -39,7 +41,7 @@ int main(int argc, char *argv[]){
       continue;
     }else if(num_entries > 1){
       cerr << "\"treeglobal has multiple entries in " << argv[arg] << '\n' << endl;
-      continue; 
+      continue;
     }
 
     const int bytes_read = tree->GetEntry(0);
@@ -58,11 +60,17 @@ int main(int argc, char *argv[]){
       continue;
     }
 
+    if(!type){
+      cerr << "Read a null pointer for type string in " << argv[arg] << '\n' << endl;
+      continue;
+    }
+
     cout << "          File: " << argv[arg] << endl;
     cout << "         Model: " << RemoveTrailingNewlines(model->Data()) << endl;
     cout << "  File Entries: " << nev_file << endl;
     cout << "Sample Entries: " << nev_sample << endl;
-    cout << "    Git Commit: " << RemoveTrailingNewlines(commit->Data()) << '\n' << endl;
+    cout << "    Git Commit: " << RemoveTrailingNewlines(commit->Data()) << endl;
+    cout << "     File Type: " << RemoveTrailingNewlines(type->Data()) << '\n' << endl;
 
     file.Close();
   }
