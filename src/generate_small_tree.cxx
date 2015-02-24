@@ -171,6 +171,8 @@ void WriteBaseHeader(const set<Variable> &all_vars,
   file << "  small_tree(); // Constructor to create tree\n";
   file << "  small_tree(const std::string &filename); // Constructor to read tree\n\n";
 
+  file << "  int Add(const std::string &filename);\n";
+
   file << "  long GetEntries() const;\n";
   file << "  virtual void GetEntry(const long entry);\n\n";
 
@@ -371,6 +373,13 @@ void WriteBaseSource(const set<Variable> &all_vars,
   file << "}\n\n";
 
   file << "small_tree::~small_tree(){\n";
+  file << "}\n\n";
+
+  file << "int small_tree::Add(const std::string &filename){\n";
+  file << "  if(!read_only_){\n";
+  file << "    throw std::logic_error(\"Trying to add files to tree opened for writing.\");\n";
+  file << "  }\n";
+  file << "  return chain_.Add(filename.c_str());\n";
   file << "}\n\n";
 
   file << "long small_tree::GetEntries() const{\n";
