@@ -275,8 +275,8 @@ void event_handler::ReduceTree(int Nentries, const TString &outFilename,
           }
         }
       }
-      tree.mc_type() = TypeCode(parts, moms);
     }
+    tree.mc_type() = TypeCode(parts, moms);
     ////////////////   Jets   ////////////////
     vector<int> veto_electrons = GetElectrons(false);
     vector<int> veto_muons = GetMuons(false);
