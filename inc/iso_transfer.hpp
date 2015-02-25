@@ -9,7 +9,7 @@
 
 #include "small_tree.hpp"
 
-class CutBase;
+struct CutBase;
 
 typedef int (*IsoCut)(const small_tree &, int &, int &);
 
