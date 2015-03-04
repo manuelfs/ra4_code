@@ -19,10 +19,10 @@ using namespace std;
 
 const type_info & GetType(int type_code){
   switch(type_code){
-  case 1: return typeid(small_tree_full);
-  case 2: return typeid(small_tree_quick);
-  case 3: return typeid(small_tree_lost_leptons_211);
-  default: return typeid(small_tree);
+  case 1: return typeid(event_handler_full);
+  case 2: return typeid(event_handler_quick);
+  case 3: return typeid(event_handler_lost_leptons_211);
+  default: return typeid(event_handler_base);
   }
 }
 

@@ -36,4 +36,11 @@ void WriteBaseSource(const std::set<Variable> &all_vars,
 void WriteSepHeader(const std::pair<std::string, std::set<Variable> > &vars);
 void WriteSepSource(const std::pair<std::string, std::set<Variable> > &vars);
 
+void GenerateEventHandlerBaseHeader();
+void GenerateEventHandlerBaseSource();
+void GenerateEventHandlerHeader(const std::string& name);
+void GenerateEventHandlerSource(const std::string& name);
+void GenerateEventHandlerMergeHeader(const std::vector<std::string> &names);
+void GenerateEventHandlerMergeSource(const std::vector<std::string> &names);
+
 #endif

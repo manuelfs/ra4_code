@@ -143,6 +143,29 @@ int main(){
     WriteSepHeader(sep_vars.at(ifile));
     WriteSepSource(sep_vars.at(ifile));
   }
+
+  vector<string> existing = Tokenize(execute("ls src/event_handler*"));
+  set<string> to_generate;
+  for(size_t iname = 0; iname < fixed_names.size(); ++iname){
+    bool found = false;
+    for(size_t iexist = 0; !found && iexist < existing.size(); ++iexist){
+      if(Contains(existing.at(iexist), fixed_names.at(iname))) found = true;
+    }
+    if(!found) to_generate.insert(fixed_names.at(iname));
+  }
+
+  GenerateEventHandlerBaseHeader();
+  GenerateEventHandlerBaseSource();
+
+  for(set<string>::const_iterator name = to_generate.begin();
+      name != to_generate.end();
+      ++name){
+    GenerateEventHandlerHeader(*name);
+    GenerateEventHandlerSource(*name);
+  }
+
+  GenerateEventHandlerMergeHeader(fixed_names);
+  GenerateEventHandlerMergeSource(fixed_names);
 }
 
 bool Contains(const string &text, const string &pattern){
@@ -650,4 +673,239 @@ void WriteSepSource(const pair<string, set<Variable> > &sep_vars){
   }
 
   file.close();
+}
+
+void GenerateEventHandlerBaseHeader(){
+  ofstream file("inc/event_handler_base.hpp");
+
+  file << " // event_handler_base: base class for reduced tree production\n";
+  file << " // File generated with generate_small_tree.exe\n\n";
+
+  file << "#ifndef H_EVENT_HANDLER_BASE\n";
+  file << "#define H_EVENT_HANDLER_BASE\n\n";
+
+  file << "#include <string>\n\n";
+
+  file << "#include \"TString.h\"\n\n";
+
+  file << "#include \"phys_objects.hpp\"\n\n";
+
+  file << "class event_handler_base : public phys_objects{\n";
+  file << "public:\n";
+  file << "  event_handler_base(const std::string &file_name);\n\n";
+
+  file << "  virtual void ReduceTree(int num_entries,\n";
+  file << "                          const TString &out_file_name,\n";
+  file << "                          int num_total_entries) = 0;\n\n";
+
+  file << "  virtual ~event_handler_base();\n";
+
+  file << "};\n\n";
+
+  file << "#endif\n";
+
+  file.close();
+}
+
+void GenerateEventHandlerBaseSource(){
+  ofstream file("src/event_handler_base.cpp");
+
+  file << "// event_handle_base: base class for reduced tree production\n";
+  file << "// File generated with generate_small_tree.exe\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+
+  file << "#include <string>\n";
+
+  file << "using namespace std;\n\n";
+
+  file << "event_handler_base::event_handler_base(const string &file_name):\n";
+  file << "  phys_objects(file_name){\n";
+  file << "}\n\n";
+
+  file << "event_handler_base::~event_handler_base(){\n";
+  file << "}\n\n";
+}
+
+void GenerateEventHandlerHeader(const string &name){
+  string NAME = ToCaps(name);
+  ofstream file(("inc/event_handler_"+name+".hpp").c_str());
+
+  file << " // event_handler_" << name << ": derived class for specialized reduced tree production\n";
+  file << " // File generated with generate_small_tree.exe\n\n";
+
+  file << "#ifndef H_EVENT_HANDLER_" << NAME << "\n";
+  file << "#define H_EVENT_HANDLER_" << NAME << "\n";
+
+  file << "#include <string>\n";
+
+  file << "#include \"TString.h\"\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+
+  file << "class event_handler_" << name << " : public event_handler_base{\n";
+  file << "public:\n";
+  file << "  event_handler_" << name << "(const std::string &file_name);\n\n";
+
+  file << "  virtual void ReduceTree(int num_entries,\n";
+  file << "                          const TString &out_file_name,\n";
+  file << "                          int num_total_entries);\n\n";
+
+  file << "  virtual ~event_handler_" << name << "();\n";
+
+  file << "};\n\n";
+
+  file << "#endif\n";
+
+  file.close();
+}
+
+void GenerateEventHandlerSource(const string &name){
+  ofstream file(("src/event_handler_"+name+".cpp").c_str());
+
+  file << " // event_handler_" << name << ": derived class for specialized reduced tree production\n";
+  file << " // File generated with generate_small_tree.exe\n\n";
+
+  file << "#include \"event_handler_" << name << ".hpp\"\n\n";
+
+  file << "#include <string>\n";
+
+  file << "#include \"TString.h\"\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+
+  file << "using namespace std;\n\n";
+
+  file << "event_handler_" << name << "::event_handler_" << name << "(const string &file_name):\n";
+  file << "  event_handler_base(file_name){\n";
+  file << "}\n\n";
+
+  file << "void event_handler_" << name << "::ReduceTree(int /*num_entries*/, const TString &/*out_file_name*/, int /*num_total_entries*/){\n";
+  file << "}\n\n";
+
+  file << "event_handler_" << name << "::~event_handler_" << name << "(){\n";
+  file << "}\n";
+
+  file.close();
+}
+
+void GenerateEventHandlerMergeHeader(const vector<string> &names){
+  ofstream file("inc/event_handler.hpp");
+
+  file << " // event_handler: main class for reduced tree production\n";
+  file << " //File generated with generate_small_tree.exe\n\n";
+
+  file << "#ifndef H_EVENT_HANDLER\n";
+  file << "#define H_EVENT_HANDLER\n\n";
+
+  file << "#include <string>\n";
+
+  file << "#include \"TString.h\"\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+  for(vector<string>::const_iterator name = names.begin(); name != names.end(); ++name){
+    file << "#include \"event_handler_" << *name << ".hpp\"\n";
+  }
+
+  file << "class event_handler{\n";
+  file << "public:\n";
+  file << "  event_handler(const std::string &file_name, const std::type_info &type);\n";
+  file << "  void ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries);\n";
+  file << "  long TotalEntries() const;\n";
+  file << "  short GetVersion() const;\n";
+  file << "  const std::string& SampleName() const;\n";
+  file << "  const std::string& SampleName(const std::string &sample_name);\n";
+  file << "  void SetFile(const std::string &file, bool is_8TeV = false);\n";
+  file << "  void AddFiles(const std::string &file);\n";
+  file << "  ~event_handler();\n";
+  file << "private:\n";
+  file << "  event_handler_base *ehb;\n";
+  file << "  static event_handler_base * LookUpType(const std::string &file_name, const std::type_info &type);\n";
+  file << "};\n\n";
+
+  file << "#endif\n";
+
+  file.close();
+}
+
+void GenerateEventHandlerMergeSource(const vector<string> &names){
+  ofstream file("src/event_handler.cpp");
+
+  file << "// event_handler: main class for reduced tree production\n";
+  file << " //File generated with generate_small_tree.exe\n\n";
+
+  file << "#include \"event_handler.hpp\"\n\n";
+
+  file << "#include <typeinfo>\n";
+  file << "#include <string>\n\n";
+
+  file << "#include \"TString.h\"\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+  for(vector<string>::const_iterator name = names.begin(); name != names.end(); ++name){
+    file << "#include \"event_handler_" << *name << ".hpp\"\n";
+  }
+
+  file << "using namespace std;\n\n";
+
+  file << "#include \"event_handler_base.hpp\"\n\n";
+  for(vector<string>::const_iterator name = names.begin(); name != names.end(); ++name){
+    file << "#include \"event_handler_" << *name << ".hpp\"\n";
+  }
+
+  file << "event_handler::event_handler(const string &file_name, const type_info &type):\n";
+  file << "  ehb(LookUpType(file_name, type)){\n";
+  file << "}\n\n";
+
+  file << "void event_handler::ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries){\n";
+  file << "  ehb->ReduceTree(num_entries, out_file_name, num_total_entries);\n";
+  file << "}\n\n";
+
+  if(names.size()){
+    file << "event_handler_base * event_handler::LookUpType(const std::string &file_name, const type_info &type){\n";
+    file << "  if(type == typeid(event_handler_" << names.front() << ")){\n";
+    file << "    return new event_handler_" << names.front() << "(file_name);\n";
+    for(size_t itype = 1; itype < names.size(); ++itype){
+      file << "  }else if(type == typeid(event_handler_" << names.at(itype) << ")){\n";
+      file << "    return new event_handler_" << names.at(itype) << "(file_name);\n";
+    }
+    file << "  }else{\n";
+    file << "    return NULL;\n";
+    file << "  }\n";
+  }else{
+    file << "event_handler_base * LookUpType(const std::string &/*file_name*/, const type_info &/*type*/){\n";
+    file << "  return NULL;\n";
+  }
+  file << "}\n\n";
+
+  file << "long event_handler::TotalEntries() const{\n";
+  file << "  return ehb->TotalEntries();\n";
+  file << "}\n\n";
+
+  file << "short event_handler::GetVersion() const{\n";
+  file << "  return ehb->GetVersion();\n";
+  file << "}\n\n";
+
+  file << "const std::string& event_handler::SampleName() const{\n";
+  file << "  return ehb->SampleName();\n";
+  file << "}\n\n";
+
+  file << "const std::string& event_handler::SampleName(const std::string &sample_name){\n";
+  file << "  return ehb->SampleName(sample_name);\n";
+  file << "}\n\n";
+
+  file << "void event_handler::SetFile(const std::string &file, bool is_8TeV){\n";
+  file << "  ehb->SetFile(file, is_8TeV);\n";
+  file << "}\n\n";
+
+  file << "void event_handler::AddFiles(const std::string &file){\n";
+  file << "  ehb->AddFiles(file);\n";
+  file << "}\n\n";
+
+  file << "event_handler::~event_handler(){\n";
+  file << "  if(ehb){\n";
+  file << "    delete ehb;\n";
+  file << "    ehb = NULL;\n";
+  file << "  }\n";
+  file << "}\n\n";
 }
