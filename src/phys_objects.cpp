@@ -33,7 +33,7 @@ namespace{
 
 float phys_objects::MinJetPt = 40.0;
 float phys_objects::MinSignalLeptonPt = 20.0;
-float phys_objects::MinVetoLeptonPt = 15.0;
+float phys_objects::MinVetoLeptonPt = 10.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
 float phys_objects::bad_val = -999.;
 

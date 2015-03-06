@@ -67,7 +67,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.nels() = 0; tree.nvels() = 0;
     tree.nels_reliso() = 0; tree.nvels_reliso() = 0;
     for(size_t index(0); index<els_pt()->size(); index++) {
-      if (els_pt()->at(index) > 10 && IsVetoIdElectron(index)) {
+      if (els_pt()->at(index) > MinVetoLeptonPt && IsVetoIdElectron(index)) {
         tree.els_sigid().push_back(IsSignalIdElectron(index));
         tree.els_ispf().push_back(els_isPF()->at(index));
         tree.els_pt().push_back(els_pt()->at(index));
@@ -106,14 +106,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         if(IsVetoElectron(index)) ++(tree.nvels_reliso());
         if(IsSignalElectron(index)) ++(tree.nels_reliso());
         if(IsVetoIdElectron(index) && tree.els_miniso_tr10().back()<0.1) ++(tree.nvels());
-        if(IsSignalIdElectron(index) && tree.els_miniso_tr10().back()<0.1) ++(tree.nels());
+        if(IsSignalIdElectron(index) && tree.els_pt().back()>MinSignalLeptonPt && tree.els_miniso_tr10().back()<0.1) ++(tree.nels());
       }
     } // Loop over els
 
     tree.nmus() = 0; tree.nvmus() = 0;
     tree.nmus_reliso() = 0; tree.nvmus_reliso() = 0;
     for(size_t index(0); index<mus_pt()->size(); index++) {
-      if (mus_pt()->at(index) > 10 && IsVetoIdMuon(index)) {
+      if (mus_pt()->at(index) > MinVetoLeptonPt && IsVetoIdMuon(index)) {
         tree.mus_sigid().push_back(IsSignalIdMuon(index));
         tree.mus_pt().push_back(mus_pt()->at(index));
         tree.mus_eta().push_back(mus_eta()->at(index));
@@ -150,7 +150,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         if(IsVetoMuon(index)) ++(tree.nvmus_reliso());
         if(IsSignalMuon(index)) ++(tree.nmus_reliso());
         if(IsVetoIdMuon(index) && tree.mus_miniso_tr10().back()<0.4) ++(tree.nvmus());
-        if(IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.4) ++(tree.nmus());
+        if(IsSignalIdMuon(index) && tree.mus_pt().back()>MinSignalLeptonPt && tree.mus_miniso_tr10().back()<0.4) ++(tree.nmus());
       }
     } // Loop over mus
 

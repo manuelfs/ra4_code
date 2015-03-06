@@ -809,7 +809,7 @@ void GenerateEventHandlerMergeHeader(const vector<string> &names){
 
   file << "class event_handler{\n";
   file << "public:\n";
-  file << "  event_handler(const std::string &file_name, const std::type_info &type);\n";
+  file << "  event_handler(const std::string &file_name, const std::string &type);\n";
   file << "  void ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries);\n";
   file << "  long TotalEntries() const;\n";
   file << "  short GetVersion() const;\n";
@@ -820,7 +820,7 @@ void GenerateEventHandlerMergeHeader(const vector<string> &names){
   file << "  ~event_handler();\n";
   file << "private:\n";
   file << "  event_handler_base *ehb;\n";
-  file << "  static event_handler_base * LookUpType(const std::string &file_name, const std::type_info &type);\n";
+  file << "  static event_handler_base * LookUpType(const std::string &file_name, const std::string &type);\n";
   file << "};\n\n";
 
   file << "#endif\n";
@@ -853,7 +853,7 @@ void GenerateEventHandlerMergeSource(const vector<string> &names){
     file << "#include \"event_handler_" << *name << ".hpp\"\n";
   }
 
-  file << "event_handler::event_handler(const string &file_name, const type_info &type):\n";
+  file << "event_handler::event_handler(const string &file_name, const string &type):\n";
   file << "  ehb(LookUpType(file_name, type)){\n";
   file << "}\n\n";
 
@@ -862,18 +862,18 @@ void GenerateEventHandlerMergeSource(const vector<string> &names){
   file << "}\n\n";
 
   if(names.size()){
-    file << "event_handler_base * event_handler::LookUpType(const std::string &file_name, const type_info &type){\n";
-    file << "  if(type == typeid(event_handler_" << names.front() << ")){\n";
+    file << "event_handler_base * event_handler::LookUpType(const string &file_name, const string &type){\n";
+    file << "  if(type ==  \"" << names.front() << "\"){\n";
     file << "    return new event_handler_" << names.front() << "(file_name);\n";
     for(size_t itype = 1; itype < names.size(); ++itype){
-      file << "  }else if(type == typeid(event_handler_" << names.at(itype) << ")){\n";
+      file << "  }else if(type == \"" << names.at(itype) << "\"){\n";
       file << "    return new event_handler_" << names.at(itype) << "(file_name);\n";
     }
     file << "  }else{\n";
     file << "    return NULL;\n";
     file << "  }\n";
   }else{
-    file << "event_handler_base * LookUpType(const std::string &/*file_name*/, const type_info &/*type*/){\n";
+    file << "event_handler_base * LookUpType(const string &/*file_name*/, const string &/*type*/){\n";
     file << "  return NULL;\n";
   }
   file << "}\n\n";

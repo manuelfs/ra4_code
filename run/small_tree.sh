@@ -1,7 +1,7 @@
 #! /bin/bash
 
-type=1
-maxfiles=10
+type=quick
+maxfiles=50
 if (( "$#" >= 1 ))
 then
     maxfiles=$1

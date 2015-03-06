@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
-#include <typeinfo>
+#include <string>
 
 #include "TString.h"
 #include "TChain.h"
@@ -17,24 +17,6 @@
 
 using namespace std;
 
-const type_info & GetType(int type_code){
-  switch(type_code){
-  case 1: return typeid(event_handler_full);
-  case 2: return typeid(event_handler_quick);
-  case 3: return typeid(event_handler_lost_leptons_211);
-  default: return typeid(event_handler_base);
-  }
-}
-
-TString GetName(int type_code){
-  switch(type_code){
-  case 1: return "full";
-  case 2: return "quick";
-  case 3: return "lost_leptons_211";
-  default: return "";
-  }
-}
-
 int main(int argc, char *argv[]){
   time_t startTime, curTime;
   time(&startTime);
@@ -42,7 +24,7 @@ int main(int argc, char *argv[]){
   std::string inFilename("");
   std::string masspoint("");
   int c(0), Nentries(-1), nfiles(-1), nbatch(-1), total_entries_override(-1);
-  int type_code = 0;
+  string type = "";
   while((c=getopt(argc, argv, "n:t:i:m:f:b:s:"))!=-1){
     switch(c){
     case 'n':
@@ -64,7 +46,7 @@ int main(int argc, char *argv[]){
       masspoint=optarg;
       break;
     case 's':
-      type_code = atoi(optarg);
+      type = optarg;
       break;
     default:
       break;
@@ -73,7 +55,7 @@ int main(int argc, char *argv[]){
 
   TString outFilename(inFilename), folder(inFilename);
   TString all_sample_files(inFilename), outfolder("out/");
-  TString prefix = "small_"+GetName(type_code)+"_";
+  TString prefix = "small_"+type+"_";
 
   vector<TString> files;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
@@ -114,7 +96,7 @@ int main(int argc, char *argv[]){
 
   cout<<"Opening "<<inFilename<<endl;
 
-  event_handler tHandler(inFilename, GetType(type_code));
+  event_handler tHandler(inFilename, type);
   if(nfiles>0){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)
