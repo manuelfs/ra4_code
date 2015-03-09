@@ -88,7 +88,9 @@ std::vector<bool> els_tru_tm
 std::vector<int> els_charge
 
 ###################   Tracks   ##################
-int nisotks
+int ntks
+int ntks_chg
+int ntks_chg_reliso
 std::vector<int> tks_id
 std::vector<float> tks_pt
 std::vector<float> tks_eta

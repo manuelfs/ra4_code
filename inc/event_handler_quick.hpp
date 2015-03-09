@@ -25,7 +25,9 @@ public:
   void WriteFatJets(small_tree_quick &tree);
   void WriteTks(small_tree_quick &tree,
                 const std::vector<mc_particle> &parts,
-                const std::vector<size_t> &moms);
+                const std::vector<size_t> &moms,
+                short lepmax_chg = 0,
+                short lepmax_chg_reliso = 0);
   unsigned TypeCode(const std::vector<mc_particle> &parts,
                     const std::vector<size_t> &moms);
   float GetMinMTWb(const std::vector<int> &good_jets,

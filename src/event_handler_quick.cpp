@@ -32,7 +32,6 @@ event_handler_quick::event_handler_quick(const string &file_name):
 }
 
 void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries){
-  cout << "Good?" << endl;
   TFile out_file(out_file_name, "recreate");
   out_file.cd();
 
@@ -64,6 +63,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
 
     TLorentzVector lepmax_p4(0., 0., 0., 0.), lepmax_p4_reliso(0., 0., 0., 0.);
+    short lepmax_chg = 0, lepmax_chg_reliso = 0;
     tree.nels() = 0; tree.nvels() = 0;
     tree.nels_reliso() = 0; tree.nvels_reliso() = 0;
     for(size_t index(0); index<els_pt()->size(); index++) {
@@ -96,12 +96,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         SetMiniIso(tree, index, 11);
 
         // Max pT lepton
-        if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdElectron(index) && tree.els_miniso_tr10().back()<0.1)
+        if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdElectron(index) && tree.els_miniso_tr10().back()<0.1){
+          lepmax_chg = Sign(els_charge()->at(index));
           lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                      els_pz()->at(index), els_energy()->at(index));
-        if(els_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalElectron(index))
+        }
+        if(els_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalElectron(index)){
+          lepmax_chg_reliso = Sign(els_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                             els_pz()->at(index), els_energy()->at(index));
+        }
         // Number of leptons
         if(IsVetoElectron(index)) ++(tree.nvels_reliso());
         if(IsSignalElectron(index)) ++(tree.nels_reliso());
@@ -140,12 +144,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         SetMiniIso(tree, index, 13);
 
         // Max pT lepton
-        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.4)
+        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.4){
+          lepmax_chg = Sign(mus_charge()->at(index));
           lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                      mus_pz()->at(index), mus_energy()->at(index));
-        if(mus_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalMuon(index))
+        }
+        if(mus_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalMuon(index)){
+          lepmax_chg_reliso = Sign(mus_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                             mus_pz()->at(index), mus_energy()->at(index));
+        }
         // Number of leptons
         if(IsVetoMuon(index)) ++(tree.nvmus_reliso());
         if(IsSignalMuon(index)) ++(tree.nmus_reliso());
@@ -254,7 +262,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         ++(tree.nfjets());
       }
     }
-    WriteTks(tree, parts, moms);
+    WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso);
 
     tree.Fill();
   }
@@ -280,8 +288,12 @@ event_handler_quick::~event_handler_quick(){
 
 void event_handler_quick::WriteTks(small_tree_quick &tree,
                                    const vector<mc_particle> &parts,
-                                   const vector<size_t> &moms){
-  tree.nisotks() = 0;
+                                   const vector<size_t> &moms,
+                                   short lepmax_chg,
+                                   short lepmax_chg_reliso){
+  tree.ntks() = 0;
+  tree.ntks_chg() = 0;
+  tree.ntks_chg_reliso() = 0;
   for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
     if(is_nan(pfcand_pt()->at(cand))
        || is_nan(pfcand_eta()->at(cand))
@@ -318,9 +330,17 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
     SetMiniIso(tree,cand,0);
 
     if(abs(tree.tks_id().back()) == 11 || abs(tree.tks_id().back()) == 13){
-      if(tree.tks_pt().back()>5. && tree.tks_r03_ch().back()) ++(tree.nisotks());
+      if(tree.tks_pt().back()>5. && tree.tks_r03_ch().back()){
+        ++(tree.ntks());
+        if(Sign(tree.tks_id().back())*lepmax_chg>0) ++(tree.ntks_chg());
+        if(Sign(tree.tks_id().back())*lepmax_chg_reliso>0) ++(tree.ntks_chg_reliso());
+      }
     }else{
-      if(tree.tks_pt().back()>10. && tree.tks_r03_ch().back()<0.1) ++(tree.nisotks());
+      if(tree.tks_pt().back()>10. && tree.tks_r03_ch().back()<0.1){
+        ++(tree.ntks());
+        if(Sign(tree.tks_id().back())*lepmax_chg<0) ++(tree.ntks_chg());
+        if(Sign(tree.tks_id().back())*lepmax_chg_reliso<0) ++(tree.ntks_chg_reliso());
+      }
     }
   } // Loop over pfcands
 }
