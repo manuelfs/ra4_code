@@ -1164,20 +1164,23 @@ bool phys_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx
   double deltaRVal = 999.;
   double deltaPT = 999.;
   double leptonEta = 0, leptonPhi = 0, leptonPt = 0;
+  int pdgid = 0;
   if(type == particleId::muon ) {
     leptonEta = mus_eta()->at(index);
     leptonPhi = mus_phi()->at(index);
     leptonPt = mus_pt()->at(index);
+    pdgid = 13;
   } else if(type == particleId::electron) {
     leptonEta = els_scEta()->at(index);
     leptonPhi = els_phi()->at(index);
     leptonPt = els_pt()->at(index);
+    pdgid = 11;
   }
   for(unsigned iCand=0; iCand<pfcand_pt()->size(); iCand++) {
     if(is_nan(pfcand_pt()->at(iCand))
        || is_nan(pfcand_eta()->at(iCand))
        || is_nan(pfcand_phi()->at(iCand))) continue;
-    if(pfcand_particleId()->at(iCand)==type) {
+    if(fabs(TMath::Nint(pfcand_pdgId()->at(iCand)))==pdgid) {
       double tempDeltaR = dR(leptonEta, pfcand_eta()->at(iCand), leptonPhi, pfcand_phi()->at(iCand));
       if(tempDeltaR < deltaRVal) {
         deltaRVal = tempDeltaR;

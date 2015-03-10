@@ -97,7 +97,15 @@ std::vector<float> tks_eta
 std::vector<float> tks_phi
 std::vector<float> tks_mt
 std::vector<int> tks_from_pv
+std::vector<bool> tks_is_primary
+std::vector<bool> tks_is_primary_reliso
+std::vector<bool> tks_is_sig_lep
 std::vector<float> tks_r03_ch
+std::vector<float> tks_r02_ch
+std::vector<float> tks_mini_ch
+std::vector<float> tks_r03_ne
+std::vector<float> tks_r02_ne
+std::vector<float> tks_mini_ne
 std::vector<int> tks_tru_id
 std::vector<float> tks_tru_dr
 std::vector<float> tks_tru_dp

@@ -62,6 +62,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.met_phi() = mets_phi()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
 
+    size_t primary_lep=static_cast<size_t>(-1);
+    size_t primary_lep_reliso = primary_lep;
+    vector<size_t> sigleps;
     TLorentzVector lepmax_p4(0., 0., 0., 0.), lepmax_p4_reliso(0., 0., 0., 0.);
     short lepmax_chg = 0, lepmax_chg_reliso = 0;
     tree.nels() = 0; tree.nvels() = 0;
@@ -95,16 +98,24 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_reliso().push_back(GetElectronIsolation(index));
         SetMiniIso(tree, index, 11);
 
+	int the_cand;
+	bool has_match = phys_objects::hasPFMatch(index, particleId::electron, the_cand);
+	if(tree.els_sigid().back() && tree.els_pt().back()>MinSignalLeptonPt && has_match){
+	  sigleps.push_back(the_cand);
+	}
+
         // Max pT lepton
         if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdElectron(index) && tree.els_miniso_tr10().back()<0.1){
           lepmax_chg = Sign(els_charge()->at(index));
           lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                      els_pz()->at(index), els_energy()->at(index));
+	  if(has_match) primary_lep = the_cand;
         }
         if(els_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalElectron(index)){
           lepmax_chg_reliso = Sign(els_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                             els_pz()->at(index), els_energy()->at(index));
+	  if(has_match) primary_lep_reliso = the_cand;
         }
         // Number of leptons
         if(IsVetoElectron(index)) ++(tree.nvels_reliso());
@@ -143,16 +154,24 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.mus_reliso().push_back(GetMuonIsolation(index));
         SetMiniIso(tree, index, 13);
 
+	int the_cand;
+	bool has_match = hasPFMatch(index, particleId::muon, the_cand);
+	if(tree.mus_sigid().back() && tree.mus_pt().back()>MinSignalLeptonPt && has_match){
+	  sigleps.push_back(the_cand);
+	}
+
         // Max pT lepton
         if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.4){
           lepmax_chg = Sign(mus_charge()->at(index));
           lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                      mus_pz()->at(index), mus_energy()->at(index));
+	  if(has_match) primary_lep = the_cand;
         }
         if(mus_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalMuon(index)){
           lepmax_chg_reliso = Sign(mus_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                             mus_pz()->at(index), mus_energy()->at(index));
+	  if(has_match) primary_lep_reliso = the_cand;
         }
         // Number of leptons
         if(IsVetoMuon(index)) ++(tree.nvmus_reliso());
@@ -330,7 +349,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         ++(tree.nfjets());
       }
     }
-    WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso);
+    WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso, sigleps, primary_lep, primary_lep_reliso);
 
     tree.Fill();
   }
@@ -358,7 +377,10 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
                                    const vector<mc_particle> &parts,
                                    const vector<size_t> &moms,
                                    short lepmax_chg,
-                                   short lepmax_chg_reliso){
+                                   short lepmax_chg_reliso,
+				   const vector<size_t> &sigleps,
+				   size_t primary_lep,
+				   size_t primary_lep_reliso){
   tree.ntks() = 0;
   tree.ntks_chg() = 0;
   tree.ntks_chg_reliso() = 0;
@@ -395,6 +417,22 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
     tree.tks_from_tauhad().push_back(tree.tks_from_tau().back()
                                      && !tree.tks_from_taulep().back());
     tree.tks_num_prongs().push_back(ParentTauDescendants(ipart, parts, moms));
+    if(cand == primary_lep){
+      tree.tks_is_primary().push_back(true);
+    }else{
+      tree.tks_is_primary().push_back(false);
+    }
+    if(cand == primary_lep_reliso){
+      tree.tks_is_primary_reliso().push_back(true);
+    }else{
+      tree.tks_is_primary_reliso().push_back(false);
+    }
+    if(find(sigleps.begin(), sigleps.end(), cand)!=sigleps.end()){
+      tree.tks_is_sig_lep().push_back(true);
+    }else{
+      tree.tks_is_sig_lep().push_back(false);
+    }
+
     SetMiniIso(tree,cand,0);
 
     if(abs(tree.tks_id().back()) == 11 || abs(tree.tks_id().back()) == 13){
@@ -467,6 +505,11 @@ void event_handler_quick::SetMiniIso(small_tree_quick &tree, int ilep, int Parti
     lep_phi = pfcand_phi()->at(ilep);
     deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01; // Using muon cones
     isos.push_back(iso_class(&tree, &small_tree_quick::tks_r03_ch, 0.3,false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r02_ch, 0.2,false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree_quick::tks_mini_ch, max(0.05, 10./lep_pt),false,false,true));
+    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r03_ne, 0.3,true,true,false));
+    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r02_ne, 0.2,true,true,false));
+    isos.push_back(iso_class(&tree, &small_tree_quick::tks_mini_ne, max(0.05, 10./lep_pt),true,true,false));
   }
   bool need_pfweight = false;
   for(size_t iso = 0; !need_pfweight && iso < isos.size(); ++iso){
