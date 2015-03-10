@@ -122,6 +122,12 @@ std::vector<float> jets_islep
 
 ####################   MC   ###################
 unsigned mc_type
+std::vector<float>  mc_pt
+std::vector<float>  mc_eta
+std::vector<float>  mc_phi
+std::vector<int>    mc_id
+std::vector<int>    mc_status
+std::vector<size_t> mc_mom
 
 ################  Fat Jets   ##################
 int nfjets

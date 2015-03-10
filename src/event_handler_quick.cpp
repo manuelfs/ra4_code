@@ -198,6 +198,74 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     vector<mc_particle> parts = GetMCParticles();
     vector<size_t> moms = GetMoms(parts);
+    vector<size_t> indices;
+    for(size_t imc = 0; imc < parts.size(); ++imc){
+      mc_particle &part = parts.at(imc);
+
+      //save last top before decay
+      if ((abs(part.id_)==5 || abs(part.id_)==24) && (abs(part.mom_)==6) ){
+        size_t last_top = moms.at(imc);
+        //make sure we didn't already save it
+        bool already_saved = false;
+        for(size_t i = 0; i < indices.size() && !already_saved; i++){
+          if(indices.at(i) == last_top) already_saved = true;
+        }
+
+        if (!already_saved){
+          if (abs(parts.at(last_top).id_) == 6){ //save decaying tops
+            tree.mc_pt().push_back(parts.at(last_top).momentum_.Pt());
+            tree.mc_phi().push_back(parts.at(last_top).momentum_.Phi());
+            tree.mc_eta().push_back(parts.at(last_top).momentum_.Eta());
+            tree.mc_id().push_back(parts.at(last_top).id_);
+            tree.mc_status().push_back(parts.at(last_top).status_);
+            indices.push_back(last_top);
+          }
+
+          bool found_mom = false;
+          size_t imom = last_top;
+          while (imom < moms.size() && !found_mom){
+            imom = moms.at(imom);
+            for(size_t i = 0; i < indices.size() && !found_mom; i++){
+              if(indices.at(i) == imom){
+                imom = i;
+                found_mom = true;
+              }
+            }
+          }
+          if(found_mom) tree.mc_mom().push_back(imom);
+          else tree.mc_mom().push_back(part.mom_+10000);
+        }
+      }
+
+      //other categories to be saved 
+      bool hardscatter(false), isr(false), fsr(false);
+      if(part.status_ == 22 || part.status_ == 23) hardscatter = true;
+      if(abs(part.id_)!=6 && abs(part.id_)!=5 && abs(part.id_)!=24 && abs(part.mom_)==6 && part.momentum_.Pt()>10.) fsr = true;
+      if(abs(part.id_)!=6 && abs(part.mom_)==2212 && part.momentum_.Pt()>10.) isr = true;
+
+      if (hardscatter || isr || fsr){
+        tree.mc_pt().push_back(part.momentum_.Pt());
+        tree.mc_phi().push_back(part.momentum_.Phi());
+        tree.mc_eta().push_back(part.momentum_.Eta());
+        tree.mc_id().push_back(part.id_);
+        tree.mc_status().push_back(part.status_);
+        indices.push_back(imc);
+
+        bool found_mom = false;
+        size_t imom = imc;
+        while (imom < moms.size() && !found_mom){
+          imom = moms.at(imom);
+          for(size_t i = 0; i < indices.size() && !found_mom; i++){
+            if(indices.at(i) == imom){
+              imom = i;
+              found_mom = true;
+            }
+          }
+        }
+        if(found_mom) tree.mc_mom().push_back(imom);
+        else tree.mc_mom().push_back(part.mom_+10000);
+      }  
+    }
     tree.mc_type() = TypeCode(parts, moms);
 
     vector<int> veto_electrons = GetElectrons(false);
