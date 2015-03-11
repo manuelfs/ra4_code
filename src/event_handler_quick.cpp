@@ -436,7 +436,7 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
     SetMiniIso(tree,cand,0);
 
     if(abs(tree.tks_id().back()) == 11 || abs(tree.tks_id().back()) == 13){
-      if(tree.tks_pt().back()>5. && tree.tks_r03_ch().back()){
+      if(tree.tks_pt().back()>5. && tree.tks_r03_ch().back()<0.2){
         ++(tree.ntks());
         if(Sign(tree.tks_id().back())*lepmax_chg>0) ++(tree.ntks_chg());
         if(Sign(tree.tks_id().back())*lepmax_chg_reliso>0) ++(tree.ntks_chg_reliso());
