@@ -100,8 +100,8 @@ float cross_section(const TString &file){
   if(file.Contains("ZJetsToNuNu_HT-400to600_Tune4C_13TeV-madgraph-tauola"))  xsec =11.99;
   if(file.Contains("ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola"))  xsec =4.113;
 
-  if(file.Contains("TTZJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 2.232;
-  if(file.Contains("TTWJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 1.152;
+  if(file.Contains("TTZJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 0.7598;
+  if(file.Contains("TTWJets_Tune4C_13TeV-madgraph-tauola"))    xsec = 0.5662;
   // Calculated at 13 TeV in
   // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV
   // Higgs branching ratios from
