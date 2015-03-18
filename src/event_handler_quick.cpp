@@ -161,7 +161,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         }
 
         // Max pT lepton
-        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.4){
+        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.2){
           lepmax_chg = Sign(mus_charge()->at(index));
           lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                      mus_pz()->at(index), mus_energy()->at(index));
@@ -176,8 +176,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         // Number of leptons
         if(IsVetoMuon(index)) ++(tree.nvmus_reliso());
         if(IsSignalMuon(index)) ++(tree.nmus_reliso());
-        if(IsVetoIdMuon(index) && tree.mus_miniso_tr10().back()<0.4) ++(tree.nvmus());
-        if(IsSignalIdMuon(index) && tree.mus_pt().back()>MinSignalLeptonPt && tree.mus_miniso_tr10().back()<0.4) ++(tree.nmus());
+        if(IsVetoIdMuon(index) && tree.mus_miniso_tr10().back()<0.2) ++(tree.nvmus());
+        if(IsSignalIdMuon(index) && tree.mus_pt().back()>MinSignalLeptonPt && tree.mus_miniso_tr10().back()<0.2) ++(tree.nmus());
       }
     } // Loop over mus
 
@@ -193,6 +193,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     if(lepmax_p4.Pt()>0.){
       tree.lep_pt() = lepmax_p4.Pt();
+      tree.lep_phi() = lepmax_p4.Phi();
+      tree.lep_eta() = lepmax_p4.Eta();
       tree.lep_charge() = lepmax_chg;
       tree.st() = lepmax_p4.Pt()+mets_et()->at(0);
 
@@ -206,6 +208,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     if(lepmax_p4_reliso.Pt()>0.){
       tree.lep_pt_reliso() = lepmax_p4_reliso.Pt();
+      tree.lep_phi_reliso() = lepmax_p4_reliso.Phi();
+      tree.lep_eta_reliso() = lepmax_p4_reliso.Eta();
       tree.lep_charge_reliso() = lepmax_chg_reliso;
       tree.st_reliso() = lepmax_p4_reliso.Pt()+mets_et()->at(0);
 
@@ -260,11 +264,11 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
       //other categories to be saved
       bool hardscatter(false), isr(false), fsr(false);
-      if(part.status_ == 22 || part.status_ == 23) hardscatter = true;
+      if(part.status_ == 22 || part.status_ == 23 || FromW(imc, parts, moms)) hardscatter = true;
       if(abs(part.id_)!=6 && abs(part.id_)!=5 && abs(part.id_)!=24 && abs(part.mom_)==6 && part.momentum_.Pt()>10.) fsr = true;
       if(abs(part.id_)!=6 && abs(part.mom_)==2212 && part.momentum_.Pt()>10.) isr = true;
 
-      if (hardscatter || isr || fsr){
+      if (hardscatter || isr || fsr && (part.status_>9 || part.status_==1 || part.status_<0)){
         tree.mc_pt().push_back(part.momentum_.Pt());
         tree.mc_phi().push_back(part.momentum_.Phi());
         tree.mc_eta().push_back(part.momentum_.Eta());
@@ -302,13 +306,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.min_mt_bmet() = GetMinMTWb(good_jets, MinJetPt, CSVCuts[0], false);
     tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets, MinJetPt, CSVCuts[0], true);
 
-    vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 20., 2.4);
+    vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 20., 5.0);
     tree.jets_pt().resize(dirty_jets.size());
     tree.jets_eta().resize(dirty_jets.size());
     tree.jets_phi().resize(dirty_jets.size());
     tree.jets_csv().resize(dirty_jets.size());
     tree.jets_id().resize(dirty_jets.size());
     tree.jets_islep().resize(dirty_jets.size());
+    tree.jets_fjet_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_gen_pt().resize(dirty_jets.size());
+    tree.jets_parton_pt().resize(dirty_jets.size());
     for(size_t idirty = 0; idirty < dirty_jets.size(); ++idirty){
       int ijet = dirty_jets.at(idirty);
       tree.jets_pt().at(idirty) = jets_AK4_pt()->at(ijet);
@@ -317,16 +324,22 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_csv().at(idirty) = jets_AK4_btag_inc_secVertexCombined()->at(ijet);
       tree.jets_id().at(idirty) = jets_AK4_parton_Id()->at(ijet);
       tree.jets_islep().at(idirty) = (find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
+      tree.jets_gen_pt().at(idirty) = jets_AK4_gen_pt()->at(ijet);
+      tree.jets_parton_pt().at(idirty) = jets_AK4_parton_pt()->at(ijet);
     }
 
     vector<PseudoJet> sjets(0);
-    for(size_t jet = 0; jet<jets_pt()->size(); ++jet){
+    vector<int> ijets(0);
+    for(size_t idirty = 0; idirty<dirty_jets.size(); ++idirty){
+      int jet = dirty_jets.at(idirty);
       if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
          || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
-      if(fabs(jets_eta()->at(jet))>5.) continue;
       const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
                               jets_pz()->at(jet), jets_energy()->at(jet));
-      if(this_pj.pt()>30.0) sjets.push_back(this_pj);
+      if(this_pj.pt()>30.0){
+        sjets.push_back(this_pj);
+        ijets.push_back(idirty);
+      }
     }
     JetDefinition jet_def(antikt_algorithm, 1.2);
     ClusterSequence cs(sjets, jet_def);
@@ -345,10 +358,20 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.fjets_eta().at(ipj) = pj.eta();
       tree.fjets_phi().at(ipj) = pj.phi_std();
       tree.fjets_m().at(ipj) = pj.m();
-      tree.fjets_nconst().at(ipj) = pj.constituents().size();
+      const vector<PseudoJet> &cjets = pj.constituents();
+      tree.fjets_nconst().at(ipj) = cjets.size();
       if(pj.pt()>50.){
         tree.mj() += pj.m();
         ++(tree.nfjets());
+      }
+
+      for(size_t ijet = 0; ijet < ijets.size(); ++ijet){
+        size_t i = ijets.at(ijet);
+        for(size_t cjet = 0; cjet < cjets.size(); ++ cjet){
+          if((cjets.at(cjet) - sjets.at(ijet)).pt() < 0.0001){
+            tree.jets_fjet_index().at(i) = ipj;
+          }
+        }
       }
     }
     WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso, sigleps, primary_lep, primary_lep_reliso);
