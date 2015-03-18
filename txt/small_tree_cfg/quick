@@ -18,6 +18,8 @@ float st
 float st_reliso
 float lep_pt
 float lep_pt_reliso
+int lep_charge
+int lep_charge_reliso
 float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
@@ -114,6 +116,7 @@ std::vector<bool> tks_from_tau
 std::vector<bool> tks_from_taulep
 std::vector<bool> tks_from_tauhad
 std::vector<int> tks_num_prongs
+std::vector<int> tks_charge
 
 ###################   Jets   ##################
 int njets
