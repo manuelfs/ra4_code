@@ -847,6 +847,38 @@ bool phys_objects::IsBrem(size_t index,
   }
 }
 
+bool phys_objects::FromStatus23(size_t index,
+                                const vector<mc_particle> &parts,
+                                const vector<size_t> &moms){
+  if(index >= moms.size()) return false;
+
+  bool found_23 = false;
+  while(index < moms.size() && !found_23){
+    if(parts.at(index).status_ == 23){
+      found_23 = true;
+    }
+    index = moms.at(index);
+  }
+  return found_23;
+}
+
+bool phys_objects::FromTop(size_t index,
+                           const vector<mc_particle> &parts,
+                           const vector<size_t> &moms){
+  if(index >= moms.size()) return false;
+  if(IsBrem(index, parts, moms)) return false;
+
+  index = moms.at(index);
+  bool found_top = false;
+  while(index < moms.size() && !found_top){
+    if(abs(parts.at(index).id_) == 6){
+      found_top = true;
+    }
+    index = moms.at(index);
+  }
+  return found_top;
+}
+
 bool phys_objects::FromW(size_t index,
                          const vector<mc_particle> &parts,
                          const vector<size_t> &moms){
@@ -1192,4 +1224,29 @@ bool phys_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx
 
   if(type == particleId::electron) return (deltaPT<10);
   else return (deltaPT<5);
+}
+
+void phys_objects::GetLeadingBJets(const vector<int> &good_jets,
+                                   double pt_cut, double csv_cut,
+                                   size_t &lead, size_t &sub){
+  lead = -1;
+  sub = -1;
+
+  float pt1 = -1., pt2 = -1.;
+  for(size_t i = 0; i < good_jets.size(); ++i){
+    size_t ijet = good_jets.at(i);
+    double pt = jets_pt()->at(ijet);
+    if(pt > pt_cut
+       && jets_btag_inc_secVertexCombined()->at(ijet) > csv_cut){
+      if(pt > pt1){
+        pt2 = pt1;
+        pt1 = pt;
+        sub = lead;
+        lead = ijet;
+      }else if(pt > pt2){
+        pt2 = pt;
+        sub = ijet;
+      }
+    }
+  }
 }

@@ -104,6 +104,12 @@ public:
   static bool IsBrem(size_t index,
                      const std::vector<mc_particle> &parts,
                      const std::vector<size_t> &moms);
+  static bool FromStatus23(size_t index,
+                           const std::vector<mc_particle> &parts,
+                           const std::vector<size_t> &moms);
+  static bool FromTop(size_t index,
+                      const std::vector<mc_particle> &parts,
+                      const std::vector<size_t> &moms);
   static bool FromW(size_t index,
                     const std::vector<mc_particle> &parts,
                     const std::vector<size_t> &moms);
@@ -158,6 +164,10 @@ public:
   // Utilities
   bool IsMC() const;
   bool hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const;
+
+  void GetLeadingBJets(const std::vector<int> &good_jets,
+                       double pt_cut, double csv_cut,
+                       size_t &lead, size_t &sub);
 
   static float MinJetPt,MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
   static float bad_val;
