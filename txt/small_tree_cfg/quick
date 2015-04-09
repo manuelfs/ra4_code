@@ -14,6 +14,8 @@ float ht
 float ht_nonb
 float ht_isr
 float ht_isr_tru
+float ht_isr_me
+int   n_isr_me
 float mht
 float mt
 float mt_reliso
@@ -41,6 +43,7 @@ float pt_bb_max_dphi
 float tru_tt_dphi
 float tru_tt_m
 float tru_tt_pt
+float tru_tt_boost
 
 ##################   Leptons   ################
 int nleps
@@ -148,7 +151,7 @@ std::vector<float> jets_csv
 std::vector<float> jets_id
 std::vector<float> jets_islep
 std::vector<int>   jets_fjet_index
-std::vector<int>   jets_fgenjet_index
+std::vector<int>   jets_genfjet_index
 std::vector<float> jets_gen_pt
 std::vector<float> jets_parton_pt
 std::vector<int>   jets_isr_code
@@ -179,10 +182,10 @@ std::vector<float> fjets_phi
 std::vector<float> fjets_m
 std::vector<float> fjets_nconst
 
-int nfgenjets
+int ngenfjets
 float gen_mj
-std::vector<float> fgenjets_pt
-std::vector<float> fgenjets_eta
-std::vector<float> fgenjets_phi
-std::vector<float> fgenjets_m
-std::vector<float> fgenjets_nconst
+std::vector<float> genfjets_pt
+std::vector<float> genfjets_eta
+std::vector<float> genfjets_phi
+std::vector<float> genfjets_m
+std::vector<float> genfjets_nconst

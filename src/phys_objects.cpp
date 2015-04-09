@@ -866,9 +866,7 @@ bool phys_objects::FromTop(size_t index,
                            const vector<mc_particle> &parts,
                            const vector<size_t> &moms){
   if(index >= moms.size()) return false;
-  if(IsBrem(index, parts, moms)) return false;
 
-  index = moms.at(index);
   bool found_top = false;
   while(index < moms.size() && !found_top){
     if(abs(parts.at(index).id_) == 6){
