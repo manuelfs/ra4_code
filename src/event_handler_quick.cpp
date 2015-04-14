@@ -419,8 +419,12 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.ngenjets() = 0;
     tree.ht_isr_tru() = 0.;
 
+    vector<int> good_mc_jets(0);
     for(size_t jet = 0; jet < mc_jets_pt()->size(); ++jet){
+      if(is_nan(mc_jets_pt()->at(jet)) || is_nan(mc_jets_eta()->at(jet))
+         || is_nan(mc_jets_phi()->at(jet)) || is_nan(mc_jets_energy()->at(jet))) continue;
       if(mc_jets_pt()->at(jet)<20. || fabs(mc_jets_eta()->at(jet))>5.) continue;
+      good_mc_jets.push_back(jet);
       tree.genjets_pt().push_back(mc_jets_pt()->at(jet));
       tree.genjets_eta().push_back(mc_jets_eta()->at(jet));
       tree.genjets_phi().push_back(mc_jets_phi()->at(jet));
@@ -565,7 +569,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                  tree.genfjets_pt(), tree.genfjets_eta(),
                  tree.genfjets_phi(), tree.genfjets_m(),
                  tree.genfjets_nconst(), tree.genjets_genfjet_index(),
-                 1.2, vector<int>(0), true);
+                 1.2, good_mc_jets, true);
 
     WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso, sigleps, primary_lep, primary_lep_reliso);
 
@@ -608,20 +612,20 @@ void event_handler_quick::WriteFatJets(int &nfjets,
   vector<int> ijets(0);
 
   if(gen){
-    for(size_t jet = 0; jet<mc_jets_pt()->size(); ++jet){
-      if(is_nan(mc_jets_pt()->at(jet)) || is_nan(mc_jets_eta()->at(jet))
-         || is_nan(mc_jets_phi()->at(jet)) || is_nan(mc_jets_energy()->at(jet))) continue;
+    for(size_t idirty = 0; idirty<jets.size(); ++idirty){
+      int jet = jets.at(idirty);
       TLorentzVector v;
       v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
                      mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
       const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
-      if(this_pj.pt()>30.0 && fabs(this_pj.pseudorapidity())<5.0){
+      if(this_pj.pt()>30.0){
         sjets.push_back(this_pj);
-        ijets.push_back(jet);
+        ijets.push_back(idirty);
       }
     }
   }else{
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
+
       int jet = jets.at(idirty);
       if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
          || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))
@@ -634,10 +638,10 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       }
     }
   }
+
   JetDefinition jet_def(antikt_algorithm, radius);
   ClusterSequence cs(sjets, jet_def);
   vector<PseudoJet> fjets = sorted_by_m(cs.inclusive_jets());
-
   nfjets = 0;
   mj = 0.;
   fjets_pt.resize(fjets.size());
