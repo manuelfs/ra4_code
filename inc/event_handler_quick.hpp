@@ -21,16 +21,30 @@ public:
 
   virtual ~event_handler_quick();
 
+  void WriteFatJets(int &nfjets,
+                    float &mj,
+                    std::vector<float> &fjets_pt,
+                    std::vector<float> &fjets_eta,
+                    std::vector<float> &fjets_phi,
+                    std::vector<float> &fjets_m,
+                    std::vector<int> &fjets_nconst,
+                    std::vector<int> &jets_fjet_index,
+                    double radius,
+                    const std::vector<int> &jets,
+                    bool gen = false,
+                    bool clean = false,
+                    std::vector<bool> to_clean = std::vector<bool>(0));
+
   void SetMiniIso(small_tree_quick &tree, int ilep, int ParticleType);
-  void WriteFatJets(small_tree_quick &tree);
+
   void WriteTks(small_tree_quick &tree,
                 const std::vector<mc_particle> &parts,
                 const std::vector<size_t> &moms,
                 short lepmax_chg,
                 short lepmax_chg_reliso,
-		const std::vector<size_t> &sigleps,
-		size_t primary_lep,
-		size_t primary_lep_reliso);
+                const std::vector<size_t> &sigleps,
+                size_t primary_lep,
+                size_t primary_lep_reliso);
   unsigned TypeCode(const std::vector<mc_particle> &parts,
                     const std::vector<size_t> &moms);
   float GetMinMTWb(const std::vector<int> &good_jets,

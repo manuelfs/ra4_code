@@ -1,6 +1,7 @@
 #include "event_handler_quick.hpp"
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <string>
 #include <limits>
@@ -325,6 +326,11 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.jets_id().resize(dirty_jets.size());
     tree.jets_islep().resize(dirty_jets.size());
     tree.jets_fjet_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjet15_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjet20_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjet30_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjetinf_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjet_nl_index() = vector<int>(dirty_jets.size(), -1);
     tree.jets_gen_pt().resize(dirty_jets.size());
     tree.jets_parton_pt().resize(dirty_jets.size());
     tree.jets_isr_code().resize(dirty_jets.size());
@@ -337,7 +343,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_m().at(idirty) = jets_mass()->at(ijet);
       tree.jets_csv().at(idirty) = jets_btag_inc_secVertexCombined()->at(ijet);
       tree.jets_id().at(idirty) = jets_parton_Id()->at(ijet);
-      tree.jets_islep().at(idirty) = (find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
+      tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
       tree.jets_gen_pt().at(idirty) = jets_gen_pt()->at(ijet);
       tree.jets_parton_pt().at(idirty) = jets_parton_pt()->at(ijet);
 
@@ -388,33 +394,38 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     tree.ht_isr_me() = 0.;
     tree.n_isr_me() = 0;
+    tree.ht_isr_nonme() = 0;
+    tree.n_isr_nonme() = 0;
+    vector<TLorentzVector> p4s;
     for(size_t i = 0; i < parts.size(); ++i){
-      if(parts.at(i).status_ == 23 && !FromTop(i, parts, moms)){
+      if(parts.at(i).status_== 23 && !FromTop(i, parts, moms)){
         tree.ht_isr_me() += parts.at(i).momentum_.Pt();
         ++(tree.n_isr_me());
-      }
-    }
-    if(tree.n_isr_me()>3){
-      for(size_t i = 0; i < parts.size(); ++i){
-        if(parts.at(i).status_ == 23 && !FromTop(i, parts, moms)){
-          parts.at(i).momentum_.Print();
-          for(size_t blah = i; blah < moms.size(); blah = moms.at(blah)){
-            cout << parts.at(blah).id_ << ' ';
+      }else if(!FromTop(i, parts, moms) && !NumChildren(i, parts, moms)){
+        bool found = false;
+        for(size_t j = 0; j < p4s.size() && !found; ++j){
+          if((p4s.at(j)-parts.at(i).momentum_).Vect().Mag()<0.001){
+            found = true;
           }
-          cout << endl;
+        }
+        if(!found){
+          p4s.push_back(parts.at(i).momentum_);
+          tree.ht_isr_nonme() += parts.at(i).momentum_.Pt();
+          ++(tree.n_isr_nonme());
         }
       }
-      cout << endl;
     }
 
     tree.ngenjets() = 0;
     tree.ht_isr_tru() = 0.;
+
     for(size_t jet = 0; jet < mc_jets_pt()->size(); ++jet){
       if(mc_jets_pt()->at(jet)<20. || fabs(mc_jets_eta()->at(jet))>5.) continue;
       tree.genjets_pt().push_back(mc_jets_pt()->at(jet));
       tree.genjets_eta().push_back(mc_jets_eta()->at(jet));
       tree.genjets_phi().push_back(mc_jets_phi()->at(jet));
       tree.genjets_m().push_back(mc_jets_mass()->at(jet));
+      tree.genjets_genfjet_index().push_back(-1);
       if(mc_jets_pt()->at(jet)>MinJetPt) ++(tree.ngenjets());
 
       TLorentzVector v;
@@ -458,12 +469,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     float dphi_min = numeric_limits<float>::max();
     float dphi_max = -numeric_limits<float>::max();
+    float high_pt_1 = -numeric_limits<float>::max();
+    float high_pt_2 = -numeric_limits<float>::max();
     for(size_t ib1 = 0; ib1 < good_jets.size(); ++ib1){
       size_t b1 = good_jets.at(ib1);
-      if(jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
+      if(jets_pt()->at(b1)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
       for(size_t ib2 = ib1+1; ib2 < good_jets.size(); ++ib2){
         size_t b2 = good_jets.at(ib2);
-        if(jets_btag_inc_secVertexCombined()->at(b2)<CSVCuts[1]) continue;
+        if(jets_pt()->at(b2)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b2)<CSVCuts[1]) continue;
         float dphi = DeltaPhi(jets_phi()->at(b1), jets_phi()->at(b2));
 
         TLorentzVector vb1, vb2;
@@ -485,6 +498,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
           tree.max_dphi_bb() = dphi;
           tree.m_bb_max_dphi() = m;
           tree.pt_bb_max_dphi() = pt;
+        }
+        if((jets_pt()->at(b1) >= high_pt_1 && jets_pt()->at(b2) >= high_pt_2)
+           || (jets_pt()->at(b1) >= high_pt_2 && jets_pt()->at(b2) >= high_pt_1)){
+          high_pt_1 = jets_pt()->at(b1);
+          high_pt_2 = jets_pt()->at(b2);
+          tree.dphi_bb_high_pt() = dphi;
+          tree.m_bb_high_pt() = m;
+          tree.pt_bb_high_pt() = pt;
         }
       }
     }
@@ -508,92 +529,43 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.tru_tt_pt() = sum.Pt();
       tree.tru_tt_boost() = diff.Pt();
     }
-    vector<PseudoJet> sjets(0);
-    vector<int> ijets(0);
-    for(size_t idirty = 0; idirty<dirty_jets.size(); ++idirty){
-      int jet = dirty_jets.at(idirty);
-      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
-         || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))) continue;
-      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
-                              jets_pz()->at(jet), jets_energy()->at(jet));
-      if(this_pj.pt()>30.0){
-        sjets.push_back(this_pj);
-        ijets.push_back(idirty);
-      }
-    }
-    JetDefinition jet_def(antikt_algorithm, 1.2);
-    ClusterSequence cs(sjets, jet_def);
-    vector<PseudoJet> fjets = sorted_by_m(cs.inclusive_jets());
 
-    tree.nfjets() = 0;
-    tree.mj() = 0.;
-    tree.fjets_pt().resize(fjets.size());
-    tree.fjets_eta().resize(fjets.size());
-    tree.fjets_phi().resize(fjets.size());
-    tree.fjets_m().resize(fjets.size());
-    tree.fjets_nconst().resize(fjets.size());
-    for(size_t ipj = 0; ipj < fjets.size(); ++ipj){
-      const PseudoJet &pj = fjets.at(ipj);
-      tree.fjets_pt().at(ipj) = pj.pt();
-      tree.fjets_eta().at(ipj) = pj.eta();
-      tree.fjets_phi().at(ipj) = pj.phi_std();
-      tree.fjets_m().at(ipj) = pj.m();
-      const vector<PseudoJet> &cjets = pj.constituents();
-      tree.fjets_nconst().at(ipj) = cjets.size();
-      if(pj.pt()>50.){
-        tree.mj() += pj.m();
-        ++(tree.nfjets());
-      }
-
-      for(size_t ijet = 0; ijet < ijets.size(); ++ijet){
-        size_t i = ijets.at(ijet);
-        for(size_t cjet = 0; cjet < cjets.size(); ++ cjet){
-          if((cjets.at(cjet) - sjets.at(ijet)).pt() < 0.0001){
-            tree.jets_fjet_index().at(i) = ipj;
-          }
-        }
-      }
-    }
-
-    sjets.clear();
-    ijets.clear();
-
-    for(size_t jet = 0; jet<mc_jets_pt()->size(); ++jet){
-      if(is_nan(mc_jets_pt()->at(jet)) || is_nan(mc_jets_eta()->at(jet))
-         || is_nan(mc_jets_phi()->at(jet)) || is_nan(mc_jets_energy()->at(jet))) continue;
-      TLorentzVector v;
-      v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
-                     mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
-      const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
-      if(this_pj.pt()>30.0 && fabs(this_pj.pseudorapidity())<5.0){
-        sjets.push_back(this_pj);
-        ijets.push_back(jet);
-      }
-    }
-
-    ClusterSequence gen_cs(sjets, jet_def);
-    vector<PseudoJet> genfjets = sorted_by_m(gen_cs.inclusive_jets());
-
-    tree.ngenfjets() = 0;
-    tree.gen_mj() = 0.;
-    tree.genfjets_pt().resize(genfjets.size());
-    tree.genfjets_eta().resize(genfjets.size());
-    tree.genfjets_phi().resize(genfjets.size());
-    tree.genfjets_m().resize(genfjets.size());
-    tree.genfjets_nconst().resize(genfjets.size());
-    for(size_t ipj = 0; ipj < genfjets.size(); ++ipj){
-      const PseudoJet &pj = genfjets.at(ipj);
-      tree.genfjets_pt().at(ipj) = pj.pt();
-      tree.genfjets_eta().at(ipj) = pj.eta();
-      tree.genfjets_phi().at(ipj) = pj.phi_std();
-      tree.genfjets_m().at(ipj) = pj.m();
-      const vector<PseudoJet> &cjets = pj.constituents();
-      tree.genfjets_nconst().at(ipj) = cjets.size();
-      if(pj.pt()>50.){
-        tree.gen_mj() += pj.m();
-        ++(tree.ngenfjets());
-      }
-    }
+    WriteFatJets(tree.nfjets(), tree.mj(),
+                 tree.fjets_pt(), tree.fjets_eta(),
+                 tree.fjets_phi(), tree.fjets_m(),
+                 tree.fjets_nconst(), tree.jets_fjet_index(),
+                 1.2, dirty_jets);
+    WriteFatJets(tree.nfjets15(), tree.mj15(),
+                 tree.fjets15_pt(), tree.fjets15_eta(),
+                 tree.fjets15_phi(), tree.fjets15_m(),
+                 tree.fjets15_nconst(), tree.jets_fjet15_index(),
+                 1.5, dirty_jets);
+    WriteFatJets(tree.nfjets20(), tree.mj20(),
+                 tree.fjets20_pt(), tree.fjets20_eta(),
+                 tree.fjets20_phi(), tree.fjets20_m(),
+                 tree.fjets20_nconst(), tree.jets_fjet20_index(),
+                 2.0, dirty_jets);
+    WriteFatJets(tree.nfjets30(), tree.mj30(),
+                 tree.fjets30_pt(), tree.fjets30_eta(),
+                 tree.fjets30_phi(), tree.fjets30_m(),
+                 tree.fjets30_nconst(), tree.jets_fjet30_index(),
+                 3.0, dirty_jets);
+    WriteFatJets(tree.nfjetsinf(), tree.mjinf(),
+                 tree.fjetsinf_pt(), tree.fjetsinf_eta(),
+                 tree.fjetsinf_phi(), tree.fjetsinf_m(),
+                 tree.fjetsinf_nconst(), tree.jets_fjetinf_index(),
+                 1000.0, dirty_jets);
+    WriteFatJets(tree.nfjets_nl(), tree.mj_nl(),
+                 tree.fjets_nl_pt(), tree.fjets_nl_eta(),
+                 tree.fjets_nl_phi(), tree.fjets_nl_m(),
+                 tree.fjets_nl_nconst(), tree.jets_fjet_nl_index(),
+                 1.2, dirty_jets, false,
+                 true, tree.jets_islep());
+    WriteFatJets(tree.ngenfjets(), tree.gen_mj(),
+                 tree.genfjets_pt(), tree.genfjets_eta(),
+                 tree.genfjets_phi(), tree.genfjets_m(),
+                 tree.genfjets_nconst(), tree.genjets_genfjet_index(),
+                 1.2, vector<int>(0), true);
 
     WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso, sigleps, primary_lep, primary_lep_reliso);
 
@@ -617,6 +589,84 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 }
 
 event_handler_quick::~event_handler_quick(){
+}
+
+void event_handler_quick::WriteFatJets(int &nfjets,
+                                       float &mj,
+                                       vector<float> &fjets_pt,
+                                       vector<float> &fjets_eta,
+                                       vector<float> &fjets_phi,
+                                       vector<float> &fjets_m,
+                                       vector<int> &fjets_nconst,
+                                       vector<int> &jets_fjet_index,
+                                       double radius,
+                                       const vector<int> &jets,
+                                       bool gen,
+                                       bool clean,
+                                       vector<bool> to_clean){
+  vector<PseudoJet> sjets(0);
+  vector<int> ijets(0);
+
+  if(gen){
+    for(size_t jet = 0; jet<mc_jets_pt()->size(); ++jet){
+      if(is_nan(mc_jets_pt()->at(jet)) || is_nan(mc_jets_eta()->at(jet))
+         || is_nan(mc_jets_phi()->at(jet)) || is_nan(mc_jets_energy()->at(jet))) continue;
+      TLorentzVector v;
+      v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
+                     mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
+      const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
+      if(this_pj.pt()>30.0 && fabs(this_pj.pseudorapidity())<5.0){
+        sjets.push_back(this_pj);
+        ijets.push_back(jet);
+      }
+    }
+  }else{
+    for(size_t idirty = 0; idirty<jets.size(); ++idirty){
+      int jet = jets.at(idirty);
+      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
+         || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))
+         || (clean && to_clean.at(idirty))) continue;
+      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
+                              jets_pz()->at(jet), jets_energy()->at(jet));
+      if(this_pj.pt()>30.0){
+        sjets.push_back(this_pj);
+        ijets.push_back(idirty);
+      }
+    }
+  }
+  JetDefinition jet_def(antikt_algorithm, radius);
+  ClusterSequence cs(sjets, jet_def);
+  vector<PseudoJet> fjets = sorted_by_m(cs.inclusive_jets());
+
+  nfjets = 0;
+  mj = 0.;
+  fjets_pt.resize(fjets.size());
+  fjets_eta.resize(fjets.size());
+  fjets_phi.resize(fjets.size());
+  fjets_m.resize(fjets.size());
+  fjets_nconst.resize(fjets.size());
+
+  for(size_t ipj = 0; ipj < fjets.size(); ++ipj){
+    const PseudoJet &pj = fjets.at(ipj);
+    fjets_pt.at(ipj) = pj.pt();
+    fjets_eta.at(ipj) = pj.eta();
+    fjets_phi.at(ipj) = pj.phi_std();
+    fjets_m.at(ipj) = pj.m();
+    const vector<PseudoJet> &cjets = pj.constituents();
+    fjets_nconst.at(ipj) = cjets.size();
+    if(pj.pt()>50.){
+      mj += pj.m();
+      ++nfjets;
+    }
+    for(size_t ijet = 0; ijet < ijets.size(); ++ijet){
+      size_t i = ijets.at(ijet);
+      for(size_t cjet = 0; cjet < cjets.size(); ++ cjet){
+        if((cjets.at(cjet) - sjets.at(ijet)).pt() < 0.0001){
+          jets_fjet_index.at(i) = ipj;
+        }
+      }
+    }
+  }
 }
 
 void event_handler_quick::WriteTks(small_tree_quick &tree,
