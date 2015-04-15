@@ -21,41 +21,37 @@ using namespace std;
 using std::cout;
 using std::endl;
 
-void skim_ntuples(){
-  TString outfolder="archive/ra4skim/", infolder = "archive/14-10-18/";
+void onefile_skim(TString infiles, TString cuts="ht>=500&&met>=200"){
+  TString folder(infiles), outfile(infiles);
+  folder.Remove(folder.Last('/')+1, folder.Length());
+  TString outfolder=folder+"skim/";
+
+  // Finding outfile name
+  outfile.Remove(0, outfile.Last('/')); outfile.ReplaceAll("*","");
+  if(outfile.Contains(".root")) outfile.ReplaceAll(".root","_"+cuts+".root");
+  else outfile += ("_"+cuts+".root");
+  outfile.ReplaceAll(">=","ge"); outfile.ReplaceAll("<=","se"); outfile.ReplaceAll("&&","_");
+  outfile.ReplaceAll(">","g"); outfile.ReplaceAll("<","s"); outfile.ReplaceAll("=","");
+  outfile = outfolder+outfile;
+
   gSystem->mkdir(outfolder, kTRUE);
-  TString cuts = "nleps==1";
+  TFile out_rootfile(outfile, "RECREATE");
+  out_rootfile.cd();
+  TChain tree("tree"); 
+  int nfiles = tree.Add(infiles); 
 
-  vector<TString> files = dirlist(infolder, ".root");
-
-  for(unsigned file(0); file < files.size(); file++){
-    TFile out_file(outfolder+files[file], "RECREATE");
-    out_file.cd();
-    TChain tree("tree"); 
-    tree.Add(infolder+files[file]); 
-
-    TTree *ctree = tree.CopyTree(cuts);
-    ctree->Write();
-    out_file.Close();
-    cout<<"Written "<<outfolder+files[file]<<endl;
-  }
+  cout<<"Skimming the "<<nfiles<<" files in "<<infiles<<endl;
+  TTree *ctree = tree.CopyTree(cuts);
+  ctree->Write();
+  out_rootfile.Close();
+  cout<<"Written "<<outfile<<endl;
 
 }
 
-void skim_one(TString file){
-  TFile fin(file);
-  fin.cd("cfA");
-  TTree *eventA = (TTree*)gDirectory->Get("eventA");
-  TTree *eventB = (TTree*)gDirectory->Get("eventB");
-  TTree *eA(eventA->CloneTree(0));
-  TTree *eB(eventB->CloneTree(0));
+void skim_ntuples(TString folder){
+  vector<TString> files = dirlist(folder, ".root");
 
-  TString outname="cfa_one.root";
-  TFile fout(outname, "RECREATE");
-  fout.mkdir("cfA");
-  fout.cd("cfA");
-  eA->Write();
-  eB->Write();
-  fout.Close();
-  cout<<endl<<"Written "<<outname<<" with the tree structure of the cfA file."<<endl<<endl;
+  for(unsigned file(0); file < files.size(); file++){
+    onefile_skim(folder+files[file], "ht>=500&&met>=200");
+  }
 }
