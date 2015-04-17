@@ -443,7 +443,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         mc_particle &part = parts.at(mc);
         if(is_nan(part.momentum_.Px()) || is_nan(part.momentum_.Py())
            || is_nan(part.momentum_.Pz()) || is_nan(part.momentum_.E())
-           || part.momentum_.Pt() <= 0.) continue;
+	   || part.momentum_.Pt() <= std::numeric_limits<float>::epsilon()) continue;
         float dr = v.DeltaR(part.momentum_);
         if(dr<mindr){
           mindr = dr;
