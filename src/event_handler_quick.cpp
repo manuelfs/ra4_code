@@ -471,49 +471,85 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
 
-    float dphi_min = numeric_limits<float>::max();
-    float dphi_max = -numeric_limits<float>::max();
-    float high_pt_1 = -numeric_limits<float>::max();
-    float high_pt_2 = -numeric_limits<float>::max();
+    tree.min_dphi_bb() = numeric_limits<float>::max();
+    tree.max_dphi_bb() = -numeric_limits<float>::max();
+    tree.min_dr_bb() = numeric_limits<float>::max();
+    tree.max_dr_bb() = -numeric_limits<float>::max();
+    tree.min_m_bb() = numeric_limits<float>::max();
+    tree.max_m_bb() = -numeric_limits<float>::max();
+    tree.min_pt_bb() = numeric_limits<float>::max();
+    tree.max_pt_bb() = -numeric_limits<float>::max();
+    
+    tree.min_dphi_blep() = numeric_limits<float>::max();
+    tree.max_dphi_blep() = -numeric_limits<float>::max();
+    tree.min_dr_blep() = numeric_limits<float>::max();
+    tree.max_dr_blep() = -numeric_limits<float>::max();
+    tree.min_m_blep() = numeric_limits<float>::max();
+    tree.max_m_blep() = -numeric_limits<float>::max();
+    tree.min_pt_blep() = numeric_limits<float>::max();
+    tree.max_pt_blep() = -numeric_limits<float>::max();
+
+    tree.min_dphi_bmet() = numeric_limits<float>::max();
+    tree.max_dphi_bmet() = -numeric_limits<float>::max();
+    tree.min_mt_bmet() = numeric_limits<float>::max();
+    tree.max_mt_bmet() = -numeric_limits<float>::max();
+    tree.min_pt_bmet() = numeric_limits<float>::max();
+    tree.max_pt_bmet() = -numeric_limits<float>::max();
     for(size_t ib1 = 0; ib1 < good_jets.size(); ++ib1){
       size_t b1 = good_jets.at(ib1);
       if(jets_pt()->at(b1)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
+      TLorentzVector vb1, vmet;
+      vb1.SetPtEtaPhiM(jets_pt()->at(b1), jets_eta()->at(b1),
+		       jets_phi()->at(b1), jets_mass()->at(b1));
+      vmet.SetPtEtaPhiM(mets_et()->at(0), 0., mets_phi()->at(0), 0.);
+
+      float dphi_blep = DeltaPhi(vb1.Phi(), lepmax_p4.Phi());
+      if(dphi_blep < tree.min_dphi_blep()) tree.min_dphi_blep() = dphi_blep;
+      if(dphi_blep > tree.max_dphi_blep()) tree.max_dphi_blep() = dphi_blep;
+      float dr_blep = vb1.DeltaR(lepmax_p4);
+      if(dr_blep < tree.min_dr_blep()) tree.min_dr_blep() = dr_blep;
+      if(dr_blep > tree.max_dr_blep()) tree.max_dr_blep() = dr_blep;
+      float m_blep = (vb1+lepmax_p4).M();
+      if(m_blep < tree.min_m_blep()) tree.min_m_blep() = m_blep;
+      if(m_blep > tree.max_m_blep()) tree.max_m_blep() = m_blep;
+      float pt_blep = (vb1+lepmax_p4).Pt();
+      if(pt_blep < tree.min_pt_blep()) tree.min_pt_blep() = pt_blep;
+      if(pt_blep > tree.max_pt_blep()) tree.max_pt_blep() = pt_blep;
+
+      float dphi_bmet = DeltaPhi(vb1.Phi(), vmet.Phi());
+      if(dphi_bmet < tree.min_dphi_bmet()) tree.min_dphi_bmet() = dphi_bmet;
+      if(dphi_bmet > tree.max_dphi_bmet()) tree.max_dphi_bmet() = dphi_bmet;
+      float mt_bmet = GetMT(vb1.M(), vb1.Pt(), vb1.Phi(),
+			    0., mets_et()->at(0), mets_phi()->at(0));
+      if(mt_bmet < tree.min_mt_bmet()) tree.min_mt_bmet() = mt_bmet;
+      if(mt_bmet > tree.max_mt_bmet()) tree.max_mt_bmet() = mt_bmet;
+      float pt_bmet = (vb1+vmet).Pt();
+      if(pt_bmet < tree.min_pt_bmet()) tree.min_pt_bmet() = pt_bmet;
+      if(pt_bmet > tree.max_pt_bmet()) tree.max_pt_bmet() = pt_bmet;
+
       for(size_t ib2 = ib1+1; ib2 < good_jets.size(); ++ib2){
         size_t b2 = good_jets.at(ib2);
         if(jets_pt()->at(b2)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b2)<CSVCuts[1]) continue;
-        float dphi = DeltaPhi(jets_phi()->at(b1), jets_phi()->at(b2));
 
-        TLorentzVector vb1, vb2;
-        vb1.SetPtEtaPhiM(jets_pt()->at(b1), jets_eta()->at(b1),
-                         jets_phi()->at(b1), jets_mass()->at(b1));
+        TLorentzVector vb2;
         vb2.SetPtEtaPhiM(jets_pt()->at(b2), jets_eta()->at(b2),
                          jets_phi()->at(b2), jets_mass()->at(b2));
-        TLorentzVector bb = vb1+vb2;
-        float m = bb.M(), pt = bb.Pt();
-
-        if(dphi < dphi_min){
-          dphi_min = dphi;
-          tree.min_dphi_bb() = dphi;
-          tree.m_bb_min_dphi() = m;
-          tree.pt_bb_min_dphi() = pt;
-        }
-        if(dphi > dphi_max){
-          dphi_max = dphi;
-          tree.max_dphi_bb() = dphi;
-          tree.m_bb_max_dphi() = m;
-          tree.pt_bb_max_dphi() = pt;
-        }
-        if((jets_pt()->at(b1) >= high_pt_1 && jets_pt()->at(b2) >= high_pt_2)
-           || (jets_pt()->at(b1) >= high_pt_2 && jets_pt()->at(b2) >= high_pt_1)){
-          high_pt_1 = jets_pt()->at(b1);
-          high_pt_2 = jets_pt()->at(b2);
-          tree.dphi_bb_high_pt() = dphi;
-          tree.m_bb_high_pt() = m;
-          tree.pt_bb_high_pt() = pt;
-        }
+	
+	float dphi_bb = DeltaPhi(vb1.Phi(), vb2.Phi());
+	if(dphi_bb < tree.min_dphi_bb()) tree.min_dphi_bb() = dphi_bb;
+	if(dphi_bb > tree.max_dphi_bb()) tree.max_dphi_bb() = dphi_bb;
+	float dr_bb = vb1.DeltaR(vb2);
+	if(dr_bb < tree.min_dr_bb()) tree.min_dr_bb() = dr_bb;
+	if(dr_bb > tree.max_dr_bb()) tree.max_dr_bb() = dr_bb;
+	float m_bb = (vb1+vb2).M();
+	if(m_bb < tree.min_m_bb()) tree.min_m_bb() = m_bb;
+	if(m_bb > tree.max_m_bb()) tree.max_m_bb() = m_bb;
+	float pt_bb = (vb1+vb2).Pt();
+	if(pt_bb < tree.min_pt_bb()) tree.min_pt_bb() = pt_bb;
+	if(pt_bb > tree.max_pt_bb()) tree.max_pt_bb() = pt_bb;
       }
     }
-
+    
     size_t it1 = 0, it2 = 0;
     bool found_top = false, found_antitop = false;
     for(size_t it = 0; it < parts.size() && !(found_top && found_antitop); ++it){
@@ -537,38 +573,54 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     WriteFatJets(tree.nfjets(), tree.mj(),
                  tree.fjets_pt(), tree.fjets_eta(),
                  tree.fjets_phi(), tree.fjets_m(),
-                 tree.fjets_nconst(), tree.jets_fjet_index(),
+                 tree.fjets_nconst(),
+		 tree.fjets_sumcsv(), tree.fjets_poscsv(),
+		 tree.fjets_btags(), tree.jets_fjet_index(),
                  1.2, dirty_jets);
     WriteFatJets(tree.nfjets15(), tree.mj15(),
                  tree.fjets15_pt(), tree.fjets15_eta(),
                  tree.fjets15_phi(), tree.fjets15_m(),
-                 tree.fjets15_nconst(), tree.jets_fjet15_index(),
+                 tree.fjets15_nconst(),
+		 tree.fjets15_sumcsv(), tree.fjets15_poscsv(),
+		 tree.fjets15_btags(), tree.jets_fjet15_index(),
                  1.5, dirty_jets);
     WriteFatJets(tree.nfjets20(), tree.mj20(),
                  tree.fjets20_pt(), tree.fjets20_eta(),
                  tree.fjets20_phi(), tree.fjets20_m(),
-                 tree.fjets20_nconst(), tree.jets_fjet20_index(),
+                 tree.fjets20_nconst(),
+		 tree.fjets20_sumcsv(), tree.fjets20_poscsv(),
+		 tree.fjets20_btags(), tree.jets_fjet20_index(),
                  2.0, dirty_jets);
     WriteFatJets(tree.nfjets30(), tree.mj30(),
                  tree.fjets30_pt(), tree.fjets30_eta(),
                  tree.fjets30_phi(), tree.fjets30_m(),
-                 tree.fjets30_nconst(), tree.jets_fjet30_index(),
+                 tree.fjets30_nconst(),
+		 tree.fjets30_sumcsv(), tree.fjets30_poscsv(),
+		 tree.fjets30_btags(), tree.jets_fjet30_index(),
                  3.0, dirty_jets);
     WriteFatJets(tree.nfjetsinf(), tree.mjinf(),
                  tree.fjetsinf_pt(), tree.fjetsinf_eta(),
                  tree.fjetsinf_phi(), tree.fjetsinf_m(),
-                 tree.fjetsinf_nconst(), tree.jets_fjetinf_index(),
+                 tree.fjetsinf_nconst(),
+		 tree.fjetsinf_sumcsv(), tree.fjetsinf_poscsv(),
+		 tree.fjetsinf_btags(), tree.jets_fjetinf_index(),
                  1000.0, dirty_jets);
     WriteFatJets(tree.nfjets_nl(), tree.mj_nl(),
                  tree.fjets_nl_pt(), tree.fjets_nl_eta(),
                  tree.fjets_nl_phi(), tree.fjets_nl_m(),
-                 tree.fjets_nl_nconst(), tree.jets_fjet_nl_index(),
+                 tree.fjets_nl_nconst(),
+		 tree.fjets_nl_sumcsv(), tree.fjets_nl_poscsv(),
+		 tree.fjets_nl_btags(), tree.jets_fjet_nl_index(),
                  1.2, dirty_jets, false,
                  true, tree.jets_islep());
+    vector<float> genfjets_csv(tree.genfjets_pt().size());
+    vector<int> genfjets_btags(tree.genfjets_pt().size());
     WriteFatJets(tree.ngenfjets(), tree.gen_mj(),
                  tree.genfjets_pt(), tree.genfjets_eta(),
                  tree.genfjets_phi(), tree.genfjets_m(),
-                 tree.genfjets_nconst(), tree.genjets_genfjet_index(),
+                 tree.genfjets_nconst(),
+		 genfjets_csv, genfjets_csv,
+		 genfjets_btags, tree.genjets_genfjet_index(),
                  1.2, good_mc_jets, true);
 
     WriteTks(tree, parts, moms, lepmax_chg, lepmax_chg_reliso, sigleps, primary_lep, primary_lep_reliso);
@@ -602,14 +654,18 @@ void event_handler_quick::WriteFatJets(int &nfjets,
                                        vector<float> &fjets_phi,
                                        vector<float> &fjets_m,
                                        vector<int> &fjets_nconst,
+				       vector<float> &fjets_sumcsv,
+				       vector<float> &fjets_poscsv,
+				       vector<int> &fjets_btags,
                                        vector<int> &jets_fjet_index,
                                        double radius,
                                        const vector<int> &jets,
                                        bool gen,
                                        bool clean,
-                                       vector<bool> to_clean){
+                                       const vector<bool> &to_clean){
   vector<PseudoJet> sjets(0);
   vector<int> ijets(0);
+  vector<float> csvs(0);
 
   if(gen){
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
@@ -621,6 +677,7 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       if(this_pj.pt()>30.0){
         sjets.push_back(this_pj);
         ijets.push_back(idirty);
+	csvs.push_back(0.);
       }
     }
   }else{
@@ -635,6 +692,7 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       if(this_pj.pt()>30.0){
         sjets.push_back(this_pj);
         ijets.push_back(idirty);
+	csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));
       }
     }
   }
@@ -649,6 +707,9 @@ void event_handler_quick::WriteFatJets(int &nfjets,
   fjets_phi.resize(fjets.size());
   fjets_m.resize(fjets.size());
   fjets_nconst.resize(fjets.size());
+  fjets_sumcsv.resize(fjets.size());
+  fjets_poscsv.resize(fjets.size());
+  fjets_btags.resize(fjets.size());
 
   for(size_t ipj = 0; ipj < fjets.size(); ++ipj){
     const PseudoJet &pj = fjets.at(ipj);
@@ -662,11 +723,19 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       mj += pj.m();
       ++nfjets;
     }
+    fjets_btags.at(ipj) = 0;
     for(size_t ijet = 0; ijet < ijets.size(); ++ijet){
       size_t i = ijets.at(ijet);
       for(size_t cjet = 0; cjet < cjets.size(); ++ cjet){
         if((cjets.at(cjet) - sjets.at(ijet)).pt() < 0.0001){
           jets_fjet_index.at(i) = ipj;
+	  fjets_sumcsv.at(ipj) += csvs.at(ijet);
+	  if(csvs.at(ijet) > 0.){
+	    fjets_poscsv.at(ipj) += csvs.at(ijet);
+	  }
+	  if(csvs.at(ijet) > CSVCuts[1]){
+	    ++(fjets_btags.at(ipj));
+	  }
         }
       }
     }

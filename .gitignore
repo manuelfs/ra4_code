@@ -1,4 +1,4 @@
-˘# Automatically generated files
+# Automatically generated files
 */cfa*.*
 */small_tree*.*
 */event_handler*.*
@@ -36,3 +36,5 @@ bin/*
 gmon.out
 out
 archive
+.nfs*
+.fuse_hidden*

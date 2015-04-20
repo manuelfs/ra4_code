@@ -38,13 +38,26 @@ float min_mt_bmet
 float min_mt_bmet_with_w_mass
 float min_dphi_bb
 float max_dphi_bb
-float dphi_bb_high_pt
-float m_bb_min_dphi
-float m_bb_max_dphi
-float m_bb_high_pt
-float pt_bb_min_dphi
-float pt_bb_max_dphi
-float pt_bb_high_pt
+float min_dr_bb
+float max_dr_bb
+float min_m_bb
+float max_m_bb
+float min_pt_bb
+float max_pt_bb
+float min_dphi_blep
+float max_dphi_blep
+float min_dr_blep
+float max_dr_blep
+float min_m_blep
+float max_m_blep
+float min_pt_blep
+float max_pt_blep
+float min_dphi_bmet
+float max_dphi_bmet
+float min_mt_bmet
+float max_mt_bmet
+float min_pt_bmet
+float max_pt_bmet
 float tru_tt_dphi
 float tru_tt_m
 float tru_tt_pt
@@ -190,6 +203,9 @@ std::vector<float> fjets_pt
 std::vector<float> fjets_eta
 std::vector<float> fjets_phi
 std::vector<float> fjets_m
+std::vector<float> fjets_sumcsv
+std::vector<float> fjets_poscsv
+std::vector<int> fjets_btags
 std::vector<int> fjets_nconst
 
 int nfjets15
@@ -198,6 +214,9 @@ std::vector<float> fjets15_pt
 std::vector<float> fjets15_eta
 std::vector<float> fjets15_phi
 std::vector<float> fjets15_m
+std::vector<float> fjets15_sumcsv
+std::vector<float> fjets15_poscsv
+std::vector<int> fjets15_btags
 std::vector<int> fjets15_nconst
 
 int nfjets20
@@ -206,6 +225,9 @@ std::vector<float> fjets20_pt
 std::vector<float> fjets20_eta
 std::vector<float> fjets20_phi
 std::vector<float> fjets20_m
+std::vector<float> fjets20_sumcsv
+std::vector<float> fjets20_poscsv
+std::vector<int> fjets20_btags
 std::vector<int> fjets20_nconst
 
 int nfjets30
@@ -214,6 +236,9 @@ std::vector<float> fjets30_pt
 std::vector<float> fjets30_eta
 std::vector<float> fjets30_phi
 std::vector<float> fjets30_m
+std::vector<float> fjets30_sumcsv
+std::vector<float> fjets30_poscsv
+std::vector<int> fjets30_btags
 std::vector<int> fjets30_nconst
 
 int nfjetsinf
@@ -222,6 +247,9 @@ std::vector<float> fjetsinf_pt
 std::vector<float> fjetsinf_eta
 std::vector<float> fjetsinf_phi
 std::vector<float> fjetsinf_m
+std::vector<float> fjetsinf_sumcsv
+std::vector<float> fjetsinf_poscsv
+std::vector<int> fjetsinf_btags
 std::vector<int> fjetsinf_nconst
 
 int nfjets_nl
@@ -230,6 +258,9 @@ std::vector<float> fjets_nl_pt
 std::vector<float> fjets_nl_eta
 std::vector<float> fjets_nl_phi
 std::vector<float> fjets_nl_m
+std::vector<float> fjets_nl_sumcsv
+std::vector<float> fjets_nl_poscsv
+std::vector<int> fjets_nl_btags
 std::vector<int> fjets_nl_nconst
 
 int ngenfjets

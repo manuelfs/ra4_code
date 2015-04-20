@@ -28,12 +28,15 @@ public:
                     std::vector<float> &fjets_phi,
                     std::vector<float> &fjets_m,
                     std::vector<int> &fjets_nconst,
+		    std::vector<float> &fjets_sumcsv,
+		    std::vector<float> &fjets_poscsv,
+		    std::vector<int> &fjets_btags,
                     std::vector<int> &jets_fjet_index,
                     double radius,
                     const std::vector<int> &jets,
                     bool gen = false,
                     bool clean = false,
-                    std::vector<bool> to_clean = std::vector<bool>(0));
+                    const std::vector<bool> &to_clean = std::vector<bool>(0));
 
   void SetMiniIso(small_tree_quick &tree, int ilep, int ParticleType);
 
