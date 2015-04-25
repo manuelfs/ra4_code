@@ -9,8 +9,12 @@ int npv
 int ntrupv
 float ntrupv_mean
 float met
+float gen_met
 float met_phi
+float gen_met_phi
 float ht
+float ht_sub
+float gen_ht
 float ht_nonb
 float ht_isr
 float ht_isr_tru
@@ -19,6 +23,7 @@ int   n_isr_me
 float ht_isr_nonme
 int   n_isr_nonme
 float mht
+float mht_sub
 float mt
 float mt_reliso
 float st
@@ -187,6 +192,24 @@ std::vector<float> genjets_m
 std::vector<int>   genjets_isr_code
 std::vector<int>   genjets_genfjet_index
 
+int nsubjets
+int nbl_sub
+int nbm_sub
+int nbt_sub
+std::vector<float> subjets_pt
+std::vector<float> subjets_eta
+std::vector<float> subjets_phi
+std::vector<float> subjets_m
+std::vector<float> subjets_csv
+std::vector<float> subjets_id
+std::vector<int> subjets_fsubjet_index
+std::vector<int> subjets_nsub
+std::vector<float> subjets_mindr
+std::vector<float> subjets_subpt
+std::vector<float> subjets_subeta
+std::vector<float> subjets_subphi
+std::vector<float> subjets_subm
+
 ####################   MC   ###################
 unsigned mc_type
 std::vector<float>  mc_pt
@@ -207,6 +230,17 @@ std::vector<float> fjets_sumcsv
 std::vector<float> fjets_poscsv
 std::vector<int> fjets_btags
 std::vector<int> fjets_nconst
+
+int nfsubjets
+float mj_sub
+std::vector<float> fsubjets_pt
+std::vector<float> fsubjets_eta
+std::vector<float> fsubjets_phi
+std::vector<float> fsubjets_m
+std::vector<float> fsubjets_sumcsv
+std::vector<float> fsubjets_poscsv
+std::vector<int> fsubjets_btags
+std::vector<int> fsubjets_nconst
 
 int nfjets15
 float mj15

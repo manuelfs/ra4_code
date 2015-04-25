@@ -15,6 +15,15 @@
 #include "cfa.hpp"
 #include "pdtlund.hpp"
 
+struct Jet{
+  TLorentzVector p4;
+  float csv;
+  int id;
+  int nleps;
+  TLorentzVector p4sub;
+  float mindr;
+};
+
 namespace particleId {
   enum leptonType {
     X=0,
@@ -89,6 +98,8 @@ public:
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
                            double pt_thresh, double eta_thresh) const;
+  std::vector<Jet> GetSubtractedJets(const std::vector<int> &veto_el, const std::vector<int> &veto_mu,
+                                     double pt_thresh, double eta_thresh) const;
   bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;
   bool IsBasicJet(unsigned ijet) const;
 

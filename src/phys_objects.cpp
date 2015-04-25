@@ -451,6 +451,109 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
   return jets;
 }
 
+vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const vector<int> &veto_mu,
+                                            double pt_thresh, double eta_thresh) const{
+  vector<Jet> jets(0);
+  map<size_t,vector<size_t> > mu_matches, el_matches;
+
+  //Match muons to jets
+  for(size_t ivmu = 0; ivmu < veto_mu.size(); ++ivmu){
+    int imu = veto_mu.at(ivmu);
+    size_t imatch = 0;
+    float mindr = numeric_limits<float>::max();
+    for(size_t ijet = 0; mindr > 0. && ijet < jets_pt()->size(); ++ijet){
+      if(mus_isPF()->at(imu) && mus_jet_ind()->at(imu) == static_cast<int>(ijet)){
+        imatch = ijet;
+        mindr = 0.;
+      }else{
+        double dr = dR(jets_eta()->at(ijet), mus_eta()->at(imu),
+                       jets_phi()->at(ijet), mus_phi()->at(imu));
+        if(dr<mindr){
+          mindr=dr;
+          imatch = ijet;
+        }
+      }
+    }
+    if(mindr < 0.4) mu_matches[imatch].push_back(imu);
+  }
+
+  //Match electrons to jets
+  for(size_t ivel = 0; ivel < veto_el.size(); ++ivel){
+    int iel = veto_el.at(ivel);
+    size_t imatch = 0;
+    float mindr = numeric_limits<float>::max();
+    for(size_t ijet = 0; mindr > 0. && ijet < jets_pt()->size(); ++ijet){
+      if(els_isPF()->at(iel) && els_jet_ind()->at(iel) == static_cast<int>(ijet)){
+        imatch = ijet;
+        mindr = 0.;
+      }else{
+        double dr = dR(jets_eta()->at(ijet), els_eta()->at(iel),
+                       jets_phi()->at(ijet), els_phi()->at(iel));
+        if(dr<mindr){
+          mindr=dr;
+          imatch = ijet;
+        }
+      }
+    }
+    if(mindr < 0.4) el_matches[imatch].push_back(iel);
+  }
+
+  //Compute subtracted jets
+  for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
+    if(!IsGoodJet(ijet, 0., 999.)) continue;
+    TLorentzVector p4jet, p4sub;
+    p4jet.SetPtEtaPhiE(jets_pt()->at(ijet), jets_eta()->at(ijet),
+                       jets_phi()->at(ijet), jets_energy()->at(ijet));
+
+    int subtracted = 0;
+    float mindr = numeric_limits<float>::max();
+    //Remove muons
+    if(mu_matches.find(ijet) != mu_matches.end()){
+      const vector<size_t> &matches = mu_matches.at(ijet);
+      for(size_t imatch = 0; imatch < matches.size(); ++imatch){
+        size_t imu = matches.at(imatch);
+        TLorentzVector p4mu;
+        p4mu.SetPtEtaPhiE(mus_pt()->at(imu), mus_eta()->at(imu),
+                          mus_phi()->at(imu), mus_energy()->at(imu));
+        float dr = p4mu.DeltaR(p4jet);
+        if(dr<mindr) mindr = dr;
+        p4sub += p4mu;
+        ++subtracted;
+      }
+    }
+
+    //Remove electrons
+    if(el_matches.find(ijet) != el_matches.end()){
+      const vector<size_t> &matches = el_matches.at(ijet);
+      for(size_t imatch = 0; imatch < matches.size(); ++imatch){
+        size_t iel = matches.at(imatch);
+        TLorentzVector p4el;
+        p4el.SetPtEtaPhiE(els_pt()->at(iel), els_eta()->at(iel),
+                          els_phi()->at(iel), els_energy()->at(iel));
+        float dr = p4el.DeltaR(p4jet);
+        if(dr<mindr) mindr = dr;
+        p4sub += p4el;
+        ++subtracted;
+      }
+    }
+
+    //Apply eta and pt cut to subtracted momentum
+    if(fabs(p4jet.Eta())>eta_thresh || p4jet.Pt()<pt_thresh) continue;
+
+    //Record subtracted jets passing quality, eta, and pt cuts
+    p4jet -= p4sub;
+    jets.push_back(Jet());
+    jets.back().p4 = p4jet;
+    jets.back().csv = jets_btag_inc_secVertexCombined()->at(ijet);
+    jets.back().nleps = subtracted;
+    jets.back().id = TMath::Nint(jets_parton_Id()->at(ijet));
+    jets.back().p4sub = p4sub;
+    jets.back().mindr = mindr;
+  }
+
+  return jets;
+}
+
 bool phys_objects::IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const{
   if(jets_pt()->size()<=ijet) return false;
   if(!IsBasicJet(ijet)) return false;

@@ -35,17 +35,17 @@ void onefile_skim(TString infiles, TString cuts="ht>=500&&met>=200"){
   outfile = outfolder+outfile;
 
   gSystem->mkdir(outfolder, kTRUE);
-  TFile out_rootfile(outfile, "RECREATE");
+  TFile out_rootfile(outfile, "CREATE");
+  if(out_rootfile.IsZombie() || !out_rootfile.IsOpen()) return;
   out_rootfile.cd();
-  TChain tree("tree"); 
-  int nfiles = tree.Add(infiles); 
+  TChain tree("tree");
+  int nfiles = tree.Add(infiles);
 
   cout<<"Skimming the "<<nfiles<<" files in "<<infiles<<endl;
   TTree *ctree = tree.CopyTree(cuts);
   ctree->Write();
   out_rootfile.Close();
   cout<<"Written "<<outfile<<endl;
-
 }
 
 void skim_ntuples(TString folder){
