@@ -441,6 +441,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.jets_eta().resize(dirty_jets.size());
     tree.jets_phi().resize(dirty_jets.size());
     tree.jets_m().resize(dirty_jets.size());
+    tree.jets_uncor_pt().resize(dirty_jets.size());
     tree.jets_csv().resize(dirty_jets.size());
     tree.jets_id().resize(dirty_jets.size());
     tree.jets_islep().resize(dirty_jets.size());
@@ -460,6 +461,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_eta().at(idirty) = jets_corr_p4().at(ijet).Eta();
       tree.jets_phi().at(idirty) = jets_corr_p4().at(ijet).Phi();
       tree.jets_m().at(idirty) = jets_corr_p4().at(ijet).M();
+      tree.jets_uncor_pt().at(idirty) = jets_pt()->at(ijet);
       tree.jets_csv().at(idirty) = jets_btag_inc_secVertexCombined()->at(ijet);
       tree.jets_id().at(idirty) = jets_parton_Id()->at(ijet);
       tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
