@@ -54,11 +54,16 @@ struct mc_particle{
   int status_;
 };
 
+class FactorizedJetCorrector;
+
 class phys_objects : public cfa{
 public:
   explicit phys_objects(const std::string &filename, bool is_8TeV=false);
+  virtual ~phys_objects();
 
   enum CutLevel{kVeto, kLoose, kMedium, kTight};
+
+  virtual void GetEntry(const long entry);
 
   // Muons
   std::vector<int> GetMuons(bool doSignal = true) const;
@@ -102,6 +107,8 @@ public:
                                      double pt_thresh, double eta_thresh) const;
   bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;
   bool IsBasicJet(unsigned ijet) const;
+  const std::vector<TLorentzVector> & jets_corr_p4() const;
+  std::vector<TLorentzVector> & jets_corr_p4();
 
   // Truth matching
   int GetTrueElectron(int index, int &momID, bool &fromW, float &closest_dR) const;
@@ -182,6 +189,13 @@ public:
 
   static float MinJetPt,MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
   static float bad_val;
+
+private:
+  FactorizedJetCorrector *jet_corrector_;
+  mutable std::vector<TLorentzVector> jets_corr_p4_;
+  mutable bool set_jets_;
+
+  void CorrectJets() const;
 };
 
 #endif

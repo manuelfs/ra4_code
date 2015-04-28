@@ -20,6 +20,9 @@
 #include "TVector3.h"
 #include "TLorentzVector.h"
 
+#include "FactorizedJetCorrector.hpp"
+#include "JetCorrector.hpp"
+
 #include "cfa_8.hpp"
 #include "cfa_13.hpp"
 #include "pdtlund.hpp"
@@ -38,7 +41,28 @@ float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
 float phys_objects::bad_val = -999.;
 
 phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
-  cfa(fileName, is_8TeV){
+  cfa(fileName, is_8TeV),
+  jet_corrector_(NULL),
+  jets_corr_p4_(0),
+  set_jets_(false){
+  vector<string> jec_files;
+  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L1FastJet_AK4PFchs.txt");
+  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
+  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L3Absolute_AK4PFchs.txt");
+  jet_corrector_ = makeJetCorrector(jec_files);
+}
+
+phys_objects::~phys_objects(){
+  if(jet_corrector_){
+    delete jet_corrector_;
+    jet_corrector_ = NULL;
+  }
+}
+
+void phys_objects::GetEntry(const long entry){
+  jets_corr_p4_.clear();
+  set_jets_ = false;
+  cfa::GetEntry(entry);
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -408,10 +432,43 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk, bool mt_cut) const{
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////  JETS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
+const vector<TLorentzVector> & phys_objects::jets_corr_p4() const{
+  CorrectJets();
+  return jets_corr_p4_;
+}
+
+vector<TLorentzVector> & phys_objects::jets_corr_p4(){
+  CorrectJets();
+  return jets_corr_p4_;
+}
+
+void phys_objects::CorrectJets() const{
+  if(set_jets_) return;
+  jets_corr_p4_.clear();
+  int version = GetVersion();
+  TLorentzVector p4;
+  for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
+    p4.SetPtEtaPhiM(jets_pt()->at(ijet), jets_eta()->at(ijet),
+                    jets_phi()->at(ijet), jets_mass()->at(ijet));
+    if(version>=78){
+      p4 *= jets_corrFactorRaw()->at(ijet);
+
+      jet_corrector_->setJetEta(p4.Eta());
+      jet_corrector_->setJetPt(p4.Pt());
+      jet_corrector_->setJetA(jets_area()->at(ijet));
+      jet_corrector_->setRho(fixedGridRhoFastjetAll());
+
+      p4 *= jet_corrector_->getCorrection();
+    }
+    jets_corr_p4_.push_back(p4);
+  }
+  set_jets_ = true;
+}
+
 vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &VetoMu,
                                   double pt_thresh, double eta_thresh) const {
   vector<int> jets;
-  vector<bool> jet_is_lepton(jets_pt()->size(), false);
+  vector<bool> jet_is_lepton(jets_corr_p4().size(), false);
 
   // Finding jets that contain good leptons
   for(unsigned index = 0; index < VetoEl.size(); index++) {
@@ -425,14 +482,14 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
   }
 
   // Tau/photon cleaning, and calculation of HT
-  for(unsigned ijet = 0; ijet<jets_pt()->size(); ijet++) {
+  for(unsigned ijet = 0; ijet<jets_corr_p4().size(); ijet++) {
     if(!IsGoodJet(ijet, pt_thresh, eta_thresh) || jet_is_lepton[ijet]) continue;
 
-    // double tmpdR, partp, jetp = sqrt(pow(jets_px()->at(ijet),2)+pow(jets_py()->at(ijet),2)+pow(jets_pz()->at(ijet),2));
+    // double tmpdR, partp, jetp = sqrt(pow(jets_corr_p4()->at(ijet).Px(),2)+pow(jets_corr_p4()->at(ijet).Py(),2)+pow(jets_corr_p4()->at(ijet).Pz(),2));
     // bool useJet = true;
     // Tau cleaning: jet rejected if withing deltaR = 0.4 of tau, and momentum at least 60% from tau
     // for(unsigned index = 0; index < taus_pt()->size(); index++) {
-    //   tmpdR = dR(jets_eta()->at(ijet), taus_eta()->at(index), jets_phi()->at(ijet), taus_phi()->at(index));
+    //   tmpdR = dR(jets_corr_p4()->at(ijet).Eta(), taus_eta()->at(index), jets_corr_p4()->at(ijet).Phi(), taus_phi()->at(index));
     //   partp = sqrt(pow(taus_px()->at(index),2)+pow(taus_py()->at(index),2)+pow(taus_pz()->at(index),2));
     //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
     // }
@@ -440,7 +497,7 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
 
     // // Photon cleaning: jet rejected if withing deltaR = 0.4 of photon, and momentum at least 60% from photon
     // for(unsigned index = 0; index < photons_pt()->size(); index++) {
-    //   tmpdR = dR(jets_eta()->at(ijet), photons_eta()->at(index), jets_phi()->at(ijet), photons_phi()->at(index));
+    //   tmpdR = dR(jets_corr_p4()->at(ijet).Eta(), photons_eta()->at(index), jets_corr_p4()->at(ijet).Phi(), photons_phi()->at(index));
     //   partp = sqrt(pow(photons_px()->at(index),2)+pow(photons_py()->at(index),2)+pow(photons_pz()->at(index),2));
     //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
     // }
@@ -461,13 +518,13 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
     int imu = veto_mu.at(ivmu);
     size_t imatch = 0;
     float mindr = numeric_limits<float>::max();
-    for(size_t ijet = 0; mindr > 0. && ijet < jets_pt()->size(); ++ijet){
+    for(size_t ijet = 0; mindr > 0. && ijet < jets_corr_p4().size(); ++ijet){
       if(mus_isPF()->at(imu) && mus_jet_ind()->at(imu) == static_cast<int>(ijet)){
         imatch = ijet;
         mindr = 0.;
       }else{
-        double dr = dR(jets_eta()->at(ijet), mus_eta()->at(imu),
-                       jets_phi()->at(ijet), mus_phi()->at(imu));
+        double dr = dR(jets_corr_p4().at(ijet).Eta(), mus_eta()->at(imu),
+                       jets_corr_p4().at(ijet).Phi(), mus_phi()->at(imu));
         if(dr<mindr){
           mindr=dr;
           imatch = ijet;
@@ -482,13 +539,13 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
     int iel = veto_el.at(ivel);
     size_t imatch = 0;
     float mindr = numeric_limits<float>::max();
-    for(size_t ijet = 0; mindr > 0. && ijet < jets_pt()->size(); ++ijet){
+    for(size_t ijet = 0; mindr > 0. && ijet < jets_corr_p4().size(); ++ijet){
       if(els_isPF()->at(iel) && els_jet_ind()->at(iel) == static_cast<int>(ijet)){
         imatch = ijet;
         mindr = 0.;
       }else{
-        double dr = dR(jets_eta()->at(ijet), els_eta()->at(iel),
-                       jets_phi()->at(ijet), els_phi()->at(iel));
+        double dr = dR(jets_corr_p4().at(ijet).Eta(), els_eta()->at(iel),
+                       jets_corr_p4().at(ijet).Phi(), els_phi()->at(iel));
         if(dr<mindr){
           mindr=dr;
           imatch = ijet;
@@ -499,11 +556,9 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
   }
 
   //Compute subtracted jets
-  for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
+  for(size_t ijet = 0; ijet < jets_corr_p4().size(); ++ijet){
     if(!IsGoodJet(ijet, 0., 999.)) continue;
-    TLorentzVector p4jet, p4sub;
-    p4jet.SetPtEtaPhiE(jets_pt()->at(ijet), jets_eta()->at(ijet),
-                       jets_phi()->at(ijet), jets_energy()->at(ijet));
+    TLorentzVector p4jet(jets_corr_p4().at(ijet)), p4sub;
 
     int subtracted = 0;
     float mindr = numeric_limits<float>::max();
@@ -555,9 +610,9 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
 }
 
 bool phys_objects::IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const{
-  if(jets_pt()->size()<=ijet) return false;
+  if(jets_corr_p4().size()<=ijet) return false;
   if(!IsBasicJet(ijet)) return false;
-  if(jets_pt()->at(ijet)<ptThresh || fabs(jets_eta()->at(ijet))>etaThresh) return false;
+  if(jets_corr_p4().at(ijet).Pt()<ptThresh || fabs(jets_corr_p4().at(ijet).Eta())>etaThresh) return false;
   return true;
 }
 
@@ -576,7 +631,7 @@ bool phys_objects::IsBasicJet(unsigned ijet) const{
   }
 
   return (NEF < 0.99 && NHF < 0.99 && numConst > 1
-          && (fabs(jets_eta()->at(ijet))>=2.4 || (CEF < 0.99 && CHF > 0 && chgMult > 0)) );
+          && (fabs(jets_corr_p4().at(ijet).Eta())>=2.4 || (CEF < 0.99 && CHF > 0 && chgMult > 0)) );
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -1211,7 +1266,7 @@ long double phys_objects::SumDeltaPhi(long double phi_x, long double phi_a, long
 
 double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
   double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
-  double dp = fabs(DeltaPhi(jets_phi()->at(goodJetI), mets_phi()->at(0)));
+  double dp = fabs(DeltaPhi(jets_corr_p4().at(goodJetI).Phi(), mets_phi()->at(0)));
   double dpN = 0.0;
   if(useArcsin) {
     if( deltaT/mets_et()->at(0) >= 1.0){
@@ -1228,17 +1283,17 @@ double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float oth
 double phys_objects::GetDeltaPhiMETN_deltaT(unsigned goodJetI,
                                             float otherpt, float
                                             othereta) const {
-  if(goodJetI>=jets_pt()->size()) return -99.;
+  if(goodJetI>=jets_corr_p4().size()) return -99.;
 
   double sum = 0;
-  for (unsigned i=0; i< jets_pt()->size(); i++) {
+  for (unsigned i=0; i< jets_corr_p4().size(); i++) {
     if(i==goodJetI) continue;
     if(IsGoodJet(i, otherpt, othereta)){
       double jetres = 0.1;
-      sum += pow( jetres*(jets_px()->at(goodJetI)*jets_py()->at(i) - jets_py()->at(goodJetI)*jets_px()->at(i)), 2);
+      sum += pow( jetres*(jets_corr_p4().at(goodJetI).Px()*jets_corr_p4().at(i).Py() - jets_corr_p4().at(goodJetI).Py()*jets_corr_p4().at(i).Px()), 2);
     }
   }
-  double deltaT = sqrt(sum)/jets_pt()->at(goodJetI);
+  double deltaT = sqrt(sum)/jets_corr_p4().at(goodJetI).Pt();
   return deltaT;
 }
 
@@ -1246,7 +1301,7 @@ double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float ma
                                         float otherpt, float othereta, bool useArcsin) const {
   double mdpN=std::numeric_limits<double>::max();
   unsigned nGoodJets(0);
-  for (unsigned i=0; i<jets_pt()->size(); i++) {
+  for (unsigned i=0; i<jets_corr_p4().size(); i++) {
     if (!IsGoodJet(i, mainpt, maineta)) continue;
     nGoodJets++;
     double dpN = GetDeltaPhiMETN(i, otherpt, othereta, useArcsin);
@@ -1259,7 +1314,7 @@ double phys_objects::GetMinDeltaPhiMETN(unsigned maxjets, float mainpt, float ma
 double phys_objects::GetHT(const vector<int> &good_jets, double pt_cut) const{
   double ht = 0.0;
   for(size_t i = 0; i < good_jets.size(); ++i){
-    const double pt = jets_pt()->at(good_jets.at(i));
+    const double pt = jets_corr_p4().at(good_jets.at(i)).Pt();
     if(pt>pt_cut) ht += pt;
   }
   return ht;
@@ -1268,10 +1323,10 @@ double phys_objects::GetHT(const vector<int> &good_jets, double pt_cut) const{
 double phys_objects::GetMHT(const vector<int> &good_jets, double pt_cut) const {
   double px(0.), py(0.);
   for(size_t ijet = 0; ijet < good_jets.size(); ++ijet){
-    const double pt = jets_pt()->at(good_jets.at(ijet));
+    const double pt = jets_corr_p4().at(good_jets.at(ijet)).Pt();
     if(pt>pt_cut){
-      px += jets_px()->at(good_jets.at(ijet));
-      py += jets_py()->at(good_jets.at(ijet));
+      px += jets_corr_p4().at(good_jets.at(ijet)).Px();
+      py += jets_corr_p4().at(good_jets.at(ijet)).Py();
     }
   }
   return AddInQuadrature(px, py);
@@ -1282,7 +1337,7 @@ size_t phys_objects::GetNumJets(const vector<int> &good_jets,
                                 double csv_cut) const{
   size_t num_jets = 0;
   for(size_t i = 0; i < good_jets.size(); ++i){
-    if(jets_pt()->at(good_jets.at(i)) > pt_cut
+    if(jets_corr_p4().at(good_jets.at(i)).Pt() > pt_cut
        && jets_btag_inc_secVertexCombined()->at(good_jets.at(i)) > csv_cut){
       ++num_jets;
     }
@@ -1336,7 +1391,7 @@ void phys_objects::GetLeadingBJets(const vector<int> &good_jets,
   float pt1 = -1., pt2 = -1.;
   for(size_t i = 0; i < good_jets.size(); ++i){
     size_t ijet = good_jets.at(i);
-    double pt = jets_pt()->at(ijet);
+    double pt = jets_corr_p4().at(ijet).Pt();
     if(pt > pt_cut
        && jets_btag_inc_secVertexCombined()->at(ijet) > csv_cut){
       if(pt > pt1){

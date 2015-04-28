@@ -11,8 +11,8 @@
 namespace{
   std::string AllCaps(std::string str){
     for(std::string::iterator it = str.begin();
-	it != str.end();
-	++it){
+        it != str.end();
+        ++it){
       *it = toupper(*it);
     }
     return str;
@@ -27,7 +27,7 @@ Variable::Variable():
 }
 
 Variable::Variable(const std::string &name, const bool from_chain_a,
-		   const std::string &to_type, const std::string &from_type):
+                   const std::string &to_type, const std::string &from_type):
   name_(name),
   to_type_(to_type),
   from_type_(from_type),
@@ -35,7 +35,7 @@ Variable::Variable(const std::string &name, const bool from_chain_a,
   }
 
 Variable::Variable(const std::string &name, const bool from_chain_a,
-		   const std::string &to_type):
+                   const std::string &to_type):
   name_(name),
   to_type_(to_type),
   from_type_(""),
@@ -83,8 +83,8 @@ bool Variable::Converted() const{
 }
 
 void GetVariables(TChain &chain, const bool is_chain_a,
-		  const size_t file, const size_t num_files,
-		  Dictionary &vars){
+                  const size_t file, const size_t num_files,
+                  Dictionary &vars){
   if(file>=num_files) throw std::logic_error("Bad file number");
   for(int i = 0; i < chain.GetListOfLeaves()->GetSize(); ++i){
     std::string type_name(static_cast<TLeafObject*>((chain.GetListOfLeaves()->At(i)))->GetTypeName());
@@ -93,14 +93,14 @@ void GetVariables(TChain &chain, const bool is_chain_a,
     //Vector and strings need special treatment
     bool needs_ptr(false);
     for(size_t j(type_name.find("vector"));
-	j!=std::string::npos;
-	j=type_name.find("vector",j+6)){
+        j!=std::string::npos;
+        j=type_name.find("vector",j+6)){
       type_name.replace(j,6,"std::vector");
       needs_ptr=true;
     }
     for(size_t j(type_name.find("string"));
-	j!=std::string::npos;
-	j=type_name.find("string",j+6)){
+        j!=std::string::npos;
+        j=type_name.find("string",j+6)){
       type_name.replace(j,6,"std::string");
       needs_ptr=true;
     }
@@ -120,7 +120,7 @@ void GetVariables(TChain &chain, const bool is_chain_a,
     if(vars[var_name].at(file)!=std::pair<bool, std::string>(false, "")
        && vars[var_name].at(file)!=std::pair<bool, std::string>(is_chain_a, type_name)){
       throw std::runtime_error("Conflicting definition found for "
-			       +type_name+" "+var_name+" in this file.");
+                               +type_name+" "+var_name+" in this file.");
     }
 
     vars[var_name].at(file)=std::pair<bool, std::string>(is_chain_a, type_name);
@@ -128,8 +128,8 @@ void GetVariables(TChain &chain, const bool is_chain_a,
 }
 
 void ClassifyVariables(const Dictionary &all_vars,
-		       std::vector<Variable> &base_vars, std::vector<Variable> &virtual_vars,
-		       std::vector<std::vector<Variable> > &file_vars){
+                       std::vector<Variable> &base_vars, std::vector<Variable> &virtual_vars,
+                       std::vector<std::vector<Variable> > &file_vars){
   file_vars.clear();
   if(all_vars.size()) file_vars.resize(all_vars.begin()->second.size());
   for(Dictionary::const_iterator var = all_vars.begin(); var!= all_vars.end(); ++var){
@@ -145,24 +145,24 @@ void ClassifyVariables(const Dictionary &all_vars,
       const std::string this_type = var->second.at(idef).second;
 
       if(this_is_chain_a!=base_is_chain_a){
-	all_same_chain = false;
+        all_same_chain = false;
       }
 
       if(this_type != best_type){
-	all_same_type = false;
-	if(best_type == ""){
-	  best_type = this_type;
-	}else if(this_type==""){
-	  //Don't need to do anything
-	}else if((best_type=="std::vector<float>*" && this_type=="std::vector<bool>*")
-		 || (best_type=="std::vector<bool>*" && this_type=="std:vector<float>*")){
-	  best_type = "std::vector<bool>*";
-	}else{
-	  throw std::runtime_error("Unknown type preference.");
-	}
+        all_same_type = false;
+        if(best_type == ""){
+          best_type = this_type;
+        }else if(this_type==""){
+          //Don't need to do anything
+        }else if((best_type=="std::vector<float>*" && this_type=="std::vector<bool>*")
+                 || (best_type=="std::vector<bool>*" && this_type=="std:vector<float>*")){
+          best_type = "std::vector<bool>*";
+        }else{
+          throw std::runtime_error("Unknown type preference.");
+        }
       }
     }
-  
+
     if(all_same_chain && all_same_type){
       base_vars.push_back(Variable(name, base_is_chain_a, best_type));
     }else{
@@ -170,20 +170,20 @@ void ClassifyVariables(const Dictionary &all_vars,
       virtual_vars.push_back(Variable(name, true, best_type));
 
       for(size_t idef = 0; idef < var->second.size(); ++idef){
-	const bool this_is_chain_a = var->second.at(idef).first;
-	const std::string this_type = var->second.at(idef).second;
-      
-	if(this_type != ""){
-	  Variable this_var(name, this_is_chain_a, best_type, this_type);
-	  file_vars.at(idef).push_back(this_var);
-	}
+        const bool this_is_chain_a = var->second.at(idef).first;
+        const std::string this_type = var->second.at(idef).second;
+
+        if(this_type != ""){
+          Variable this_var(name, this_is_chain_a, best_type, this_type);
+          file_vars.at(idef).push_back(this_var);
+        }
       }
     }
   }
 }
 
 void WriteBaseHeader(const std::vector<Variable> &base_vars,
-		     const std::vector<Variable> &virtual_vars){
+                     const std::vector<Variable> &virtual_vars){
   std::ofstream hpp_file("inc/cfa_base.hpp");
   hpp_file << "#ifndef H_CFA_BASE\n";
   hpp_file << "#define H_CFA_BASE\n\n";
@@ -217,17 +217,16 @@ void WriteBaseHeader(const std::vector<Variable> &base_vars,
     hpp_file << "  " << var->ToType() << " const & " << var->Name() << "() const;\n";
   }
   hpp_file << '\n';
-  
 
   //Print accessor function declarations for variables that change across cfA versions
   for(std::vector<Variable>::const_iterator var = virtual_vars.begin();
       var != virtual_vars.end();
       ++var){
     hpp_file << "  __attribute__((noreturn)) virtual " << var->ToType() << " const & "
-	     << var->Name() << "() const;\n";
+             << var->Name() << "() const;\n";
   }
   hpp_file << '\n';
- 
+
   hpp_file << "protected:\n";
   hpp_file << "  void PrepareNewChains();\n";
   hpp_file << "  virtual void InitializeA();\n";
@@ -264,7 +263,7 @@ void WriteBaseHeader(const std::vector<Variable> &base_vars,
 }
 
 void WriteBaseSource(const std::vector<Variable> &base_vars,
-		     const std::vector<Variable> &virtual_vars){
+                     const std::vector<Variable> &virtual_vars){
   std::ofstream cpp_file("src/cfa_base.cpp");
 
   cpp_file << "#include \"cfa_base.hpp\"\n\n";
@@ -284,14 +283,14 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "  cfa_version_(-1),\n";
   if(base_vars.size()){
     cpp_file << "  cached_total_entries_(false),\n";
-        std::vector<Variable>::const_iterator last(base_vars.end());
+    std::vector<Variable>::const_iterator last(base_vars.end());
     --last;
     for(std::vector<Variable>::const_iterator var = base_vars.begin();
-	var != last;
-	++var){
+        var != last;
+        ++var){
       cpp_file << "  " << var->Name() << "_(0),\n";
       if(var->Converted()){
-	cpp_file << "  v_" << var->Name() << "_(0),\n";
+        cpp_file << "  v_" << var->Name() << "_(0),\n";
       }
       cpp_file << "  b_" << var->Name() << "_(NULL),\n";
       cpp_file << "  c_" << var->Name() << "_(false),\n";
@@ -305,7 +304,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   }else{
     cpp_file << "  cached_total_entries_(false){\n";
   }
-  cpp_file << "  GetVersion();\n";
+  cpp_file << "  CalcVersion();\n";
   cpp_file << "  AddFiles(file);\n";
   cpp_file << "  PrepareNewChains();\n";
   cpp_file << "}\n\n";
@@ -377,7 +376,7 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   cpp_file << "  chainA_.Add((file_name+dir_name+\"/eventA\").c_str());\n";
   cpp_file << "  chainB_.Add((file_name+dir_name+\"/eventB\").c_str());\n";
   cpp_file << "}\n\n";
-  
+
   cpp_file << "void cfa_base::PrepareNewChains(){\n";
   cpp_file << "  InitializeA();\n";
   cpp_file << "  InitializeB();\n";
@@ -389,13 +388,13 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
   for(std::vector<Variable>::const_iterator var = base_vars.begin();
       var != base_vars.end();
       ++var){
-    
+
     if(var->FromChainA()){
       cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &"
-	       << var->Name() << "_, &b_" << var->Name() << "_);\n";
+               << var->Name() << "_, &b_" << var->Name() << "_);\n";
       if(var->Converted()){
-	cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &v_" 
-		 << var->Name() << "_, &b_" << var->Name() << "_);\n";
+        cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &v_"
+                 << var->Name() << "_, &b_" << var->Name() << "_);\n";
       }
     }
   }
@@ -410,10 +409,10 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
 
     if(!var->FromChainA()){
       cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &"
-	       << var->Name() << "_, &b_" << var->Name() << "_);\n";
+               << var->Name() << "_, &b_" << var->Name() << "_);\n";
       if(var->Converted()){
-	cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &v_" 
-		 << var->Name() << "_, &b_" << var->Name() << "_);\n";
+        cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &v_"
+                 << var->Name() << "_, &b_" << var->Name() << "_);\n";
       }
     }
   }
@@ -435,15 +434,15 @@ void WriteBaseSource(const std::vector<Variable> &base_vars,
       ++var){
     cpp_file << var->ToType() << " const & cfa_base::" << var->Name() << "() const{\n";
     cpp_file << "  throw std::runtime_error(\"" << var->Name()
-	     << " does not exist in this cfA version.\");\n";
+             << " does not exist in this cfA version.\");\n";
     cpp_file << "}\n\n";
   }
-  
+
   cpp_file.close();
 }
 
 void WriteDerivedHeader(const std::string &class_name,
-			const std::vector<Variable> &vars){
+                        const std::vector<Variable> &vars){
   std::ofstream hpp_file(("inc/"+class_name+".hpp").c_str());
 
   hpp_file << "#ifndef H_" << AllCaps(class_name) << "\n";
@@ -495,7 +494,7 @@ void WriteDerivedHeader(const std::string &class_name,
 }
 
 void WriteDerivedSource(const std::string &class_name,
-			const std::vector<Variable> &vars){
+                        const std::vector<Variable> &vars){
   std::ofstream cpp_file(("src/"+class_name+".cpp").c_str());
 
   cpp_file << "#include \"" << class_name << ".hpp\"\n\n";
@@ -514,11 +513,11 @@ void WriteDerivedSource(const std::string &class_name,
     std::vector<Variable>::const_iterator last(vars.end());
     --last;
     for(std::vector<Variable>::const_iterator var = vars.begin();
-	var != last;
-	++var){
+        var != last;
+        ++var){
       cpp_file << "  " << var->Name() << "_(0),\n";
       if(var->Converted()){
-	cpp_file << "  v_" << var->Name() << "_(0),\n";
+        cpp_file << "  v_" << var->Name() << "_(0),\n";
       }
       cpp_file << "  b_" << var->Name() << "_(NULL),\n";
       cpp_file << "  c_" << var->Name() << "_(false),\n";
@@ -532,7 +531,7 @@ void WriteDerivedSource(const std::string &class_name,
   }else{
     cpp_file << "  cfa_base(file){\n";
   }
-  
+
   cpp_file << "  PrepareNewChains();\n";
   cpp_file << "}\n\n";
 
@@ -555,10 +554,10 @@ void WriteDerivedSource(const std::string &class_name,
 
     if(var->FromChainA()){
       cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &"
-	       << var->Name() << "_, &b_" << var->Name() << "_);\n";
+               << var->Name() << "_, &b_" << var->Name() << "_);\n";
       if(var->Converted()){
-	cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &v_" 
-		 << var->Name() << "_, &b_" << var->Name() << "_);\n";
+        cpp_file << "  chainA_.SetBranchAddress(\"" << var->Name() << "\", &v_"
+                 << var->Name() << "_, &b_" << var->Name() << "_);\n";
       }
     }
   }
@@ -573,10 +572,10 @@ void WriteDerivedSource(const std::string &class_name,
 
     if(!var->FromChainA()){
       cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &"
-	       << var->Name() << "_, &b_" << var->Name() << "_);\n";
+               << var->Name() << "_, &b_" << var->Name() << "_);\n";
       if(var->Converted()){
-	cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &v_" 
-		 << var->Name() << "_, &b_" << var->Name() << "_);\n";
+        cpp_file << "  chainB_.SetBranchAddress(\"" << var->Name() << "\", &v_"
+                 << var->Name() << "_, &b_" << var->Name() << "_);\n";
       }
     }
   }
@@ -596,7 +595,7 @@ void WriteDerivedSource(const std::string &class_name,
 }
 
 void AddToTypelist(const std::vector<Variable> &vars,
-		   Typelist &typelist){
+                   Typelist &typelist){
   for(std::vector<Variable>::const_iterator var = vars.begin();
       var != vars.end();
       ++var){
@@ -613,7 +612,7 @@ void PrintAccessor(const Variable &var, std::ofstream &file, const std::string &
       file << "    " << var.Name() << "_->resize(v_" << var.Name() << "_->size());\n";
       file << "    for(size_t i = 0; i < " << var.Name() << "_->size(); ++i){\n";
       file << "      " << var.Name() << "_->at(i) = static_cast<bool>(v_"
-	   << var.Name() << "_->at(i));\n";
+           << var.Name() << "_->at(i));\n";
       file << "    }\n";
     }else{
       throw std::logic_error("Cannot write accessor for requested type conversion");
@@ -669,7 +668,7 @@ void GetReplacements(const Typelist &typelist, const RepList &pats, RepMap &reps
           //Variable matches this replacement rule!
           const std::string prefix = name.substr(0, match_loc);
           const std::string suffix = name.substr(match_loc+to_match->size(), name.size());
-          
+
           //Get the name of the function we're producing
           const std::string out_name = prefix + pat->first + suffix;
           const std::pair<std::string, std::string> key_val(out_name, type);
@@ -730,7 +729,7 @@ void WriteMergedHeader(const Typelist &typelist, const RepMap &overwritten, cons
   hpp_file << "  explicit cfa(const std::string &file, const bool is_8TeV = false);\n\n";
 
   hpp_file << "  long TotalEntries() const;\n";
-  hpp_file << "  void GetEntry(const long entry);\n";
+  hpp_file << "  virtual void GetEntry(const long entry);\n";
   hpp_file << "  short GetVersion() const;\n";
   hpp_file << "  const std::string& SampleName() const;\n";
   hpp_file << "  const std::string& SampleName(const std::string &sample_name);\n";
@@ -738,7 +737,7 @@ void WriteMergedHeader(const Typelist &typelist, const RepMap &overwritten, cons
   hpp_file << "  void AddFiles(const std::string &file);\n";
   hpp_file << "  const std::type_info& Type() const;\n\n";
 
-  hpp_file << "  ~cfa();\n\n";
+  hpp_file << "  virtual ~cfa();\n\n";
 
   //Print accessor function declarations
   for(Typelist::const_iterator it = typelist.begin();

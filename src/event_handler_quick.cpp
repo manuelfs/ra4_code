@@ -430,10 +430,10 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     GetLeadingBJets(good_jets, MinJetPt, CSVCuts[1], lead_b, sub_b);
     for(size_t i = 0; i < good_jets.size(); ++i){
       size_t ijet = good_jets.at(i);
-      if(jets_pt()->at(ijet)>MinJetPt
-         && fabs(jets_eta()->at(ijet) < 2.4)
+      if(jets_corr_p4().at(ijet).Pt()>MinJetPt
+         && fabs(jets_corr_p4().at(ijet).Eta() < 2.4)
          && ijet!=lead_b && ijet!=sub_b){
-        tree.ht_nonb()+=jets_pt()->at(ijet);
+        tree.ht_nonb()+=jets_corr_p4().at(ijet).Pt();
       }
     }
     vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 20., 5.0);
@@ -456,10 +456,10 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.ht_isr() = 0.;
     for(size_t idirty = 0; idirty < dirty_jets.size(); ++idirty){
       int ijet = dirty_jets.at(idirty);
-      tree.jets_pt().at(idirty) = jets_pt()->at(ijet);
-      tree.jets_eta().at(idirty) = jets_eta()->at(ijet);
-      tree.jets_phi().at(idirty) = jets_phi()->at(ijet);
-      tree.jets_m().at(idirty) = jets_mass()->at(ijet);
+      tree.jets_pt().at(idirty) = jets_corr_p4().at(ijet).Pt();
+      tree.jets_eta().at(idirty) = jets_corr_p4().at(ijet).Eta();
+      tree.jets_phi().at(idirty) = jets_corr_p4().at(ijet).Phi();
+      tree.jets_m().at(idirty) = jets_corr_p4().at(ijet).M();
       tree.jets_csv().at(idirty) = jets_btag_inc_secVertexCombined()->at(ijet);
       tree.jets_id().at(idirty) = jets_parton_Id()->at(ijet);
       tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
@@ -619,10 +619,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.max_pt_bmet() = -numeric_limits<float>::max();
     for(size_t ib1 = 0; ib1 < good_jets.size(); ++ib1){
       size_t b1 = good_jets.at(ib1);
-      if(jets_pt()->at(b1)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
-      TLorentzVector vb1, vmet;
-      vb1.SetPtEtaPhiM(jets_pt()->at(b1), jets_eta()->at(b1),
-                       jets_phi()->at(b1), jets_mass()->at(b1));
+      if(jets_corr_p4().at(b1).Pt()<MinJetPt || jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
+      TLorentzVector vb1(jets_corr_p4().at(b1)), vmet;
       vmet.SetPtEtaPhiM(mets_et()->at(0), 0., mets_phi()->at(0), 0.);
 
       float dphi_blep = DeltaPhi(vb1.Phi(), lepmax_p4.Phi());
@@ -651,11 +649,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
       for(size_t ib2 = ib1+1; ib2 < good_jets.size(); ++ib2){
         size_t b2 = good_jets.at(ib2);
-        if(jets_pt()->at(b2)<MinJetPt || jets_btag_inc_secVertexCombined()->at(b2)<CSVCuts[1]) continue;
+        if(jets_corr_p4().at(b2).Pt()<MinJetPt || jets_btag_inc_secVertexCombined()->at(b2)<CSVCuts[1]) continue;
 
-        TLorentzVector vb2;
-        vb2.SetPtEtaPhiM(jets_pt()->at(b2), jets_eta()->at(b2),
-                         jets_phi()->at(b2), jets_mass()->at(b2));
+        TLorentzVector vb2(jets_corr_p4().at(b2));
 
         float dphi_bb = DeltaPhi(vb1.Phi(), vb2.Phi());
         if(dphi_bb < tree.min_dphi_bb()) tree.min_dphi_bb() = dphi_bb;
@@ -806,11 +802,12 @@ void event_handler_quick::WriteFatJets(int &nfjets,
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
 
       int jet = jets.at(idirty);
-      if(is_nan(jets_px()->at(jet)) || is_nan(jets_py()->at(jet))
-         || is_nan(jets_pz()->at(jet)) || is_nan(jets_energy()->at(jet))
+      if(is_nan(jets_corr_p4().at(jet).Px()) || is_nan(jets_corr_p4().at(jet).Py())
+         || is_nan(jets_corr_p4().at(jet).Pz()) || is_nan(jets_corr_p4().at(jet).E())
          || (clean && to_clean.at(idirty))) continue;
-      const PseudoJet this_pj(jets_px()->at(jet), jets_py()->at(jet),
-                              jets_pz()->at(jet), jets_energy()->at(jet));
+      const TLorentzVector &this_lv = jets_corr_p4().at(jet);
+      const PseudoJet this_pj(this_lv.Px(), this_lv.Py(), this_lv.Pz(), this_lv.E());
+
       if(this_pj.pt()>30.0){
         sjets.push_back(this_pj);
         ijets.push_back(idirty);
@@ -1086,10 +1083,10 @@ float event_handler_quick::GetMinMTWb(const vector<int> &good_jets,
   float min_mT(fltmax);
   for (uint ijet(0); ijet<good_jets.size(); ijet++) {
     uint jet = good_jets[ijet];
-    if (jets_pt()->at(jet)<pt_cut) continue;
+    if (jets_corr_p4().at(jet).Pt()<pt_cut) continue;
     if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
     float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
-                     0., jets_pt()->at(jet), jets_phi()->at(jet));
+                     0., jets_corr_p4().at(jet).Pt(), jets_corr_p4().at(jet).Phi());
     if (mT<min_mT) min_mT=mT;
   }
   if (min_mT==fltmax) return bad_val;
