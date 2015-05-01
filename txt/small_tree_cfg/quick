@@ -66,7 +66,14 @@ float max_pt_bmet
 float tru_tt_dphi
 float tru_tt_m
 float tru_tt_pt
-float tru_tt_boost
+float tru_tt_ptdiff
+float tru_gluglu_dphi
+float tru_gluglu_m
+float tru_gluglu_pt
+float tru_gluglu_ptdiff
+float dphi_neutralinos
+std::vector<float> glu_proj_frac
+float tru_sphericity
 
 ##################   Leptons   ################
 int nleps
@@ -93,8 +100,6 @@ std::vector<float> mus_miniso_tr10
 std::vector<float> mus_miniso_10
 std::vector<float> mus_miniso_tr10_ch
 std::vector<float> mus_miniso_10_ch
-std::vector<float> mus_miniso_tr10_pfpu
-std::vector<float> mus_miniso_10_pfpu
 std::vector<float> mus_tru_dr
 std::vector<int> mus_tru_id
 std::vector<int> mus_tru_momid
@@ -123,8 +128,6 @@ std::vector<float> els_miniso_tr10
 std::vector<float> els_miniso_10
 std::vector<float> els_miniso_tr10_ch
 std::vector<float> els_miniso_10_ch
-std::vector<float> els_miniso_tr10_pfpu
-std::vector<float> els_miniso_10_pfpu
 std::vector<float> els_tru_dr
 std::vector<int> els_tru_id
 std::vector<int> els_tru_momid

@@ -28,9 +28,9 @@ public:
                     std::vector<float> &fjets_phi,
                     std::vector<float> &fjets_m,
                     std::vector<int> &fjets_nconst,
-		    std::vector<float> &fjets_sumcsv,
-		    std::vector<float> &fjets_poscsv,
-		    std::vector<int> &fjets_btags,
+                    std::vector<float> &fjets_sumcsv,
+                    std::vector<float> &fjets_poscsv,
+                    std::vector<int> &fjets_btags,
                     std::vector<int> &jets_fjet_index,
                     double radius,
                     const std::vector<int> &jets,
@@ -55,20 +55,6 @@ public:
                    const double bTag_req,
                    const bool use_W_mass) const;
 
-};
-
-// Class to organize the parameters of each iso calculation
-typedef std::vector<float> & (small_tree_quick::*st_branch)();
-class iso_class {
-public:
-  explicit iso_class(small_tree_quick *itree, st_branch ibranch=NULL, double iR=0.3,
-                     bool iaddPH=true, bool iaddNH=true, bool iaddCH=true, bool iusePFweight=false);
-  small_tree_quick *tree;
-  st_branch branch;
-  double R;
-  bool addPH, addNH, addCH, usePFweight;
-  float iso_ch, iso_ph, iso_nh, iso_pu;
-  void SetIso(float lep_pt=1.);
 };
 
 bool greater_m(const fastjet::PseudoJet &a, const fastjet::PseudoJet &b);

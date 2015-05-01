@@ -75,7 +75,7 @@ public:
 
   bool IsIdMuon(unsigned imu, CutLevel threshold) const;
 
-  float GetMuonIsolation(unsigned imu) const;
+  float GetMuonIsolation(unsigned imu, bool mini=true) const;
 
   // Electrons
   std::vector<int> GetElectrons(bool doSignal = true) const;
@@ -87,13 +87,16 @@ public:
 
   bool IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso=false) const;
 
-  float GetElectronIsolation(unsigned iel) const;
+  float GetElectronIsolation(unsigned iel, bool mini=true) const;
   float GetEffectiveArea(float SCEta, bool isMC) const;
 
   // Leptons
   static int GetMom(float id, float mom, float gmom, float ggmom,
                     bool &fromW);
   void GetBestLepton(bool &is_muon, size_t &index);
+  double GetMiniIsolation(int particle_type, int ilep, double riso_min = 0.05, double riso_max = 0.2,
+                          bool add_ph = true, bool add_nh = true, bool add_ch = true,
+                          bool use_pf_weight = false, double kt_scale = 10.) const;
 
   // Taus
   bool PassPhys14TauID(const int itau, const bool againstEMu, const bool mt_cut) const;
@@ -178,6 +181,7 @@ public:
   size_t GetNumJets(const std::vector<int> &good_jets,
                     double pt_cut=0.0,
                     double csv_cut=-std::numeric_limits<float>::max()) const;
+  static double GetSphericity(const std::vector<TLorentzVector> &vs);
 
   // Utilities
   bool IsMC() const;

@@ -82,7 +82,7 @@ vector<int> phys_objects::GetMuons(bool doSignal) const {
 bool phys_objects::IsSignalMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
   return IsSignalIdMuon(imu)
-    && 0.12>GetMuonIsolation(imu)
+    && 0.2>GetMuonIsolation(imu)
     && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
@@ -167,13 +167,17 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     && mus_tk_LayersWithMeasurement()->at(imu) > layers_cut;
 }
 
-float phys_objects::GetMuonIsolation(unsigned imu) const {
+float phys_objects::GetMuonIsolation(unsigned imu, bool mini) const {
   if(imu >= mus_pt()->size()) return -999;
-  double sumEt = mus_pfIsolationR04_sumNeutralHadronEt()->at(imu)
-    + mus_pfIsolationR04_sumPhotonEt()->at(imu)
-    - 0.5*mus_pfIsolationR04_sumPUPt()->at(imu);
-  if(sumEt<0.0) sumEt=0.0;
-  return (mus_pfIsolationR04_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
+  if(!mini){
+    double sumEt = mus_pfIsolationR04_sumNeutralHadronEt()->at(imu)
+      + mus_pfIsolationR04_sumPhotonEt()->at(imu)
+      - 0.5*mus_pfIsolationR04_sumPUPt()->at(imu);
+    if(sumEt<0.0) sumEt=0.0;
+    return (mus_pfIsolationR04_sumChargedHadronPt()->at(imu) + sumEt)/mus_pt()->at(imu);
+  }else{
+    return GetMiniIsolation(13, imu);
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -192,13 +196,15 @@ vector<int> phys_objects::GetElectrons(bool doSignal) const {
 
 bool phys_objects::IsSignalElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsSignalIdElectron(iel, true)
+  return IsSignalIdElectron(iel, false)
+    && 0.1>GetElectronIsolation(iel)
     && els_pt()->at(iel)>=MinSignalLeptonPt;
 }
 
 bool phys_objects::IsVetoElectron(unsigned iel) const {
   if(iel >= els_pt()->size()) return false;
-  return IsVetoIdElectron(iel, true)
+  return IsVetoIdElectron(iel, false)
+    && 0.1>GetElectronIsolation(iel)
     && els_pt()->at(iel)>=MinVetoLeptonPt;
 }
 
@@ -357,25 +363,29 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     && (misshits_cut >= els_expectedMissingInnerHits()->at(iel));
 }
 
-float phys_objects::GetElectronIsolation(unsigned iel) const {
-  if(Type()==typeid(cfa_8)){
-    double sumEt = els_PFphotonIsoR03()->at(iel)
-      + els_PFneutralHadronIsoR03()->at(iel)
-      - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), IsMC());
-    if(sumEt<0.0) sumEt=0;
-    return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
-  }else if(Type()==typeid(cfa_13)){
-    float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
-      + std::max(0.0,
-                 els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
-                 +els_pfIsolationR03_sumPhotonEt()->at(iel)
-                 -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
-    return absiso/els_pt()->at(iel);
+float phys_objects::GetElectronIsolation(unsigned iel, bool mini) const {
+  if(!mini){
+    if(Type()==typeid(cfa_8)){
+      double sumEt = els_PFphotonIsoR03()->at(iel)
+        + els_PFneutralHadronIsoR03()->at(iel)
+        - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), IsMC());
+      if(sumEt<0.0) sumEt=0;
+      return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
+    }else if(Type()==typeid(cfa_13)){
+      float absiso = els_pfIsolationR03_sumChargedHadronPt()->at(iel)
+        + std::max(0.0,
+                   els_pfIsolationR03_sumNeutralHadronEt()->at(iel)
+                   +els_pfIsolationR03_sumPhotonEt()->at(iel)
+                   -0.5*els_pfIsolationR03_sumPUPt()->at(iel));
+      return absiso/els_pt()->at(iel);
+    }else{
+      throw std::logic_error("Unknown type "
+                             +std::string(Type().name())
+                             +" in phys_objects::GetElectronIsolation");
+      return 0.0;
+    }
   }else{
-    throw std::logic_error("Unknown type "
-                           +std::string(Type().name())
-                           +" in phys_objects::GetElectronIsolation");
-    return 0.0;
+    return GetMiniIsolation(11, iel);
   }
 }
 
@@ -399,6 +409,129 @@ float phys_objects::GetEffectiveArea(float SCEta, bool isMC) const {
     else if(SCEta < 2.4  ) return 0.120;
     else                   return 0.130;
   }
+}
+
+double phys_objects::GetMiniIsolation(int particle_type, int ilep, double riso_min, double riso_max,
+                                      bool add_ph, bool add_nh, bool add_ch,
+                                      bool use_pf_weight, double kt_scale) const{
+  double ptThresh(0.5);
+  double lep_pt(0.), lep_eta(0.), lep_phi(0.);
+  double deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);
+  switch(particle_type){
+  case 11:
+    lep_pt = els_pt()->at(ilep);
+    lep_eta = els_eta()->at(ilep);
+    lep_phi = els_phi()->at(ilep);
+    ptThresh = 0;
+    if(fabs(els_scEta()->at(ilep))>1.479){
+      deadcone_ch = 0.015;
+      deadcone_pu = 0.015;
+      deadcone_ph = 0.08;
+    }
+    break;
+  case 13:
+    lep_pt = mus_pt()->at(ilep);
+    lep_eta = mus_eta()->at(ilep);
+    lep_phi = mus_phi()->at(ilep);
+    deadcone_ch = 0.0001;
+    deadcone_pu = 0.01;
+    deadcone_ph = 0.01;
+    deadcone_nh = 0.01;
+    break;
+  default:
+    if(is_nan(pfcand_pt()->at(ilep))
+       || is_nan(pfcand_eta()->at(ilep))
+       || is_nan(pfcand_phi()->at(ilep))){
+      return numeric_limits<double>::quiet_NaN();
+    }
+    lep_pt = pfcand_pt()->at(ilep);
+    lep_eta = pfcand_eta()->at(ilep);
+    lep_phi = pfcand_phi()->at(ilep);
+    deadcone_ch = 0.0001;
+    deadcone_pu = 0.01;
+    deadcone_ph = 0.01;
+    deadcone_nh = 0.01; // Using muon cones
+    break;
+  }
+  double iso_r = kt_scale/lep_pt;
+  if(iso_r < riso_min) iso_r = riso_min;
+  if(iso_r > riso_max) iso_r = riso_max;
+
+  // find the PF cands that matches the lepton
+  double drmin = numeric_limits<double>::max();
+  size_t match_index = static_cast<size_t>(-1);
+  for(size_t icand = 0; icand < pfcand_pt()->size(); ++icand){
+    if(is_nan(pfcand_eta()->at(icand))
+       || is_nan(pfcand_phi()->at(icand))) continue;
+    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
+    if(dr < drmin){
+      drmin = dr;
+      match_index = icand;
+    }
+  }
+
+  double iso_ph = 0., iso_nh = 0., iso_ch = 0., iso_pu = 0.;
+  // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons,
+  // 1 and 2 for hadronic and em particles in HF
+  for (size_t icand = 0; icand < pfcand_pt()->size(); icand++) {
+    if (icand==match_index) continue;
+    if (abs(pfcand_pdgId()->at(icand))<7) continue;
+    if(is_nan(pfcand_pt()->at(icand))
+       || is_nan(pfcand_eta()->at(icand))
+       || is_nan(pfcand_phi()->at(icand))) continue;
+    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
+    if (dr > riso_max) continue;
+    ////////////////// NEUTRALS /////////////////////////
+    if (pfcand_charge()->at(icand)==0){
+      if (pfcand_pt()->at(icand)>ptThresh) {
+        double wpv(0.), wpu(0.), wpf(1.);
+        for (size_t jcand = 0; use_pf_weight && jcand < pfcand_pt()->size(); jcand++) {
+          if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
+          double jpt = pfcand_pt()->at(jcand);
+          double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand),
+                          pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
+          if(jdr<=0) continue; // We can either not count it, or count it infinitely...
+          if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
+          else wpu += log(jpt/jdr);
+        }
+        /////////// PHOTONS ////////////
+        if (abs(pfcand_pdgId()->at(icand))==22) {
+          if(dr < deadcone_ph) continue;
+          wpf = use_pf_weight?(wpv/(wpv+wpu)):1.;
+          if (dr<iso_r) iso_ph += wpf*pfcand_pt()->at(icand);
+          /////////// NEUTRAL HADRONS ////////////
+        } else if (abs(pfcand_pdgId()->at(icand))==130) {
+          if(dr < deadcone_nh) continue;
+          wpf = use_pf_weight?(wpv/(wpv+wpu)):1.;
+          if (dr<iso_r) iso_nh += wpf*pfcand_pt()->at(icand);
+        }
+      }
+      ////////////////// CHARGED from PV /////////////////////////
+    } else if (pfcand_fromPV()->at(icand)>1){
+      if (abs(pfcand_pdgId()->at(icand))==211) {
+        if(dr < deadcone_ch) continue;
+        if(dr<iso_r){
+          iso_ch += pfcand_pt()->at(icand);
+        }
+      }
+      ////////////////// CHARGED from PU /////////////////////////
+    } else {
+      if (pfcand_pt()->at(icand)>ptThresh){
+        if(dr < deadcone_pu) continue;
+        if (dr<iso_r){
+          iso_pu += pfcand_pt()->at(icand);
+        }
+      }
+    }
+  }
+
+  double iso = 0.;
+  if(add_ph) iso += iso_ph;
+  if(add_nh) iso += iso_nh;
+  if(add_ph && add_nh && !use_pf_weight) iso -= iso_pu*0.5;
+  if(iso < 0.) iso = 0.;
+  if(add_ch) iso += iso_ch;
+  return iso/lep_pt;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -1343,6 +1476,23 @@ size_t phys_objects::GetNumJets(const vector<int> &good_jets,
     }
   }
   return num_jets;
+}
+
+double phys_objects::GetSphericity(const std::vector<TLorentzVector> &vs){
+  double sumpt = 0.;
+  double xx = 0., xy=0., yy =0.;
+  for(size_t iv = 0; iv < vs.size(); ++iv){
+    const TLorentzVector &v = vs.at(iv);
+    sumpt += v.Pt();
+    double inv_pt = 1./v.Pt();
+    xx += v.Px()*v.Px()*inv_pt;
+    xy += v.Px()*v.Py()*inv_pt;
+    yy += v.Py()*v.Py()*inv_pt;
+  }
+  xx/=sumpt;
+  xy/=sumpt;
+  yy/=sumpt;
+  return (xx+yy!=0.)?(xx+yy-AddInQuadrature(xx-yy,2.*xy))/(xx+yy):-1.;
 }
 
 /////////////////////////////////////////////////////////////////////////

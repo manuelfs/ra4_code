@@ -8,6 +8,9 @@
 #include <algorithm>
 
 #include "TString.h"
+#include "TLorentzVector.h"
+#include "TVector3.h"
+#include "TVector2.h"
 #include "TFile.h"
 
 #include "fastjet/ClusterSequence.hh"
@@ -45,10 +48,13 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   for(int entry = 0; entry < num_entries; ++entry){
     timer.Iterate();
     GetEntry(entry);
+
     tree.event() = event();
     tree.lumiblock() = lumiblock();
     tree.run() = run();
+    tree.weight() = xsec*luminosity / static_cast<double>(num_total_entries);
 
+    tree.npv() = Npv();
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
       if(PU_bunchCrossing()->at(bc)==0){
         tree.ntrupv() = PU_NumInteractions()->at(bc);
@@ -56,8 +62,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         break;
       }
     }
-    tree.npv() = Npv();
-    tree.weight() = xsec*luminosity / static_cast<double>(num_total_entries);
+
     tree.met() = mets_et()->at(0);
     tree.met_phi() = mets_phi()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
@@ -69,6 +74,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     short lepmax_chg = 0, lepmax_chg_reliso = 0;
     tree.nels() = 0; tree.nvels() = 0;
     tree.nels_reliso() = 0; tree.nvels_reliso() = 0;
+    vector<int> sig_electrons = GetElectrons(true);
+    vector<int> sig_muons = GetMuons(true);
+
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > MinVetoLeptonPt && IsVetoIdElectron(index)) {
         tree.els_sigid().push_back(IsSignalIdElectron(index));
@@ -95,7 +103,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_tru_dr().push_back(deltaR);
 
         // Isolation
-        tree.els_reliso().push_back(GetElectronIsolation(index));
+        tree.els_reliso().push_back(GetElectronIsolation(index, false));
         SetMiniIso(tree, index, 11);
 
         int the_cand;
@@ -151,7 +159,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.mus_tru_dr().push_back(deltaR);
 
         // Isolation
-        tree.mus_reliso().push_back(GetMuonIsolation(index));
+        tree.mus_reliso().push_back(GetMuonIsolation(index, false));
         SetMiniIso(tree, index, 13);
 
         int the_cand;
@@ -293,10 +301,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     }
     tree.mc_type() = TypeCode(parts, moms);
 
-    vector<int> veto_electrons = GetElectrons(false);
-    vector<int> veto_muons = GetMuons(false);
-    vector<int> good_jets = GetJets(veto_electrons, veto_muons, 20., 2.4);
-    vector<Jet> subtracted_jets = GetSubtractedJets(veto_electrons, veto_muons, 20., 2.4);
+    vector<int> good_jets = GetJets(sig_electrons, sig_muons, 20., 2.4);
+    vector<Jet> subtracted_jets = GetSubtractedJets(sig_electrons, sig_muons, 20., 2.4);
 
     tree.nsubjets() = 0;
     tree.nbl_sub() = 0;
@@ -672,7 +678,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     size_t it1 = 0, it2 = 0;
     bool found_top = false, found_antitop = false;
-    for(size_t it = 0; it < parts.size() && !(found_top && found_antitop); ++it){
+    for(size_t it = parts.size()-1; it < parts.size() && !(found_top && found_antitop); --it){
+      if(parts.at(it).status_==0) continue;
       if(parts.at(it).id_ == 6 && !found_top){
         found_top = true;
         it1 = it;
@@ -687,7 +694,98 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       TLorentzVector diff = parts.at(it1).momentum_-parts.at(it2).momentum_;
       tree.tru_tt_m() = sum.M();
       tree.tru_tt_pt() = sum.Pt();
-      tree.tru_tt_boost() = diff.Pt();
+      tree.tru_tt_ptdiff() = diff.Pt();
+    }
+
+    size_t ig1 = 0, ig2 = 0;
+    bool found_g1 = false, found_g2 = false;
+    for(size_t it = parts.size()-1; it < parts.size() && !(found_g1 && found_g2); --it){
+      if(parts.at(it).id_ == 1000021 && parts.at(it).mom_ != 1000021){
+        if(!found_g2){
+          ig2 = it;
+          found_g2 = true;
+        }else if(!found_g1){
+          ig1 = it;
+          found_g1 = true;
+        }
+      }
+    }
+    if(found_g1 && found_g2){
+      tree.tru_gluglu_dphi() = DeltaPhi(parts.at(ig1).momentum_.Phi(), parts.at(ig2).momentum_.Phi());
+      TLorentzVector sum = parts.at(ig1).momentum_+parts.at(ig2).momentum_;
+      TLorentzVector diff = parts.at(ig1).momentum_-parts.at(ig2).momentum_;
+      tree.tru_gluglu_m() = sum.M();
+      tree.tru_gluglu_pt() = sum.Pt();
+      tree.tru_gluglu_ptdiff() = diff.Pt();
+    }
+
+    size_t in1 = 0, in2 = 0;
+    bool found_n1 = false, found_n2 = false;
+    for(size_t it = 0; it < parts.size() && !(found_n1 && found_n2); ++it){
+      if(parts.at(it).id_ != 1000022 || parts.at(it).mom_ != 1000021) continue;
+      if(!found_n1){
+        in1 = it;
+        found_n1 = true;
+      }else if(!found_n2){
+        in2 = it;
+        found_n2 = true;
+      }
+    }
+    tree.glu_proj_frac().clear();
+    if(found_n1 && found_n2){
+      tree.dphi_neutralinos() = DeltaPhi(parts.at(in1).momentum_.Phi(), parts.at(in2).momentum_.Phi());
+      if(in2+2 < parts.size()
+         && abs(parts.at(in1+1).id_)==6 && parts.at(in1+1).mom_==1000021
+         && abs(parts.at(in1+2).id_)==6 && parts.at(in1+2).mom_==1000021
+         && abs(parts.at(in2+1).id_)==6 && parts.at(in2+1).mom_==1000021
+         && abs(parts.at(in2+2).id_)==6 && parts.at(in2+2).mom_==1000021){
+        ig1 = GetMom(in1, parts);
+        ig2 = GetMom(in2, parts);
+        if(ig1<parts.size() && ig2<parts.size()){
+          const TLorentzVector &vg1 = parts.at(ig1).momentum_;
+          const TLorentzVector &vg2 = parts.at(ig2).momentum_;
+          TLorentzVector vs1 = parts.at(in1).momentum_ + parts.at(in1+1).momentum_ + parts.at(in1+2).momentum_;
+          TLorentzVector vs2 = parts.at(in2).momentum_ + parts.at(in2+1).momentum_ + parts.at(in2+2).momentum_;
+          float dra1 = vg1.DeltaR(vs1);
+          float dra2 = vg2.DeltaR(vs2);
+          float drb1 = vg1.DeltaR(vs2);
+          float drb2 = vg2.DeltaR(vs1);
+          float dra = AddInQuadrature(dra1, dra2);
+          float drb = AddInQuadrature(drb1, drb2);
+          if(drb<dra){
+            size_t intemp = in2;
+            in2 = in1;
+            in1 = intemp;
+            TLorentzVector vstemp = vs2;
+            vs2 = vs1;
+            vs1 = vstemp;
+          }
+          TVector2 v2g1(vg1.Vect().XYvector().Unit());
+          TVector2 v2g2(vg2.Vect().XYvector().Unit());
+          double proj1[3], proj2[3];
+          double sum1 = 0., sum2 = 0.;
+          tree.glu_proj_frac() = vector<float>(2, 0.);
+          for(size_t i = 0; i < 3; ++i){
+            proj1[i] = v2g1.Px()*parts.at(in2+i).momentum_.Px()+v2g1.Py()*parts.at(in2+i).momentum_.Py();
+            proj2[i] = v2g2.Px()*parts.at(in1+i).momentum_.Px()+v2g2.Py()*parts.at(in1+i).momentum_.Py();
+            sum1 += fabs(proj1[i]);
+            sum2 += fabs(proj2[i]);
+            if(proj1[i]>0.) tree.glu_proj_frac().at(0) += proj1[i];
+            if(proj2[i]>0.) tree.glu_proj_frac().at(1) += proj2[i];
+          }
+          tree.glu_proj_frac().at(0)/=sum1;
+          tree.glu_proj_frac().at(1)/=sum2;
+
+          vector<TLorentzVector> vs;
+          vs.push_back(parts.at(in1).momentum_);
+          vs.push_back(parts.at(in1+1).momentum_);
+          vs.push_back(parts.at(in1+2).momentum_);
+          vs.push_back(parts.at(in2).momentum_);
+          vs.push_back(parts.at(in2+1).momentum_);
+          vs.push_back(parts.at(in2+2).momentum_);
+          tree.tru_sphericity() = GetSphericity(vs);
+        }
+      }
     }
 
     WriteFatJets(tree.nfjets(), tree.mj(),
@@ -945,137 +1043,39 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
 }
 
 void event_handler_quick::SetMiniIso(small_tree_quick &tree, int ilep, int ParticleType){
-  vector<iso_class> isos;
-  double ptThresh(0.5);
-  double lep_pt(0.), lep_eta(0.), lep_phi(0.), deadcone_nh(0.), deadcone_ch(0.), deadcone_ph(0.), deadcone_pu(0.);;
-  if(ParticleType==11) {
-    lep_pt = els_pt()->at(ilep);
-    lep_eta = els_eta()->at(ilep);
-    lep_phi = els_phi()->at(ilep);
-    ptThresh = 0;
-    if (fabs(lep_eta)>1.479) {deadcone_ch = 0.015; deadcone_pu = 0.015; deadcone_ph = 0.08;}
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_reliso_r01, 0.1));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_reliso_r015, 0.15));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_reliso_r02, 0.2));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_reliso_r03, 0.3));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_reliso_r04, 0.4));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_10, max(0.05, 10./lep_pt)));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_tr10, max(0.05, min(0.2, 10./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_10_ch, max(0.05, 10./lep_pt), false, false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_tr10_ch, max(0.05, min(0.2, 10./lep_pt)), false, false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_10_pfpu, max(0.05, 10./lep_pt), true, true, true, true));
-    isos.push_back(iso_class(&tree, &small_tree_quick::els_miniso_tr10_pfpu, max(0.05, min(0.2, 10./lep_pt)), true, true, true, true));
-  }else if(ParticleType==13){
-    lep_pt = mus_pt()->at(ilep);
-    lep_eta = mus_eta()->at(ilep);
-    lep_phi = mus_phi()->at(ilep);
-    deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01;
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_reliso_r01, 0.1));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_reliso_r015, 0.15));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_reliso_r02, 0.2));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_reliso_r03, 0.3));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_reliso_r04, 0.4));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_10, max(0.05, 10./lep_pt)));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_tr10, max(0.05, min(0.2, 10./lep_pt))));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_10_ch, max(0.05, 10./lep_pt), false, false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_tr10_ch, max(0.05, min(0.2, 10./lep_pt)), false, false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_10_pfpu, max(0.05, 10./lep_pt), true, true, true, true));
-    isos.push_back(iso_class(&tree, &small_tree_quick::mus_miniso_tr10_pfpu, max(0.05, min(0.2, 10./lep_pt)), true, true, true, true));
-  }else{
-    if(is_nan(pfcand_pt()->at(ilep))
-       || is_nan(pfcand_eta()->at(ilep))
-       || is_nan(pfcand_phi()->at(ilep))){
-      for(size_t i = 0; i < isos.size(); ++i){
-        iso_class &iso = isos.at(i);
-        if(iso.branch){
-          ((iso.tree)->*(iso.branch))().push_back(numeric_limits<float>::quiet_NaN());
-        }
-      }
-      return;
-    }
-    lep_pt = pfcand_pt()->at(ilep);
-    lep_eta = pfcand_eta()->at(ilep);
-    lep_phi = pfcand_phi()->at(ilep);
-    deadcone_ch = 0.0001; deadcone_pu = 0.01; deadcone_ph = 0.01;deadcone_nh = 0.01; // Using muon cones
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r03_ch, 0.3,false,false,true));
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r02_ch, 0.2,false,false,true));
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_mini_ch, max(0.05, 10./lep_pt),false,false,true));
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r03_ne, 0.3,true,true,false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_r02_ne, 0.2,true,true,false));
-    isos.push_back(iso_class(&tree, &small_tree_quick::tks_mini_ne, max(0.05, 10./lep_pt),true,true,false));
+  double bignum = std::numeric_limits<double>::max();
+  switch(ParticleType){
+  case 11:
+    tree.els_reliso_r01().push_back(GetMiniIsolation(ParticleType, ilep, 0.1, 0.1));
+    tree.els_reliso_r015().push_back(GetMiniIsolation(ParticleType, ilep, 0.15, 0.15));
+    tree.els_reliso_r02().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2));
+    tree.els_reliso_r03().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3));
+    tree.els_reliso_r04().push_back(GetMiniIsolation(ParticleType, ilep, 0.4, 0.4));
+    tree.els_miniso_10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum));
+    tree.els_miniso_tr10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2));
+    tree.els_miniso_10_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, false, false));
+    tree.els_miniso_tr10_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2, false, false));
+    break;
+  case 13:
+    tree.mus_reliso_r01().push_back(GetMiniIsolation(ParticleType, ilep, 0.1, 0.1));
+    tree.mus_reliso_r015().push_back(GetMiniIsolation(ParticleType, ilep, 0.15, 0.15));
+    tree.mus_reliso_r02().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2));
+    tree.mus_reliso_r03().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3));
+    tree.mus_reliso_r04().push_back(GetMiniIsolation(ParticleType, ilep, 0.4, 0.4));
+    tree.mus_miniso_10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum));
+    tree.mus_miniso_tr10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2));
+    tree.mus_miniso_10_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, false, false));
+    tree.mus_miniso_tr10_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2, false, false));
+    break;
+  default:
+    tree.tks_r03_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3, false, false, true));
+    tree.tks_r02_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2, false, false, true));
+    tree.tks_mini_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, false, false, true));
+    tree.tks_r03_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3, true, true, false));
+    tree.tks_r02_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2, true, true, false));
+    tree.tks_mini_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, true, true, false));
+    break;
   }
-  bool need_pfweight = false;
-  for(size_t iso = 0; !need_pfweight && iso < isos.size(); ++iso){
-    if(isos.at(iso).usePFweight) need_pfweight = true;
-  }
-  size_t nriso = isos.size();
-  double riso_max = max(0.4,10./lep_pt);
-  // find the PF cands that matches the lepton
-  double drmin = fltmax;
-  uint match_index = 9999999;
-  for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
-    if(is_nan(pfcand_eta()->at(icand))
-       || is_nan(pfcand_phi()->at(icand))) continue;
-    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
-    if (dr < drmin){
-      drmin = dr;
-      match_index = icand;
-    }
-  }
-  // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons,
-  // 1 and 2 for hadronic and em particles in HF
-  for (unsigned int icand = 0; icand < pfcand_pt()->size(); icand++) {
-    if (icand==match_index) continue;
-    if (abs(pfcand_pdgId()->at(icand))<7) continue;
-    if(is_nan(pfcand_pt()->at(icand))
-       || is_nan(pfcand_eta()->at(icand))
-       || is_nan(pfcand_phi()->at(icand))) continue;
-    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
-    if (dr > riso_max) continue;
-    ////////////////// NEUTRALS /////////////////////////
-    if (pfcand_charge()->at(icand)==0){
-      if (pfcand_pt()->at(icand)>ptThresh) {
-        double wpv(0.), wpu(0.), wpf(1.);
-        for (unsigned int jcand = 0; need_pfweight && jcand < pfcand_pt()->size(); jcand++) {
-          if (pfcand_charge()->at(icand)!=0 || icand==jcand) continue;
-          double jpt = pfcand_pt()->at(jcand);
-          double jdr = dR(pfcand_eta()->at(icand), pfcand_eta()->at(jcand),
-                          pfcand_phi()->at(icand), pfcand_phi()->at(jcand));
-          if(jdr<=0) continue; // We can either not count it, or count it infinitely...
-          if (pfcand_fromPV()->at(icand)>1) wpv += log(jpt/jdr);
-          else wpu += log(jpt/jdr);
-        }
-        /////////// PHOTONS ////////////
-        if (abs(pfcand_pdgId()->at(icand))==22) {
-          if(dr < deadcone_ph) continue;
-          for (uint ir=0; ir<nriso; ir++) {
-            wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
-            if (dr<isos[ir].R) isos[ir].iso_ph += wpf*pfcand_pt()->at(icand);
-          }
-          /////////// NEUTRAL HADRONS ////////////
-        } else if (abs(pfcand_pdgId()->at(icand))==130) {
-          if(dr < deadcone_nh) continue;
-          for (uint ir=0; ir<nriso; ir++) {
-            wpf = (isos[ir].usePFweight)?(wpv/(wpv+wpu)):1.;
-            if (dr<isos[ir].R) isos[ir].iso_nh += wpf*pfcand_pt()->at(icand);
-          }
-        }
-      }
-      ////////////////// CHARGED from PV /////////////////////////
-    } else if (pfcand_fromPV()->at(icand)>1){
-      if (abs(pfcand_pdgId()->at(icand))==211) {
-        if(dr < deadcone_ch) continue;
-        for (uint ir=0; ir<nriso; ir++) {if (dr<isos[ir].R) isos[ir].iso_ch += pfcand_pt()->at(icand);}
-      }
-      ////////////////// CHARGED from PU /////////////////////////
-    } else {
-      if (pfcand_pt()->at(icand)>ptThresh){
-        if(dr < deadcone_pu) continue;
-        for (uint ir=0; ir<nriso; ir++) {if (dr<isos[ir].R) isos[ir].iso_pu += pfcand_pt()->at(icand);}
-      }
-    }
-  }
-  for (uint ir=0; ir<nriso; ir++) isos[ir].SetIso(lep_pt);
 }
 
 float event_handler_quick::GetMinMTWb(const vector<int> &good_jets,
@@ -1094,6 +1094,7 @@ float event_handler_quick::GetMinMTWb(const vector<int> &good_jets,
   if (min_mT==fltmax) return bad_val;
   else return min_mT;
 }
+
 unsigned event_handler_quick::TypeCode(const vector<mc_particle> &parts,
                                        const vector<size_t> &moms){
   const string sample_name = SampleName();
@@ -1125,33 +1126,6 @@ unsigned event_handler_quick::TypeCode(const vector<mc_particle> &parts,
   if(ntau > 0xF) ntau = 0xF;
   if(ntaul > 0xF) ntaul = 0xF;
   return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
-}
-
-// Class to have in one place the parameters of each iso calculation
-iso_class::iso_class(small_tree_quick *itree, st_branch ibranch, double iR,
-                     bool iaddPH, bool iaddNH, bool iaddCH, bool iusePFweight):
-  tree(itree),
-  branch(ibranch),
-  R(iR),
-  addPH(iaddPH),
-  addNH(iaddNH),
-  addCH(iaddCH),
-  usePFweight(iusePFweight){
-  iso_ch = 0;
-  iso_ph = 0;
-  iso_nh = 0;
-  iso_pu = 0;
-  }
-
-void iso_class::SetIso(float lep_pt){
-  if(branch==NULL) return;
-  float isolation(0.);
-  if(addPH) isolation += iso_ph;
-  if(addNH) isolation += iso_nh;
-  if(addPH && addNH && !usePFweight) isolation -= iso_pu/2.;
-  if(isolation < 0) isolation = 0;
-  if(addCH) isolation += iso_ch;
-  (tree->*branch)().push_back(isolation/lep_pt);
 }
 
 bool greater_m(const PseudoJet &a, const PseudoJet &b){
