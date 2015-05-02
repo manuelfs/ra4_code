@@ -457,6 +457,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.jets_fjet30_index() = vector<int>(dirty_jets.size(), -1);
     tree.jets_fjetinf_index() = vector<int>(dirty_jets.size(), -1);
     tree.jets_fjet_nl_index() = vector<int>(dirty_jets.size(), -1);
+    tree.jets_fjet15_nl_index() = vector<int>(dirty_jets.size(), -1);
     tree.jets_gen_pt().resize(dirty_jets.size());
     tree.jets_parton_pt().resize(dirty_jets.size());
     tree.jets_isr_code().resize(dirty_jets.size());
@@ -830,6 +831,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                  tree.fjets_nl_sumcsv(), tree.fjets_nl_poscsv(),
                  tree.fjets_nl_btags(), tree.jets_fjet_nl_index(),
                  1.2, dirty_jets, false,
+                 true, tree.jets_islep());
+    WriteFatJets(tree.nfjets15_nl(), tree.mj15_nl(),
+                 tree.fjets15_nl_pt(), tree.fjets15_nl_eta(),
+                 tree.fjets15_nl_phi(), tree.fjets15_nl_m(),
+                 tree.fjets15_nl_nconst(),
+                 tree.fjets15_nl_sumcsv(), tree.fjets15_nl_poscsv(),
+                 tree.fjets15_nl_btags(), tree.jets_fjet15_nl_index(),
+                 1.5, dirty_jets, false,
                  true, tree.jets_islep());
     vector<float> genfjets_csv(tree.genfjets_pt().size());
     vector<int> genfjets_btags(tree.genfjets_pt().size());

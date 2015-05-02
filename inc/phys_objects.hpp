@@ -4,10 +4,13 @@
 #ifndef H_PHYS_OBJECTS
 #define H_PHYS_OBJECTS
 
+#include <cstdlib>
+
 #include <iostream>
 #include <vector>
 #include <string>
 #include <limits>
+#include <map>
 
 #include "TLorentzVector.h"
 #include "TMath.h"
@@ -106,6 +109,11 @@ public:
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
                            double pt_thresh, double eta_thresh) const;
+  void GetMatchedLeptons(const std::vector<int> &veto_mu,
+                         const std::vector<int> &veto_el,
+                         std::map<size_t,std::vector<size_t> > &mu_matches,
+                         std::map<size_t,std::vector<size_t> > &el_matches) const;
+
   std::vector<Jet> GetSubtractedJets(const std::vector<int> &veto_el, const std::vector<int> &veto_mu,
                                      double pt_thresh, double eta_thresh) const;
   bool IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) const;

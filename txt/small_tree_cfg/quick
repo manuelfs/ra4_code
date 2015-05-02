@@ -183,6 +183,7 @@ std::vector<int>   jets_fjet20_index
 std::vector<int>   jets_fjet30_index
 std::vector<int>   jets_fjetinf_index
 std::vector<int>   jets_fjet_nl_index
+std::vector<int>   jets_fjet15_nl_index
 std::vector<float> jets_gen_pt
 std::vector<float> jets_parton_pt
 std::vector<int>   jets_isr_code
@@ -300,6 +301,17 @@ std::vector<float> fjets_nl_sumcsv
 std::vector<float> fjets_nl_poscsv
 std::vector<int> fjets_nl_btags
 std::vector<int> fjets_nl_nconst
+
+int nfjets15_nl
+float mj15_nl
+std::vector<float> fjets15_nl_pt
+std::vector<float> fjets15_nl_eta
+std::vector<float> fjets15_nl_phi
+std::vector<float> fjets15_nl_m
+std::vector<float> fjets15_nl_sumcsv
+std::vector<float> fjets15_nl_poscsv
+std::vector<int> fjets15_nl_btags
+std::vector<int> fjets15_nl_nconst
 
 int ngenfjets
 float gen_mj

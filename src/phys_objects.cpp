@@ -221,9 +221,9 @@ bool phys_objects::IsVetoIdElectron(unsigned iel, bool do_iso) const {
 bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) const{
   if(iel>=els_pt()->size()) return false;
   bool barrel;
-  if(fabs(els_scEta()->at(iel))<=1.479){
+  if(els_isEB()->at(iel)){
     barrel = true;
-  }else if(fabs(els_scEta()->at(iel))<2.5){
+  }else if(els_isEE()->at(iel)){
     barrel = false;
   }else{
     return false;
@@ -602,16 +602,14 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
                                   double pt_thresh, double eta_thresh) const {
   vector<int> jets;
   vector<bool> jet_is_lepton(jets_corr_p4().size(), false);
+  map<size_t,vector<size_t> > mu_matches, el_matches;
+  GetMatchedLeptons(VetoMu, VetoEl, mu_matches, el_matches);
 
-  // Finding jets that contain good leptons
-  for(unsigned index = 0; index < VetoEl.size(); index++) {
-    int ijet = els_jet_ind()->at(VetoEl[index]);
-    if(ijet >= 0) jet_is_lepton[ijet] = true;
-  }
-
-  for(unsigned index = 0; index < VetoMu.size(); index++) {
-    int ijet = mus_jet_ind()->at(VetoMu[index]);
-    if(ijet >= 0) jet_is_lepton[ijet] = true;
+  for(size_t ijet = 0; ijet < jets_corr_p4().size(); ++ijet){
+    if(mu_matches.find(ijet) != mu_matches.end()
+       || el_matches.find(ijet) != el_matches.end()){
+      jet_is_lepton[ijet] = true;
+    }
   }
 
   // Tau/photon cleaning, and calculation of HT
@@ -638,14 +636,16 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
 
     jets.push_back(ijet);
   } // Loop over jets
+
   return jets;
 }
 
-vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const vector<int> &veto_mu,
-                                            double pt_thresh, double eta_thresh) const{
-  vector<Jet> jets(0);
-  map<size_t,vector<size_t> > mu_matches, el_matches;
-
+void phys_objects::GetMatchedLeptons(const vector<int> &veto_mu,
+                                     const vector<int> &veto_el,
+                                     map<size_t,vector<size_t> > &mu_matches,
+                                     map<size_t,vector<size_t> > &el_matches) const{
+  mu_matches.clear();
+  el_matches.clear();
   //Match muons to jets
   for(size_t ivmu = 0; ivmu < veto_mu.size(); ++ivmu){
     int imu = veto_mu.at(ivmu);
@@ -687,6 +687,14 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
     }
     if(mindr < 0.4) el_matches[imatch].push_back(iel);
   }
+}
+
+vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const vector<int> &veto_mu,
+                                            double pt_thresh, double eta_thresh) const{
+  vector<Jet> jets(0);
+  map<size_t,vector<size_t> > mu_matches, el_matches;
+
+  GetMatchedLeptons(veto_mu, veto_el, mu_matches, el_matches);
 
   //Compute subtracted jets
   for(size_t ijet = 0; ijet < jets_corr_p4().size(); ++ijet){
@@ -724,12 +732,12 @@ vector<Jet> phys_objects::GetSubtractedJets(const vector<int> &veto_el, const ve
         ++subtracted;
       }
     }
+    p4jet -= p4sub;
 
     //Apply eta and pt cut to subtracted momentum
     if(fabs(p4jet.Eta())>eta_thresh || p4jet.Pt()<pt_thresh) continue;
 
     //Record subtracted jets passing quality, eta, and pt cuts
-    p4jet -= p4sub;
     jets.push_back(Jet());
     jets.back().p4 = p4jet;
     jets.back().csv = jets_btag_inc_secVertexCombined()->at(ijet);
@@ -750,6 +758,8 @@ bool phys_objects::IsGoodJet(unsigned ijet, double ptThresh, double etaThresh) c
 }
 
 bool phys_objects::IsBasicJet(unsigned ijet) const{
+  //NOTE: This may need to be updated to match:
+  //https://twiki.cern.ch/twiki/bin/view/CMS/JetID
   double rawRatio =(jets_rawPt()->at(ijet)/jets_pt()->at(ijet)); // Same as jets_corrFactorRaw
   const double jetenergy = jets_energy()->at(ijet) * rawRatio;
   double NEF = -999., CEF = -999., NHF=-999., CHF=-999.;
