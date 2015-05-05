@@ -992,7 +992,8 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
     int absid = abs(TMath::Nint(pfcand_pdgId()->at(cand)));
     bool islep = ((absid == 11) || (absid == 13));
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
-        (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep))) continue;
+        (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep)) ||
+	fabs(pfcand_eta()->at(cand))>2.5) continue;
     TLorentzVector vcand;
     vcand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
                        pfcand_phi()->at(cand), pfcand_energy()->at(cand));
