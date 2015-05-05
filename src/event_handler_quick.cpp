@@ -83,6 +83,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_ispf().push_back(els_isPF()->at(index));
         tree.els_pt().push_back(els_pt()->at(index));
         tree.els_eta().push_back(els_eta()->at(index));
+        tree.els_sceta().push_back(els_scEta()->at(index));
         tree.els_phi().push_back(els_phi()->at(index));
         tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
         tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),

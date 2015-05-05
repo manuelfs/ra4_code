@@ -112,6 +112,7 @@ int nels_reliso
 int nvels_reliso
 std::vector<float> els_pt
 std::vector<float> els_eta
+std::vector<float> els_sceta
 std::vector<float> els_phi
 std::vector<float> els_mt
 std::vector<bool> els_sigid

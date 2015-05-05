@@ -221,9 +221,10 @@ bool phys_objects::IsVetoIdElectron(unsigned iel, bool do_iso) const {
 bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) const{
   if(iel>=els_pt()->size()) return false;
   bool barrel;
-  if(els_isEB()->at(iel)){
+  if(fabs(els_scEta()->at(iel))>2.5) return false;
+  if(els_isEB()->at(iel) && !els_isEE()->at(iel)){
     barrel = true;
-  }else if(els_isEE()->at(iel)){
+  }else if(els_isEE()->at(iel) && !els_isEB()->at(iel)){
     barrel = false;
   }else{
     return false;
@@ -423,10 +424,13 @@ double phys_objects::GetMiniIsolation(int particle_type, int ilep, double riso_m
     lep_eta = els_eta()->at(ilep);
     lep_phi = els_phi()->at(ilep);
     ptThresh = 0;
-    if(fabs(els_scEta()->at(ilep))>1.479){
+    if(els_isEE()->at(ilep) && !els_isEB()->at(ilep)){
       deadcone_ch = 0.015;
       deadcone_pu = 0.015;
       deadcone_ph = 0.08;
+    }else if(!(els_isEB()->at(ilep) && !els_isEE()->at(ilep))){
+      //In both barrel and endcap or neither
+      return numeric_limits<float>::max();
     }
     break;
   case 13:
@@ -1519,7 +1523,7 @@ bool phys_objects::hasPFMatch(int index, particleId::leptonType type, int &pfIdx
     leptonPt = mus_pt()->at(index);
     pdgid = 13;
   } else if(type == particleId::electron) {
-    leptonEta = els_scEta()->at(index);
+    leptonEta = els_eta()->at(index);
     leptonPhi = els_phi()->at(index);
     leptonPt = els_pt()->at(index);
     pdgid = 11;
