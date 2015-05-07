@@ -64,6 +64,9 @@ float min_mt_bmet
 float max_mt_bmet
 float min_pt_bmet
 float max_pt_bmet
+
+float tru_top_pt
+float tru_topb_pt
 float tru_tt_dphi
 float tru_tt_m
 float tru_tt_pt
@@ -225,6 +228,9 @@ std::vector<float>  mc_phi
 std::vector<int>    mc_id
 std::vector<int>    mc_status
 std::vector<size_t> mc_mom
+int ngentaus
+int ngenleps
+int ngentausl
 
 ################  Fat Jets   ##################
 int nfjets

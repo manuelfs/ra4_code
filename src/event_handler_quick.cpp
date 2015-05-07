@@ -232,6 +232,20 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), met_corr(), met_phi_corr());
     }
 
+    tree.tru_top_pt() = bad_val;
+    tree.tru_topb_pt() = bad_val;
+    float min_top_m(fltmax), min_topb_m(fltmax);
+    for(size_t imc = 0; imc < mc_doc_id()->size(); ++imc){
+      if(mc_doc_id()->at(imc) == 6 && mc_doc_mass()->at(imc) < min_top_m){
+	tree.tru_top_pt() = mc_doc_pt()->at(imc);
+	min_top_m = mc_doc_mass()->at(imc);
+      }
+      if(mc_doc_id()->at(imc) == -6 && mc_doc_mass()->at(imc) < min_topb_m){
+	tree.tru_topb_pt() = mc_doc_pt()->at(imc);
+	min_topb_m = mc_doc_mass()->at(imc);
+      }
+    } // Loop over mc_doc
+
     vector<mc_particle> parts = GetMCParticles();
     vector<size_t> moms = GetMoms(parts);
     vector<size_t> indices;
@@ -303,6 +317,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
     tree.mc_type() = TypeCode(parts, moms);
+    tree.ngentaus() = (tree.mc_type()&0x000F);
+    tree.ngentausl() = ((tree.mc_type()&0x00F0)>>4);
+    tree.ngenleps() = ((tree.mc_type()&0x0F00)>>8)+(tree.mc_type()&0x000F)-((tree.mc_type()&0x00F0)>>4);
 
     vector<int> good_jets = GetJets(sig_electrons, sig_muons, 20., 2.4);
     vector<Jet> subtracted_jets = GetSubtractedJets(sig_electrons, sig_muons, 20., 2.4);
