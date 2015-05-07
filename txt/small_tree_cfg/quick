@@ -9,6 +9,7 @@ int npv
 int ntrupv
 float ntrupv_mean
 float met
+float met_from_mini
 float gen_met
 float met_phi
 float gen_met_phi
@@ -174,7 +175,7 @@ std::vector<float> jets_pt
 std::vector<float> jets_eta
 std::vector<float> jets_phi
 std::vector<float> jets_m
-std::vector<float> jets_uncor_pt
+std::vector<float> jets_pt_from_mini
 std::vector<float> jets_csv
 std::vector<float> jets_id
 std::vector<bool> jets_islep

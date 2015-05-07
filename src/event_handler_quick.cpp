@@ -52,7 +52,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.event() = event();
     tree.lumiblock() = lumiblock();
     tree.run() = run();
-    tree.weight() = xsec*luminosity / static_cast<double>(num_total_entries);
+    tree.weight() = weight()*xsec*luminosity / static_cast<double>(num_total_entries);
 
     tree.npv() = Npv();
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
@@ -63,8 +63,10 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
 
-    tree.met() = mets_et()->at(0);
-    tree.met_phi() = mets_phi()->at(0);
+    ///////////// MET //////////////////
+    tree.met_from_mini() = mets_et()->at(0);
+    tree.met() = met_corr();
+    tree.met_phi() = met_phi_corr();
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
 
     size_t primary_lep=static_cast<size_t>(-1);
@@ -87,7 +89,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_phi().push_back(els_phi()->at(index));
         tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
         tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),
-                                      mets_et()->at(0), mets_phi()->at(0)));
+                                      met_corr(), met_phi_corr()));
         tree.els_d0().push_back(els_d0dum()->at(index)
                                 -pv_x()->at(0)*sin(els_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(els_tk_phi()->at(index)));
@@ -144,7 +146,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.mus_phi().push_back(mus_phi()->at(index));
         tree.mus_charge().push_back(TMath::Nint(mus_charge()->at(index)));
         tree.mus_mt().push_back(GetMT(mus_pt()->at(index), mus_phi()->at(index),
-                                      mets_et()->at(0), mets_phi()->at(0)));
+                                      met_corr(), met_phi_corr()));
         tree.mus_d0().push_back(mus_tk_d0dum()->at(index)
                                 -pv_x()->at(0)*sin(mus_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(mus_tk_phi()->at(index)));
@@ -205,14 +207,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_phi() = lepmax_p4.Phi();
       tree.lep_eta() = lepmax_p4.Eta();
       tree.lep_charge() = lepmax_chg;
-      tree.st() = lepmax_p4.Pt()+mets_et()->at(0);
+      tree.st() = lepmax_p4.Pt()+met_corr();
 
       float wx = mets_ex()->at(0) + lepmax_p4.Px();
       float wy = mets_ey()->at(0) + lepmax_p4.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep() = DeltaPhi(wphi, lepmax_p4.Phi());
-      tree.mt() = GetMT(lepmax_p4.Pt(), lepmax_p4.Phi(), mets_et()->at(0), mets_phi()->at(0));
+      tree.mt() = GetMT(lepmax_p4.Pt(), lepmax_p4.Phi(), met_corr(), met_phi_corr());
     }
 
     if(lepmax_p4_reliso.Pt()>0.){
@@ -220,14 +222,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_phi_reliso() = lepmax_p4_reliso.Phi();
       tree.lep_eta_reliso() = lepmax_p4_reliso.Eta();
       tree.lep_charge_reliso() = lepmax_chg_reliso;
-      tree.st_reliso() = lepmax_p4_reliso.Pt()+mets_et()->at(0);
+      tree.st_reliso() = lepmax_p4_reliso.Pt()+met_corr();
 
       float wx = mets_ex()->at(0) + lepmax_p4_reliso.Px();
       float wy = mets_ey()->at(0) + lepmax_p4_reliso.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep_reliso() = DeltaPhi(wphi, lepmax_p4_reliso.Phi());
-      tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), mets_et()->at(0), mets_phi()->at(0));
+      tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), met_corr(), met_phi_corr());
     }
 
     vector<mc_particle> parts = GetMCParticles();
@@ -448,7 +450,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.jets_eta().resize(dirty_jets.size());
     tree.jets_phi().resize(dirty_jets.size());
     tree.jets_m().resize(dirty_jets.size());
-    tree.jets_uncor_pt().resize(dirty_jets.size());
+    tree.jets_pt_from_mini().resize(dirty_jets.size());
     tree.jets_csv().resize(dirty_jets.size());
     tree.jets_id().resize(dirty_jets.size());
     tree.jets_islep().resize(dirty_jets.size());
@@ -469,7 +471,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_eta().at(idirty) = jets_corr_p4().at(ijet).Eta();
       tree.jets_phi().at(idirty) = jets_corr_p4().at(ijet).Phi();
       tree.jets_m().at(idirty) = jets_corr_p4().at(ijet).M();
-      tree.jets_uncor_pt().at(idirty) = jets_pt()->at(ijet);
+      tree.jets_pt_from_mini().at(idirty) = jets_pt()->at(ijet);
       tree.jets_csv().at(idirty) = jets_btag_inc_secVertexCombined()->at(ijet);
       tree.jets_id().at(idirty) = jets_parton_Id()->at(ijet);
       tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
@@ -631,7 +633,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       size_t b1 = good_jets.at(ib1);
       if(jets_corr_p4().at(b1).Pt()<MinJetPt || jets_btag_inc_secVertexCombined()->at(b1)<CSVCuts[1]) continue;
       TLorentzVector vb1(jets_corr_p4().at(b1)), vmet;
-      vmet.SetPtEtaPhiM(mets_et()->at(0), 0., mets_phi()->at(0), 0.);
+      vmet.SetPtEtaPhiM(met_corr(), 0., met_phi_corr(), 0.);
 
       float dphi_blep = DeltaPhi(vb1.Phi(), lepmax_p4.Phi());
       if(dphi_blep < tree.min_dphi_blep()) tree.min_dphi_blep() = dphi_blep;
@@ -650,7 +652,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       if(dphi_bmet < tree.min_dphi_bmet()) tree.min_dphi_bmet() = dphi_bmet;
       if(dphi_bmet > tree.max_dphi_bmet()) tree.max_dphi_bmet() = dphi_bmet;
       float mt_bmet = GetMT(vb1.M(), vb1.Pt(), vb1.Phi(),
-                            0., mets_et()->at(0), mets_phi()->at(0));
+                            0., met_corr(), met_phi_corr());
       if(mt_bmet < tree.min_mt_bmet()) tree.min_mt_bmet() = mt_bmet;
       if(mt_bmet > tree.max_mt_bmet()) tree.max_mt_bmet() = mt_bmet;
       float pt_bmet = (vb1+vmet).Pt();
@@ -1002,7 +1004,7 @@ void event_handler_quick::WriteTks(small_tree_quick &tree,
     tree.tks_phi().push_back(pfcand_phi()->at(cand));
     tree.tks_id().push_back(TMath::Nint(pfcand_pdgId()->at(cand)));
     tree.tks_mt().push_back(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
-                                  mets_et()->at(0), mets_phi()->at(0)));
+                                  met_corr(), met_phi_corr()));
     tree.tks_from_pv().push_back(TMath::Nint(pfcand_fromPV()->at(cand)));
     size_t ipart = MatchCandToStatus1(cand, parts);
     tree.tks_tru_id().push_back(ipart<parts.size()?parts.at(ipart).id_:0);
@@ -1098,7 +1100,7 @@ float event_handler_quick::GetMinMTWb(const vector<int> &good_jets,
     uint jet = good_jets[ijet];
     if (jets_corr_p4().at(jet).Pt()<pt_cut) continue;
     if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
-    float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et()->at(0), mets_phi()->at(0),
+    float mT = GetMT(use_W_mass ? 80.385 : 0., met_corr(), met_phi_corr(),
                      0., jets_corr_p4().at(jet).Pt(), jets_corr_p4().at(jet).Phi());
     if (mT<min_mT) min_mT=mT;
   }
