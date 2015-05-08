@@ -9,7 +9,6 @@ int npv
 int ntrupv
 float ntrupv_mean
 float met
-float met_from_mini
 float gen_met
 float met_phi
 float gen_met_phi

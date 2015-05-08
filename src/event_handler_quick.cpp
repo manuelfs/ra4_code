@@ -64,7 +64,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     }
 
     ///////////// MET //////////////////
-    tree.met_from_mini() = mets_et()->at(0);
     tree.met() = met_corr();
     tree.met_phi() = met_phi_corr();
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
@@ -462,7 +461,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.ht_nonb()+=jets_corr_p4().at(ijet).Pt();
       }
     }
-    vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 20., 5.0);
+    vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 30., 5.0);
     tree.jets_pt().resize(dirty_jets.size());
     tree.jets_eta().resize(dirty_jets.size());
     tree.jets_phi().resize(dirty_jets.size());
@@ -471,13 +470,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.jets_csv().resize(dirty_jets.size());
     tree.jets_id().resize(dirty_jets.size());
     tree.jets_islep().resize(dirty_jets.size());
-    tree.jets_fjet_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjet15_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjet20_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjet30_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjetinf_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjet_nl_index() = vector<int>(dirty_jets.size(), -1);
-    tree.jets_fjet15_nl_index() = vector<int>(dirty_jets.size(), -1);
     tree.jets_gen_pt().resize(dirty_jets.size());
     tree.jets_parton_pt().resize(dirty_jets.size());
     tree.jets_isr_code().resize(dirty_jets.size());
@@ -809,57 +801,64 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
 
+    vector<int> alljets;
+    vector<bool> alljets_islep;
+    for(unsigned ijet(0); ijet<jets_corr_p4().size(); ijet++) {
+      alljets.push_back(static_cast<int>(ijet));
+      alljets_islep.push_back(!(find(good_jets.begin(), good_jets.end(), static_cast<int>(ijet)) 
+				!= good_jets.end()));      
+    }
     WriteFatJets(tree.nfjets(), tree.mj(),
                  tree.fjets_pt(), tree.fjets_eta(),
                  tree.fjets_phi(), tree.fjets_m(),
                  tree.fjets_nconst(),
                  tree.fjets_sumcsv(), tree.fjets_poscsv(),
                  tree.fjets_btags(), tree.jets_fjet_index(),
-                 1.2, dirty_jets);
+                 1.2, alljets);
     WriteFatJets(tree.nfjets15(), tree.mj15(),
                  tree.fjets15_pt(), tree.fjets15_eta(),
                  tree.fjets15_phi(), tree.fjets15_m(),
                  tree.fjets15_nconst(),
                  tree.fjets15_sumcsv(), tree.fjets15_poscsv(),
                  tree.fjets15_btags(), tree.jets_fjet15_index(),
-                 1.5, dirty_jets);
+                 1.5, alljets);
     WriteFatJets(tree.nfjets20(), tree.mj20(),
                  tree.fjets20_pt(), tree.fjets20_eta(),
                  tree.fjets20_phi(), tree.fjets20_m(),
                  tree.fjets20_nconst(),
                  tree.fjets20_sumcsv(), tree.fjets20_poscsv(),
                  tree.fjets20_btags(), tree.jets_fjet20_index(),
-                 2.0, dirty_jets);
+                 2.0, alljets);
     WriteFatJets(tree.nfjets30(), tree.mj30(),
                  tree.fjets30_pt(), tree.fjets30_eta(),
                  tree.fjets30_phi(), tree.fjets30_m(),
                  tree.fjets30_nconst(),
                  tree.fjets30_sumcsv(), tree.fjets30_poscsv(),
                  tree.fjets30_btags(), tree.jets_fjet30_index(),
-                 3.0, dirty_jets);
+                 3.0, alljets);
     WriteFatJets(tree.nfjetsinf(), tree.mjinf(),
                  tree.fjetsinf_pt(), tree.fjetsinf_eta(),
                  tree.fjetsinf_phi(), tree.fjetsinf_m(),
                  tree.fjetsinf_nconst(),
                  tree.fjetsinf_sumcsv(), tree.fjetsinf_poscsv(),
                  tree.fjetsinf_btags(), tree.jets_fjetinf_index(),
-                 1000.0, dirty_jets);
+                 1000.0, alljets);
     WriteFatJets(tree.nfjets_nl(), tree.mj_nl(),
                  tree.fjets_nl_pt(), tree.fjets_nl_eta(),
                  tree.fjets_nl_phi(), tree.fjets_nl_m(),
                  tree.fjets_nl_nconst(),
                  tree.fjets_nl_sumcsv(), tree.fjets_nl_poscsv(),
                  tree.fjets_nl_btags(), tree.jets_fjet_nl_index(),
-                 1.2, dirty_jets, false,
-                 true, tree.jets_islep());
+                 1.2, alljets, false,
+                 true, alljets_islep);
     WriteFatJets(tree.nfjets15_nl(), tree.mj15_nl(),
                  tree.fjets15_nl_pt(), tree.fjets15_nl_eta(),
                  tree.fjets15_nl_phi(), tree.fjets15_nl_m(),
                  tree.fjets15_nl_nconst(),
                  tree.fjets15_nl_sumcsv(), tree.fjets15_nl_poscsv(),
                  tree.fjets15_nl_btags(), tree.jets_fjet15_nl_index(),
-                 1.5, dirty_jets, false,
-                 true, tree.jets_islep());
+                 1.5, alljets, false,
+                 true, alljets_islep);
     vector<float> genfjets_csv(tree.genfjets_pt().size());
     vector<int> genfjets_btags(tree.genfjets_pt().size());
     WriteFatJets(tree.ngenfjets(), tree.gen_mj(),
@@ -913,6 +912,8 @@ void event_handler_quick::WriteFatJets(int &nfjets,
   vector<PseudoJet> sjets(0);
   vector<int> ijets(0);
   vector<float> csvs(0);
+  const float EtaThresh(5.);
+  jets_fjet_index = vector<int>(jets.size(), -1);
 
   if(gen){
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
@@ -921,7 +922,7 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
                      mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
       const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
-      if(this_pj.pt()>30.0){
+      if(this_pj.pt()>30.0 && fabs(v.Eta()) <= EtaThresh){
         sjets.push_back(this_pj);
         ijets.push_back(idirty);
         csvs.push_back(0.);
@@ -937,7 +938,7 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       const TLorentzVector &this_lv = jets_corr_p4().at(jet);
       const PseudoJet this_pj(this_lv.Px(), this_lv.Py(), this_lv.Pz(), this_lv.E());
 
-      if(this_pj.pt()>30.0){
+      if(this_pj.pt()>30.0 && fabs(this_lv.Eta()) <= EtaThresh){
         sjets.push_back(this_pj);
         ijets.push_back(idirty);
         csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));

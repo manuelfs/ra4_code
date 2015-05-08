@@ -596,6 +596,8 @@ vector<TLorentzVector> & phys_objects::jets_corr_p4(){
 
 void phys_objects::CorrectJets() const{
   if(set_jets_) return;
+
+  bool do_metcorr(false); // For now we don't correct MET
   jets_corr_p4_.clear();
   int version = GetVersion();
   TLorentzVector corr_p4, miniaod_p4;
@@ -614,7 +616,7 @@ void phys_objects::CorrectJets() const{
       jet_corrector_->setRho(fixedGridRhoFastjetAll());
 
       corr_p4 *= jet_corrector_->getCorrection();
-      if(miniaod_p4.Pt() > 10) {
+      if(miniaod_p4.Pt() > 10 && do_metcorr) {
 	METx += miniaod_p4.Px();
 	METy += miniaod_p4.Py();
 	METx -= corr_p4.Px();
@@ -624,10 +626,15 @@ void phys_objects::CorrectJets() const{
     jets_corr_p4_.push_back(corr_p4);
   } // Loop over jets
 
-  float correctedMET = sqrt(METx*METx + METy*METy);
-  float correctedMETPhi = atan2(METy,METx);
-  met_corr_ = correctedMET;
-  met_phi_corr_ = TVector2::Phi_mpi_pi(correctedMETPhi); 
+  if(do_metcorr){
+    float correctedMET = sqrt(METx*METx + METy*METy);
+    float correctedMETPhi = atan2(METy,METx);
+    met_corr_ = correctedMET;
+    met_phi_corr_ = TVector2::Phi_mpi_pi(correctedMETPhi); 
+  } else {
+    met_corr_ = mets_et()->at(0);
+    met_phi_corr_ = mets_phi()->at(0); 
+  }
   set_jets_ = true;
 }
 
