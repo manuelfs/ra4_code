@@ -192,6 +192,15 @@ std::vector<float> jets_gen_pt
 std::vector<float> jets_parton_pt
 std::vector<int>   jets_isr_code
 
+int nbadjets;
+
+std::vector<float> badjets_pt;
+std::vector<float> badjets_eta;
+std::vector<float> badjets_phi;
+std::vector<float> badjets_m;
+std::vector<float> badjets_id;
+std::vector<bool> badjets_islep;
+
 int ngenjets
 
 std::vector<float> genjets_pt

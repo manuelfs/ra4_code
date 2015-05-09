@@ -556,6 +556,21 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
 
+    map<size_t,vector<size_t> > mu_matches, el_matches;
+    GetMatchedLeptons(sig_muons, sig_electrons, mu_matches, el_matches);
+    for(unsigned ijet(0); ijet<jets_corr_p4().size(); ijet++) {
+      if (jets_corr_p4().at(ijet).Pt()<=30.) continue;
+      if (fabs(jets_corr_p4().at(ijet).Eta())>5.) continue;
+      if (IsBasicJet(ijet)) continue;
+      tree.badjets_pt().push_back(jets_corr_p4().at(ijet).Pt());
+      tree.badjets_eta().push_back(jets_corr_p4().at(ijet).Eta());
+      tree.badjets_phi().push_back(jets_corr_p4().at(ijet).Phi());
+      tree.badjets_m().push_back(jets_corr_p4().at(ijet).M());
+      tree.badjets_id().push_back(jets_parton_Id()->at(ijet));
+      tree.badjets_islep().push_back((mu_matches.find(ijet) != mu_matches.end()) || (el_matches.find(ijet) != el_matches.end()));
+    } // Loop over jets
+    tree.nbadjets() = tree.badjets_pt().size();
+
     tree.ngenjets() = 0;
     tree.ht_isr_tru() = 0.;
     tree.gen_ht() = 0.;
