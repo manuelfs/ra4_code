@@ -12,6 +12,7 @@
 #include "TVector3.h"
 #include "TVector2.h"
 #include "TFile.h"
+#include "TROOT.h"
 
 #include "fastjet/ClusterSequence.hh"
 
@@ -894,12 +895,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   TString model = model_params()->c_str();
   TString commit = RemoveTrailingNewlines(execute("git rev-parse HEAD"));
   TString type = tree.Type();
+  TString root_version = gROOT->GetVersion();
+  TString root_tutorial_dir = gROOT->GetTutorialsDir();
   TTree treeglobal("treeglobal", "treeglobal");
   treeglobal.Branch("nev_file", &num_entries);
   treeglobal.Branch("nev_sample", &num_total_entries);
   treeglobal.Branch("commit", &commit);
   treeglobal.Branch("model", &model);
   treeglobal.Branch("type", &type);
+  treeglobal.Branch("root_version", &root_version);
+  treeglobal.Branch("root_tutorial_dir", &root_tutorial_dir);
   treeglobal.Fill();
   treeglobal.Write();
   out_file.Close();
