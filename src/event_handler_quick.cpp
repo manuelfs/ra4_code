@@ -53,7 +53,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.event() = event();
     tree.lumiblock() = lumiblock();
     tree.run() = run();
-    tree.weight() = weight()*xsec*luminosity / static_cast<double>(num_total_entries);
+    tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
 
     tree.npv() = Npv();
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
