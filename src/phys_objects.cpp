@@ -70,28 +70,28 @@ void phys_objects::GetEntry(const long entry){
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////  MUONS  ////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> phys_objects::GetMuons(bool doSignal) const {
+vector<int> phys_objects::GetMuons(bool doSignal, bool mini) const {
   vector<int> muons;
   for(unsigned index=0; index<mus_pt()->size(); index++)
     if(doSignal){
-      if(IsSignalMuon(index)) muons.push_back(index);
+      if(IsSignalMuon(index, mini)) muons.push_back(index);
     }else{
-      if(IsVetoMuon(index)) muons.push_back(index);
+      if(IsVetoMuon(index, mini)) muons.push_back(index);
     }
   return muons;
 }
 
-bool phys_objects::IsSignalMuon(unsigned imu) const {
+bool phys_objects::IsSignalMuon(unsigned imu, bool mini) const {
   if(imu >= mus_pt()->size()) return false;
   return IsSignalIdMuon(imu)
-    && 0.2>GetMuonIsolation(imu)
+    && 0.2>GetMuonIsolation(imu, mini)
     && mus_pt()->at(imu)>MinSignalLeptonPt;
 }
 
-bool phys_objects::IsVetoMuon(unsigned imu) const{
+bool phys_objects::IsVetoMuon(unsigned imu, bool mini) const{
   if(imu >= mus_pt()->size()) return false;
   return IsVetoIdMuon(imu)
-    && 0.2>GetMuonIsolation(imu)
+    && 0.2>GetMuonIsolation(imu, mini)
     && mus_pt()->at(imu)>MinVetoLeptonPt;
 }
 
@@ -185,28 +185,41 @@ float phys_objects::GetMuonIsolation(unsigned imu, bool mini) const {
 /////////////////////////////////////////////////////////////////////////
 //////////////////////////////  ELECTRONS  //////////////////////////////
 /////////////////////////////////////////////////////////////////////////
-vector<int> phys_objects::GetElectrons(bool doSignal) const {
+vector<int> phys_objects::GetElectrons(bool doSignal, bool mini) const {
   vector<int> electrons;
   for(unsigned index=0; index<els_pt()->size(); index++)
     if(doSignal){
-      if(IsSignalElectron(index)) electrons.push_back(index);
+      if(IsSignalElectron(index, mini)) electrons.push_back(index);
     }else{
-      if(IsVetoElectron(index)) electrons.push_back(index);
+      if(IsVetoElectron(index, mini)) electrons.push_back(index);
     }
   return electrons;
 }
 
-bool phys_objects::IsSignalElectron(unsigned iel) const {
+bool phys_objects::IsSignalElectron(unsigned iel, bool mini) const {
   if(iel >= els_pt()->size()) return false;
+  double iso_cut(0.1);
+  if (!mini) {
+    //can't get this from IsSignalIdElectron since we use kMedium Id but kVeto iso
+    bool barrel = false; 
+    if(els_isEB()->at(iel) && !els_isEE()->at(iel)){
+      barrel = true;
+    }else if(els_isEE()->at(iel) && !els_isEB()->at(iel)){
+      barrel = false;
+    }else{
+      return false;
+    }
+    iso_cut = barrel ? 0.164369 : 0.212604; 
+  }
   return IsSignalIdElectron(iel, false)
-    && 0.1>GetElectronIsolation(iel)
+    && iso_cut>GetElectronIsolation(iel, mini)
     && els_pt()->at(iel)>=MinSignalLeptonPt;
 }
 
-bool phys_objects::IsVetoElectron(unsigned iel) const {
+bool phys_objects::IsVetoElectron(unsigned iel, bool mini) const {
   if(iel >= els_pt()->size()) return false;
   return IsVetoIdElectron(iel, false)
-    && 0.1>GetElectronIsolation(iel)
+    && 0.1>GetElectronIsolation(iel, mini)
     && els_pt()->at(iel)>=MinVetoLeptonPt;
 }
 

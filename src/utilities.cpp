@@ -12,6 +12,8 @@
 #include <string>
 #include <stdexcept>
 
+#include "fastjet/PseudoJet.hh"
+
 #include "TString.h"
 #include "TSystemDirectory.h"
 #include "TSystemFile.h"
@@ -23,6 +25,7 @@
 #include "TGraph.h"
 
 using namespace std;
+using namespace fastjet;
 
 // Returns cross section of sample in pb
 float cross_section(const TString &file){
@@ -294,4 +297,13 @@ vector<double> LinearSpacing(size_t npts, double low, double high){
     }
   }
   return pts;
+}
+
+bool greater_m(const PseudoJet &a, const PseudoJet &b){
+  return a.m() > b.m();
+}
+
+vector<PseudoJet> sorted_by_m(vector<PseudoJet> pjs){
+  sort(pjs.begin(), pjs.end(), greater_m);
+  return pjs;
 }

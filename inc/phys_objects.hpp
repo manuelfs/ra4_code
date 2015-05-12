@@ -69,10 +69,10 @@ public:
   virtual void GetEntry(const long entry);
 
   // Muons
-  std::vector<int> GetMuons(bool doSignal = true) const;
+  std::vector<int> GetMuons(bool doSignal = true, bool mini = true) const;
 
-  bool IsSignalMuon(unsigned imu) const;
-  bool IsVetoMuon(unsigned imu) const;
+  bool IsSignalMuon(unsigned imu, bool mini = true) const;
+  bool IsVetoMuon(unsigned imu, bool mini = true) const;
   bool IsSignalIdMuon(unsigned iel) const;
   bool IsVetoIdMuon(unsigned iel) const;
 
@@ -81,10 +81,10 @@ public:
   float GetMuonIsolation(unsigned imu, bool mini=true) const;
 
   // Electrons
-  std::vector<int> GetElectrons(bool doSignal = true) const;
+  std::vector<int> GetElectrons(bool doSignal = true, bool mini = true) const;
 
-  bool IsSignalElectron(unsigned iel) const;
-  bool IsVetoElectron(unsigned iel) const;
+  bool IsSignalElectron(unsigned iel, bool mini = true) const;
+  bool IsVetoElectron(unsigned iel, bool mini = true) const;
   bool IsSignalIdElectron(unsigned iel, bool do_iso=false) const;
   bool IsVetoIdElectron(unsigned iel, bool do_iso=false) const;
 

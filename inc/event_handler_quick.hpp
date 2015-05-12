@@ -39,15 +39,7 @@ public:
                     const std::vector<bool> &to_clean = std::vector<bool>(0));
 
   void SetMiniIso(small_tree_quick &tree, int ilep, int ParticleType);
-
-  void WriteTks(small_tree_quick &tree,
-                const std::vector<mc_particle> &parts,
-                const std::vector<size_t> &moms,
-                short lepmax_chg,
-                short lepmax_chg_reliso,
-                const std::vector<size_t> &sigleps,
-                size_t primary_lep,
-                size_t primary_lep_reliso);
+  
   unsigned TypeCode(const std::vector<mc_particle> &parts,
                     const std::vector<size_t> &moms);
   float GetMinMTWb(const std::vector<int> &good_jets,
@@ -56,8 +48,5 @@ public:
                    const bool use_W_mass) const;
 
 };
-
-bool greater_m(const fastjet::PseudoJet &a, const fastjet::PseudoJet &b);
-std::vector<fastjet::PseudoJet> sorted_by_m(std::vector<fastjet::PseudoJet> pjs);
 
 #endif
