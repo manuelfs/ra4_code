@@ -99,7 +99,7 @@ int main(int argc, char *argv[]){
   event_handler tHandler(inFilename, type);
   TChain chain("cfA/eventB");
   chain.Add(inFilename.c_str());
-  int corrected_entries =tHandler.TotalEntries()-chain.GetEntries("weight<=0");
+  int corrected_entries =chain.GetEntries("weight>0")-chain.GetEntries("weight<=0");
   if(nfiles>0){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)
