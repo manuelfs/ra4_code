@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
   }
 
   TString outFilename(inFilename), folder(inFilename);
-  TString all_sample_files(inFilename), outfolder("out/");
+  TString outfolder("out/");
   TString prefix = "small_"+type+"_";
 
   vector<TString> files;
@@ -64,10 +64,14 @@ int main(int argc, char *argv[]){
   // which produces files named cfA_XX.root
 
   int len(outFilename.Length());
+
   if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
   outFilename.Remove(0,outFilename.Last('/')+1);
-  if(inFilename.find(".root")==std::string::npos){
+  enum Mode{dir_full, dir_part, one_file, unknown};
+  Mode mode = unknown;
+  if(!Contains(inFilename, ".root")){
     if(nfiles>0){ // Doing sample in various parts
+      mode = dir_part;
       files = dirlist(inFilename, ".root");
       ntotfiles = static_cast<int>(files.size());
       if(ini > ntotfiles) {
@@ -79,34 +83,46 @@ int main(int argc, char *argv[]){
       outFilename += "_batch"; outFilename += nbatch; outFilename += ".root";
 
       if(end > ntotfiles) end = ntotfiles;
-      // Finding total number of entries in sample
-      all_sample_files += "/*.root";
-
-      TChain totsample("cfA/eventA");
-      totsample.Add(all_sample_files);
-      Ntotentries = totsample.GetEntries();
     }else{
+      mode = dir_full;
       inFilename = inFilename + "/*.root";
       outFilename = outfolder+prefix+outFilename+".root";
     }
   } else {
+    mode = one_file;
     outFilename = outfolder+prefix+outFilename;
     nfiles = -1;
   }
 
   cout<<"Opening "<<inFilename<<endl;
 
-  event_handler tHandler(inFilename, type);
   TChain chain("cfA/eventB");
-  chain.Add(inFilename.c_str());
-  int corrected_entries =chain.GetEntries("weight>0")-chain.GetEntries("weight<=0");
-  if(nfiles>0){
+  switch(mode){
+  case dir_part:
+    chain.Add((inFilename+"/*.root").c_str());
+    for(int ifile(ini+1); ifile < end; ifile++){
+      chain.Add((folder+ "/" + files[ifile]).Data());
+    }
+    break;
+  case dir_full:
+  case one_file:
+  case unknown:
+  default:
+    chain.Add(inFilename.c_str());
+  }
+
+  event_handler tHandler(inFilename, type);
+  if(mode==dir_part){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
   }
-  if(Nentries > corrected_entries || Nentries < 0) Nentries = corrected_entries;
-  if(nfiles<=0) Ntotentries = Nentries;
+  if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
+  if((mode==one_file || mode==dir_full) && Nentries != tHandler.TotalEntries()){
+    Ntotentries = Nentries;
+  }else{
+    Ntotentries = chain.GetEntries("weight>0")-chain.GetEntries("weight<0");
+  }
   if(total_entries_override > 0) Ntotentries = total_entries_override;
 
   time(&curTime);
