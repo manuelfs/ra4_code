@@ -69,6 +69,7 @@ int main(int argc, char *argv[]){
   outFilename.Remove(0,outFilename.Last('/')+1);
   enum Mode{dir_full, dir_part, one_file, unknown};
   Mode mode = unknown;
+  std::string all_sample_files = inFilename + "/*.root";
   if(!Contains(inFilename, ".root")){
     if(nfiles>0){ // Doing sample in various parts
       mode = dir_part;
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]){
   TChain chain("cfA/eventB");
   switch(mode){
   case dir_part:
-    chain.Add((inFilename+"/*.root").c_str());
+    chain.Add(all_sample_files.c_str());
     for(int ifile(ini+1); ifile < end; ifile++){
       chain.Add((folder+ "/" + files[ifile]).Data());
     }
@@ -109,13 +110,15 @@ int main(int argc, char *argv[]){
   case unknown:
   default:
     chain.Add(inFilename.c_str());
+    break;
   }
 
   event_handler tHandler(inFilename, type);
   if(mode==dir_part){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
-    for(int ifile(ini+1); ifile < end; ifile++)
+    for(int ifile(ini+1); ifile < end; ifile++){
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
+    }
   }
   if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
   if((mode==one_file || mode==dir_full) && Nentries != tHandler.TotalEntries()){
@@ -124,7 +127,6 @@ int main(int argc, char *argv[]){
     Ntotentries = chain.GetEntries("weight>0")-chain.GetEntries("weight<0");
   }
   if(total_entries_override > 0) Ntotentries = total_entries_override;
-
   time(&curTime);
   cout<<"Getting started takes "<<difftime(curTime,startTime)<<" seconds. "
       <<"Making reduced tree with "<<Nentries<<" entries out of "<<tHandler.TotalEntries()
