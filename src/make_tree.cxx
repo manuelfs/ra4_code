@@ -97,12 +97,15 @@ int main(int argc, char *argv[]){
   cout<<"Opening "<<inFilename<<endl;
 
   event_handler tHandler(inFilename, type);
+  TChain chain("cfA/eventB");
+  chain.Add(inFilename.c_str());
+  int corrected_entries =tHandler.TotalEntries()-chain.GetEntries("weight<=0");
   if(nfiles>0){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++)
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
   }
-  if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
+  if(Nentries > corrected_entries || Nentries < 0) Nentries = corrected_entries;
   if(nfiles<=0) Ntotentries = Nentries;
   if(total_entries_override > 0) Ntotentries = total_entries_override;
 
