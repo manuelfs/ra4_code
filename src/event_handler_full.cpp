@@ -53,7 +53,7 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
     tree.event() = event();
     tree.lumiblock() = lumiblock();
     tree.run() = run();
-    tree.weight() = weight()*xsec*luminosity / static_cast<double>(num_total_entries);
+    tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
 
     tree.npv() = Npv();
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
@@ -237,12 +237,12 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
     float min_top_m(fltmax), min_topb_m(fltmax);
     for(size_t imc = 0; imc < mc_doc_id()->size(); ++imc){
       if(mc_doc_id()->at(imc) == 6 && mc_doc_mass()->at(imc) < min_top_m){
-  tree.tru_top_pt() = mc_doc_pt()->at(imc);
-  min_top_m = mc_doc_mass()->at(imc);
+        tree.tru_top_pt() = mc_doc_pt()->at(imc);
+        min_top_m = mc_doc_mass()->at(imc);
       }
       if(mc_doc_id()->at(imc) == -6 && mc_doc_mass()->at(imc) < min_topb_m){
-  tree.tru_topb_pt() = mc_doc_pt()->at(imc);
-  min_topb_m = mc_doc_mass()->at(imc);
+        tree.tru_topb_pt() = mc_doc_pt()->at(imc);
+        min_topb_m = mc_doc_mass()->at(imc);
       }
     } // Loop over mc_doc
 
@@ -821,8 +821,8 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
     vector<bool> alljets_islep;
     for(unsigned ijet(0); ijet<jets_corr_p4().size(); ijet++) {
       alljets.push_back(static_cast<int>(ijet));
-      alljets_islep.push_back(!(find(good_jets.begin(), good_jets.end(), static_cast<int>(ijet)) 
-        != good_jets.end()));      
+      alljets_islep.push_back(!(find(good_jets.begin(), good_jets.end(), static_cast<int>(ijet))
+                                != good_jets.end()));
     }
     WriteFatJets(tree.nfjets(), tree.mj(),
                  tree.fjets_pt(), tree.fjets_eta(),
@@ -914,21 +914,21 @@ event_handler_full::~event_handler_full(){
 }
 
 void event_handler_full::WriteFatJets(int &nfjets,
-                                       float &mj,
-                                       vector<float> &fjets_pt,
-                                       vector<float> &fjets_eta,
-                                       vector<float> &fjets_phi,
-                                       vector<float> &fjets_m,
-                                       vector<int> &fjets_nconst,
-                                       vector<float> &fjets_sumcsv,
-                                       vector<float> &fjets_poscsv,
-                                       vector<int> &fjets_btags,
-                                       vector<int> &jets_fjet_index,
-                                       double radius,
-                                       const vector<int> &jets,
-                                       bool gen,
-                                       bool clean,
-                                       const vector<bool> &to_clean){
+                                      float &mj,
+                                      vector<float> &fjets_pt,
+                                      vector<float> &fjets_eta,
+                                      vector<float> &fjets_phi,
+                                      vector<float> &fjets_m,
+                                      vector<int> &fjets_nconst,
+                                      vector<float> &fjets_sumcsv,
+                                      vector<float> &fjets_poscsv,
+                                      vector<int> &fjets_btags,
+                                      vector<int> &jets_fjet_index,
+                                      double radius,
+                                      const vector<int> &jets,
+                                      bool gen,
+                                      bool clean,
+                                      const vector<bool> &to_clean){
   vector<PseudoJet> sjets(0);
   vector<int> ijets(0);
   vector<float> csvs(0);
@@ -1014,13 +1014,13 @@ void event_handler_full::WriteFatJets(int &nfjets,
 }
 
 void event_handler_full::WriteTks(small_tree_full &tree,
-                                   const vector<mc_particle> &parts,
-                                   const vector<size_t> &moms,
-                                   short lepmax_chg,
-                                   short lepmax_chg_reliso,
-                                   const vector<size_t> &sigleps,
-                                   size_t primary_lep,
-                                   size_t primary_lep_reliso){
+                                  const vector<mc_particle> &parts,
+                                  const vector<size_t> &moms,
+                                  short lepmax_chg,
+                                  short lepmax_chg_reliso,
+                                  const vector<size_t> &sigleps,
+                                  size_t primary_lep,
+                                  size_t primary_lep_reliso){
   tree.ntks() = 0;
   tree.ntks_chg() = 0;
   tree.ntks_chg_reliso() = 0;
@@ -1033,7 +1033,7 @@ void event_handler_full::WriteTks(small_tree_full &tree,
     bool islep = ((absid == 11) || (absid == 13));
     if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
         (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep)) ||
-  fabs(pfcand_eta()->at(cand))>2.5) continue;
+        fabs(pfcand_eta()->at(cand))>2.5) continue;
     TLorentzVector vcand;
     vcand.SetPtEtaPhiE(pfcand_pt()->at(cand), pfcand_eta()->at(cand),
                        pfcand_phi()->at(cand), pfcand_energy()->at(cand));
@@ -1077,17 +1077,35 @@ void event_handler_full::WriteTks(small_tree_full &tree,
 
     SetMiniIso(tree,cand,0);
 
-    if(abs(tree.tks_id().back()) == 11 || abs(tree.tks_id().back()) == 13){
-      if(tree.tks_pt().back()>5. && tree.tks_r03_ch().back()<0.2){
-        ++(tree.ntks());
-        if(Sign(tree.tks_id().back())*lepmax_chg>0) ++(tree.ntks_chg());
-        if(Sign(tree.tks_id().back())*lepmax_chg_reliso>0) ++(tree.ntks_chg_reliso());
+    if(!tree.tks_is_primary().back() && tree.tks_mt().back()<90.){
+      bool pass_iso, pass_pt;
+      short chg_mult;
+      switch(abs(tree.tks_id().back())){
+      case 11:
+        pass_pt = (tree.tks_pt().back() > 5.);
+	pass_iso = (tree.tks_pt().back()*(tree.tks_mini_ch().back()+tree.tks_mini_ne().back()) < 10.);
+	chg_mult = -1;
+	break;
+      case 13:
+	pass_pt = (tree.tks_pt().back() > 5.);
+	pass_iso = (tree.tks_pt().back()*(tree.tks_mini_ch().back()+tree.tks_mini_ne().back()) < 30.);
+	chg_mult = -1;
+	break;
+      default:
+	pass_pt = (tree.tks_pt().back() > 10.);
+	pass_iso = (tree.tks_pt().back()*tree.tks_mini_ch().back() < 2.5);
+        chg_mult = 1;
+        break;
       }
-    }else{
-      if(tree.tks_pt().back()>10. && tree.tks_r03_ch().back()<0.1){
+
+      if(pass_pt && pass_iso){
         ++(tree.ntks());
-        if(Sign(tree.tks_id().back())*lepmax_chg<0) ++(tree.ntks_chg());
-        if(Sign(tree.tks_id().back())*lepmax_chg_reliso<0) ++(tree.ntks_chg_reliso());
+        if(Sign(tree.tks_id().back())*lepmax_chg*chg_mult<0){
+          ++(tree.ntks_chg());
+        }
+        if(Sign(tree.tks_id().back())*lepmax_chg_reliso*chg_mult<0){
+          ++(tree.ntks_chg_reliso());
+        }
       }
     }
   } // Loop over pfcands
@@ -1130,9 +1148,9 @@ void event_handler_full::SetMiniIso(small_tree_full &tree, int ilep, int Particl
 }
 
 float event_handler_full::GetMinMTWb(const vector<int> &good_jets,
-                                      const double pt_cut,
-                                      const double bTag_req,
-                                      const bool use_W_mass) const{
+                                     const double pt_cut,
+                                     const double bTag_req,
+                                     const bool use_W_mass) const{
   float min_mT(fltmax);
   for (uint ijet(0); ijet<good_jets.size(); ijet++) {
     uint jet = good_jets[ijet];
@@ -1147,7 +1165,7 @@ float event_handler_full::GetMinMTWb(const vector<int> &good_jets,
 }
 
 unsigned event_handler_full::TypeCode(const vector<mc_particle> &parts,
-                                       const vector<size_t> &moms){
+                                      const vector<size_t> &moms){
   const string sample_name = SampleName();
   unsigned sample_code = 0xF;
   if(Contains(sample_name, "SMS")){
