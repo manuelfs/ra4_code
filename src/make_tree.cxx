@@ -101,9 +101,6 @@ int main(int argc, char *argv[]){
   switch(mode){
   case dir_part:
     chain.Add(all_sample_files.c_str());
-    for(int ifile(ini+1); ifile < end; ifile++){
-      chain.Add((folder+ "/" + files[ifile]).Data());
-    }
     break;
   case dir_full:
   case one_file:
