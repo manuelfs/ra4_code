@@ -203,8 +203,25 @@ public:
                        double pt_cut, double csv_cut,
                        size_t &lead, size_t &sub);
 
-  static float MinJetPt,MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
+  static float MinJetPt, MinRA2bJetPt, MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
   static float bad_val;
+
+  template<class T>
+  T chooseVal(CutLevel threshold, T valVeto, T valLoose, T valMedium, T valTight) const{
+   switch(threshold){
+   default:
+   case kVeto:
+     return valVeto;
+   case kLoose:
+     return valLoose;
+   case kMedium:
+     return valMedium;
+   case kTight:
+     return valTight;
+   }
+   return valVeto;
+ }
+
 
 private:
   FactorizedJetCorrector *jet_corrector_;

@@ -282,6 +282,18 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                  tree.fjets_btags(), tree.jets_fjet_index(),
                  1.2, alljets);
 
+    /////////////////////////////////  MC  ///////////////////////////////
+    std::vector<int> mc_mus, mc_els, mc_taush, mc_tausl;
+    GetTrueLeptons(mc_els, mc_mus, mc_taush, mc_tausl);
+    tree.ntrumus()   = mc_mus.size();
+    tree.ntruels()   = mc_els.size();
+    tree.ntrutaush() = mc_taush.size();
+    tree.ntrutausl() = mc_tausl.size();
+    tree.ntruleps()  = tree.ntrumus()+tree.ntruels()+tree.ntrutaush()+tree.ntrutausl();
+
+    WriteTks(tree, lepmax_chg, primary_lep);
+ 
+
     tree.Fill();
   }
 
@@ -304,6 +316,68 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   treeglobal.Write();
   out_file.Close();
 }
+
+
+void event_handler_quick::WriteTks(small_tree_quick &tree,
+                                  short lepmax_chg,
+                                  size_t primary_lep){
+  double bignum = std::numeric_limits<double>::max();
+  tree.ntks_chg() = 0;
+  tree.ntks_chg_mini() = 0;
+  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
+    if(is_nan(pfcand_pt()->at(cand))
+       || is_nan(pfcand_eta()->at(cand))
+       || is_nan(pfcand_phi()->at(cand))
+       || is_nan(pfcand_energy()->at(cand))) continue;
+    int absid = abs(TMath::Nint(pfcand_pdgId()->at(cand)));
+    bool islep = ((absid == 11) || (absid == 13));
+    if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
+        (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep)) ||
+        fabs(pfcand_eta()->at(cand))>2.5) continue;
+
+    int itks_id(TMath::Nint(pfcand_pdgId()->at(cand)));
+    float itks_pt(pfcand_pt()->at(cand));
+    float itks_mini_ch(GetMiniIsolation(0, cand, 0.05, bignum, false, false, true));
+    float itks_mini_ne(GetMiniIsolation(0, cand, 0.05, bignum, true, true, false));
+    float itks_mini_tr_ch(GetMiniIsolation(0, cand, 0.05, 0.2, false, false, true));
+    float itks_mini_tr_ne(GetMiniIsolation(0, cand, 0.05, 0.2, true, true, false));
+    float itks_mt(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
+			met_corr(), met_phi_corr()));
+
+    bool itks_is_primary(cand==primary_lep?true:false);
+
+    if(!itks_is_primary && itks_mt<90.){
+      bool pass_iso, pass_iso_tr, pass_pt;
+      short chg_mult;
+      switch(abs(itks_id)){
+      case 11:
+        pass_pt = (itks_pt > 5.);
+	pass_iso = (itks_pt*(itks_mini_ch+itks_mini_ne) < 10.);
+	pass_iso_tr = (itks_pt*(itks_mini_tr_ch+itks_mini_tr_ne) < 10.);
+	chg_mult = -1;
+	break;
+      case 13:
+	pass_pt = (itks_pt > 5.);
+	pass_iso = (itks_pt*(itks_mini_ch+itks_mini_ne) < 30.);
+	pass_iso_tr = (itks_pt*(itks_mini_tr_ch+itks_mini_tr_ne) < 30.);
+	chg_mult = -1;
+	break;
+      default:
+	pass_pt = (itks_pt > 10.);
+	pass_iso = (itks_pt*itks_mini_ch < 2.5);
+	pass_iso_tr = (itks_pt*itks_mini_tr_ch < 2.5);
+        chg_mult = 1;
+        break;
+      }
+
+      if(pass_pt && Sign(itks_id)*lepmax_chg*chg_mult<0){
+        if(pass_iso) ++(tree.ntks_chg());
+        if(pass_iso_tr) ++(tree.ntks_chg_mini());        
+      }
+    } // If it is primary and mT < 90
+  } // Loop over pfcands
+}
+
 
 event_handler_quick::~event_handler_quick(){
 }
@@ -471,3 +545,79 @@ unsigned event_handler_quick::TypeCode(const vector<mc_particle> &parts,
   if(ntaul > 0xF) ntaul = 0xF;
   return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
 }
+
+// MC lepton counting without building the whole tree
+void event_handler_quick::GetTrueLeptons(vector<int> &true_electrons, vector<int> &true_muons,
+				   vector<int> &true_had_taus, vector<int> &true_lep_taus) {
+  true_electrons.clear();
+  true_muons.clear();
+  true_had_taus.clear();
+  true_lep_taus.clear();
+  bool tau_to_3tau(false);
+  vector<int> lep_from_tau;
+  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
+    const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
+    const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
+    const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
+    const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+    if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
+      if (mom == 24) { // Lep from W
+	if (id==11) true_electrons.push_back(i);
+	else if (id==13) true_muons.push_back(i);
+      } else if(!tau_to_3tau) { // Lep from tau, check for Brem
+	uint nlep(1);
+	for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	  const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	  const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	  if(momb==15 && (idb==11 || idb==13)) nlep++;
+	  if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	    if(nlep==1){
+	      // if (id==11) true_electrons.push_back(i); // If we want to count isolated leptons
+	      // else if (id==13) true_muons.push_back(i);
+	      lep_from_tau.push_back(i);
+	    }
+	    i = j-1; // Moving index to first particle after tau daughters
+	    break;
+	  }
+	} // Loop over tau daughters
+      } // if lepton comes from tau
+    }
+    if(id == 15 && mom == 24){
+      true_had_taus.push_back(i);
+    }
+    // Counting number of tau->tautautau
+    if((id == 15) && (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24)))){
+      uint nlep(1);
+      for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	if(momb==15 && idb==15) nlep++;
+	if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	  if(nlep>1) tau_to_3tau = true;
+	  i = j-1; // Moving index to first particle after tau daughters
+	  break;
+	}
+      } // Loop over tau daughters
+    } // if tau comes from prompt tau
+  } // Loop over mc_doc
+  // Removing leptonic taus from tau list by finding smallest DeltaR(lep,tau)
+  for(unsigned ind = 0; ind < lep_from_tau.size(); ++ind){
+    float minDr(9999.), lepEta(mc_doc_eta()->at(lep_from_tau[ind])), lepPhi(mc_doc_phi()->at(lep_from_tau[ind]));
+    int imintau(-1);
+    for(unsigned itau=0; itau < true_had_taus.size(); itau++){
+      if(mc_doc_mother_id()->at(lep_from_tau[ind]) != mc_doc_id()->at(true_had_taus[itau])) continue;
+      float tauEta(mc_doc_eta()->at(true_had_taus[itau])), tauPhi(mc_doc_phi()->at(true_had_taus[itau]));
+      float tauDr(dR(tauEta,lepEta, tauPhi,lepPhi));
+      if(tauDr < minDr) {
+	minDr = tauDr;
+	imintau = itau;
+      }
+    }
+    if(imintau>=0) {
+      true_lep_taus.push_back(imintau);
+      true_had_taus.erase(true_had_taus.begin()+imintau);
+    } else cout<<"Not found a tau match for lepton "<<ind<<endl; // Should not happen
+  } // Loop over leptons from taus
+  return;
+}
+

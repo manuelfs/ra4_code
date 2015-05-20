@@ -46,6 +46,9 @@ public:
                    const double pt_cut,
                    const double bTag_req,
                    const bool use_W_mass) const;
+  void GetTrueLeptons(std::vector<int> &true_electrons, std::vector<int> &true_muons,
+		      std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
+  void WriteTks(small_tree_quick &tree, short lepmax_chg, size_t primary_lep);
 
 };
 

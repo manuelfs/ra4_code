@@ -29,9 +29,18 @@ float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
 
+##################   MC   ################
+int ntruleps
+int ntrumus
+int ntruels
+int ntrutaush
+int ntrutausl
+
 ##################   Leptons   ################
 int nleps
 int nleps_reliso
+int ntks_chg
+int ntks_chg_mini
 
 int nmus
 int nvmus

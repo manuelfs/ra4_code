@@ -35,6 +35,7 @@ namespace{
 }
 
 float phys_objects::MinJetPt = 40.0;
+float phys_objects::MinRA2bJetPt = 30.0;
 float phys_objects::MinSignalLeptonPt = 20.0;
 float phys_objects::MinVetoLeptonPt = 10.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
@@ -305,58 +306,34 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
       break;
     }
   }else{
-    //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Working_points_for_PHYS14_sample
-    switch(threshold){
-    default:
-    case kVeto:
-      ieta_cut        = barrel ? 0.011100 : 0.033987;
-      deta_cut        = barrel ? 0.016315 : 0.010671;
-      dphi_cut        = barrel ? 0.252044 : 0.245263;
-      hovere_cut      = barrel ? 0.345843 : 0.134691;
-      reliso_cut      = barrel ? 0.164369 : 0.212604;
-      ooeminusoop_cut = barrel ? 0.248070 : 0.157160;
-      d0_cut          = barrel ? 0.060279 : 0.273097;
-      dz_cut          = barrel ? 0.800538 : 0.885860;
-      misshits_cut    = barrel ? 2        : 3;
-      req_conv_veto   = barrel ? true     : true;
-      break;
-    case kLoose:
-      ieta_cut        = barrel ? 0.010557 : 0.032602;
-      deta_cut        = barrel ? 0.012442 : 0.010654;
-      dphi_cut        = barrel ? 0.072624 : 0.145129;
-      hovere_cut      = barrel ? 0.121476 : 0.131862;
-      reliso_cut      = barrel ? 0.120026 : 0.162914;
-      ooeminusoop_cut = barrel ? 0.221803 : 0.142283;
-      d0_cut          = barrel ? 0.022664 : 0.097358;
-      dz_cut          = barrel ? 0.173670 : 0.198444;
-      misshits_cut    = barrel ? 1        : 1;
-      req_conv_veto   = barrel ? true     : true;
-      break;
-    case kMedium:
-      ieta_cut        = barrel ? 0.010399 : 0.029524;
-      deta_cut        = barrel ? 0.007641 : 0.009285;
-      dphi_cut        = barrel ? 0.032643 : 0.042447;
-      hovere_cut      = barrel ? 0.060662 : 0.104263;
-      reliso_cut      = barrel ? 0.097213 : 0.116708;
-      ooeminusoop_cut = barrel ? 0.153897 : 0.137468;
-      d0_cut          = barrel ? 0.011811 : 0.051682;
-      dz_cut          = barrel ? 0.070775 : 0.180720;
-      misshits_cut    = barrel ? 1        : 1;
-      req_conv_veto   = barrel ? true     : true;
-      break;
-    case kTight:
-      ieta_cut        = barrel ? 0.010181 : 0.028766;
-      deta_cut        = barrel ? 0.006574 : 0.005681;
-      dphi_cut        = barrel ? 0.022868 : 0.032046;
-      hovere_cut      = barrel ? 0.037553 : 0.081902;
-      reliso_cut      = barrel ? 0.074355 : 0.090185;
-      ooeminusoop_cut = barrel ? 0.131191 : 0.106055;
-      d0_cut          = barrel ? 0.009924 : 0.027261;
-      dz_cut          = barrel ? 0.015310 : 0.147154;
-      misshits_cut    = barrel ? 1        : 1;
-      req_conv_veto   = barrel ? true     : true;
-      break;
+
+    //https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Working_points_for_PHYS14_sample
+    // Values from May 7th
+    if(barrel){
+      deta_cut        = chooseVal(threshold, 0.013625	, 0.009277	, 0.008925	, 0.006046);
+      dphi_cut        = chooseVal(threshold, 0.230374	, 0.094739	, 0.035973	, 0.028092);
+      ieta_cut        = chooseVal(threshold, 0.011586	, 0.010331	, 0.009996	, 0.009947);
+      hovere_cut      = chooseVal(threshold, 0.181130	, 0.093068	, 0.050537	, 0.045772);
+      d0_cut          = chooseVal(threshold, 0.094095	, 0.035904	, 0.012235	, 0.008790);
+      dz_cut          = chooseVal(threshold, 0.713070	, 0.075496	, 0.042020	, 0.021226);
+      ooeminusoop_cut = chooseVal(threshold, 0.295751	, 0.189968	, 0.091942	, 0.020118);
+      reliso_cut      = chooseVal(threshold, 0.158721	, 0.130136	, 0.107587	, 0.069537);
+      misshits_cut    = chooseVal(threshold,  2		,  1		,  1		,  1	  );
+      req_conv_veto   = chooseVal(threshold,  true	,  true		,  true		,  true	  );
+
+    } else {
+      deta_cut        = chooseVal(threshold,  0.011932	,  0.009833	,  0.007429	, 0.007057);
+      dphi_cut        = chooseVal(threshold,  0.255450	,  0.149934	,  0.067879	, 0.030159);
+      ieta_cut        = chooseVal(threshold,  0.031849	,  0.031838	,  0.030135	, 0.028237);
+      hovere_cut      = chooseVal(threshold,  0.223870	,  0.115754	,  0.086782	, 0.067778);
+      d0_cut          = chooseVal(threshold,  0.342293	,  0.099266	,  0.036719	, 0.027984);
+      dz_cut          = chooseVal(threshold,  0.953461	,  0.197897	,  0.138142	, 0.133431);
+      ooeminusoop_cut = chooseVal(threshold,  0.155501	,  0.140662	,  0.100683	, 0.098919);
+      reliso_cut      = chooseVal(threshold,  0.177032	,  0.163368	,  0.113254	, 0.078265);
+      misshits_cut    = chooseVal(threshold,  3		,  1		,  1		,  1	  );
+      req_conv_veto   = chooseVal(threshold,  true	,  true		,  true		,  true	  );
     }
+
   }
 
   const double d0 = els_d0dum()->at(iel)
@@ -476,24 +453,10 @@ double phys_objects::GetMiniIsolation(int particle_type, int ilep, double riso_m
   if(iso_r < riso_min) iso_r = riso_min;
   if(iso_r > riso_max) iso_r = riso_max;
 
-  // find the PF cands that matches the lepton
-  double drmin = numeric_limits<double>::max();
-  size_t match_index = static_cast<size_t>(-1);
-  for(size_t icand = 0; icand < pfcand_pt()->size(); ++icand){
-    if(is_nan(pfcand_eta()->at(icand))
-       || is_nan(pfcand_phi()->at(icand))) continue;
-    double dr = dR(pfcand_eta()->at(icand), lep_eta, pfcand_phi()->at(icand), lep_phi);
-    if(dr < drmin){
-      drmin = dr;
-      match_index = icand;
-    }
-  }
-
   double iso_ph = 0., iso_nh = 0., iso_ch = 0., iso_pu = 0.;
   // 11, 13, 22 for ele/mu/gamma, 211 for charged hadrons, 130 for neutral hadrons,
   // 1 and 2 for hadronic and em particles in HF
   for (size_t icand = 0; icand < pfcand_pt()->size(); icand++) {
-    if (icand==match_index) continue;
     if (abs(pfcand_pdgId()->at(icand))<7) continue;
     if(is_nan(pfcand_pt()->at(icand))
        || is_nan(pfcand_eta()->at(icand))
@@ -610,18 +573,21 @@ vector<TLorentzVector> & phys_objects::jets_corr_p4(){
 void phys_objects::CorrectJets() const{
   if(set_jets_) return;
 
-  bool do_metcorr(false); // For now we don't correct MET
+  //bool do_metcorr(false); // For now we don't correct MET
+  bool do_metcorr(true); 
   jets_corr_p4_.clear();
   int version = GetVersion();
-  TLorentzVector corr_p4, miniaod_p4;
+  if(version<78) do_metcorr = false; // This is to avoid rounding errors
+  TLorentzVector corr_p4, uncorr_p4, miniaod_p4;
   float METx = mets_et()->at(0)*cos(mets_phi()->at(0));
   float METy = mets_et()->at(0)*sin(mets_phi()->at(0));
   for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
     miniaod_p4.SetPtEtaPhiM(jets_pt()->at(ijet), jets_eta()->at(ijet),
 			    jets_phi()->at(ijet), jets_mass()->at(ijet));
+    uncorr_p4 = miniaod_p4*jets_corrFactorRaw()->at(ijet);
     corr_p4 = miniaod_p4;
     if(version>=78){
-      corr_p4 *= jets_corrFactorRaw()->at(ijet);
+      corr_p4 *= jets_corrFactorRaw()->at(ijet); // First, uncorrect it
 
       jet_corrector_->setJetEta(corr_p4.Eta());
       jet_corrector_->setJetPt(corr_p4.Pt());
@@ -629,7 +595,7 @@ void phys_objects::CorrectJets() const{
       jet_corrector_->setRho(fixedGridRhoFastjetAll());
 
       corr_p4 *= jet_corrector_->getCorrection();
-      if(miniaod_p4.Pt() > 10 && do_metcorr) {
+      if(uncorr_p4.Pt() > 10 && do_metcorr) {
 	METx += miniaod_p4.Px();
 	METy += miniaod_p4.Py();
 	METx -= corr_p4.Px();
@@ -1619,3 +1585,4 @@ void phys_objects::GetLeadingBJets(const vector<int> &good_jets,
     }
   }
 }
+
