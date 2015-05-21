@@ -573,8 +573,8 @@ vector<TLorentzVector> & phys_objects::jets_corr_p4(){
 void phys_objects::CorrectJets() const{
   if(set_jets_) return;
 
-  //bool do_metcorr(false); // For now we don't correct MET
-  bool do_metcorr(true); 
+  bool do_metcorr(false); // For now we don't correct MET
+  //bool do_metcorr(true); 
   jets_corr_p4_.clear();
   int version = GetVersion();
   if(version<78) do_metcorr = false; // This is to avoid rounding errors

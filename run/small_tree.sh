@@ -42,6 +42,10 @@ fi
 ./run/send_small_tree.sh /cms2r0/cfA/ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2379_v78	$type	$maxfiles
 
 ## Drell-Yan
+./run/send_small_tree.sh /cms2r0/cfA/DYJetsToLL_M-50_HT-100to200_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2413_v78	$type	$maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/DYJetsToLL_M-50_HT-200to400_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2417_v78	$type	$maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/DYJetsToLL_M-50_HT-400to600_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2418_v78	$type	$maxfiles
+./run/send_small_tree.sh /cms2r0/cfA/DYJetsToLL_M-50_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2419_v78	$type	$maxfiles
 
 ## Single top
 ./run/send_small_tree.sh /cms2r0/cfA/TBarToLeptons_s-channel-CSA14_Tune4C_13TeV-aMCatNLO-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2411_v78	$type	$maxfiles

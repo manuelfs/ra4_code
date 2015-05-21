@@ -281,6 +281,13 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                  tree.fjets_sumcsv(), tree.fjets_poscsv(),
                  tree.fjets_btags(), tree.jets_fjet_index(),
                  1.2, alljets);
+    WriteFatJets(tree.nfjets08(), tree.mj08(),
+                 tree.fjets08_pt(), tree.fjets08_eta(),
+                 tree.fjets08_phi(), tree.fjets08_m(),
+                 tree.fjets08_nconst(),
+                 tree.fjets08_sumcsv(), tree.fjets08_poscsv(),
+                 tree.fjets08_btags(), tree.jets_fjet08_index(),
+                 0.8, alljets);
 
     /////////////////////////////////  MC  ///////////////////////////////
     std::vector<int> mc_mus, mc_els, mc_taush, mc_tausl;
