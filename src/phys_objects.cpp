@@ -34,7 +34,7 @@ namespace{
   const float fltmax = numeric_limits<float>::max();
 }
 
-float phys_objects::MinJetPt = 40.0;
+float phys_objects::MinJetPt = 30.0;
 float phys_objects::MinRA2bJetPt = 30.0;
 float phys_objects::MinSignalLeptonPt = 20.0;
 float phys_objects::MinVetoLeptonPt = 10.0;
@@ -684,6 +684,8 @@ void phys_objects::GetMatchedLeptons(const vector<int> &veto_mu,
       }
     }
     if(mindr < 0.4) mu_matches[imatch].push_back(imu);
+    else cout<<"mus "<<imu<<" not matched. p = ("<<mus_pt()->at(imu)<<","<<mus_eta()->at(imu)
+	     <<","<<mus_phi()->at(imu)<<")"<<endl;
   }
 
   //Match electrons to jets
@@ -705,6 +707,8 @@ void phys_objects::GetMatchedLeptons(const vector<int> &veto_mu,
       }
     }
     if(mindr < 0.4) el_matches[imatch].push_back(iel);
+    else cout<<"els "<<iel<<" not matched. p = ("<<els_pt()->at(iel)<<","<<els_eta()->at(iel)
+	     <<","<<els_phi()->at(iel)<<")"<<endl;
   }
 }
 

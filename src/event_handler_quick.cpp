@@ -74,12 +74,18 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     vector<size_t> sigleps;
     TLorentzVector lepmax_p4(0., 0., 0., 0.), lepmax_p4_reliso(0., 0., 0., 0.);
     short lepmax_chg = 0, lepmax_chg_reliso = 0;
-    tree.nels() = 0; tree.nvels() = 0;
-    tree.nels_reliso() = 0; tree.nvels_reliso() = 0;
     vector<int> sig_electrons = GetElectrons(true, true);
     vector<int> sig_muons = GetMuons(true, true);
     vector<int> sig_electrons_reliso = GetElectrons(true, false);
     vector<int> sig_muons_reliso = GetMuons(true, false);
+    vector<int> veto_electrons = GetElectrons(false, true);
+    vector<int> veto_muons = GetMuons(false, true);
+    vector<int> veto_electrons_reliso = GetElectrons(false, false);
+    vector<int> veto_muons_reliso = GetMuons(false, false);
+    tree.nels() = sig_electrons.size(); tree.nvels() = veto_electrons.size();
+    tree.nels_reliso() = sig_electrons_reliso.size(); tree.nvels_reliso() = veto_electrons_reliso.size();
+    tree.nmus() = sig_muons.size(); tree.nvmus() = veto_muons.size();
+    tree.nmus_reliso() = sig_muons_reliso.size(); tree.nvmus_reliso() = veto_muons_reliso.size();
 
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > MinVetoLeptonPt && IsVetoIdElectron(index)) {
@@ -130,16 +136,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                                             els_pz()->at(index), els_energy()->at(index));
           if(has_match) primary_lep_reliso = the_cand;
         }
-        // Number of leptons
-        if(IsVetoElectron(index)) ++(tree.nvels_reliso());
-        if(IsSignalElectron(index)) ++(tree.nels_reliso());
-        if(IsVetoIdElectron(index) && tree.els_miniso_tr10().back()<0.1) ++(tree.nvels());
-        if(IsSignalIdElectron(index) && tree.els_pt().back()>MinSignalLeptonPt && tree.els_miniso_tr10().back()<0.1) ++(tree.nels());
       }
     } // Loop over els
 
-    tree.nmus() = 0; tree.nvmus() = 0;
-    tree.nmus_reliso() = 0; tree.nvmus_reliso() = 0;
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > MinVetoLeptonPt && IsVetoIdMuon(index)) {
         tree.mus_sigid().push_back(IsSignalIdMuon(index));
@@ -186,11 +185,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                                             mus_pz()->at(index), mus_energy()->at(index));
           if(has_match) primary_lep_reliso = the_cand;
         }
-        // Number of leptons
-        if(IsVetoMuon(index)) ++(tree.nvmus_reliso());
-        if(IsSignalMuon(index)) ++(tree.nmus_reliso());
-        if(IsVetoIdMuon(index) && tree.mus_miniso_tr10().back()<0.2) ++(tree.nvmus());
-        if(IsSignalIdMuon(index) && tree.mus_pt().back()>MinSignalLeptonPt && tree.mus_miniso_tr10().back()<0.2) ++(tree.nmus());
       }
     } // Loop over mus
 
@@ -238,8 +232,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     // vector<size_t> moms = GetMoms(parts);
     // tree.mc_type() = TypeCode(parts, moms);
 
-    vector<int> good_jets = GetJets(sig_electrons, sig_muons, 20., 2.4);
-    vector<int> good_jets_reliso = GetJets(sig_electrons_reliso, sig_muons_reliso, 20., 2.4);
+    vector<int> good_jets = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 2.4);
+    vector<int> good_jets_reliso = GetJets(sig_electrons_reliso, sig_muons_reliso, phys_objects::MinJetPt , 2.4);
     tree.njets() = GetNumJets(good_jets, MinJetPt);
     tree.nbl() = GetNumJets(good_jets, MinJetPt, CSVCuts[0]);
     tree.nbm() = GetNumJets(good_jets, MinJetPt, CSVCuts[1]);
@@ -247,6 +241,13 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.ht() = GetHT(good_jets, MinJetPt);
     tree.ht_reliso() = GetHT(good_jets_reliso, MinJetPt);
     tree.mht() = GetMHT(good_jets, MinJetPt);
+
+    vector<int> good_jets40 = GetJets(sig_electrons, sig_muons, 40. , 2.4);
+    tree.njets40() = GetNumJets(good_jets40, MinJetPt);
+    tree.nbl40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[0]);
+    tree.nbm40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[1]);
+    tree.nbt40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[2]);
+    tree.ht40() = GetHT(good_jets40, MinJetPt);
 
     vector<int> dirty_jets = GetJets(vector<int>(0), vector<int>(0), 30., 5.0);
     tree.jets_pt().resize(dirty_jets.size());
@@ -267,27 +268,44 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
     }
 
-    vector<int> alljets;
-    vector<bool> alljets_islep;
+    vector<int> mj_jets;
+    vector<bool> mj_jets_islep;
+    map<size_t,vector<size_t> > mu_matches, el_matches;
+    GetMatchedLeptons(sig_muons, sig_electrons, mu_matches, el_matches);
     for(unsigned ijet(0); ijet<jets_corr_p4().size(); ijet++) {
-      alljets.push_back(static_cast<int>(ijet));
-      alljets_islep.push_back(!(find(good_jets.begin(), good_jets.end(), static_cast<int>(ijet)) 
-				!= good_jets.end()));      
-    }
+      if(mu_matches.find(ijet) != mu_matches.end() || el_matches.find(ijet) != el_matches.end()){
+	mj_jets.push_back(static_cast<int>(ijet));
+	mj_jets_islep.push_back(true);
+      } // If lepton in jet
+      // if(mu_matches.find(ijet) != mu_matches.end() && el_matches.find(ijet) != el_matches.end()) {
+      // 	size_t iel = el_matches[ijet][0];
+      // 	size_t imu = mu_matches[ijet][0];
+      // 	cout<<entry<<": Both els and mus match: jet p=("<<jets_pt()->at(ijet)<<","<<jets_eta()->at(ijet)
+      // 	    <<","<<jets_phi()->at(ijet)<<"). el p = ("<<els_pt()->at(iel)<<","<<els_eta()->at(iel)
+      // 	    <<","<<els_phi()->at(iel)<<"). mu p = ("<<mus_pt()->at(imu)<<","<<mus_eta()->at(imu)
+      // 	    <<","<<mus_phi()->at(imu)<<")"<<endl;
+      // }
+    } // Loop over all jets
+    // Adding all clean jets
+    for(unsigned ijet(0); ijet<good_jets.size(); ijet++) {
+      mj_jets.push_back(static_cast<int>(ijet));
+      mj_jets_islep.push_back(false);      
+    } // Loop over good jets
+
     WriteFatJets(tree.nfjets(), tree.mj(),
                  tree.fjets_pt(), tree.fjets_eta(),
                  tree.fjets_phi(), tree.fjets_m(),
                  tree.fjets_nconst(),
                  tree.fjets_sumcsv(), tree.fjets_poscsv(),
                  tree.fjets_btags(), tree.jets_fjet_index(),
-                 1.2, alljets);
+                 1.2, mj_jets);
     WriteFatJets(tree.nfjets08(), tree.mj08(),
                  tree.fjets08_pt(), tree.fjets08_eta(),
                  tree.fjets08_phi(), tree.fjets08_m(),
                  tree.fjets08_nconst(),
                  tree.fjets08_sumcsv(), tree.fjets08_poscsv(),
                  tree.fjets08_btags(), tree.jets_fjet08_index(),
-                 0.8, alljets);
+                 0.8, mj_jets);
 
     /////////////////////////////////  MC  ///////////////////////////////
     std::vector<int> mc_mus, mc_els, mc_taush, mc_tausl;
@@ -300,9 +318,18 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     WriteTks(tree, lepmax_chg, primary_lep);
  
+    // int nobj = tree.njets() + tree.nmus() + tree.nels();
+    // int nobj_mj(0);
+    // //int nobj_list(mj_jets.size());
+    // for(unsigned ijet(0); ijet < tree.fjets_nconst().size(); ijet++)
+    //   nobj_mj += tree.fjets_nconst().at(ijet);
+    // if(nobj != nobj_mj) cout<<entry<<": nobj "<<nobj<<", nobj_mj "<<nobj_mj<<endl;
+
+    // if(tree.njets() != static_cast<int>(good_jets.size())) 
+    //   cout<<entry<<": njets "<<tree.njets()<<", gj_size "<<good_jets.size()<<endl;
 
     tree.Fill();
-  }
+ }
 
   tree.Write();
 
@@ -408,7 +435,6 @@ void event_handler_quick::WriteFatJets(int &nfjets,
   vector<PseudoJet> sjets(0);
   vector<int> ijets(0);
   vector<float> csvs(0);
-  const float EtaThresh(5.);
   jets_fjet_index = vector<int>(jets.size(), -1);
 
   if(gen){
@@ -418,11 +444,9 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
                      mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
       const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
-      if(this_pj.pt()>30.0 && fabs(v.Eta()) <= EtaThresh){
-        sjets.push_back(this_pj);
-        ijets.push_back(idirty);
-        csvs.push_back(0.);
-      }
+      sjets.push_back(this_pj);
+      ijets.push_back(idirty);
+      csvs.push_back(0.);
     }
   }else{
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
@@ -434,11 +458,9 @@ void event_handler_quick::WriteFatJets(int &nfjets,
       const TLorentzVector &this_lv = jets_corr_p4().at(jet);
       const PseudoJet this_pj(this_lv.Px(), this_lv.Py(), this_lv.Pz(), this_lv.E());
 
-      if(this_pj.pt()>30.0 && fabs(this_lv.Eta()) <= EtaThresh){
-        sjets.push_back(this_pj);
-        ijets.push_back(idirty);
-        csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));
-      }
+      sjets.push_back(this_pj);
+      ijets.push_back(idirty);
+      csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));
     }
   }
 
@@ -464,10 +486,8 @@ void event_handler_quick::WriteFatJets(int &nfjets,
     fjets_m.at(ipj) = pj.m();
     const vector<PseudoJet> &cjets = pj.constituents();
     fjets_nconst.at(ipj) = cjets.size();
-    if(pj.pt()>50.){
-      mj += pj.m();
-      ++nfjets;
-    }
+    mj += pj.m();
+    ++nfjets;
     fjets_btags.at(ipj) = 0;
     fjets_sumcsv.at(ipj) = 0.;
     fjets_poscsv.at(ipj) = 0.;
