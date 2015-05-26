@@ -1,4 +1,10 @@
-2015-05-21:
+2015-05-25, quick:
+  - Lowered jet pT threshold to 30 GeV for HT, njets, nb
+  - Added ht40, njets40, nb[t,m,l]40 variables
+  - Changed MJ eta threshold to 2.5 and removed pT > 50 GeV threshold
+  - All jets associated with signal leptons are included in MJ
+
+2015-05-21, quick:
   - Updated electron ID to the May 7th Egamma POG recommendation. It kills ~4% of good electrons...
   - For non-PF leptons, don't skip pfcands in the miniso calculation. It kills ~20% of good non-PF
     electrons, a small fraction of the total.
@@ -6,7 +12,7 @@
   - Added ntks_chg with number of tracks that pass the proposed track veto
   - Added ntruleps, ntrumus, ntruels, ntrutaush, ntrutausl
 
-2015-05-18:
+2015-05-18: DO NOT USE!!! MERGED into 2015-05-15
   -Rerun single top s-channel to fix incorrect negative weights in samples split over multiple batch jobs
   -Merged into 2015-05-15
 
@@ -15,11 +21,10 @@
   -Single top s-channel remade 5-18 due to bug in negative weight handling when sample needs multiple batch jobs
   -All weights incorrect for samples split into multiple batch jobs. 
 
-2015-05-12:
+2015-05-12: MERGED into 2015-05-10
   -Rerun single top in "quick" mode to fix negative weights; merged into 2015-05-10
   -Merged into 5-10
 
-2015-05-10:
+2015-05-10, full [quick for single t] [tag says "quick" incorrectly]:
   -Synchronized trees with Stu-tuples (stuples?)
   -Single top remade 5-12 to include negative weights
-  -Only have "quick" format, not full
