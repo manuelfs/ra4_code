@@ -36,6 +36,11 @@ int ntrumus
 int ntruels
 int ntrutaush
 int ntrutausl
+float trutop1_pt
+float trutop2_pt
+float trutop1_phi
+float trutop2_phi
+int ntrumeisr
 
 ##################   Leptons   ################
 int nleps

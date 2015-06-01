@@ -316,6 +316,24 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.ntrutausl() = mc_tausl.size();
     tree.ntruleps()  = tree.ntrumus()+tree.ntruels()+tree.ntrutaush()+tree.ntrutausl();
 
+    //for systematics:
+    float toppt1(0),toppt2(0),topphi1(0),topphi2(0);
+    int nisr(0);
+    for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
+      const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
+      const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
+      const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
+      const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+      if(mc_doc_id()->at(i)==6) {toppt1 = mc_doc_pt()->at(i); topphi1 = mc_doc_phi()->at(i);}
+      if(mc_doc_id()->at(i)==(-6)){ toppt2 = mc_doc_pt()->at(i); topphi2 = mc_doc_phi()->at(i);}
+      if(mc_doc_status()->at(i)==23 && id!=6 && mom!=6 && mom!=24 && gmom!=6 && ggmom!=6) nisr++;
+    }
+    tree.trutop1_pt() = toppt1;
+    tree.trutop2_pt() = toppt2;
+    tree.trutop1_phi() = topphi1;
+    tree.trutop2_phi() = topphi2;
+    tree.ntrumeisr() = nisr;
+    
     WriteTks(tree, lepmax_chg, primary_lep);
  
     // int nobj = tree.njets() + tree.nmus() + tree.nels();
@@ -587,6 +605,8 @@ void event_handler_quick::GetTrueLeptons(vector<int> &true_electrons, vector<int
     const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
     const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
     const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+  
+    
     if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
       if (mom == 24) { // Lep from W
 	if (id==11) true_electrons.push_back(i);

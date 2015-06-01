@@ -14,7 +14,7 @@ EXTRA_WARNINGS := -Wcast-align -Wcast-qual -Wdisabled-optimization -Wformat=2 -W
 CXXFLAGS := $(subst -I,-isystem,$(shell fastjet/bin/fastjet-config --cxxflags)) -isystem $(shell root-config --incdir) -Wall -Wextra -pedantic -Werror -Wshadow -Woverloaded-virtual -Wold-style-cast $(EXTRA_WARNINGS) $(shell root-config --cflags) -O2 -I $(INCDIR)
 LD := $(shell root-config --ld)
 LDFLAGS := $(shell root-config --ldflags)
-LDLIBS := $(shell root-config --libs) -lMinuit -lRooStats -lRooFitCore $(shell fastjet/bin/fastjet-config --libs --plugins)
+LDLIBS := $(shell root-config --libs) -lMinuit -lRooStats -lTreePlayer -lRooFitCore $(shell fastjet/bin/fastjet-config --libs --plugins)
 
 EXECUTABLES := $(addprefix $(EXEDIR)/, $(addsuffix .exe, $(notdir $(basename $(wildcard $(SRCDIR)/*.cxx))))) $(addprefix $(MACEXEDIR)/, $(addsuffix .exe, $(notdir $(basename $(wildcard $(MACSRCDIR)/*.cxx)))))
 OBJECTS := $(addprefix $(OBJDIR)/, $(addsuffix .o, $(notdir $(basename $(wildcard $(SRCDIR)/*.cpp))))) $(OBJDIR)/small_tree.o $(OBJDIR)/cfa_base.o $(OBJDIR)/cfa_8.o $(OBJDIR)/cfa_13.o $(OBJDIR)/cfa.o
