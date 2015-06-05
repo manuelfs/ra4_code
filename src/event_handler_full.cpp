@@ -317,11 +317,15 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
       }
     }
     tree.mc_type() = TypeCode(parts, moms);
-    tree.ngentaus() = (tree.mc_type()&0x000F);
-    tree.ngentausl() = ((tree.mc_type()&0x00F0)>>4);
-    tree.ngenleps() = ((tree.mc_type()&0x0F00)>>8)+(tree.mc_type()&0x000F)-((tree.mc_type()&0x00F0)>>4);
+    std::vector<int> mc_mus, mc_els, mc_taush, mc_tausl;
+    GetTrueLeptons(mc_els, mc_mus, mc_taush, mc_tausl);
+    tree.ntrumus()   = mc_mus.size();
+    tree.ntruels()   = mc_els.size();
+    tree.ntrutaush() = mc_taush.size();
+    tree.ntrutausl() = mc_tausl.size();
+    tree.ntruleps()  = tree.ntrumus()+tree.ntruels()+tree.ntrutaush()+tree.ntrutausl();
 
-    vector<int> good_jets = GetJets(sig_electrons, sig_muons, 20., 2.4);
+    vector<int> good_jets = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 2.4);
     vector<Jet> subtracted_jets = GetSubtractedJets(sig_electrons, sig_muons, 20., 2.4);
 
     tree.nsubjets() = 0;
@@ -435,6 +439,13 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
     tree.mht() = GetMHT(good_jets, MinJetPt);
     tree.min_mt_bmet() = GetMinMTWb(good_jets, MinJetPt, CSVCuts[1], false);
     tree.min_mt_bmet_with_w_mass() = GetMinMTWb(good_jets, MinJetPt, CSVCuts[1], true);
+
+    vector<int> good_jets40 = GetJets(sig_electrons, sig_muons, 40. , 2.4);
+    tree.njets40() = GetNumJets(good_jets40, MinJetPt);
+    tree.nbl40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[0]);
+    tree.nbm40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[1]);
+    tree.nbt40() = GetNumJets(good_jets40, MinJetPt, CSVCuts[2]);
+    tree.ht40() = GetHT(good_jets40, MinJetPt);
 
     double genmetx = 0., genmety = 0.;
     for(size_t imc = 0; imc < mc_final_id()->size(); ++imc){
@@ -817,64 +828,49 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
       }
     }
 
-    vector<int> alljets;
-    vector<bool> alljets_islep;
+    vector<int> mj_jets;
+    vector<bool> mj_jets_islep;
     for(unsigned ijet(0); ijet<jets_corr_p4().size(); ijet++) {
-      alljets.push_back(static_cast<int>(ijet));
-      alljets_islep.push_back(!(find(good_jets.begin(), good_jets.end(), static_cast<int>(ijet))
-                                != good_jets.end()));
-    }
+      if(mu_matches.find(ijet) != mu_matches.end() || el_matches.find(ijet) != el_matches.end()){
+	mj_jets.push_back(static_cast<int>(ijet));
+	mj_jets_islep.push_back(true);
+      } // If lepton in jet
+      // if(mu_matches.find(ijet) != mu_matches.end() && el_matches.find(ijet) != el_matches.end()) {
+      // 	size_t iel = el_matches[ijet][0];
+      // 	size_t imu = mu_matches[ijet][0];
+      // 	cout<<entry<<": Both els and mus match: jet p=("<<jets_pt()->at(ijet)<<","<<jets_eta()->at(ijet)
+      // 	    <<","<<jets_phi()->at(ijet)<<"). el p = ("<<els_pt()->at(iel)<<","<<els_eta()->at(iel)
+      // 	    <<","<<els_phi()->at(iel)<<"). mu p = ("<<mus_pt()->at(imu)<<","<<mus_eta()->at(imu)
+      // 	    <<","<<mus_phi()->at(imu)<<")"<<endl;
+      // }
+    } // Loop over all jets
+    // Adding all clean jets
+    for(unsigned ijet(0); ijet<good_jets.size(); ijet++) {
+      mj_jets.push_back(static_cast<int>(ijet));
+      mj_jets_islep.push_back(false);      
+    } // Loop over good jets
+
     WriteFatJets(tree.nfjets(), tree.mj(),
                  tree.fjets_pt(), tree.fjets_eta(),
                  tree.fjets_phi(), tree.fjets_m(),
                  tree.fjets_nconst(),
                  tree.fjets_sumcsv(), tree.fjets_poscsv(),
                  tree.fjets_btags(), tree.jets_fjet_index(),
-                 1.2, alljets);
+                 1.2, mj_jets);
+    WriteFatJets(tree.nfjets08(), tree.mj08(),
+                 tree.fjets08_pt(), tree.fjets08_eta(),
+                 tree.fjets08_phi(), tree.fjets08_m(),
+                 tree.fjets08_nconst(),
+                 tree.fjets08_sumcsv(), tree.fjets08_poscsv(),
+                 tree.fjets08_btags(), tree.jets_fjet08_index(),
+                 0.8, mj_jets);
     WriteFatJets(tree.nfjets15(), tree.mj15(),
                  tree.fjets15_pt(), tree.fjets15_eta(),
                  tree.fjets15_phi(), tree.fjets15_m(),
                  tree.fjets15_nconst(),
                  tree.fjets15_sumcsv(), tree.fjets15_poscsv(),
                  tree.fjets15_btags(), tree.jets_fjet15_index(),
-                 1.5, alljets);
-    WriteFatJets(tree.nfjets20(), tree.mj20(),
-                 tree.fjets20_pt(), tree.fjets20_eta(),
-                 tree.fjets20_phi(), tree.fjets20_m(),
-                 tree.fjets20_nconst(),
-                 tree.fjets20_sumcsv(), tree.fjets20_poscsv(),
-                 tree.fjets20_btags(), tree.jets_fjet20_index(),
-                 2.0, alljets);
-    WriteFatJets(tree.nfjets30(), tree.mj30(),
-                 tree.fjets30_pt(), tree.fjets30_eta(),
-                 tree.fjets30_phi(), tree.fjets30_m(),
-                 tree.fjets30_nconst(),
-                 tree.fjets30_sumcsv(), tree.fjets30_poscsv(),
-                 tree.fjets30_btags(), tree.jets_fjet30_index(),
-                 3.0, alljets);
-    WriteFatJets(tree.nfjetsinf(), tree.mjinf(),
-                 tree.fjetsinf_pt(), tree.fjetsinf_eta(),
-                 tree.fjetsinf_phi(), tree.fjetsinf_m(),
-                 tree.fjetsinf_nconst(),
-                 tree.fjetsinf_sumcsv(), tree.fjetsinf_poscsv(),
-                 tree.fjetsinf_btags(), tree.jets_fjetinf_index(),
-                 1000.0, alljets);
-    WriteFatJets(tree.nfjets_nl(), tree.mj_nl(),
-                 tree.fjets_nl_pt(), tree.fjets_nl_eta(),
-                 tree.fjets_nl_phi(), tree.fjets_nl_m(),
-                 tree.fjets_nl_nconst(),
-                 tree.fjets_nl_sumcsv(), tree.fjets_nl_poscsv(),
-                 tree.fjets_nl_btags(), tree.jets_fjet_nl_index(),
-                 1.2, alljets, false,
-                 true, alljets_islep);
-    WriteFatJets(tree.nfjets15_nl(), tree.mj15_nl(),
-                 tree.fjets15_nl_pt(), tree.fjets15_nl_eta(),
-                 tree.fjets15_nl_phi(), tree.fjets15_nl_m(),
-                 tree.fjets15_nl_nconst(),
-                 tree.fjets15_nl_sumcsv(), tree.fjets15_nl_poscsv(),
-                 tree.fjets15_nl_btags(), tree.jets_fjet15_nl_index(),
-                 1.5, alljets, false,
-                 true, alljets_islep);
+                 1.5, mj_jets);
     vector<float> genfjets_csv(tree.genfjets_pt().size());
     vector<int> genfjets_btags(tree.genfjets_pt().size());
     WriteFatJets(tree.ngenfjets(), tree.gen_mj(),
@@ -914,25 +910,24 @@ event_handler_full::~event_handler_full(){
 }
 
 void event_handler_full::WriteFatJets(int &nfjets,
-                                      float &mj,
-                                      vector<float> &fjets_pt,
-                                      vector<float> &fjets_eta,
-                                      vector<float> &fjets_phi,
-                                      vector<float> &fjets_m,
-                                      vector<int> &fjets_nconst,
-                                      vector<float> &fjets_sumcsv,
-                                      vector<float> &fjets_poscsv,
-                                      vector<int> &fjets_btags,
-                                      vector<int> &jets_fjet_index,
-                                      double radius,
-                                      const vector<int> &jets,
-                                      bool gen,
-                                      bool clean,
-                                      const vector<bool> &to_clean){
+                                       float &mj,
+                                       vector<float> &fjets_pt,
+                                       vector<float> &fjets_eta,
+                                       vector<float> &fjets_phi,
+                                       vector<float> &fjets_m,
+                                       vector<int> &fjets_nconst,
+                                       vector<float> &fjets_sumcsv,
+                                       vector<float> &fjets_poscsv,
+                                       vector<int> &fjets_btags,
+                                       vector<int> &jets_fjet_index,
+                                       double radius,
+                                       const vector<int> &jets,
+                                       bool gen,
+                                       bool clean,
+                                       const vector<bool> &to_clean){
   vector<PseudoJet> sjets(0);
   vector<int> ijets(0);
   vector<float> csvs(0);
-  const float EtaThresh(5.);
   jets_fjet_index = vector<int>(jets.size(), -1);
 
   if(gen){
@@ -942,11 +937,9 @@ void event_handler_full::WriteFatJets(int &nfjets,
       v.SetPtEtaPhiE(mc_jets_pt()->at(jet), mc_jets_eta()->at(jet),
                      mc_jets_phi()->at(jet), mc_jets_energy()->at(jet));
       const PseudoJet this_pj(v.Px(), v.Py(), v.Pz(), v.E());
-      if(this_pj.pt()>30.0 && fabs(v.Eta()) <= EtaThresh){
-        sjets.push_back(this_pj);
-        ijets.push_back(idirty);
-        csvs.push_back(0.);
-      }
+      sjets.push_back(this_pj);
+      ijets.push_back(idirty);
+      csvs.push_back(0.);
     }
   }else{
     for(size_t idirty = 0; idirty<jets.size(); ++idirty){
@@ -958,11 +951,9 @@ void event_handler_full::WriteFatJets(int &nfjets,
       const TLorentzVector &this_lv = jets_corr_p4().at(jet);
       const PseudoJet this_pj(this_lv.Px(), this_lv.Py(), this_lv.Pz(), this_lv.E());
 
-      if(this_pj.pt()>30.0 && fabs(this_lv.Eta()) <= EtaThresh){
-        sjets.push_back(this_pj);
-        ijets.push_back(idirty);
-        csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));
-      }
+      sjets.push_back(this_pj);
+      ijets.push_back(idirty);
+      csvs.push_back(jets_btag_inc_secVertexCombined()->at(jet));
     }
   }
 
@@ -988,10 +979,8 @@ void event_handler_full::WriteFatJets(int &nfjets,
     fjets_m.at(ipj) = pj.m();
     const vector<PseudoJet> &cjets = pj.constituents();
     fjets_nconst.at(ipj) = cjets.size();
-    if(pj.pt()>50.){
-      mj += pj.m();
-      ++nfjets;
-    }
+    mj += pj.m();
+    ++nfjets;
     fjets_btags.at(ipj) = 0;
     fjets_sumcsv.at(ipj) = 0.;
     fjets_poscsv.at(ipj) = 0.;
@@ -1196,3 +1185,79 @@ unsigned event_handler_full::TypeCode(const vector<mc_particle> &parts,
   if(ntaul > 0xF) ntaul = 0xF;
   return (sample_code << 12) | (nlep << 8) | (ntaul << 4) | ntau;
 }
+
+// MC lepton counting without building the whole tree
+void event_handler_full::GetTrueLeptons(vector<int> &true_electrons, vector<int> &true_muons,
+				   vector<int> &true_had_taus, vector<int> &true_lep_taus) {
+  true_electrons.clear();
+  true_muons.clear();
+  true_had_taus.clear();
+  true_lep_taus.clear();
+  bool tau_to_3tau(false);
+  vector<int> lep_from_tau;
+  for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
+    const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
+    const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
+    const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
+    const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+    if((id == 11 || id == 13) && (mom == 24 || (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24))))){
+      if (mom == 24) { // Lep from W
+	if (id==11) true_electrons.push_back(i);
+	else if (id==13) true_muons.push_back(i);
+      } else if(!tau_to_3tau) { // Lep from tau, check for Brem
+	uint nlep(1);
+	for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	  const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	  const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	  if(momb==15 && (idb==11 || idb==13)) nlep++;
+	  if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	    if(nlep==1){
+	      // if (id==11) true_electrons.push_back(i); // If we want to count isolated leptons
+	      // else if (id==13) true_muons.push_back(i);
+	      lep_from_tau.push_back(i);
+	    }
+	    i = j-1; // Moving index to first particle after tau daughters
+	    break;
+	  }
+	} // Loop over tau daughters
+      } // if lepton comes from tau
+    }
+    if(id == 15 && mom == 24){
+      true_had_taus.push_back(i);
+    }
+    // Counting number of tau->tautautau
+    if((id == 15) && (mom == 15 && (gmom == 24 || (gmom == 15 && ggmom == 24)))){
+      uint nlep(1);
+      for(uint j=i+1; j<mc_doc_id()->size(); ++j) {
+	const int idb = static_cast<int>(floor(fabs(mc_doc_id()->at(j))+0.5));
+	const int momb = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(j))+0.5));
+	if(momb==15 && idb==15) nlep++;
+	if(momb!=15 || (momb==15&&idb==16) || j==mc_doc_id()->size()-1){
+	  if(nlep>1) tau_to_3tau = true;
+	  i = j-1; // Moving index to first particle after tau daughters
+	  break;
+	}
+      } // Loop over tau daughters
+    } // if tau comes from prompt tau
+  } // Loop over mc_doc
+  // Removing leptonic taus from tau list by finding smallest DeltaR(lep,tau)
+  for(unsigned ind = 0; ind < lep_from_tau.size(); ++ind){
+    float minDr(9999.), lepEta(mc_doc_eta()->at(lep_from_tau[ind])), lepPhi(mc_doc_phi()->at(lep_from_tau[ind]));
+    int imintau(-1);
+    for(unsigned itau=0; itau < true_had_taus.size(); itau++){
+      if(mc_doc_mother_id()->at(lep_from_tau[ind]) != mc_doc_id()->at(true_had_taus[itau])) continue;
+      float tauEta(mc_doc_eta()->at(true_had_taus[itau])), tauPhi(mc_doc_phi()->at(true_had_taus[itau]));
+      float tauDr(dR(tauEta,lepEta, tauPhi,lepPhi));
+      if(tauDr < minDr) {
+	minDr = tauDr;
+	imintau = itau;
+      }
+    }
+    if(imintau>=0) {
+      true_lep_taus.push_back(imintau);
+      true_had_taus.erase(true_had_taus.begin()+imintau);
+    } else cout<<"Not found a tau match for lepton "<<ind<<endl; // Should not happen
+  } // Loop over leptons from taus
+  return;
+}
+
