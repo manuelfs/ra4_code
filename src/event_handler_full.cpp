@@ -232,20 +232,6 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
       tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), met_corr(), met_phi_corr());
     }
 
-    tree.tru_top_pt() = bad_val;
-    tree.tru_topb_pt() = bad_val;
-    float min_top_m(fltmax), min_topb_m(fltmax);
-    for(size_t imc = 0; imc < mc_doc_id()->size(); ++imc){
-      if(mc_doc_id()->at(imc) == 6 && mc_doc_mass()->at(imc) < min_top_m){
-        tree.tru_top_pt() = mc_doc_pt()->at(imc);
-        min_top_m = mc_doc_mass()->at(imc);
-      }
-      if(mc_doc_id()->at(imc) == -6 && mc_doc_mass()->at(imc) < min_topb_m){
-        tree.tru_topb_pt() = mc_doc_pt()->at(imc);
-        min_topb_m = mc_doc_mass()->at(imc);
-      }
-    } // Loop over mc_doc
-
     vector<mc_particle> parts = GetMCParticles();
     vector<size_t> moms = GetMoms(parts);
     vector<size_t> indices;
@@ -716,22 +702,34 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
       }
     }
 
-    size_t it1 = 0, it2 = 0;
-    bool found_top = false, found_antitop = false;
-    for(size_t it = parts.size()-1; it < parts.size() && !(found_top && found_antitop); --it){
-      if(parts.at(it).status_==0) continue;
-      if(parts.at(it).id_ == 6 && !found_top){
-        found_top = true;
-        it1 = it;
-      }else if(parts.at(it).id_ == -6 && !found_antitop){
-        found_antitop = true;
-        it2 = it;
-      }
+    //for systematics:
+    float toppt1(bad_val),toppt2(bad_val),topphi1(bad_val),topphi2(bad_val);
+    int it1 = -1, it2 = -1;
+    int nisr(0);
+    for(unsigned i = 0; i < mc_doc_id()->size(); ++i){
+      const int id = static_cast<int>(floor(fabs(mc_doc_id()->at(i))+0.5));
+      const int mom = static_cast<int>(floor(fabs(mc_doc_mother_id()->at(i))+0.5));
+      const int gmom = static_cast<int>(floor(fabs(mc_doc_grandmother_id()->at(i))+0.5));
+      const int ggmom = static_cast<int>(floor(fabs(mc_doc_ggrandmother_id()->at(i))+0.5));
+      if(mc_doc_id()->at(i)==6) {toppt1 = mc_doc_pt()->at(i); topphi1 = mc_doc_phi()->at(i); it1=i;}
+      if(mc_doc_id()->at(i)==(-6)){ toppt2 = mc_doc_pt()->at(i); topphi2 = mc_doc_phi()->at(i); it2=i;}
+      if(mc_doc_status()->at(i)==23 && id!=6 && mom!=6 && mom!=24 && gmom!=6 && ggmom!=6) nisr++;
     }
-    if(found_top && found_antitop){
-      tree.tru_tt_dphi() = DeltaPhi(parts.at(it1).momentum_.Phi(), parts.at(it2).momentum_.Phi());
-      TLorentzVector sum = parts.at(it1).momentum_+parts.at(it2).momentum_;
-      TLorentzVector diff = parts.at(it1).momentum_-parts.at(it2).momentum_;
+    tree.trutop1_pt() = toppt1;
+    tree.trutop2_pt() = toppt2;
+    tree.trutop1_phi() = topphi1;
+    tree.trutop2_phi() = topphi2;
+    
+
+    if(it1>=0 && it2>=0){
+      tree.tru_tt_dphi() = DeltaPhi(mc_doc_phi()->at(it1), mc_doc_phi()->at(it2));
+      TLorentzVector p4_top1, p4_top2;
+      p4_top1.SetPtEtaPhiE(mc_doc_pt()->at(it1), mc_doc_eta()->at(it1),
+			   mc_doc_phi()->at(it1), mc_doc_energy()->at(it1));
+      p4_top2.SetPtEtaPhiE(mc_doc_pt()->at(it2), mc_doc_eta()->at(it2),
+			   mc_doc_phi()->at(it2), mc_doc_energy()->at(it2));
+      TLorentzVector sum = p4_top1+p4_top2;
+      TLorentzVector diff = p4_top1-p4_top2;
       tree.tru_tt_m() = sum.M();
       tree.tru_tt_pt() = sum.Pt();
       tree.tru_tt_ptdiff() = diff.Pt();
@@ -1126,9 +1124,13 @@ void event_handler_full::SetMiniIso(small_tree_full &tree, int ilep, int Particl
     tree.mus_miniso_tr10_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2, false, false));
     break;
   default:
+    tree.tks_r05_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.5, 0.5, false, false, true));
+    tree.tks_r04_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.4, 0.4, false, false, true));
     tree.tks_r03_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3, false, false, true));
     tree.tks_r02_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2, false, false, true));
     tree.tks_mini_ch().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, false, false, true));
+    tree.tks_r05_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.5, 0.5, true, true, false));
+    tree.tks_r04_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.4, 0.4, true, true, false));
     tree.tks_r03_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.3, 0.3, true, true, false));
     tree.tks_r02_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.2, 0.2, true, true, false));
     tree.tks_mini_ne().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, bignum, true, true, false));

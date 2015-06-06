@@ -65,8 +65,10 @@ float max_mt_bmet
 float min_pt_bmet
 float max_pt_bmet
 
-float tru_top_pt
-float tru_topb_pt
+float trutop1_pt
+float trutop2_pt
+float trutop1_phi
+float trutop2_phi
 float tru_tt_dphi
 float tru_tt_m
 float tru_tt_pt
@@ -152,9 +154,13 @@ std::vector<int> tks_from_pv
 std::vector<bool> tks_is_primary
 std::vector<bool> tks_is_primary_reliso
 std::vector<bool> tks_is_sig_lep
+std::vector<float> tks_r05_ch
+std::vector<float> tks_r04_ch
 std::vector<float> tks_r03_ch
 std::vector<float> tks_r02_ch
 std::vector<float> tks_mini_ch
+std::vector<float> tks_r05_ne
+std::vector<float> tks_r04_ne
 std::vector<float> tks_r03_ne
 std::vector<float> tks_r02_ne
 std::vector<float> tks_mini_ne
