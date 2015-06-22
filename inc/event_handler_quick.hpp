@@ -50,6 +50,9 @@ public:
 		      std::vector<int> &true_had_taus, std::vector<int> &true_lep_taus);
   void WriteTks(small_tree_quick &tree, short lepmax_chg, size_t primary_lep);
 
+private:
+  static bool greater_m(const fastjet::PseudoJet &a, const fastjet::PseudoJet &b);
+  static std::vector<fastjet::PseudoJet> sorted_by_m(std::vector<fastjet::PseudoJet> pjs);
 };
 
 #endif

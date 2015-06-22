@@ -57,6 +57,9 @@ public:
                    const double bTag_req,
                    const bool use_W_mass) const;
 
+private:
+  static bool greater_m(const fastjet::PseudoJet &a, const fastjet::PseudoJet &b);
+  static std::vector<fastjet::PseudoJet> sorted_by_m(std::vector<fastjet::PseudoJet> pjs);
 };
 
 #endif

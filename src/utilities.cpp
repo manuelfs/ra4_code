@@ -300,14 +300,3 @@ vector<double> LinearSpacing(size_t npts, double low, double high){
   return pts;
 }
 
-#ifndef INT_ROOT
-using namespace fastjet;
-bool greater_m(const PseudoJet &a, const PseudoJet &b){
-  return a.m() > b.m();
-}
-
-vector<PseudoJet> sorted_by_m(vector<PseudoJet> pjs){
-  sort(pjs.begin(), pjs.end(), greater_m);
-  return pjs;
-}
-#endif

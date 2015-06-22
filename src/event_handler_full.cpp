@@ -1263,3 +1263,11 @@ void event_handler_full::GetTrueLeptons(vector<int> &true_electrons, vector<int>
   return;
 }
 
+bool event_handler_full::greater_m(const fastjet::PseudoJet &a, const fastjet::PseudoJet &b){
+  return a.m() > b.m();
+}
+
+vector<fastjet::PseudoJet> event_handler_full::sorted_by_m(vector<fastjet::PseudoJet> pjs){
+  sort(pjs.begin(), pjs.end(), greater_m);
+  return pjs;
+}
