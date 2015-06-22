@@ -12,10 +12,6 @@
 #include <string>
 #include <stdexcept>
 
-#ifndef INT_ROOT
-#include "fastjet/PseudoJet.hh"
-#endif
-
 #include "TString.h"
 #include "TSystemDirectory.h"
 #include "TSystemFile.h"
