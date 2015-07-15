@@ -28,6 +28,7 @@
 #include "pdtlund.hpp"
 #include "utilities.hpp"
 
+
 using namespace std;
 
 namespace{
@@ -41,6 +42,13 @@ float phys_objects::MinVetoLeptonPt = 10.0;
 float phys_objects::MinTrackPt = phys_objects::MinVetoLeptonPt;
 float phys_objects::bad_val = -999.;
 
+const std::vector<std::vector<int> > VRunLumiPrompt(MakeVRunLumi("Golden"));
+const std::vector<std::vector<int> > VRunLumi24Aug(MakeVRunLumi("24Aug"));
+const std::vector<std::vector<int> > VRunLumi13Jul(MakeVRunLumi("13Jul"));
+const std::vector<std::vector<int> > VRunLumi2015(MakeVRunLumi("2015"));
+
+
+
 phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV),
   jet_corrector_(NULL),
@@ -53,6 +61,7 @@ phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
   jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L3Absolute_AK4PFchs.txt");
   jet_corrector_ = makeJetCorrector(jec_files);
+
 }
 
 phys_objects::~phys_objects(){
@@ -67,6 +76,45 @@ void phys_objects::GetEntry(const long entry){
   set_jets_ = false;
   cfa::GetEntry(entry);
 }
+
+
+////////// Triggers /////////////
+void phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, vector<float> &trig_prescale){
+  for(int unsigned itrig=0;itrig<trigger_decision()->size();itrig++){
+    TString trig = trigger_name()->at(itrig);
+    if(trig.Contains("IsoVVVL")|| trig.Contains("Mu15_PFHT300") || trig.Contains("Ele15_PFHT300") || trig.Contains("PFHT350_PFMET100_NoiseCleaned")){
+      trig_names.push_back(trig); trig_dec.push_back(trigger_decision()->at(itrig)); trig_prescale.push_back(trigger_prescalevalue()->at(itrig));
+    } 
+
+  }
+
+}
+
+bool phys_objects::PassesJSONCut(){
+  string sampleName = SampleName();
+  
+  if(sampleName.find("Run201")!=std::string::npos){
+    if(sampleName.find("2015")!=std::string::npos){
+      if(!inJSON(VRunLumi2015, run(), lumiblock())){return false;}}
+     else{
+       if(sampleName.find("PromptReco")!=std::string::npos
+	  &&!inJSON(VRunLumiPrompt, run(), lumiblock())) return false;
+       if(sampleName.find("24Aug")!=std::string::npos
+	  && !inJSON(VRunLumi24Aug, run(), lumiblock())) return false;
+       if(sampleName.find("13Jul")!=std::string::npos
+	  && !inJSON(VRunLumi13Jul, run(), lumiblock())) return false;
+     }
+    return true;
+  }else{
+    return true;
+  }
+}
+
+
+
+////////////////////////////////////
+
+
 
 /////////////////////////////////////////////////////////////////////////
 ////////////////////////////////  MUONS  ////////////////////////////////
@@ -577,7 +625,7 @@ void phys_objects::CorrectJets() const{
   //bool do_metcorr(true); 
   jets_corr_p4_.clear();
   int version = GetVersion();
-  if(version<78) do_metcorr = false; // This is to avoid rounding errors
+  if(version<78 || version==79) do_metcorr = false; // This is to avoid rounding errors
   TLorentzVector corr_p4, uncorr_p4, miniaod_p4;
   float METx = mets_et()->at(0)*cos(mets_phi()->at(0));
   float METy = mets_et()->at(0)*sin(mets_phi()->at(0));
@@ -586,7 +634,7 @@ void phys_objects::CorrectJets() const{
 			    jets_phi()->at(ijet), jets_mass()->at(ijet));
     uncorr_p4 = miniaod_p4*jets_corrFactorRaw()->at(ijet);
     corr_p4 = miniaod_p4;
-    if(version>=78){
+    if(version==78){ //EXCLUDE 79
       corr_p4 *= jets_corrFactorRaw()->at(ijet); // First, uncorrect it
 
       jet_corrector_->setJetEta(corr_p4.Eta());

@@ -30,6 +30,12 @@ float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
 
+bool passJSON;
+
+std::vector<bool> trigger_decision;
+std::vector<TString> trigger_name;
+std::vector<float> trigger_prescale;
+
 ##################   MC   ################
 int ntruleps
 int ntrumus

@@ -64,6 +64,23 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
       }
     }
 
+    ///////// Triggers ///////
+
+    vector<TString> trig_name;
+    vector<bool> trig_decision;
+    vector<float> trig_prescale;
+
+    GetTriggerInfo(trig_name, trig_decision, trig_prescale);
+    tree.trigger_name()= trig_name;
+    tree.trigger_decision()=trig_decision;
+    tree.trigger_prescale()=trig_prescale;
+
+
+    /////////JSON////////
+
+    //defined in phys_objects
+    tree.passJSON()=PassesJSONCut();
+    
     ///////////// MET //////////////////
     tree.met() = met_corr();
     tree.met_phi() = met_phi_corr();
@@ -94,6 +111,7 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
                                 -pv_x()->at(0)*sin(els_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(els_tk_phi()->at(index)));
         tree.els_dz().push_back(els_vz()->at(index)-pv_z()->at(0));
+	tree.els_dz_miniaod().push_back(els_dz()->at(index));
 
         // MC truth
         bool fromW = false;
@@ -151,6 +169,8 @@ void event_handler_full::ReduceTree(int num_entries, const TString &out_file_nam
                                 -pv_x()->at(0)*sin(mus_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(mus_tk_phi()->at(index)));
         tree.mus_dz().push_back(mus_tk_vz()->at(index)-pv_z()->at(0));
+	tree.mus_dz_miniaod().push_back(mus_tk_dz()->at(index));
+
         // MC truth
         bool fromW = false;
         int mcmomID;
@@ -1018,7 +1038,7 @@ void event_handler_full::WriteTks(small_tree_full &tree,
        || is_nan(pfcand_energy()->at(cand))) continue;
     int absid = abs(TMath::Nint(pfcand_pdgId()->at(cand)));
     bool islep = ((absid == 11) || (absid == 13));
-    if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
+    if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<0 ||
         (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep)) ||
         fabs(pfcand_eta()->at(cand))>2.5) continue;
     TLorentzVector vcand;
@@ -1031,6 +1051,10 @@ void event_handler_full::WriteTks(small_tree_full &tree,
     tree.tks_mt().push_back(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
                                   met_corr(), met_phi_corr()));
     tree.tks_from_pv().push_back(TMath::Nint(pfcand_fromPV()->at(cand)));
+    
+    tree.tks_dxy().push_back(pfcand_dxy()->at(cand));
+    tree.tks_dz().push_back(pfcand_dz()->at(cand));
+    
     size_t ipart = MatchCandToStatus1(cand, parts);
     tree.tks_tru_id().push_back(ipart<parts.size()?parts.at(ipart).id_:0);
     tree.tks_tru_dr().push_back(ipart<parts.size()

@@ -64,6 +64,25 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
 
+
+
+     ///////// Triggers ///////
+
+    vector<TString> trig_name;
+    vector<bool> trig_decision;
+    vector<float> trig_prescale;
+
+    GetTriggerInfo(trig_name, trig_decision, trig_prescale);
+    tree.trigger_name()= trig_name;
+    tree.trigger_decision()=trig_decision;
+    tree.trigger_prescale()=trig_prescale;
+
+
+    /////////JSON////////
+
+    //defined in phys_objects
+    tree.passJSON()=PassesJSONCut();
+
     ///////////// MET //////////////////
     tree.met() = met_corr();
     tree.met_phi() = met_phi_corr();

@@ -17,6 +17,7 @@
 
 #include "cfa.hpp"
 #include "pdtlund.hpp"
+#include "in_json_2012.hpp"
 
 struct Jet{
   TLorentzVector p4;
@@ -67,7 +68,9 @@ public:
   enum CutLevel{kVeto, kLoose, kMedium, kTight};
 
   virtual void GetEntry(const long entry);
-
+  //Triggers
+  void GetTriggerInfo(std::vector<TString> &trig_names, std::vector<bool> &trig_dec, std::vector<float> &trig_prescale);
+  bool PassesJSONCut();
   // Muons
   std::vector<int> GetMuons(bool doSignal = true, bool mini = true) const;
 
@@ -205,6 +208,7 @@ public:
 
   static float MinJetPt, MinRA2bJetPt, MinSignalLeptonPt, MinVetoLeptonPt, MinTrackPt;
   static float bad_val;
+
 
   template<class T>
   T chooseVal(CutLevel threshold, T valVeto, T valLoose, T valMedium, T valTight) const{

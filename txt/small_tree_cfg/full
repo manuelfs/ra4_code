@@ -81,6 +81,12 @@ float dphi_neutralinos
 std::vector<float> glu_proj_frac
 float tru_sphericity
 
+bool passJSON;
+
+std::vector<bool> trigger_decision;
+std::vector<TString> trigger_name;
+std::vector<float> trigger_prescale;
+
 ##################   Leptons   ################
 int nleps
 int nleps_reliso
@@ -96,6 +102,7 @@ std::vector<float> mus_mt
 std::vector<bool> mus_sigid
 std::vector<float> mus_d0
 std::vector<float> mus_dz
+std::vector<float> mus_dz_miniaod
 std::vector<float> mus_reliso
 std::vector<float> mus_reliso_r04
 std::vector<float> mus_reliso_r03
@@ -125,6 +132,7 @@ std::vector<bool> els_sigid
 std::vector<bool> els_ispf
 std::vector<float> els_d0
 std::vector<float> els_dz
+std::vector<float> els_dz_miniaod
 std::vector<float> els_reliso
 std::vector<float> els_reliso_r04
 std::vector<float> els_reliso_r03
@@ -151,6 +159,8 @@ std::vector<float> tks_eta
 std::vector<float> tks_phi
 std::vector<float> tks_mt
 std::vector<int> tks_from_pv
+std::vector<float> tks_dxy
+std::vector<float> tks_dz
 std::vector<bool> tks_is_primary
 std::vector<bool> tks_is_primary_reliso
 std::vector<bool> tks_is_sig_lep
