@@ -53,7 +53,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.event() = event();
     tree.lumiblock() = lumiblock();
     tree.run() = run();
-    tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
+    if(out_file_name.Contains("Run2015")) tree.weight() = 1.;
+    else tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
 
     tree.npv() = Npv();
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
@@ -88,9 +89,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.met_phi() = met_phi_corr();
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
 
-    size_t primary_lep=static_cast<size_t>(-1);
-    size_t primary_lep_reliso = primary_lep;
-    vector<size_t> sigleps;
     TLorentzVector lepmax_p4(0., 0., 0., 0.), lepmax_p4_reliso(0., 0., 0., 0.);
     short lepmax_chg = 0, lepmax_chg_reliso = 0;
     vector<int> sig_electrons = GetElectrons(true, true);
@@ -136,24 +134,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_reliso().push_back(GetElectronIsolation(index, false));
         SetMiniIso(tree, index, 11);
 
-        int the_cand;
-        bool has_match = phys_objects::hasPFMatch(index, particleId::electron, the_cand);
-        if(tree.els_sigid().back() && tree.els_pt().back()>MinSignalLeptonPt && has_match){
-          sigleps.push_back(the_cand);
-        }
-
         // Max pT lepton
-        if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdElectron(index) && tree.els_miniso_tr10().back()<0.1){
+        if(els_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdElectron(index) && tree.els_miniso().back()<0.1){
           lepmax_chg = Sign(els_charge()->at(index));
           lepmax_p4 = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                      els_pz()->at(index), els_energy()->at(index));
-          if(has_match) primary_lep = the_cand;
         }
         if(els_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalElectron(index)){
           lepmax_chg_reliso = Sign(els_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(els_px()->at(index), els_py()->at(index),
                                             els_pz()->at(index), els_energy()->at(index));
-          if(has_match) primary_lep_reliso = the_cand;
         }
       }
     } // Loop over els
@@ -185,24 +175,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.mus_reliso().push_back(GetMuonIsolation(index, false));
         SetMiniIso(tree, index, 13);
 
-        int the_cand;
-        bool has_match = hasPFMatch(index, particleId::muon, the_cand);
-        if(tree.mus_sigid().back() && tree.mus_pt().back()>MinSignalLeptonPt && has_match){
-          sigleps.push_back(the_cand);
-        }
-
         // Max pT lepton
-        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso_tr10().back()<0.2){
+        if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso().back()<0.2){
           lepmax_chg = Sign(mus_charge()->at(index));
           lepmax_p4 = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                      mus_pz()->at(index), mus_energy()->at(index));
-          if(has_match) primary_lep = the_cand;
         }
         if(mus_pt()->at(index) > lepmax_p4_reliso.Pt() && IsSignalMuon(index)){
           lepmax_chg_reliso = Sign(mus_charge()->at(index));
           lepmax_p4_reliso = TLorentzVector(mus_px()->at(index), mus_py()->at(index),
                                             mus_pz()->at(index), mus_energy()->at(index));
-          if(has_match) primary_lep_reliso = the_cand;
         }
       }
     } // Loop over mus
@@ -353,7 +335,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.trutop2_phi() = topphi2;
     tree.ntrumeisr() = nisr;
     
-    WriteTks(tree, lepmax_chg, primary_lep);
  
     // int nobj = tree.njets() + tree.nmus() + tree.nels();
     // int nobj_mj(0);
@@ -388,66 +369,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   out_file.Close();
 }
 
-
-void event_handler_quick::WriteTks(small_tree_quick &tree,
-                                  short lepmax_chg,
-                                  size_t primary_lep){
-  double bignum = std::numeric_limits<double>::max();
-  tree.ntks_chg() = 0;
-  tree.ntks_chg_mini() = 0;
-  for(size_t cand = 0; cand < pfcand_pt()->size(); ++cand){
-    if(is_nan(pfcand_pt()->at(cand))
-       || is_nan(pfcand_eta()->at(cand))
-       || is_nan(pfcand_phi()->at(cand))
-       || is_nan(pfcand_energy()->at(cand))) continue;
-    int absid = abs(TMath::Nint(pfcand_pdgId()->at(cand)));
-    bool islep = ((absid == 11) || (absid == 13));
-    if (pfcand_charge()->at(cand)==0 || pfcand_fromPV()->at(cand)<2 ||
-        (pfcand_pt()->at(cand)<5 || (pfcand_pt()->at(cand)<10 && !islep)) ||
-        fabs(pfcand_eta()->at(cand))>2.5) continue;
-
-    int itks_id(TMath::Nint(pfcand_pdgId()->at(cand)));
-    float itks_pt(pfcand_pt()->at(cand));
-    float itks_mini_ch(GetMiniIsolation(0, cand, 0.05, bignum, false, false, true));
-    float itks_mini_ne(GetMiniIsolation(0, cand, 0.05, bignum, true, true, false));
-    float itks_mini_tr_ch(GetMiniIsolation(0, cand, 0.05, 0.2, false, false, true));
-    float itks_mini_tr_ne(GetMiniIsolation(0, cand, 0.05, 0.2, true, true, false));
-    float itks_mt(GetMT(pfcand_pt()->at(cand), pfcand_phi()->at(cand),
-			met_corr(), met_phi_corr()));
-
-    bool itks_is_primary(cand==primary_lep?true:false);
-
-    if(!itks_is_primary && itks_mt<90.){
-      bool pass_iso, pass_iso_tr, pass_pt;
-      short chg_mult;
-      switch(abs(itks_id)){
-      case 11:
-        pass_pt = (itks_pt > 5.);
-	pass_iso = (itks_pt*(itks_mini_ch+itks_mini_ne) < 10.);
-	pass_iso_tr = (itks_pt*(itks_mini_tr_ch+itks_mini_tr_ne) < 10.);
-	chg_mult = -1;
-	break;
-      case 13:
-	pass_pt = (itks_pt > 5.);
-	pass_iso = (itks_pt*(itks_mini_ch+itks_mini_ne) < 30.);
-	pass_iso_tr = (itks_pt*(itks_mini_tr_ch+itks_mini_tr_ne) < 30.);
-	chg_mult = -1;
-	break;
-      default:
-	pass_pt = (itks_pt > 10.);
-	pass_iso = (itks_pt*itks_mini_ch < 2.5);
-	pass_iso_tr = (itks_pt*itks_mini_tr_ch < 2.5);
-        chg_mult = 1;
-        break;
-      }
-
-      if(pass_pt && Sign(itks_id)*lepmax_chg*chg_mult<0){
-        if(pass_iso) ++(tree.ntks_chg());
-        if(pass_iso_tr) ++(tree.ntks_chg_mini());        
-      }
-    } // If it is primary and mT < 90
-  } // Loop over pfcands
-}
 
 
 event_handler_quick::~event_handler_quick(){
@@ -550,10 +471,10 @@ void event_handler_quick::SetMiniIso(small_tree_quick &tree, int ilep, int Parti
   // double bignum = std::numeric_limits<double>::max();
   switch(ParticleType){
   case 11:
-    tree.els_miniso_tr10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2));
+    tree.els_miniso().push_back(els_miniso()->at(ilep));
     break;
   case 13:
-    tree.mus_miniso_tr10().push_back(GetMiniIsolation(ParticleType, ilep, 0.05, 0.2));
+    tree.mus_miniso().push_back(mus_miniso()->at(ilep));
     break;
   default:
     break;

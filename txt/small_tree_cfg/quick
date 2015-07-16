@@ -51,8 +51,6 @@ int ntrumeisr
 ##################   Leptons   ################
 int nleps
 int nleps_reliso
-int ntks_chg
-int ntks_chg_mini
 
 int nmus
 int nvmus
@@ -66,7 +64,7 @@ std::vector<bool> mus_sigid
 std::vector<float> mus_d0
 std::vector<float> mus_dz
 std::vector<float> mus_reliso
-std::vector<float> mus_miniso_tr10
+std::vector<float> mus_miniso
 std::vector<float> mus_tru_dr
 std::vector<int> mus_tru_id
 std::vector<int> mus_tru_momid
@@ -87,7 +85,7 @@ std::vector<bool> els_ispf
 std::vector<float> els_d0
 std::vector<float> els_dz
 std::vector<float> els_reliso
-std::vector<float> els_miniso_tr10
+std::vector<float> els_miniso
 std::vector<float> els_tru_dr
 std::vector<int> els_tru_id
 std::vector<int> els_tru_momid

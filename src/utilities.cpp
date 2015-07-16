@@ -28,6 +28,9 @@ using namespace std;
 float cross_section(const TString &file){
   float xsec(0.);
 
+  if(file.Contains("Run2015"))   xsec = 1.;
+
+
   // From https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SUSYCrossSections13TeVgluglu
   if(file.Contains("T1tttt") && file.Contains("825_"))   xsec = 1.2167;
   if(file.Contains("T1tttt") && file.Contains("1025_"))  xsec = 0.272778;
