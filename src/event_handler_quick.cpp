@@ -44,6 +44,19 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   float xsec = cross_section(out_file_name);
   float luminosity = 1000.;
 
+  GetEntry(0); // Getting the first entry to find trigger names
+  vector<TString> trig_name;
+  for(int unsigned itrig=0;itrig<trigger_decision()->size();itrig++){
+    TString trig = trigger_name()->at(itrig);
+    if(trig.Contains("IsoVVVL")|| trig.Contains("Mu15_PFHT300") || trig.Contains("Ele15_PFHT300") 
+       || trig.Contains("PFHT350_PFMET100_NoiseCleaned") || trig.Contains("PFMET170_NoiseCleaned")
+       || trig.Contains("PFHT800") || trig.Contains("DoubleMu8_Mass8") || trig.Contains("DoubleEle8_Mass8")
+       || trig.Contains("Mu50")|| trig.Contains("Ele105")
+       || trig.Contains("Ele32_eta2p1_WPLoose_Gsf")|| trig.Contains("IsoMu27")){
+      trig_name.push_back(trig); 
+    } 
+  }
+
   Timer timer(num_entries, 1.);
   timer.Start();
   for(int entry = 0; entry < num_entries; ++entry){
@@ -66,23 +79,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     }
 
 
-
      ///////// Triggers ///////
-
-    vector<TString> trig_name;
     vector<bool> trig_decision;
     vector<float> trig_prescale;
-
     GetTriggerInfo(trig_name, trig_decision, trig_prescale);
-    tree.trigger_name()= trig_name;
-    tree.trigger_decision()=trig_decision;
-    tree.trigger_prescale()=trig_prescale;
+    tree.trig_decision()=trig_decision;
+    tree.trig_prescale()=trig_prescale;
 
 
     /////////JSON////////
-
-    //defined in phys_objects
-    tree.passJSON()=PassesJSONCut();
+    tree.passJSON()=PassesJSONCut(); //defined in phys_objects
 
     ///////////// MET //////////////////
     tree.met() = met_corr();
@@ -364,6 +370,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   treeglobal.Branch("type", &type);
   treeglobal.Branch("root_version", &root_version);
   treeglobal.Branch("root_tutorial_dir", &root_tutorial_dir);
+  treeglobal.Branch("trig_name", &trig_name);
   treeglobal.Fill();
   treeglobal.Write();
   out_file.Close();

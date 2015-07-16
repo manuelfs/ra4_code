@@ -40,10 +40,14 @@ void onefile_skim(TString infiles, TString cuts="ht>=500&&met>=200"){
   out_rootfile.cd();
   TChain tree("tree");
   int nfiles = tree.Add(infiles);
+  TChain treeglobal("treeglobal");
+  treeglobal.Add(infiles);
 
   cout<<"Skimming the "<<nfiles<<" files in "<<infiles<<endl;
   TTree *ctree = tree.CopyTree(cuts);
+  TTree *ctreeglobal = treeglobal.CopyTree("1");
   ctree->Write();
+  ctreeglobal->Write();
   out_rootfile.Close();
   cout<<"Written "<<outfile<<endl;
 }

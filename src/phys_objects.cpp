@@ -79,19 +79,18 @@ void phys_objects::GetEntry(const long entry){
 
 
 ////////// Triggers /////////////
-void phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, vector<float> &trig_prescale){
+void phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, 
+				  vector<float> &trig_prescale){
+  trig_dec.resize(trig_names.size(), false);
+  trig_prescale.resize(trig_names.size(), 1.);
   for(int unsigned itrig=0;itrig<trigger_decision()->size();itrig++){
-    TString trig = trigger_name()->at(itrig);
-    if(trig.Contains("IsoVVVL")|| trig.Contains("Mu15_PFHT300") || trig.Contains("Ele15_PFHT300") 
-       || trig.Contains("PFHT350_PFMET100_NoiseCleaned") || trig.Contains("PFMET170_NoiseCleaned")
-       || trig.Contains("PFHT800") || trig.Contains("DoubleMu8_Mass8") || trig.Contains("DoubleEle8_Mass8")
-       || trig.Contains("Mu50")|| trig.Contains("Ele105")
-       || trig.Contains("Ele32_eta2p1_WPLoose_Gsf")|| trig.Contains("IsoMu27")){
-      trig_names.push_back(trig); trig_dec.push_back(trigger_decision()->at(itrig)); trig_prescale.push_back(trigger_prescalevalue()->at(itrig));
-    } 
-
-  }
-
+    for(unsigned itn(0); itn < trig_names.size(); itn++){
+      if(trigger_name()->at(itrig) == trig_names[itn]){
+	trig_dec[itn] = trigger_decision()->at(itrig); 
+	trig_prescale[itn] = trigger_prescalevalue()->at(itrig);
+      }
+    } // Loop over trigger names
+  } // Loop over cfA triggers
 }
 
 bool phys_objects::PassesJSONCut(){
