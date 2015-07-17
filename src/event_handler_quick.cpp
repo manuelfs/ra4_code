@@ -50,7 +50,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     TString trig = trigger_name()->at(itrig);
     if(trig.Contains("IsoVVVL")|| trig.Contains("Mu15_PFHT300") || trig.Contains("Ele15_PFHT300") 
        || trig.Contains("PFHT350_PFMET100_NoiseCleaned") || trig.Contains("PFMET170_NoiseCleaned")
-       || trig.Contains("PFHT800") || trig.Contains("DoubleMu8_Mass8") || trig.Contains("DoubleEle8_Mass8")
+       || trig.Contains("PFHT800") || trig.Contains("DoubleMu8_Mass8") || trig.Contains("DoubleEle8_Mass8") || trig.Contains("DoubleEle8_CaloIdM_TrackIdM_Mass8")
        || trig.Contains("Mu50")|| trig.Contains("Ele105")
        || trig.Contains("Ele32_eta2p1_WPLoose_Gsf")|| trig.Contains("IsoMu27")){
       trig_name.push_back(trig); 
