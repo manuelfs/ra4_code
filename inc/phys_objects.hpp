@@ -13,6 +13,7 @@
 #include <map>
 
 #include "TLorentzVector.h"
+#include "TString.h"
 #include "TMath.h"
 
 #include "cfa.hpp"
@@ -69,8 +70,10 @@ public:
 
   virtual void GetEntry(const long entry);
   //Triggers
-  void GetTriggerInfo(std::vector<TString> &trig_names, std::vector<bool> &trig_dec, std::vector<float> &trig_prescale);
-  bool PassesJSONCut();
+  bool GetTriggerInfo(std::vector<TString> &trig_names, std::vector<bool> &trig_dec, 
+		      std::vector<float> &trig_prescale);
+  std::vector<TString> yes_trig, no_trig;
+  bool PassesJSONCut(TString type);
   // Muons
   std::vector<int> GetMuons(bool doSignal = true, bool mini = true) const;
 

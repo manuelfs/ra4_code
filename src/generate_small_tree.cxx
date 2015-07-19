@@ -858,8 +858,8 @@ void GenerateEventHandlerMergeHeader(const vector<string> &names){
   file << "  void SetFile(const std::string &file, bool is_8TeV = false);\n";
   file << "  void AddFiles(const std::string &file);\n";
   file << "  ~event_handler();\n";
-  file << "private:\n";
   file << "  event_handler_base *ehb;\n";
+  file << "private:\n";
   file << "  static event_handler_base * LookUpType(const std::string &file_name, const std::string &type);\n";
   file << "};\n\n";
 

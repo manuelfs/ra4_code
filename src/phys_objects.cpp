@@ -45,7 +45,8 @@ float phys_objects::bad_val = -999.;
 // const std::vector<std::vector<int> > VRunLumiPrompt(MakeVRunLumi("Golden"));
 // const std::vector<std::vector<int> > VRunLumi24Aug(MakeVRunLumi("24Aug"));
 // const std::vector<std::vector<int> > VRunLumi13Jul(MakeVRunLumi("13Jul"));
-const std::vector<std::vector<int> > VRunLumi2015(MakeVRunLumi("2015"));
+const std::vector<std::vector<int> > VRunLumi2015golden(MakeVRunLumi("2015golden"));
+const std::vector<std::vector<int> > VRunLumi2015dcs(MakeVRunLumi("2015dcs"));
 
 
 
@@ -79,38 +80,37 @@ void phys_objects::GetEntry(const long entry){
 
 
 ////////// Triggers /////////////
-void phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, 
+bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, 
 				  vector<float> &trig_prescale){
+  bool want_event(yes_trig.size()==0); // If yes_trig is not set up, we keep every event
+  TString trigname;
   trig_dec.resize(trig_names.size(), false);
   trig_prescale.resize(trig_names.size(), 1.);
   for(int unsigned itrig=0;itrig<trigger_decision()->size();itrig++){
+    trigname = trigger_name()->at(itrig);
+    bool trigdec = trigger_decision()->at(itrig);
+    for(unsigned ind(0); ind<yes_trig.size(); ind++)
+      if(trigname.Contains(yes_trig[ind])) want_event = (want_event||trigdec);
+    for(unsigned ind(0); ind<no_trig.size(); ind++)
+      if(trigname.Contains(no_trig[ind])) want_event = (want_event&&!trigdec);
     for(unsigned itn(0); itn < trig_names.size(); itn++){
-      if(trigger_name()->at(itrig) == trig_names[itn]){
-	trig_dec[itn] = trigger_decision()->at(itrig); 
+      if(trigname == trig_names[itn]){
+	trig_dec[itn] = trigdec; 
 	trig_prescale[itn] = trigger_prescalevalue()->at(itrig);
       }
     } // Loop over trigger names
   } // Loop over cfA triggers
+  return want_event;
 }
 
-bool phys_objects::PassesJSONCut(){
+bool phys_objects::PassesJSONCut(TString type){
   string sampleName = SampleName();
 
   if(sampleName.find("Run201")!=std::string::npos){
-    if(sampleName.find("2015")!=std::string::npos){
-      if(!inJSON(VRunLumi2015, run(), lumiblock())){return false;}}
-     // else{
-     //   if(sampleName.find("PromptReco")!=std::string::npos
-     // 	  &&!inJSON(VRunLumiPrompt, run(), lumiblock())) return false;
-     //   if(sampleName.find("24Aug")!=std::string::npos
-     // 	  && !inJSON(VRunLumi24Aug, run(), lumiblock())) return false;
-     //   if(sampleName.find("13Jul")!=std::string::npos
-     // 	  && !inJSON(VRunLumi13Jul, run(), lumiblock())) return false;
-     // }
-    return true;
-  }else{
-    return true;
+    if(type=="golden") return inJSON(VRunLumi2015golden, run(), lumiblock());
+    if(type=="dcs") return inJSON(VRunLumi2015dcs, run(), lumiblock());
   }
+  return true;
 }
 
 

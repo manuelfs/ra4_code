@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <unistd.h>
 #include <string>
@@ -16,6 +17,9 @@
 #include "small_tree.hpp"
 
 using namespace std;
+
+void ParseDatasets(TString inFilename, int nfiles, int nbatch, vector<TString> &yes_trig, vector<TString> &no_trig,
+		   vector<TString> &files, TString &outname);
 
 int main(int argc, char *argv[]){
   time_t startTime, curTime;
@@ -53,24 +57,38 @@ int main(int argc, char *argv[]){
     }
   }
 
-  TString outFilename(inFilename), folder(inFilename);
+  TString inFilename_s(inFilename);
+  int len(inFilename_s.Length());
+  if(inFilename_s[len-2] == '/') inFilename_s.Remove(len-2, len-1);
+  inFilename = inFilename_s;
+  TString outFilename(inFilename_s), folder(inFilename_s);
   TString outfolder("out/");
   TString prefix = "small_"+type+"_";
 
-  vector<TString> files;
+  vector<TString> files, yes_trig, no_trig;
   int ini(nfiles*(nbatch-1)), end(nfiles*nbatch), ntotfiles(-1), Ntotentries(-1);
 
   //outFilename.ReplaceAll("/cfA",""); // line needed when running directly on the output of CfANtupler
   // which produces files named cfA_XX.root
 
-  int len(outFilename.Length());
-
-  if(outFilename[len-2] == '/') outFilename.Remove(len-2, len-1);
   outFilename.Remove(0,outFilename.Last('/')+1);
-  enum Mode{dir_full, dir_part, one_file, unknown};
+  enum Mode{dir_full, dir_part, one_file, txt_part, unknown};
   Mode mode = unknown;
   std::string all_sample_files = inFilename + "/*.root";
-  if(!Contains(inFilename, ".root")){
+  if(Contains(inFilename, ".txt")){
+    if(nfiles < 0 ) cout<<"Txt file input method in one go not implemented yet. Try with -f -b"<<endl;
+    else {
+      mode = txt_part;
+      TString outname;
+      ParseDatasets(inFilename, nfiles, nbatch, yes_trig, no_trig, files, outname);      
+      cout<<"Sending job "<<files[0]<<" with "<<files.size()<<" files, "
+	  <<yes_trig.size()<<" yes_trig, and "<<no_trig.size()<<" no_trig"<<endl;
+      
+      inFilename = files[0];
+      outFilename = outfolder+prefix+outname+"_files"; outFilename += nfiles;
+      outFilename += "_batch"; outFilename += nbatch; outFilename += ".root";
+    }
+  } else if(!Contains(inFilename, ".root")){
     if(nfiles>0){ // Doing sample in various parts
       mode = dir_part;
       files = dirlist(inFilename, ".root");
@@ -102,6 +120,9 @@ int main(int argc, char *argv[]){
   case dir_part:
     chain.Add(all_sample_files.c_str());
     break;
+  case txt_part: // It doesn't matter
+    chain.Add(files[0]);
+    break;
   case dir_full:
   case one_file:
   case unknown:
@@ -111,10 +132,16 @@ int main(int argc, char *argv[]){
   }
 
   event_handler tHandler(inFilename, type);
+  tHandler.ehb->yes_trig = yes_trig; tHandler.ehb->no_trig = no_trig; 
   if(mode==dir_part){
     cout<<endl<<"Doing files "<<ini+1<<" to "<<end<<" from a total of "<<ntotfiles<<" files."<<endl;
     for(int ifile(ini+1); ifile < end; ifile++){
       tHandler.AddFiles((folder + "/" + files[ifile]).Data());
+    }
+  }
+  if(mode==txt_part){
+    for(unsigned ifile(1); ifile < files.size(); ifile++){
+      tHandler.AddFiles(files[ifile].Data());
     }
   }
   if(Nentries > tHandler.TotalEntries() || Nentries < 0) Nentries = tHandler.TotalEntries();
@@ -136,3 +163,46 @@ int main(int argc, char *argv[]){
 
   return 0;
 }
+
+
+void ParseDatasets(TString inFilename, int nfiles, int nbatch, vector<TString> &yes_trig, vector<TString> &no_trig, 
+		   vector<TString> &files, TString &outname){
+
+  ifstream file(inFilename);
+  TString dataset, filename;
+  int ifile(1);
+  yes_trig.clear(); no_trig.clear();
+  files.clear();
+  file >> dataset;
+  outname = "Run2015B_";
+  while(file){
+    if(!dataset.Contains("MINIAOD")) continue;
+    TString name(dataset);
+    int len(name.Length());
+    if(name[len-2] == '/') name.Remove(len-2, len-1);
+    name.Remove(0,name.Last('/')+1);
+    name.Remove(name.First('_'), len);
+    outname += ("_"+name);
+    vector<TString> setfiles = dirlist(dataset, ".root");
+    unsigned nfilesdir(setfiles.size()), ibatch(-1);
+    int njobs(nfilesdir/nfiles+1);
+    bool sendjob(nbatch>=ifile && nbatch<(ifile+njobs));
+    if(sendjob) ibatch = nbatch - ifile;
+    unsigned ini(nfiles*ibatch), end(nfiles*(ibatch+1));
+
+    for(unsigned fil(0); fil < nfilesdir; fil++){
+      filename = dataset+"/"+setfiles[fil];
+      if(fil>=ini && fil<end && sendjob) files.push_back(filename);
+    }
+    ifile += njobs;
+    file >> dataset;
+    while(!dataset.Contains("MINIAOD") && file){
+      if(dataset.Contains("_v")){
+	if(sendjob) yes_trig.push_back(dataset);
+	else if(files.size()==0) no_trig.push_back(dataset);
+      }
+      file >> dataset;
+    } // Looping over the input file for triggers
+  } // Looping over the input file for datasets
+}
+

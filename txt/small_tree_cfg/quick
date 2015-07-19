@@ -30,9 +30,10 @@ float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
 
-bool passJSON;
+bool json_golden;
+bool json_dcs;
 
-std::vector<bool> trig_decision;
+std::vector<bool> trig;
 std::vector<float> trig_prescale;
 
 ##################   MC   ################
