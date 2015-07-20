@@ -89,15 +89,18 @@ bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &tri
   for(int unsigned itrig=0;itrig<trigger_decision()->size();itrig++){
     trigname = trigger_name()->at(itrig);
     bool trigdec = trigger_decision()->at(itrig);
+    for(unsigned itn(0); itn < trig_names.size(); itn++){
+      if(trigname.Contains(trig_names[itn])){
+	trig_dec[itn] = trigdec; 
+	trig_prescale[itn] = trigger_prescalevalue()->at(itrig);
+      }
+
+    // Checking if the event passes at least one yes_trig and none of no_trig
     for(unsigned ind(0); ind<yes_trig.size(); ind++)
       if(trigname.Contains(yes_trig[ind])) want_event = (want_event||trigdec);
     for(unsigned ind(0); ind<no_trig.size(); ind++)
       if(trigname.Contains(no_trig[ind])) want_event = (want_event&&!trigdec);
-    for(unsigned itn(0); itn < trig_names.size(); itn++){
-      if(trigname == trig_names[itn]){
-	trig_dec[itn] = trigdec; 
-	trig_prescale[itn] = trigger_prescalevalue()->at(itrig);
-      }
+
     } // Loop over trigger names
   } // Loop over cfA triggers
   return want_event;
