@@ -4,14 +4,16 @@ import sys
 import subprocess
 import os
 
-if len(sys.argv) < 3:
-    filename = 'txt/datasamples/slep_dlep_htmht_ht_met.txt'
-else:
-    filename = sys.argv[2]
 if len(sys.argv) < 2:
-    files_job = 25
+    files_job = 5
 else:
     files_job = sys.argv[1]
+
+if len(sys.argv) < 3:
+    #filename = 'txt/datasamples/slep_dlep_htmht_ht_met.txt'
+    filename = 'txt/datasamples/htmht_met.txt'
+else:
+    filename = sys.argv[2]
 
 sample_file = open(filename, 'r')
 

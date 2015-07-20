@@ -83,6 +83,7 @@ void phys_objects::GetEntry(const long entry){
 bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &trig_dec, 
 				  vector<float> &trig_prescale){
   bool want_event(yes_trig.size()==0); // If yes_trig is not set up, we keep every event
+  bool duplicate(false);
   TString trigname;
   trig_dec.resize(trig_names.size(), false);
   trig_prescale.resize(trig_names.size(), 1.);
@@ -94,16 +95,16 @@ bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &tri
 	trig_dec[itn] = trigdec; 
 	trig_prescale[itn] = trigger_prescalevalue()->at(itrig);
       }
+    } // Loop over trigger names
 
     // Checking if the event passes at least one yes_trig and none of no_trig
     for(unsigned ind(0); ind<yes_trig.size(); ind++)
-      if(trigname.Contains(yes_trig[ind])) want_event = (want_event||trigdec);
+      if(trigname.Contains(yes_trig[ind])) want_event = (want_event || trigdec);
     for(unsigned ind(0); ind<no_trig.size(); ind++)
-      if(trigname.Contains(no_trig[ind])) want_event = (want_event&&!trigdec);
+      if(trigname.Contains(no_trig[ind])) duplicate = (duplicate || trigdec);
 
-    } // Loop over trigger names
   } // Loop over cfA triggers
-  return want_event;
+  return want_event&&!duplicate;
 }
 
 bool phys_objects::PassesJSONCut(TString type){

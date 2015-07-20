@@ -1,0 +1,7 @@
+/cms2r0/cfA/HTMHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2468_v80
+PFHT350_PFMET100_NoiseCleaned_v
+
+/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2469_v80
+PFMET170_NoiseCleaned_v
+PFMET120_NoiseCleaned_Mu5_v
+

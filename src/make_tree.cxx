@@ -80,9 +80,17 @@ int main(int argc, char *argv[]){
     else {
       mode = txt_part;
       TString outname;
-      ParseDatasets(inFilename, nfiles, nbatch, yes_trig, no_trig, files, outname);      
-      cout<<"Sending job "<<files[0]<<" with "<<files.size()<<" files, "
+      ParseDatasets(inFilename, nfiles, nbatch, yes_trig, no_trig, files, outname); 
+      if(files.size()==0){
+	cout<<"No files for file "<<inFilename<<". Exiting"<<endl<<endl;
+	return 1;
+      }
+      cout<<"Sending job with "<<files.size()<<" files. First is "<<files[0]<<" with "<<files.size()<<" files, "
 	  <<yes_trig.size()<<" yes_trig, and "<<no_trig.size()<<" no_trig"<<endl;
+      for(unsigned ind(0); ind<yes_trig.size(); ind++)
+	cout<<"Yes: "<<yes_trig[ind]<<endl;
+      for(unsigned ind(0); ind<no_trig.size(); ind++)
+	cout<<"No: "<<no_trig[ind]<<endl;
       
       inFilename = files[0];
       outFilename = outfolder+prefix+outname+"_files"; outFilename += nfiles;
@@ -184,13 +192,29 @@ void ParseDatasets(TString inFilename, int nfiles, int nbatch, vector<TString> &
     name.Remove(name.First('_'), len);
     outname += ("_"+name);
     vector<TString> setfiles = dirlist(dataset, ".root");
-    unsigned nfilesdir(setfiles.size()), ibatch(-1);
+   
+    // For some reason, files can't be read some times
+    if(setfiles.size()==0) {
+      int maxretry(5);
+      for(int ind(0); ind<maxretry; ind++){
+	cout<<"No root files found at "<<dataset<<". Retrying "<<ind+1<<"/"<<maxretry<<endl;
+	setfiles = dirlist(dataset, ".root");
+	if(setfiles.size()>0) break;
+      }
+      if(setfiles.size()==0) {
+	cout<<"Giving up. No root files found at "<<dataset<<endl;
+	return;
+      }
+    }
+    int nfilesdir(static_cast<int>(setfiles.size())), ibatch(-1);
     int njobs(nfilesdir/nfiles+1);
     bool sendjob(nbatch>=ifile && nbatch<(ifile+njobs));
     if(sendjob) ibatch = nbatch - ifile;
-    unsigned ini(nfiles*ibatch), end(nfiles*(ibatch+1));
+    int ini(nfiles*ibatch), end(nfiles*(ibatch+1));
+    cout<<"Adding "<<dataset<<". nbatch "<<nbatch<<", ifile "<<ifile<<", njobs "<<njobs<<", sendjob "<<sendjob
+	<<", nfilesdir "<<nfilesdir<<", ini "<<ini<<", end "<<end;
 
-    for(unsigned fil(0); fil < nfilesdir; fil++){
+    for(int fil(0); fil < nfilesdir; fil++){
       filename = dataset+"/"+setfiles[fil];
       if(fil>=ini && fil<end && sendjob) files.push_back(filename);
     }
@@ -203,6 +227,10 @@ void ParseDatasets(TString inFilename, int nfiles, int nbatch, vector<TString> &
       }
       file >> dataset;
     } // Looping over the input file for triggers
+    cout<<". It has "<<yes_trig.size()<<" yes_trig and "<<no_trig.size()<<" no_trig"<<endl;
   } // Looping over the input file for datasets
+  if(files.size()==0){
+    cout<<"No files for file "<<inFilename<<" and batch job "<<nbatch<<". Max batch number "<<ifile-1<<endl;
+  }
 }
 
