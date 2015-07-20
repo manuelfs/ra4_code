@@ -14,6 +14,9 @@ float ht
 float ht40
 float ht_reliso
 float mht
+float mht_ra2b
+float ht_ra2b
+float ht_hlt
 float mt
 float mt_reliso
 float st
@@ -32,9 +35,6 @@ float mindphin_metjet
 
 bool json_golden;
 bool json_dcs;
-
-std::vector<bool> trig;
-std::vector<float> trig_prescale;
 
 ##################   MC   ################
 int ntruleps
@@ -98,6 +98,8 @@ int nbl
 int nbm
 int nbt
 int njets40
+int njets_ra2b
+int nbm_ra2b
 int nbl40
 int nbm40
 int nbt40
@@ -111,6 +113,14 @@ std::vector<float> jets_id
 std::vector<bool> jets_islep
 std::vector<int>   jets_fjet_index
 std::vector<int>   jets_fjet08_index
+
+###################   Trigger   ##################
+std::vector<bool> trig;
+std::vector<float> trig_prescale;
+float onht
+float onmet
+float onmaxmu
+float onmaxel
 
 ################  Fat Jets   ##################
 int nfjets

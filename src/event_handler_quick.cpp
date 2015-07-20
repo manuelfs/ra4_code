@@ -45,31 +45,31 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   float luminosity = 1000.;
 
   vector<TString> trig_name;
-  trig_name.push_back("PFHT350_PFMET100_NoiseCleaned_v");
-  trig_name.push_back("Mu15_IsoVVVL_PFHT350_PFMET70_v");
-  trig_name.push_back("Mu15_IsoVVVL_PFHT600_v");
-  trig_name.push_back("Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v");
-  trig_name.push_back("Mu15_PFHT300_v");
-  trig_name.push_back("Ele15_IsoVVVL_PFHT350_PFMET70_v");
-  trig_name.push_back("Ele15_IsoVVVL_PFHT600_v");
-  trig_name.push_back("Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v");
-  trig_name.push_back("Ele15_PFHT300_v");
-  trig_name.push_back("DoubleMu8_Mass8_PFHT300_v");
-  trig_name.push_back("DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v");
-  trig_name.push_back("PFHT475_v");
-  trig_name.push_back("PFHT800_v");
-  trig_name.push_back("PFMET120_NoiseCleaned_Mu5_v");
-  trig_name.push_back("PFMET170_NoiseCleaned_v");
-  trig_name.push_back("Mu17_v");
-  trig_name.push_back("Mu17_TrkIsoVVL_v");
-  trig_name.push_back("IsoMu17_eta2p1_v");
-  trig_name.push_back("IsoMu20_v");
-  trig_name.push_back("IsoMu24_eta2p1_v");
-  trig_name.push_back("IsoMu27_v");
-  trig_name.push_back("Mu50_v");
-  trig_name.push_back("Ele27_eta2p1_WPLoose_Gsf_v");
-  trig_name.push_back("Ele32_eta2p1_WPLoose_Gsf_v");
-  trig_name.push_back("Ele105_CaloIdVT_GsfTrkIdT_v");
+  trig_name.push_back("PFHT350_PFMET100_NoiseCleaned_v");               // 0
+  trig_name.push_back("Mu15_IsoVVVL_PFHT350_PFMET70_v");		// 1
+  trig_name.push_back("Mu15_IsoVVVL_PFHT600_v");			// 2
+  trig_name.push_back("Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v");		// 3
+  trig_name.push_back("Mu15_PFHT300_v");				// 4
+  trig_name.push_back("Ele15_IsoVVVL_PFHT350_PFMET70_v");		// 5
+  trig_name.push_back("Ele15_IsoVVVL_PFHT600_v");			// 6
+  trig_name.push_back("Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v");		// 7
+  trig_name.push_back("Ele15_PFHT300_v");				// 8
+  trig_name.push_back("DoubleMu8_Mass8_PFHT300_v");			// 9
+  trig_name.push_back("DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v");	// 10
+  trig_name.push_back("PFHT475_v");					// 11
+  trig_name.push_back("PFHT800_v");					// 12
+  trig_name.push_back("PFMET120_NoiseCleaned_Mu5_v");			// 13
+  trig_name.push_back("PFMET170_NoiseCleaned_v");			// 14
+  trig_name.push_back("Mu17_v");					// 15
+  trig_name.push_back("Mu17_TrkIsoVVL_v");				// 16
+  trig_name.push_back("IsoMu17_eta2p1_v");				// 17
+  trig_name.push_back("IsoMu20_v");					// 18
+  trig_name.push_back("IsoMu24_eta2p1_v");				// 19
+  trig_name.push_back("IsoMu27_v");					// 20
+  trig_name.push_back("Mu50_v");					// 21
+  trig_name.push_back("Ele27_eta2p1_WPLoose_Gsf_v");			// 22
+  trig_name.push_back("Ele32_eta2p1_WPLoose_Gsf_v");			// 23
+  trig_name.push_back("Ele105_CaloIdVT_GsfTrkIdT_v");                   // 24
   
 
   Timer timer(num_entries, 1.);
@@ -92,8 +92,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         break;
       }
     }
-
-
      ///////// Triggers ///////
     vector<bool> trig_decision;
     vector<float> trig_prescale;
@@ -101,6 +99,23 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.trig()=trig_decision;
     tree.trig_prescale()=trig_prescale;
 
+
+    //cout<<endl<<endl<<"Entry "<<entry<<endl;
+    tree.onmaxmu() = bad_val;
+    tree.onmaxel() = bad_val;
+    for(unsigned ind(0); ind<standalone_triggerobject_collectionname()->size(); ind++){
+      TString name(standalone_triggerobject_collectionname()->at(ind));
+      float objpt(standalone_triggerobject_pt()->at(ind));
+      if(name.Contains("MET")||name.Contains("HT")||name.Contains("Combined")||name.Contains("Mu")||
+      	 name.Contains("Ele")||name.Contains("Egamma"))
+	// cout<<name<<": pt "<<objpt<<", energy "<<standalone_triggerobject_energy()->at(ind)
+	//     <<", et "<<standalone_triggerobject_et()->at(ind)<<endl;
+
+      if(name=="hltPFMETProducer::HLT") tree.onmet() = objpt;
+      if(name=="hltPFHT::HLT") tree.onht() = objpt; // There's 2 of these, and we want the last one
+      if(name=="hltL3MuonCandidates::HLT" && tree.onmaxmu()<objpt) tree.onmaxmu() = objpt;
+      if(name=="hltEgammaCandidates::HLT" && tree.onmaxel()<objpt) tree.onmaxel() = objpt;
+    }
 
     /////////JSON////////
     tree.json_golden()=PassesJSONCut("golden"); //defined in phys_objects
@@ -290,6 +305,17 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.jets_id().at(idirty) = jets_parton_Id()->at(ijet);
       tree.jets_islep().at(idirty) = !(find(good_jets.begin(), good_jets.end(), ijet) != good_jets.end());
     }
+    tree.mht_ra2b() = GetMHT(dirty_jets, 30);
+
+    vector<int> ra2b_jets = GetJets(vector<int>(0), vector<int>(0), 30., 2.4);
+    tree.njets_ra2b() = GetNumJets(ra2b_jets, MinJetPt);
+    tree.nbm_ra2b() = GetNumJets(ra2b_jets, MinJetPt, CSVCuts[1]);
+    tree.ht_ra2b() = GetHT(ra2b_jets, MinJetPt);
+    
+    
+    vector<int> hlt_jets = GetJets(vector<int>(0), vector<int>(0), 40., 3.0);
+    tree.ht_hlt() = GetHT(hlt_jets, 40);
+
 
     vector<int> mj_jets;
     vector<bool> mj_jets_islep;
