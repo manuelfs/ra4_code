@@ -98,12 +98,12 @@ bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &tri
     } // Loop over trigger names
 
     // Checking if the event passes at least one yes_trig and none of no_trig
-    for(unsigned ind(0); ind<yes_trig.size(); ind++)
+    for(unsigned ind(0); ind<yes_trig.size() && !want_event && !duplicate; ind++)
       if(trigname.Contains(yes_trig[ind])) want_event = (want_event || trigdec);
-    for(unsigned ind(0); ind<no_trig.size(); ind++)
-      if(trigname.Contains(no_trig[ind])) duplicate = (duplicate || trigdec);
-
+    for(unsigned ind(0); ind<no_trig.size() && !duplicate; ind++)
+      if(trigname.Contains(no_trig[ind])) duplicate = (duplicate || trigdec);    
   } // Loop over cfA triggers
+
   return want_event&&!duplicate;
 }
 

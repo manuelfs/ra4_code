@@ -45,31 +45,31 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   float luminosity = 1000.;
 
   vector<TString> trig_name;
-  trig_name.push_back("PFHT350_PFMET100_NoiseCleaned_v");               // 0
-  trig_name.push_back("Mu15_IsoVVVL_PFHT350_PFMET70_v");		// 1
-  trig_name.push_back("Mu15_IsoVVVL_PFHT600_v");			// 2
-  trig_name.push_back("Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v");		// 3
-  trig_name.push_back("Mu15_PFHT300_v");				// 4
-  trig_name.push_back("Ele15_IsoVVVL_PFHT350_PFMET70_v");		// 5
-  trig_name.push_back("Ele15_IsoVVVL_PFHT600_v");			// 6
-  trig_name.push_back("Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v");		// 7
-  trig_name.push_back("Ele15_PFHT300_v");				// 8
-  trig_name.push_back("DoubleMu8_Mass8_PFHT300_v");			// 9
-  trig_name.push_back("DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v");	// 10
-  trig_name.push_back("PFHT475_v");					// 11
-  trig_name.push_back("PFHT800_v");					// 12
-  trig_name.push_back("PFMET120_NoiseCleaned_Mu5_v");			// 13
-  trig_name.push_back("PFMET170_NoiseCleaned_v");			// 14
-  trig_name.push_back("Mu17_v");					// 15
-  trig_name.push_back("Mu17_TrkIsoVVL_v");				// 16
-  trig_name.push_back("IsoMu17_eta2p1_v");				// 17
-  trig_name.push_back("IsoMu20_v");					// 18
-  trig_name.push_back("IsoMu24_eta2p1_v");				// 19
-  trig_name.push_back("IsoMu27_v");					// 20
-  trig_name.push_back("Mu50_v");					// 21
-  trig_name.push_back("Ele27_eta2p1_WPLoose_Gsf_v");			// 22
-  trig_name.push_back("Ele32_eta2p1_WPLoose_Gsf_v");			// 23
-  trig_name.push_back("Ele105_CaloIdVT_GsfTrkIdT_v");                   // 24
+  trig_name.push_back("HLT_PFHT350_PFMET100_NoiseCleaned_v");		  // 0
+  trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT350_PFMET70_v");		  // 1
+  trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT600_v");			  // 2
+  trig_name.push_back("HLT_Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v");	  // 3
+  trig_name.push_back("HLT_Mu15_PFHT300_v");				  // 4
+  trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT350_PFMET70_v");		  // 5
+  trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT600_v");			  // 6
+  trig_name.push_back("HLT_Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v");	  // 7
+  trig_name.push_back("HLT_Ele15_PFHT300_v");				  // 8
+  trig_name.push_back("HLT_DoubleMu8_Mass8_PFHT300_v");			  // 9
+  trig_name.push_back("HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v"); // 10
+  trig_name.push_back("HLT_PFHT475_v");					  // 11
+  trig_name.push_back("HLT_PFHT800_v");					  // 12
+  trig_name.push_back("HLT_PFMET120_NoiseCleaned_Mu5_v");		  // 13
+  trig_name.push_back("HLT_PFMET170_NoiseCleaned_v");			  // 14
+  trig_name.push_back("HLT_Mu17_v");					  // 15
+  trig_name.push_back("HLT_Mu17_TrkIsoVVL_v");				  // 16
+  trig_name.push_back("HLT_IsoMu17_eta2p1_v");				  // 17
+  trig_name.push_back("HLT_IsoMu20_v");					  // 18
+  trig_name.push_back("HLT_IsoMu24_eta2p1_v");				  // 19
+  trig_name.push_back("HLT_IsoMu27_v");					  // 20
+  trig_name.push_back("HLT_Mu50_v");					  // 21
+  trig_name.push_back("HLT_Ele27_eta2p1_WPLoose_Gsf_v");		  // 22
+  trig_name.push_back("HLT_Ele32_eta2p1_WPLoose_Gsf_v");		  // 23
+  trig_name.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");		  // 24
 
   // This is to save only events in data for which we store the trigger
   if(isData() && yes_trig.size()==0) yes_trig=trig_name; 
@@ -81,27 +81,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     timer.Iterate();
     GetEntry(entry);
 
-    tree.event() = event();
-    tree.lumiblock() = lumiblock();
-    tree.run() = run();
-    if(out_file_name.Contains("Run2015")) tree.weight() = 1.;
-    else tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
+    /////////JSON////////
+    if(isData() && !PassesJSONCut("dcs")) continue;	// Only saving events with good DCS
+    tree.json_golden()=PassesJSONCut("golden"); // Golden JSON
 
-    tree.npv() = Npv();
-    for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
-      if(PU_bunchCrossing()->at(bc)==0){
-        tree.ntrupv() = PU_NumInteractions()->at(bc);
-        tree.ntrupv_mean() = PU_TrueNumInteractions()->at(bc);
-        break;
-      }
-    }
      ///////// Triggers ///////
     vector<bool> trig_decision;
     vector<float> trig_prescale;
     if(!GetTriggerInfo(trig_name, trig_decision, trig_prescale)) continue;
     tree.trig()=trig_decision;
     tree.trig_prescale()=trig_prescale;
-
 
     //cout<<endl<<endl<<"Entry "<<entry<<endl;
     for(unsigned ind(0); ind<standalone_triggerobject_collectionname()->size(); ind++){
@@ -118,10 +107,20 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       if(name=="hltEgammaCandidates::HLT" && tree.onmaxel()<objpt) tree.onmaxel() = objpt;
     }
 
-    /////////JSON////////
-    if(isData() && !PassesJSONCut("dcs")) continue;	// Only saving events with good DCS
-    tree.json_golden()=PassesJSONCut("golden"); // Golden JSON
+    tree.event() = event();
+    tree.lumiblock() = lumiblock();
+    tree.run() = run();
+    if(isData()) tree.weight() = 1.;
+    else tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
 
+    tree.npv() = Npv();
+    for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
+      if(PU_bunchCrossing()->at(bc)==0){
+        tree.ntrupv() = PU_NumInteractions()->at(bc);
+        tree.ntrupv_mean() = PU_TrueNumInteractions()->at(bc);
+        break;
+      }
+    }
     ///////////// MET //////////////////
     tree.met() = met_corr();
     tree.met_phi() = met_phi_corr();

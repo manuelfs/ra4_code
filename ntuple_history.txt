@@ -1,3 +1,10 @@
+2015-07-22, quick:
+  - Added triggers and JSON for data
+  - Changed signal muon ID to Medium, veto to Loose
+  - Most MC is Spring15 with cfA v80
+  - Added mumu_m and elel_m with the dilepton invariant mass
+  - Added online HT, MET, lepton pT
+
 2015-05-25, quick:
   - Lowered jet pT threshold to 30 GeV for HT, njets, nb
   - Added ht40, njets40, nb[t,m,l]40 variables
