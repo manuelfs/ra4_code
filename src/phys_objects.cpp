@@ -110,7 +110,7 @@ bool phys_objects::GetTriggerInfo(vector<TString> &trig_names, vector<bool> &tri
 bool phys_objects::PassesJSONCut(TString type){
   string sampleName = SampleName();
 
-  if(sampleName.find("Run201")!=std::string::npos){
+  if(isData()){
     if(type=="golden") return inJSON(VRunLumi2015golden, run(), lumiblock());
     if(type=="dcs") return inJSON(VRunLumi2015dcs, run(), lumiblock());
   }
@@ -165,7 +165,7 @@ bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   int version = GetVersion();
   bool dec = false;
   if(version<80) dec = IsIdMuon(imu, kTight); //Intentionally vetoing on "tight" muons!
-  else dec = IsIdMuon(imu, kMedium);
+  else dec = IsIdMuon(imu, kLoose);
   return dec && fabs(mus_eta()->at(imu))<2.4;
 }
 
@@ -179,17 +179,20 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
   default:
   case kVeto:
   case kLoose:
-    pf_cut                = true;
-    global_or_tracker_cut = true;
-    global_cut            = false;
-    globalprompttight_cut = false;
-    chisq_cut             = fltmax;
-    hits_cut              = -fltmax;
-    stations_cut          = -fltmax;
-    dxy_cut               = fltmax;
-    dz_cut                = fltmax;
-    pixel_cut             = -fltmax;
-    layers_cut            = -fltmax;
+    if(GetVersion()>=80) return mus_isLooseMuon()->at(imu);
+    else {
+      pf_cut                = true;
+      global_or_tracker_cut = true;
+      global_cut            = false;
+      globalprompttight_cut = false;
+      chisq_cut             = fltmax;
+      hits_cut              = -fltmax;
+      stations_cut          = -fltmax;
+      dxy_cut               = fltmax;
+      dz_cut                = fltmax;
+      pixel_cut             = -fltmax;
+      layers_cut            = -fltmax;
+    }
     break;
     
   case kMedium:
@@ -198,17 +201,20 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
 
     
   case kTight:
-    pf_cut                = true;
-    global_or_tracker_cut = false;
-    global_cut            = true;
-    globalprompttight_cut = true;
-    chisq_cut             = 10.0;
-    hits_cut              = 0.0;
-    stations_cut          = 1.0;
-    dxy_cut               = 0.2;
-    dz_cut                = 0.5;
-    pixel_cut             = 0;
-    layers_cut            = 5;
+    if(GetVersion()>=80) return mus_isTightMuon()->at(imu);
+    else {
+      pf_cut                = true;
+      global_or_tracker_cut = false;
+      global_cut            = true;
+      globalprompttight_cut = true;
+      chisq_cut             = 10.0;
+      hits_cut              = 0.0;
+      stations_cut          = 1.0;
+      dxy_cut               = 0.2;
+      dz_cut                = 0.5;
+      pixel_cut             = 0;
+      layers_cut            = 5;
+    }
     break;
   }
 
@@ -427,7 +433,7 @@ float phys_objects::GetElectronIsolation(unsigned iel, bool mini) const {
     if(Type()==typeid(cfa_8)){
       double sumEt = els_PFphotonIsoR03()->at(iel)
         + els_PFneutralHadronIsoR03()->at(iel)
-        - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), IsMC());
+        - rho_kt6PFJetsForIsolation2011() * GetEffectiveArea(els_scEta()->at(iel), !isData());
       if(sumEt<0.0) sumEt=0;
       return (els_PFchargedHadronIsoR03()->at(iel) + sumEt)/els_pt()->at(iel);
     }else if(Type()==typeid(cfa_13)){
@@ -1363,8 +1369,8 @@ double phys_objects::getDZ(double vx, double vy, double vz, double px, double py
 ////////////////////////////////  EVENT VARS/////////////////////////////
 /////////////////////////////////////////////////////////////////////////
 
-bool phys_objects::IsMC() const {
-  return (SampleName().find("Run201") == string::npos);
+bool phys_objects::isData() const {
+  return (SampleName().find("Run201") != string::npos);
 }
 
 long double phys_objects::SumDeltaPhi(long double phi_x, long double phi_a, long double phi_b){

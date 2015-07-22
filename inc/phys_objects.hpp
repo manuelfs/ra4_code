@@ -202,7 +202,7 @@ public:
   static double GetSphericity(const std::vector<TLorentzVector> &vs);
 
   // Utilities
-  bool IsMC() const;
+  bool isData() const;
   bool hasPFMatch(int index, particleId::leptonType type, int &pfIdx) const;
 
   void GetLeadingBJets(const std::vector<int> &good_jets,

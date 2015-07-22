@@ -33,8 +33,21 @@ float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
 
+float elel_m
+float elel_pt1
+float elel_pt2
+float elelv_m
+float elelv_pt1
+float elelv_pt2
+
+float mumu_m
+float mumu_pt1
+float mumu_pt2
+float mumuv_m
+float mumuv_pt1
+float mumuv_pt2
+
 bool json_golden;
-bool json_dcs;
 
 ##################   MC   ################
 int ntruleps

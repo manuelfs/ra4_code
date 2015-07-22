@@ -70,6 +70,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   trig_name.push_back("Ele27_eta2p1_WPLoose_Gsf_v");			// 22
   trig_name.push_back("Ele32_eta2p1_WPLoose_Gsf_v");			// 23
   trig_name.push_back("Ele105_CaloIdVT_GsfTrkIdT_v");                   // 24
+
+  // This is to save only events in data for which we store the trigger
+  if(isData() && yes_trig.size()==0) yes_trig=trig_name; 
   
 
   Timer timer(num_entries, 1.);
@@ -101,8 +104,6 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
 
     //cout<<endl<<endl<<"Entry "<<entry<<endl;
-    tree.onmaxmu() = bad_val;
-    tree.onmaxel() = bad_val;
     for(unsigned ind(0); ind<standalone_triggerobject_collectionname()->size(); ind++){
       TString name(standalone_triggerobject_collectionname()->at(ind));
       float objpt(standalone_triggerobject_pt()->at(ind));
@@ -118,8 +119,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     }
 
     /////////JSON////////
-    tree.json_golden()=PassesJSONCut("golden"); //defined in phys_objects
-    tree.json_dcs()=PassesJSONCut("dcs"); //defined in phys_objects
+    if(isData() && !PassesJSONCut("dcs")) continue;	// Only saving events with good DCS
+    tree.json_golden()=PassesJSONCut("golden"); // Golden JSON
 
     ///////////// MET //////////////////
     tree.met() = met_corr();
@@ -156,6 +157,11 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                                 -pv_x()->at(0)*sin(els_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(els_tk_phi()->at(index)));
         tree.els_dz().push_back(els_vz()->at(index)-pv_z()->at(0));
+
+	for(size_t iel(index+1); iel<els_pt()->size(); iel++) {
+	  if(IsVetoIdElectron(index)   && IsVetoIdElectron(iel))   Setllmass(tree, index, iel, 11, false);
+	  if(IsSignalIdElectron(index) && IsSignalIdElectron(iel)) Setllmass(tree, index, iel, 11, true);
+	}
 
         // MC truth
         bool fromW = false;
@@ -198,6 +204,11 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
                                 -pv_x()->at(0)*sin(mus_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(mus_tk_phi()->at(index)));
         tree.mus_dz().push_back(mus_tk_vz()->at(index)-pv_z()->at(0));
+	for(size_t imu(index+1); imu<mus_pt()->size(); imu++) {
+	  if(IsVetoIdMuon(index)   && IsVetoIdMuon(imu))   Setllmass(tree, index, imu, 13, false);
+	  if(IsSignalIdMuon(index) && IsSignalIdMuon(imu)) Setllmass(tree, index, imu, 13, true);
+	}
+
         // MC truth
         bool fromW = false;
         int mcmomID;
@@ -664,4 +675,56 @@ bool event_handler_quick::greater_m(const fastjet::PseudoJet &a, const fastjet::
 vector<fastjet::PseudoJet> event_handler_quick::sorted_by_m(vector<fastjet::PseudoJet> pjs){
   sort(pjs.begin(), pjs.end(), greater_m);
   return pjs;
+}
+
+void event_handler_quick::Setllmass(small_tree_quick &tree, size_t id1, size_t id2, int pdgid, bool isSig){
+  typedef float& (small_tree::*sm_float)() ;
+  sm_float ll_m, ll_pt1, ll_pt2;
+  if(pdgid==11){
+    if(els_charge()->at(id1)*els_charge()->at(id2) > 0) return; // Only using opposite sign leptons
+    if(els_pt()->at(id2) <= MinVetoLeptonPt) return; // Momentum of id1 already checked
+    if(els_miniso()->at(id1)>=0.1 || els_miniso()->at(id2)>=0.1) return; // Use only isolated leptons
+    if(isSig){
+      ll_m   = &small_tree::elel_m;
+      ll_pt1 = &small_tree::elel_pt1;
+      ll_pt2 = &small_tree::elel_pt2;
+    } else {
+      ll_m   = &small_tree::elelv_m;
+      ll_pt1 = &small_tree::elelv_pt1;
+      ll_pt2 = &small_tree::elelv_pt2;
+   }
+  } else if(pdgid==13){
+    if(mus_charge()->at(id1)*mus_charge()->at(id2) > 0) return; // Only using opposite sign leptons
+    if(mus_pt()->at(id2) <= MinVetoLeptonPt) return;
+    if(mus_miniso()->at(id1)>=0.2 || mus_miniso()->at(id2)>=0.2) return; // Use only isolated leptons
+    if(isSig){
+      ll_m   = &small_tree::mumu_m;
+      ll_pt1 = &small_tree::mumu_pt1;
+      ll_pt2 = &small_tree::mumu_pt2;
+    } else {
+      ll_m   = &small_tree::mumuv_m;
+      ll_pt1 = &small_tree::mumuv_pt1;
+      ll_pt2 = &small_tree::mumuv_pt2;
+   }
+  } else {
+    cout<<"PDG ID "<<pdgid<<" not supported in Setllmass, you silly."<<endl;
+    return;
+  }
+  if((tree.*ll_m)() > 0) return; // We only set it with the first good ll combination
+
+  float px1(-1.), py1(-1.), pz1(-1.), energy1(-1.), px2(-1.), py2(-1.), pz2(-1.), energy2(-1.);
+  if(pdgid==11){
+    px1 = els_px()->at(id1); py1 = els_py()->at(id1); pz1 = els_pz()->at(id1); energy1 = els_energy()->at(id1);
+    px2 = els_px()->at(id2); py2 = els_py()->at(id2); pz2 = els_pz()->at(id2); energy2 = els_energy()->at(id2);
+  }
+  if(pdgid==13){
+    px1 = mus_px()->at(id1); py1 = mus_py()->at(id1); pz1 = mus_pz()->at(id1); energy1 = mus_energy()->at(id1);
+    px2 = mus_px()->at(id2); py2 = mus_py()->at(id2); pz2 = mus_pz()->at(id2); energy2 = mus_energy()->at(id2);
+  }
+
+  TLorentzVector lep1(px1, py1, pz1, energy1), lep2(px2, py2, pz2, energy2);
+  lep2 += lep1;
+  (tree.*ll_m)() = lep2.M();
+  (tree.*ll_pt1)() = max(sqrt(px1*px1+py1*py1), sqrt(px2*px2+py2*py2));
+  (tree.*ll_pt2)() = min(sqrt(px1*px1+py1*py1), sqrt(px2*px2+py2*py2));
 }

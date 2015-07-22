@@ -107,7 +107,7 @@ fi
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2469_v80  $type $maxfiles
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleElectron_Run2015B-PromptReco-v1_MINIAOD_UCSB2470_v80  $type $maxfiles
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2466_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SinglePhoton_Run2015B-PromptReco-v1_MINIAOD_UCSB2471_v80  $type $maxfiles
+#./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SinglePhoton_Run2015B-PromptReco-v1_MINIAOD_UCSB2471_v80  $type $maxfiles
 
 
 exit 0;

@@ -39,6 +39,7 @@ public:
                     const std::vector<bool> &to_clean = std::vector<bool>(0));
 
   void SetMiniIso(small_tree_quick &tree, int ilep, int ParticleType);
+  void Setllmass(small_tree_quick &tree, size_t id1, size_t id2, int pdgid, bool isSig);
   
   unsigned TypeCode(const std::vector<mc_particle> &parts,
                     const std::vector<size_t> &moms);
