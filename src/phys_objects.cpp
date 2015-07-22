@@ -153,14 +153,20 @@ bool phys_objects::IsVetoMuon(unsigned imu, bool mini) const{
 
 bool phys_objects::IsSignalIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  return IsIdMuon(imu, kTight)
-    && fabs(mus_eta()->at(imu))<2.4;
+  int version = GetVersion();
+  bool dec = false;
+  if(version<80) dec = IsIdMuon(imu, kTight);
+  else dec =  IsIdMuon(imu, kMedium);
+  return dec && fabs(mus_eta()->at(imu))<2.4;
 }
 
 bool phys_objects::IsVetoIdMuon(unsigned imu) const {
   if(imu >= mus_pt()->size()) return false;
-  return IsIdMuon(imu, kTight)//Intentionally vetoing on "tight" muons!
-    && fabs(mus_eta()->at(imu))<2.4;
+  int version = GetVersion();
+  bool dec = false;
+  if(version<80) dec = IsIdMuon(imu, kTight); //Intentionally vetoing on "tight" muons!
+  else dec = IsIdMuon(imu, kMedium);
+  return dec && fabs(mus_eta()->at(imu))<2.4;
 }
 
 bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
@@ -185,7 +191,12 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     pixel_cut             = -fltmax;
     layers_cut            = -fltmax;
     break;
+    
   case kMedium:
+    return mus_isMediumMuon()->at(imu);
+    break;
+
+    
   case kTight:
     pf_cut                = true;
     global_or_tracker_cut = false;
