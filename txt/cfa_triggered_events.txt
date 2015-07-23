@@ -1,0 +1,38 @@
+/net/cms2/cms2r0/cfA/HTMHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2468_v80 (310347 entries)
+30575   HLT_PFHT350_PFMET100_NoiseCleaned_v
+
+/net/cms2/cms2r0/cfA/SingleElectron_Run2015B-PromptReco-v1_MINIAOD_UCSB2470_v80 (2489088 entries)
+31152   HLT_Ele15_PFHT300_v
+19006   HLT_Ele15_IsoVVVL_PFHT600_v
+7732    HLT_Ele15_IsoVVVL_PFHT350_PFMET70_v
+29603   HLT_Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v
+87100   HLT_Ele105_CaloIdVT_GsfTrkIdT_v
+576840  HLT_Ele32_eta2p1_WPLoose_Gsf_v
+989433  HLT_Ele27_eta2p1_WPLoose_Gsf_v
+
+/net/cms2/cms2r0/cfA/SingleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2466_v80 (2814400 entries)
+158828  HLT_Mu17_v
+24838   HLT_Mu15_PFHT300_v
+6026    HLT_Mu15_IsoVVVL_PFHT600_v
+4934    HLT_Mu15_IsoVVVL_PFHT350_PFMET70_v
+15484   HLT_Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v
+136227  HLT_Mu17_TrkIsoVVL_v
+169629  HLT_Mu50_v
+607000  HLT_IsoMu27_v
+682336  HLT_IsoMu24_eta2p1_v
+1070021         HLT_IsoMu20_v
+1413787         HLT_IsoMu17_eta2p1_v
+
+/net/cms2/cms2r0/cfA/DoubleEG_Run2015B-PromptReco-v1_MINIAOD_UCSB2472_v80 (4974444 entries)
+10428   HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v
+
+/net/cms2/cms2r0/cfA/DoubleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2467_v80 (1465367 entries)
+10798   HLT_DoubleMu8_Mass8_PFHT300_v
+
+/net/cms2/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2469_v80 (230949 entries)
+32463   HLT_PFMET170_NoiseCleaned_v
+6632    HLT_PFMET120_NoiseCleaned_Mu5_v
+
+/net/cms2/cms2r0/cfA/JetHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2473_v80 (5206642 entries)
+136571  HLT_PFHT800_v
+21236   HLT_PFHT475_v
