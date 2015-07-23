@@ -58,11 +58,19 @@ float cross_section(const TString &file){
   // k-factors from https://mangano.web.cern.ch/mangano/public/MECCA/samples_50ns_miniaod.txt
   // k-factors are ratio of https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
   // NLO/NNLO cross-sections to that of an inclusive sample in mcm at lower order (LO/NLO)
-  if(file.Contains("WJetsToLNu_HT-100to200"))  xsec = 1817.0*1.23;
-  if(file.Contains("WJetsToLNu_HT-200to400"))  xsec = 471.6*1.23;
-  if(file.Contains("WJetsToLNu_HT-400to600"))  xsec = 55.61*1.23;
-  if(file.Contains("WJetsToLNu_HT-600toInf"))  xsec = 18.81*1.23;
 
+  //cross-section per slice changed due to change in genHT definition
+  if (file.Contains("RunIISpring15DR74")){
+    if(file.Contains("WJetsToLNu_HT-100To200"))  xsec = 1292.0*1.21;
+    if(file.Contains("WJetsToLNu_HT-200To400"))  xsec = 385.9*1.21;
+    if(file.Contains("WJetsToLNu_HT-400To600"))  xsec = 47.9*1.21;
+    if(file.Contains("WJetsToLNu_HT-600ToInf"))  xsec = 19.9*1.21;
+  } else {
+    if(file.Contains("WJetsToLNu_HT-100to200"))  xsec = 1817.0*1.23;
+    if(file.Contains("WJetsToLNu_HT-200to400"))  xsec = 471.6*1.23;
+    if(file.Contains("WJetsToLNu_HT-400to600"))  xsec = 55.61*1.23;
+    if(file.Contains("WJetsToLNu_HT-600toInf"))  xsec = 18.81*1.23;
+  }
   if(file.Contains("WToENu"))   xsec = 16000.0;
   if(file.Contains("WToMuNu"))  xsec = 16100.0;
 
@@ -73,30 +81,41 @@ float cross_section(const TString &file){
 
   if(file.Contains("QCD_Pt-1800_")) xsec = 0.1091;
 
-  if(file.Contains("QCD_Pt-5to10"))      xsec = 80710000000;
-  if(file.Contains("QCD_Pt-10to15"))     xsec = 7528000000;
-  if(file.Contains("QCD_Pt-15to30"))     xsec = 2237000000;
-  if(file.Contains("QCD_Pt-30to50"))     xsec = 161500000;
-  if(file.Contains("QCD_Pt-50to80"))     xsec = 22110000;
-  if(file.Contains("QCD_Pt-80to120"))   xsec = 2762530;// xsec = 3000114.3;
-  if(file.Contains("QCD_Pt-120to170"))   xsec = 471100;//493200;
-  if(file.Contains("QCD_Pt-170to300"))   xsec = 117276;//120300;
-  if(file.Contains("QCD_Pt-300to470"))   xsec = 7823;//7475;
-  if(file.Contains("QCD_Pt-470to600"))   xsec = 648.2;//587.1;
-  if(file.Contains("QCD_Pt-600to800"))   xsec = 186.9;//167;
-  if(file.Contains("QCD_Pt-800to1000"))  xsec = 32.293;//28.25;
-  if(file.Contains("QCD_Pt-1000to1400")) xsec = 9.4183;//8.195;
-  if(file.Contains("QCD_Pt-1400to1800")) xsec = 0.84265;// 0.7346;
-  if(file.Contains("QCD_Pt-1800to2400")) xsec = 0.114943;//0.102;
-  if(file.Contains("QCD_Pt-2400to3200")) xsec = 0.00682981;//0.00644;
-  if(file.Contains("QCD_Pt-3200"))       xsec = 0.000165445;// 0.000163;
+  // only thing that changed for Spring 15 is "QCD_Pt-" --> "QCD_Pt_"
+  if (file.Contains("QCD_Pt")){ 
+    if(file.Contains("5to10"))      xsec = 80710000000;
+    if(file.Contains("10to15"))     xsec = 7528000000;
+    if(file.Contains("15to30"))     xsec = 2237000000;
+    if(file.Contains("30to50"))     xsec = 161500000;
+    if(file.Contains("50to80"))     xsec = 22110000;
+    if(file.Contains("80to120"))   xsec = 2762530;// xsec = 3000114.3;
+    if(file.Contains("120to170"))   xsec = 471100;//493200;
+    if(file.Contains("170to300"))   xsec = 117276;//120300;
+    if(file.Contains("300to470"))   xsec = 7823;//7475;
+    if(file.Contains("470to600"))   xsec = 648.2;//587.1;
+    if(file.Contains("600to800"))   xsec = 186.9;//167;
+    if(file.Contains("800to1000"))  xsec = 32.293;//28.25;
+    if(file.Contains("1000to1400")) xsec = 9.4183;//8.195;
+    if(file.Contains("1400to1800")) xsec = 0.84265;// 0.7346;
+    if(file.Contains("1800to2400")) xsec = 0.114943;//0.102;
+    if(file.Contains("2400to3200")) xsec = 0.00682981;//0.00644;
+    if(file.Contains("3200toInf"))       xsec = 0.000165445;// 0.000163;
+  }
 
-  if(file.Contains("TToLeptons_s-channel"))       xsec = 2.0;
-  if(file.Contains("TToLeptons_t-channel"))       xsec = 103.4;
-  if(file.Contains("T_tW-channel-DR"))            xsec = 35.0;
-  if(file.Contains("TBarToLeptons_s-channel"))    xsec = 1.0;
-  if(file.Contains("TBarToLeptons_t-channel"))    xsec = 61.6;
-  if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.0;
+  if (file.Contains("RunIISpring15DR74")){
+    if (file.Contains("ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8")) xsec = 10.11; //ref 10.32
+    if (file.Contains("ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8")) xsec = 80.95; //ref 80.95
+    if (file.Contains("ST_t-channel_top_4f_leptonDecays_13TeV-powheg-pythia8")) xsec = 103.02; //ref 136.02
+    if (file.Contains("ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8")) xsec = 38.09; //ref 35.8
+    if (file.Contains("ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8")) xsec = 38.09;// ref 35.8
+  } else {
+    if(file.Contains("TToLeptons_s-channel"))       xsec = 2.0;
+    if(file.Contains("TToLeptons_t-channel"))       xsec = 103.4;
+    if(file.Contains("T_tW-channel-DR"))            xsec = 35.0;
+    if(file.Contains("TBarToLeptons_s-channel"))    xsec = 1.0;
+    if(file.Contains("TBarToLeptons_t-channel"))    xsec = 61.6;
+    if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.0;
+  }
 
   if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3*1.27;
   if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24*1.27;
