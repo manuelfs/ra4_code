@@ -60,7 +60,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   trig_name.push_back("HLT_PFHT800_v");					  // 12
   trig_name.push_back("HLT_PFMET120_NoiseCleaned_Mu5_v");		  // 13
   trig_name.push_back("HLT_PFMET170_NoiseCleaned_v");			  // 14
-  trig_name.push_back("HLT_Mu17_v");					  // 15
+  trig_name.push_back("HLT_DoubleIsoMu17_eta2p1_v");			  // 15
   trig_name.push_back("HLT_Mu17_TrkIsoVVL_v");				  // 16
   trig_name.push_back("HLT_IsoMu17_eta2p1_v");				  // 17
   trig_name.push_back("HLT_IsoMu20_v");					  // 18
@@ -70,6 +70,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   trig_name.push_back("HLT_Ele27_eta2p1_WPLoose_Gsf_v");		  // 22
   trig_name.push_back("HLT_Ele32_eta2p1_WPLoose_Gsf_v");		  // 23
   trig_name.push_back("HLT_Ele105_CaloIdVT_GsfTrkIdT_v");		  // 24
+  trig_name.push_back("HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_MW_v");	  // 25
+  trig_name.push_back("HLT_DoubleEle24_22_eta2p1_WPLoose_Gsf_v");	  // 26
 
   // This is to save only events in data for which we store the trigger
   if(isData() && yes_trig.size()==0) yes_trig=trig_name; 
@@ -84,6 +86,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     /////////JSON////////
     if(isData() && !PassesJSONCut("dcs")) continue;	// Only saving events with good DCS
     tree.json_golden()=PassesJSONCut("golden"); // Golden JSON
+    //tree.json_dcs()=PassesJSONCut("dcs"); // DCS JSON
 
      ///////// Triggers ///////
     vector<bool> trig_decision;

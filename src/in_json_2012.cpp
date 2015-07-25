@@ -36,10 +36,10 @@ std::vector< std::vector<int> > MakeVRunLumi(std::string input){
     orgJSON.open("/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions12/8TeV/DCSOnly/json_DCSONLY.txt");
   }
   else if(input == "2015golden"){
-    orgJSON.open("txt/json/golden_15July2015_Run2015B.json");
+    orgJSON.open("txt/json/golden_Cert_246908-251883_13TeV_PromptReco_Collisions15_JSON_15_07_24.json");
   }
   else if(input == "2015dcs"){
-    orgJSON.open("txt/json/DCSONLY_Run2015B_15_07_19.json");
+    orgJSON.open("txt/json/dcs_DCSONLY_Run2015B_15_07_24.json");
   }
   else{
     orgJSON.open(input.c_str());

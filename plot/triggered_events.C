@@ -28,8 +28,9 @@ void find_cfa_trigger(TString filename = "txt/datasamples/slep_dlep_htmht_ht_met
       file >> trigger;
     } // Looping over the input file for triggers
  
-    TChain chain("cfA/eventA");
+    TChain chain("cfA/eventA"), chainB("cfA/eventB");
     chain.Add(dataset+"/*.root");
+    chainB.Add(dataset+"/*.root");
     long entries(chain.GetEntries());
     cout<<endl<<"Triggers for "<<dataset<<" ("<<entries<<" entries)"<<endl;
     outfile<<endl<<"Triggers for "<<dataset<<" ("<<entries<<" entries)"<<endl;
@@ -37,15 +38,28 @@ void find_cfa_trigger(TString filename = "txt/datasamples/slep_dlep_htmht_ht_met
     vector<int> ntriggered(trignames.size(), 0);
     vector<string>* trig_name(0);
     vector<bool>* trig_dec(0);
-    chain.SetBranchStatus("*",0);
-    chain.SetBranchStatus("trigger_name",1);
-    chain.SetBranchStatus("trigger_decision",1);
+    vector<float>* trig_pre(0);
+    UInt_t event, run;
+    // chain.SetBranchStatus("*",0);
+    // chain.SetBranchStatus("trigger_name",1);
+    // chain.SetBranchStatus("trigger_decision",1);
+    chain.SetBranchAddress("trigger_prescalevalue", &trig_pre);
     chain.SetBranchAddress("trigger_name", &trig_name);
     chain.SetBranchAddress("trigger_decision", &trig_dec);
+    chainB.SetBranchAddress("event", &event);
+    chainB.SetBranchAddress("run", &run);
+    
     for(int entry(0); entry < entries; entry++){
+      if(entry%50000==0) {
+	cout<<"Doing entry "<<entry<<" of "<<entries<<endl;
+      }
       chain.GetEntry(entry);
+      chainB.GetEntry(entry);
       for(unsigned itrig=0; itrig<trig_name->size();itrig++){
 	trigname = trig_name->at(itrig);
+	if(event== 14196661&&run==251561&&(trigname.Contains("Double") || trigname.Contains("Mu")) && trig_dec->at(itrig)) 
+	  cout<<entry<<": "<<trigname<<"  "<<trig_dec->at(itrig)<<", prescale "<<
+	    trig_pre->at(itrig)<<endl;
 	for(unsigned itn=0; itn<trignames.size();itn++) {
 	  if(trigname.Contains(trignames[itn])) {
 	    if(trig_dec->at(itrig)) ntriggered[itn]++;
@@ -53,6 +67,11 @@ void find_cfa_trigger(TString filename = "txt/datasamples/slep_dlep_htmht_ht_met
 	  }
 	} // Loop over desired triggers
       } // Loop over cfA triggers
+      if(event== 14196661&&run==251561){
+	cout<<entry<<": event "<<event<<", run "<<run<<endl;
+	return;
+      }
+      
     } // Loop over dataset entries
     for(unsigned itrig=0; itrig<trignames.size();itrig++){
       cout<<ntriggered[itrig]<<" \t"<<trignames[itrig]<<endl;
@@ -79,7 +98,7 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
     datasets.push_back(dataset);
     PDs.ReplaceAll(dataset,"");
   } 
-  //for(unsigned ind(0); ind<datasets.size(); ind++) cout<<datasets[ind]<<endl;
+  for(unsigned ind(0); ind<datasets.size(); ind++) cout<<datasets[ind]<<endl;
 
   while(file){
     if(!word2.Contains("MINIAOD")) {
@@ -90,7 +109,7 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
     bool want_PD(false);
     for(unsigned ind(0); ind<datasets.size(); ind++) 
       if(word2.Contains(datasets[ind])) {want_PD=true; break;}
-
+    cout<<"Doing dataset "<<word2<<" and want_PD "<<want_PD<<endl;
     do {
       if(word2.Contains("HLT_") && want_PD) {
 	trignames.push_back(word2);
@@ -105,8 +124,8 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
     cout<<"No triggers desired. Exiting."<<endl;
     return;
   }
-  // for(unsigned ind(0); ind<trignames.size(); ind++) 
-  //   cout<<cfaevents[ind]<<" \t"<<trignames[ind]<<endl;
+   for(unsigned ind(0); ind<trignames.size(); ind++) 
+     cout<<cfaevents[ind]<<" \t"<<trignames[ind]<<endl;
 
   vector<int> trigind(trignames.size(), -1);
   vector<TString>*trig_name(0);
@@ -131,7 +150,7 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
   //entries=1000;
   cout<<endl<<"Triggers for "<<filename<<" ("<<entries<<" entries)"<<endl;
   for(int entry(0); entry < entries; entry++){
-    if(entry%50000==0) cout<<"Doing entry "<<entry<<" of "<<entries<<endl;
+    if(entry%250000==0) cout<<"Doing entry "<<entry<<" of "<<entries<<endl;
     tree.GetEntry(entry);
     for(unsigned itn=0; itn<trignames.size();itn++) 
       if(trigind[itn]>=0 && trig->at(trigind[itn])) ntriggered[itn]++;
