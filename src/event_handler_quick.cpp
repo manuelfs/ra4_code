@@ -84,8 +84,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     GetEntry(entry);
 
     /////////JSON////////
-    if(isData() && !PassesJSONCut("dcs")) continue;	// Only saving events with good DCS
-    tree.json_golden()=PassesJSONCut("golden"); // Golden JSON
+    bool golden(PassesJSONCut("golden"));
+    if(isData() && !PassesJSONCut("dcs") && !golden) continue;	// Only saving events with good DCS
+    tree.json_golden() = golden; // Golden JSON
     //tree.json_dcs()=PassesJSONCut("dcs"); // DCS JSON
 
      ///////// Triggers ///////

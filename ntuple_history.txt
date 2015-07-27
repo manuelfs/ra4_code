@@ -1,3 +1,7 @@
+2015-07-26, quick:
+  - Just reprocessed the data with the new JSON files
+  - Defined nleps (nvleps) as just the sum of nmus and nels (nvmus and nvels)
+
 2015-07-22, quick:
   - Added triggers and JSON for data
   - Changed signal muon ID to Medium, veto to Loose
