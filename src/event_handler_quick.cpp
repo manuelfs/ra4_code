@@ -239,15 +239,11 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     } // Loop over mus
 
-    tree.nleps() = static_cast<int>(bad_val);
-    if(tree.nels()+tree.nmus() == tree.nvels()+tree.nvmus()){
-      tree.nleps() = tree.nels() + tree.nmus();
-    }
+    tree.nleps() = tree.nels() + tree.nmus();
+    tree.nvleps() = tree.nvels() + tree.nvmus();
 
-    tree.nleps_reliso() = static_cast<int>(bad_val);
-    if(tree.nels_reliso()+tree.nmus_reliso() == tree.nvels_reliso()+tree.nvmus_reliso()){
-      tree.nleps_reliso() = tree.nels_reliso() + tree.nmus_reliso();
-    }
+    tree.nleps_reliso() = tree.nels_reliso() + tree.nmus_reliso();
+    
 
     if(lepmax_p4.Pt()>0.){
       tree.lep_pt() = lepmax_p4.Pt();

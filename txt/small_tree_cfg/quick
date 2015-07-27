@@ -63,6 +63,7 @@ int ntrumeisr
 
 ##################   Leptons   ################
 int nleps
+int nvleps
 int nleps_reliso
 
 int nmus

@@ -79,6 +79,14 @@ float cross_section(const TString &file){
   if(file.Contains("QCD_HT-500To1000_13TeV-madgraph")) xsec = 26740.0;
   if(file.Contains("QCD_HT_1000ToInf_13TeV-madgraph")) xsec = 769.7;
 
+  if(file.Contains("QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8"))   xsec = 1735000;
+  if(file.Contains("QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8"))   xsec = 366800;
+  if(file.Contains("QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8"))   xsec = 29370;
+  if(file.Contains("QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8"))  xsec = 6524;
+  if(file.Contains("QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8")) xsec = 1064;
+  if(file.Contains("QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8")) xsec = 121.5;
+  if(file.Contains("QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8"))  xsec = 25.42;
+
   if(file.Contains("QCD_Pt-1800_")) xsec = 0.1091;
 
   // only thing that changed for Spring 15 is "QCD_Pt-" --> "QCD_Pt_"
@@ -102,19 +110,21 @@ float cross_section(const TString &file){
     if(file.Contains("3200toInf"))       xsec = 0.000165445;// 0.000163;
   }
 
+  // Cross sections from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec
+  // multiplied by BF(W->mu,e,tau) = 0.324
   if (file.Contains("RunIISpring15DR74")){
-    if (file.Contains("ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8")) xsec = 10.11; //ref 10.32
-    if (file.Contains("ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8")) xsec = 80.95; //ref 80.95
-    if (file.Contains("ST_t-channel_top_4f_leptonDecays_13TeV-powheg-pythia8")) xsec = 103.02; //ref 136.02
-    if (file.Contains("ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8")) xsec = 38.09; //ref 35.8
-    if (file.Contains("ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8")) xsec = 38.09;// ref 35.8
+    if (file.Contains("ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8"))	    xsec = 3.34;
+    if (file.Contains("ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8")) xsec = 26.23;
+    if (file.Contains("ST_t-channel_top_4f_leptonDecays_13TeV-powheg-pythia8"))	    xsec = 44.07;
+    if (file.Contains("ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8"))	    xsec = 35.8;
+    if (file.Contains("ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8"))	    xsec = 35.8; 
   } else {
-    if(file.Contains("TToLeptons_s-channel"))       xsec = 2.0;
-    if(file.Contains("TToLeptons_t-channel"))       xsec = 103.4;
-    if(file.Contains("T_tW-channel-DR"))            xsec = 35.0;
-    if(file.Contains("TBarToLeptons_s-channel"))    xsec = 1.0;
-    if(file.Contains("TBarToLeptons_t-channel"))    xsec = 61.6;
-    if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.0;
+    if(file.Contains("TBarToLeptons_s-channel"))    xsec = 1.29;
+    if(file.Contains("TToLeptons_s-channel"))       xsec = 2.06;
+    if(file.Contains("TBarToLeptons_t-channel"))    xsec = 26.23;
+    if(file.Contains("TToLeptons_t-channel"))       xsec = 44.07;
+    if(file.Contains("Tbar_tW-channel-DR"))         xsec = 35.8; 
+    if(file.Contains("T_tW-channel-DR"))            xsec = 35.8; 
   }
 
   if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3*1.27;

@@ -1,5 +1,5 @@
 // skim_ntuples.cxx: Skims reduced trees
-// USAGE: ./plot/skim_ntuples.cxx infolder outfolder [cuts=\"ht>500&&met>200\"] [njobs=-1] [ijob=-1]
+// USAGE: ./plot/skim_ntuples.exe infolder outfolder [cuts=\"ht>500&&met>200\"] [njobs=-1] [ijob=-1]
 
 
 #include "utilities.hpp"
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
   if(argc < 3) {
     cout<<endl<<"Required at least 2 arguments: "
-	<<"./plot/skim_ntuples.cxx infolder outfolder [cuts=\"ht>500&&met>200\"] "
+	<<"./plot/skim_ntuples.exe infolder outfolder [cuts=\"ht>500&&met>200\"] "
 	<<"[njobs=-1] [ijob=-1]"<<endl<<endl;;
     return 1;
   }
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
   }
   cout<<"Doing files "<<ini+1<<" to "<<end<<" out of "<<nfiles<<endl;
   for(unsigned file(ini); file < end; file++){
-    onefile_skim(folder+files[file], outfolder, cuts);
+    onefile_skim(folder+"/"+files[file], outfolder, cuts);
   }
   return 0;
 }
@@ -75,6 +75,15 @@ void onefile_skim(TString infiles, TString outfolder, TString cuts){
   outfile.ReplaceAll(">","g"); outfile.ReplaceAll("<","s"); outfile.ReplaceAll("=","");
   outfile.ReplaceAll("(",""); outfile.ReplaceAll(")",""); outfile.ReplaceAll("+","");
   outfile = outfolder+outfile;
+
+  // Checking if output file exists
+  TString outname(outfile);
+  outname.ReplaceAll(outfolder, ""); outname.ReplaceAll("/", "");
+  vector<TString> outfiles = dirlist(outfolder, outname);
+  if(outfiles.size()>0) {
+    cout<<"File "<<outfile<<" exists. Exiting"<<endl;
+    return;
+  }
 
   gSystem->mkdir(outfolder, kTRUE);
   TFile out_rootfile(outfile, "CREATE");

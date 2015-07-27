@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <set>
 
 #include "TChain.h"
 #include "TString.h"
@@ -98,7 +99,7 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
     datasets.push_back(dataset);
     PDs.ReplaceAll(dataset,"");
   } 
-  for(unsigned ind(0); ind<datasets.size(); ind++) cout<<datasets[ind]<<endl;
+  //  for(unsigned ind(0); ind<datasets.size(); ind++) cout<<datasets[ind]<<endl;
 
   while(file){
     if(!word2.Contains("MINIAOD")) {
@@ -109,7 +110,7 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
     bool want_PD(false);
     for(unsigned ind(0); ind<datasets.size(); ind++) 
       if(word2.Contains(datasets[ind])) {want_PD=true; break;}
-    cout<<"Doing dataset "<<word2<<" and want_PD "<<want_PD<<endl;
+    //cout<<"Doing dataset "<<word2<<" and want_PD "<<want_PD<<endl;
     do {
       if(word2.Contains("HLT_") && want_PD) {
 	trignames.push_back(word2);
@@ -121,11 +122,11 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
   } // Loop over datasets
 
   if(trignames.size()==0){
-    cout<<"No triggers desired. Exiting."<<endl;
+    cout<<"No triggers desired. Exiting."<<endl; 
     return;
   }
-   for(unsigned ind(0); ind<trignames.size(); ind++) 
-     cout<<cfaevents[ind]<<" \t"<<trignames[ind]<<endl;
+   // for(unsigned ind(0); ind<trignames.size(); ind++) 
+   //   cout<<cfaevents[ind]<<" \t"<<trignames[ind]<<endl;
 
   vector<int> trigind(trignames.size(), -1);
   vector<TString>*trig_name(0);
@@ -157,4 +158,26 @@ void triggered_events(TString filename = "out/small_quick_Run2015B__HTMHT_MET_fi
   }
   for(unsigned itn=0; itn<trignames.size();itn++) 
     cout<<"ntu-cfa = "<<ntriggered[itn]-cfaevents[itn]<<", \t ntu = "<<ntriggered[itn]<<" \t"<<trignames[itn]<<endl;
+}
+
+void print_runs(TString filename, int itrig=-1){
+  set<int> runs;
+  int run;
+  vector<bool>*trig(0);
+  TChain tree("tree");
+  tree.Add(filename);
+  tree.SetBranchAddress("run", &run);
+  if(itrig>=0) tree.SetBranchAddress("trig", &trig);
+  long entries(tree.GetEntries());
+  for(int entry(0); entry < entries; entry++){
+    if(entry%250000==0) cout<<"Doing entry "<<entry<<" of "<<entries<<endl;
+    tree.GetEntry(entry);
+    if(itrig<0 || trig->at(itrig)) runs.insert(run);
+  }
+
+  cout<<endl<<"Runs for "<<filename<<endl;
+  set<int>::iterator itr;
+  for(itr = runs.begin(); itr != runs.end(); itr++)
+    cout<<*itr<<", ";
+  cout<<endl<<endl;
 }
