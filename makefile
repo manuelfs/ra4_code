@@ -1,17 +1,26 @@
-EXEDIR := run
+REV := $(shell cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*// | cut -d '.' -f 1 )
+DIST := $(shell echo "slc"$(REV) )
+$(info Building for release: $(DIST))
+
+
+EXEDIR := run/$(DIST)
 MACEXEDIR := plot
-OBJDIR := bin
+OBJDIR := bin/$(DIST)
 SRCDIR := src
 MACSRCDIR := macros
 INCDIR := inc
-MAKEDIR := bin
+MAKEDIR := bin/$(DIST)
 LIBFILE := $(OBJDIR)/libStatObj.a
 EX8FILE := example_cfa_file_8.root
 EX13FILE := example_cfa_file_13.root
 
+$(shell mkdir -p run/$(DIST))
+$(shell mkdir -p bin/$(DIST))
+
+
 CXX := $(shell root-config --cxx)
 EXTRA_WARNINGS := -Wcast-align -Wcast-qual -Wdisabled-optimization -Wformat=2 -Wformat-nonliteral -Wformat-security -Wformat-y2k -Winit-self -Winvalid-pch -Wlong-long -Wmissing-format-attribute -Wmissing-include-dirs -Wpacked -Wpointer-arith -Wredundant-decls -Wstack-protector -Wswitch-default -Wswitch-enum -Wundef -Wunused -Wvariadic-macros -Wwrite-strings -Wabi -Wctor-dtor-privacy -Wnon-virtual-dtor -Wsign-promo -Wsign-compare #-Wmissing-noreturn -Wunsafe-loop-optimizations -Wfloat-equal -Wsign-conversion -Wunreachable-code
-CXXFLAGS := $(subst -I,-isystem,$(shell fastjet/bin/fastjet-config --cxxflags)) -isystem $(shell root-config --incdir) -Wall -Wextra -pedantic -Werror -Wshadow -Woverloaded-virtual -Wold-style-cast $(EXTRA_WARNINGS) $(shell root-config --cflags) -O2 -I $(INCDIR)
+CXXFLAGS := $(subst -I,-isystem,$(shell fastjet/bin/fastjet-config --cxxflags)) -isystem $(shell root-config --incdir) -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -Wold-style-cast $(EXTRA_WARNINGS) $(shell root-config --cflags) -O2 -I $(INCDIR)
 LD := $(shell root-config --ld)
 LDFLAGS := $(shell root-config --ldflags)
 LDLIBS := $(shell root-config --libs) -lMinuit -lRooStats -lTreePlayer -lRooFitCore $(shell fastjet/bin/fastjet-config --libs --plugins)

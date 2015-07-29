@@ -26,7 +26,7 @@ using namespace std;
 using namespace fastjet;
 
 //const double CSVCuts[] = {0.244, 0.679, 0.898}; //Run 1 CSV
-const double CSVCuts[] = {0.423, 0.814, 0.941};   //Run 2 CSV+IVF
+const double CSVCuts[] = {0.605, 0.890, 0.970};   //Run 2 CSV+IVF
 
 namespace{
   const float fltmax = numeric_limits<float>::max();

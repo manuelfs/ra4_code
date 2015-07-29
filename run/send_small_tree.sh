@@ -21,7 +21,7 @@ if (( $nfiles <= $maxfiles ))
 then 
     outfile="out/small_${type}_${samplename}.root"
     if [ ! -f $outfile ]; then
-	JobSubmit.csh ./run/make_tree.exe -i $dataset -n -1 -s $type
+	JobSubmit.csh ./run/wrapper.sh make_tree.exe -i $dataset -n -1 -s $type
     else
 	echo File $outfile exists. Not sending job
     fi
@@ -32,7 +32,7 @@ else
     do
 	outfile="out/small_${type}_${samplename}_files${maxfiles}_batch${file}.root"
 	if [ ! -f $outfile ]; then
-	    JobSubmit.csh ./run/make_tree.exe -i $dataset -n -1 -f $maxfiles -b $file -t $totentries -s $type
+	    JobSubmit.csh ./run/wrapper.sh make_tree.exe -i $dataset -n -1 -f $maxfiles -b $file -t $totentries -s $type
 	else
 	    echo File $outfile exists. Not sending job
 	fi
