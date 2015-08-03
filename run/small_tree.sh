@@ -7,13 +7,30 @@ then
     maxfiles=$1
 fi
 
-## Signal
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1bbbb_2J_mGl-1000_mLSP-900_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2365_v78	$type	$maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1bbbb_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2364_v78	$type	$maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1qqqq_2J_mGl-1000_mLSP-800_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2367_v78	$type	$maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1qqqq_2J_mGl-1400_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2366_v78	$type	$maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1tttt_2J_mGl-1200_mLSP-800_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2363_v78	$type	$maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1tttt_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2377_v78	$type	$maxfiles
+
+#Data
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleEG_Run2015B-PromptReco-v1_MINIAOD_UCSB2472_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2467_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/HTMHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2468_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/JetHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2473_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2469_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleElectron_Run2015B-PromptReco-v1_MINIAOD_UCSB2470_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2466_v80  $type $maxfiles
+#./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SinglePhoton_Run2015B-PromptReco-v1_MINIAOD_UCSB2471_v80  $type $maxfiles
+
+### Drell-Yan
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v2_MINIAODSIM_UCSB2520_v80       $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v1_MINIAODSIM_UCSB2519_v80   $type $maxfiles
+
+
+### QCD_HT
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2_MINIAODSIM_UCSB2530_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2529_v80  $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2528_v80   $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2_MINIAODSIM_UCSB2534_v80    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v2_MINIAODSIM_UCSB2532_v80    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2533_v80    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2531_v80   $type $maxfiles
 
 ## QCD
 #./run/send_small_tree.sh /net/cms2/cms2r0/cfA/QCD_Pt_1000to1400_TuneCUETP8M1_13TeV_pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2502_v80  $type $maxfiles
@@ -89,6 +106,15 @@ fi
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/WH_HToBB_WToLNu_M-125_13TeV_powheg-herwigpp_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2382_v78 $type   $maxfiles
   ##
 
+## Signal
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1bbbb_2J_mGl-1000_mLSP-900_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2365_v78	$type	$maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1bbbb_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2364_v78	$type	$maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1qqqq_2J_mGl-1000_mLSP-800_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2367_v78	$type	$maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1qqqq_2J_mGl-1400_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2366_v78	$type	$maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1tttt_2J_mGl-1200_mLSP-800_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2363_v78	$type	$maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SMS-T1tttt_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MINIAODSIM_UCSB2377_v78	$type	$maxfiles
+
+
 ## GJets
 #./run/send_small_tree.sh /net/cms2/cms2r0/cfA/GJets_HT-400To600_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2483_v80  $type $maxfiles
 #./run/send_small_tree.sh /net/cms2/cms2r0/cfA/GJets_HT-600ToInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1_MINIAODSIM_UCSB2482_v80  $type $maxfiles
@@ -98,16 +124,5 @@ fi
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/GJets_HT-400to600_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2358_v78  $type   $maxfiles
 ./run/send_small_tree.sh /net/cms2/cms2r0/cfA/GJets_HT-600toInf_Tune4C_13TeV-madgraph-tauola_Phys14DR-PU20bx25_PHYS14_25_V1-v1_MINIAODSIM_UCSB2357_v78  $type   $maxfiles
   ##
-
-#Data
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleEG_Run2015B-PromptReco-v1_MINIAOD_UCSB2472_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2467_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/HTMHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2468_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/JetHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2473_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2469_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleElectron_Run2015B-PromptReco-v1_MINIAOD_UCSB2470_v80  $type $maxfiles
-./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2466_v80  $type $maxfiles
-#./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SinglePhoton_Run2015B-PromptReco-v1_MINIAOD_UCSB2471_v80  $type $maxfiles
-
 
 exit 0;

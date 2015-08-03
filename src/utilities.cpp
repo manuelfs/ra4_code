@@ -127,6 +127,10 @@ float cross_section(const TString &file){
     if(file.Contains("T_tW-channel-DR"))            xsec = 35.8; 
   }
 
+  if(file.Contains("DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8")) xsec = 18610;
+  if(file.Contains("DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8"))     xsec = 6104;
+
+
   if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3*1.27;
   if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24*1.27;
   if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.546*1.27;
