@@ -29,10 +29,10 @@ ifile = 1
 for line in lines:
     if line.find('MINIAOD') != -1:
         nfiles = len([f for f in os.listdir(line[:-1]) if f[-5:] == ".root"])
-        #print line[:-1]+' has '+`nfiles`+' files. Will send '+`nfiles/files_job+1`+' jobs'
+        print line[:-1]+' has '+`nfiles`+' files. Will send '+`nfiles/files_job+1`+' jobs'
         for num in range(0,nfiles/files_job+1):
             outfile = "out/small_quick_Run2015B__"+basefile+"_files"+`files_job`+"_batch"+`ifile`+".root"
-            command = 'JobSubmit.csh ./run/make_tree.exe -i '+filename+' -n -1 -f '+`files_job`+' -b '+`ifile`+' -t -1 -s quick'
+            command = 'JobSubmit.csh ./run/wrapper.sh make_tree.exe -i '+filename+' -n -1 -f '+`files_job`+' -b '+`ifile`+' -t -1 -s quick'
             #print command
             if(not os.path.isfile(outfile)): os.system(command)
             ifile += 1

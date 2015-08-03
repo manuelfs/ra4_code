@@ -119,6 +119,8 @@ public:
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
                            double pt_thresh, double eta_thresh) const;
+  bool AllGoodJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
+	       double pt_thresh, double eta_thresh) const;
   void GetMatchedLeptons(const std::vector<int> &veto_mu,
                          const std::vector<int> &veto_el,
                          std::map<size_t,std::vector<size_t> > &mu_matches,

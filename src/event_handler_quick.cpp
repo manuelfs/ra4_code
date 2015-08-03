@@ -280,6 +280,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     // vector<size_t> moms = GetMoms(parts);
     // tree.mc_type() = TypeCode(parts, moms);
 
+    // pass_jets() is true if all jets in the event (not matched to leptons) pass loose ID
+    tree.pass_jets() = AllGoodJets(sig_electrons, sig_muons, phys_objects::MinJetPt , fltmax);
+
     vector<int> good_jets = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 2.4);
     vector<int> good_jets_reliso = GetJets(sig_electrons_reliso, sig_muons_reliso, phys_objects::MinJetPt , 2.4);
     tree.njets() = GetNumJets(good_jets, MinJetPt);

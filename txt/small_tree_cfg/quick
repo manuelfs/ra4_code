@@ -48,6 +48,7 @@ float mumuv_pt1
 float mumuv_pt2
 
 bool json_golden;
+bool pass_jets;
 
 ##################   MC   ################
 int ntruleps

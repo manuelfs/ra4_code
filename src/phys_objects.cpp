@@ -174,6 +174,11 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
 
   bool pf_cut, global_cut, global_or_tracker_cut, globalprompttight_cut;
   double chisq_cut, hits_cut, stations_cut, dxy_cut, dz_cut, pixel_cut, layers_cut;
+  const double d0 = mus_tk_d0dum()->at(imu)
+    -pv_x()->at(0)*sin(mus_tk_phi()->at(imu))
+    +pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
+  const double dz = mus_tk_vz()->at(imu)-pv_z()->at(0);
+
   //See https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Tight_Muon
   switch(threshold){
   default:
@@ -196,7 +201,7 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
     break;
     
   case kMedium:
-    return mus_isMediumMuon()->at(imu);
+    return mus_isMediumMuon()->at(imu) && fabs(d0)<=0.2 && fabs(dz)<=0.5;
     break;
 
     
@@ -224,11 +229,6 @@ bool phys_objects::IsIdMuon(unsigned imu, CutLevel threshold) const{
   }else if(Type()==typeid(cfa_13)){
     isPF = mus_isPF()->at(imu);
   }
-  const double d0 = mus_tk_d0dum()->at(imu)
-    -pv_x()->at(0)*sin(mus_tk_phi()->at(imu))
-    +pv_y()->at(0)*cos(mus_tk_phi()->at(imu));
-  const double dz = mus_tk_vz()->at(imu)-pv_z()->at(0);
-
   return (!pf_cut || isPF)
     && (!global_or_tracker_cut || mus_isGlobalMuon()->at(imu)>0 || mus_isTrackerMuon()->at(imu)>0)
     && (!global_cut || mus_isGlobalMuon()->at(imu)>0)
@@ -595,28 +595,35 @@ vector<int> phys_objects::GetJets(const vector<int> &VetoEl, const vector<int> &
   for(unsigned ijet = 0; ijet<jets_corr_p4().size(); ijet++) {
     if(!IsGoodJet(ijet, pt_thresh, eta_thresh) || jet_is_lepton[ijet]) continue;
 
-    // double tmpdR, partp, jetp = sqrt(pow(jets_corr_p4()->at(ijet).Px(),2)+pow(jets_corr_p4()->at(ijet).Py(),2)+pow(jets_corr_p4()->at(ijet).Pz(),2));
-    // bool useJet = true;
-    // Tau cleaning: jet rejected if withing deltaR = 0.4 of tau, and momentum at least 60% from tau
-    // for(unsigned index = 0; index < taus_pt()->size(); index++) {
-    //   tmpdR = dR(jets_corr_p4()->at(ijet).Eta(), taus_eta()->at(index), jets_corr_p4()->at(ijet).Phi(), taus_phi()->at(index));
-    //   partp = sqrt(pow(taus_px()->at(index),2)+pow(taus_py()->at(index),2)+pow(taus_pz()->at(index),2));
-    //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
-    // }
-    // if(!useJet) continue;
-
-    // // Photon cleaning: jet rejected if withing deltaR = 0.4 of photon, and momentum at least 60% from photon
-    // for(unsigned index = 0; index < photons_pt()->size(); index++) {
-    //   tmpdR = dR(jets_corr_p4()->at(ijet).Eta(), photons_eta()->at(index), jets_corr_p4()->at(ijet).Phi(), photons_phi()->at(index));
-    //   partp = sqrt(pow(photons_px()->at(index),2)+pow(photons_py()->at(index),2)+pow(photons_pz()->at(index),2));
-    //   if(tmpdR < 0.4 && partp/jetp >= 0.6){useJet = false; break;}
-    // }
-    // if(!useJet) continue;
-
-    jets.push_back(ijet);
+     jets.push_back(ijet);
   } // Loop over jets
 
   return jets;
+}
+
+bool phys_objects::AllGoodJets(const vector<int> &VetoEl, const vector<int> &VetoMu,
+                                  double pt_thresh, double eta_thresh) const {
+  vector<bool> jet_is_lepton(jets_corr_p4().size(), false);
+  map<size_t,vector<size_t> > mu_matches, el_matches;
+  GetMatchedLeptons(VetoMu, VetoEl, mu_matches, el_matches);
+
+  for(size_t ijet = 0; ijet < jets_corr_p4().size(); ++ijet){
+    if(mu_matches.find(ijet) != mu_matches.end()
+       || el_matches.find(ijet) != el_matches.end()){
+      jet_is_lepton[ijet] = true;
+    }
+  }
+
+  bool bad_jets(true);
+  // Tau/photon cleaning, and calculation of HT
+  for(unsigned ijet = 0; ijet<jets_corr_p4().size(); ijet++) {
+    if(!jet_is_lepton[ijet] && jets_corr_p4().at(ijet).Pt()>pt_thresh &&
+       fabs(jets_corr_p4().at(ijet).Eta())<eta_thresh && !IsBasicJet(ijet)) {
+      bad_jets = false;
+      break;
+    }
+  } // Loop over jets
+  return bad_jets;
 }
 
 void phys_objects::GetMatchedLeptons(const vector<int> &veto_mu,

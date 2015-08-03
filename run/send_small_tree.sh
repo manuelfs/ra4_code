@@ -21,6 +21,7 @@ if (( $nfiles <= $maxfiles ))
 then 
     outfile="out/small_${type}_${samplename}.root"
     if [ ! -f $outfile ]; then
+	echo Sending $dataset in 1 job
 	JobSubmit.csh ./run/wrapper.sh make_tree.exe -i $dataset -n -1 -s $type
     else
 	echo File $outfile exists. Not sending job
@@ -28,6 +29,7 @@ then
 else
     nfiles=$(($nfiles + $maxfiles - 1))
     njobs=$(($nfiles / $maxfiles))
+    echo Sending $dataset in $njobs jobs
     for file in `seq 1 $njobs`;
     do
 	outfile="out/small_${type}_${samplename}_files${maxfiles}_batch${file}.root"
