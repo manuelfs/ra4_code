@@ -539,8 +539,8 @@ void phys_objects::CorrectJets() const{
   int version = GetVersion();
   if(version<78 || version==79) do_metcorr = false; // This is to avoid rounding errors
   TLorentzVector corr_p4, uncorr_p4, miniaod_p4;
-  float METx = pfType1metsSummer15V2_et()*cos(pfType1metsSummer15V2_phi());
-  float METy = pfType1metsSummer15V2_et()*sin(pfType1metsSummer15V2_phi());
+  float METx = mets_et()*cos(mets_phi());
+  float METy = mets_et()*sin(mets_phi());
   for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
     miniaod_p4.SetPtEtaPhiM(jets_pt()->at(ijet), jets_eta()->at(ijet),
 			    jets_phi()->at(ijet), jets_mass()->at(ijet));
@@ -571,8 +571,8 @@ void phys_objects::CorrectJets() const{
     met_corr_ = correctedMET;
     met_phi_corr_ = TVector2::Phi_mpi_pi(correctedMETPhi); 
   } else {
-    met_corr_ = pfType1metsSummer15V2_et();
-    met_phi_corr_ = pfType1metsSummer15V2_phi(); 
+    met_corr_ = mets_et();
+    met_phi_corr_ = mets_phi(); 
   }
   set_jets_ = true;
 }
@@ -615,7 +615,6 @@ bool phys_objects::AllGoodJets(const vector<int> &VetoEl, const vector<int> &Vet
   }
 
   bool bad_jets(true);
-  // Tau/photon cleaning, and calculation of HT
   for(unsigned ijet = 0; ijet<jets_corr_p4().size(); ijet++) {
     if(!jet_is_lepton[ijet] && jets_corr_p4().at(ijet).Pt()>pt_thresh &&
        fabs(jets_corr_p4().at(ijet).Eta())<eta_thresh && !IsBasicJet(ijet)) {

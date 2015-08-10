@@ -10,6 +10,8 @@ int ntrupv
 float ntrupv_mean
 float met
 float met_phi
+float met_nocorr
+float met_nocorr_phi
 float ht
 float ht40
 float ht_reliso
@@ -59,7 +61,13 @@ float mumuv_pt1
 float mumuv_pt2
 
 bool json_golden;
+
 bool pass_jets;
+bool pass_hbhe;
+bool pass_goodv;
+bool pass_cschalo;
+bool pass_eebadsc;
+bool pass;
 
 ##################   MC   ################
 int ntruleps

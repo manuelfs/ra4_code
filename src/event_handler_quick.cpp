@@ -128,12 +128,25 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     ///////////// MET //////////////////
     tree.met() = met_corr();
     tree.met_phi() = met_phi_corr();
+    tree.met_nocorr() = pfType1mets_default_et()->at(0);
+    tree.met_nocorr_phi() = pfType1mets_default_et()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
+
+    // MET filters
+    tree.pass_hbhe()    = static_cast<bool>(HBHENoisefilter_decision());
+    tree.pass_goodv()   = static_cast<bool>(goodVerticesfilter_decision());
+    tree.pass_cschalo() = static_cast<bool>(cschalofilter_decision());
+    tree.pass_eebadsc() = static_cast<bool>(eebadscfilter_decision());
+    // pass_jets() is true if all jets in the event (not matched to leptons) pass loose ID
+    vector<int> sig_electrons = GetElectrons(true, true);
+    vector<int> sig_muons = GetMuons(true, true);
+    tree.pass_jets() = AllGoodJets(sig_electrons, sig_muons, phys_objects::MinJetPt , fltmax);
+
+    tree.pass() = tree.pass_hbhe()&&tree.pass_goodv()&&tree.pass_cschalo()&&tree.pass_eebadsc()&&tree.pass_jets();
+
 
     TLorentzVector lepmax_p4(0., 0., 0., 0.), lepmax_p4_reliso(0., 0., 0., 0.);
     short lepmax_chg = 0, lepmax_chg_reliso = 0;
-    vector<int> sig_electrons = GetElectrons(true, true);
-    vector<int> sig_muons = GetMuons(true, true);
     vector<int> sig_electrons_reliso = GetElectrons(true, false);
     vector<int> sig_muons_reliso = GetMuons(true, false);
     vector<int> veto_electrons = GetElectrons(false, true);
@@ -253,8 +266,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_charge() = lepmax_chg;
       tree.st() = lepmax_p4.Pt()+met_corr();
 
-      float wx = pfType1metsSummer15V2_et()*cos(pfType1metsSummer15V2_phi()) + lepmax_p4.Px();
-      float wy = pfType1metsSummer15V2_et()*sin(pfType1metsSummer15V2_phi()) + lepmax_p4.Py();
+      float wx = mets_et()*cos(mets_phi()) + lepmax_p4.Px();
+      float wy = mets_et()*sin(mets_phi()) + lepmax_p4.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep() = DeltaPhi(wphi, lepmax_p4.Phi());
@@ -268,8 +281,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_charge_reliso() = lepmax_chg_reliso;
       tree.st_reliso() = lepmax_p4_reliso.Pt()+met_corr();
 
-      float wx = pfType1metsSummer15V2_et()*cos(pfType1metsSummer15V2_phi()) + lepmax_p4_reliso.Px();
-      float wy = pfType1metsSummer15V2_et()*sin(pfType1metsSummer15V2_phi()) + lepmax_p4_reliso.Py();
+      float wx = mets_et()*cos(mets_phi()) + lepmax_p4_reliso.Px();
+      float wy = mets_et()*sin(mets_phi()) + lepmax_p4_reliso.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep_reliso() = DeltaPhi(wphi, lepmax_p4_reliso.Phi());
@@ -280,16 +293,13 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     // vector<size_t> moms = GetMoms(parts);
     // tree.mc_type() = TypeCode(parts, moms);
 
-    // pass_jets() is true if all jets in the event (not matched to leptons) pass loose ID
-    tree.pass_jets() = AllGoodJets(sig_electrons, sig_muons, phys_objects::MinJetPt , fltmax);
-
     //**************** No HF variables ***************//
-    tree.met_nohf() = pfType1metsSummer15V2_NoHF_et();
-    tree.met_nohf_phi() = pfType1metsSummer15V2_NoHF_phi();
-    tree.met_nohf_sumEt() = pfType1metsSummer15V2_NoHF_sumEt(); 
+    tree.met_nohf() = mets_NoHF_et();
+    tree.met_nohf_phi() = mets_NoHF_phi();
+    tree.met_nohf_sumEt() = mets_NoHF_sumEt(); 
 
-    float met_hf_x = met_corr()*cos(met_phi_corr()) - pfType1metsSummer15V2_NoHF_et()*cos(pfType1metsSummer15V2_NoHF_phi());
-    float met_hf_y = met_corr()*sin(met_phi_corr()) - pfType1metsSummer15V2_NoHF_et()*sin(pfType1metsSummer15V2_NoHF_phi());    
+    float met_hf_x = met_corr()*cos(met_phi_corr()) - mets_NoHF_et()*cos(mets_NoHF_phi());
+    float met_hf_y = met_corr()*sin(met_phi_corr()) - mets_NoHF_et()*sin(mets_NoHF_phi());    
     tree.met_hf() = sqrt(met_hf_x*met_hf_x + met_hf_y*met_hf_y); 
     tree.met_hf_phi() = atan2(met_hf_y,met_hf_x);
 
