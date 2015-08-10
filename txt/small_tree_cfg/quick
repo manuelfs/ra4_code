@@ -33,6 +33,17 @@ float dphi_wlep
 float dphi_wlep_reliso
 float mindphin_metjet
 
+float met_nohf
+float met_nohf_phi
+float met_nohf_sumEt
+float met_hf
+float met_hf_phi
+float ht_hf
+float ht_nohf
+int njets_hf
+int njets_nohf
+bool hfjet
+
 float elel_m
 float elel_pt1
 float elel_pt2

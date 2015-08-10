@@ -253,8 +253,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_charge() = lepmax_chg;
       tree.st() = lepmax_p4.Pt()+met_corr();
 
-      float wx = mets_ex()->at(0) + lepmax_p4.Px();
-      float wy = mets_ey()->at(0) + lepmax_p4.Py();
+      float wx = pfType1metsSummer15V2_et()*cos(pfType1metsSummer15V2_phi()) + lepmax_p4.Px();
+      float wy = pfType1metsSummer15V2_et()*sin(pfType1metsSummer15V2_phi()) + lepmax_p4.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep() = DeltaPhi(wphi, lepmax_p4.Phi());
@@ -268,8 +268,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_charge_reliso() = lepmax_chg_reliso;
       tree.st_reliso() = lepmax_p4_reliso.Pt()+met_corr();
 
-      float wx = mets_ex()->at(0) + lepmax_p4_reliso.Px();
-      float wy = mets_ey()->at(0) + lepmax_p4_reliso.Py();
+      float wx = pfType1metsSummer15V2_et()*cos(pfType1metsSummer15V2_phi()) + lepmax_p4_reliso.Px();
+      float wy = pfType1metsSummer15V2_et()*sin(pfType1metsSummer15V2_phi()) + lepmax_p4_reliso.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep_reliso() = DeltaPhi(wphi, lepmax_p4_reliso.Phi());
@@ -282,6 +282,32 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     // pass_jets() is true if all jets in the event (not matched to leptons) pass loose ID
     tree.pass_jets() = AllGoodJets(sig_electrons, sig_muons, phys_objects::MinJetPt , fltmax);
+
+    //**************** No HF variables ***************//
+    tree.met_nohf() = pfType1metsSummer15V2_NoHF_et();
+    tree.met_nohf_phi() = pfType1metsSummer15V2_NoHF_phi();
+    tree.met_nohf_sumEt() = pfType1metsSummer15V2_NoHF_sumEt(); 
+
+    float met_hf_x = met_corr()*cos(met_phi_corr()) - pfType1metsSummer15V2_NoHF_et()*cos(pfType1metsSummer15V2_NoHF_phi());
+    float met_hf_y = met_corr()*sin(met_phi_corr()) - pfType1metsSummer15V2_NoHF_et()*sin(pfType1metsSummer15V2_NoHF_phi());    
+    tree.met_hf() = sqrt(met_hf_x*met_hf_x + met_hf_y*met_hf_y); 
+    tree.met_hf_phi() = atan2(met_hf_y,met_hf_x);
+
+    vector<int> good_jets_nohf = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 3.0);
+    vector<int> good_jets_eta5 = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 5.0);
+
+    float ht_nohf = GetHT(good_jets_nohf, MinJetPt);
+    float ht_eta5 = GetHT(good_jets_eta5, MinJetPt);
+    tree.ht_hf() = ht_eta5 - ht_nohf;
+    
+    int njets_nohf = GetNumJets(good_jets_nohf, MinJetPt);
+    int njets_eta5 = GetNumJets(good_jets_eta5, MinJetPt);
+    tree.njets_nohf() = njets_nohf;
+    tree.njets_hf() = njets_eta5 - njets_nohf;
+
+    tree.hfjet() = (njets_eta5 - njets_nohf)>0;
+
+    //**************** No HF variables ***************//
 
     vector<int> good_jets = GetJets(sig_electrons, sig_muons, phys_objects::MinJetPt , 2.4);
     vector<int> good_jets_reliso = GetJets(sig_electrons_reliso, sig_muons_reliso, phys_objects::MinJetPt , 2.4);
