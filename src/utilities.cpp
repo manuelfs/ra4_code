@@ -59,12 +59,14 @@ float cross_section(const TString &file){
   // k-factors are ratio of https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
   // NLO/NNLO cross-sections to that of an inclusive sample in mcm at lower order (LO/NLO)
 
+  if(file.Contains("WJetsToLNu") && file.Contains("amcatnloFXFX")) xsec=61526.7; //NNLO from Lesya's summary table 
+
   //cross-section per slice changed due to change in genHT definition
   if (file.Contains("RunIISpring15DR74")){
-    if(file.Contains("WJetsToLNu_HT-100To200"))  xsec = 1292.0*1.21;
-    if(file.Contains("WJetsToLNu_HT-200To400"))  xsec = 385.9*1.21;
-    if(file.Contains("WJetsToLNu_HT-400To600"))  xsec = 47.9*1.21;
-    if(file.Contains("WJetsToLNu_HT-600ToInf"))  xsec = 19.9*1.21;
+    if(file.Contains("WJetsToLNu_HT-100To200"))  xsec = 1347.*1.21; //updated based on MCM
+    if(file.Contains("WJetsToLNu_HT-200To400"))  xsec = 360.*1.21;
+    if(file.Contains("WJetsToLNu_HT-400To600"))  xsec = 48.9*1.21;
+    if(file.Contains("WJetsToLNu_HT-600ToInf"))  xsec = 18.77*1.21;
   } else {
     if(file.Contains("WJetsToLNu_HT-100to200"))  xsec = 1817.0*1.23;
     if(file.Contains("WJetsToLNu_HT-200to400"))  xsec = 471.6*1.23;
