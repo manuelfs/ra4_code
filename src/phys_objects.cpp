@@ -33,6 +33,7 @@ using namespace std;
 
 namespace{
   const float fltmax = numeric_limits<float>::max();
+  vector<string> jec_files;
 }
 
 float phys_objects::MinJetPt = 30.0;
@@ -57,10 +58,14 @@ phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   set_jets_(false),
   met_corr_(bad_val),
   met_phi_corr_(bad_val){
-  vector<string> jec_files;
-  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L1FastJet_AK4PFchs.txt");
-  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
-  jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L3Absolute_AK4PFchs.txt");
+  if(GetVersion()==78) {
+    jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L1FastJet_AK4PFchs.txt");
+    jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
+    jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L3Absolute_AK4PFchs.txt");
+  }
+  if(GetVersion()==82 && isData()) {
+    jec_files.push_back("txt/jec/Summer15_50nsV2_DATA_L2L3Residual_AK4PFchs.txt");
+  }
   jet_corrector_ = makeJetCorrector(jec_files);
 
 }
@@ -536,8 +541,6 @@ void phys_objects::CorrectJets() const{
   bool do_metcorr(false); // For now we don't correct MET
   //bool do_metcorr(true); 
   jets_corr_p4_.clear();
-  int version = GetVersion();
-  if(version<78 || version==79) do_metcorr = false; // This is to avoid rounding errors
   TLorentzVector corr_p4, uncorr_p4, miniaod_p4;
   float METx = mets_et()*cos(mets_phi());
   float METy = mets_et()*sin(mets_phi());
@@ -546,7 +549,7 @@ void phys_objects::CorrectJets() const{
 			    jets_phi()->at(ijet), jets_mass()->at(ijet));
     uncorr_p4 = miniaod_p4*jets_corrFactorRaw()->at(ijet);
     corr_p4 = miniaod_p4;
-    if(version==78){ //EXCLUDE 79
+    if(jec_files.size() > 0){ 
       corr_p4 *= jets_corrFactorRaw()->at(ijet); // First, uncorrect it
 
       jet_corrector_->setJetEta(corr_p4.Eta());
@@ -561,7 +564,7 @@ void phys_objects::CorrectJets() const{
 	METx -= corr_p4.Px();
 	METy -= corr_p4.Py();
       }
-    } // if version >= 78
+    } // if there are corrections to make
     jets_corr_p4_.push_back(corr_p4);
   } // Loop over jets
 

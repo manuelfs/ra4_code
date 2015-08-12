@@ -134,9 +134,18 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     // MET filters
     tree.pass_hbhe()    = static_cast<bool>(HBHENoisefilter_decision());
-    tree.pass_goodv()   = static_cast<bool>(goodVerticesfilter_decision());
     tree.pass_cschalo() = static_cast<bool>(cschalofilter_decision());
     tree.pass_eebadsc() = static_cast<bool>(eebadscfilter_decision());
+
+    bool one_good_pv(false);
+    for(unsigned ipv(0); ipv < pv_z()->size(); ipv++){
+      const double pv_rho(sqrt(pv_x()->at(ipv)*pv_x()->at(ipv) + pv_y()->at(ipv)*pv_y()->at(ipv)));
+      if(pv_ndof()->at(ipv)>4 && fabs(pv_z()->at(ipv))<24. && pv_rho<2.0 && pv_isFake()->at(ipv)==0){
+	one_good_pv = true;
+	break;
+      }
+    } // Loop over vertices
+    tree.pass_goodv() = one_good_pv && static_cast<bool>(goodVerticesfilter_decision());
     // pass_jets() is true if all jets in the event (not matched to leptons) pass loose ID
     vector<int> sig_electrons = GetElectrons(true, true);
     vector<int> sig_muons = GetMuons(true, true);
@@ -294,12 +303,15 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     // tree.mc_type() = TypeCode(parts, moms);
 
     //**************** No HF variables ***************//
-    tree.met_nohf() = mets_NoHF_et();
-    tree.met_nohf_phi() = mets_NoHF_phi();
-    tree.met_nohf_sumEt() = mets_NoHF_sumEt(); 
+    //float metnohf(mets_NoHF_et()), metnohfphi(mets_NoHF_phi()), metnohfsumet(mets_NoHF_sumEt());
+    float metnohf(mets_et()), metnohfphi(mets_phi()), metnohfsumet(mets_sumEt());
 
-    float met_hf_x = met_corr()*cos(met_phi_corr()) - mets_NoHF_et()*cos(mets_NoHF_phi());
-    float met_hf_y = met_corr()*sin(met_phi_corr()) - mets_NoHF_et()*sin(mets_NoHF_phi());    
+    tree.met_nohf() = metnohf;
+    tree.met_nohf_phi() = metnohfphi;
+    tree.met_nohf_sumEt() = metnohfsumet; 
+
+    float met_hf_x = met_corr()*cos(met_phi_corr()) - metnohf*cos(metnohfphi);
+    float met_hf_y = met_corr()*sin(met_phi_corr()) - metnohf*sin(metnohfphi);    
     tree.met_hf() = sqrt(met_hf_x*met_hf_x + met_hf_y*met_hf_y); 
     tree.met_hf_phi() = atan2(met_hf_y,met_hf_x);
 
