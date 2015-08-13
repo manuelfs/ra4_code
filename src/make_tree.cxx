@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
   std::string inFilename("");
   std::string masspoint("");
   int c(0), Nentries(-1), nfiles(-1), nbatch(-1), total_entries_override(-1);
-  string type = "";
+  string type = "quick";
   while((c=getopt(argc, argv, "n:t:i:m:f:b:s:"))!=-1){
     switch(c){
     case 'n':

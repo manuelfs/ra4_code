@@ -63,8 +63,19 @@ phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
     jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
     jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L3Absolute_AK4PFchs.txt");
   }
-  if(GetVersion()==82 && isData()) {
-    jec_files.push_back("txt/jec/Summer15_50nsV2_DATA_L2L3Residual_AK4PFchs.txt");
+  if(GetVersion()==82) {
+    if(isData()) {
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_DATA_L1FastJet_AK4PFchs.txt");
+      //jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_DATA_L1RC_AK4PFchs.txt");
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_DATA_L2Relative_AK4PFchs.txt");
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_DATA_L3Absolute_AK4PFchs.txt");
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_DATA_L2L3Residual_AK4PFchs.txt");
+    } else if(SampleName().rfind("50ns") != std::string::npos){
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_MC_L1FastJet_AK4PFchs.txt");
+      //jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_MC_L1RC_AK4PFchs.txt");
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_MC_L2Relative_AK4PFchs.txt");
+      jec_files.push_back("txt/jec/summer15_v3/Summer15_50nsV3_MC_L3Absolute_AK4PFchs.txt");
+    } // For now, use the cfA JECs for 25ns MC
   }
   jet_corrector_ = makeJetCorrector(jec_files);
 

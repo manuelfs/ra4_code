@@ -126,10 +126,10 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
     ///////////// MET //////////////////
-    tree.met() = met_corr();
-    tree.met_phi() = met_phi_corr();
-    tree.met_nocorr() = pfType1mets_default_et()->at(0);
-    tree.met_nocorr_phi() = pfType1mets_default_et()->at(0);
+    tree.met() = pfType1metsSummer15V2_et();
+    tree.met_phi() = pfType1metsSummer15V2_phi();
+    tree.met_mini() = pfType1mets_default_et()->at(0);
+    tree.met_mini_phi() = pfType1mets_default_et()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
 
     // MET filters
