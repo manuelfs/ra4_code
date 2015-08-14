@@ -13,7 +13,7 @@
 #include "TVector2.h"
 #include "TFile.h"
 #include "TROOT.h"
-
+#include "TH1F.h"
 #include "fastjet/ClusterSequence.hh"
 
 #include "event_handler_base.hpp"
@@ -37,6 +37,9 @@ event_handler_quick::event_handler_quick(const string &file_name):
 }
 
 void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries){
+  TFile *puweights = TFile::Open("pu_weights.root");
+  TH1F * h_wpu =  (TH1F*)puweights->Get("sf");
+
   TFile out_file(out_file_name, "recreate");
   out_file.cd();
 
@@ -118,6 +121,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     else tree.weight() = Sign(weight())*xsec*luminosity / static_cast<double>(num_total_entries);
 
     tree.npv() = Npv();
+    if(isData()) tree.wpu() = 1.;
+    else tree.wpu() = h_wpu->GetBinContent(h_wpu->FindBin(tree.npv()));
+    
     for(size_t bc(0); bc<PU_bunchCrossing()->size(); ++bc){
       if(PU_bunchCrossing()->at(bc)==0){
         tree.ntrupv() = PU_NumInteractions()->at(bc);
@@ -480,6 +486,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   treeglobal.Fill();
   treeglobal.Write();
   out_file.Close();
+  puweights->Close();
 }
 
 
