@@ -132,11 +132,18 @@ float cross_section(const TString &file){
   if(file.Contains("DYJetsToLL_M-10to50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8")) xsec = 18610;
   if(file.Contains("DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8"))     xsec = 6104;
 
-
-  if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3*1.27;
-  if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24*1.27;
-  if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.546*1.27;
-  if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))    xsec = 2.179*1.27;
+  if(file.Contains("madgraphMLM")){
+      if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 171.46;
+      if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.58;
+      if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.761;
+      if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))    xsec = 2.713;
+    }
+    else{
+      if(file.Contains("DYJetsToLL_M-50_HT-100to200"))    xsec = 194.3*1.27;
+      if(file.Contains("DYJetsToLL_M-50_HT-200to400"))    xsec = 52.24*1.27;
+      if(file.Contains("DYJetsToLL_M-50_HT-400to600"))    xsec = 6.546*1.27;
+      if(file.Contains("DYJetsToLL_M-50_HT-600toInf"))    xsec = 2.179*1.27;
+    }
 
   if(file.Contains("ZJetsToNuNu_HT-100to200_Tune4C_13TeV-madgraph-tauola"))  xsec =372.6*1.27;
   if(file.Contains("ZJetsToNuNu_HT-200to400_Tune4C_13TeV-madgraph-tauola"))  xsec =100.8*1.27;

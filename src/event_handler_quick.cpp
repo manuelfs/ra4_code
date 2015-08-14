@@ -188,6 +188,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 	  if(IsSignalIdElectron(index) && IsSignalIdElectron(iel)) Setllmass(tree, index, iel, 11, true);
 	}
 
+
+
         // MC truth
         bool fromW = false;
         int mcmomID;
@@ -262,6 +264,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     } // Loop over mus
 
+    
     tree.nleps() = tree.nels() + tree.nmus();
     tree.nvleps() = tree.nvels() + tree.nvmus();
 
@@ -729,7 +732,7 @@ vector<fastjet::PseudoJet> event_handler_quick::sorted_by_m(vector<fastjet::Pseu
 
 void event_handler_quick::Setllmass(small_tree_quick &tree, size_t id1, size_t id2, int pdgid, bool isSig){
   typedef float& (small_tree::*sm_float)() ;
-  sm_float ll_m, ll_pt1, ll_pt2;
+  sm_float ll_m, ll_pt1, ll_pt2, ll_zpt;
   if(pdgid==11){
     if(els_charge()->at(id1)*els_charge()->at(id2) > 0) return; // Only using opposite sign leptons
     if(els_pt()->at(id2) <= MinVetoLeptonPt) return; // Momentum of id1 already checked
@@ -738,10 +741,12 @@ void event_handler_quick::Setllmass(small_tree_quick &tree, size_t id1, size_t i
       ll_m   = &small_tree::elel_m;
       ll_pt1 = &small_tree::elel_pt1;
       ll_pt2 = &small_tree::elel_pt2;
+      ll_zpt = &small_tree::elel_zpt;
     } else {
       ll_m   = &small_tree::elelv_m;
       ll_pt1 = &small_tree::elelv_pt1;
       ll_pt2 = &small_tree::elelv_pt2;
+      ll_zpt = &small_tree::elelv_zpt;
    }
   } else if(pdgid==13){
     if(mus_charge()->at(id1)*mus_charge()->at(id2) > 0) return; // Only using opposite sign leptons
@@ -751,10 +756,12 @@ void event_handler_quick::Setllmass(small_tree_quick &tree, size_t id1, size_t i
       ll_m   = &small_tree::mumu_m;
       ll_pt1 = &small_tree::mumu_pt1;
       ll_pt2 = &small_tree::mumu_pt2;
+      ll_zpt = &small_tree::mumu_zpt;
     } else {
       ll_m   = &small_tree::mumuv_m;
       ll_pt1 = &small_tree::mumuv_pt1;
       ll_pt2 = &small_tree::mumuv_pt2;
+      ll_zpt = &small_tree::mumuv_zpt;
    }
   } else {
     cout<<"PDG ID "<<pdgid<<" not supported in Setllmass, you silly."<<endl;
@@ -775,6 +782,8 @@ void event_handler_quick::Setllmass(small_tree_quick &tree, size_t id1, size_t i
   TLorentzVector lep1(px1, py1, pz1, energy1), lep2(px2, py2, pz2, energy2);
   lep2 += lep1;
   (tree.*ll_m)() = lep2.M();
+  (tree.*ll_zpt)() = lep2.Pt();
   (tree.*ll_pt1)() = max(sqrt(px1*px1+py1*py1), sqrt(px2*px2+py2*py2));
   (tree.*ll_pt2)() = min(sqrt(px1*px1+py1*py1), sqrt(px2*px2+py2*py2));
+  
 }

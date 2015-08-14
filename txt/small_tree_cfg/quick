@@ -49,16 +49,20 @@ bool hfjet
 float elel_m
 float elel_pt1
 float elel_pt2
+float elel_zpt
 float elelv_m
 float elelv_pt1
 float elelv_pt2
+float elelv_zpt
 
 float mumu_m
 float mumu_pt1
 float mumu_pt2
+float mumu_zpt
 float mumuv_m
 float mumuv_pt1
 float mumuv_pt2
+float mumuv_zpt
 
 bool json_golden;
 
