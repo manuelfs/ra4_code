@@ -38,7 +38,7 @@ event_handler_quick::event_handler_quick(const string &file_name):
 
 void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_name, int num_total_entries){
   TFile *puweights = TFile::Open("pu_weights.root");
-  TH1F * h_wpu =  (TH1F*)puweights->Get("sf");
+  TH1F * h_wpu =  static_cast<TH1F*>(puweights->Get("sf"));
 
   TFile out_file(out_file_name, "recreate");
   out_file.cd();
@@ -132,8 +132,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
     ///////////// MET //////////////////
-    tree.met() = pfType1metsSummer15V2_et();
-    tree.met_phi() = pfType1metsSummer15V2_phi();
+    tree.met() = pfType1metsSummer15V4_et();
+    tree.met_phi() = pfType1metsSummer15V4_phi();
     tree.met_mini() = pfType1mets_default_et()->at(0);
     tree.met_mini_phi() = pfType1mets_default_et()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);

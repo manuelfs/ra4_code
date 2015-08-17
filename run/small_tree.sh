@@ -7,6 +7,24 @@ then
     maxfiles=$1
 fi
 
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/HTMHT_Run2015B-17Jul2015-v1_MINIAOD_UCSB2687_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/HTMHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2688_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MET_Run2015B-17Jul2015-v1_MINIAOD_UCSB2692_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MET_Run2015B-PromptReco-v1_MINIAOD_UCSB2699_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleElectron_Run2015B-17Jul2015-v1_MINIAOD_UCSB2694_v83	    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleElectron_Run2015B-PromptReco-v1_MINIAOD_UCSB2696_v83    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleMuon_Run2015B-17Jul2015-v1_MINIAOD_UCSB2695_v83	    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/SingleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2697_v83        $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/JetHT_Run2015B-17Jul2015-v1_MINIAOD_UCSB2700_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/JetHT_Run2015B-PromptReco-v1_MINIAOD_UCSB2693_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleEG_Run2015B-17Jul2015-v1_MINIAOD_UCSB2701_v83           $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleEG_Run2015B-PromptReco-v1_MINIAOD_UCSB2702_v83	    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleMuon_Run2015B-17Jul2015-v1_MINIAOD_UCSB2690_v83	    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/DoubleMuon_Run2015B-PromptReco-v1_MINIAOD_UCSB2691_v83	    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MuonEG_Run2015B-17Jul2015-v1_MINIAOD_UCSB2689_v83		    $type $maxfiles
+./run/send_small_tree.sh /net/cms2/cms2r0/cfA/MuonEG_Run2015B-PromptReco-v1_MINIAOD_UCSB2698_v83	    $type $maxfiles
+
+exit 0;
 
 
 ## Data
