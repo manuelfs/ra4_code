@@ -95,11 +95,14 @@ void onefile_skim(TString infiles, TString outfolder, TString cuts){
   treeglobal.Add(infiles);
 
   //cout<<"Skimming the "<<nfiles<<" files in "<<infiles<<endl;
-  TTree *ctree = tree.CopyTree(cuts);
-  TTree *ctreeglobal = treeglobal.CopyTree("1");
-  ctree->Write();
-  ctreeglobal->Write();
+  long nentries(tree.GetEntries());
+  if(nentries>0){
+    TTree *ctree = tree.CopyTree(cuts);
+    TTree *ctreeglobal = treeglobal.CopyTree("1");
+    ctree->Write();
+    ctreeglobal->Write();
+  }
   out_rootfile.Close();
-  cout<<"Written "<<outfile<<" from "<<nfiles<<" files"<<endl;
+  cout<<"Written "<<outfile<<" from "<<nfiles<<" files and "<<nentries<<" entries."<<endl;
 }
 
