@@ -176,6 +176,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > MinVetoLeptonPt && IsVetoIdElectron(index)) {
         tree.els_sigid().push_back(IsSignalIdElectron(index));
+        tree.els_tight().push_back(IsIdElectron(index, kTight, false));
         tree.els_ispf().push_back(els_isPF()->at(index));
         tree.els_pt().push_back(els_pt()->at(index));
         tree.els_eta().push_back(els_eta()->at(index));
@@ -227,6 +228,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > MinVetoLeptonPt && IsVetoIdMuon(index)) {
         tree.mus_sigid().push_back(IsSignalIdMuon(index));
+        tree.mus_tight().push_back(IsIdMuon(index, kTight));
         tree.mus_pt().push_back(mus_pt()->at(index));
         tree.mus_eta().push_back(mus_eta()->at(index));
         tree.mus_phi().push_back(mus_phi()->at(index));
