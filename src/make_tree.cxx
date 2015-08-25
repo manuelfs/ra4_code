@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 
   TString inFilename_s(inFilename);
   int len(inFilename_s.Length());
-  if(inFilename_s[len-2] == '/') inFilename_s.Remove(len-2, len-1);
+  if(inFilename_s[len-1] == '/') inFilename_s.Remove(len-1, len);
   inFilename = inFilename_s;
   TString outFilename(inFilename_s), folder(inFilename_s);
   TString outfolder("out/");

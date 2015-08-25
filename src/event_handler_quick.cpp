@@ -86,6 +86,9 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     timer.Iterate();
     GetEntry(entry);
 
+    // Skipping events in the 17Jul2015 re-RECO
+    if(out_file_name.Contains("Run2015B-PromptReco") && run() < 251585) continue;
+
     /////////JSON////////
     bool golden(PassesJSONCut("golden"));
     if(isData() && !PassesJSONCut("dcs") && !golden) continue;	// Only saving events with good DCS
