@@ -85,6 +85,7 @@ float trutop2_pt
 float trutop1_phi
 float trutop2_phi
 int ntrumeisr
+float genht
 
 ##################   Leptons   ################
 int nleps

@@ -52,8 +52,21 @@ float cross_section(const TString &file){
 
   //  Cross-section taken from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
   // Alternative option: https://twiki.cern.ch/twiki/bin/view/Sandbox/FullNNLOcrossSections#Top_cross_section_for_13_TeV
-  if(file.Contains("TTJet") || file.Contains("TT_"))  xsec = 815.96;
+  if(file.Contains("TTJets_Tune") || file.Contains("TT_"))  xsec = 815.96;
+  if(file.Contains("TTJets_HT")){//LO cross sections with k-factor of 1.625 already applied
+    if(file.Contains("2500toInf")) xsec = 0.0023234211;
+    if(file.Contains("1200to2500")) xsec = 0.194972521;
+    if(file.Contains("800to1200")) xsec = 1.07722318;
+    if(file.Contains("600to800")) xsec = 2.61537118;
 
+  }
+
+  if(file.Contains("TTJets_DiLept")) xsec = 85.66; // (3*0.108)^2*815.96
+  if(file.Contains("TTJets_SingleLept")) xsec = 178.7; //(1- ((1-3*0.108)^2+(3*0.108)^2))*815.96*0.5 per half
+
+				      
+
+  
   // From https://cms-pdmv.cern.ch/mcm
   // k-factors from https://mangano.web.cern.ch/mangano/public/MECCA/samples_50ns_miniaod.txt
   // k-factors are ratio of https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV

@@ -458,6 +458,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.trutop2_phi() = topphi2;
     tree.ntrumeisr() = nisr;
     
+    tree.genht() = genHT();
  
     // int nobj = tree.njets() + tree.nmus() + tree.nels();
     // int nobj_mj(0);
