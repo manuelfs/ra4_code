@@ -398,30 +398,28 @@ bool phys_objects::IsIdElectron(unsigned iel, CutLevel threshold, bool do_iso) c
     //https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Working_points_for_PHYS14_sample
     // Values from May 7th
     if(barrel){
-      deta_cut        = chooseVal(threshold, 0.013625	, 0.009277	, 0.008925	, 0.006046);
-      dphi_cut        = chooseVal(threshold, 0.230374	, 0.094739	, 0.035973	, 0.028092);
-      ieta_cut        = chooseVal(threshold, 0.011586	, 0.010331	, 0.009996	, 0.009947);
-      hovere_cut      = chooseVal(threshold, 0.181130	, 0.093068	, 0.050537	, 0.045772);
-      d0_cut          = chooseVal(threshold, 0.094095	, 0.035904	, 0.012235	, 0.008790);
-      dz_cut          = chooseVal(threshold, 0.713070	, 0.075496	, 0.042020	, 0.021226);
-      ooeminusoop_cut = chooseVal(threshold, 0.295751	, 0.189968	, 0.091942	, 0.020118);
-      reliso_cut      = chooseVal(threshold, 0.158721	, 0.130136	, 0.107587	, 0.069537);
-      misshits_cut    = chooseVal(threshold,  2		,  1		,  1		,  1	  );
-      req_conv_veto   = chooseVal(threshold,  true	,  true		,  true		,  true	  );
-
+      ieta_cut        = chooseVal(threshold, 0.012,  0.0105,  0.0101, 0.0101 );
+      deta_cut        = chooseVal(threshold, 0.0126,  0.00976,  0.0094, 0.0095 );
+      dphi_cut        = chooseVal(threshold, 0.107,  0.0929,  0.0296, 0.0291 );
+      hovere_cut      = chooseVal(threshold, 0.186,  0.0765,  0.0372, 0.0372 );
+      reliso_cut      = chooseVal(threshold, 0.161, 0.118,  0.0987, 0.0468 );
+      ooeminusoop_cut = chooseVal(threshold, 0.239, 0.184,  0.118, 0.0174 );
+      d0_cut          = chooseVal(threshold, 0.0621,  0.0227,  0.0151, 0.0144 );
+      dz_cut          = chooseVal(threshold, 0.613, 0.379,  0.238, 0.323  );
+      misshits_cut    = chooseVal(threshold, 2,  2,  2,  2 );
+      req_conv_veto   = chooseVal(threshold, true,  true,  true,  true );
     } else {
-      deta_cut        = chooseVal(threshold,  0.011932	,  0.009833	,  0.007429	, 0.007057);
-      dphi_cut        = chooseVal(threshold,  0.255450	,  0.149934	,  0.067879	, 0.030159);
-      ieta_cut        = chooseVal(threshold,  0.031849	,  0.031838	,  0.030135	, 0.028237);
-      hovere_cut      = chooseVal(threshold,  0.223870	,  0.115754	,  0.086782	, 0.067778);
-      d0_cut          = chooseVal(threshold,  0.342293	,  0.099266	,  0.036719	, 0.027984);
-      dz_cut          = chooseVal(threshold,  0.953461	,  0.197897	,  0.138142	, 0.133431);
-      ooeminusoop_cut = chooseVal(threshold,  0.155501	,  0.140662	,  0.100683	, 0.098919);
-      reliso_cut      = chooseVal(threshold,  0.177032	,  0.163368	,  0.113254	, 0.078265);
-      misshits_cut    = chooseVal(threshold,  3		,  1		,  1		,  1	  );
-      req_conv_veto   = chooseVal(threshold,  true	,  true		,  true		,  true	  );
+      ieta_cut        = chooseVal(threshold, 0.0339,  0.0318,  0.0287, 0.0287 );
+      deta_cut        = chooseVal(threshold, 0.0109,  0.00952,  0.00773, 0.00762);
+      dphi_cut        = chooseVal(threshold, 0.219,  0.181,  0.148, 0.0439 );
+      hovere_cut      = chooseVal(threshold, 0.0962,  0.0824,  0.0546, 0.0544 );
+      reliso_cut      = chooseVal(threshold, 0.193,  0.118,  0.0902, 0.0759 );
+      ooeminusoop_cut = chooseVal(threshold, 0.141,  0.125,  0.104, 0.01   );
+      d0_cut          = chooseVal(threshold, 0.279,  0.242,  0.0535, 0.0377 );
+      dz_cut          = chooseVal(threshold, 0.947,  0.921,  0.572, 0.571 );
+      misshits_cut    = chooseVal(threshold, 3,  1,  1, 1 );
+      req_conv_veto   = chooseVal(threshold, true,  true,  true,  true );
     }
-
   }
 
   const double d0 = els_d0dum()->at(iel)
@@ -765,19 +763,26 @@ bool phys_objects::IsBasicJet(unsigned ijet) const{
   //https://twiki.cern.ch/twiki/bin/view/CMS/JetID
   double rawRatio =(jets_rawPt()->at(ijet)/jets_pt()->at(ijet)); // Same as jets_corrFactorRaw
   const double jetenergy = jets_energy()->at(ijet) * rawRatio;
-  double NEF = -999., CEF = -999., NHF=-999., CHF=-999.;
-  double chgMult=jets_chg_Mult()->at(ijet);
-  double numConst=jets_mu_Mult()->at(ijet)+jets_neutral_Mult()->at(ijet)+jets_chg_Mult()->at(ijet);
+  double NEMF = -999., CEMF = -999., NHF=-999., CHF=-999.;
+  double CHM=jets_chg_Mult()->at(ijet);
+  double NumConst=jets_mu_Mult()->at(ijet)+jets_neutral_Mult()->at(ijet)+jets_chg_Mult()->at(ijet);
+  double NumNeutralParticles = jets_neutral_Mult()->at(ijet);
 
   if(jetenergy > 0){
-    NEF = jets_neutralEmE()->at(ijet)/jetenergy;
-    CEF = jets_chgEmE()->at(ijet)/jetenergy;
+    NEMF = jets_neutralEmE()->at(ijet)/jetenergy;
+    CEMF = jets_chgEmE()->at(ijet)/jetenergy;
     NHF = jets_neutralHadE()->at(ijet)/jetenergy;
     CHF = jets_chgHadE()->at(ijet)/jetenergy;
   }
 
-  return (NEF < 0.99 && NHF < 0.99 && numConst > 1
-          && (fabs(jets_corr_p4().at(ijet).Eta())>=2.4 || (CEF < 0.99 && CHF > 0 && chgMult > 0)) );
+  double eta(jets_corr_p4().at(ijet).Eta());
+  bool eta_leq_3 = (NHF<0.99 && NEMF<0.99 && NumConst>1) && ((fabs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || fabs(eta)>2.4);
+  bool eta_g_3 = NEMF<0.90 && NumNeutralParticles>10;
+
+  return  (eta_leq_3 && fabs(eta)<=3.) || (eta_g_3 && fabs(eta)>3.);
+
+  //  return (NEMF < 0.99 && NHF < 0.99 && NumConst > 1
+  //      && (fabs(jets_corr_p4().at(ijet).Eta())>=2.4 || (CEMF < 0.99 && CHF > 0 && CHM > 0)) );
 }
 
 /////////////////////////////////////////////////////////////////////////
