@@ -412,7 +412,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     } // Loop over all jets
     // Adding all clean jets
     for(unsigned ijet(0); ijet<good_jets.size(); ijet++) {
-      mj_jets.push_back(static_cast<int>(ijet));
+      mj_jets.push_back(good_jets[ijet]);
       mj_jets_islep.push_back(false);      
     } // Loop over good jets
 
