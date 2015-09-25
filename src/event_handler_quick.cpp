@@ -48,15 +48,16 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
   float luminosity = 1000.;
 
   vector<TString> trig_name;
-  trig_name.push_back("HLT_PFHT350_PFMET100_NoiseCleaned_v");		  // 0
-  trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT350_PFMET70_v");		  // 1
+  //Leaving 50ns triggers in comments
+  trig_name.push_back("HLT_PFHT350_PFMET100_JetIdCleaned_v");           // 0 trig_name.push_back("HLT_PFHT350_PFMET100_NoiseCleaned_v");		  // 0
+  trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT350_PFMET50_v");            // 1 trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT350_PFMET70_v");		  // 1
   trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT600_v");			  // 2
   trig_name.push_back("HLT_Mu15_IsoVVVL_BTagCSV0p72_PFHT400_v");	  // 3
-  trig_name.push_back("HLT_Mu15_PFHT300_v");				  // 4
-  trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT350_PFMET70_v");		  // 5
+  trig_name.push_back("HLT_Mu15_IsoVVVL_PFHT350_v");                    // 4 trig_name.push_back("HLT_Mu15_PFHT300_v");				  // 4
+  trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT350_PFMET50_v");           // 5 trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT350_PFMET70_v");		  // 5
   trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT600_v");			  // 6
   trig_name.push_back("HLT_Ele15_IsoVVVL_BTagCSV0p72_PFHT400_v");	  // 7
-  trig_name.push_back("HLT_Ele15_PFHT300_v");				  // 8
+  trig_name.push_back("HLT_Ele15_IsoVVVL_PFHT350_v");                   // 8 trig_name.push_back("HLT_Ele15_PFHT300_v");				  // 8
   trig_name.push_back("HLT_DoubleMu8_Mass8_PFHT300_v");			  // 9
   trig_name.push_back("HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v"); // 10
   trig_name.push_back("HLT_PFHT475_v");					  // 11
@@ -91,7 +92,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 
     /////////JSON////////
     bool golden(PassesJSONCut("golden"));
-    if(isData() && !PassesJSONCut("dcs") && !golden) continue;	// Only saving events with good DCS
+    if(isData() && !(PassesJSONCut("dcs") || golden)) continue;	// Only saving events with good DCS or golden. DCS not necessarily strict superset of golden now.
     tree.json_golden() = golden; // Golden JSON
     //tree.json_dcs()=PassesJSONCut("dcs"); // DCS JSON
 
