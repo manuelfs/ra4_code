@@ -1,6 +1,7 @@
 # Automatically generated files
 */cfa*.*
-*/small_tree*.*
+*/small_tree*.cpp
+*/small_tree*.hpp
 */event_handler*.*
 
 # Compiled Object files

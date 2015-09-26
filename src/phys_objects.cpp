@@ -55,9 +55,7 @@ phys_objects::phys_objects(const std::string &fileName, const bool is_8TeV):
   cfa(fileName, is_8TeV),
   jet_corrector_(NULL),
   jets_corr_p4_(0),
-  set_jets_(false),
-  met_corr_(bad_val),
-  met_phi_corr_(bad_val){
+  set_jets_(false){
   if(GetVersion()==78) {
     jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L1FastJet_AK4PFchs.txt");
     jec_files.push_back("txt/jec/phys14_v4_mc/PHYS14_V4_MC_L2Relative_AK4PFchs.txt");
@@ -500,7 +498,7 @@ bool phys_objects::PassPhys14TauID(const int itau, const bool againstEMu, const 
   if (taus_chargedIsoPtSum()->at(itau) > 1.) return false;
   if (againstEMu && (!taus_againstMuonLoose3()->at(itau) || !taus_againstElectronLooseMVA5()->at(itau))) return false;
   if (mt_cut && GetMT(taus_pt()->at(itau), taus_phi()->at(itau),
-                      met_corr(), met_phi_corr())>100) return false;
+                      mets_et(), mets_phi())>100) return false;
 
   return true;
 }
@@ -515,20 +513,7 @@ bool phys_objects::IsGoodIsoTrack(unsigned itrk, bool mt_cut) const{
     && (fabs(isotk_dzpv()->at(itrk))<0.05)
     && (fabs(isotk_eta()->at(itrk))<2.4)
     && ( !mt_cut || GetMT(isotk_pt()->at(itrk), isotk_phi()->at(itrk),
-                          met_corr(), met_phi_corr())<100 ) ;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////  MET  ////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-float phys_objects::met_corr() const{
-  CorrectJets();
-  return met_corr_;
-}
-
-float phys_objects::met_phi_corr() const{
-  CorrectJets();
-  return met_phi_corr_;
+                          mets_et(), mets_phi())<100 ) ;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -546,13 +531,8 @@ vector<TLorentzVector> & phys_objects::jets_corr_p4(){
 
 void phys_objects::CorrectJets() const{
   if(set_jets_) return;
-
-  bool do_metcorr(false); // For now we don't correct MET
-  //bool do_metcorr(true); 
   jets_corr_p4_.clear();
   TLorentzVector corr_p4, uncorr_p4, miniaod_p4;
-  float METx = mets_et()*cos(mets_phi());
-  float METy = mets_et()*sin(mets_phi());
   for(size_t ijet = 0; ijet < jets_pt()->size(); ++ijet){
     miniaod_p4.SetPtEtaPhiM(jets_pt()->at(ijet), jets_eta()->at(ijet),
 			    jets_phi()->at(ijet), jets_mass()->at(ijet));
@@ -567,25 +547,9 @@ void phys_objects::CorrectJets() const{
       jet_corrector_->setRho(fixedGridRhoFastjetAll());
 
       corr_p4 *= jet_corrector_->getCorrection();
-      if(uncorr_p4.Pt() > 10 && do_metcorr) {
-	METx += miniaod_p4.Px();
-	METy += miniaod_p4.Py();
-	METx -= corr_p4.Px();
-	METy -= corr_p4.Py();
-      }
     } // if there are corrections to make
     jets_corr_p4_.push_back(corr_p4);
   } // Loop over jets
-
-  if(do_metcorr){
-    float correctedMET = sqrt(METx*METx + METy*METy);
-    float correctedMETPhi = atan2(METy,METx);
-    met_corr_ = correctedMET;
-    met_phi_corr_ = TVector2::Phi_mpi_pi(correctedMETPhi); 
-  } else {
-    met_corr_ = mets_et();
-    met_phi_corr_ = mets_phi(); 
-  }
   set_jets_ = true;
 }
 
@@ -1417,16 +1381,16 @@ long double phys_objects::SumDeltaPhi(long double phi_x, long double phi_a, long
 
 double phys_objects::GetDeltaPhiMETN(unsigned goodJetI, float otherpt, float othereta, bool useArcsin) const {
   double deltaT = GetDeltaPhiMETN_deltaT(goodJetI, otherpt, othereta);
-  double dp = fabs(DeltaPhi(jets_corr_p4().at(goodJetI).Phi(), met_phi_corr()));
+  double dp = fabs(DeltaPhi(jets_corr_p4().at(goodJetI).Phi(), mets_phi()));
   double dpN = 0.0;
   if(useArcsin) {
-    if( deltaT/met_corr() >= 1.0){
+    if( deltaT/mets_et() >= 1.0){
       dpN = dp / (PI/2.0);
     }else{
-      dpN = dp / asin(deltaT/met_corr());
+      dpN = dp / asin(deltaT/mets_et());
     }
   }else{
-    dpN = dp / atan2(deltaT, static_cast<double>(met_corr()));
+    dpN = dp / atan2(deltaT, static_cast<double>(mets_et()));
   }
   return dpN;
 }

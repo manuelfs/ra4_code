@@ -112,10 +112,6 @@ public:
   // Tracks
   bool IsGoodIsoTrack(unsigned itrk, bool mt_cut) const;
 
-  // MET
-  float met_corr() const;
-  float met_phi_corr() const;
-
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
                            double pt_thresh, double eta_thresh) const;
