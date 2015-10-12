@@ -112,6 +112,10 @@ public:
   // Tracks
   bool IsGoodIsoTrack(unsigned itrk, bool mt_cut) const;
 
+  // MET
+  float met_corr() const;
+  float met_phi_corr() const;
+
   // Jets
   std::vector<int> GetJets(const std::vector<int> &VetoEl, const std::vector<int> &VetoMu,
                            double pt_thresh, double eta_thresh) const;
@@ -130,8 +134,8 @@ public:
   std::vector<TLorentzVector> & jets_corr_p4();
 
   // Truth matching
-  int GetTrueElectron(int index, int &momID, bool &fromW, float &closest_dR) const;
-  int GetTrueMuon(int index, int &momID, bool &fromW, float &closest_dR) const;
+  int GetTrueElectron(int index, int &momID, bool &fromW, float &closest_dR, double &els_mc_pt, double &els_mc_phi) const;
+  int GetTrueMuon(int index, int &momID, bool &fromW, float &closest_dR, double &mus_mc_pt, double &mus_mc_phi) const;
   int GetTrueParticle(float RecPt, float RecEta, float RecPhi, float &closest_dR, int ID) const;
   std::vector<mc_particle> GetMCParticles() const;
   size_t MatchCandToStatus1(size_t icand,

@@ -43,7 +43,6 @@ float met_hf
 float met_hf_phi
 float ht_hf
 float ht_nohf
-float mt_nohf
 int njets_hf
 int njets_nohf
 bool hfjet
@@ -188,3 +187,21 @@ std::vector<float> fjets08_poscsv
 std::vector<int> fjets08_btags
 std::vector<int> fjets08_nconst
 
+std::vector<double> els_tru_pt;
+std::vector<double> els_tru_phi;
+std::vector<double> mus_tru_pt;
+std::vector<double> mus_tru_phi;
+
+double gen_met;
+double gen_met_phi;
+double gen_met_fromw;
+double gen_met_phi_fromw;
+int ntrunus;
+int ntrunus_fromw;
+
+int nels_tru_prompt;
+std::vector<double> els_genmt;
+std::vector<double> els_genmt_fromw;
+int nmus_tru_prompt;
+std::vector<double> mus_genmt;
+std::vector<double> mus_genmt_fromw;

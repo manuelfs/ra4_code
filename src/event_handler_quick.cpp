@@ -136,11 +136,43 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     }
     ///////////// MET //////////////////
-    tree.met() = mets_et();
-    tree.met_phi() = mets_phi();
+    tree.met() = met_corr();
+    tree.met_phi() = met_phi_corr();
     tree.met_mini() = pfType1mets_default_et()->at(0);
     tree.met_mini_phi() = pfType1mets_default_et()->at(0);
     tree.mindphin_metjet() = GetMinDeltaPhiMETN(3, 50., 2.4, 30., 2.4, true);
+
+    int nnus = 0, nnus_fromw = 0;
+    double genmetx = 0., genmety = 0., genmetx_fromw = 0, genmety_fromw = 0;
+      for(size_t imc = 0; imc < mc_final_id()->size(); ++imc){
+      int id = abs(TMath::Nint(mc_final_id()->at(imc)));
+      double px = mc_final_pt()->at(imc)*cos(mc_final_phi()->at(imc));
+      double py = mc_final_pt()->at(imc)*sin(mc_final_phi()->at(imc));
+      if(id==12 || id==14 || id==16 || id==18
+         || id==1000012 || id==1000014 || id==1000016
+         || id==1000022 || id==1000023 || id==1000025 || id==1000035 || id==1000039){
+
+        genmetx += px;
+        genmety += py;
+	nnus++;
+
+	bool nufromw=false;
+	GetMom(mc_final_id()->at(imc),mc_final_mother_id()->at(imc),mc_final_grandmother_id()->at(imc),mc_final_ggrandmother_id()->at(imc), nufromw);
+
+	if(nufromw){
+	  genmetx_fromw += px;
+	  genmety_fromw += py;
+	  nnus_fromw++;
+	}
+      }
+    }
+    tree.gen_met() = AddInQuadrature(genmetx, genmety);
+    tree.gen_met_phi() = atan2(genmety, genmetx);
+    tree.ntrunus() = nnus;
+
+    tree.gen_met_fromw() = AddInQuadrature(genmetx_fromw, genmety_fromw);
+    tree.gen_met_phi_fromw() = atan2(genmety_fromw, genmetx_fromw);
+    tree.ntrunus_fromw() = nnus_fromw;
 
     // MET filters
     tree.pass_hbhe()    = static_cast<bool>(HBHENoisefilter_decision());
@@ -177,6 +209,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     tree.nmus() = sig_muons.size(); tree.nvmus() = veto_muons.size();
     tree.nmus_reliso() = sig_muons_reliso.size(); tree.nvmus_reliso() = veto_muons_reliso.size();
 
+    int els_tru_prompt = 0;
+
     for(size_t index(0); index<els_pt()->size(); index++) {
       if (els_pt()->at(index) > MinVetoLeptonPt && IsVetoIdElectron(index)) {
         tree.els_sigid().push_back(IsSignalIdElectron(index));
@@ -188,7 +222,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.els_phi().push_back(els_phi()->at(index));
         tree.els_charge().push_back(TMath::Nint(els_charge()->at(index)));
         tree.els_mt().push_back(GetMT(els_pt()->at(index), els_phi()->at(index),
-                                      mets_et(), mets_phi()));
+                                      met_corr(), met_phi_corr()));
         tree.els_d0().push_back(els_d0dum()->at(index)
                                 -pv_x()->at(0)*sin(els_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(els_tk_phi()->at(index)));
@@ -199,17 +233,26 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
 	  if(IsSignalIdElectron(index) && IsSignalIdElectron(iel)) Setllmass(tree, index, iel, 11, true);
 	}
 
-
-
         // MC truth
         bool fromW = false;
         int mcmomID;
         float deltaR;
-        int mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR);
+	double els_mc_pt, els_mc_phi;
+        int mcID = GetTrueElectron(static_cast<int>(index), mcmomID, fromW, deltaR, els_mc_pt, els_mc_phi);
         tree.els_tru_id().push_back(mcID);
         tree.els_tru_momid().push_back(mcmomID);
         tree.els_tru_tm().push_back(abs(mcID)==pdtlund::e_minus && fromW);
         tree.els_tru_dr().push_back(deltaR);
+	tree.els_tru_pt().push_back(els_mc_pt);
+	tree.els_tru_phi().push_back(els_mc_phi);
+
+	if(abs(mcID)==pdtlund::e_minus && fromW && IsSignalElectron(index,true)){
+	  els_tru_prompt++;
+	  tree.els_genmt().push_back(GetMT(els_mc_pt, els_mc_phi,
+					   tree.gen_met(), tree.gen_met_phi()));
+	  tree.els_genmt_fromw().push_back(GetMT(els_mc_pt, els_mc_phi,
+				           tree.gen_met_fromw(), tree.gen_met_phi_fromw()));
+	}
 
         // Isolation
         tree.els_reliso().push_back(GetElectronIsolation(index, false));
@@ -229,6 +272,10 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     } // Loop over els
 
+    tree.nels_tru_prompt() = els_tru_prompt;
+
+    int mus_tru_prompt = 0;
+
     for(size_t index(0); index<mus_pt()->size(); index++) {
       if (mus_pt()->at(index) > MinVetoLeptonPt && IsVetoIdMuon(index)) {
         tree.mus_sigid().push_back(IsSignalIdMuon(index));
@@ -238,7 +285,7 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         tree.mus_phi().push_back(mus_phi()->at(index));
         tree.mus_charge().push_back(TMath::Nint(mus_charge()->at(index)));
         tree.mus_mt().push_back(GetMT(mus_pt()->at(index), mus_phi()->at(index),
-                                      mets_et(), mets_phi()));
+                                      met_corr(), met_phi_corr()));
         tree.mus_d0().push_back(mus_tk_d0dum()->at(index)
                                 -pv_x()->at(0)*sin(mus_tk_phi()->at(index))
                                 +pv_y()->at(0)*cos(mus_tk_phi()->at(index)));
@@ -252,15 +299,26 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
         bool fromW = false;
         int mcmomID;
         float deltaR;
-        int mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR);
+	double mus_mc_pt, mus_mc_phi;
+	int mcID = GetTrueMuon(static_cast<int>(index), mcmomID, fromW, deltaR, mus_mc_pt, mus_mc_phi);
         tree.mus_tru_id().push_back(mcID);
         tree.mus_tru_momid().push_back(mcmomID);
         tree.mus_tru_tm().push_back(abs(mcID)==pdtlund::mu_minus && fromW);
         tree.mus_tru_dr().push_back(deltaR);
+	tree.mus_tru_pt().push_back(mus_mc_pt);
+	tree.mus_tru_phi().push_back(mus_mc_phi);
 
         // Isolation
         tree.mus_reliso().push_back(GetMuonIsolation(index, false));
         SetMiniIso(tree, index, 13);
+
+	if(abs(mcID)==pdtlund::mu_minus && fromW && IsSignalMuon(index,true)){ 
+	  mus_tru_prompt++;
+	  tree.mus_genmt().push_back(GetMT(mus_mc_pt, mus_mc_phi,
+					   tree.gen_met(), tree.gen_met_phi()));
+	  tree.mus_genmt_fromw().push_back(GetMT(mus_mc_pt, mus_mc_phi,
+					   tree.gen_met_fromw(), tree.gen_met_phi_fromw()));
+	}
 
         // Max pT lepton
         if(mus_pt()->at(index) > lepmax_p4.Pt() && IsSignalIdMuon(index) && tree.mus_miniso().back()<0.2){
@@ -276,7 +334,8 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       }
     } // Loop over mus
 
-    
+    tree.nmus_tru_prompt() = mus_tru_prompt;
+
     tree.nleps() = tree.nels() + tree.nmus();
     tree.nvleps() = tree.nvels() + tree.nvmus();
 
@@ -288,15 +347,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_phi() = lepmax_p4.Phi();
       tree.lep_eta() = lepmax_p4.Eta();
       tree.lep_charge() = lepmax_chg;
-      tree.st() = lepmax_p4.Pt()+mets_et();
+      tree.st() = lepmax_p4.Pt()+met_corr();
 
       float wx = mets_et()*cos(mets_phi()) + lepmax_p4.Px();
       float wy = mets_et()*sin(mets_phi()) + lepmax_p4.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep() = DeltaPhi(wphi, lepmax_p4.Phi());
-      tree.mt() = GetMT(lepmax_p4.Pt(), lepmax_p4.Phi(), mets_et(), mets_phi());
-      tree.mt_nohf() = GetMT(lepmax_p4.Pt(), lepmax_p4.Phi(), mets_NoHF_et(), mets_NoHF_phi());
+      tree.mt() = GetMT(lepmax_p4.Pt(), lepmax_p4.Phi(), met_corr(), met_phi_corr());
     }
 
     if(lepmax_p4_reliso.Pt()>0.){
@@ -304,14 +362,14 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
       tree.lep_phi_reliso() = lepmax_p4_reliso.Phi();
       tree.lep_eta_reliso() = lepmax_p4_reliso.Eta();
       tree.lep_charge_reliso() = lepmax_chg_reliso;
-      tree.st_reliso() = lepmax_p4_reliso.Pt()+mets_et();
+      tree.st_reliso() = lepmax_p4_reliso.Pt()+met_corr();
 
       float wx = mets_et()*cos(mets_phi()) + lepmax_p4_reliso.Px();
       float wy = mets_et()*sin(mets_phi()) + lepmax_p4_reliso.Py();
       float wphi = atan2(wy, wx);
 
       tree.dphi_wlep_reliso() = DeltaPhi(wphi, lepmax_p4_reliso.Phi());
-      tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), mets_et(), mets_phi());
+      tree.mt_reliso() = GetMT(lepmax_p4_reliso.Pt(), lepmax_p4_reliso.Phi(), met_corr(), met_phi_corr());
     }
 
     // vector<mc_particle> parts = GetMCParticles();
@@ -319,12 +377,15 @@ void event_handler_quick::ReduceTree(int num_entries, const TString &out_file_na
     // tree.mc_type() = TypeCode(parts, moms);
 
     //**************** No HF variables ***************//
-    tree.met_nohf() = mets_NoHF_et();
-    tree.met_nohf_phi() = mets_NoHF_phi();
-    tree.met_nohf_sumEt() = mets_NoHF_sumEt(); 
+    //float metnohf(mets_NoHF_et()), metnohfphi(mets_NoHF_phi()), metnohfsumet(mets_NoHF_sumEt());
+    float metnohf(mets_et()), metnohfphi(mets_phi()), metnohfsumet(mets_sumEt());
 
-    float met_hf_x = mets_et()*cos(mets_phi()) - mets_NoHF_et()*cos(mets_NoHF_phi());
-    float met_hf_y = mets_et()*sin(mets_phi()) - mets_NoHF_et()*sin(mets_NoHF_phi());    
+    tree.met_nohf() = metnohf;
+    tree.met_nohf_phi() = metnohfphi;
+    tree.met_nohf_sumEt() = metnohfsumet; 
+
+    float met_hf_x = met_corr()*cos(met_phi_corr()) - metnohf*cos(metnohfphi);
+    float met_hf_y = met_corr()*sin(met_phi_corr()) - metnohf*sin(metnohfphi);    
     tree.met_hf() = sqrt(met_hf_x*met_hf_x + met_hf_y*met_hf_y); 
     tree.met_hf_phi() = atan2(met_hf_y,met_hf_x);
 
@@ -615,7 +676,7 @@ float event_handler_quick::GetMinMTWb(const vector<int> &good_jets,
     uint jet = good_jets[ijet];
     if (jets_corr_p4().at(jet).Pt()<pt_cut) continue;
     if (jets_btag_inc_secVertexCombined()->at(jet)<bTag_req) continue;
-    float mT = GetMT(use_W_mass ? 80.385 : 0., mets_et(), mets_phi(),
+    float mT = GetMT(use_W_mass ? 80.385 : 0., met_corr(), met_phi_corr(),
                      0., jets_corr_p4().at(jet).Pt(), jets_corr_p4().at(jet).Phi());
     if (mT<min_mT) min_mT=mT;
   }
@@ -693,7 +754,7 @@ void event_handler_quick::GetTrueLeptons(vector<int> &true_electrons, vector<int
 	  }
 	} // Loop over tau daughters
       } // if lepton comes from tau
-    }
+   } 
     if(id == 15 && mom == 24){
       true_had_taus.push_back(i);
     }
