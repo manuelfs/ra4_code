@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
   }
 
   vector<TString> datasets;
-  TString buffer, basename("Run2015");
+  TString buffer, basename("Run2015D");
   ifstream indata(file_datasets);
   while(indata){
     indata >> buffer;
@@ -56,15 +56,15 @@ int main(int argc, char *argv[]){
   int event, run;
 
   for(unsigned idata(0); idata < datasets.size(); idata++){
-    TChain chain("tree");
+    TChain chain("tree"), treeglobal("treeglobal");
     TString filename(infolder+"/*"+datasets[idata]+"*.root");
     int files = chain.Add(filename);
     if(files<1) {
       cout<<"No files found for "<<filename<<endl;
       continue;
     }
-
-    TString outname("out/small_"+basename+"_");
+    treeglobal.Add(filename);
+    TString outname("out/baby_"+basename+"_");
     outname += idata; outname += ".root";
     TFile outfile(outname, "RECREATE");
     outfile.cd();
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
     chain.SetBranchAddress("run", &run);
 
     long entries(chain.GetEntries());
-    //entries = 100;
+    entries = 100;
 
     cout<<endl<<"Doing "<<files<<" files in "<<filename<<" with "<<entries<<" entries"<<endl;
     for(int entry(0); entry<entries; entry++){
@@ -91,6 +91,8 @@ int main(int argc, char *argv[]){
       } 
     } // Loop over entries
     outtree->Write();
+    treeglobal.CloneTree(-1,"fast");
+    outfile.Write();
     outfile.Close();
     time(&curTime);
     cout<<"Took "<<difftime(curTime,startTime) <<" seconds to write "<<outname<<endl;
