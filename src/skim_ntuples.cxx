@@ -11,6 +11,7 @@
 #include <sstream>
 #include <vector>
 #include <stdlib.h>     /* atoi */
+
 #include "TChain.h"
 #include "TFile.h"
 #include "TString.h"
@@ -71,9 +72,10 @@ void onefile_skim(TString infiles, TString outfolder, TString cuts){
   outfile.Remove(0, outfile.Last('/')); outfile.ReplaceAll("*","");
   if(outfile.Contains(".root")) outfile.ReplaceAll(".root","_"+cuts+".root");
   else outfile += ("_"+cuts+".root");
-  outfile.ReplaceAll(">=","ge"); outfile.ReplaceAll("<=","se"); outfile.ReplaceAll("&&","_");
+  outfile.ReplaceAll(">=","ge"); outfile.ReplaceAll("<=","se"); outfile.ReplaceAll("&","_");
   outfile.ReplaceAll(">","g"); outfile.ReplaceAll("<","s"); outfile.ReplaceAll("=","");
   outfile.ReplaceAll("(",""); outfile.ReplaceAll(")",""); outfile.ReplaceAll("+","");
+  outfile.ReplaceAll("[",""); outfile.ReplaceAll("]",""); outfile.ReplaceAll("|","_");
   outfile = outfolder+outfile;
 
   // Checking if output file exists
@@ -96,12 +98,12 @@ void onefile_skim(TString infiles, TString outfolder, TString cuts){
 
   //cout<<"Skimming the "<<nfiles<<" files in "<<infiles<<endl;
   long nentries(tree.GetEntries());
-  if(nentries>0){
-    TTree *ctree = tree.CopyTree(cuts);
-    TTree *ctreeglobal = treeglobal.CopyTree("1");
-    ctree->Write();
-    ctreeglobal->Write();
-  }
+  TTree *ctree = tree.CopyTree(cuts);
+  TTree *ctreeglobal = treeglobal.CopyTree("1");
+  if(ctree) ctree->Write();
+  else cout<<"Could not find tree in "<<infiles<<endl;
+  if(ctreeglobal)   ctreeglobal->Write();
+  else cout<<"Could not find treeglobal in "<<infiles<<endl;
   out_rootfile.Close();
   cout<<"Written "<<outfile<<" from "<<nfiles<<" files and "<<nentries<<" entries."<<endl;
 }

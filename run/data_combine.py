@@ -1,38 +1,46 @@
-#! /usr/bin python
+#! /usr/bin/env python
 
 ### Script to send batch jobs of combinations for data PDs
 
 import sys
 import subprocess
 import os
+from glob import glob
 
 if len(sys.argv) < 2:
-    files_job = 10
+    print "\nFormat is: ./run/data_combine.py infolder <datasets.txt>\n"
+    sys.exit()
 else:
-    files_job = int(sys.argv[1])
+    infolder = sys.argv[1]
 
-basefile = "HTMHT_SingleElectron_SingleMuon_DoubleEG_DoubleMuon_MET_JetHT"
 if len(sys.argv) < 3:
-    filename = 'txt/datasamples/slep_dlep_htmht_ht_met.txt'
-    #filename = 'txt/datasamples/smu_dmu_htmht_met.txt'
-    #filename = 'txt/datasamples/dlep_htmht_met.txt'
-    #filename = 'txt/datasamples/htmht_met.txt'
+    outfolder = 'out/'
 else:
-    filename = sys.argv[2]
+    outfolder  = sys.argv[2]
+
+if len(sys.argv) < 4:
+    filename = 'txt/datasamples/singlelep.txt'
+else:
+    filename = sys.argv[3]
 
 sample_file = open(filename, 'r')
 
 
 lines = sample_file.readlines()
-ifile = 1
 
-for line in lines:
-    if line.find('MINIAOD') != -1:
-        nfiles = len([f for f in os.listdir(line[:-1]) if f[-5:] == ".root"])
-        print line[:-1]+' has '+`nfiles`+' files. Will send '+`nfiles/files_job+1`+' jobs'
-        for num in range(0,nfiles/files_job+1):
-            outfile = "out/small_quick_Run2015B__"+basefile+"_files"+`files_job`+"_batch"+`ifile`+".root"
-            command = 'JobSubmit.csh ./run/wrapper.sh make_tree.exe -i '+filename+' -n -1 -f '+`files_job`+' -b '+`ifile`+' -t -1 -s quick'
-            #print command
-            if(not os.path.isfile(outfile)): os.system(command)
-            ifile += 1
+# We split datasets by run ranges to be able to make the combination in parallel
+# Finding unique run ranges
+files = infolder+"/*"+lines[0].strip()+"*"
+flist = glob(files)
+runset = set()
+print "Files matching "+files
+for file in flist:
+    runs = file.split("Run2015D_")[1]
+    runs = runs.split("_")[0]
+    runset.add(runs)
+
+runset = list(runset)  # Converting set to list
+for run in runset:
+    command = "JobSubmit.csh ./run/wrapper.sh combine_datasets.exe -i "+infolder+" -t "+run+" -f "+filename+" -o "+outfolder
+    print command
+    os.system(command)

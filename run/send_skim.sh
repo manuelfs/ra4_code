@@ -17,5 +17,5 @@ nfiles=`ls $infolder/*root | wc -l`
 for file in `seq 1 $njobs`;
 do
     #echo JobSubmit.csh ./plot/skim_ntuples.exe $infolder $outfolder \"$cuts\" $njobs $file
-    JobSubmit.csh ./plot/skim_ntuples.exe $infolder $outfolder $cuts $njobs $file
+    JobSubmit.csh ./run/wrapper.sh skim_ntuples.exe $infolder $outfolder $cuts $njobs $file
 done
