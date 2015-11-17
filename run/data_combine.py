@@ -8,7 +8,7 @@ import os
 from glob import glob
 
 if len(sys.argv) < 2:
-    print "\nFormat is: ./run/data_combine.py infolder <datasets.txt>\n"
+    print "\nFormat is: ./run/data_combine.py infolder <outfolder=out> <datasets.txt>\n"
     sys.exit()
 else:
     infolder = sys.argv[1]
@@ -35,9 +35,9 @@ flist = glob(files)
 runset = set()
 print "Files matching "+files
 for file in flist:
-    runs = file.split("Run2015D_")[1]
+    runs = file.split("Run")[1]
     runs = runs.split("_")[0]
-    runset.add(runs)
+    runset.add(runs+"_")
 
 runset = list(runset)  # Converting set to list
 for run in runset:
